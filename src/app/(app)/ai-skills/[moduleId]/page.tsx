@@ -1,0 +1,160 @@
+import { notFound, redirect } from 'next/navigation'
+import { cookies } from 'next/headers'
+import { createServerClient } from '@supabase/ssr'
+import Link from 'next/link'
+import { ArrowLeft, ArrowRight } from 'lucide-react'
+import { aiModules, moduleOrder } from '@/content/ai-skills'
+import AIModuleRenderer from '@/components/ai/AIModuleRenderer'
+
+interface PageProps {
+  params: Promise<{ moduleId: string }>
+}
+
+export async function generateStaticParams() {
+  return moduleOrder.map((id) => ({ moduleId: id }))
+}
+
+export async function generateMetadata({ params }: PageProps) {
+  const { moduleId } = await params
+  const module = aiModules[moduleId]
+
+  if (!module) {
+    return { title: 'Module Not Found' }
+  }
+
+  return {
+    title: `${module.title} | AI Skills | Angelo Tutoring`,
+    description: module.description,
+  }
+}
+
+async function getUserData() {
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
+  const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+
+  if (!supabaseUrl || !supabaseKey) {
+    return {
+      userId: 'demo-user',
+      completedModules: [] as string[],
+    }
+  }
+
+  const cookieStore = await cookies()
+  const supabase = createServerClient(supabaseUrl, supabaseKey, {
+    cookies: {
+      getAll() {
+        return cookieStore.getAll()
+      },
+      setAll(cookiesToSet) {
+        try {
+          cookiesToSet.forEach(({ name, value, options }) =>
+            cookieStore.set(name, value, options)
+          )
+        } catch {
+          // Ignore
+        }
+      },
+    },
+  })
+
+  const { data: { user } } = await supabase.auth.getUser()
+
+  if (!user) {
+    return {
+      userId: 'demo-user',
+      completedModules: [] as string[],
+    }
+  }
+
+  const { data: userData } = await supabase
+    .from('users')
+    .select('ai_modules_completed')
+    .eq('id', user.id)
+    .single()
+
+  return {
+    userId: user.id,
+    completedModules: userData?.ai_modules_completed || [],
+  }
+}
+
+export default async function AIModulePage({ params }: PageProps) {
+  const { moduleId } = await params
+  const module = aiModules[moduleId]
+
+  if (!module) {
+    notFound()
+  }
+
+  const { userId, completedModules } = await getUserData()
+
+  // Check if module is locked
+  if (module.unlockCondition && !completedModules.includes(module.unlockCondition)) {
+    redirect('/ai-skills')
+  }
+
+  const isCompleted = completedModules.includes(moduleId)
+  const currentIndex = moduleOrder.indexOf(moduleId as typeof moduleOrder[number])
+  const prevModule = currentIndex > 0 ? aiModules[moduleOrder[currentIndex - 1]] : null
+  const nextModule = currentIndex < moduleOrder.length - 1 ? aiModules[moduleOrder[currentIndex + 1]] : null
+
+  return (
+    <div className="p-4 md:p-6 max-w-3xl mx-auto space-y-6">
+      {/* Back Link */}
+      <Link
+        href="/ai-skills"
+        className="inline-flex items-center gap-2 text-sm hover:text-ai-purple transition-colors"
+        style={{ color: 'var(--muted-custom)' }}
+      >
+        <ArrowLeft className="w-4 h-4" />
+        Back to AI Skills
+      </Link>
+
+      {/* Module Content */}
+      <AIModuleRenderer
+        module={module}
+        userId={userId}
+        isCompleted={isCompleted}
+      />
+
+      {/* Navigation */}
+      <div
+        className="flex items-center justify-between pt-6"
+        style={{ borderTop: '1px solid var(--border-custom)' }}
+      >
+        {prevModule ? (
+          <Link
+            href={`/ai-skills/${prevModule.id}`}
+            className="flex items-center gap-2 text-sm hover:text-ai-purple transition-colors"
+            style={{ color: 'var(--muted-custom)' }}
+          >
+            <ArrowLeft className="w-4 h-4" />
+            {prevModule.title}
+          </Link>
+        ) : (
+          <div />
+        )}
+
+        {nextModule ? (
+          <Link
+            href={`/ai-skills/${nextModule.id}`}
+            className="flex items-center gap-2 text-sm hover:text-ai-purple transition-colors"
+            style={{ color: 'var(--muted-custom)' }}
+          >
+            {nextModule.title}
+            <ArrowRight className="w-4 h-4" />
+          </Link>
+        ) : (
+          <Link
+            href="/ai-skills/prompt-challenge"
+            className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium"
+            style={{ background: 'var(--ai-purple)', color: 'white' }}
+          >
+            Take the Challenge
+            <ArrowRight className="w-4 h-4" />
+          </Link>
+        )}
+      </div>
+    </div>
+  )
+}

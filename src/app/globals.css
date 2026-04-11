@@ -1,6 +1,8 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
+@import "react-pdf/dist/Page/AnnotationLayer.css";
+@import "react-pdf/dist/Page/TextLayer.css";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -46,85 +48,187 @@
   --radius-2xl: calc(var(--radius) * 1.8);
   --radius-3xl: calc(var(--radius) * 2.2);
   --radius-4xl: calc(var(--radius) * 2.6);
+
+  /* Angelo Tutoring Custom Colors */
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface2: var(--surface2);
+  --color-border-custom: var(--border-custom);
+  --color-accent-red: var(--accent-red);
+  --color-gold: var(--gold);
+  --color-teal: var(--teal);
+  --color-text: var(--text);
+  --color-muted-custom: var(--muted-custom);
 }
 
 :root {
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
-  --chart-1: oklch(0.87 0 0);
-  --chart-2: oklch(0.556 0 0);
-  --chart-3: oklch(0.439 0 0);
-  --chart-4: oklch(0.371 0 0);
-  --chart-5: oklch(0.269 0 0);
-  --radius: 0.625rem;
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
-}
+  /* Angelo Tutoring Theme - Dark Mode Default */
+  --bg: #0d1117;
+  --surface: #161b22;
+  --surface2: #21262d;
+  --border-custom: #30363d;
+  --accent-red: #e63946;
+  --gold: #f4a261;
+  --teal: #2dd4bf;
+  --text: #e6edf3;
+  --muted-custom: #7d8590;
 
-.dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
-  --chart-1: oklch(0.87 0 0);
-  --chart-2: oklch(0.556 0 0);
-  --chart-3: oklch(0.439 0 0);
-  --chart-4: oklch(0.371 0 0);
-  --chart-5: oklch(0.269 0 0);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.556 0 0);
+  /* AI Skills Purple Theme - inspired by Azure */
+  --ai-purple: #8b5cf6;
+  --ai-purple-dim: #6d28d9;
+  --ai-purple-glow: rgba(139, 92, 246, 0.15);
+  --ai-blue: #0078D4;
+  --ai-success: #00A854;
+
+  /* Shadcn overrides for dark theme */
+  --background: #0d1117;
+  --foreground: #e6edf3;
+  --card: #161b22;
+  --card-foreground: #e6edf3;
+  --popover: #161b22;
+  --popover-foreground: #e6edf3;
+  --primary: #e63946;
+  --primary-foreground: #ffffff;
+  --secondary: #21262d;
+  --secondary-foreground: #e6edf3;
+  --muted: #21262d;
+  --muted-foreground: #7d8590;
+  --accent: #21262d;
+  --accent-foreground: #e6edf3;
+  --destructive: #e63946;
+  --border: #30363d;
+  --input: #30363d;
+  --ring: #e63946;
+  --chart-1: #e63946;
+  --chart-2: #f4a261;
+  --chart-3: #2dd4bf;
+  --chart-4: #457b9d;
+  --chart-5: #1d3557;
+  --radius: 0.625rem;
+  --sidebar: #161b22;
+  --sidebar-foreground: #e6edf3;
+  --sidebar-primary: #e63946;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #21262d;
+  --sidebar-accent-foreground: #e6edf3;
+  --sidebar-border: #30363d;
+  --sidebar-ring: #e63946;
 }
 
 @layer base {
   * {
     @apply border-border outline-ring/50;
   }
-  body {
-    @apply bg-background text-foreground;
-  }
   html {
     @apply font-sans;
+    background: var(--bg);
   }
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+  }
+}
+
+/* Custom utility classes */
+@layer utilities {
+  .bg-surface {
+    background-color: var(--surface);
+  }
+  .bg-surface2 {
+    background-color: var(--surface2);
+  }
+  .bg-accent-red {
+    background-color: var(--accent-red);
+  }
+  .text-accent-red {
+    color: var(--accent-red);
+  }
+  .text-gold {
+    color: var(--gold);
+  }
+  .text-teal {
+    color: var(--teal);
+  }
+  .text-muted-custom {
+    color: var(--muted-custom);
+  }
+  .bg-muted-custom {
+    background-color: var(--muted-custom);
+  }
+  .border-custom {
+    border-color: var(--border-custom);
+  }
+  .pb-safe {
+    padding-bottom: env(safe-area-inset-bottom, 16px);
+  }
+
+  /* AI Skills Purple Theme utilities */
+  .bg-ai-purple {
+    background-color: var(--ai-purple);
+  }
+  .bg-ai-purple-glow {
+    background-color: var(--ai-purple-glow);
+  }
+  .text-ai-purple {
+    color: var(--ai-purple);
+  }
+  .border-ai-purple {
+    border-color: var(--ai-purple);
+  }
+  .ring-ai-purple {
+    --tw-ring-color: var(--ai-purple);
+  }
+
+  /* AI Success utilities */
+  .bg-ai-success {
+    background-color: var(--ai-success);
+  }
+  .bg-ai-success-glow {
+    background-color: rgba(0, 168, 84, 0.1);
+  }
+  .text-ai-success {
+    color: var(--ai-success);
+  }
+  .border-ai-success {
+    border-color: var(--ai-success);
+  }
+
+  /* Text color utilities */
+  .text-primary-text {
+    color: var(--text);
+  }
+
+  /* Gold utilities */
+  .bg-gold {
+    background-color: var(--gold);
+  }
+  .bg-gold-glow {
+    background-color: rgba(244, 162, 97, 0.1);
+  }
+  .border-gold {
+    border-color: var(--gold);
+  }
+
+  /* Accent red glow */
+  .bg-accent-red-glow {
+    background-color: rgba(230, 57, 70, 0.1);
+  }
+}
+
+/* PWA Install Prompt Animation */
+@keyframes slide-up {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.animate-slide-up {
+  animation: slide-up 0.3s ease-out forwards;
 }

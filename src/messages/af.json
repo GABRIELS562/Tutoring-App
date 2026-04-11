@@ -1,0 +1,110 @@
+{
+  "common": {
+    "loading": "Laai...",
+    "error": "Iets het verkeerd gegaan",
+    "retry": "Probeer weer",
+    "back": "Terug",
+    "next": "Volgende",
+    "save": "Stoor",
+    "cancel": "Kanselleer",
+    "close": "Sluit",
+    "search": "Soek",
+    "offline": "Aflyn",
+    "online": "Aanlyn"
+  },
+  "nav": {
+    "home": "Tuis",
+    "topics": "Onderwerpe",
+    "papers": "Vorige Vraestelle",
+    "formulas": "Formuleblad",
+    "aiSkills": "KI-Vaardighede",
+    "profile": "Profiel",
+    "settings": "Instellings",
+    "signOut": "Teken uit"
+  },
+  "home": {
+    "welcome": "Welkom terug",
+    "continueStudying": "Gaan voort met studeer",
+    "yourProgress": "Jou Vordering",
+    "recentTopics": "Onlangse Onderwerpe",
+    "quickActions": "Vinnige Aksies",
+    "streak": "Dag Reeks",
+    "xp": "XP"
+  },
+  "topics": {
+    "title": "Onderwerpe",
+    "subtitle": "Bemeester elke onderwerp stap vir stap",
+    "grade": "Graad",
+    "paper": "Vraestel",
+    "capsWeight": "KABV Gewig",
+    "comingSoon": "Kom Binnekort",
+    "contentUnderDevelopment": "Hierdie onderwerp word tans ontwikkel. Kom gou weer terug!",
+    "sections": "Afdelings",
+    "complete": "Voltooid",
+    "inProgress": "Besig",
+    "locked": "Gesluit"
+  },
+  "papers": {
+    "title": "Vorige Vraestelle",
+    "subtitle": "Oefen met werklike eksamen vraestelle",
+    "download": "Laai Af",
+    "viewMemo": "Bekyk Memo",
+    "year": "Jaar",
+    "type": "Tipe",
+    "november": "November",
+    "june": "Junie",
+    "march": "Maart",
+    "prelim": "Voorlopige",
+    "exemplar": "Eksemplaar"
+  },
+  "formulas": {
+    "title": "Formuleblad",
+    "subtitle": "Vinnige verwysing vir sleutelformules",
+    "searchPlaceholder": "Soek formules..."
+  },
+  "ai": {
+    "title": "KI-Vaardighede",
+    "subtitle": "Leer om KI effektief en verantwoordelik te gebruik",
+    "askHint": "Vra vir 'n wenk",
+    "hintPlaceholder": "Waarmee sukkel jy?",
+    "getHint": "Kry Wenk",
+    "thinking": "Dink...",
+    "tryAgain": "Probeer weer",
+    "modules": {
+      "whatIsAI": "Wat is KI?",
+      "prompts": "Skryf Effektiewe Instruksies",
+      "studyWithAI": "Studeer met KI",
+      "ethics": "KI-Etiek en Integriteit",
+      "careers": "KI en Jou Loopbaan"
+    }
+  },
+  "auth": {
+    "signIn": "Teken In",
+    "signUp": "Registreer",
+    "email": "E-pos",
+    "password": "Wagwoord",
+    "forgotPassword": "Wagwoord vergeet?",
+    "noAccount": "Het jy nie 'n rekening nie?",
+    "hasAccount": "Het jy reeds 'n rekening?",
+    "continueWithGoogle": "Gaan voort met Google"
+  },
+  "video": {
+    "watch": "Kyk Video",
+    "openInYouTube": "Maak oop in YouTube",
+    "noVideoAvailable": "Geen video beskikbaar in jou taal nie"
+  },
+  "language": {
+    "title": "Taal",
+    "english": "Engels",
+    "afrikaans": "Afrikaans",
+    "switchTo": "Skakel oor na {language}"
+  },
+  "onboarding": {
+    "welcomeTitle": "Welkom by Angelo Tutoring",
+    "welcomeSubtitle": "Kom ons verpersoonlik jou leerervaring",
+    "selectGrade": "In watter graad is jy?",
+    "selectLanguage": "Voorkeur taal",
+    "languageNote": "Jy kan dit enige tyd in instellings verander",
+    "getStarted": "Begin"
+  }
+}

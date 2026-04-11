@@ -1,0 +1,110 @@
+{
+  "common": {
+    "loading": "Loading...",
+    "error": "Something went wrong",
+    "retry": "Try again",
+    "back": "Back",
+    "next": "Next",
+    "save": "Save",
+    "cancel": "Cancel",
+    "close": "Close",
+    "search": "Search",
+    "offline": "Offline",
+    "online": "Online"
+  },
+  "nav": {
+    "home": "Home",
+    "topics": "Topics",
+    "papers": "Past Papers",
+    "formulas": "Formula Sheet",
+    "aiSkills": "AI Skills",
+    "profile": "Profile",
+    "settings": "Settings",
+    "signOut": "Sign out"
+  },
+  "home": {
+    "welcome": "Welcome back",
+    "continueStudying": "Continue studying",
+    "yourProgress": "Your Progress",
+    "recentTopics": "Recent Topics",
+    "quickActions": "Quick Actions",
+    "streak": "Day Streak",
+    "xp": "XP"
+  },
+  "topics": {
+    "title": "Topics",
+    "subtitle": "Master each topic step by step",
+    "grade": "Grade",
+    "paper": "Paper",
+    "capsWeight": "CAPS Weight",
+    "comingSoon": "Coming Soon",
+    "contentUnderDevelopment": "This topic is currently being developed. Check back soon!",
+    "sections": "Sections",
+    "complete": "Complete",
+    "inProgress": "In Progress",
+    "locked": "Locked"
+  },
+  "papers": {
+    "title": "Past Papers",
+    "subtitle": "Practice with real exam papers",
+    "download": "Download",
+    "viewMemo": "View Memo",
+    "year": "Year",
+    "type": "Type",
+    "november": "November",
+    "june": "June",
+    "march": "March",
+    "prelim": "Preliminary",
+    "exemplar": "Exemplar"
+  },
+  "formulas": {
+    "title": "Formula Sheet",
+    "subtitle": "Quick reference for key formulas",
+    "searchPlaceholder": "Search formulas..."
+  },
+  "ai": {
+    "title": "AI Skills",
+    "subtitle": "Learn to use AI effectively and responsibly",
+    "askHint": "Ask for a hint",
+    "hintPlaceholder": "What are you struggling with?",
+    "getHint": "Get Hint",
+    "thinking": "Thinking...",
+    "tryAgain": "Try again",
+    "modules": {
+      "whatIsAI": "What is AI?",
+      "prompts": "Writing Effective Prompts",
+      "studyWithAI": "Study with AI",
+      "ethics": "AI Ethics & Integrity",
+      "careers": "AI & Your Career"
+    }
+  },
+  "auth": {
+    "signIn": "Sign In",
+    "signUp": "Sign Up",
+    "email": "Email",
+    "password": "Password",
+    "forgotPassword": "Forgot password?",
+    "noAccount": "Don't have an account?",
+    "hasAccount": "Already have an account?",
+    "continueWithGoogle": "Continue with Google"
+  },
+  "video": {
+    "watch": "Watch Video",
+    "openInYouTube": "Open in YouTube",
+    "noVideoAvailable": "No video available in your language"
+  },
+  "language": {
+    "title": "Language",
+    "english": "English",
+    "afrikaans": "Afrikaans",
+    "switchTo": "Switch to {language}"
+  },
+  "onboarding": {
+    "welcomeTitle": "Welcome to Angelo Tutoring",
+    "welcomeSubtitle": "Let's personalise your learning experience",
+    "selectGrade": "What grade are you in?",
+    "selectLanguage": "Preferred language",
+    "languageNote": "You can change this anytime in settings",
+    "getStarted": "Get Started"
+  }
+}

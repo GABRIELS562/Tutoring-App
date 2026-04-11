@@ -1,0 +1,139 @@
+'use client'
+
+import Link from 'next/link'
+import { usePathname, useRouter } from 'next/navigation'
+import { createBrowserClient } from '@supabase/ssr'
+import {
+  Home,
+  BookOpen,
+  PenTool,
+  FileText,
+  BarChart3,
+  LogOut,
+  Brain,
+} from 'lucide-react'
+
+const navItems = [
+  { icon: Home, label: 'Dashboard', href: '/dashboard' },
+  { icon: BookOpen, label: 'Subjects', href: '/subjects' },
+  { icon: Brain, label: 'AI Skills', href: '/ai-skills', isAI: true },
+  { icon: PenTool, label: 'Practice', href: '/topics/trig-gr11/practice' },
+  { icon: FileText, label: 'Past Papers', href: '/papers' },
+  { icon: BarChart3, label: 'Progress', href: '/progress' },
+]
+
+export default function Sidebar() {
+  const pathname = usePathname()
+  const router = useRouter()
+
+  const handleSignOut = async () => {
+    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
+    const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+
+    if (supabaseUrl && supabaseKey) {
+      const supabase = createBrowserClient(supabaseUrl, supabaseKey)
+      await supabase.auth.signOut()
+    }
+    router.push('/login')
+    router.refresh()
+  }
+
+  const isActive = (href: string) => {
+    if (href === '/dashboard') return pathname === href
+    return pathname.startsWith(href)
+  }
+
+  return (
+    <>
+      {/* Desktop Sidebar */}
+      <aside
+        className="fixed left-0 top-0 h-full w-[60px] hidden md:flex flex-col items-center py-4 z-50"
+        style={{ background: 'var(--surface)', borderRight: '1px solid var(--border-custom)' }}
+      >
+        {/* Logo */}
+        <Link href="/dashboard" className="mb-8">
+          <div
+            className="w-10 h-10 rounded-lg flex items-center justify-center text-white font-bold text-sm"
+            style={{ background: 'var(--accent-red)' }}
+          >
+            AT
+          </div>
+        </Link>
+
+        {/* Nav Items */}
+        <nav className="flex-1 flex flex-col items-center gap-2">
+          {navItems.map((item) => {
+            const Icon = item.icon
+            const active = isActive(item.href)
+            const isAI = 'isAI' in item && item.isAI
+            const activeColor = isAI ? 'var(--ai-purple)' : 'var(--accent-red)'
+            const activeBg = isAI ? 'rgba(139, 92, 246, 0.15)' : 'rgba(230, 57, 70, 0.15)'
+
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                className="relative group w-10 h-10 rounded-lg flex items-center justify-center transition-all"
+                style={{
+                  background: active ? activeBg : 'transparent',
+                  color: active ? activeColor : 'var(--muted-custom)',
+                }}
+              >
+                <Icon className="w-5 h-5" />
+                {/* Tooltip */}
+                <span
+                  className="absolute left-full ml-3 px-2 py-1 rounded text-xs font-medium whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"
+                  style={{ background: 'var(--surface2)', color: 'var(--text)' }}
+                >
+                  {item.label}
+                </span>
+              </Link>
+            )
+          })}
+        </nav>
+
+        {/* Sign Out */}
+        <button
+          onClick={handleSignOut}
+          className="w-10 h-10 rounded-lg flex items-center justify-center transition-all hover:bg-red-500/10 group relative"
+          style={{ color: 'var(--muted-custom)' }}
+        >
+          <LogOut className="w-5 h-5" />
+          <span
+            className="absolute left-full ml-3 px-2 py-1 rounded text-xs font-medium whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"
+            style={{ background: 'var(--surface2)', color: 'var(--text)' }}
+          >
+            Sign out
+          </span>
+        </button>
+      </aside>
+
+      {/* Mobile Bottom Tab Bar */}
+      <nav
+        className="fixed bottom-0 left-0 right-0 h-16 md:hidden flex items-center justify-around z-50"
+        style={{ background: 'var(--surface)', borderTop: '1px solid var(--border-custom)' }}
+      >
+        {navItems.map((item) => {
+          const Icon = item.icon
+          const active = isActive(item.href)
+          const isAI = 'isAI' in item && item.isAI
+          const activeColor = isAI ? 'var(--ai-purple)' : 'var(--accent-red)'
+
+          return (
+            <Link
+              key={item.href}
+              href={item.href}
+              className="flex flex-col items-center justify-center gap-1 px-3 py-2 rounded-lg transition-all"
+              style={{
+                color: active ? activeColor : 'var(--muted-custom)',
+              }}
+            >
+              <Icon className="w-5 h-5" />
+              <span className="text-[10px] font-medium">{item.label.split(' ')[0]}</span>
+            </Link>
+          )
+        })}
+      </nav>
+    </>
+  )
+}
