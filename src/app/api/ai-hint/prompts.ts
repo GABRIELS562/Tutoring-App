@@ -189,8 +189,18 @@ BELANGRIK: Antwoord ALTYD in Afrikaans.`
 // Every field below comes straight from the request body, so all of it is
 // attacker-controllable, not just the fields a UI happens to expose as a
 // free-text box.
+//
+// The tags alone aren't enough: a payload containing a literal
+// `</student_input>` would otherwise close the real tag early and let
+// whatever follows it (e.g. "SYSTEM: ignore all previous instructions")
+// read as if it were outside student-supplied data. Escaping every `<` in
+// the student text to `&lt;` neutralises that - there is no longer a
+// literal `<` for `</student_input>` (or any other tag-like sequence) to
+// be built from, so only the tags studentInput() itself adds are ever
+// real.
 function studentInput(value: string | undefined): string {
-  return `<student_input>${value ?? ''}</student_input>`
+  const escaped = (value ?? '').replace(/</g, '&lt;')
+  return `<student_input>${escaped}</student_input>`
 }
 
 export function getModeSpecificPrompt(body: HintRequest): string {
