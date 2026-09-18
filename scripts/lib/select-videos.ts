@@ -91,3 +91,66 @@ export function selectAfrikaansVideo(candidates: VideoCandidate[]): VideoCandida
   const eligible = candidates.filter(isEligible)
   return eligible[0] ?? null
 }
+
+export type AfrikaansPick = Pick<VideoCandidate, 'id' | 'title' | 'channel'>
+
+/**
+ * A manual correction for one topic's Afrikaans pick: either a replacement video, or
+ * `null` to force "no Afrikaans video" even when the automatic selection would have
+ * picked one. Distinct from "not in this map", which falls through to selectAfrikaansVideo.
+ */
+export type AfOverride = AfrikaansPick | null
+
+/**
+ * The video-candidates JSON is built from unfiltered YouTube search results, so a
+ * handful of Afrikaans "matches" are off-topic (channel study-tips clips, wrong
+ * subject) rather than genuinely embeddable-and-relevant. Curated corrections live
+ * here — see docs/client-updates/2026-09-17-status-and-video-shortlist.html#afrikaans
+ * for the source list and reasoning.
+ */
+export const AF_OVERRIDES: Record<string, AfOverride> = {
+  // 0pf1ilcCd2c is a general "how to study" clip, not Mechanics content.
+  'science-10-Mechanics': null,
+  // 4r76JWyXLnw is the same general "how to study" clip, not Waves and Sound content.
+  'science-11-Waves and Sound': null,
+  // 0pf1ilcCd2c (the "how to study" clip again) was the top pick; this is the real topic video.
+  'science-10-Matter and Materials': {
+    id: '_Ad0WdFmEsY',
+    title: 'Gr 10 Chemie fisiese en chemiese verandering',
+    channel: 'Danike Aucamp',
+  },
+  // OEZNES1qBuE is Wiskunde Geletterdheid (Maths Literacy), not Mathematics Finance and Growth.
+  'maths-10-Finance and Growth': {
+    id: 'T7zTTrn1ulE',
+    title: 'Graad 10 enkelvoudige en saamgestelde rente',
+    channel: 'Rochelle Van der Merwe',
+  },
+}
+
+export function afOverrideKey(subject: string, grade: number, topic: string): string {
+  return `${subject}-${grade}-${topic}`
+}
+
+/**
+ * Resolves the Afrikaans pick for one topic: an `overrides` entry takes precedence
+ * (including a `null` override, which forces "no Afrikaans video"); otherwise falls
+ * back to the automatic selectAfrikaansVideo logic over the raw candidates.
+ *
+ * `overrides` defaults to the real curated AF_OVERRIDES map; tests pass their own map
+ * instead of mutating the shared one.
+ */
+export function resolveAfrikaansPick(
+  subject: string,
+  grade: number,
+  topic: string,
+  candidates: VideoCandidate[],
+  overrides: Readonly<Record<string, AfOverride>> = AF_OVERRIDES
+): AfrikaansPick | null {
+  const key = afOverrideKey(subject, grade, topic)
+  if (Object.prototype.hasOwnProperty.call(overrides, key)) {
+    return overrides[key]
+  }
+
+  const picked = selectAfrikaansVideo(candidates)
+  return picked ? { id: picked.id, title: picked.title, channel: picked.channel } : null
+}

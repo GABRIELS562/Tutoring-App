@@ -29,8 +29,8 @@ export const financeGr10: TopicContent = {
           type: 'video',
           title: 'Watch: Financial Maths Grade 10 | Simple Interest Introduction — Kevinmathscience',
           videoId: 'AKU4lSQvrnI',
-          videoIdAf: 'OEZNES1qBuE',
-          titleAf: 'Watch: Enkelvoudig en Saamgestelde rente - lang metode Wisk Gelet — TheWhiteboardSA'
+          videoIdAf: 'T7zTTrn1ulE',
+          titleAf: 'Watch: Graad 10 enkelvoudige en saamgestelde rente — Rochelle Van der Merwe'
         },
         {
           type: 'video',

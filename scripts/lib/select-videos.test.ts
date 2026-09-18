@@ -1,5 +1,12 @@
 import { describe, it, expect } from 'vitest'
-import { selectVideosForTopic, selectAfrikaansVideo, parseDuration, type VideoCandidate } from './select-videos'
+import {
+  selectVideosForTopic,
+  selectAfrikaansVideo,
+  resolveAfrikaansPick,
+  afOverrideKey,
+  parseDuration,
+  type VideoCandidate,
+} from './select-videos'
 
 function video(overrides: Partial<VideoCandidate> = {}): VideoCandidate {
   return {
@@ -127,5 +134,70 @@ describe('selectAfrikaansVideo', () => {
 
     // Assert
     expect(pick?.id).toBe('first-ok')
+  })
+})
+
+describe('resolveAfrikaansPick', () => {
+  it('falls back to the automatic selection when no override exists for the topic', () => {
+    // Arrange
+    const candidates = [video({ id: 'auto-pick', embeddable: true })]
+
+    // Act
+    const pick = resolveAfrikaansPick('maths', 10, 'Some Topic Not In The Override Map', candidates)
+
+    // Assert
+    expect(pick?.id).toBe('auto-pick')
+  })
+
+  it('an override replaces whatever the automatic selection would have picked', () => {
+    // Arrange
+    const candidates = [video({ id: 'would-have-been-picked', embeddable: true })]
+    const key = afOverrideKey('maths', 10, 'Overridden Topic')
+    const overrides = {
+      [key]: { id: 'curated-override', title: 'Curated title', channel: 'Curated channel' },
+    }
+
+    // Act
+    const pick = resolveAfrikaansPick('maths', 10, 'Overridden Topic', candidates, overrides)
+
+    // Assert
+    expect(pick).toEqual({ id: 'curated-override', title: 'Curated title', channel: 'Curated channel' })
+  })
+
+  it('an override to null forces "no Afrikaans video" even when a candidate is embeddable', () => {
+    // Arrange
+    const candidates = [video({ id: 'would-have-been-picked', embeddable: true })]
+    const key = afOverrideKey('maths', 10, 'Suppressed Topic')
+    const overrides = { [key]: null }
+
+    // Act
+    const pick = resolveAfrikaansPick('maths', 10, 'Suppressed Topic', candidates, overrides)
+
+    // Assert
+    expect(pick).toBeNull()
+  })
+
+  it('the real curated map suppresses science gr10 Mechanics (off-topic "how to study" clip)', () => {
+    const candidates = [video({ id: '0pf1ilcCd2c', embeddable: true })]
+
+    expect(resolveAfrikaansPick('science', 10, 'Mechanics', candidates)).toBeNull()
+  })
+
+  it('the real curated map suppresses science gr11 Waves and Sound (off-topic "how to study" clip)', () => {
+    const candidates = [video({ id: '4r76JWyXLnw', embeddable: true })]
+
+    expect(resolveAfrikaansPick('science', 11, 'Waves and Sound', candidates)).toBeNull()
+  })
+
+  it('the real curated map replaces the pick for science gr10 Matter and Materials', () => {
+    const candidates = [video({ id: '0pf1ilcCd2c', embeddable: true })]
+
+    expect(resolveAfrikaansPick('science', 10, 'Matter and Materials', candidates)?.id).toBe('_Ad0WdFmEsY')
+  })
+
+  it('the real curated map replaces the pick for maths gr10 Finance and Growth', () => {
+    const candidates = [video({ id: 'OEZNES1qBuE', embeddable: true })]
+
+    expect(resolveAfrikaansPick('maths', 10, 'Finance and Growth', candidates)?.id).toBe('T7zTTrn1ulE')
   })
 })

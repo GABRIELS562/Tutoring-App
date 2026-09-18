@@ -28,9 +28,7 @@ export const mechanicsGr10: TopicContent = {
         {
           type: 'video',
           title: 'Watch: Grade 10 Mechanics Past Paper Question Motion in One Dimension — Miss Martins Maths and Science',
-          videoId: 'gtiOPVVKkU4',
-          videoIdAf: '0pf1ilcCd2c',
-          titleAf: 'Watch: Hoe om vir Graad 10 Fisiese Wetenskap te leer — Juf. OK se Wetenskap Akademie'
+          videoId: 'gtiOPVVKkU4'
         },
         {
           type: 'video',

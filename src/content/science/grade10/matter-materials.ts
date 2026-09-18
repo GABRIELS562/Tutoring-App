@@ -30,8 +30,8 @@ export const matterMaterialsGr10: TopicContent = {
           type: 'video',
           title: 'Watch: Grade 10 Classification of Matter: Properties of materials — Miss Martins Maths and Science',
           videoId: '5M4hJjp3-lQ',
-          videoIdAf: '0pf1ilcCd2c',
-          titleAf: 'Watch: Hoe om vir Graad 10 Fisiese Wetenskap te leer — Juf. OK se Wetenskap Akademie'
+          videoIdAf: '_Ad0WdFmEsY',
+          titleAf: 'Watch: Gr 10 Chemie fisiese en chemiese verandering — Danike Aucamp'
         },
         {
           type: 'video',

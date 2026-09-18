@@ -28,9 +28,7 @@ export const wavesSoundGr11: TopicContent = {
         {
           type: 'video',
           title: 'Watch: Grade 11 - Diffraction | Huygen’s Principle & Wavefronts | November 2017 | Mlungisi Nkosi — Mlungisi Nkosi Maths & Science',
-          videoId: 'KXRnmQGweJE',
-          videoIdAf: '4r76JWyXLnw',
-          titleAf: 'Watch: Hoe om vir Graad 11 Fisiese Wetenskap te leer — Juf. OK se Wetenskap Akademie'
+          videoId: 'KXRnmQGweJE'
         },
         {
           type: 'video',
