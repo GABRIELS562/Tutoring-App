@@ -22,7 +22,7 @@ Vercel (app) + Supabase (auth/DB) + Cloudflare (DNS). No Docker, no GitLab — n
 | `SUPABASE_SERVICE_ROLE_KEY` | Server-only; falls back to anon key if unset |
 | `DATABASE_URL` | Pooled (6543) at runtime, direct (5432) for migrations |
 | `ANTHROPIC_API_KEY` | AI hints (`api/ai-hint`) |
-| `ANTHROPIC_MODEL` | Defaults to `claude-sonnet-5` if unset |
+| `ANTHROPIC_MODEL` | Not read by the code yet (wired in Phase 4); will default to `claude-sonnet-5` |
 | `ADMIN_EMAIL` | **Grants admin** to this Supabase user — set carefully |
 
 ## DNS

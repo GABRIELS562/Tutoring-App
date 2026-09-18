@@ -26,3 +26,20 @@ describe('locale cookie helpers', () => {
     expect(detectBrowserLocale()).toBe('af')
   })
 })
+
+describe('locale change subscribers', () => {
+  it('notifies a listener when the cookie is set and stops after unsubscribe', async () => {
+    // Arrange
+    const { subscribeToLocaleCookie } = await import('@/lib/locale')
+    const seen: string[] = []
+    const unsubscribe = subscribeToLocaleCookie(() => seen.push(getLocaleFromCookie()))
+
+    // Act
+    setLocaleCookie('af')
+    unsubscribe()
+    setLocaleCookie('en')
+
+    // Assert
+    expect(seen).toEqual(['af'])
+  })
+})

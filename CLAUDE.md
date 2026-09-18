@@ -103,7 +103,7 @@ Shadcn (`components.json`, base-nova style) in `src/components/ui/`; Tailwind v4
 - `NEXT_PUBLIC_SUPABASE_URL` / `NEXT_PUBLIC_SUPABASE_ANON_KEY` — enables auth + route protection; absent = demo user
 - `SUPABASE_SERVICE_ROLE_KEY` — used by API routes (falls back to anon key)
 - `ANTHROPIC_API_KEY` — AI hints
-- `ANTHROPIC_MODEL` — model id for the AI hint route; defaults to `claude-sonnet-5`
+- `ANTHROPIC_MODEL` — model id for the AI hint route (not read yet — Phase 4 wires it; will default to `claude-sonnet-5`)
 - `ADMIN_EMAIL` — grants admin to that Supabase user without `is_admin`
 
 ## Known gaps to be aware of
