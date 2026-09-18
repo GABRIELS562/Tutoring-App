@@ -1,6 +1,5 @@
 'use client'
 
-import { useEffect, useState } from 'react'
 import { useTranslations } from 'next-intl'
 import MathRenderer from '@/components/math/MathRenderer'
 import FormulaBox from './FormulaBox'
@@ -8,8 +7,7 @@ import WorkedExample from './WorkedExample'
 import VoicePlayer from '@/components/ui/VoicePlayer'
 import type { NoteBlock as NoteBlockType } from '@/types'
 import { Lightbulb } from 'lucide-react'
-import { getLocaleFromCookie } from '@/lib/locale'
-import type { Locale } from '@/i18n/routing'
+import { useLocaleCookie } from '@/hooks/useLocaleCookie'
 
 type NoteBlockProps = {
   block: NoteBlockType
@@ -19,11 +17,7 @@ type NoteBlockProps = {
 
 export default function NoteBlock({ block, topicSlug = 'topic', sectionId = 'section' }: NoteBlockProps) {
   const t = useTranslations('video')
-  const [locale, setLocale] = useState<Locale>('en')
-
-  useEffect(() => {
-    setLocale(getLocaleFromCookie())
-  }, [])
+  const locale = useLocaleCookie()
 
   // Generate unique ID for voice player
   const blockId = `${sectionId}-${block.type}-${block.title?.toLowerCase().replace(/\s+/g, '-') || 'content'}`

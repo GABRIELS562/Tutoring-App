@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect } from 'react'
 import { Star, ArrowRight, ArrowLeft, Trophy, Loader2, Check, Sparkles, Target } from 'lucide-react'
 import { promptScenarios, PROMPT_CHALLENGE_XP_PER_STAR } from '@/content/ai-skills'
 import type { PromptEvaluationResult } from '@/types'
@@ -223,7 +223,7 @@ export default function PromptChallengeGame({ userId, onComplete }: PromptChalle
 
           {avgScore >= 4 && (
             <p className="text-teal font-medium">
-              You're ready to earn your AI Literacy Certificate!
+              You&apos;re ready to earn your AI Literacy Certificate!
             </p>
           )}
 
@@ -399,7 +399,7 @@ export default function PromptChallengeGame({ userId, onComplete }: PromptChalle
                   Better version
                 </p>
                 <p className="text-sm italic text-primary-text">
-                  "{evaluation.improved_prompt}"
+                  &quot;{evaluation.improved_prompt}&quot;
                 </p>
               </div>
             </div>

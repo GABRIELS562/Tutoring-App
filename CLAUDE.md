@@ -9,7 +9,7 @@ This project uses **Next.js 16** which has breaking changes from earlier version
 ## Repo Layout & Git
 
 - This directory (`angelo-tutoring/`) is its own git repo on branch **`master`**, `origin` = `https://github.com/GABRIELS562/Tutoring-App.git`. The parent `Updated-tutorial-app-2026/` is a plain wrapper folder (architecture docs, tool-comparison write-ups) — **run all git commands from inside `angelo-tutoring/`**. `/Users/user` itself is a separate git repo; never run git from there.
-- `.gitlab-ci.yml`, `GITLAB_SETUP.md`, `DEPLOYMENT_SUMMARY.md`, `INFRASTRUCTURE.md` describe a GitLab pipeline that is **not wired to the current GitHub remote**. Treat them as design docs, not live CI.
+- The GitLab pipeline (`.gitlab-ci.yml`, `GITLAB_SETUP.md`, etc.) and the Dockerfile were never wired to the current GitHub remote and have been deleted. CI is `.github/workflows/ci.yml`; see `DEPLOYMENT.md` for the actual Vercel + Supabase deployment target and `docs/archive/INFRASTRUCTURE-aws-ecs-design.md` for the abandoned design.
 
 ## Commands
 
@@ -18,18 +18,19 @@ npm run dev              # next dev --webpack (port 3000). Webpack, NOT Turbopac
 npm run build            # next build --webpack
 npm run start
 npm run lint             # eslint (flat config); ignores scripts/, public/sw.js, public/workbox-*.js
-npx tsc --noEmit         # typecheck — no npm script, but CI runs exactly this
+npm run typecheck        # tsc --noEmit — also what CI runs
+npm test                 # vitest run
+npm run test:watch       # vitest, watch mode
+npm run test:coverage    # vitest run --coverage
 
 # Database (Drizzle ORM + PostgreSQL, requires DATABASE_URL)
 npm run db:push          # the actual workflow — NO migrations are committed (drizzle.config.ts points at src/db/migrations, which doesn't exist)
 npm run db:generate
 npm run db:studio
-npm run db:seed-papers
+npm run db:seed-topics    # curriculum topics — run first, other seeds depend on it
 npm run db:seed-questions
-npx tsx src/db/seed-topics.ts   # curriculum topics; no npm script
+npm run db:seed-papers
 ```
-
-There is **no test framework**. The CI `test_unit` job is a placeholder echo.
 
 ## Architecture
 
@@ -102,10 +103,9 @@ Shadcn (`components.json`, base-nova style) in `src/components/ui/`; Tailwind v4
 - `NEXT_PUBLIC_SUPABASE_URL` / `NEXT_PUBLIC_SUPABASE_ANON_KEY` — enables auth + route protection; absent = demo user
 - `SUPABASE_SERVICE_ROLE_KEY` — used by API routes (falls back to anon key)
 - `ANTHROPIC_API_KEY` — AI hints
+- `ANTHROPIC_MODEL` — model id for the AI hint route (not read yet — Phase 4 wires it; will default to `claude-sonnet-5`)
 - `ADMIN_EMAIL` — grants admin to that Supabase user without `is_admin`
-- `RESEND_API_KEY` — email (optional)
 
 ## Known gaps to be aware of
 
-- `Dockerfile` copies `.next/standalone` and health-checks `/api/health`, but `next.config.ts` has no `output: 'standalone'` and there is no `api/health` route. The image will not build/run as-is.
 - `SUPABASE_SERVICE_ROLE_KEY` is only referenced in `src/lib/supabase/api.ts` — server routes silently fall back to the anon key when it is unset, so writes become subject to whatever RLS policies exist on the Supabase project.

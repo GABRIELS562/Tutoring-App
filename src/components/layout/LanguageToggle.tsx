@@ -4,7 +4,8 @@ import { useState, useRef, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { Globe, Check } from 'lucide-react'
 import { locales, localeNames, localeFlags, type Locale } from '@/i18n/routing'
-import { getLocaleFromCookie, setLocaleCookie } from '@/lib/locale'
+import { setLocaleCookie } from '@/lib/locale'
+import { useLocaleCookie } from '@/hooks/useLocaleCookie'
 
 type LanguageToggleProps = {
   variant?: 'dropdown' | 'inline'
@@ -12,15 +13,10 @@ type LanguageToggleProps = {
 }
 
 export default function LanguageToggle({ variant = 'dropdown', showLabel = false }: LanguageToggleProps) {
-  const [currentLocale, setCurrentLocale] = useState<Locale>('en')
+  const currentLocale = useLocaleCookie()
   const [dropdownOpen, setDropdownOpen] = useState(false)
   const dropdownRef = useRef<HTMLDivElement>(null)
   const router = useRouter()
-
-  // Initialize locale from cookie on mount
-  useEffect(() => {
-    setCurrentLocale(getLocaleFromCookie())
-  }, [])
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -34,10 +30,9 @@ export default function LanguageToggle({ variant = 'dropdown', showLabel = false
   }, [])
 
   const handleLocaleChange = (locale: Locale) => {
-    setLocaleCookie(locale)
-    setCurrentLocale(locale)
+    setLocaleCookie(locale) // notifies useLocaleCookie subscribers immediately
     setDropdownOpen(false)
-    // Refresh to reload with new locale
+    // Refresh to reload server-rendered content with the new locale
     router.refresh()
   }
 

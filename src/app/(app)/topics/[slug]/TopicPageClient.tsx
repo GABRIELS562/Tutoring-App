@@ -15,6 +15,7 @@ import {
   storeAudio,
   type OfflineQuestion,
 } from '@/lib/offlineStorage'
+import { useOnlineStatus } from '@/hooks/useOnlineStatus'
 
 const FREE_TIER_OFFLINE_LIMIT = 2
 
@@ -28,25 +29,9 @@ export default function TopicPageClient({ slug, content }: TopicPageClientProps)
   const [activeSection, setActiveSection] = useState<string | null>(null)
   const [downloadState, setDownloadState] = useState<'idle' | 'downloading' | 'downloaded' | 'error' | 'limit_reached'>('idle')
   const [downloadProgress, setDownloadProgress] = useState('')
-  const [isOnline, setIsOnline] = useState(true)
+  const isOnline = useOnlineStatus()
   const { user } = useUser()
   const isPremium = user?.isPremium ?? false
-
-  // Check online status
-  useEffect(() => {
-    setIsOnline(navigator.onLine)
-
-    const handleOnline = () => setIsOnline(true)
-    const handleOffline = () => setIsOnline(false)
-
-    window.addEventListener('online', handleOnline)
-    window.addEventListener('offline', handleOffline)
-
-    return () => {
-      window.removeEventListener('online', handleOnline)
-      window.removeEventListener('offline', handleOffline)
-    }
-  }, [])
 
   // Check if topic is already cached (IndexedDB + Cache API)
   useEffect(() => {

@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useRef, useEffect } from 'react'
-import { X, Share2, Download, MessageCircle } from 'lucide-react'
+import { X, Download, MessageCircle } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 
 type AchievementType = 'topic_mastery' | 'streak' | 'leaderboard' | 'questions_milestone'
