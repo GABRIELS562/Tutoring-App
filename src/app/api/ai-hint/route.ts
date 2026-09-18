@@ -2,9 +2,10 @@ import { NextRequest, NextResponse } from 'next/server'
 import { getApiSupabase } from '@/lib/supabase/api'
 import { requireUser, authErrorResponse } from '@/lib/auth/require-user'
 import { badges, PROMPT_CHALLENGE_XP_PER_STAR } from '@/content/ai-skills'
+import { checkPremiumStatus } from '@/db/queries/users'
+import { isDemoMode } from '@/db'
 import {
   HintRequestSchema,
-  type HintRequest,
   type HintMode,
   getModeSpecificPrompt,
   getSystemPromptForMode,
@@ -13,6 +14,29 @@ import {
 const FREE_HINT_LIMIT = 5
 const FREE_CAMERA_LIMIT = 1
 const ANTHROPIC_API_URL = 'https://api.anthropic.com/v1/messages'
+
+/**
+ * Premium status is never trusted from the client - a request body field
+ * was previously read directly (`isPremium` in HintRequestSchema), which
+ * let anyone bypass the free-tier daily limits by sending
+ * `{ isPremium: true }`. Resolved server-side instead, via the same
+ * Drizzle-backed check used elsewhere (checkPremiumStatus). In demo mode
+ * (no DATABASE_URL) there is no real user row to check, so premium is
+ * always false; any other lookup failure also defaults to false (fail
+ * closed on a benefit, not a restriction).
+ */
+async function resolveIsPremium(userId: string): Promise<boolean> {
+  if (isDemoMode) {
+    return false
+  }
+
+  try {
+    return await checkPremiumStatus(userId)
+  } catch (error) {
+    console.error('Error checking premium status:', error)
+    return false
+  }
+}
 
 // Get or create usage record for today
 async function getUsageRecord(userId: string, today: string) {
@@ -195,7 +219,8 @@ export async function POST(request: NextRequest) {
 
     const body = parseResult.data
     const userId = user.id
-    const { mode, isPremium, imageBase64, locale } = body
+    const { mode, imageBase64, locale } = body
+    const isPremium = await resolveIsPremium(userId)
 
     const today = new Date().toISOString().split('T')[0]
 

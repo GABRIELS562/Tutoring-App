@@ -3,7 +3,6 @@ import { z } from 'zod'
 // Zod schema for request validation
 export const HintRequestSchema = z.object({
   mode: z.enum(['step_hint', 'wrong_answer', 'camera_scan', 'prompt_evaluation', 'general_question', 'cv_help']).default('step_hint'),
-  isPremium: z.boolean().optional(),
   locale: z.enum(['en', 'af']).optional().default('en'), // Language preference
   // For step_hint mode
   questionText: z.string().optional(),
