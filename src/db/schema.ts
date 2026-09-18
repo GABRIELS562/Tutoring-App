@@ -1,4 +1,4 @@
-import { pgTable, uuid, text, integer, boolean, timestamp, date, decimal, index } from 'drizzle-orm/pg-core'
+import { pgTable, uuid, text, integer, boolean, timestamp, date, decimal, index, unique } from 'drizzle-orm/pg-core'
 
 // Table 1: users
 export const users = pgTable('users', {
@@ -165,4 +165,8 @@ export const promptChallengeAttempts = pgTable('prompt_challenge_attempts', {
 }, (table) => [
   index('prompt_challenge_attempts_user_id_idx').on(table.userId),
   index('prompt_challenge_attempts_challenge_id_idx').on(table.challengeId),
+  // One attempt row per (user, challenge): persistPromptChallengeAttempt()
+  // in api/ai-hint/route.ts depends on this to stay idempotent - a repeat
+  // attempt updates the existing row instead of inserting a duplicate.
+  unique('prompt_challenge_attempts_user_challenge_unique').on(table.userId, table.challengeId),
 ])

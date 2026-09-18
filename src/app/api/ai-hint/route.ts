@@ -123,6 +123,23 @@ interface PersistedPromptChallengeAttempt {
  * Returns null when there is nothing to persist (demo mode, or the caller
  * didn't send a challengeId).
  */
+/**
+ * Idempotent per (user_id, challenge_id) - a UNIQUE constraint on the
+ * table backs this up at the DB level (see
+ * supabase/migrations/0001_rls.sql and prompt_challenge_attempts in
+ * schema.ts). Without this, calling the same challenge twice (a retry, a
+ * duplicated request, or a student redoing a challenge) inserted a second
+ * row and awarded XP/a badge a second time.
+ *
+ * Simplest-acceptable policy (matches what the security review signed
+ * off on): XP and the prompt-master badge are awarded once, on the
+ * FIRST completion of a given challenge. A later attempt only updates
+ * the stored row when it beats the previous best score - it never earns
+ * additional XP, never re-awards a badge, and never increments
+ * prompt_challenges_completed again. Trade-off: a student who first
+ * scores below 5 and later nails a 5/5 on a repeat won't retroactively
+ * get the prompt-master badge from that repeat.
+ */
 async function persistPromptChallengeAttempt(
   userId: string,
   challengeId: string | undefined,
@@ -134,6 +151,63 @@ async function persistPromptChallengeAttempt(
     return null
   }
 
+  const { data: existing, error: existingError } = await supabase
+    .from('prompt_challenge_attempts')
+    .select('id, ai_score, xp_earned')
+    .eq('user_id', userId)
+    .eq('challenge_id', challengeId)
+    .maybeSingle()
+
+  if (existingError) {
+    console.error('Error checking existing prompt challenge attempt:', existingError)
+    return null
+  }
+
+  if (existing) {
+    return updateExistingAttempt(supabase, existing, studentPrompt, evaluation)
+  }
+
+  return insertFirstAttempt(supabase, userId, challengeId, studentPrompt, evaluation)
+}
+
+type SupabaseLike = NonNullable<ReturnType<typeof getApiSupabase>>
+
+async function updateExistingAttempt(
+  supabase: SupabaseLike,
+  existing: { id: string; ai_score: number | null },
+  studentPrompt: string | undefined,
+  evaluation: PromptEvaluation
+): Promise<PersistedPromptChallengeAttempt> {
+  const previousBest = existing.ai_score ?? 0
+
+  if (evaluation.score > previousBest) {
+    const { error: updateError } = await supabase
+      .from('prompt_challenge_attempts')
+      .update({
+        student_prompt: studentPrompt || '',
+        ai_score: evaluation.score,
+        ai_feedback: `${evaluation.what_worked} ${evaluation.what_to_improve}`,
+        improved_prompt: evaluation.improved_prompt,
+      })
+      .eq('id', existing.id)
+
+    if (updateError) {
+      console.error('Error updating prompt challenge attempt:', updateError)
+    }
+  }
+
+  // No XP/badge/completion-count change on a repeat - those are awarded
+  // once, on first completion (insertFirstAttempt).
+  return { id: existing.id, xpEarned: 0, newBadges: [], totalChallengesCompleted: 0 }
+}
+
+async function insertFirstAttempt(
+  supabase: SupabaseLike,
+  userId: string,
+  challengeId: string,
+  studentPrompt: string | undefined,
+  evaluation: PromptEvaluation
+): Promise<PersistedPromptChallengeAttempt | null> {
   const xpEarned = evaluation.score * PROMPT_CHALLENGE_XP_PER_STAR
 
   const { data: attempt, error: insertError } = await supabase

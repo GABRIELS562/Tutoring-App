@@ -81,6 +81,15 @@ describe('supabase/migrations/0001_rls.sql', () => {
     }
   })
 
+  it('adds a UNIQUE (user_id, challenge_id) constraint on prompt_challenge_attempts, idempotently', () => {
+    expect(sql).toMatch(
+      /DROP CONSTRAINT IF EXISTS prompt_challenge_attempts_user_challenge_unique/
+    )
+    expect(sql).toMatch(
+      /ADD CONSTRAINT prompt_challenge_attempts_user_challenge_unique\s+UNIQUE \(user_id, challenge_id\)/
+    )
+  })
+
   it('every CREATE POLICY is preceded by a matching DROP POLICY IF EXISTS (idempotent re-runs)', () => {
     const policyNames = Array.from(sql.matchAll(/CREATE POLICY "([^"]+)"/g)).map((m) => m[1])
     expect(policyNames.length).toBeGreaterThan(0)

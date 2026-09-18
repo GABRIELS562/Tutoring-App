@@ -49,6 +49,15 @@ function makeSupabaseMock() {
 
       if (table === 'prompt_challenge_attempts') {
         return {
+          // No existing attempt for this (user, challenge) pair in any of
+          // these tests - every call is a first completion.
+          select: () => ({
+            eq: () => ({
+              eq: () => ({
+                maybeSingle: async () => ({ data: null, error: null }),
+              }),
+            }),
+          }),
           insert: (row: Record<string, unknown>) => {
             insertedRows.push(row)
             return {

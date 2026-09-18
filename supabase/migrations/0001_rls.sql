@@ -112,6 +112,19 @@ CREATE POLICY "ai_hint_usage_update_own" ON ai_hint_usage
 -- 4. prompt_challenge_attempts — own rows only, by user_id = auth.uid()
 -- =============================================================================
 
+-- One attempt row per (user, challenge): persistPromptChallengeAttempt() in
+-- src/app/api/ai-hint/route.ts depends on this to stay idempotent - without
+-- it, replaying the same challenge inserts a duplicate row and (before that
+-- fix) awarded XP/badges every time. Matches the `unique(...)` in
+-- src/db/schema.ts. Postgres has no `ADD CONSTRAINT IF NOT EXISTS`, so this
+-- drops-then-adds (same idempotency pattern as the DROP POLICY IF EXISTS
+-- guards below) to stay safe to re-run.
+ALTER TABLE prompt_challenge_attempts
+  DROP CONSTRAINT IF EXISTS prompt_challenge_attempts_user_challenge_unique;
+ALTER TABLE prompt_challenge_attempts
+  ADD CONSTRAINT prompt_challenge_attempts_user_challenge_unique
+  UNIQUE (user_id, challenge_id);
+
 ALTER TABLE prompt_challenge_attempts ENABLE ROW LEVEL SECURITY;
 
 DROP POLICY IF EXISTS "prompt_challenge_attempts_select_own" ON prompt_challenge_attempts;
