@@ -1,6 +1,5 @@
-import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
-import { createServerClient } from '@supabase/ssr'
+import { isDemoAuth, getSessionUser, type SessionUser } from '@/lib/auth/require-user'
 import { isUserAdmin } from '@/db/queries/admin'
 import AdminNav from './AdminNav'
 
@@ -11,57 +10,40 @@ export default async function AdminLayout({
 }: {
   children: React.ReactNode
 }) {
-  // Check authentication and admin status
-  let isAdmin = false
-  let userName = ''
+  if (isDemoAuth()) {
+    return renderAdmin(children, 'Demo Admin')
+  }
+
+  // Fail CLOSED: any error resolving the session or checking admin status
+  // sends the user to /login. isAdmin is never set to true from a catch.
+  let user: SessionUser | null
+  let isAdminByRole = false
 
   try {
-    const cookieStore = await cookies()
-    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
-    const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
-
-    if (supabaseUrl && supabaseKey) {
-      const supabase = createServerClient(supabaseUrl, supabaseKey, {
-        cookies: {
-          getAll() {
-            return cookieStore.getAll()
-          },
-          setAll() {},
-        },
-      })
-
-      const { data: { user } } = await supabase.auth.getUser()
-
-      if (!user) {
-        redirect('/login')
-      }
-
-      isAdmin = await isUserAdmin(user.id)
-      userName = user.email || 'Admin'
-
-      if (!isAdmin) {
-        // Check for demo/dev mode - allow access if ADMIN_EMAIL matches
-        const adminEmail = process.env.ADMIN_EMAIL
-        if (adminEmail && user.email === adminEmail) {
-          isAdmin = true
-        }
-      }
-    } else {
-      // Demo mode - allow access
-      isAdmin = true
-      userName = 'Demo Admin'
+    user = await getSessionUser()
+    if (user) {
+      isAdminByRole = await isUserAdmin(user.id)
     }
   } catch (error) {
     console.error('Admin auth error:', error)
-    // In case of error, allow demo access
-    isAdmin = true
-    userName = 'Demo Admin'
+    redirect('/login')
   }
 
-  if (!isAdmin) {
+  if (!user) {
+    redirect('/login')
+  }
+
+  const adminEmail = process.env.ADMIN_EMAIL
+  const isAdminByEmail = Boolean(adminEmail && user.email && user.email === adminEmail)
+
+  if (!isAdminByRole && !isAdminByEmail) {
     redirect('/dashboard')
   }
 
+  return renderAdmin(children, user.email || 'Admin')
+}
+
+function renderAdmin(children: React.ReactNode, userName: string) {
   return (
     <div className="min-h-screen" style={{ background: 'var(--bg)' }}>
       <AdminNav userName={userName} />
