@@ -17,7 +17,8 @@
     "test:coverage": "vitest run --coverage",
     "typecheck": "tsc --noEmit",
     "db:seed-topics": "tsx src/db/seed-topics.ts",
-    "check:videos": "tsx scripts/check-videos.ts"
+    "check:videos": "tsx scripts/check-videos.ts",
+    "db:rls": "tsx scripts/apply-sql.ts supabase/migrations/0001_rls.sql"
   },
   "dependencies": {
     "@base-ui/react": "^1.3.0",

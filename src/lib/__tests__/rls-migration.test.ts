@@ -25,8 +25,12 @@ function expectPolicy(table: string, using: string) {
 
 describe('supabase/migrations/0001_rls.sql', () => {
   it('has a header explaining it is not applied yet and when to apply it', () => {
-    expect(sql).toMatch(/NOT APPLIED YET/)
+    expect(sql).toMatch(/NOT YET RUN/)
     expect(sql).toMatch(/WHEN TO APPLY/)
+  })
+
+  it('documents the db:rls npm script that applies this file transactionally', () => {
+    expect(sql).toMatch(/npm run db:rls/)
   })
 
   it('enables RLS on every user-data table required by the build plan', () => {

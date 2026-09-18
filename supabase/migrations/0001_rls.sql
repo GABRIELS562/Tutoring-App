@@ -1,21 +1,22 @@
 -- 0001_rls.sql — Row Level Security policies for Angelo Tutoring
 --
--- STATUS: NOT APPLIED YET. There is no dev/prod Supabase project wired up
+-- STATUS: WIRED, NOT YET RUN. There is still no dev/prod Supabase project
 -- as of Phase 1 (see docs/BUILD-PLAN.md §0 — "No RLS policies exist
--- anywhere in the repo"). This file is written now so it ships with the
--- security fixes it depends on, but it is inert until someone runs it.
+-- anywhere in the repo"), so this file is still inert - but it is no
+-- longer a "paste into the SQL editor and hope" step: `npm run db:rls`
+-- (scripts/apply-sql.ts) applies it transactionally against DATABASE_URL,
+-- and DEPLOYMENT.md documents it as a required release gate.
 --
 -- WHEN TO APPLY:
 --   1. As part of Phase 6 ("Real services on our own dev accounts") once a
---      Supabase project exists: `supabase db push` or paste this file into
---      the SQL editor, after `drizzle-kit push`/migrations have created the
---      tables below.
+--      Supabase project exists: `npm run db:push` (or migrate), then
+--      `npm run db:rls` — see DEPLOYMENT.md "Applying Row Level Security".
 --   2. Before any production Supabase project goes live. Until this runs,
 --      every table below is fully open to the anon/authenticated Postgres
 --      roles — RLS enforcement is entirely absent, not merely permissive.
---   3. Re-run (it is idempotent — see IF NOT EXISTS / DROP POLICY IF EXISTS
---      guards below) after any migration that recreates one of these
---      tables from scratch.
+--   3. Re-run `npm run db:rls` (it is idempotent — see IF NOT EXISTS /
+--      DROP POLICY IF EXISTS guards below) after any migration that
+--      recreates one of these tables from scratch.
 --
 -- WHY THIS MATTERS EVEN THOUGH THE APP ALSO CHECKS AUTH IN CODE:
 --   src/lib/auth/require-user.ts (Phase 1) makes every API route check the
