@@ -2,25 +2,31 @@ import { redirect } from 'next/navigation'
 import { cookies } from 'next/headers'
 import { createServerClient } from '@supabase/ssr'
 import Link from 'next/link'
-import { ArrowLeft, Lock } from 'lucide-react'
+import { ArrowLeft, Lock, AlertTriangle } from 'lucide-react'
 import { moduleOrder } from '@/content/ai-skills'
 import CertificateGenerator from '@/components/ai/CertificateGenerator'
+import { createCertificateWithRetry } from '@/lib/certificates/create-certificate'
 
 export const metadata = {
   title: 'AI Literacy Certificate | Angelo Tutoring',
   description: 'Download your AI Literacy Certificate from Angelo Tutoring. Prove your AI skills to employers with a verifiable digital credential.',
 }
 
-function generateCertificateId(): string {
-  const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789'
-  let id = 'AT-2026-'
-  for (let i = 0; i < 4; i++) {
-    id += chars.charAt(Math.floor(Math.random() * chars.length))
-  }
-  return id
+interface CertificateInfo {
+  studentName: string
+  certificateId: string
+  avgPromptScore: number
+  modulesCompleted: number
+  issuedAt: string
 }
 
-async function getCertificateData() {
+interface CertificateData {
+  isEligible: boolean
+  certificate: CertificateInfo | null
+  error?: string
+}
+
+async function getCertificateData(): Promise<CertificateData> {
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
   const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
 
@@ -107,19 +113,19 @@ async function getCertificateData() {
     : 4.0
 
   // Create new certificate
-  const newCertId = generateCertificateId()
   const studentName = userData?.name || 'Student'
 
-  const { error } = await supabase.from('ai_certificates').insert({
-    user_id: user.id,
-    certificate_id: newCertId,
-    student_name: studentName,
-    avg_prompt_score: avgScore,
-    modules_completed: 5,
+  const { certificateId: newCertId, error } = await createCertificateWithRetry(supabase, {
+    userId: user.id,
+    studentName,
+    avgPromptScore: avgScore,
   })
 
-  if (error) {
-    console.error('Error creating certificate:', error)
+  if (error || !newCertId) {
+    // Fail closed: never render a certificate that was not actually
+    // persisted. Surface the failure so the student can retry instead of
+    // getting an unverifiable credential.
+    return { isEligible: true, certificate: null, error: error || 'Failed to create certificate.' }
   }
 
   return {
@@ -135,7 +141,7 @@ async function getCertificateData() {
 }
 
 export default async function CertificatePage() {
-  const { isEligible, certificate } = await getCertificateData()
+  const { isEligible, certificate, error } = await getCertificateData()
 
   if (!isEligible) {
     return (
@@ -177,6 +183,47 @@ export default async function CertificatePage() {
     )
   }
 
+  if (!certificate) {
+    return (
+      <div className="p-4 md:p-6 max-w-2xl mx-auto space-y-6">
+        <Link
+          href="/ai-skills"
+          className="inline-flex items-center gap-2 text-sm hover:text-ai-purple transition-colors"
+          style={{ color: 'var(--muted-custom)' }}
+        >
+          <ArrowLeft className="w-4 h-4" />
+          Back to AI Skills
+        </Link>
+
+        <div
+          className="rounded-xl p-8 text-center space-y-4"
+          style={{ background: 'var(--surface)', border: '1px solid var(--border-custom)' }}
+        >
+          <div
+            className="w-16 h-16 rounded-full flex items-center justify-center mx-auto"
+            style={{ background: 'var(--surface2)' }}
+          >
+            <AlertTriangle className="w-8 h-8 text-muted-custom" />
+          </div>
+          <h1 className="text-xl font-bold" style={{ color: 'var(--text)' }}>
+            Couldn&apos;t create your certificate
+          </h1>
+          <p className="text-sm text-muted-custom max-w-md mx-auto">
+            {error || 'Something went wrong while generating your certificate.'} Please try again -
+            if this keeps happening, let us know.
+          </p>
+          <Link
+            href="/ai-skills/certificate"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium"
+            style={{ background: 'var(--ai-purple)', color: 'white' }}
+          >
+            Try again
+          </Link>
+        </div>
+      </div>
+    )
+  }
+
   return (
     <div className="p-4 md:p-6 max-w-2xl mx-auto space-y-6">
       <Link
@@ -197,15 +244,13 @@ export default async function CertificatePage() {
         </p>
       </div>
 
-      {certificate && (
-        <CertificateGenerator
-          studentName={certificate.studentName}
-          certificateId={certificate.certificateId}
-          avgPromptScore={certificate.avgPromptScore}
-          modulesCompleted={certificate.modulesCompleted}
-          issuedAt={certificate.issuedAt}
-        />
-      )}
+      <CertificateGenerator
+        studentName={certificate.studentName}
+        certificateId={certificate.certificateId}
+        avgPromptScore={certificate.avgPromptScore}
+        modulesCompleted={certificate.modulesCompleted}
+        issuedAt={certificate.issuedAt}
+      />
     </div>
   )
 }
