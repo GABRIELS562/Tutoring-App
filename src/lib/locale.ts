@@ -3,6 +3,19 @@ import { type Locale, locales } from '@/i18n/routing'
 const LOCALE_COOKIE_NAME = 'NEXT_LOCALE'
 const LOCALE_COOKIE_MAX_AGE = 365 * 24 * 60 * 60 // 1 year in seconds
 
+// The NEXT_LOCALE cookie has no native browser change event, so components
+// reading it via useSyncExternalStore (see src/hooks/useLocaleCookie.ts)
+// need an explicit notify when it's written from within the app itself.
+type LocaleChangeListener = () => void
+const localeChangeListeners = new Set<LocaleChangeListener>()
+
+export function subscribeToLocaleCookie(listener: LocaleChangeListener): () => void {
+  localeChangeListeners.add(listener)
+  return () => {
+    localeChangeListeners.delete(listener)
+  }
+}
+
 /**
  * Get the current locale from cookie (client-side)
  */
@@ -22,6 +35,7 @@ export function setLocaleCookie(locale: Locale): void {
   if (typeof document === 'undefined') return
 
   document.cookie = `${LOCALE_COOKIE_NAME}=${locale}; path=/; max-age=${LOCALE_COOKIE_MAX_AGE}; SameSite=Lax`
+  localeChangeListeners.forEach((listener) => listener())
 }
 
 /**

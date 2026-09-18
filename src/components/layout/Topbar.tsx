@@ -6,6 +6,7 @@ import { createBrowserClient } from '@supabase/ssr'
 import { useUser } from '@/context/UserContext'
 import { Flame, Gem, User, Settings, LogOut, ChevronDown, WifiOff } from 'lucide-react'
 import LanguageToggle from './LanguageToggle'
+import { useOnlineStatus } from '@/hooks/useOnlineStatus'
 
 type TopbarProps = {
   title: string
@@ -15,25 +16,9 @@ type TopbarProps = {
 export default function Topbar({ title, subtitle }: TopbarProps) {
   const { user } = useUser()
   const [dropdownOpen, setDropdownOpen] = useState(false)
-  const [isOnline, setIsOnline] = useState(true)
+  const isOnline = useOnlineStatus()
   const dropdownRef = useRef<HTMLDivElement>(null)
   const router = useRouter()
-
-  // Track online status
-  useEffect(() => {
-    setIsOnline(navigator.onLine)
-
-    const handleOnline = () => setIsOnline(true)
-    const handleOffline = () => setIsOnline(false)
-
-    window.addEventListener('online', handleOnline)
-    window.addEventListener('offline', handleOffline)
-
-    return () => {
-      window.removeEventListener('online', handleOnline)
-      window.removeEventListener('offline', handleOffline)
-    }
-  }, [])
 
   // Close dropdown when clicking outside
   useEffect(() => {

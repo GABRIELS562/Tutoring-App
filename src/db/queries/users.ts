@@ -1,6 +1,6 @@
 import { db } from '..'
 import { users, studentProgress, promptChallengeAttempts, aiCertificates } from '../schema'
-import { eq, sql, and, desc } from 'drizzle-orm'
+import { eq, sql } from 'drizzle-orm'
 
 /**
  * Get user by ID
