@@ -1,5 +1,8 @@
 import { createServerClient } from '@supabase/ssr'
 import { NextResponse, type NextRequest } from 'next/server'
+// Side-effect import: fail loudly in production if Supabase/DB env is missing,
+// so the demo-mode pass-through below can never be reached on a real deploy.
+import '@/lib/env'
 
 export async function middleware(request: NextRequest) {
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
