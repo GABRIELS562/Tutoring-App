@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { z } from 'zod'
 import { getApiSupabase } from '@/lib/supabase/api'
+import { requireUser, authErrorResponse } from '@/lib/auth/require-user'
 
 const FREE_HINT_LIMIT = 5
 const FREE_CAMERA_LIMIT = 1
@@ -9,7 +10,6 @@ const ANTHROPIC_API_URL = 'https://api.anthropic.com/v1/messages'
 // Zod schema for request validation
 const HintRequestSchema = z.object({
   mode: z.enum(['step_hint', 'wrong_answer', 'camera_scan', 'prompt_evaluation', 'general_question', 'cv_help']).default('step_hint'),
-  userId: z.string().min(1, 'userId is required'),
   isPremium: z.boolean().optional(),
   locale: z.enum(['en', 'af']).optional().default('en'), // Language preference
   // For step_hint mode
@@ -305,6 +305,13 @@ async function updateUsageRecord(
 }
 
 export async function POST(request: NextRequest) {
+  let user
+  try {
+    user = await requireUser()
+  } catch (err) {
+    return authErrorResponse(err)
+  }
+
   try {
     const rawBody = await request.json()
 
@@ -324,7 +331,8 @@ export async function POST(request: NextRequest) {
     }
 
     const body = parseResult.data
-    const { mode, userId, isPremium, imageBase64, locale } = body
+    const userId = user.id
+    const { mode, isPremium, imageBase64, locale } = body
 
     const today = new Date().toISOString().split('T')[0]
 

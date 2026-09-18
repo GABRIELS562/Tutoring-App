@@ -158,7 +158,7 @@ export default async function DashboardPage() {
                 )}
               </p>
             </div>
-            <GradeSelector currentGrade={user?.grade || 11} userId={userId} />
+            <GradeSelector currentGrade={user?.grade || 11} />
           </div>
         </div>
 

@@ -4,11 +4,7 @@ import { useState, useRef } from 'react'
 import { Camera, X, Loader2, RotateCcw } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 
-type CameraScanProps = {
-  userId?: string
-}
-
-export default function CameraScan({ userId = 'demo-user' }: CameraScanProps) {
+export default function CameraScan() {
   const [isOpen, setIsOpen] = useState(false)
   const [image, setImage] = useState<string | null>(null)
   const [loading, setLoading] = useState(false)
@@ -53,7 +49,6 @@ export default function CameraScan({ userId = 'demo-user' }: CameraScanProps) {
         body: JSON.stringify({
           mode: 'camera_scan',
           imageBase64: base64Image,
-          userId,
         }),
       })
 

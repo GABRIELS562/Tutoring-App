@@ -33,14 +33,12 @@ type QuestionCardProps = {
   }
   onAnswer: (selectedLetter: string, correct: boolean) => void
   onNext: () => void
-  userId?: string
 }
 
 export default function QuestionCard({
   question,
   onAnswer,
   onNext,
-  userId = 'demo-user',
 }: QuestionCardProps) {
   const [selectedLetter, setSelectedLetter] = useState<string | null>(null)
   const [answered, setAnswered] = useState(false)
@@ -66,7 +64,6 @@ export default function QuestionCard({
           selectedAnswer: selectedLetter,
           correctAnswer: question.options.find(o => o.isCorrect)?.optionLetter,
           topicName: question.topicName,
-          userId,
         }),
       })
 

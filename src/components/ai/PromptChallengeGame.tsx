@@ -99,7 +99,6 @@ export default function PromptChallengeGame({ userId, onComplete }: PromptChalle
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           mode: 'prompt_evaluation',
-          userId,
           scenarioContext: currentScenario.context,
           scenarioTask: currentScenario.task,
           studentPrompt: userPrompt,

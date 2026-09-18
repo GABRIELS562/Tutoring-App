@@ -1,15 +1,24 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { updateUserGrade } from '@/db/queries/progress'
 import { isDemoMode } from '@/db'
+import { requireUser, authErrorResponse } from '@/lib/auth/require-user'
 
 export async function POST(request: NextRequest) {
+  let user
+  try {
+    user = await requireUser()
+  } catch (err) {
+    return authErrorResponse(err)
+  }
+
   try {
     const body = await request.json()
-    const { userId, grade } = body
+    const { grade } = body
+    const userId = user.id
 
-    if (!userId || !grade) {
+    if (!grade) {
       return NextResponse.json(
-        { error: 'Missing userId or grade' },
+        { error: 'Missing grade' },
         { status: 400 }
       )
     }

@@ -2,10 +2,10 @@ import { NextRequest, NextResponse } from 'next/server'
 import { z } from 'zod'
 import { getApiSupabase } from '@/lib/supabase/api'
 import { badges, PROMPT_CHALLENGE_XP_PER_STAR } from '@/content/ai-skills'
+import { requireUser, authErrorResponse } from '@/lib/auth/require-user'
 
 // Zod schema for request validation
 const SaveAttemptSchema = z.object({
-  userId: z.string().min(1, 'userId is required'),
   challengeId: z.string().min(1, 'challengeId is required'),
   studentPrompt: z.string().min(1, 'studentPrompt is required'),
   aiScore: z.number().min(1).max(5),
@@ -14,6 +14,13 @@ const SaveAttemptSchema = z.object({
 })
 
 export async function POST(request: NextRequest) {
+  let user
+  try {
+    user = await requireUser()
+  } catch (err) {
+    return authErrorResponse(err)
+  }
+
   try {
     const rawBody = await request.json()
 
@@ -32,7 +39,8 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    const { userId, challengeId, studentPrompt, aiScore, aiFeedback, improvedPrompt } = parseResult.data
+    const userId = user.id
+    const { challengeId, studentPrompt, aiScore, aiFeedback, improvedPrompt } = parseResult.data
     const xpEarned = aiScore * PROMPT_CHALLENGE_XP_PER_STAR
 
     // Get Supabase client

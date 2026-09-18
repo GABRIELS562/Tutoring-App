@@ -8,12 +8,11 @@ import AIPracticalBlock from './AIPracticalBlock'
 
 interface AIModuleRendererProps {
   module: AIModule
-  userId: string
   isCompleted?: boolean
   onComplete?: () => void
 }
 
-function BlockRenderer({ block, userId }: { block: NoteBlock; userId: string }) {
+function BlockRenderer({ block }: { block: NoteBlock }) {
   switch (block.type) {
     case 'theory':
       return (
@@ -82,7 +81,6 @@ function BlockRenderer({ block, userId }: { block: NoteBlock; userId: string }) 
         <AIPracticalBlock
           config={block.aiConfig}
           title={block.title}
-          userId={userId}
         />
       )
 
@@ -112,7 +110,7 @@ function BlockRenderer({ block, userId }: { block: NoteBlock; userId: string }) 
   }
 }
 
-function SectionRenderer({ section, userId }: { section: TopicSection; userId: string }) {
+function SectionRenderer({ section }: { section: TopicSection }) {
   const [isExpanded, setIsExpanded] = useState(true)
 
   return (
@@ -132,7 +130,7 @@ function SectionRenderer({ section, userId }: { section: TopicSection; userId: s
       {isExpanded && (
         <div className="px-5 pb-5 space-y-5">
           {section.blocks.map((block, idx) => (
-            <BlockRenderer key={idx} block={block} userId={userId} />
+            <BlockRenderer key={idx} block={block} />
           ))}
         </div>
       )}
@@ -142,7 +140,6 @@ function SectionRenderer({ section, userId }: { section: TopicSection; userId: s
 
 export default function AIModuleRenderer({
   module,
-  userId,
   isCompleted: initialCompleted = false,
   onComplete,
 }: AIModuleRendererProps) {
@@ -162,7 +159,6 @@ export default function AIModuleRenderer({
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          userId,
           moduleId: module.id,
         }),
       })
@@ -213,7 +209,7 @@ export default function AIModuleRenderer({
       {/* Sections */}
       <div className="space-y-4">
         {module.sections.map((section) => (
-          <SectionRenderer key={section.id} section={section} userId={userId} />
+          <SectionRenderer key={section.id} section={section} />
         ))}
       </div>
 

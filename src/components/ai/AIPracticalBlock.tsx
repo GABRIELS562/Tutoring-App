@@ -7,10 +7,9 @@ import type { AIPracticalConfig } from '@/types'
 interface AIPracticalBlockProps {
   config: AIPracticalConfig
   title?: string
-  userId: string
 }
 
-export default function AIPracticalBlock({ config, title, userId }: AIPracticalBlockProps) {
+export default function AIPracticalBlock({ config, title }: AIPracticalBlockProps) {
   const [input, setInput] = useState('')
   const [response, setResponse] = useState<string | null>(null)
   const [isLoading, setIsLoading] = useState(false)
@@ -26,7 +25,6 @@ export default function AIPracticalBlock({ config, title, userId }: AIPracticalB
     try {
       const body: Record<string, string | undefined> = {
         mode: config.mode,
-        userId,
       }
 
       // Add mode-specific fields

@@ -2,16 +2,23 @@ import { NextRequest, NextResponse } from 'next/server'
 import { z } from 'zod'
 import { getApiSupabase } from '@/lib/supabase/api'
 import { moduleOrder, badges, AI_MODULE_XP, ALL_MODULES_BONUS_XP } from '@/content/ai-skills'
+import { requireUser, authErrorResponse } from '@/lib/auth/require-user'
 
 // Zod schema for request validation
 const CompleteModuleSchema = z.object({
-  userId: z.string().min(1, 'userId is required'),
   moduleId: z.enum(['ai-what-is', 'ai-prompts', 'ai-study', 'ai-ethics', 'ai-careers'], {
     message: 'Invalid moduleId',
   }),
 })
 
 export async function POST(request: NextRequest) {
+  let user
+  try {
+    user = await requireUser()
+  } catch (err) {
+    return authErrorResponse(err)
+  }
+
   try {
     const rawBody = await request.json()
 
@@ -30,7 +37,8 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    const { userId, moduleId } = parseResult.data
+    const userId = user.id
+    const { moduleId } = parseResult.data
 
     // Get Supabase client
     const supabase = getApiSupabase()

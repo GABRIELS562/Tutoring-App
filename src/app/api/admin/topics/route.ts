@@ -1,7 +1,14 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createTopic, deleteTopic } from '@/db/queries/admin'
+import { requireAdmin, authErrorResponse } from '@/lib/auth/require-user'
 
 export async function POST(request: NextRequest) {
+  try {
+    await requireAdmin()
+  } catch (err) {
+    return authErrorResponse(err)
+  }
+
   try {
     const body = await request.json()
     const { name, subject, grade, paper, slug, capsWeightPercent, term, sortOrder } = body
@@ -42,6 +49,12 @@ export async function POST(request: NextRequest) {
 }
 
 export async function DELETE(request: NextRequest) {
+  try {
+    await requireAdmin()
+  } catch (err) {
+    return authErrorResponse(err)
+  }
+
   try {
     const body = await request.json()
     const { topicId } = body

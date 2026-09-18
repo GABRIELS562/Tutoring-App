@@ -86,7 +86,7 @@ export default async function AIModulePage({ params }: PageProps) {
     notFound()
   }
 
-  const { userId, completedModules } = await getUserData()
+  const { completedModules } = await getUserData()
 
   // Check if module is locked
   if (module.unlockCondition && !completedModules.includes(module.unlockCondition)) {
@@ -113,7 +113,6 @@ export default async function AIModulePage({ params }: PageProps) {
       {/* Module Content */}
       <AIModuleRenderer
         module={module}
-        userId={userId}
         isCompleted={isCompleted}
       />
 
