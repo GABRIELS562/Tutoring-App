@@ -1,0 +1,761 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Angelo Tutoring Build Status</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Public+Sans:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+  :root {
+    --bg: #fbfaf9;
+    --surface: #ffffff;
+    --ink: #1c1a19;
+    --ink-2: #5b5552;
+    --ink-3: #8c8480;
+    --line: #e6e0dc;
+    --accent: #e63946;
+    --accent-ink: #b8232f;
+    --accent-soft: #fdeceb;
+    --good: #2f7d4f;
+    --good-soft: #e5f3ea;
+    --warn: #b7791f;
+    --warn-soft: #fbf1dc;
+    --bad: #b93a3a;
+    --bad-soft: #fbe6e6;
+    --meter-track: #ede8e4; --chip: #f1ecea;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #171514; --surface: #201d1c; --ink: #f1ecea; --ink-2: #b7aeaa; --ink-3: #7f7672;
+      --line: #322d2b; --accent: #f25a66; --accent-ink: #ff8791; --accent-soft: #3a2224;
+      --good: #6ac48a; --good-soft: #1e3126; --warn: #e0a84a; --warn-soft: #3a2f18;
+      --bad: #ef7373; --bad-soft: #3d2020; --meter-track: #2c2827; --chip: #2c2827;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #171514; --surface: #201d1c; --ink: #f1ecea; --ink-2: #b7aeaa; --ink-3: #7f7672;
+    --line: #322d2b; --accent: #f25a66; --accent-ink: #ff8791; --accent-soft: #3a2224;
+    --good: #6ac48a; --good-soft: #1e3126; --warn: #e0a84a; --warn-soft: #3a2f18;
+    --bad: #ef7373; --bad-soft: #3d2020; --meter-track: #2c2827; --chip: #2c2827;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--ink);
+    font-family: "Public Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+    font-size: 16px; line-height: 1.55;
+    padding-inline: 20px; padding-block: 40px 80px;
+  }
+  .wrap { max-width: 880px; margin: 0 auto; }
+  h1, h2, h3 { font-family: "Bricolage Grotesque", "Public Sans", system-ui, sans-serif; text-wrap: balance; margin: 0; }
+  h1 { font-size: clamp(30px, 5vw, 42px); font-weight: 700; line-height: 1.1; letter-spacing: -0.01em; }
+  h2 { font-size: 24px; font-weight: 700; margin-top: 56px; margin-bottom: 16px; }
+  h3 { font-size: 17px; font-weight: 700; margin-bottom: 6px; }
+  p { margin: 0 0 14px; max-width: 65ch; }
+  .eyebrow { font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent-ink); margin-bottom: 10px; }
+  .meta { color: var(--ink-3); font-size: 14px; margin-top: 12px; }
+  .lede { font-size: 18px; color: var(--ink-2); margin-top: 18px; }
+  code, .mono { font-family: "JetBrains Mono", ui-monospace, Menlo, monospace; font-size: 0.9em; }
+
+  /* headline verdict */
+  .verdict { margin-top: 32px; border: 1px solid var(--line); background: var(--surface); border-radius: 10px; padding: 22px 24px; }
+  .verdict-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 8px; }
+  .stat { display: flex; flex-direction: column; gap: 2px; }
+  .stat b { font-family: "Bricolage Grotesque", sans-serif; font-size: 34px; font-weight: 700; line-height: 1; font-variant-numeric: tabular-nums; }
+  .stat span { font-size: 13px; color: var(--ink-2); }
+  .stat.good b { color: var(--good); } .stat.warn b { color: var(--warn); } .stat.bad b { color: var(--bad); }
+  @media (max-width: 520px) { .verdict-grid { grid-template-columns: 1fr; } }
+
+  /* area meters */
+  .areas { display: flex; flex-direction: column; gap: 14px; }
+  .area { display: grid; grid-template-columns: 200px 1fr 48px; gap: 14px; align-items: center; }
+  .area .name { font-weight: 600; font-size: 15px; }
+  .area .name small { display: block; font-weight: 400; color: var(--ink-3); font-size: 12.5px; }
+  .meter { height: 10px; background: var(--meter-track); border-radius: 999px; overflow: hidden; }
+  .meter i { display: block; height: 100%; border-radius: 999px; background: var(--good); }
+  .meter.warn i { background: var(--warn); } .meter.bad i { background: var(--bad); }
+  .area .pct { font-variant-numeric: tabular-nums; text-align: right; font-weight: 600; font-size: 14px; color: var(--ink-2); }
+  @media (max-width: 560px) { .area { grid-template-columns: 1fr 44px; } .area .meter { grid-column: 1 / 2; } .area .pct { grid-row: 1; grid-column: 2; } }
+
+  /* status table */
+  .tablewrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); }
+  table { border-collapse: collapse; width: 100%; font-size: 14.5px; }
+  th, td { text-align: left; padding: 11px 14px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  th { font-size: 12px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink-3); font-weight: 600; }
+  tr:last-child td { border-bottom: 0; }
+  td:first-child { font-weight: 600; white-space: nowrap; }
+  .pill { display: inline-block; font-size: 12px; font-weight: 600; padding: 2px 9px; border-radius: 999px; white-space: nowrap; }
+  .pill.done { background: var(--good-soft); color: var(--good); }
+  .pill.partial { background: var(--warn-soft); color: var(--warn); }
+  .pill.missing { background: var(--bad-soft); color: var(--bad); }
+
+  /* callouts */
+  .note { border-left: 3px solid var(--accent); background: var(--accent-soft); padding: 14px 18px; border-radius: 0 8px 8px 0; margin: 18px 0; }
+  .note p:last-child { margin-bottom: 0; }
+
+  /* questions */
+  .qgroup { margin-top: 28px; }
+  .qgroup h3 { display: flex; align-items: baseline; gap: 10px; }
+  .qgroup h3 .why { font-family: "Public Sans", sans-serif; font-weight: 400; font-size: 13.5px; color: var(--ink-3); }
+  ol.q { margin: 10px 0 0; padding-left: 0; list-style: none; counter-reset: q; display: flex; flex-direction: column; gap: 10px; }
+  ol.q li { counter-increment: q; position: relative; padding-left: 44px; }
+  ol.q li::before { content: "Q" counter(q); position: absolute; left: 0; top: 4px; font-family: "JetBrains Mono", monospace; font-size: 12px; font-weight: 500; color: var(--accent-ink); }
+  ol.q li .ctx { display: block; color: var(--ink-3); font-size: 13.5px; margin-top: 2px; }
+  ol.q { counter-reset: q var(--start, 0); }
+
+  ul.plain { padding-left: 20px; margin: 0 0 14px; }
+  ul.plain li { margin-bottom: 6px; }
+  .foot { margin-top: 64px; padding-top: 18px; border-top: 1px solid var(--line); color: var(--ink-3); font-size: 13px; }
+
+  .videos h3 {font-size:18px;margin-top:34px;margin-bottom:10px;display:flex;gap:10px;align-items:baseline;flex-wrap:wrap}
+  .videos h3 .sub {font-family:"Public Sans",sans-serif;font-weight:400;font-size:13px;color:var(--ink-3)}
+  .videos td.num {font-variant-numeric:tabular-nums;white-space:normal;min-width:110px}
+  .videos .tier {font-family:"JetBrains Mono",monospace;font-size:12px;color:var(--accent-ink)}
+  .videos .pill.short {background:var(--good-soft);color:var(--good)}
+  .videos .pill.mid {background:var(--chip);color:var(--ink-2)}
+  .videos .pill.long {background:var(--warn-soft);color:var(--warn)}
+  .videos .pill.marathon {background:var(--bad-soft);color:var(--bad)}
+  .videos .pill.blocked {background:var(--bad-soft);color:var(--bad)}
+  .videos .grade {margin-top:44px;padding-top:10px;border-top:2px solid var(--ink)}
+  .videos .grade .eyebrow {margin-bottom:0}
+  .videos .vid {display:grid;grid-template-columns:1fr auto;gap:6px 14px;padding:10px 0;border-bottom:1px solid var(--line)}
+  .videos .vid:last-child {border-bottom:0}
+  .videos .vid a {color:var(--ink);font-weight:600;text-decoration:none}
+  .videos .vid a:hover, .videos .vid a:focus-visible {color:var(--accent-ink);text-decoration:underline;outline:none}
+  .videos .vid .ch {font-size:13px;color:var(--ink-2)}
+  .videos .vid .stats {display:flex;gap:10px;align-items:center;font-size:13px;color:var(--ink-3);font-variant-numeric:tabular-nums;white-space:nowrap}
+  .videos .vid .flag {grid-column:1/-1;font-size:13px;color:var(--warn)}
+  .videos .topic {background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:6px 16px 4px;margin-top:14px}
+  .videos .legend {display:flex;flex-wrap:wrap;gap:10px;font-size:13px;color:var(--ink-2);margin:10px 0 0}
+  .videos .vid {grid-template-columns:1fr}
+  .videos .tablewrap table { font-size: 14px; }
+  .videos .num { font-variant-numeric: tabular-nums; }
+  .videos .tablewrap td:first-child { white-space: normal; min-width: 150px; }
+  .videos .tablewrap td:last-child { min-width: 220px; }
+  @media (max-width:520px){ .videos .vid { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <div class="eyebrow">Project status · Angelo Tutoring · Part 1 of 2</div>
+  <h1>Where the Angelo app stands, and what we need from you</h1>
+  <p class="lede">An honest read of the codebase as of 17 September 2026: what is built and working, what is scaffolded but not finished, and the decisions that are now blocking progress.</p>
+  <p class="meta">Part 1 is the build status and the questions we need answered. <a href="#costs" style="color:var(--accent-ink)">Running costs</a> sets out what will incur a bill. <a href="#videos" style="color:var(--accent-ink)">Part 2</a> is the video shortlist the questions refer to. Prepared from a direct review of the source code, not from a feature list. Percentages are an engineering estimate of effort remaining, not a promise of dates.</p>
+
+  <div class="verdict">
+    <div class="eyebrow" style="margin-bottom:4px">Headline</div>
+    <p style="margin-bottom:6px">The <strong>software shell is roughly 70% done</strong>. The <strong>curriculum is roughly 15% done</strong> — but because the plan is to curate existing YouTube lessons played inside the app (already built) rather than write lessons from scratch, the remaining curriculum work is curation hours, not authoring. Overall the product is about <strong>45–50% of the way to something you could charge for</strong>.</p>
+    <div class="verdict-grid">
+      <div class="stat warn"><b>1 / 28</b><span>topics with curated videos and notes in place (Grade 11 Trigonometry). The other 27 have the page structure, a syllabus outline and one placeholder video slot each.</span></div>
+      <div class="stat bad"><b>6</b><span>practice questions in the whole question bank, all for one topic.</span></div>
+      <div class="stat good"><b>5 / 5</b><span>AI Skills course modules written, with certificate and public verification.</span></div>
+    </div>
+  </div>
+
+  <h2>Progress by area</h2>
+  <p>Each bar is how far that area is from launch-ready. The long pole is now the question bank and video curation — both are subject-matter hours, not developer hours.</p>
+  <div class="areas">
+    <div class="area"><div class="name">App foundation<small>Login, navigation, layout, mobile install, English/Afrikaans</small></div><div class="meter"><i style="width:80%"></i></div><div class="pct">80%</div></div>
+    <div class="area"><div class="name">AI Skills course<small>5 modules, prompt challenge, certificate</small></div><div class="meter"><i style="width:85%"></i></div><div class="pct">85%</div></div>
+    <div class="area"><div class="name">AI tutor "Angelo"<small>Hints, wrong-answer help, photo scan</small></div><div class="meter warn"><i style="width:65%"></i></div><div class="pct">65%</div></div>
+    <div class="area"><div class="name">Admin panel<small>Topic and question management</small></div><div class="meter warn"><i style="width:65%"></i></div><div class="pct">65%</div></div>
+    <div class="area"><div class="name">Past papers<small>50 NSC papers linked (2019–2024)</small></div><div class="meter warn"><i style="width:55%"></i></div><div class="pct">55%</div></div>
+    <div class="area"><div class="name">Quiz, XP, streaks, progress<small>Screens exist; results are not saved</small></div><div class="meter warn"><i style="width:40%"></i></div><div class="pct">40%</div></div>
+    <div class="area"><div class="name">Hosting &amp; release pipeline<small>Designed on paper; nothing deployed</small></div><div class="meter bad"><i style="width:25%"></i></div><div class="pct">25%</div></div>
+    <div class="area"><div class="name">Curriculum (curated video)<small>Player, structure and Afrikaans-video support built; 2 of ~80 videos chosen</small></div><div class="meter bad"><i style="width:15%"></i></div><div class="pct">15%</div></div>
+    <div class="area"><div class="name">Premium &amp; payments<small>PayFast keys exist; no code uses them</small></div><div class="meter bad"><i style="width:0%"></i></div><div class="pct">0%</div></div>
+    <div class="area"><div class="name">Email<small>Resend key exists; no code uses it</small></div><div class="meter bad"><i style="width:0%"></i></div><div class="pct">0%</div></div>
+  </div>
+
+  <h2>What is actually working</h2>
+  <div class="tablewrap">
+    <table>
+      <thead><tr><th>Feature</th><th>Status</th><th>Detail</th></tr></thead>
+      <tbody>
+        <tr><td>Sign up / log in</td><td><span class="pill done">Built</span></td><td>Email + password through Supabase. Protected pages redirect to login. No Google/Apple sign-in, no password reset yet.</td></tr>
+        <tr><td>English / Afrikaans</td><td><span class="pill done">Built</span></td><td>84 interface strings translated in both languages. The AI tutor also answers in Afrikaans. Lesson content itself is English only.</td></tr>
+        <tr><td>Install as an app (PWA)</td><td><span class="pill done">Built</span></td><td>Installs on phones from the browser; caches topic pages and the formula sheet for offline use.</td></tr>
+        <tr><td>AI Skills course</td><td><span class="pill done">Built</span></td><td>Five full modules (What is AI, Prompts, Studying with AI, Ethics, Careers), a prompt-writing challenge graded by AI, and a downloadable certificate with a public verification link.</td></tr>
+        <tr><td>Formula sheet</td><td><span class="pill done">Built</span></td><td>Static reference, available offline.</td></tr>
+        <tr><td>In-app video player</td><td><span class="pill done">Built</span></td><td>YouTube videos play inside the topic page with related-video suggestions and branding minimised. Each video slot can carry a separate Afrikaans video. Only Grade 11 Trigonometry has real videos chosen (2); the rest have placeholder IDs. 111 English and 95 Afrikaans candidates have been identified and checked for in-app playback.</td></tr>
+        <tr><td>Grade 11 Trigonometry</td><td><span class="pill done">Built</span></td><td>The one complete topic: videos, formula boxes, worked examples, tips. This is the template every other topic will follow.</td></tr>
+        <tr><td>AI tutor (Angelo)</td><td><span class="pill partial">Built, untested live</span></td><td>Six modes, a 10-rule Socratic personality, daily free limits (5 hints, 1 photo scan). Has never been run against a real Claude API key on this machine, so behaviour and cost are unverified.</td></tr>
+        <tr><td>Admin panel</td><td><span class="pill partial">Built, untested live</span></td><td>Create topic entries, write multiple-choice questions with step-by-step solutions, AI-generate solution steps. <strong>Cannot edit lesson text</strong> — lessons are source code, so every content change currently needs a developer. Never run against a real database.</td></tr>
+        <tr><td>Past papers</td><td><span class="pill partial">Partial</span></td><td>50 papers seeded in the database, but the Papers screen currently shows a hard-coded list of 30. PDFs are hosted on a third-party site (stanmorephysics.com), not ours.</td></tr>
+        <tr><td>Quizzes &amp; progress</td><td><span class="pill partial">Screens only</span></td><td>Quiz engine, XP counter, hearts, streaks, leaderboard, exam countdown and weakness detection all render — but quiz results are <em>never saved</em>, hearts never run out, and the dashboard shows sample numbers. Questions are multiple-choice only. Exam countdown uses hard-coded 2026 NSC dates.</td></tr>
+        <tr><td>27 other topics</td><td><span class="pill missing">Needs curation</span></td><td>Each shows a "Content Under Development" page with a syllabus bullet list and one empty video slot. Filling a topic means choosing 2–4 videos, adding the formula box, and writing a short intro — a tutor's job, not a developer's.</td></tr>
+        <tr><td>Premium tier</td><td><span class="pill missing">Not started</span></td><td>The app knows the difference between free and premium users (hint limits), but there is no way to become premium. No PayFast integration exists in the code.</td></tr>
+        <tr><td>Email</td><td><span class="pill missing">Not started</span></td><td>No welcome, reset, or certificate emails.</td></tr>
+        <tr><td>Hosting</td><td><span class="pill missing">Not deployed</span></td><td>A GitLab pipeline and Docker setup were written but are not connected to the repository, and the Docker build fails as-is. There is no staging or production URL today. No automated tests exist.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="note">
+    <p><strong>One thing YouTube will not let us do.</strong> Embedded YouTube players must keep the YouTube logo, a "Watch on YouTube" link and any ads the channel runs; YouTube's terms forbid hiding these. Students will stay in the app by default, but a determined tap can always open YouTube. We will remove the app's own "Open in YouTube" link, which currently invites exactly that.</p>
+  </div>
+  <div class="note">
+    <p><strong>The important caveat.</strong> On the development machine the app has only ever run in <em>demo mode</em> — no database, no login service, no AI key configured. Every feature marked "built" has been exercised with sample data. Connecting a real Supabase project and database is the first thing that has to happen, and it will surface bugs.</p>
+  </div>
+
+  <h2>What the remaining work looks like</h2>
+  <p>In rough order of what unblocks what:</p>
+  <ul class="plain">
+    <li><strong>Provision real services</strong> (Supabase, PostgreSQL, Claude API) and run every feature against them. Fix what breaks.</li>
+    <li><strong>Wire up progress saving</strong> so quizzes actually award XP, spend hearts, extend streaks, and feed the dashboard.</li>
+    <li><strong>Curate the videos.</strong> 27 topics × 2–4 videos, plus a formula box and short intro per topic. Roughly 80 videos to choose against CAPS. Whoever does this needs to know the syllabus, not the code.</li>
+    <li><strong>Build the question bank.</strong> This is now the biggest content job — YouTube does not solve it. 6 questions is a demo, not a product; the target depends on your answer to Q9.</li>
+    <li><strong>Premium and payments</strong>, if launching with a paid tier.</li>
+    <li><strong>Deploy</strong>: fix the container build, choose a host, set up a staging environment, add basic automated tests before anything is public.</li>
+  </ul>
+
+
+  <h2 id="costs">Running costs: what will incur a bill</h2>
+  <p>Nothing has been provisioned yet, so this is the setup we recommend and what it costs. Every price below was checked against the vendor on 17–18 September 2026; dollar prices are converted at <strong>R16.20 / USD</strong> (16 Sep 2026) and will move with the rand. All amounts exclude VAT.</p>
+
+  <div class="tablewrap">
+    <table>
+      <thead><tr><th>What</th><th>We recommend</th><th>Why this one</th><th>To launch</th><th>In production</th></tr></thead>
+      <tbody>
+        <tr><td>Hosting (the app)</td><td><strong>Vercel</strong></td><td>Made by the Next.js team; deploys from GitHub in minutes, HTTPS, CDN and previews included, no server to maintain. The AWS ECS Fargate design in the repo works but needs a DevOps person and costs roughly six times more before any traffic (costed below).</td><td>Free ("Hobby") — but licensed for non-commercial use only, so fine for the beta, not for a paid product.</td><td><strong>$20 ≈ R325 / month</strong> (Pro, one seat). Includes 1 TB transfer — video is on YouTube, so we will not get near it.</td></tr>
+        <tr><td>Database, login and file storage</td><td><strong>Supabase</strong> (Postgres + Auth + Storage)</td><td>One service for all three; the app is already written against it. Both the Drizzle database code and the login code point at the same Supabase Postgres, so there is one database bill, not two.</td><td>Free: 500 MB database, 50,000 monthly users, 1 GB files. <strong>Catch:</strong> free projects pause after 7 days without traffic — acceptable for a beta, not for launch.</td><td><strong>$25 ≈ R405 / month</strong> (Pro): 8 GB database, 100,000 monthly users, 100 GB files, no pausing, daily backups.</td></tr>
+        <tr><td>File storage — what actually gets stored</td><td>Supabase Storage (included above)</td><td>Almost nothing. Videos stay on YouTube (R0). Certificates are drawn on the student's phone and downloaded, not stored. Camera-scan photos go to the AI and are not kept. Only if you choose to self-host the 50 past-paper PDFs (Q20) do we store files — roughly 100–200 MB, inside the free allowance.</td><td>R0</td><td>R0</td></tr>
+        <tr><td>AI tutor (Angelo)</td><td><strong>Anthropic Claude API</strong>, pay per use</td><td>Already built. <strong>Note:</strong> the model currently hard-coded in the app (<span class="mono">claude-sonnet-4</span>) is deprecated by Anthropic; we will switch to Sonnet 5 ($2 / $10 per million tokens) or Haiku 4.5 ($1 / $5), both cheaper. A text hint costs about <strong>R0.04</strong> (Sonnet 5) or <strong>R0.02</strong> (Haiku); a camera scan about <strong>R0.15–0.25</strong> because the photo is the expensive part.</td><td>Pay as you go. A beta of 30 students using it heavily: under R150 / month.</td><td>Depends entirely on usage — see the table below. Free-tier students are capped at 5 hints + 1 scan a day already; <strong>Premium is "unlimited", which is the one uncapped cost in the product.</strong> We will set a monthly spend limit on the Anthropic account.</td></tr>
+        <tr><td>Email</td><td><strong>Resend</strong></td><td>Key already exists. Welcome, password-reset and certificate emails only.</td><td>Free: 3,000 emails / month (max 100 / day).</td><td>Free tier holds until roughly 1,500 active students; then <strong>$20 ≈ R325 / month</strong> for 50,000.</td></tr>
+        <tr><td>Domain</td><td>A <strong>.co.za</strong> from any South African registrar</td><td>Local, cheap, recognisable. Registry fee rises from R65 to R69 on 1 Oct 2026; registrars charge R45–R150.</td><td><strong>≈ R99 / year</strong></td><td>≈ R99 / year</td></tr>
+        <tr><td>DNS, CDN, DDoS protection</td><td><strong>Cloudflare</strong> Free plan</td><td>Point the domain's nameservers at Cloudflare; DNS, caching and attack protection are free with no card required. Vercel provides HTTPS certificates automatically.</td><td>R0</td><td>R0</td></tr>
+        <tr><td>Payments (if a paid tier)</td><td><strong>PayFast</strong></td><td>Credentials already exist. No setup or monthly fee; you pay per successful sale: <strong>3.2% + R2.00</strong> on cards, <strong>2.0%</strong> (min R2) on Instant EFT, plus R8.70 per payout to your bank. On a R99 subscription that is R5.17 (5.2%) per payment.</td><td>R0 fixed</td><td>R0 fixed; ~5% of revenue</td></tr>
+        <tr><td>Error monitoring (optional)</td><td>Sentry Free</td><td>Tells us when something breaks for a student before they email you.</td><td>R0</td><td>R0 at launch volumes</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3 style="margin-top:28px">AI tutor cost by usage</h3>
+  <p>Cost per month on Sonnet 5, assuming every student uses their full free daily allowance (5 text hints, 1 photo scan) every school day. Real usage is normally a fraction of this.</p>
+  <div class="tablewrap">
+    <table>
+      <thead><tr><th>Active students</th><th>Hints / month</th><th>Scans / month</th><th>Worst-case cost</th><th>Likely cost (¼ of allowance)</th></tr></thead>
+      <tbody>
+        <tr><td>50</td><td class="mono">5,500</td><td class="mono">1,100</td><td>≈ R440</td><td>≈ R110</td></tr>
+        <tr><td>200</td><td class="mono">22,000</td><td class="mono">4,400</td><td>≈ R1,760</td><td>≈ R440</td></tr>
+        <tr><td>500</td><td class="mono">55,000</td><td class="mono">11,000</td><td>≈ R4,400</td><td>≈ R1,100</td></tr>
+        <tr><td>1,000</td><td class="mono">110,000</td><td class="mono">22,000</td><td>≈ R8,800</td><td>≈ R2,200</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="meta" style="margin-top:10px">Basis: 22 school days; R0.04 per hint, R0.20 per scan. Switching to Haiku 4.5 roughly halves these figures at some cost to answer quality. Premium "unlimited" users are not in this table.</p>
+
+  <div class="verdict" style="margin-top:24px">
+    <div class="eyebrow" style="margin-bottom:8px">Bottom line</div>
+    <p style="margin-bottom:6px"><strong>Beta on free tiers:</strong> about <strong>R99 / year</strong> for the domain plus AI usage (tens of rands). <strong>Production with a paid tier:</strong> <strong>≈ R730 / month</strong> fixed (Vercel R325 + Supabase R405) plus AI usage — realistically <strong>R1,000–R2,000 / month all-in</strong> for a few hundred active students, rising with AI use. The AWS design in the repo, costed as drawn, is <strong>≈ R4,400 / month</strong> before traffic (≈ R1,300 trimmed to a bare minimum) — see below — and is not recommended for launch.</p>
+    <p style="margin-bottom:0" class="meta">Accounts that need to exist, in your name, with your card: Vercel, Supabase, Anthropic, Resend, Cloudflare, a domain registrar, PayFast. We set them up; you own them (Q6).</p>
+  </div>
+
+
+  <h3 style="margin-top:28px">The AWS design, costed</h3>
+  <p>The repo contains an AWS ECS Fargate architecture (<span class="mono">docs/architecture/</span>). Priced as drawn, from AWS list prices for the US East region with the roughly 20% premium the Cape Town region (af-south-1) carries, at R16.20 / USD, 730 hours a month:</p>
+  <div class="tablewrap">
+    <table>
+      <thead><tr><th>Component in the design</th><th>Sizing as drawn</th><th>≈ $ / month (Cape Town)</th><th>≈ R / month</th></tr></thead>
+      <tbody>
+        <tr><td>Fargate tasks (the app)</td><td>2 × 0.5 vCPU, 1 GB, always on</td><td class="num">$43</td><td class="num">R700</td></tr>
+        <tr><td>RDS PostgreSQL</td><td>db.t3.medium, <strong>Multi-AZ</strong>, 20 GB</td><td class="num">$125</td><td class="num">R2,030</td></tr>
+        <tr><td>NAT Gateway</td><td>1, plus data processing</td><td class="num">$46</td><td class="num">R740</td></tr>
+        <tr><td>Application Load Balancer</td><td>1</td><td class="num">$26</td><td class="num">R420</td></tr>
+        <tr><td>ElastiCache Redis</td><td>1 × cache.t3.micro (smallest)</td><td class="num">$15</td><td class="num">R240</td></tr>
+        <tr><td>CloudFront, Route 53, ECR, S3, Secrets Manager, CloudWatch</td><td>launch-scale usage</td><td class="num">$15</td><td class="num">R240</td></tr>
+        <tr><td><strong>Total, design as drawn</strong></td><td>before any traffic-based charges</td><td class="num"><strong>≈ $270</strong></td><td class="num"><strong>≈ R4,400</strong></td></tr>
+        <tr><td><strong>Trimmed to a minimum</strong></td><td>1 task, single-AZ db.t3.micro, no Redis, no NAT</td><td class="num">≈ $80</td><td class="num">≈ R1,300</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="meta" style="margin-top:10px">Compare: Vercel + Supabase Pro ≈ R730 / month with backups, HTTPS, CDN and a managed database included, and nobody on call. The AWS route only makes sense if the client has an existing AWS commitment or a hard data-residency requirement — and even then, Supabase Auth is still in the design (the NAT gateway exists partly to reach it), so it does not remove the Supabase dependency. Figures are list-price estimates, not an AWS Pricing Calculator quote; Multi-AZ RDS is the single line that dominates.</p>
+
+  <h2>Questions for you</h2>
+  <p>These are decisions we cannot make on your behalf. Six of them change the size of the job by a large factor — please answer those first; the rest can follow at your pace.</p>
+
+  <div class="verdict" style="margin-top:20px">
+    <div class="eyebrow" style="margin-bottom:8px">Answer these six first</div>
+    <ol class="q">
+      <li><strong>What is the smallest thing you'd be happy to launch?</strong> All of Grades 10–12 in both subjects, one grade, or one subject — and is there a hard date? <span class="ctx">Grade 12 Maths alone is roughly a quarter of the content work.</span></li>
+      <li><strong>Is Angelo English-first, Afrikaans-first, or genuinely bilingual?</strong> The interface and AI tutor already work in both. For the videos it matters a lot: the English YouTube ecosystem for CAPS is roughly a hundred times larger than the Afrikaans one, and the best Afrikaans channel blocks in-app playback. "English with Afrikaans where it exists" is one afternoon of extra curation; "every topic in both languages" is a different project. <span class="ctx">See the Afrikaans section of the <a href="#afrikaans" style="color:var(--accent-ink)">video shortlist</a>.</span></li>
+      <li><strong>Who curates the videos, and who writes the practice questions?</strong> Curation is roughly 80 videos chosen against the CAPS syllabus — we have already found <a href="#videos" style="color:var(--accent-ink)">111 candidates</a> to choose from, so this can be a few hours of review rather than a search. Questions are the larger job and cannot be outsourced to YouTube. Both need a person who knows the syllabus.</li>
+      <li><strong>Do you need to swap videos and edit topic notes yourself?</strong> Today only a developer can change them. A simple editor for video IDs and notes is a modest build; if sending us a list is fine for launch, we skip it.</li>
+      <li><strong>Are you launching with a paid tier or free first?</strong> Nothing exists for payments yet, so "free first" removes an entire workstream from the launch path.</li>
+      <li><strong>Who owns the accounts we need to test for real</strong> — Supabase (login + database), the Claude API key for the tutor, and hosting? Every feature so far has only run on sample data.</li>
+    </ol>
+  </div>
+
+  <div class="qgroup">
+    <h3>Scope <span class="why">— beyond the five above</span></h3>
+    <ol class="q" style="--start:6">
+      <li>Do you want a private beta with a handful of students before public launch? If so, from which school(s), and who recruits them?</li>
+      <li>Is it Mathematics and Physical Sciences only, or should the structure allow for Mathematical Literacy, Life Sciences, or other subjects later? <span class="ctx">Cheap to plan for now, expensive to bolt on later.</span></li>
+      <li>What devices and data conditions are your students on? <span class="ctx">A video-first curriculum is data-hungry. If most students are on prepaid mobile data, we should keep videos short, default to lower quality, and make the notes and formulas useful without pressing play.</span></li>
+    </ol>
+  </div>
+
+  <div class="qgroup">
+    <h3>Curriculum content <span class="why">— curation and question decisions</span></h3>
+    <ol class="q" style="--start:9">
+      <li>How many practice questions per topic is enough, and is multiple-choice acceptable? <span class="ctx">Currently 6 questions total. The engine only supports multiple choice; NSC papers are mostly written-answer.</span></li>
+      <li>Should questions be adapted from past NSC papers (copyright applies) or written fresh?</li>
+      <li>Which YouTube channels do you trust for CAPS content? <span class="ctx">We have prepared a <a href="#videos" style="color:var(--accent-ink)">verified shortlist</a>: the ten channels South African learners actually watch, ranked by reach, with 3–4 embeddable candidate videos for every one of the 28 topics. Kevinmathscience (1.1M subscribers, short exam-style clips) is our suggested default. Pick from that list, or tell us which channel to use everywhere.</span></li>
+      <li>What makes a video "good enough" for the app — maximum length, South African context, exam-technique focus? We need a rule the curator can apply consistently.</li>
+      <li>Is the finished Grade 11 Trigonometry topic the right layout — videos, formula box, worked examples, tips? Please review it before we replicate it 27 times.</li>
+      <li>Who signs off that the videos and formulas are <em>correct</em> and match the syllabus? <span class="ctx">We need a named subject reviewer.</span></li>
+      <li>Should students earn XP for watching a video, and should we track which videos they have watched? <span class="ctx">Not built yet; easy to add if wanted.</span></li>
+      <li>Videos get deleted or made private by their owners without warning. Should we build an automatic check that flags broken videos, or is a periodic manual check acceptable?</li>
+      <li>The most-watched Afrikaans teacher on YouTube (HouNetOpSukkel, 27.7K subscribers) has switched off in-app playback on almost all their videos. Do you want us to approach them, link out to YouTube for those videos only, or skip them? <span class="ctx">The app already supports a separate Afrikaans video per slot; 77 embeddable Afrikaans candidates are on the shortlist.</span></li>
+      <li>The exam countdown shows fixed 2026 NSC dates. Can you confirm them, and who updates them each year?</li>
+      <li>The 50 past-paper PDFs are hosted on stanmorephysics.com, a third-party site. Are you comfortable depending on it, or should we host the PDFs ourselves — and are we allowed to?</li>
+    </ol>
+  </div>
+
+  <div class="qgroup">
+    <h3>Premium &amp; payments <span class="why">— only if you answered "paid" above</span></h3>
+    <ol class="q" style="--start:20">
+      <li>What is included in Premium, and what does it cost? <span class="ctx">Today the only difference is unlimited AI hints and photo scans.</span></li>
+      <li>Is PayFast confirmed as the provider, is the account live or sandbox, and is it a monthly subscription, once-off, or both?</li>
+      <li>Free users get 5 AI hints and 1 photo scan per day. Are those the right numbers?</li>
+    </ol>
+  </div>
+
+  <div class="qgroup">
+    <h3>AI tutor <span class="why">— running cost and behaviour</span></h3>
+    <ol class="q" style="--start:23">
+      <li>Is the Angelo personality (never gives the full answer, ≤80 words, Socratic, no hollow praise) what you want? Anything to add or remove?</li>
+      <li>Should students' tutor conversations be stored for you to review, or discarded? <span class="ctx">Storing them helps you improve content but adds a privacy obligation.</span></li>
+    </ol>
+  </div>
+
+  <div class="qgroup">
+    <h3>Accounts &amp; learner data <span class="why">— POPIA applies</span></h3>
+    <ol class="q" style="--start:25">
+      <li>Students may be under 18. Do you need parental consent at sign-up, and do you have a privacy policy and terms we should link to?</li>
+      <li>The leaderboard shows other students' first name, last initial and school. Is that acceptable to you and to the schools?</li>
+      <li>Should sign-in support Google (most learners have a school Google account), or is email + password enough? <span class="ctx">Password reset is not built yet either way.</span></li>
+      <li>Who should be an admin, and do you want any parent or teacher view of a student's progress?</li>
+    </ol>
+  </div>
+
+  <div class="qgroup">
+    <h3>Brand, hosting &amp; ownership <span class="why">— nothing is deployed yet</span></h3>
+    <ol class="q" style="--start:29">
+      <li>Is "Angelo" the final name, and do you have a logo? Whose name and logo appear as the issuer on the AI Skills certificate?</li>
+      <li>Where should the app be hosted, on what domain, and in whose accounts (hosting, DNS, code repository)? <span class="ctx">Vercel is the fastest path for this stack; an AWS design also exists. Who holds the account and pays matters more than the technology.</span></li>
+      <li>Is roughly R730 / month fixed plus AI usage (see <a href="#costs" style="color:var(--accent-ink)">Running costs</a>) an acceptable running budget, and who is the billing contact for the seven vendor accounts?</li>
+      <li>Which email address should welcome, password-reset and certificate emails come from? <span class="ctx">A Resend key exists but nothing sends yet.</span></li>
+    </ol>
+  </div>
+
+
+  <section class="videos" id="videos">
+  <h2 style="margin-top:72px;padding-top:28px;border-top:2px solid var(--ink)">Part 2 · Video shortlist</h2>
+  <p class="lede" style="margin-top:6px">A verified shortlist of the channels South African learners already watch for CAPS Maths and Physical Sciences, and 3–4 candidate videos for every one of the app's 28 topics — English first, Afrikaans at the end. Pick from these, or tell us which channel to use as the default.</p>
+  <p class="meta">All subscriber and view counts were read directly from YouTube on 17 September 2026. Every video has been checked to confirm it can be played inside the app; the ones that cannot are marked.</p>
+<h2>The channels, ranked by reach</h2>
+  <p>Only channels that teach the South African CAPS/NSC syllabus for Grades 10–12 are listed. Miss Angler (346K) is left out because her channel is Life Sciences, not Maths or Physics.</p>
+  <div class="tablewrap"><table>
+    <thead><tr><th>Channel</th><th>Subscribers</th><th>Style</th><th>Typical length</th><th>Our read</th></tr></thead>
+    <tbody>
+      <tr><td><span class="tier">1</span> Kevinmathscience</td><td class="num">1.11M · 2,023 videos · 335M views</td><td>One concept or one exam question per video, Maths and Physics, Gr 10–12</td><td>2–15 min</td><td><strong>Best default.</strong> Highest reach by a factor of three, bite-sized, exam-focused, covers every topic in the app. Ideal for phone data budgets.</td></tr>
+      <tr><td><span class="tier">2</span> Mlungisi Nkosi Maths &amp; Science</td><td class="num">386K</td><td>Full structured lessons, numbered series, Maths and Physics</td><td>20–60 min</td><td>Strongest on Grade 12 Calculus, Sequences and Momentum. Long, so best as the "full lesson" slot next to a short Kevin clip.</td></tr>
+      <tr><td><span class="tier">3</span> Miss Martins Maths and Science</td><td class="num">329K</td><td>Classroom-style lessons plus past-paper walkthroughs; Physics and Chemistry as well as Maths</td><td>6–20 min</td><td>The best Grade 10 Physical Sciences coverage of anyone. Warm, clear, well paced.</td></tr>
+      <tr><td><span class="tier">4</span> Mindset Learn</td><td class="num">302K · 7,081 videos · 47M views</td><td>Recorded live lessons from the Mindset Network (NGO, DBE-aligned)</td><td>50–90 min</td><td>Official and syllabus-complete, but old, long and low-viewed today. Use for topics nobody else covers (e.g. Gr 11 wavefronts).</td></tr>
+      <tr><td><span class="tier">5</span> ThunderEDUC</td><td class="num">195K</td><td>Past-paper revision</td><td>30–60 min</td><td>Good for exam-season revision playlists, not for first-time teaching.</td></tr>
+      <tr><td><span class="tier">6</span> PHAKAMA RESEARCH</td><td class="num">118K</td><td>CAPS-aligned revision, all grades</td><td>40–60 min</td><td>Solid but low per-video views; second choice.</td></tr>
+      <tr><td><span class="tier">7</span> Isinamuva Tutoring</td><td class="num">55.3K</td><td>Maths and Science <strong>in isiZulu</strong></td><td>1–2 h</td><td>Worth a conversation: the app supports one alternative-language video per slot, currently intended for Afrikaans.</td></tr>
+      <tr><td><span class="tier">8</span> Zandile loves Maths</td><td class="num">37.8K</td><td>"Everything you need to know" marathons</td><td>2–10 h</td><td>Popular, but 5-hour videos are wrong for an embedded player on mobile data. Skip unless chaptered.</td></tr>
+      <tr><td><span class="tier">9</span> Wiskunde_Mathematics_SUM</td><td class="num">13.6K · 926 videos</td><td>Short Maths clips, <strong>every video in English and Afrikaans</strong></td><td>5–15 min</td><td>The natural pick for the app's Afrikaans slot — see the <a href="#afrikaans" style="color:var(--accent-ink)">Afrikaans section</a>.</td></tr>
+      <tr><td><span class="tier">10</span> Simple Science</td><td class="num">15.7K</td><td>Physical Sciences concept explainers</td><td>10–20 min</td><td>Backup for physics topics.</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="note">
+    <p><strong>What the numbers say.</strong> Across all 28 topics, the top search results from South African channels were Kevinmathscience 61 times, Miss Martins 28, Mlungisi Nkosi 7, Zandile 7 and Mindset 3. If you want a one-line answer: <em>default to Kevinmathscience for the short clip, Miss Martins for Grade 10 Physics, Mlungisi Nkosi for Grade 12 full lessons.</em></p>
+  </div>
+
+  <h2>How to choose</h2>
+  <ul class="plain">
+    <li><strong>Two per topic is enough to launch:</strong> one short "what is it" clip and one exam-question walkthrough. A third for the hardest topics.</li>
+    <li><strong>Under 20 minutes wins on mobile.</strong> A 15-minute 360p video is roughly 40–60 MB; an hour is 200 MB+. Marathons are marked and should not be embedded as-is.</li>
+    <li><strong>Watch the first 60 seconds.</strong> Accent, pace and board legibility on a phone matter more than the channel name.</li>
+    <li><strong>Check the grade in the title.</strong> Search surfaces Grade 11 videos for Grade 10 queries. Where that happened it is flagged below.</li>
+    <li><strong>Reply with the video codes</strong> (the 11-character code at the end of each link) or just say "use the first one everywhere" — either works for us.</li>
+  </ul>
+  <div class="legend"><span class="pill short">Short</span> ≤15 min &nbsp;<span class="pill mid">Lesson</span> 15–30 min &nbsp;<span class="pill long">Long</span> 30 min–2 h &nbsp;<span class="pill marathon">Marathon</span> over 2 h</div>
+<div class="grade"><div class="eyebrow">Mathematics · Grade 10</div></div>
+<div class="topic"><h3>Algebraic Expressions <span class="sub">4 candidates</span></h3>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=EnVbvflrJ4Q" target="_blank" rel="noopener">8a) Factorising trinomials grade 10 | Try</a><div class="ch">Kevinmathscience · <span class="tier">EnVbvflrJ4Q</span></div></div><div class="stats"><span>344K views</span><span>2:52</span><span class="pill short">Short</span></div></div>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=52-eRCXTPX0" target="_blank" rel="noopener">Grade 10 Maths ALGEBRA Exam Questions Practice</a><div class="ch">Miss Martins Maths and Science · <span class="tier">52-eRCXTPX0</span></div></div><div class="stats"><span>267K views</span><span>57:07</span><span class="pill long">Long</span></div></div>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=6Am2_HXuoqU" target="_blank" rel="noopener">Exponential Equation Grade 10</a><div class="ch">Kevinmathscience · <span class="tier">6Am2_HXuoqU</span></div></div><div class="stats"><span>333K views</span><span>1:39</span><span class="pill short">Short</span></div></div>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=pirVy1agpus" target="_blank" rel="noopener">6) Common Factor | factorisation grade 10</a><div class="ch">Kevinmathscience · <span class="tier">pirVy1agpus</span></div></div><div class="stats"><span>500K views</span><span>5:04</span><span class="pill short">Short</span></div></div>
+</div>
+<div class="topic"><h3>Equations and Inequalities <span class="sub">4 candidates</span></h3>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=OFX7zmbEmro" target="_blank" rel="noopener">Grade 10 Inequalities</a><div class="ch">Kevinmathscience · <span class="tier">OFX7zmbEmro</span></div></div><div class="stats"><span>405K views</span><span>3:15</span><span class="pill short">Short</span></div></div>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=LHAq_5VmxRU" target="_blank" rel="noopener">Equations Grade 10: Linear Equation without fraction</a><div class="ch">Kevinmathscience · <span class="tier">LHAq_5VmxRU</span></div></div><div class="stats"><span>287K views</span><span>5:16</span><span class="pill short">Short</span></div></div>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=FWKCISifI9I" target="_blank" rel="noopener">Grade 10 Equations: Linear Equations</a><div class="ch">Miss Martins Maths and Science · <span class="tier">FWKCISifI9I</span></div></div><div class="stats"><span>22K views</span><span>6:44</span><span class="pill short">Short</span></div></div>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=zHNvf3hMlSk" target="_blank" rel="noopener">Exam Equations Grade 10</a><div class="ch">Kevinmathscience · <span class="tier">zHNvf3hMlSk</span></div></div><div class="stats"><span>87K views</span><span>4:01</span><span class="pill short">Short</span></div></div>
+</div>
+<div class="topic"><h3>Functions and Graphs <span class="sub">4 candidates</span></h3>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=1RnuVXYcVpE" target="_blank" rel="noopener">Exam Functions Grade 10</a><div class="ch">Kevinmathscience · <span class="tier">1RnuVXYcVpE</span></div></div><div class="stats"><span>563K views</span><span>13:37</span><span class="pill short">Short</span></div></div>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=ZqRXA19yhMM" target="_blank" rel="noopener">🚀 Grade 10 Mathematics | Straight Line Functions Made Easy</a><div class="ch">SmartPrep MathsScience · <span class="tier">ZqRXA19yhMM</span></div></div><div class="stats"><span>45 views</span><span>7:30</span><span class="pill short">Short</span></div></div>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=Nujt5qcZWqE" target="_blank" rel="noopener">Parabola Grade 10 Functions (Introduction)</a><div class="ch">Miss Martins Maths and Science · <span class="tier">Nujt5qcZWqE</span></div></div><div class="stats"><span>229K views</span><span>9:52</span><span class="pill short">Short</span></div></div>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=9pJupVoCq7g" target="_blank" rel="noopener">Domain and Range for Functions: Grade 10 Maths</a><div class="ch">Miss Martins Maths and Science · <span class="tier">9pJupVoCq7g</span></div></div><div class="stats"><span>157K views</span><span>21:13</span><span class="pill mid">Lesson</span></div></div>
+</div>
+<div class="topic"><h3>Number Patterns <span class="sub">3 candidates</span></h3>
+<p class="meta" style="color:var(--warn);margin-top:-4px">Grade 10 linear-pattern videos from the top channels either did not surface or block embedding (My Class Series does). These are Grade 11/12 pattern videos — a manual search is needed for this topic.</p>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=Ws_tyxB-Xyo" target="_blank" rel="noopener">Quadratic number patterns grade 11: introduction and examples</a><div class="ch">Kevinmathscience · <span class="tier">Ws_tyxB-Xyo</span></div></div><div class="stats"><span>475K views</span><span>11:29</span><span class="pill short">Short</span></div></div>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=GzFLsWU5jlY" target="_blank" rel="noopener">Quadratic Pattern Grade 11: Exam</a><div class="ch">Kevinmathscience · <span class="tier">GzFLsWU5jlY</span></div></div><div class="stats"><span>90K views</span><span>9:00</span><span class="pill short">Short</span></div></div>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=sXwkDJw8izM" target="_blank" rel="noopener">Grade 12 Number Patterns| Sequences And Series| Exam Questions</a><div class="ch">Zandile loves Maths · <span class="tier">sXwkDJw8izM</span></div></div><div class="stats"><span>127K views</span><span>4:55:48</span><span class="pill marathon">Marathon</span></div></div>
+</div>
+<div class="topic"><h3>Finance and Growth <span class="sub">4 candidates</span></h3>
+<p class="meta" style="color:var(--warn);margin-top:-4px">&#x27;Interest Maths Lit&#x27; is the Mathematical Literacy version; the other three are Core Maths.</p>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=AKU4lSQvrnI" target="_blank" rel="noopener">Financial Maths Grade 10 | Simple Interest Introduction</a><div class="ch">Kevinmathscience · <span class="tier">AKU4lSQvrnI</span></div></div><div class="stats"><span>440K views</span><span>3:59</span><span class="pill short">Short</span></div></div>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=q9Sxe0HBDR4" target="_blank" rel="noopener">Financial Maths Grade 10 | Simple Interest | Determine P</a><div class="ch">Kevinmathscience · <span class="tier">q9Sxe0HBDR4</span></div></div><div class="stats"><span>244K views</span><span>2:53</span><span class="pill short">Short</span></div></div>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=3cj331uG3uI" target="_blank" rel="noopener">Financial Maths Grade 10 Past Paper Exam Question 1</a><div class="ch">Miss Martins Maths and Science · <span class="tier">3cj331uG3uI</span></div></div><div class="stats"><span>51K views</span><span>8:40</span><span class="pill short">Short</span></div></div>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=le6w0YG-ecE" target="_blank" rel="noopener">Interest Maths Lit</a><div class="ch">Kevinmathscience · <span class="tier">le6w0YG-ecE</span></div></div><div class="stats"><span>456K views</span><span>10:17</span><span class="pill short">Short</span></div></div>
+</div>
+<div class="topic"><h3>Trigonometry <span class="sub">4 candidates</span></h3>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=4jSqFXdmKR0" target="_blank" rel="noopener">Sin Triangle Grade 10</a><div class="ch">Kevinmathscience · <span class="tier">4jSqFXdmKR0</span></div></div><div class="stats"><span>827K views</span><span>4:23</span><span class="pill short">Short</span></div></div>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=KvBqPFfzfEM" target="_blank" rel="noopener">Trigonometry 2D Grade 10 Angle of elevation and depression</a><div class="ch">Miss Martins Maths and Science · <span class="tier">KvBqPFfzfEM</span></div></div><div class="stats"><span>159K views</span><span>13:49</span><span class="pill short">Short</span></div></div>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=Z9ltIFQILHw" target="_blank" rel="noopener">Trigonometry Grade 10: Introduction to trig</a><div class="ch">Miss Martins Maths and Science · <span class="tier">Z9ltIFQILHw</span></div></div><div class="stats"><span>156K views</span><span>13:26</span><span class="pill short">Short</span></div></div>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=K5Odz79j7to" target="_blank" rel="noopener">Grade 10 Trigonometry: Trig Ratios Sin, Cos and Tan</a><div class="ch">Miss Martins Maths and Science · <span class="tier">K5Odz79j7to</span></div></div><div class="stats"><span>73K views</span><span>15:39</span><span class="pill mid">Lesson</span></div></div>
+</div>
+<div class="topic"><h3>Analytical Geometry <span class="sub">4 candidates</span></h3>
+<p class="meta" style="color:var(--warn);margin-top:-4px">The 813K-view Kevinmathscience video is Grade 11 revision of Grade 10 work — fine as the second clip.</p>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=VDCxnhnkzJg" target="_blank" rel="noopener">Analytical Geometry Grade 10: Distance formula - length of a line</a><div class="ch">Miss Martins Maths and Science · <span class="tier">VDCxnhnkzJg</span></div></div><div class="stats"><span>71K views</span><span>9:59</span><span class="pill short">Short</span></div></div>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=w1QwFixKjBo" target="_blank" rel="noopener">Analytical Geometry Grade 10 Exam Question</a><div class="ch">Kevinmathscience · <span class="tier">w1QwFixKjBo</span></div></div><div class="stats"><span>440K views</span><span>12:41</span><span class="pill short">Short</span></div></div>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=GhiX06fp_rM" target="_blank" rel="noopener">Exam Analytical Geometry Grade 10</a><div class="ch">Kevinmathscience · <span class="tier">GhiX06fp_rM</span></div></div><div class="stats"><span>229K views</span><span>15:12</span><span class="pill mid">Lesson</span></div></div>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=QmNzxSM3qZA" target="_blank" rel="noopener">gr 11 analytical geometry grade 10 revision</a><div class="ch">Kevinmathscience · <span class="tier">QmNzxSM3qZA</span></div></div><div class="stats"><span>813K views</span><span>14:11</span><span class="pill short">Short</span></div></div>
+</div>
+<div class="topic"><h3>Euclidean Geometry <span class="sub">4 candidates</span></h3>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=lJHk-dG-Or4" target="_blank" rel="noopener">Grade 10 Euclidean Geometry Exam Questions Part 1</a><div class="ch">Miss Martins Maths and Science · <span class="tier">lJHk-dG-Or4</span></div></div><div class="stats"><span>190K views</span><span>41:35</span><span class="pill long">Long</span></div></div>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=tuAFyRv62wI" target="_blank" rel="noopener">Grade 10: Euclidean Geometry | Everything you need to know</a><div class="ch">Zandile loves Maths · <span class="tier">tuAFyRv62wI</span></div></div><div class="stats"><span>805 views</span><span>3:22:39</span><span class="pill marathon">Marathon</span></div></div>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=g5b1Ygc-Tn4" target="_blank" rel="noopener">Exam Questions Grade 10 Euclidean Geometry</a><div class="ch">Kevinmathscience · <span class="tier">g5b1Ygc-Tn4</span></div></div><div class="stats"><span>236K views</span><span>6:22</span><span class="pill short">Short</span></div></div>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=yY9qGF-CjXI" target="_blank" rel="noopener">Exam Euclidean Geometry Grade 10</a><div class="ch">Kevinmathscience · <span class="tier">yY9qGF-CjXI</span></div></div><div class="stats"><span>297K views</span><span>7:43</span><span class="pill short">Short</span></div></div>
+</div>
+<div class="topic"><h3>Statistics <span class="sub">4 candidates</span></h3>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=xi8VjMmWdgI" target="_blank" rel="noopener">Statistics Grade 10: Mean, mode, median</a><div class="ch">Kevinmathscience · <span class="tier">xi8VjMmWdgI</span></div></div><div class="stats"><span>770K views</span><span>4:45</span><span class="pill short">Short</span></div></div>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=Hc-BUqBaUkQ" target="_blank" rel="noopener">Statistics Grade 10: Exam Question</a><div class="ch">Kevinmathscience · <span class="tier">Hc-BUqBaUkQ</span></div></div><div class="stats"><span>293K views</span><span>2:50</span><span class="pill short">Short</span></div></div>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=oVtvnQ8OW5Y" target="_blank" rel="noopener">Statistics Grade 10: Table</a><div class="ch">Kevinmathscience · <span class="tier">oVtvnQ8OW5Y</span></div></div><div class="stats"><span>439K views</span><span>6:59</span><span class="pill short">Short</span></div></div>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=94_ljD-J19Y" target="_blank" rel="noopener">Statistics Grade 10: Box and whisker</a><div class="ch">Kevinmathscience · <span class="tier">94_ljD-J19Y</span></div></div><div class="stats"><span>471K views</span><span>4:46</span><span class="pill short">Short</span></div></div>
+</div>
+<div class="topic"><h3>Probability <span class="sub">4 candidates</span></h3>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=Hqbbyh5OEtc" target="_blank" rel="noopener">Probability Grade 10 | Introduction</a><div class="ch">Kevinmathscience · <span class="tier">Hqbbyh5OEtc</span></div></div><div class="stats"><span>630K views</span><span>6:25</span><span class="pill short">Short</span></div></div>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=vgAf7PxSK7E" target="_blank" rel="noopener">Probability Grade 10 | Tree Diagram</a><div class="ch">Kevinmathscience · <span class="tier">vgAf7PxSK7E</span></div></div><div class="stats"><span>200K views</span><span>8:48</span><span class="pill short">Short</span></div></div>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=iBoBTRrp-w8" target="_blank" rel="noopener">Probability Grade 10 | Exam Question</a><div class="ch">Kevinmathscience · <span class="tier">iBoBTRrp-w8</span></div></div><div class="stats"><span>350K views</span><span>5:51</span><span class="pill short">Short</span></div></div>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=kMJVyxYiato" target="_blank" rel="noopener">Probability Maths Lit Part 1</a><div class="ch">Kevinmathscience · <span class="tier">kMJVyxYiato</span></div></div><div class="stats"><span>390K views</span><span>8:58</span><span class="pill short">Short</span></div></div>
+</div>
+<div class="grade"><div class="eyebrow">Mathematics · Grade 11</div></div>
+<div class="topic"><h3>Trigonometry <span class="sub">4 candidates</span></h3>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=IhXnVk8PuJY" target="_blank" rel="noopener">Trigonometry Grade 11 Exam Questions</a><div class="ch">Kevinmathscience · <span class="tier">IhXnVk8PuJY</span></div></div><div class="stats"><span>225K views</span><span>4:45</span><span class="pill short">Short</span></div></div>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=Optfjw6HGZw" target="_blank" rel="noopener">Trig functions grade 11 and 12: Determine Equation</a><div class="ch">Kevinmathscience · <span class="tier">Optfjw6HGZw</span></div></div><div class="stats"><span>434K views</span><span>3:27</span><span class="pill short">Short</span></div></div>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=rEFv51neoUc" target="_blank" rel="noopener">General Solutions Grade 11 Trigonometry PART 1</a><div class="ch">Miss Martins Maths and Science · <span class="tier">rEFv51neoUc</span></div></div><div class="stats"><span>4K views</span><span>14:26</span><span class="pill short">Short</span></div></div>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=cZoEfccMapk" target="_blank" rel="noopener">Trig Functions Grade 11 Exam Questions</a><div class="ch">Kevinmathscience · <span class="tier">cZoEfccMapk</span></div></div><div class="stats"><span>14K views</span><span>9:56</span><span class="pill short">Short</span></div></div>
+</div>
+<div class="topic"><h3>Analytical Geometry <span class="sub">4 candidates</span></h3>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=VB4jH92V-tg" target="_blank" rel="noopener">Grade 11 Analytical geometry: angle of inclination</a><div class="ch">Kevinmathscience · <span class="tier">VB4jH92V-tg</span></div></div><div class="stats"><span>563K views</span><span>6:49</span><span class="pill short">Short</span></div></div>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=mLAhC1DHtDc" target="_blank" rel="noopener">Grade 11 analytical geometry: 4th Co-ordinate of parallelogram</a><div class="ch">Kevinmathscience · <span class="tier">mLAhC1DHtDc</span></div></div><div class="stats"><span>455K views</span><span>2:55</span><span class="pill short">Short</span></div></div>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=nvHOzaZKxbA" target="_blank" rel="noopener">Grade 11 Analytical Geometry Grade 10 Revision</a><div class="ch">Miss Martins Maths and Science · <span class="tier">nvHOzaZKxbA</span></div></div><div class="stats"><span>21K views</span><span>19:48</span><span class="pill mid">Lesson</span></div></div>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=lrmASs4NOww" target="_blank" rel="noopener">Grade 11 Analytical Geometry Angle of Inclination Introduction and practice</a><div class="ch">Miss Martins Maths and Science · <span class="tier">lrmASs4NOww</span></div></div><div class="stats"><span>23K views</span><span>12:25</span><span class="pill short">Short</span></div></div>
+</div>
+<div class="topic"><h3>Euclidean Geometry <span class="sub">4 candidates</span></h3>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=4NqwU3BzOcE" target="_blank" rel="noopener">Grade 11: Euclidean Geometry | Everything you need to know</a><div class="ch">Zandile loves Maths · <span class="tier">4NqwU3BzOcE</span></div></div><div class="stats"><span>670 views</span><span>5:45:01</span><span class="pill marathon">Marathon</span></div></div>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=bc6x2GQcMbU" target="_blank" rel="noopener">Circle Geometry Grade 11 : Practice</a><div class="ch">Kevinmathscience · <span class="tier">bc6x2GQcMbU</span></div></div><div class="stats"><span>151K views</span><span>12:14</span><span class="pill short">Short</span></div></div>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=lQE642ILPDY" target="_blank" rel="noopener">Euclidean Geometry Grade 11: Exam question</a><div class="ch">Kevinmathscience · <span class="tier">lQE642ILPDY</span></div></div><div class="stats"><span>412K views</span><span>20:18</span><span class="pill mid">Lesson</span></div></div>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=KWYgy_YkyCA" target="_blank" rel="noopener">Grade 11 - Euclidean Geometry | Tangents and chords | Mlungisi Nkosi</a><div class="ch">Mlungisi Nkosi Maths &amp; Science · <span class="tier">KWYgy_YkyCA</span></div></div><div class="stats"><span>30K views</span><span>22:02</span><span class="pill mid">Lesson</span></div></div>
+</div>
+<div class="topic"><h3>Statistics <span class="sub">4 candidates</span></h3>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=CTj0OE6lkkg" target="_blank" rel="noopener">Statistics Grade 11: Ogive curve</a><div class="ch">Kevinmathscience · <span class="tier">CTj0OE6lkkg</span></div></div><div class="stats"><span>832K views</span><span>6:45</span><span class="pill short">Short</span></div></div>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=aNv4gD72-1I" target="_blank" rel="noopener">Statistics Grade 11</a><div class="ch">Kevinmathscience · <span class="tier">aNv4gD72-1I</span></div></div><div class="stats"><span>1.2M views</span><span>13:11</span><span class="pill short">Short</span></div></div>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=ifJUTSTL4WU" target="_blank" rel="noopener">Statistics Grade 11: Table</a><div class="ch">Kevinmathscience · <span class="tier">ifJUTSTL4WU</span></div></div><div class="stats"><span>738K views</span><span>4:08</span><span class="pill short">Short</span></div></div>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=Amf60jAYIaI" target="_blank" rel="noopener">Statistics Grade 11 Exam Questions</a><div class="ch">Kevinmathscience · <span class="tier">Amf60jAYIaI</span></div></div><div class="stats"><span>222K views</span><span>8:32</span><span class="pill short">Short</span></div></div>
+</div>
+<div class="grade"><div class="eyebrow">Mathematics · Grade 12</div></div>
+<div class="topic"><h3>Calculus <span class="sub">4 candidates</span></h3>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=UzVKkR-XArM" target="_blank" rel="noopener">Determine Cubic Equation Calculus grade 12</a><div class="ch">Kevinmathscience · <span class="tier">UzVKkR-XArM</span></div></div><div class="stats"><span>469K views</span><span>4:28</span><span class="pill short">Short</span></div></div>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=4VUWIiudCk0" target="_blank" rel="noopener">Limits Calculus Grade 12</a><div class="ch">Kevinmathscience · <span class="tier">4VUWIiudCk0</span></div></div><div class="stats"><span>1.0M views</span><span>5:08</span><span class="pill short">Short</span></div></div>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=1ye4FhvMazo" target="_blank" rel="noopener">Lesson 7: How To Solve Optimisation Questions | Area, Volume &amp; Cost | Grade 12 Calculus</a><div class="ch">Mlungisi Nkosi Maths &amp; Science · <span class="tier">1ye4FhvMazo</span></div></div><div class="stats"><span>286K views</span><span>21:55</span><span class="pill mid">Lesson</span></div></div>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=_WFx3JDTuQg" target="_blank" rel="noopener">Lesson 4: How To Plot and Interpret Cubic Functions | Grade 12 Calculus</a><div class="ch">Mlungisi Nkosi Maths &amp; Science · <span class="tier">_WFx3JDTuQg</span></div></div><div class="stats"><span>249K views</span><span>51:37</span><span class="pill long">Long</span></div></div>
+</div>
+<div class="topic"><h3>Sequences and Series <span class="sub">4 candidates</span></h3>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=An_O1nY1lac" target="_blank" rel="noopener">17) Worksheet Series Sequences | Half</a><div class="ch">Kevinmathscience · <span class="tier">An_O1nY1lac</span></div></div><div class="stats"><span>228K views</span><span>1:53:07</span><span class="pill long">Long</span></div></div>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=S9oGEqRqO_8" target="_blank" rel="noopener">Grade 12 Algebra Lesson 1| Sequences and Series : Arithmetic Sequence Explained</a><div class="ch">Mlungisi Nkosi Maths &amp; Science · <span class="tier">S9oGEqRqO_8</span></div></div><div class="stats"><span>400K views</span><span>24:34</span><span class="pill mid">Lesson</span></div></div>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=nBFLxEZko8o" target="_blank" rel="noopener">Grade 12 Mathematics | Sequence and Series | Past Exam Questions | May/June 2021_Question 2</a><div class="ch">Mlungisi Nkosi Maths &amp; Science · <span class="tier">nBFLxEZko8o</span></div></div><div class="stats"><span>112K views</span><span>23:09</span><span class="pill mid">Lesson</span></div></div>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=DIOaZtU7XlA" target="_blank" rel="noopener">Exam Question Series Sequences</a><div class="ch">Kevinmathscience · <span class="tier">DIOaZtU7XlA</span></div></div><div class="stats"><span>79K views</span><span>7:07</span><span class="pill short">Short</span></div></div>
+</div>
+<div class="topic"><h3>Analytical Geometry <span class="sub">4 candidates</span></h3>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=H4m6YuW75vw" target="_blank" rel="noopener">Grade 12: Analytical Geometry | Everything you need to know</a><div class="ch">Zandile loves Maths · <span class="tier">H4m6YuW75vw</span></div></div><div class="stats"><span>97K views</span><span>2:03:08</span><span class="pill marathon">Marathon</span></div></div>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=O9mO17v2-e8" target="_blank" rel="noopener">Analytical Geometry Grade 12 Exam Questions</a><div class="ch">Kevinmathscience · <span class="tier">O9mO17v2-e8</span></div></div><div class="stats"><span>190K views</span><span>20:25</span><span class="pill mid">Lesson</span></div></div>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=LxMkIbspJAw" target="_blank" rel="noopener">Analytical Geometry Grade 12 Exam Questions</a><div class="ch">Kevinmathscience · <span class="tier">LxMkIbspJAw</span></div></div><div class="stats"><span>97K views</span><span>12:29</span><span class="pill short">Short</span></div></div>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=RU1Uott6Xf4" target="_blank" rel="noopener">Analytical Geometry Grade 12 Exam Question</a><div class="ch">Kevinmathscience · <span class="tier">RU1Uott6Xf4</span></div></div><div class="stats"><span>316K views</span><span>12:28</span><span class="pill short">Short</span></div></div>
+</div>
+<div class="topic"><h3>Euclidean Geometry <span class="sub">4 candidates</span></h3>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=9RJLHVysqA8" target="_blank" rel="noopener">Grade 12: Euclidean Geometry | Everything you need to know</a><div class="ch">Zandile loves Maths · <span class="tier">9RJLHVysqA8</span></div></div><div class="stats"><span>140K views</span><span>10:45:13</span><span class="pill marathon">Marathon</span></div></div>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=kwsSjMvqTF4" target="_blank" rel="noopener">Grade 12: Prop Theorem and Similarity Updated | Euclidean Geometry | Everything you need to know</a><div class="ch">Zandile loves Maths · <span class="tier">kwsSjMvqTF4</span></div></div><div class="stats"><span>2K views</span><span>5:27:45</span><span class="pill marathon">Marathon</span></div></div>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=nWn-HjCP9wY" target="_blank" rel="noopener">Grade 12 Euclidean Geometry Exam question # 1</a><div class="ch">Kevinmathscience · <span class="tier">nWn-HjCP9wY</span></div></div><div class="stats"><span>255K views</span><span>6:26</span><span class="pill short">Short</span></div></div>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=122eVl0o_C8" target="_blank" rel="noopener">EUCLIDEAN GEOMETRY | PROPORTIONALITY GRADE 12 [ ISIZULU ]</a><div class="ch">Isinamuva Tutoring · <span class="tier">122eVl0o_C8</span></div></div><div class="stats"><span>73K views</span><span>1:48:45</span><span class="pill long">Long</span></div></div>
+</div>
+<div class="topic"><h3>Probability <span class="sub">4 candidates</span></h3>
+<p class="meta" style="color:var(--warn);margin-top:-4px">&#x27;Probability Maths Lit Part 1&#x27; is Mathematical Literacy, not Core Maths.</p>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=1IpyhSJvKiY" target="_blank" rel="noopener">Grade 12: Probability | Everything you need to know</a><div class="ch">Zandile loves Maths · <span class="tier">1IpyhSJvKiY</span></div></div><div class="stats"><span>94K views</span><span>2:31:34</span><span class="pill marathon">Marathon</span></div></div>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=kMJVyxYiato" target="_blank" rel="noopener">Probability Maths Lit Part 1</a><div class="ch">Kevinmathscience · <span class="tier">kMJVyxYiato</span></div></div><div class="stats"><span>390K views</span><span>8:58</span><span class="pill short">Short</span></div></div>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=loYKqFQcksY" target="_blank" rel="noopener">Gr 12 probability # 1</a><div class="ch">Kevinmathscience · <span class="tier">loYKqFQcksY</span></div></div><div class="stats"><span>675K views</span><span>3:48</span><span class="pill short">Short</span></div></div>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=0haRHA-QoAk" target="_blank" rel="noopener">PROBABILITY GRADE 12 | COUNTING PRINCIPLES [ ISIZULU ]</a><div class="ch">Isinamuva Tutoring · <span class="tier">0haRHA-QoAk</span></div></div><div class="stats"><span>39K views</span><span>58:08</span><span class="pill long">Long</span></div></div>
+</div>
+<div class="grade"><div class="eyebrow">Physical Sciences · Grade 10</div></div>
+<div class="topic"><h3>Mechanics <span class="sub">4 candidates</span></h3>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=gtiOPVVKkU4" target="_blank" rel="noopener">Grade 10 Mechanics Past Paper Question Motion in One Dimension</a><div class="ch">Miss Martins Maths and Science · <span class="tier">gtiOPVVKkU4</span></div></div><div class="stats"><span>48K views</span><span>10:00</span><span class="pill short">Short</span></div></div>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=vW93Ub-vsD4" target="_blank" rel="noopener">Motion in one dimension: Frame of reference and position Grade 10 Physics</a><div class="ch">Miss Martins Maths and Science · <span class="tier">vW93Ub-vsD4</span></div></div><div class="stats"><span>107K views</span><span>8:39</span><span class="pill short">Short</span></div></div>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=-wHXFMMEltw" target="_blank" rel="noopener">Grade 10 Mechanics: Equations of Motion Exam Question PART 1</a><div class="ch">Miss Martins Maths and Science · <span class="tier">-wHXFMMEltw</span></div></div><div class="stats"><span>40K views</span><span>6:06</span><span class="pill short">Short</span></div></div>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=7-vQ6k4bTqM" target="_blank" rel="noopener">Equations of Motion Grade 10</a><div class="ch">Kevinmathscience · <span class="tier">7-vQ6k4bTqM</span></div></div><div class="stats"><span>264K views</span><span>22:32</span><span class="pill mid">Lesson</span></div></div>
+</div>
+<div class="topic"><h3>Transverse Waves <span class="sub">4 candidates</span></h3>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=JUnMAK9qPNU" target="_blank" rel="noopener">3) Transverse Waves Grade 10</a><div class="ch">Kevinmathscience · <span class="tier">JUnMAK9qPNU</span></div></div><div class="stats"><span>388K views</span><span>24:09</span><span class="pill mid">Lesson</span></div></div>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=4vDk3W66s5I" target="_blank" rel="noopener">Grade 10 Physics Transverse waves Period and Frequency</a><div class="ch">Miss Martins Maths and Science · <span class="tier">4vDk3W66s5I</span></div></div><div class="stats"><span>100K views</span><span>15:05</span><span class="pill mid">Lesson</span></div></div>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=PGgeSD7vPOQ" target="_blank" rel="noopener">Grade 10 Transverse Waves Points in phase and points out of phase</a><div class="ch">Miss Martins Maths and Science · <span class="tier">PGgeSD7vPOQ</span></div></div><div class="stats"><span>81K views</span><span>9:28</span><span class="pill short">Short</span></div></div>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=o7BDo4CcQOI" target="_blank" rel="noopener">Grade 10 Transverse waves Exam question Wavelength</a><div class="ch">Miss Martins Maths and Science · <span class="tier">o7BDo4CcQOI</span></div></div><div class="stats"><span>99K views</span><span>13:10</span><span class="pill short">Short</span></div></div>
+</div>
+<div class="topic"><h3>Sound <span class="sub">4 candidates</span></h3>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=1u5GSxuSj7A" target="_blank" rel="noopener">5) Sound Waves Grade 10</a><div class="ch">Kevinmathscience · <span class="tier">1u5GSxuSj7A</span></div></div><div class="stats"><span>214K views</span><span>19:55</span><span class="pill mid">Lesson</span></div></div>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=4IpqrR4vqOw" target="_blank" rel="noopener">Grade 10 Physics Sound waves</a><div class="ch">Miss Martins Maths and Science · <span class="tier">4IpqrR4vqOw</span></div></div><div class="stats"><span>86K views</span><span>11:22</span><span class="pill short">Short</span></div></div>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=9sP74zJKcIQ" target="_blank" rel="noopener">4) Longitudinal  Waves Grade 10</a><div class="ch">Kevinmathscience · <span class="tier">9sP74zJKcIQ</span></div></div><div class="stats"><span>207K views</span><span>5:59</span><span class="pill short">Short</span></div></div>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=JUnMAK9qPNU" target="_blank" rel="noopener">3) Transverse Waves Grade 10</a><div class="ch">Kevinmathscience · <span class="tier">JUnMAK9qPNU</span></div></div><div class="stats"><span>388K views</span><span>24:09</span><span class="pill mid">Lesson</span></div></div>
+</div>
+<div class="topic"><h3>Electromagnetic Radiation <span class="sub">4 candidates</span></h3>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=a4aHyWtV2Kw" target="_blank" rel="noopener">Grade 10 Electromagnetic Radiation Physics: Introduction</a><div class="ch">Miss Martins Maths and Science · <span class="tier">a4aHyWtV2Kw</span></div></div><div class="stats"><span>228K views</span><span>13:22</span><span class="pill short">Short</span></div></div>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=AAyPp8W9mWw" target="_blank" rel="noopener">Electromagnetic radiation calculations Grade 10 Physics</a><div class="ch">Miss Martins Maths and Science · <span class="tier">AAyPp8W9mWw</span></div></div><div class="stats"><span>196K views</span><span>12:40</span><span class="pill short">Short</span></div></div>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=b1JrapSyaIQ" target="_blank" rel="noopener">Grade 10 Physics Particle Nature of Electromagnetic Radiation</a><div class="ch">Miss Martins Maths and Science · <span class="tier">b1JrapSyaIQ</span></div></div><div class="stats"><span>87K views</span><span>8:02</span><span class="pill short">Short</span></div></div>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=18mpmoo4g7A" target="_blank" rel="noopener">Electrostatics Grade 10 | Introduction</a><div class="ch">Kevinmathscience · <span class="tier">18mpmoo4g7A</span></div></div><div class="stats"><span>347K views</span><span>25:25</span><span class="pill mid">Lesson</span></div></div>
+</div>
+<div class="topic"><h3>Electric Circuits <span class="sub">4 candidates</span></h3>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=imoShDLnQqE" target="_blank" rel="noopener">Circuits grade 10 | Part 1</a><div class="ch">Kevinmathscience · <span class="tier">imoShDLnQqE</span></div></div><div class="stats"><span>348K views</span><span>10:13</span><span class="pill short">Short</span></div></div>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=5WRqdTr9WmQ" target="_blank" rel="noopener">Circuits Grade 10 | Calculations</a><div class="ch">Kevinmathscience · <span class="tier">5WRqdTr9WmQ</span></div></div><div class="stats"><span>295K views</span><span>29:44</span><span class="pill mid">Lesson</span></div></div>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=hMAArBq00y4" target="_blank" rel="noopener">Electricity Grade 10 Electric Circuits Summary Physics</a><div class="ch">Miss Martins Maths and Science · <span class="tier">hMAArBq00y4</span></div></div><div class="stats"><span>179K views</span><span>58:00</span><span class="pill long">Long</span></div></div>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=JZJlJ18ggc0" target="_blank" rel="noopener">Resistance Grade 10</a><div class="ch">Kevinmathscience · <span class="tier">JZJlJ18ggc0</span></div></div><div class="stats"><span>212K views</span><span>12:33</span><span class="pill short">Short</span></div></div>
+</div>
+<div class="topic"><h3>Matter and Materials <span class="sub">4 candidates</span></h3>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=5M4hJjp3-lQ" target="_blank" rel="noopener">Grade 10 Classification of Matter: Properties of materials</a><div class="ch">Miss Martins Maths and Science · <span class="tier">5M4hJjp3-lQ</span></div></div><div class="stats"><span>118K views</span><span>9:46</span><span class="pill short">Short</span></div></div>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=oADmMF84wbA" target="_blank" rel="noopener">Water of Crystallization | Chemistry Grade 10-12</a><div class="ch">Miss Martins Maths and Science · <span class="tier">oADmMF84wbA</span></div></div><div class="stats"><span>272K views</span><span>17:52</span><span class="pill mid">Lesson</span></div></div>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=B5gVS4Ti3P8" target="_blank" rel="noopener">Cooling curve vs Heating curve Grade 10 Chemistry</a><div class="ch">Miss Martins Maths and Science · <span class="tier">B5gVS4Ti3P8</span></div></div><div class="stats"><span>75K views</span><span>10:43</span><span class="pill short">Short</span></div></div>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=SSKvnWYbrwM" target="_blank" rel="noopener">Grade 10 Matter and Materials Homogeneous and Heterogeneous mixtures</a><div class="ch">Miss Martins Maths and Science · <span class="tier">SSKvnWYbrwM</span></div></div><div class="stats"><span>43K views</span><span>11:37</span><span class="pill short">Short</span></div></div>
+</div>
+<div class="grade"><div class="eyebrow">Physical Sciences · Grade 11</div></div>
+<div class="topic"><h3>Newton&#x27;s Laws <span class="sub">4 candidates</span></h3>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=AFwr05QW3aY" target="_blank" rel="noopener">Newton Law Gravity Grade 11</a><div class="ch">Kevinmathscience · <span class="tier">AFwr05QW3aY</span></div></div><div class="stats"><span>255K views</span><span>19:38</span><span class="pill mid">Lesson</span></div></div>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=aSC1sgTUODA" target="_blank" rel="noopener">Newton&#x27;s second law Grade 11 and 12  [ IsiZulu ]</a><div class="ch">Isinamuva Tutoring · <span class="tier">aSC1sgTUODA</span></div></div><div class="stats"><span>71K views</span><span>1:01:49</span><span class="pill long">Long</span></div></div>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=HmoNMxId4-Y" target="_blank" rel="noopener">Grade 11 Newton Laws: Objects on a slope</a><div class="ch">Kevinmathscience · <span class="tier">HmoNMxId4-Y</span></div></div><div class="stats"><span>552K views</span><span>7:47</span><span class="pill short">Short</span></div></div>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=7YhkjSlxsrc" target="_blank" rel="noopener">Grade 11 Newton Laws: Look out for normal force</a><div class="ch">Kevinmathscience · <span class="tier">7YhkjSlxsrc</span></div></div><div class="stats"><span>504K views</span><span>7:17</span><span class="pill short">Short</span></div></div>
+</div>
+<div class="topic"><h3>Waves and Sound <span class="sub">4 candidates</span></h3>
+<p class="meta" style="color:var(--warn);margin-top:-4px">Under CAPS, waves and sound are Grade 10 work; Grade 11 covers 2D/3D wavefronts and diffraction. The app&#x27;s topic list may be mislabelled — the subject reviewer should confirm. Candidates below are the Grade 11 wavefront content.</p>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=IQ_HH68wmHw" target="_blank" rel="noopener">2D &amp; 3D Wavefronts</a><div class="ch">Mindset · <span class="tier">IQ_HH68wmHw</span></div></div><div class="stats"><span>4K views</span><span>1:14:58</span><span class="pill long">Long</span></div></div>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=KXRnmQGweJE" target="_blank" rel="noopener">Grade 11 - Diffraction | Huygen’s Principle &amp; Wavefronts | November 2017 | Mlungisi Nkosi</a><div class="ch">Mlungisi Nkosi Maths &amp; Science · <span class="tier">KXRnmQGweJE</span></div></div><div class="stats"><span>333 views</span><span>4:52</span><span class="pill short">Short</span></div></div>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=lf689C99Sxw" target="_blank" rel="noopener">Diffraction</a><div class="ch">Mindset · <span class="tier">lf689C99Sxw</span></div></div><div class="stats"><span>2K views</span><span>50:49</span><span class="pill long">Long</span></div></div>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=5--qGnkJtN4" target="_blank" rel="noopener">Revision: Refraction &amp; Diffraction</a><div class="ch">Mindset · <span class="tier">5--qGnkJtN4</span></div></div><div class="stats"><span>10K views</span><span>53:36</span><span class="pill long">Long</span></div></div>
+</div>
+<div class="grade"><div class="eyebrow">Physical Sciences · Grade 12</div></div>
+<div class="topic"><h3>Momentum and Impulse <span class="sub">4 candidates</span></h3>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=QAURZq43508" target="_blank" rel="noopener">Physics | Momentum | Conservation of linear momentum (Made easy)</a><div class="ch">Mlungisi Nkosi Maths &amp; Science · <span class="tier">QAURZq43508</span></div></div><div class="stats"><span>388K views</span><span>1:02:20</span><span class="pill long">Long</span></div></div>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=xfTAxHUR1pU" target="_blank" rel="noopener">PHYSICAL SCIENCES GRADE 12 - MOMENTUM AND IMPULSE REVISION MODERATED</a><div class="ch">PHAKAMA RESEARCH · <span class="tier">xfTAxHUR1pU</span></div></div><div class="stats"><span>1K views</span><span>45:12</span><span class="pill long">Long</span></div></div>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=JOyL0KJRe0g" target="_blank" rel="noopener">1) Momentum Gr 12 | Intro</a><div class="ch">Kevinmathscience · <span class="tier">JOyL0KJRe0g</span></div></div><div class="stats"><span>770K views</span><span>2:09</span><span class="pill short">Short</span></div></div>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=7Zq7PjYaySU" target="_blank" rel="noopener">Exam question momentum gr 12</a><div class="ch">Kevinmathscience · <span class="tier">7Zq7PjYaySU</span></div></div><div class="stats"><span>208K views</span><span>17:17</span><span class="pill mid">Lesson</span></div></div>
+</div>
+  
+  <h2 id="afrikaans">Afrikaans lessons</h2>
+  <p>The app can carry a second, Afrikaans video in every slot. We ran the same search in Afrikaans for all 28 topics. The honest summary: <strong>there is a real Afrikaans YouTube ecosystem for CAPS Maths and Physics, but it is roughly a hundredth the size of the English one</strong> — the biggest channel has 27.7K subscribers against Kevinmathscience's 1.11M, and a typical Afrikaans video has hundreds to low thousands of views rather than hundreds of thousands.</p>
+
+  <div class="note">
+    <p><strong>The best Afrikaans channel blocks embedding.</strong> HouNetOpSukkel (27.7K subscribers, 1.87M views, 63 videos, Maths and Physics Gr 10–12) is by a wide margin the most-watched Afrikaans teacher — its videos average 20–85K views. But 14 of the 16 HouNetOpSukkel videos we found refuse to play inside other apps; only the two Grade 10 Functions videos allow it. Embedding is a per-video setting the owner controls, so the practical move is to <strong>ask them</strong>. A small channel with a tutoring business may well say yes to an app that sends them Afrikaans learners. Until then they are listed below as "Cannot embed" so you can see what you would be missing.</p>
+  </div>
+
+  <div class="tablewrap"><table>
+    <thead><tr><th>Channel</th><th>Subscribers</th><th>Covers</th><th>Our read</th></tr></thead>
+    <tbody>
+      <tr><td><span class="tier">1</span> HouNetOpSukkel</td><td class="num">27.7K · 63 videos · 1.87M views</td><td>Wiskunde + Fisiese Wetenskappe, Gr 10–12, crash courses and revision classes</td><td><strong>Best content, blocked.</strong> Worth one email asking them to enable embedding.</td></tr>
+      <tr><td><span class="tier">2</span> Wiskunde_Mathematics_SUM</td><td class="num">13.6K · 926 videos · 3.0M views</td><td>Short Maths clips Gr 8–12, <strong>every video in both Afrikaans and English</strong></td><td><strong>Best practical pick.</strong> Numbered series per topic, short, embeddable, and the same teacher in both languages — ideal for the app's two-language slot.</td></tr>
+      <tr><td><span class="tier">3</span> Online Maths by Miss Pythagoras</td><td class="num">5.92K · 1,168 videos · 855K views</td><td>Afrikaans Maths Gr 8–12, numbered lessons (L1, L2…) per topic</td><td>Most systematic Afrikaans coverage of the Grade 12 syllabus. Embeddable.</td></tr>
+      <tr><td><span class="tier">4</span> Wiskunde Broers</td><td class="num">4.01K · 60 videos · 196K views</td><td>Afrikaans Maths</td><td>Small library; one good Grade 12 Eweredigheid video.</td></tr>
+      <tr><td><span class="tier">5</span> Danike Aucamp</td><td class="num">2.68K · 346 videos · 330K views</td><td>Wiskunde en Wetenskap Gr 10–12, "in 'n neutedop" summaries</td><td>Useful for Chemistry side of Physical Sciences. Embeddable.</td></tr>
+      <tr><td><span class="tier">6</span> WiskundeMetMargie</td><td class="num">1.22K · 248 videos · 94K views</td><td>Afrikaans Maths, numbered series (#1, #2…) for Gr 10–11</td><td>Best Grade 10 Algebra and Euclidean Geometry coverage in Afrikaans. Embeddable.</td></tr>
+      <tr><td><span class="tier">7</span> WSILAB</td><td class="num">1.19K · 328 videos · 87K views</td><td>Fisiese Wetenskap en Wiskunde, Afrikaans and English, CAPS and IEB</td><td>Backup for physics.</td></tr>
+      <tr><td><span class="tier">8</span> Ekstra Wetenskap Klasse</td><td class="num">876</td><td>Afrikaans Physics Gr 10</td><td>Small but on-topic: the best Grade 10 Stroombane and Golwe clips in Afrikaans. Embeddable.</td></tr>
+      <tr><td><span class="tier">9</span> Skeinat met Schabort</td><td class="num">752 · 1,006 videos</td><td>Afrikaans Physical Sciences Gr 10–12 (sister channel of Science with Schabort)</td><td>Huge library, tiny audience, joined Nov 2024. Did not surface in topic searches — worth a manual look.</td></tr>
+      <tr><td><span class="tier">–</span> Science Clinic</td><td class="num">6.25K · 1 video</td><td>—</td><td><strong>Correction:</strong> their Afrikaans courses are on their own website, not YouTube. Not a source for the app.</td></tr>
+    </tbody>
+  </table></div>
+  <p class="meta" style="margin-top:12px">Also present but not tested: Thuma Mina Teaching (123K, non-profit; language mix unverified), Lekker Wiskunde, Wiskunde hulp deur Lariesa, Juf. OK se Wetenskap Akademie (7 videos), Shap Science SA – Juffrou R (bilingual Physics, 353 subscribers).</p>
+
+<div class="grade"><div class="eyebrow">Wiskunde (Mathematics) · Graad 10</div></div>
+<div class="topic"><h3>Algebraic Expressions <span class="sub">4 Afrikaans candidates</span></h3>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=68tBHlCty1M" target="_blank" rel="noopener">Graad 10 Algebraïese Uitdrukkings #1: Die Getallestelsel</a><div class="ch">WiskundeMetMargie · <span class="tier">68tBHlCty1M</span></div></div><div class="stats"><span>2.7K views</span><span>05:38</span><span class="pill short">Short</span></div></div>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=xl0AdY6jZUs" target="_blank" rel="noopener">Graad 10 Algebraïese Uitdrukkings #6: Produkte met Tweeterms en Drieterms</a><div class="ch">WiskundeMetMargie · <span class="tier">xl0AdY6jZUs</span></div></div><div class="stats"><span>1.5K views</span><span>12:25</span><span class="pill short">Short</span></div></div>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=NNyGntxiNzk" target="_blank" rel="noopener">Graad 10 Algebraïese Uitdrukkings #7: Faktorisering (Kruismetode en Vele Meer)</a><div class="ch">WiskundeMetMargie · <span class="tier">NNyGntxiNzk</span></div></div><div class="stats"><span>1.4K views</span><span>13:47</span><span class="pill short">Short</span></div></div>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=de4BWka2t5g" target="_blank" rel="noopener">Gr 10 Wiskunde : Faktorisering - Som en Verskil van Derdemagte</a><div class="ch">HouNetOpSukkel · <span class="tier">de4BWka2t5g</span></div></div><div class="stats"><span>25.6K views</span><span>10:18</span><span class="pill short">Short</span> <span class="pill blocked">Cannot embed</span></div></div>
+</div>
+<div class="topic"><h3>Equations and Inequalities <span class="sub">4 Afrikaans candidates</span></h3>
+<p class="meta" style="color:var(--warn);margin-top:-4px">The three strong videos are all HouNetOpSukkel and cannot be embedded. The only embeddable one has 45 views. Weak topic.</p>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=tU4eNI2SwAE" target="_blank" rel="noopener">Gr 10 Wiskunde : Gelyktydige Vergelykings - Substitusie en Eliminasie</a><div class="ch">HouNetOpSukkel · <span class="tier">tU4eNI2SwAE</span></div></div><div class="stats"><span>40.6K views</span><span>25:26</span><span class="pill mid">Lesson</span> <span class="pill blocked">Cannot embed</span></div></div>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=tiWXFqpqsgs" target="_blank" rel="noopener">Gr 10 Wiskunde : Lineêre Ongelykhede</a><div class="ch">HouNetOpSukkel · <span class="tier">tiWXFqpqsgs</span></div></div><div class="stats"><span>26.7K views</span><span>18:56</span><span class="pill mid">Lesson</span> <span class="pill blocked">Cannot embed</span></div></div>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=QcmyvFc1r9U" target="_blank" rel="noopener">Gr 10 Wisk : Hersieningsklas 2.1 - Vergelykings en Ongelykhede</a><div class="ch">HouNetOpSukkel · <span class="tier">QcmyvFc1r9U</span></div></div><div class="stats"><span>14.5K views</span><span>20:06</span><span class="pill mid">Lesson</span> <span class="pill blocked">Cannot embed</span></div></div>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=8IUh8jx2vrM" target="_blank" rel="noopener">Gr10 (CAPS) Vergelykings en Ongelykhede</a><div class="ch">Philpotts Consultancy · <span class="tier">8IUh8jx2vrM</span></div></div><div class="stats"><span>45 views</span><span>10:09</span><span class="pill short">Short</span></div></div>
+</div>
+<div class="topic"><h3>Functions and Graphs <span class="sub">4 Afrikaans candidates</span></h3>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=oORnjRomY5w" target="_blank" rel="noopener">Gr 10 Wiskunde : Funksies - Parabool Intro</a><div class="ch">HouNetOpSukkel · <span class="tier">oORnjRomY5w</span></div></div><div class="stats"><span>47.6K views</span><span>10:04</span><span class="pill short">Short</span></div></div>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=Fv-g8e-ZZdE" target="_blank" rel="noopener">Gr 10 Wiskunde : Funksies - Bepaal die Vergelyking van &#x27;n Parabool</a><div class="ch">HouNetOpSukkel · <span class="tier">Fv-g8e-ZZdE</span></div></div><div class="stats"><span>31.0K views</span><span>11:13</span><span class="pill short">Short</span></div></div>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=90DcF3f3V7c" target="_blank" rel="noopener">Funksies Parabool Graad10: L6 Grafiek Interpretasie Eksamen vraag</a><div class="ch">Online Maths by Miss Pythagoras · <span class="tier">90DcF3f3V7c</span></div></div><div class="stats"><span>293 views</span><span>08:11</span><span class="pill short">Short</span></div></div>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=i4bKrt8Puk4" target="_blank" rel="noopener">Skets Van Funksies En Grafieke || Wiskunde Graad 10</a><div class="ch">CollieMath Studio · <span class="tier">i4bKrt8Puk4</span></div></div><div class="stats"><span>532 views</span><span>11:26</span><span class="pill short">Short</span></div></div>
+</div>
+<div class="topic"><h3>Number Patterns <span class="sub">4 Afrikaans candidates</span></h3>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=5TV5cYTMytA" target="_blank" rel="noopener">Graad 10 Wiskunde: Linieere Getalpatrone</a><div class="ch">Dalene Coetzee · <span class="tier">5TV5cYTMytA</span></div></div><div class="stats"><span>898 views</span><span>11:30</span><span class="pill short">Short</span></div></div>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=0y9fAfDp3TM" target="_blank" rel="noopener">Getalpatrone Graad10: L1 Hersiening en Inleiding</a><div class="ch">Online Maths by Miss Pythagoras · <span class="tier">0y9fAfDp3TM</span></div></div><div class="stats"><span>569 views</span><span>06:01</span><span class="pill short">Short</span></div></div>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=jAMB56RrfDs" target="_blank" rel="noopener">W10 Getalpatrone graad 10</a><div class="ch">Stefan Buys · <span class="tier">jAMB56RrfDs</span></div></div><div class="stats"><span>2.2K views</span><span>08:27</span><span class="pill short">Short</span></div></div>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=C7igJjQ_rsM" target="_blank" rel="noopener">Graad 10 Wiskunde Hersiening: Getalpatrone | Vrae uit Vorige Vraestelle (KABV)</a><div class="ch">Smart Culture Education · <span class="tier">C7igJjQ_rsM</span></div></div><div class="stats"><span>625 views</span><span>09:39</span><span class="pill short">Short</span></div></div>
+</div>
+<div class="topic"><h3>Finance and Growth <span class="sub">3 Afrikaans candidates</span></h3>
+<p class="meta" style="color:var(--warn);margin-top:-4px">Last video is Grade 11 level. Mathematical Literacy results were removed.</p>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=T7zTTrn1ulE" target="_blank" rel="noopener">Graad 10 Wiskunde Les 1 Enkelvoudige en saamgestelde rente 13 tot 17 Julie</a><div class="ch">Rochelle Van der Merwe · <span class="tier">T7zTTrn1ulE</span></div></div><div class="stats"><span>1.8K views</span><span>08:14</span><span class="pill short">Short</span></div></div>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=K08zwu3OID0" target="_blank" rel="noopener">Graad 10 | Verstaan Enkelvoudige Rente: &#x27;n Inleiding</a><div class="ch">Smart Culture Education · <span class="tier">K08zwu3OID0</span></div></div><div class="stats"><span>495 views</span><span>03:55</span><span class="pill short">Short</span></div></div>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=mGIa5BYX9vM" target="_blank" rel="noopener">Enkelvoudige en Saamgestelde Rente - Graad 11</a><div class="ch">SlimDink · <span class="tier">mGIa5BYX9vM</span></div></div><div class="stats"><span>2.1K views</span><span>08:51</span><span class="pill short">Short</span></div></div>
+</div>
+<div class="topic"><h3>Trigonometry <span class="sub">4 Afrikaans candidates</span></h3>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=U3rGPy484Ro" target="_blank" rel="noopener">Graad 10 Trigonometrie</a><div class="ch">YCDM - YouCanDoMaths · <span class="tier">U3rGPy484Ro</span></div></div><div class="stats"><span>12.8K views</span><span>08:56</span><span class="pill short">Short</span></div></div>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=aYs5h0288mg" target="_blank" rel="noopener">Gr10 Trigonometrie - Les 5 Sakrekenaar Spesiale hoeke</a><div class="ch">Lekker Wiskunde · <span class="tier">aYs5h0288mg</span></div></div><div class="stats"><span>289 views</span><span>11:49</span><span class="pill short">Short</span></div></div>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=pNasYZnXYSw" target="_blank" rel="noopener">Gr. 10 Wiskunde: Trigonometrie</a><div class="ch">Danike Aucamp_Wiskunde en Wetenskap · <span class="tier">pNasYZnXYSw</span></div></div><div class="stats"><span>678 views</span><span>28:06</span><span class="pill mid">Lesson</span></div></div>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=ZVc-YFUfwtE" target="_blank" rel="noopener">Gr 10 Wiskunde : Trigonometrie - Oplos van Driehoeke</a><div class="ch">HouNetOpSukkel · <span class="tier">ZVc-YFUfwtE</span></div></div><div class="stats"><span>84.6K views</span><span>36:44</span><span class="pill long">Long</span> <span class="pill blocked">Cannot embed</span></div></div>
+</div>
+<div class="topic"><h3>Analytical Geometry <span class="sub">4 Afrikaans candidates</span></h3>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=jndysNtUg9s" target="_blank" rel="noopener">Analitiese meetkunde Middelpunt Graad 10 en ouer  (wiskvaw)</a><div class="ch">VAW-Vereniging vir Afrikaanse Wiskunde-onderwysers · <span class="tier">jndysNtUg9s</span></div></div><div class="stats"><span>2.2K views</span><span>02:12</span><span class="pill short">Short</span></div></div>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=arh51glLHFU" target="_blank" rel="noopener">W10 3.Analitiese Meetkunde Hellings/Gradiënte</a><div class="ch">Stefan Buys · <span class="tier">arh51glLHFU</span></div></div><div class="stats"><span>419 views</span><span>04:46</span><span class="pill short">Short</span></div></div>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=4kCOeJdhECM" target="_blank" rel="noopener">Gr10 Junie Eksamen voorbereiding: Analitiese Meetkunde</a><div class="ch">Lichelle Barnard · <span class="tier">4kCOeJdhECM</span></div></div><div class="stats"><span>116 views</span><span>24:15</span><span class="pill mid">Lesson</span></div></div>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=0EgRpXmKq44" target="_blank" rel="noopener">Gr 10 Wisk : Hersieningsklas 4 - Analitiese Meetkunde</a><div class="ch">HouNetOpSukkel · <span class="tier">0EgRpXmKq44</span></div></div><div class="stats"><span>50.0K views</span><span>12:53</span><span class="pill short">Short</span> <span class="pill blocked">Cannot embed</span></div></div>
+</div>
+<div class="topic"><h3>Euclidean Geometry <span class="sub">4 Afrikaans candidates</span></h3>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=8ev_al-joQI" target="_blank" rel="noopener">Graad 10 Euklidiese Meetkunde #1: Inleiding</a><div class="ch">WiskundeMetMargie · <span class="tier">8ev_al-joQI</span></div></div><div class="stats"><span>2.5K views</span><span>08:06</span><span class="pill short">Short</span></div></div>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=37yh72NntxQ" target="_blank" rel="noopener">Graad 10 Euklidiese Meetkunde #10 : Middelpuntstelling met Voorbeelde</a><div class="ch">WiskundeMetMargie · <span class="tier">37yh72NntxQ</span></div></div><div class="stats"><span>608 views</span><span>16:39</span><span class="pill mid">Lesson</span></div></div>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=oda9jTEWVyU" target="_blank" rel="noopener">Graad 10 Euklidiese meetkunde Parallelo gramme</a><div class="ch">Wiskunde · <span class="tier">oda9jTEWVyU</span></div></div><div class="stats"><span>100 views</span><span>14:10</span><span class="pill short">Short</span></div></div>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=BSDa-8njr2w" target="_blank" rel="noopener">Euklidiese Meetkunde Voorbeelde - Verduideliking || Wiskunde Graad 10</a><div class="ch">CollieMath Studio · <span class="tier">BSDa-8njr2w</span></div></div><div class="stats"><span>382 views</span><span>01:09:43</span><span class="pill long">Long</span></div></div>
+</div>
+<div class="topic"><h3>Statistics <span class="sub">4 Afrikaans candidates</span></h3>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=twoRWkbvv_o" target="_blank" rel="noopener">Graad 10 Wiskunde Les 1 Statistiek</a><div class="ch">Rochelle Van der Merwe · <span class="tier">twoRWkbvv_o</span></div></div><div class="stats"><span>7.0K views</span><span>04:12</span><span class="pill short">Short</span></div></div>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=IyFhkpXp9zM" target="_blank" rel="noopener">Gr. 10 - Statistiek Video 1</a><div class="ch">QuickMafs · <span class="tier">IyFhkpXp9zM</span></div></div><div class="stats"><span>1.8K views</span><span>04:23</span><span class="pill short">Short</span></div></div>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=GuM1joF5aWw" target="_blank" rel="noopener">Graad 10 Wiskunde Memo 1 Statistiek</a><div class="ch">Rochelle Van der Merwe · <span class="tier">GuM1joF5aWw</span></div></div><div class="stats"><span>377 views</span><span>05:28</span><span class="pill short">Short</span></div></div>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=aYxCSk3zeTg" target="_blank" rel="noopener">Data Hantering Voorbeeld Verduideliking || Wiskunde Graad 10</a><div class="ch">CollieMath Studio · <span class="tier">aYxCSk3zeTg</span></div></div><div class="stats"><span>893 views</span><span>24:48</span><span class="pill mid">Lesson</span></div></div>
+</div>
+<div class="topic"><h3>Probability <span class="sub">4 Afrikaans candidates</span></h3>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=Gx2qBMBObYs" target="_blank" rel="noopener">01 Waarskynlikheid - Hersiening van Graad 10</a><div class="ch">Wiskunde_Mathematics_SUM · <span class="tier">Gx2qBMBObYs</span></div></div><div class="stats"><span>19.6K views</span><span>12:13</span><span class="pill short">Short</span></div></div>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=ZRZQV5YLuPc" target="_blank" rel="noopener">Graad 10 Waarskynlikheid</a><div class="ch">YCDM - YouCanDoMaths · <span class="tier">ZRZQV5YLuPc</span></div></div><div class="stats"><span>13.0K views</span><span>13:45</span><span class="pill short">Short</span></div></div>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=ZXDCP67cYEw" target="_blank" rel="noopener">Graad 10 Wiskunde Les 1 Waarskynlikheid</a><div class="ch">Rochelle Van der Merwe · <span class="tier">ZXDCP67cYEw</span></div></div><div class="stats"><span>3.3K views</span><span>07:13</span><span class="pill short">Short</span></div></div>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=pLP_eWbWoVk" target="_blank" rel="noopener">Graad 10 Wiskunde Les 4 Waarskynlikheid</a><div class="ch">Rochelle Van der Merwe · <span class="tier">pLP_eWbWoVk</span></div></div><div class="stats"><span>704 views</span><span>01:57</span><span class="pill short">Short</span></div></div>
+</div>
+<div class="grade"><div class="eyebrow">Wiskunde (Mathematics) · Graad 11</div></div>
+<div class="topic"><h3>Trigonometry <span class="sub">4 Afrikaans candidates</span></h3>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=Jiz_6sQY418" target="_blank" rel="noopener">Graad 11 Trig identiteite (bewys)</a><div class="ch">Mathfanatics · <span class="tier">Jiz_6sQY418</span></div></div><div class="stats"><span>452 views</span><span>18:46</span><span class="pill mid">Lesson</span></div></div>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=WLeO-VJj-zs" target="_blank" rel="noopener">Voorbeeld van Bewys die Identiteit (LK=RK) - Graad 11</a><div class="ch">SlimDink · <span class="tier">WLeO-VJj-zs</span></div></div><div class="stats"><span>818 views</span><span>03:59</span><span class="pill short">Short</span></div></div>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=aZ31zEGOhgs" target="_blank" rel="noopener">Herkende Trigonometriese Identiteite - Graad 11</a><div class="ch">SlimDink · <span class="tier">aZ31zEGOhgs</span></div></div><div class="stats"><span>138 views</span><span>08:28</span><span class="pill short">Short</span></div></div>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=ImrMU3AKWr8" target="_blank" rel="noopener">Trigonometrie ; Bewys Van Identiteite - Verduideliking en Voorbeelde || Wiskunde Graad 11</a><div class="ch">CollieMath Studio · <span class="tier">ImrMU3AKWr8</span></div></div><div class="stats"><span>80 views</span><span>29:50</span><span class="pill mid">Lesson</span></div></div>
+</div>
+<div class="topic"><h3>Analytical Geometry <span class="sub">2 Afrikaans candidates</span></h3>
+<p class="meta" style="color:var(--warn);margin-top:-4px">Only one on-topic embeddable Afrikaans video surfaced. Weak topic.</p>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=kwLfg5jJ2eI" target="_blank" rel="noopener">Graad 11 Analitiese Meetkunde #6: Ewewydige (Parallele) Lyne</a><div class="ch">WiskundeMetMargie · <span class="tier">kwLfg5jJ2eI</span></div></div><div class="stats"><span>181 views</span><span>12:47</span><span class="pill short">Short</span></div></div>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=0EgRpXmKq44" target="_blank" rel="noopener">Gr 10 Wisk : Hersieningsklas 4 - Analitiese Meetkunde</a><div class="ch">HouNetOpSukkel · <span class="tier">0EgRpXmKq44</span></div></div><div class="stats"><span>50.0K views</span><span>12:53</span><span class="pill short">Short</span> <span class="pill blocked">Cannot embed</span></div></div>
+</div>
+<div class="topic"><h3>Euclidean Geometry <span class="sub">4 Afrikaans candidates</span></h3>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=ULsEMok0Ksk" target="_blank" rel="noopener">Sirkelmeetkunde vraagstukke 1 euklidiese graad 11 (wiskvaw) (wiskdo)</a><div class="ch">VAW-Vereniging vir Afrikaanse Wiskunde-onderwysers · <span class="tier">ULsEMok0Ksk</span></div></div><div class="stats"><span>915 views</span><span>04:42</span><span class="pill short">Short</span></div></div>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=cCej2oFSZ1s" target="_blank" rel="noopener">Sirkelmeetkunde vraagstukke 3 euklidiese graad 11 (wiskvaw) (wiskdo)</a><div class="ch">VAW-Vereniging vir Afrikaanse Wiskunde-onderwysers · <span class="tier">cCej2oFSZ1s</span></div></div><div class="stats"><span>229 views</span><span>04:53</span><span class="pill short">Short</span></div></div>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=iU6JUwI7l8w" target="_blank" rel="noopener">Grade 11 euklidiese meetkunde sirkels (mathdou)</a><div class="ch">Dou Kleefstra · <span class="tier">iU6JUwI7l8w</span></div></div><div class="stats"><span>2.1K views</span><span>04:49</span><span class="pill short">Short</span></div></div>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=HBw5Lu95IbM" target="_blank" rel="noopener">Euklidiese meetkunde sirkels 11.20 (wiskdou) Graad 11 en ouer</a><div class="ch">Dou Kleefstra · <span class="tier">HBw5Lu95IbM</span></div></div><div class="stats"><span>2.3K views</span><span>02:57</span><span class="pill short">Short</span></div></div>
+</div>
+<div class="topic"><h3>Statistics <span class="sub">3 Afrikaans candidates</span></h3>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=FAkpy9lI958" target="_blank" rel="noopener">04 Gegroepeerde data en ogiewe</a><div class="ch">Wiskunde_Mathematics_SUM · <span class="tier">FAkpy9lI958</span></div></div><div class="stats"><span>13.8K views</span><span>09:49</span><span class="pill short">Short</span></div></div>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=w_-oF0w5DDY" target="_blank" rel="noopener">Statistiek Graad11 L2: Ogief of kumulatiewe frekwensie kurwe  Wiskunde</a><div class="ch">Online Maths by Miss Pythagoras · <span class="tier">w_-oF0w5DDY</span></div></div><div class="stats"><span>5.0K views</span><span>10:29</span><span class="pill short">Short</span></div></div>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=v0NWn7nXALU" target="_blank" rel="noopener">Gr 11 en 12 Ogief Statistiek Deel 1 - Die Basics</a><div class="ch">But They Ask It In A Funny Way · <span class="tier">v0NWn7nXALU</span></div></div><div class="stats"><span>178 views</span><span>15:28</span><span class="pill mid">Lesson</span></div></div>
+</div>
+<div class="grade"><div class="eyebrow">Wiskunde (Mathematics) · Graad 12</div></div>
+<div class="topic"><h3>Calculus <span class="sub">4 Afrikaans candidates</span></h3>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=7xLX-oLsmFM" target="_blank" rel="noopener">09 Grafiese interpretasie van afgeleide</a><div class="ch">Wiskunde_Mathematics_SUM · <span class="tier">7xLX-oLsmFM</span></div></div><div class="stats"><span>4.3K views</span><span>05:47</span><span class="pill short">Short</span></div></div>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=vgXpuSdQbjc" target="_blank" rel="noopener">Die grafiek van die afgeleide van &#x27;n funksie</a><div class="ch">Wiskunde Graad 12 Juffrou Koorsen · <span class="tier">vgXpuSdQbjc</span></div></div><div class="stats"><span>82 views</span><span>08:22</span><span class="pill short">Short</span></div></div>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=T7lN-6kcGE0" target="_blank" rel="noopener">Graad 12 Differensiaalrekene Kort metode</a><div class="ch">Wiskunde · <span class="tier">T7lN-6kcGE0</span></div></div><div class="stats"><span>23 views</span><span>25:55</span><span class="pill mid">Lesson</span></div></div>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=n3XE5NtY-Ls" target="_blank" rel="noopener">Differensiasie - Verduideliking en Voorbeelde || Wiskunde Graad 12</a><div class="ch">CollieMath Studio · <span class="tier">n3XE5NtY-Ls</span></div></div><div class="stats"><span>341 views</span><span>36:12</span><span class="pill long">Long</span></div></div>
+</div>
+<div class="topic"><h3>Sequences and Series <span class="sub">4 Afrikaans candidates</span></h3>
+<p class="meta" style="color:var(--warn);margin-top:-4px">HouNetOpSukkel has the best three (20–30K views each) but all block embedding. One embeddable alternative with 362 views.</p>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=Pu2B6FY7YkA" target="_blank" rel="noopener">Graad 12, Vraestel 1, Vraag 2, Rye en Reekse Video 1: Teorie</a><div class="ch">Wizzkunde · <span class="tier">Pu2B6FY7YkA</span></div></div><div class="stats"><span>362 views</span><span>08:16</span><span class="pill short">Short</span></div></div>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=EGLMIlomhjM" target="_blank" rel="noopener">Gr 12 Wiskunde : Rye en Reekse - Sigma Notasie</a><div class="ch">HouNetOpSukkel · <span class="tier">EGLMIlomhjM</span></div></div><div class="stats"><span>29.8K views</span><span>24:07</span><span class="pill mid">Lesson</span> <span class="pill blocked">Cannot embed</span></div></div>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=FZFIkpQgD8s" target="_blank" rel="noopener">Gr 12 Wiskunde : Rye en Reekse - Bewys Sn vir &#x27;n Meetkundige Reeks</a><div class="ch">HouNetOpSukkel · <span class="tier">FZFIkpQgD8s</span></div></div><div class="stats"><span>20.0K views</span><span>05:34</span><span class="pill short">Short</span> <span class="pill blocked">Cannot embed</span></div></div>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=cxg1zOYHBng" target="_blank" rel="noopener">Gr 12 Wiskunde : Rye en Reekse - Bewys Sn vir &#x27;n Rekenkundige Reeks</a><div class="ch">HouNetOpSukkel · <span class="tier">cxg1zOYHBng</span></div></div><div class="stats"><span>23.6K views</span><span>03:28</span><span class="pill short">Short</span> <span class="pill blocked">Cannot embed</span></div></div>
+</div>
+<div class="topic"><h3>Analytical Geometry <span class="sub">4 Afrikaans candidates</span></h3>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=9YT8XPAM9Vc" target="_blank" rel="noopener">Analitiese Meetkunde Graad 12 Wiskunde: L1 Sirkel met oorsprong middelpunt</a><div class="ch">Online Maths by Miss Pythagoras · <span class="tier">9YT8XPAM9Vc</span></div></div><div class="stats"><span>6.8K views</span><span>13:48</span><span class="pill short">Short</span></div></div>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=w5nJdK5AdFQ" target="_blank" rel="noopener">04  Raaklyne aan sirkels</a><div class="ch">Wiskunde_Mathematics_SUM · <span class="tier">w5nJdK5AdFQ</span></div></div><div class="stats"><span>4.2K views</span><span>09:07</span><span class="pill short">Short</span></div></div>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=v3HhBGG552c" target="_blank" rel="noopener">A1 Gr 12 Analitiese Meetkunde Sirkel by oorsprong</a><div class="ch">Wiskunde Graad 12 Juffrou Koorsen · <span class="tier">v3HhBGG552c</span></div></div><div class="stats"><span>773 views</span><span>05:03</span><span class="pill short">Short</span></div></div>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=Pwf6Ukzv38I" target="_blank" rel="noopener">Gr12 Analitiese Meetkunde : Sirkels Notas - Snyding (Interne en Eksterne)</a><div class="ch">123 Maths Training · <span class="tier">Pwf6Ukzv38I</span></div></div><div class="stats"><span>91 views</span><span>03:12</span><span class="pill short">Short</span></div></div>
+</div>
+<div class="topic"><h3>Euclidean Geometry <span class="sub">4 Afrikaans candidates</span></h3>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=1dqCThLt2Fk" target="_blank" rel="noopener">Euklidiese Meetkunde Graad12: L1 Eweredigheid in Driehoeke( Lyn ewewydig een sy van driehoek)</a><div class="ch">Online Maths by Miss Pythagoras · <span class="tier">1dqCThLt2Fk</span></div></div><div class="stats"><span>7.9K views</span><span>15:40</span><span class="pill mid">Lesson</span></div></div>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=Sj5pFbuGtK4" target="_blank" rel="noopener">Eweredigheid</a><div class="ch">Wiskunde Broers · <span class="tier">Sj5pFbuGtK4</span></div></div><div class="stats"><span>7.7K views</span><span>08:19</span><span class="pill short">Short</span></div></div>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=ffTCN19mHMw" target="_blank" rel="noopener">Euklidiese Meetkunde Gemengde Maklike Voorbeelde #1 - #7 || Wiskunde Graad 12</a><div class="ch">CollieMath Studio · <span class="tier">ffTCN19mHMw</span></div></div><div class="stats"><span>155 views</span><span>49:03</span><span class="pill long">Long</span></div></div>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=GbXpQ2YDdNQ" target="_blank" rel="noopener">Eweredigheid en Gelykvormigheid Verduideliking Via Voorbeelde || Wiskunde Graad 12</a><div class="ch">CollieMath Studio · <span class="tier">GbXpQ2YDdNQ</span></div></div><div class="stats"><span>247 views</span><span>01:21:17</span><span class="pill long">Long</span></div></div>
+</div>
+<div class="topic"><h3>Probability <span class="sub">4 Afrikaans candidates</span></h3>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=5HNopMSeyLg" target="_blank" rel="noopener">Waarskynlikheid Graad12: L1 Fundamentele Telbeginsel Wiskunde</a><div class="ch">Online Maths by Miss Pythagoras · <span class="tier">5HNopMSeyLg</span></div></div><div class="stats"><span>5.9K views</span><span>10:56</span><span class="pill short">Short</span></div></div>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=kOSiMdRRPBg" target="_blank" rel="noopener">Telbeginsels Waarskynlikheid Graad 12 (wiskdou)</a><div class="ch">Dou Kleefstra · <span class="tier">kOSiMdRRPBg</span></div></div><div class="stats"><span>3.2K views</span><span>04:49</span><span class="pill short">Short</span></div></div>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=pnZ3qXnhT08" target="_blank" rel="noopener">Waarskynlikheid - Fundamentele Telbeginsel</a><div class="ch">Arnold Lamont · <span class="tier">pnZ3qXnhT08</span></div></div><div class="stats"><span>2.6K views</span><span>09:02</span><span class="pill short">Short</span></div></div>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=0gtdb64d5jg" target="_blank" rel="noopener">Wiskunde met LitNet: graad 12 – Waarskynlikheid</a><div class="ch">Chris Brunette · <span class="tier">0gtdb64d5jg</span></div></div><div class="stats"><span>221 views</span><span>12:23</span><span class="pill short">Short</span></div></div>
+</div>
+<div class="grade"><div class="eyebrow">Fisiese Wetenskappe (Physical Sciences) · Graad 10</div></div>
+<div class="topic"><h3>Mechanics <span class="sub">0 Afrikaans candidates</span></h3>
+<p class="meta" style="color:var(--warn);margin-top:-4px">No on-topic Afrikaans video surfaced for motion in one dimension. Search returned wave videos. Needs a manual search or an English fallback.</p>
+</div>
+<div class="topic"><h3>Transverse Waves <span class="sub">3 Afrikaans candidates</span></h3>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=fhCoYWh97Nc" target="_blank" rel="noopener">Transversale golwe: Graad 10 Fisika</a><div class="ch">Ekstra Wetenskap Klasse · <span class="tier">fhCoYWh97Nc</span></div></div><div class="stats"><span>3.4K views</span><span>06:46</span><span class="pill short">Short</span></div></div>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=IoqhxiZgT5U" target="_blank" rel="noopener">Gr 10 Fisiese Wetenskappe Transversale Golwe - Janiena Daubert</a><div class="ch">Hoërskool Noordheuwel · <span class="tier">IoqhxiZgT5U</span></div></div><div class="stats"><span>2.9K views</span><span>54:19</span><span class="pill long">Long</span></div></div>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=tiXt-JRl2tQ" target="_blank" rel="noopener">Gr 10 Fisika : Hersieningsklas 1 - Transversale en Longitudinale Golwe</a><div class="ch">HouNetOpSukkel · <span class="tier">tiXt-JRl2tQ</span></div></div><div class="stats"><span>38.1K views</span><span>21:17</span><span class="pill mid">Lesson</span> <span class="pill blocked">Cannot embed</span></div></div>
+</div>
+<div class="topic"><h3>Sound <span class="sub">3 Afrikaans candidates</span></h3>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=9NSTY53rU0o" target="_blank" rel="noopener">Gr.10 Longitudinale golwe</a><div class="ch">Douwliena Fourie · <span class="tier">9NSTY53rU0o</span></div></div><div class="stats"><span>741 views</span><span>03:31</span><span class="pill short">Short</span></div></div>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=Ye7QmYuHeBE" target="_blank" rel="noopener">Gr 10 Fisiese Wetenskappe Longitudinale Golwe - Janiena Daubert</a><div class="ch">Hoërskool Noordheuwel · <span class="tier">Ye7QmYuHeBE</span></div></div><div class="stats"><span>1.9K views</span><span>23:13</span><span class="pill mid">Lesson</span></div></div>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=tiXt-JRl2tQ" target="_blank" rel="noopener">Gr 10 Fisika : Hersieningsklas 1 - Transversale en Longitudinale Golwe</a><div class="ch">HouNetOpSukkel · <span class="tier">tiXt-JRl2tQ</span></div></div><div class="stats"><span>38.1K views</span><span>21:17</span><span class="pill mid">Lesson</span> <span class="pill blocked">Cannot embed</span></div></div>
+</div>
+<div class="topic"><h3>Electromagnetic Radiation <span class="sub">3 Afrikaans candidates</span></h3>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=yVipv9v9JVo" target="_blank" rel="noopener">Elektromagnetiese golwe en spektrum Graad 10 Fisika</a><div class="ch">Ekstra Wetenskap Klasse · <span class="tier">yVipv9v9JVo</span></div></div><div class="stats"><span>2.2K views</span><span>09:55</span><span class="pill short">Short</span></div></div>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=nxug2Fhnud8" target="_blank" rel="noopener">Gr.10 Formuleblad. Elektromagnetiese golwe.</a><div class="ch">Douwliena Fourie · <span class="tier">nxug2Fhnud8</span></div></div><div class="stats"><span>435 views</span><span>01:20</span><span class="pill short">Short</span></div></div>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=cXkvDhvqQO0" target="_blank" rel="noopener">Gr 10 Fisika : Hersieningsklas 2 - Elektromagnetiese Golwe</a><div class="ch">HouNetOpSukkel · <span class="tier">cXkvDhvqQO0</span></div></div><div class="stats"><span>20.1K views</span><span>10:39</span><span class="pill short">Short</span> <span class="pill blocked">Cannot embed</span></div></div>
+</div>
+<div class="topic"><h3>Electric Circuits <span class="sub">4 Afrikaans candidates</span></h3>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=xO7N97B1RB0" target="_blank" rel="noopener">Stroombane: Berekeninge Graad 10 Fisika</a><div class="ch">Ekstra Wetenskap Klasse · <span class="tier">xO7N97B1RB0</span></div></div><div class="stats"><span>4.7K views</span><span>07:08</span><span class="pill short">Short</span></div></div>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=fc9fd9d5J14" target="_blank" rel="noopener">Stroombane: Voorbeelde van stroombaan berekeninge Graad 10 Fisika</a><div class="ch">Ekstra Wetenskap Klasse · <span class="tier">fc9fd9d5J14</span></div></div><div class="stats"><span>9.0K views</span><span>10:45</span><span class="pill short">Short</span></div></div>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=efdBSXXC85A" target="_blank" rel="noopener">Gr 10 Fisika : Hersieningsklas 4 - Stroombane 1</a><div class="ch">HouNetOpSukkel · <span class="tier">efdBSXXC85A</span></div></div><div class="stats"><span>40.2K views</span><span>17:40</span><span class="pill mid">Lesson</span> <span class="pill blocked">Cannot embed</span></div></div>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=fe58DwqVx9o" target="_blank" rel="noopener">Gr 10 Fisika : Hersieningsklas 4 - Stroombane 2</a><div class="ch">HouNetOpSukkel · <span class="tier">fe58DwqVx9o</span></div></div><div class="stats"><span>19.3K views</span><span>13:10</span><span class="pill short">Short</span> <span class="pill blocked">Cannot embed</span></div></div>
+</div>
+<div class="topic"><h3>Matter and Materials <span class="sub">2 Afrikaans candidates</span></h3>
+<p class="meta" style="color:var(--warn);margin-top:-4px">Thin: one general chemistry overview and one long lab video.</p>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=_Ad0WdFmEsY" target="_blank" rel="noopener">Gr. 10 Chemie: Fisiese en Chemiese verandering in &#x27;n NEUTEDOP </a><div class="ch">Danike Aucamp_Wiskunde en Wetenskap · <span class="tier">_Ad0WdFmEsY</span></div></div><div class="stats"><span>4.4K views</span><span>12:58</span><span class="pill short">Short</span></div></div>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=69ybb2h55aU" target="_blank" rel="noopener">Gr 10 Fisiese Wetenskappe: Erken Anione in oplossings</a><div class="ch">Mari Bartholomae · <span class="tier">69ybb2h55aU</span></div></div><div class="stats"><span>32 views</span><span>39:31</span><span class="pill long">Long</span></div></div>
+</div>
+<div class="grade"><div class="eyebrow">Fisiese Wetenskappe (Physical Sciences) · Graad 11</div></div>
+<div class="topic"><h3>Newton&#x27;s Laws <span class="sub">4 Afrikaans candidates</span></h3>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=FA5DBBNyS8E" target="_blank" rel="noopener">Newton se wette: Trek krag teen &#x27;n hoek</a><div class="ch">HenBot Wetenskap · <span class="tier">FA5DBBNyS8E</span></div></div><div class="stats"><span>4.5K views</span><span>13:46</span><span class="pill short">Short</span></div></div>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=ZT1bhZDYBD8" target="_blank" rel="noopener">Fisika | Newton se Wette Eksamenvraag 6 | Fisiese Wetenskappe CAPS | Gr 11 - 12</a><div class="ch">Shap Science SA - Juffrou R · <span class="tier">ZT1bhZDYBD8</span></div></div><div class="stats"><span>110 views</span><span>27:27</span><span class="pill mid">Lesson</span></div></div>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=8nD6e9mqQBY" target="_blank" rel="noopener">Gr 11 Wetenskap : Meganika - Newton 2 Vb 1</a><div class="ch">HouNetOpSukkel · <span class="tier">8nD6e9mqQBY</span></div></div><div class="stats"><span>49.9K views</span><span>07:26</span><span class="pill short">Short</span> <span class="pill blocked">Cannot embed</span></div></div>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=jPxiSarJxE4" target="_blank" rel="noopener">Gr 11 Wetenskap : Meganika - Newton 2 Vb 4</a><div class="ch">HouNetOpSukkel · <span class="tier">jPxiSarJxE4</span></div></div><div class="stats"><span>19.6K views</span><span>09:28</span><span class="pill short">Short</span> <span class="pill blocked">Cannot embed</span></div></div>
+</div>
+<div class="topic"><h3>Waves and Sound <span class="sub">0 Afrikaans candidates</span></h3>
+<p class="meta" style="color:var(--warn);margin-top:-4px">No on-topic Afrikaans video surfaced for 2D/3D wavefronts or diffraction. Results were vectors and redox. Use the English Mindset videos.</p>
+</div>
+<div class="grade"><div class="eyebrow">Fisiese Wetenskappe (Physical Sciences) · Graad 12</div></div>
+<div class="topic"><h3>Momentum and Impulse <span class="sub">4 Afrikaans candidates</span></h3>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=2YERVz7HUMI" target="_blank" rel="noopener">Momentum en Impuls - Afrikaans Potgooi / Fisika / Fisiese Wetenskappe / Graad 12 NSS</a><div class="ch">Simple Science · <span class="tier">2YERVz7HUMI</span></div></div><div class="stats"><span>228 views</span><span>08:20</span><span class="pill short">Short</span></div></div>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=q7-CZbl6M8k" target="_blank" rel="noopener">Boost Series: Momentum en Impuls</a><div class="ch">STEM in ACTION MandelaUni · <span class="tier">q7-CZbl6M8k</span></div></div><div class="stats"><span>835 views</span><span>41:03</span><span class="pill long">Long</span></div></div>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=TRrTMvHCh08" target="_blank" rel="noopener">Newton se Tweede Wet en Momentum | Graad 12 Fisiese Wetenskap | CAPS Afrikaans</a><div class="ch">Nelius Maths and Science Tutor · <span class="tier">TRrTMvHCh08</span></div></div><div class="stats"><span>4 views</span><span>21:39</span><span class="pill mid">Lesson</span></div></div>
+<div class="vid"><div><a href="https://www.youtube.com/watch?v=9x--nIiaIH8" target="_blank" rel="noopener">Gr 12 Nas : Meganika - Momentum en Impuls</a><div class="ch">HouNetOpSukkel · <span class="tier">9x--nIiaIH8</span></div></div><div class="stats"><span>31.1K views</span><span>24:54</span><span class="pill mid">Lesson</span> <span class="pill blocked">Cannot embed</span></div></div>
+</div>
+  
+  <p class="meta">Counts read from YouTube on 17 Sep 2026 and will drift. Embedding was verified with YouTube's own embed check; a channel can still switch it off later, which is why the app needs a broken-video check. Search was run per topic with "south africa caps" appended and filtered to the channels in the table above, so a good video from a channel not on the list will not appear here.</p>
+  </section>
+  <div class="foot">Source of truth: the <span class="mono">angelo-tutoring</span> repository on branch <span class="mono">master</span>, reviewed 17 Sep 2026. Estimates will be revised once real services are connected and the scope questions above are answered.</div>
+</div>
+</body>
+</html>
