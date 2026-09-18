@@ -15,11 +15,8 @@ export const trigonometryGr10: TopicContent = {
       blocks: [
         {
           type: 'theory',
-          title: 'Full Notes Coming Soon',
-          body: `Full notes for this topic are coming soon. In the meantime, watch the Mindset Learn video below.
-
-This topic covers:
-• **Right-Angled Triangles** - Identifying sides (opposite, adjacent, hypotenuse)
+          title: 'What this topic covers',
+          body: `• **Right-Angled Triangles** - Identifying sides (opposite, adjacent, hypotenuse)
 • **Trigonometric Ratios** - sin, cos, tan definitions (SOH CAH TOA)
 • **Calculating Ratios** - Finding trig ratios from given triangles
 • **Finding Angles** - Using inverse trig functions
@@ -40,6 +37,7 @@ This topic covers:
           title: 'Watch: Trigonometry 2D Grade 10 Angle of elevation and depression — Miss Martins Maths and Science',
           videoId: 'KvBqPFfzfEM'
         }
+        // TODO(curator): add { type: 'formula', formulas: [...] } block
       ]
     }
   ]

@@ -15,11 +15,8 @@ export const emRadiationGr10: TopicContent = {
       blocks: [
         {
           type: 'theory',
-          title: 'Full Notes Coming Soon',
-          body: `Full notes for this topic are coming soon. In the meantime, watch the Mindset Learn video below.
-
-This topic covers:
-• **EM Spectrum** - Radio, microwave, infrared, visible, UV, X-ray, gamma
+          title: 'What this topic covers',
+          body: `• **EM Spectrum** - Radio, microwave, infrared, visible, UV, X-ray, gamma
 • **Properties of EM Waves** - Travel at speed of light, don't need a medium
 • **Wavelength and Frequency** - Relationship across the spectrum
 • **Energy and Frequency** - Higher frequency = more energy
@@ -40,6 +37,7 @@ This topic covers:
           title: 'Watch: Electromagnetic radiation calculations Grade 10 Physics — Miss Martins Maths and Science',
           videoId: 'AAyPp8W9mWw'
         }
+        // TODO(curator): add { type: 'formula', formulas: [...] } block
       ]
     }
   ]

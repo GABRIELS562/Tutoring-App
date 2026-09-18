@@ -15,19 +15,15 @@ export const sequencesSeriesGr12: TopicContent = {
       blocks: [
         {
           type: 'theory',
-          title: 'Content Under Development',
-          body: `This topic is currently being developed. Check back soon for comprehensive content on:
-
-• **Arithmetic Sequences** - Finding terms and the common difference
+          title: 'What this topic covers',
+          body: `• **Arithmetic Sequences** - Finding terms and the common difference
 • **Arithmetic Series** - Sum of arithmetic sequences
 • **Geometric Sequences** - Finding terms and the common ratio
 • **Geometric Series** - Sum of geometric sequences (finite and infinite)
 • **Sigma Notation** - Understanding and using summation notation
 • **Convergence** - When infinite series have a finite sum
 • **Mixed Problems** - Combining arithmetic and geometric concepts
-• **Real-World Applications** - Finance, growth, and decay problems
-
-In the meantime, practice with past papers available in the Papers section.`
+• **Real-World Applications** - Finance, growth, and decay problems`
         },
         {
           type: 'tip',
@@ -46,6 +42,7 @@ In the meantime, practice with past papers available in the Papers section.`
           title: 'Watch: Grade 12 Mathematics | Sequence and Series | Past Exam Questions | May/June 2021_Question 2 — Mlungisi Nkosi Maths & Science',
           videoId: 'nBFLxEZko8o'
         }
+        // TODO(curator): add { type: 'formula', formulas: [...] } block
       ]
     }
   ]

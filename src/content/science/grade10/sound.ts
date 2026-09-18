@@ -15,11 +15,8 @@ export const soundGr10: TopicContent = {
       blocks: [
         {
           type: 'theory',
-          title: 'Full Notes Coming Soon',
-          body: `Full notes for this topic are coming soon. In the meantime, watch the Mindset Learn video below.
-
-This topic covers:
-• **Longitudinal Waves** - Compressions and rarefactions
+          title: 'What this topic covers',
+          body: `• **Longitudinal Waves** - Compressions and rarefactions
 • **Sound Production** - Vibrating objects creating sound
 • **Sound Propagation** - Requires a medium (solid, liquid, gas)
 • **Speed of Sound** - Different in different media
@@ -40,6 +37,7 @@ This topic covers:
           title: 'Watch: 5) Sound Waves Grade 10 — Kevinmathscience',
           videoId: '1u5GSxuSj7A'
         }
+        // TODO(curator): add { type: 'formula', formulas: [...] } block
       ]
     }
   ]

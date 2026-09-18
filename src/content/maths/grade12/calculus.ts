@@ -15,19 +15,15 @@ export const calculusGr12: TopicContent = {
       blocks: [
         {
           type: 'theory',
-          title: 'Content Under Development',
-          body: `This topic is currently being developed. Check back soon for comprehensive content on:
-
-• **Limits and Continuity** - Understanding the foundation of calculus
+          title: 'What this topic covers',
+          body: `• **Limits and Continuity** - Understanding the foundation of calculus
 • **Differentiation from First Principles** - The definition of the derivative
 • **Rules of Differentiation** - Power rule, product rule, quotient rule, chain rule
 • **Applications of Derivatives** - Tangents, normals, rates of change
 • **Curve Sketching** - Using calculus to analyze functions
 • **Optimization Problems** - Finding maxima and minima
 • **Integration** - The reverse of differentiation
-• **Area Under Curves** - Definite integrals and applications
-
-In the meantime, practice with past papers available in the Papers section.`
+• **Area Under Curves** - Definite integrals and applications`
         },
         {
           type: 'tip',
@@ -46,6 +42,7 @@ In the meantime, practice with past papers available in the Papers section.`
           title: 'Watch: Lesson 7: How To Solve Optimisation Questions | Area, Volume & Cost | Grade 12 Calculus — Mlungisi Nkosi Maths & Science',
           videoId: '1ye4FhvMazo'
         }
+        // TODO(curator): add { type: 'formula', formulas: [...] } block
       ]
     }
   ]

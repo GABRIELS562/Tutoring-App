@@ -15,11 +15,8 @@ export const euclideanGeometryGr12: TopicContent = {
       blocks: [
         {
           type: 'theory',
-          title: 'Full Notes Coming Soon',
-          body: `Full notes for this topic are coming soon. In the meantime, watch the Mindset Learn video below.
-
-This topic covers:
-• **Revision of Grade 11 Circle Geometry** - All theorems and converses
+          title: 'What this topic covers',
+          body: `• **Revision of Grade 11 Circle Geometry** - All theorems and converses
 • **Proportionality Theorems** - Lines parallel to one side of a triangle
 • **Similar Triangles** - Proving and using similarity
 • **Midpoint Theorem** - Applications and proofs
@@ -39,6 +36,7 @@ This topic covers:
           title: 'Watch: EUCLIDEAN GEOMETRY | PROPORTIONALITY GRADE 12 [ ISIZULU ] — Isinamuva Tutoring',
           videoId: '122eVl0o_C8'
         }
+        // TODO(curator): add { type: 'formula', formulas: [...] } block
       ]
     }
   ]

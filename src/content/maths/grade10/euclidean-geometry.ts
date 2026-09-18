@@ -15,11 +15,8 @@ export const euclideanGeometryGr10: TopicContent = {
       blocks: [
         {
           type: 'theory',
-          title: 'Full Notes Coming Soon',
-          body: `Full notes for this topic are coming soon. In the meantime, watch the Mindset Learn video below.
-
-This topic covers:
-• **Lines and Angles** - Vertically opposite, corresponding, alternate, co-interior
+          title: 'What this topic covers',
+          body: `• **Lines and Angles** - Vertically opposite, corresponding, alternate, co-interior
 • **Triangles** - Properties, types, angle sum, exterior angles
 • **Congruence** - SSS, SAS, AAS, RHS
 • **Similarity** - AAA, sides in proportion
@@ -40,6 +37,7 @@ This topic covers:
           title: 'Watch: Grade 10 Euclidean Geometry Exam Questions Part 1 — Miss Martins Maths and Science',
           videoId: 'lJHk-dG-Or4'
         }
+        // TODO(curator): add { type: 'formula', formulas: [...] } block
       ]
     }
   ]

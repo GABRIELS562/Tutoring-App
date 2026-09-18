@@ -15,11 +15,8 @@ export const wavesGr10: TopicContent = {
       blocks: [
         {
           type: 'theory',
-          title: 'Full Notes Coming Soon',
-          body: `Full notes for this topic are coming soon. In the meantime, watch the Mindset Learn video below.
-
-This topic covers:
-• **Pulses** - Single disturbances, amplitude, pulse length
+          title: 'What this topic covers',
+          body: `• **Pulses** - Single disturbances, amplitude, pulse length
 • **Transverse Waves** - Crests, troughs, perpendicular vibration
 • **Wave Properties** - Amplitude, wavelength, frequency, period
 • **Wave Equation** - $v = f\\lambda$
@@ -40,6 +37,7 @@ This topic covers:
           title: 'Watch: Grade 10 Transverse waves Exam question Wavelength — Miss Martins Maths and Science',
           videoId: 'o7BDo4CcQOI'
         }
+        // TODO(curator): add { type: 'formula', formulas: [...] } block
       ]
     }
   ]

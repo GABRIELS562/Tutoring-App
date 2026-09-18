@@ -15,19 +15,15 @@ export const analyticalGeometryGr11: TopicContent = {
       blocks: [
         {
           type: 'theory',
-          title: 'Content Under Development',
-          body: `This topic is currently being developed. Check back soon for comprehensive content on:
-
-• **Distance Formula** - Finding the distance between two points
+          title: 'What this topic covers',
+          body: `• **Distance Formula** - Finding the distance between two points
 • **Midpoint Formula** - Finding the midpoint of a line segment
 • **Gradient of a Line** - Calculating slope and understanding its meaning
 • **Equation of a Straight Line** - Different forms: $y = mx + c$, point-gradient form
 • **Parallel and Perpendicular Lines** - Relationship between gradients
 • **Inclination of a Line** - The angle a line makes with the positive $x$-axis
 • **Collinear Points** - Proving points lie on the same line
-• **Properties of Quadrilaterals** - Using analytical geometry to prove properties
-
-In the meantime, practice with past papers available in the Papers section.`
+• **Properties of Quadrilaterals** - Using analytical geometry to prove properties`
         },
         {
           type: 'tip',
@@ -46,6 +42,7 @@ In the meantime, practice with past papers available in the Papers section.`
           title: 'Watch: Grade 11 Analytical Geometry Angle of Inclination Introduction and practice — Miss Martins Maths and Science',
           videoId: 'lrmASs4NOww'
         }
+        // TODO(curator): add { type: 'formula', formulas: [...] } block
       ]
     }
   ]

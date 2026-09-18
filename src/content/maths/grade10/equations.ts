@@ -15,11 +15,8 @@ export const equationsGr10: TopicContent = {
       blocks: [
         {
           type: 'theory',
-          title: 'Full Notes Coming Soon',
-          body: `Full notes for this topic are coming soon. In the meantime, watch the Mindset Learn video below.
-
-This topic covers:
-• **Linear Equations** - Solving equations with one variable
+          title: 'What this topic covers',
+          body: `• **Linear Equations** - Solving equations with one variable
 • **Quadratic Equations** - Factorisation, completing the square
 • **Simultaneous Equations** - Substitution and elimination methods
 • **Linear Inequalities** - Solving and representing on a number line
@@ -39,6 +36,7 @@ This topic covers:
           title: 'Watch: Exam Equations Grade 10 — Kevinmathscience',
           videoId: 'zHNvf3hMlSk'
         }
+        // TODO(curator): add { type: 'formula', formulas: [...] } block
       ]
     }
   ]

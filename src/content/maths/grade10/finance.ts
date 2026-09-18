@@ -15,11 +15,8 @@ export const financeGr10: TopicContent = {
       blocks: [
         {
           type: 'theory',
-          title: 'Full Notes Coming Soon',
-          body: `Full notes for this topic are coming soon. In the meantime, watch the Mindset Learn video below.
-
-This topic covers:
-• **Simple Interest** - $A = P(1 + in)$
+          title: 'What this topic covers',
+          body: `• **Simple Interest** - $A = P(1 + in)$
 • **Compound Interest** - $A = P(1 + i)^n$
 • **Comparing Simple and Compound Interest** - When each is better
 • **Hire Purchase** - Calculating repayments with interest
@@ -40,6 +37,7 @@ This topic covers:
           title: 'Watch: Financial Maths Grade 10 Past Paper Exam Question 1 — Miss Martins Maths and Science',
           videoId: '3cj331uG3uI'
         }
+        // TODO(curator): add { type: 'formula', formulas: [...] } block
       ]
     }
   ]

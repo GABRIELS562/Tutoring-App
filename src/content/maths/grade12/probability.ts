@@ -15,10 +15,8 @@ export const probabilityGr12: TopicContent = {
       blocks: [
         {
           type: 'theory',
-          title: 'Content Under Development',
-          body: `This topic is currently being developed. Check back soon for comprehensive content on:
-
-• **Fundamental Counting Principle** - Multiplication and addition rules
+          title: 'What this topic covers',
+          body: `• **Fundamental Counting Principle** - Multiplication and addition rules
 • **Factorials** - Understanding $n!$ and its applications
 • **Permutations** - Arrangements where order matters
 • **Combinations** - Selections where order doesn't matter
@@ -27,9 +25,7 @@ export const probabilityGr12: TopicContent = {
 • **Independent Events** - Events that don't affect each other
 • **Dependent Events and Conditional Probability** - $P(A|B)$
 • **Tree Diagrams and Venn Diagrams** - Visual probability tools
-• **The Counting Principle in Probability** - Combining concepts
-
-In the meantime, practice with past papers available in the Papers section.`
+• **The Counting Principle in Probability** - Combining concepts`
         },
         {
           type: 'tip',
@@ -48,6 +44,7 @@ In the meantime, practice with past papers available in the Papers section.`
           title: 'Watch: Gr 12 probability # 1 — Kevinmathscience',
           videoId: 'loYKqFQcksY'
         }
+        // TODO(curator): add { type: 'formula', formulas: [...] } block
       ]
     }
   ]

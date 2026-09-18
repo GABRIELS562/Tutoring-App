@@ -15,11 +15,8 @@ export const functionsGr10: TopicContent = {
       blocks: [
         {
           type: 'theory',
-          title: 'Full Notes Coming Soon',
-          body: `Full notes for this topic are coming soon. In the meantime, watch the Mindset Learn video below.
-
-This topic covers:
-• **Function Notation** - Understanding $f(x)$ notation
+          title: 'What this topic covers',
+          body: `• **Function Notation** - Understanding $f(x)$ notation
 • **Linear Functions** - $y = mx + c$, gradient and y-intercept
 • **Quadratic Functions** - $y = ax^2 + q$, parabolas, turning points
 • **Hyperbolic Functions** - $y = \\frac{a}{x} + q$, asymptotes
@@ -40,6 +37,7 @@ This topic covers:
           title: 'Watch: 🚀 Grade 10 Mathematics | Straight Line Functions Made Easy — SmartPrep MathsScience',
           videoId: 'ZqRXA19yhMM'
         }
+        // TODO(curator): add { type: 'formula', formulas: [...] } block
       ]
     }
   ]

@@ -15,11 +15,8 @@ export const statisticsGr11: TopicContent = {
       blocks: [
         {
           type: 'theory',
-          title: 'Full Notes Coming Soon',
-          body: `Full notes for this topic are coming soon. In the meantime, watch the Mindset Learn video below.
-
-This topic covers:
-• **Measures of Central Tendency** - Mean, median, mode for grouped and ungrouped data
+          title: 'What this topic covers',
+          body: `• **Measures of Central Tendency** - Mean, median, mode for grouped and ungrouped data
 • **Measures of Dispersion** - Range, variance, standard deviation
 • **Five Number Summary** - Min, Q1, median, Q3, max
 • **Box and Whisker Plots** - Drawing and interpreting
@@ -40,6 +37,7 @@ This topic covers:
           title: 'Watch: Statistics Grade 11 Exam Questions — Kevinmathscience',
           videoId: 'Amf60jAYIaI'
         }
+        // TODO(curator): add { type: 'formula', formulas: [...] } block
       ]
     }
   ]

@@ -15,11 +15,8 @@ export const numberPatternsGr10: TopicContent = {
       blocks: [
         {
           type: 'theory',
-          title: 'Full Notes Coming Soon',
-          body: `Full notes for this topic are coming soon. In the meantime, watch the Mindset Learn video below.
-
-This topic covers:
-• **Linear Patterns** - Constant first difference
+          title: 'What this topic covers',
+          body: `• **Linear Patterns** - Constant first difference
 • **Quadratic Patterns** - Constant second difference
 • **General Term** - Finding the $n$th term ($T_n$)
 • **Linear Sequences** - $T_n = an + b$
@@ -39,6 +36,7 @@ This topic covers:
           title: 'Watch: Quadratic Pattern Grade 11: Exam — Kevinmathscience',
           videoId: 'GzFLsWU5jlY'
         }
+        // TODO(curator): add { type: 'formula', formulas: [...] } block
       ]
     }
   ]

@@ -15,11 +15,8 @@ export const algebraGr10: TopicContent = {
       blocks: [
         {
           type: 'theory',
-          title: 'Full Notes Coming Soon',
-          body: `Full notes for this topic are coming soon. In the meantime, watch the Mindset Learn video below.
-
-This topic covers:
-• **Number Systems** - Rational, irrational, real numbers
+          title: 'What this topic covers',
+          body: `• **Number Systems** - Rational, irrational, real numbers
 • **Exponent Laws** - Multiplying, dividing, power of a power
 • **Simplifying Expressions** - Like terms, distribution
 • **Factorisation** - Common factors, grouping, trinomials, difference of squares
@@ -39,6 +36,7 @@ This topic covers:
           title: 'Watch: Grade 10 Maths ALGEBRA Exam Questions Practice — Miss Martins Maths and Science',
           videoId: '52-eRCXTPX0'
         }
+        // TODO(curator): add { type: 'formula', formulas: [...] } block
       ]
     }
   ]

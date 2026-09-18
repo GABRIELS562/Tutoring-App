@@ -15,11 +15,8 @@ export const statisticsGr10: TopicContent = {
       blocks: [
         {
           type: 'theory',
-          title: 'Full Notes Coming Soon',
-          body: `Full notes for this topic are coming soon. In the meantime, watch the Mindset Learn video below.
-
-This topic covers:
-• **Measures of Central Tendency** - Mean, median, mode
+          title: 'What this topic covers',
+          body: `• **Measures of Central Tendency** - Mean, median, mode
 • **Measures of Dispersion** - Range, quartiles, interquartile range
 • **Five Number Summary** - Minimum, Q1, median, Q3, maximum
 • **Box and Whisker Diagrams** - Drawing and interpreting
@@ -40,6 +37,7 @@ This topic covers:
           title: 'Watch: Statistics Grade 10: Exam Question — Kevinmathscience',
           videoId: 'Hc-BUqBaUkQ'
         }
+        // TODO(curator): add { type: 'formula', formulas: [...] } block
       ]
     }
   ]

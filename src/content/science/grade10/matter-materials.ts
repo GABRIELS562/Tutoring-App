@@ -15,11 +15,8 @@ export const matterMaterialsGr10: TopicContent = {
       blocks: [
         {
           type: 'theory',
-          title: 'Full Notes Coming Soon',
-          body: `Full notes for this topic are coming soon. In the meantime, watch the Mindset Learn video below.
-
-This topic covers:
-• **Atomic Structure** - Protons, neutrons, electrons
+          title: 'What this topic covers',
+          body: `• **Atomic Structure** - Protons, neutrons, electrons
 • **Isotopes** - Same element, different mass numbers
 • **The Periodic Table** - Groups, periods, trends
 • **Electronic Configuration** - Electron arrangement in shells
@@ -41,6 +38,7 @@ This topic covers:
           title: 'Watch: Water of Crystallization | Chemistry Grade 10-12 — Miss Martins Maths and Science',
           videoId: 'oADmMF84wbA'
         }
+        // TODO(curator): add { type: 'formula', formulas: [...] } block
       ]
     }
   ]

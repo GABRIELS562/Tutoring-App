@@ -15,11 +15,8 @@ export const electricCircuitsGr10: TopicContent = {
       blocks: [
         {
           type: 'theory',
-          title: 'Full Notes Coming Soon',
-          body: `Full notes for this topic are coming soon. In the meantime, watch the Mindset Learn video below.
-
-This topic covers:
-• **Current** - Flow of charge, measured in amperes (A)
+          title: 'What this topic covers',
+          body: `• **Current** - Flow of charge, measured in amperes (A)
 • **Potential Difference (Voltage)** - Energy per unit charge, measured in volts (V)
 • **Resistance** - Opposition to current flow, measured in ohms (Ω)
 • **Ohm's Law** - $V = IR$
@@ -41,6 +38,7 @@ This topic covers:
           title: 'Watch: Circuits Grade 10 | Calculations — Kevinmathscience',
           videoId: '5WRqdTr9WmQ'
         }
+        // TODO(curator): add { type: 'formula', formulas: [...] } block
       ]
     }
   ]

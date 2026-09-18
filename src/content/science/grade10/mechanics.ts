@@ -15,11 +15,8 @@ export const mechanicsGr10: TopicContent = {
       blocks: [
         {
           type: 'theory',
-          title: 'Full Notes Coming Soon',
-          body: `Full notes for this topic are coming soon. In the meantime, watch the Mindset Learn video below.
-
-This topic covers:
-• **Vectors and Scalars** - Distance vs displacement, speed vs velocity
+          title: 'What this topic covers',
+          body: `• **Vectors and Scalars** - Distance vs displacement, speed vs velocity
 • **Motion in 1D** - Position, displacement, velocity, acceleration
 • **Equations of Motion** - $v = u + at$, $s = ut + \\frac{1}{2}at^2$, $v^2 = u^2 + 2as$
 • **Motion Graphs** - Position-time, velocity-time, acceleration-time
@@ -40,6 +37,7 @@ This topic covers:
           title: 'Watch: Grade 10 Mechanics: Equations of Motion Exam Question PART 1 — Miss Martins Maths and Science',
           videoId: '-wHXFMMEltw'
         }
+        // TODO(curator): add { type: 'formula', formulas: [...] } block
       ]
     }
   ]
