@@ -15,22 +15,28 @@ export const algebraGr10: TopicContent = {
       blocks: [
         {
           type: 'theory',
-          title: 'Full Notes Coming Soon',
-          body: `Full notes for this topic are coming soon. In the meantime, watch the Mindset Learn video below.
-
-This topic covers:
-• **Number Systems** - Rational, irrational, real numbers
+          title: 'What this topic covers',
+          body: `• **Number Systems** - Rational, irrational, real numbers
 • **Exponent Laws** - Multiplying, dividing, power of a power
 • **Simplifying Expressions** - Like terms, distribution
 • **Factorisation** - Common factors, grouping, trinomials, difference of squares
 • **Algebraic Fractions** - Simplifying, adding, subtracting, multiplying, dividing
 • **Surds** - Simplifying, rationalising denominators`
         },
+        // PROVISIONAL video picks — auto-filled 2026-09-18 from docs/client-updates/video-candidates; client to confirm.
         {
           type: 'video',
-          title: 'Watch: Algebraic Expressions — Mindset Learn',
-          videoId: 'MINDSET_ALGEBRA_GR10'
+          title: 'Watch: 8a) Factorising trinomials grade 10 | Try — Kevinmathscience',
+          videoId: 'EnVbvflrJ4Q',
+          videoIdAf: '68tBHlCty1M',
+          titleAf: 'Watch: Graad 10 Algebraïese Uitdrukkings #1: Die Getallestelsel — WiskundeMetMargie'
+        },
+        {
+          type: 'video',
+          title: 'Watch: Grade 10 Maths ALGEBRA Exam Questions Practice — Miss Martins Maths and Science',
+          videoId: '52-eRCXTPX0'
         }
+        // TODO(curator): add { type: 'formula', formulas: [...] } block
       ]
     }
   ]

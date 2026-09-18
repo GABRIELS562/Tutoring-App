@@ -15,22 +15,28 @@ export const probabilityGr10: TopicContent = {
       blocks: [
         {
           type: 'theory',
-          title: 'Full Notes Coming Soon',
-          body: `Full notes for this topic are coming soon. In the meantime, watch the Mindset Learn video below.
-
-This topic covers:
-• **Theoretical Probability** - $P(A) = \\frac{\\text{favourable outcomes}}{\\text{total outcomes}}$
+          title: 'What this topic covers',
+          body: `• **Theoretical Probability** - $P(A) = \\frac{\\text{favourable outcomes}}{\\text{total outcomes}}$
 • **Relative Frequency** - Experimental probability
 • **Venn Diagrams** - Representing events visually
 • **Mutually Exclusive Events** - Events that cannot occur together
 • **Complementary Events** - $P(A') = 1 - P(A)$
 • **The Addition Rule** - $P(A \\text{ or } B) = P(A) + P(B) - P(A \\text{ and } B)$`
         },
+        // PROVISIONAL video picks — auto-filled 2026-09-18 from docs/client-updates/video-candidates; client to confirm.
         {
           type: 'video',
-          title: 'Watch: Probability — Mindset Learn',
-          videoId: 'MINDSET_PROBABILITY_GR10'
+          title: 'Watch: Probability Grade 10 | Introduction — Kevinmathscience',
+          videoId: 'Hqbbyh5OEtc',
+          videoIdAf: 'ZRZQV5YLuPc',
+          titleAf: 'Watch: Graad 10 Waarskynlikheid — YCDM - YouCanDoMaths'
+        },
+        {
+          type: 'video',
+          title: 'Watch: Probability Grade 10 | Exam Question — Kevinmathscience',
+          videoId: 'iBoBTRrp-w8'
         }
+        // TODO(curator): add { type: 'formula', formulas: [...] } block
       ]
     }
   ]

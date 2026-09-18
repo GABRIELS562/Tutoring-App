@@ -15,11 +15,8 @@ export const wavesSoundGr11: TopicContent = {
       blocks: [
         {
           type: 'theory',
-          title: 'Full Notes Coming Soon',
-          body: `Full notes for this topic are coming soon. In the meantime, watch the Mindset Learn video below.
-
-This topic covers:
-• **Wave Properties** - Amplitude, wavelength, frequency, period
+          title: 'What this topic covers',
+          body: `• **Wave Properties** - Amplitude, wavelength, frequency, period
 • **Wave Equation** - $v = f\\lambda$
 • **Transverse and Longitudinal Waves** - Differences and examples
 • **Sound Waves** - Production, propagation, speed of sound
@@ -27,11 +24,18 @@ This topic covers:
 • **Applications of Doppler Effect** - Speed traps, medical imaging, astronomy
 • **Superposition and Interference** - Constructive and destructive interference`
         },
+        // PROVISIONAL video picks — auto-filled 2026-09-18 from docs/client-updates/video-candidates; client to confirm.
         {
           type: 'video',
-          title: 'Watch: Waves and Sound — Mindset Learn',
-          videoId: 'MINDSET_WAVES_SOUND_GR11'
+          title: 'Watch: Grade 11 - Diffraction | Huygen’s Principle & Wavefronts | November 2017 | Mlungisi Nkosi — Mlungisi Nkosi Maths & Science',
+          videoId: 'KXRnmQGweJE'
+        },
+        {
+          type: 'video',
+          title: 'Watch: 2D & 3D Wavefronts — Mindset',
+          videoId: 'IQ_HH68wmHw'
         }
+        // TODO(curator): add { type: 'formula', formulas: [...] } block
       ]
     }
   ]

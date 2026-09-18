@@ -15,11 +15,8 @@ export const statisticsGr10: TopicContent = {
       blocks: [
         {
           type: 'theory',
-          title: 'Full Notes Coming Soon',
-          body: `Full notes for this topic are coming soon. In the meantime, watch the Mindset Learn video below.
-
-This topic covers:
-• **Measures of Central Tendency** - Mean, median, mode
+          title: 'What this topic covers',
+          body: `• **Measures of Central Tendency** - Mean, median, mode
 • **Measures of Dispersion** - Range, quartiles, interquartile range
 • **Five Number Summary** - Minimum, Q1, median, Q3, maximum
 • **Box and Whisker Diagrams** - Drawing and interpreting
@@ -27,11 +24,20 @@ This topic covers:
 • **Histograms** - Drawing and interpreting frequency histograms
 • **Frequency Polygons** - Connecting midpoints of histogram bars`
         },
+        // PROVISIONAL video picks — auto-filled 2026-09-18 from docs/client-updates/video-candidates; client to confirm.
         {
           type: 'video',
-          title: 'Watch: Statistics — Mindset Learn',
-          videoId: 'MINDSET_STATISTICS_GR10'
+          title: 'Watch: Statistics Grade 10: Mean, mode, median — Kevinmathscience',
+          videoId: 'xi8VjMmWdgI',
+          videoIdAf: 'twoRWkbvv_o',
+          titleAf: 'Watch: Graad 10 Wiskunde Les 1 Statistiek — Rochelle Van der Merwe'
+        },
+        {
+          type: 'video',
+          title: 'Watch: Statistics Grade 10: Exam Question — Kevinmathscience',
+          videoId: 'Hc-BUqBaUkQ'
         }
+        // TODO(curator): add { type: 'formula', formulas: [...] } block
       ]
     }
   ]

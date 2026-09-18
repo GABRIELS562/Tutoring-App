@@ -15,11 +15,8 @@ export const functionsGr10: TopicContent = {
       blocks: [
         {
           type: 'theory',
-          title: 'Full Notes Coming Soon',
-          body: `Full notes for this topic are coming soon. In the meantime, watch the Mindset Learn video below.
-
-This topic covers:
-• **Function Notation** - Understanding $f(x)$ notation
+          title: 'What this topic covers',
+          body: `• **Function Notation** - Understanding $f(x)$ notation
 • **Linear Functions** - $y = mx + c$, gradient and y-intercept
 • **Quadratic Functions** - $y = ax^2 + q$, parabolas, turning points
 • **Hyperbolic Functions** - $y = \\frac{a}{x} + q$, asymptotes
@@ -27,11 +24,20 @@ This topic covers:
 • **Sketching Graphs** - Domain, range, intercepts, asymptotes
 • **Transformations** - Effects of $a$ and $q$ on graphs`
         },
+        // PROVISIONAL video picks — auto-filled 2026-09-18 from docs/client-updates/video-candidates; client to confirm.
         {
           type: 'video',
-          title: 'Watch: Functions and Graphs — Mindset Learn',
-          videoId: 'MINDSET_FUNCTIONS_GR10'
+          title: 'Watch: Exam Functions Grade 10 — Kevinmathscience',
+          videoId: '1RnuVXYcVpE',
+          videoIdAf: '90DcF3f3V7c',
+          titleAf: 'Watch: Funksies Parabool Graad10: L6 Grafiek Interpretasie Eksamen vraag — Online Maths by Miss Pythagoras'
+        },
+        {
+          type: 'video',
+          title: 'Watch: 🚀 Grade 10 Mathematics | Straight Line Functions Made Easy — SmartPrep MathsScience',
+          videoId: 'ZqRXA19yhMM'
         }
+        // TODO(curator): add { type: 'formula', formulas: [...] } block
       ]
     }
   ]
