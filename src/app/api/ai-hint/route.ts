@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { z } from 'zod'
 import { getApiSupabase } from '@/lib/supabase/api'
 import { requireUser, authErrorResponse } from '@/lib/auth/require-user'
 import { badges, PROMPT_CHALLENGE_XP_PER_STAR } from '@/content/ai-skills'
@@ -90,13 +91,22 @@ async function updateUsageRecord(
   }
 }
 
-interface PromptEvaluation {
-  score: number
-  what_worked: string
-  what_to_improve: string
-  improved_prompt: string
-  encouragement: string
-}
+// Validates the JSON the model returns for prompt_evaluation before it is
+// ever trusted for persistence/XP: the model is an external, untrusted
+// input just like the request body. Caps string lengths generously above
+// what the prompt asks for (1-2 sentences) to reject a runaway/adversarial
+// response without being brittle about normal-length answers.
+const MODEL_FIELD_MAX_LENGTH = 600
+
+const PromptEvaluationSchema = z.object({
+  score: z.number().int().min(1).max(5),
+  what_worked: z.string().max(MODEL_FIELD_MAX_LENGTH),
+  what_to_improve: z.string().max(MODEL_FIELD_MAX_LENGTH),
+  improved_prompt: z.string().max(MODEL_FIELD_MAX_LENGTH),
+  encouragement: z.string().max(MODEL_FIELD_MAX_LENGTH),
+})
+
+type PromptEvaluation = z.infer<typeof PromptEvaluationSchema>
 
 interface PersistedPromptChallengeAttempt {
   id: string
@@ -415,54 +425,56 @@ export async function POST(request: NextRequest) {
       }
     }
 
-    // Handle prompt_evaluation mode - parse JSON response
+    // Handle prompt_evaluation mode - parse and VALIDATE the model's JSON.
+    // The model's output is untrusted input, exactly like the request body:
+    // a malformed or out-of-range value (e.g. score: 99) must never be
+    // persisted or earn XP. Any parse/validation failure falls back to the
+    // same canned response, flagged with parseError so the client knows
+    // nothing was saved.
     if (mode === 'prompt_evaluation') {
+      const fallbackEvaluation: PromptEvaluation = {
+        score: 3,
+        what_worked: "Your prompt shows effort",
+        what_to_improve: "Try being more specific about context and format",
+        improved_prompt: body.studentPrompt || '',
+        encouragement: "Keep practising — prompt engineering is a skill that improves with use.",
+      }
+
+      let rawEvaluation: unknown = null
       try {
         // Extract JSON from response (in case it's wrapped in markdown code blocks)
         const jsonMatch = aiResponse.match(/\{[\s\S]*\}/)
-        const evaluation = jsonMatch ? JSON.parse(jsonMatch[0]) : {
-          score: 3,
-          what_worked: "Unable to parse evaluation",
-          what_to_improve: "Please try again",
-          improved_prompt: body.studentPrompt || '',
-          encouragement: "Keep practising!",
-        }
+        rawEvaluation = jsonMatch ? JSON.parse(jsonMatch[0]) : null
+      } catch (parseError) {
+        console.error('Error parsing model evaluation JSON:', parseError)
+        rawEvaluation = null
+      }
 
-        const attempt = await persistPromptChallengeAttempt(
-          userId,
-          body.challengeId,
-          body.studentPrompt,
-          evaluation
-        )
+      const validation = PromptEvaluationSchema.safeParse(rawEvaluation)
 
-        return NextResponse.json({
-          evaluation,
-          remaining,
-          ...(attempt ? { attempt } : {}),
-        })
-      } catch {
-        // Fallback if JSON parsing fails
-        const fallbackEvaluation = {
-          score: 3,
-          what_worked: "Your prompt shows effort",
-          what_to_improve: "Try being more specific about context and format",
-          improved_prompt: body.studentPrompt || '',
-          encouragement: "Keep practising — prompt engineering is a skill that improves with use.",
-        }
-
-        const attempt = await persistPromptChallengeAttempt(
-          userId,
-          body.challengeId,
-          body.studentPrompt,
-          fallbackEvaluation
-        )
-
+      if (!validation.success) {
+        console.error('Model evaluation failed validation:', validation.error.issues)
         return NextResponse.json({
           evaluation: fallbackEvaluation,
           remaining,
-          ...(attempt ? { attempt } : {}),
+          parseError: true,
         })
       }
+
+      const evaluation = validation.data
+
+      const attempt = await persistPromptChallengeAttempt(
+        userId,
+        body.challengeId,
+        body.studentPrompt,
+        evaluation
+      )
+
+      return NextResponse.json({
+        evaluation,
+        remaining,
+        ...(attempt ? { attempt } : {}),
+      })
     }
 
     return NextResponse.json({
