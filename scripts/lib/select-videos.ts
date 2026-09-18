@@ -125,6 +125,12 @@ export const AF_OVERRIDES: Record<string, AfOverride> = {
     title: 'Graad 10 enkelvoudige en saamgestelde rente',
     channel: 'Rochelle Van der Merwe',
   },
+  // _Rc6KZtQtVM is a Euclidean Geometry video, not Analytical Geometry.
+  'maths-11-Analytical Geometry': {
+    id: 'kwLfg5jJ2eI',
+    title: 'Graad 11 Analitiese Meetkunde #6: Ewewydige (Parallele) Lyne',
+    channel: 'WiskundeMetMargie',
+  },
 }
 
 export function afOverrideKey(subject: string, grade: number, topic: string): string {

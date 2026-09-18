@@ -34,8 +34,8 @@ export const analyticalGeometryGr11: TopicContent = {
           type: 'video',
           title: 'Watch: Grade 11 Analytical geometry: angle of inclination — Kevinmathscience',
           videoId: 'VB4jH92V-tg',
-          videoIdAf: '_Rc6KZtQtVM',
-          titleAf: 'Watch: Graad 11 Euklidiese Meetkunde #1: Inleiding — WiskundeMetMargie'
+          videoIdAf: 'kwLfg5jJ2eI',
+          titleAf: 'Watch: Graad 11 Analitiese Meetkunde #6: Ewewydige (Parallele) Lyne — WiskundeMetMargie'
         },
         {
           type: 'video',

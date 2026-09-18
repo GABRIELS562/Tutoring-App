@@ -200,4 +200,10 @@ describe('resolveAfrikaansPick', () => {
 
     expect(resolveAfrikaansPick('maths', 10, 'Finance and Growth', candidates)?.id).toBe('T7zTTrn1ulE')
   })
+
+  it('the real curated map replaces the pick for maths gr11 Analytical Geometry (was a Euclidean Geometry video)', () => {
+    const candidates = [video({ id: '_Rc6KZtQtVM', embeddable: true })]
+
+    expect(resolveAfrikaansPick('maths', 11, 'Analytical Geometry', candidates)?.id).toBe('kwLfg5jJ2eI')
+  })
 })
