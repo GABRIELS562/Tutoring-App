@@ -2,7 +2,7 @@ import { describe, it, expect } from 'vitest'
 import {
   getModeSpecificPrompt,
   getSystemPromptForMode,
-} from '@/app/api/ai-hint/route'
+} from '@/app/api/ai-hint/prompts'
 
 describe('ai-hint prompt-injection hardening', () => {
   describe('getModeSpecificPrompt wraps every student-controllable string', () => {

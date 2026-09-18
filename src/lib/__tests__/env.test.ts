@@ -20,6 +20,7 @@ describe('assertProductionEnv', () => {
       NEXT_PUBLIC_SUPABASE_URL: undefined,
       NEXT_PUBLIC_SUPABASE_ANON_KEY: undefined,
       DATABASE_URL: undefined,
+      NEXT_PHASE: undefined,
     })
   })
 
@@ -59,5 +60,24 @@ describe('assertProductionEnv', () => {
     })
 
     expect(() => assertProductionEnv()).not.toThrow()
+  })
+
+  it('does not throw during `next build` (NEXT_PHASE=phase-production-build) even with everything missing', () => {
+    setEnv({
+      NODE_ENV: 'production',
+      NEXT_PHASE: 'phase-production-build',
+    })
+
+    expect(() => assertProductionEnv()).not.toThrow()
+  })
+
+  it('still throws at actual server runtime in production (NEXT_PHASE unset) when env is missing', () => {
+    setEnv({
+      NODE_ENV: 'production',
+      NEXT_PHASE: undefined,
+      DATABASE_URL: 'postgres://example',
+    })
+
+    expect(() => assertProductionEnv()).toThrow(/NEXT_PUBLIC_SUPABASE_URL/)
   })
 })

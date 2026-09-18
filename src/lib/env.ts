@@ -12,6 +12,14 @@
  * deploy: if NODE_ENV is 'production' but the required env is missing, it
  * throws immediately so the app fails to boot loudly, instead of quietly
  * running with an open admin panel and no route protection.
+ *
+ * `next build` always runs with NODE_ENV='production' too (that is what
+ * produces a production bundle), including on a dev machine or CI with no
+ * real Supabase/DATABASE_URL configured — this repo's own DoD requires
+ * `npm run build` to succeed against an empty .env.local. Next sets
+ * NEXT_PHASE='phase-production-build' only during that build step (not
+ * during `next start` or a deployed server/serverless invocation), so this
+ * guard is skipped then and enforced only at actual server runtime.
  */
 
 const REQUIRED_PRODUCTION_ENV = [
@@ -20,8 +28,14 @@ const REQUIRED_PRODUCTION_ENV = [
   'DATABASE_URL',
 ] as const
 
+const NEXT_PRODUCTION_BUILD_PHASE = 'phase-production-build'
+
 export function assertProductionEnv(): void {
   if (process.env.NODE_ENV !== 'production') {
+    return
+  }
+
+  if (process.env.NEXT_PHASE === NEXT_PRODUCTION_BUILD_PHASE) {
     return
   }
 
