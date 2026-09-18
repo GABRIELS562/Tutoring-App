@@ -16,15 +16,15 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }: PageProps) {
   const { moduleId } = await params
-  const module = aiModules[moduleId]
+  const aiModule = aiModules[moduleId]
 
-  if (!module) {
+  if (!aiModule) {
     return { title: 'Module Not Found' }
   }
 
   return {
-    title: `${module.title} | AI Skills | Angelo Tutoring`,
-    description: module.description,
+    title: `${aiModule.title} | AI Skills | Angelo Tutoring`,
+    description: aiModule.description,
   }
 }
 
@@ -80,16 +80,16 @@ async function getUserData() {
 
 export default async function AIModulePage({ params }: PageProps) {
   const { moduleId } = await params
-  const module = aiModules[moduleId]
+  const aiModule = aiModules[moduleId]
 
-  if (!module) {
+  if (!aiModule) {
     notFound()
   }
 
   const { userId, completedModules } = await getUserData()
 
   // Check if module is locked
-  if (module.unlockCondition && !completedModules.includes(module.unlockCondition)) {
+  if (aiModule.unlockCondition && !completedModules.includes(aiModule.unlockCondition)) {
     redirect('/ai-skills')
   }
 
@@ -112,7 +112,7 @@ export default async function AIModulePage({ params }: PageProps) {
 
       {/* Module Content */}
       <AIModuleRenderer
-        module={module}
+        module={aiModule}
         userId={userId}
         isCompleted={isCompleted}
       />

@@ -69,9 +69,6 @@ REËLS:
 
 BELANGRIK: Antwoord ALTYD in Afrikaans.`
 
-// Keep for backwards compatibility
-const ANGELO_SYSTEM_PROMPT = ANGELO_SYSTEM_PROMPT_EN
-
 // System prompt for evaluating student prompts in the AI Skills course
 const PROMPT_EVALUATION_SYSTEM = `You are an AI literacy coach helping South African students learn prompt engineering.
 
@@ -155,9 +152,6 @@ Verwys na SA konteks waar relevant.
 
 BELANGRIK: Antwoord ALTYD in Afrikaans.`
 
-// Keep for backwards compatibility
-const GENERAL_QUESTION_SYSTEM = GENERAL_QUESTION_SYSTEM_EN
-
 // System prompt for CV help (English)
 const CV_HELP_SYSTEM_EN = `You are helping a South African student create a professional statement about their AI skills for their CV.
 
@@ -181,9 +175,6 @@ Riglyne:
 - Klink soos 'n selfversekerde jong persoon, nie 'n robot nie
 
 BELANGRIK: Antwoord ALTYD in Afrikaans.`
-
-// Keep for backwards compatibility
-const CV_HELP_SYSTEM = CV_HELP_SYSTEM_EN
 
 function getModeSpecificPrompt(body: HintRequest): string {
   switch (body.mode) {

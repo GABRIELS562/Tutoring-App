@@ -1,6 +1,6 @@
 import { db } from '@/db'
 import { studentProgress, questions, topics } from '@/db/schema'
-import { eq, sql, and } from 'drizzle-orm'
+import { eq, and } from 'drizzle-orm'
 
 export type Weakness = {
   topicSlug: string

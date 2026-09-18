@@ -130,9 +130,9 @@ export default async function AISkillsPage() {
 
         <div className="space-y-3">
           {moduleOrder.map((moduleId, index) => {
-            const module = aiModules[moduleId]
+            const aiModule = aiModules[moduleId]
             const isCompleted = completedModules.includes(moduleId)
-            const isLocked = module.unlockCondition && !completedModules.includes(module.unlockCondition)
+            const isLocked = aiModule.unlockCondition && !completedModules.includes(aiModule.unlockCondition)
             const prevModule = index > 0 ? aiModules[moduleOrder[index - 1]] : null
 
             return (
@@ -165,13 +165,13 @@ export default async function AISkillsPage() {
                   {/* Module Info */}
                   <div className="flex-1 min-w-0">
                     <h3 className="font-medium truncate" style={{ color: 'var(--text)' }}>
-                      {module.title}
+                      {aiModule.title}
                     </h3>
                     <p className="text-sm text-muted-custom truncate">
-                      {module.description}
+                      {aiModule.description}
                     </p>
                     <div className="flex items-center gap-3 mt-1">
-                      <span className="text-xs text-muted-custom">{module.timeEstimate}</span>
+                      <span className="text-xs text-muted-custom">{aiModule.timeEstimate}</span>
                       <span className="text-xs text-gold">+{AI_MODULE_XP} XP</span>
                     </div>
                   </div>
@@ -184,7 +184,7 @@ export default async function AISkillsPage() {
 
                 {isLocked && prevModule && (
                   <p className="text-xs text-muted-custom mt-2 ml-14">
-                    Complete "{prevModule.title}" first
+                    Complete &quot;{prevModule.title}&quot; first
                   </p>
                 )}
               </Link>

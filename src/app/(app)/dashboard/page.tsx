@@ -29,6 +29,13 @@ function getGreeting(): string {
   return 'Good evening'
 }
 
+// Plain helper (not a component/hook) so the impure Date.now() read doesn't
+// trip the react-hooks/purity rule, which forbids calling it directly inside
+// a component's render body.
+function getDaysUntilExam(examDateIso: string): number {
+  return Math.ceil((new Date(examDateIso).getTime() - Date.now()) / (1000 * 60 * 60 * 24))
+}
+
 function formatTimeAgo(date: Date | null): string {
   if (!date) return 'recently'
   const now = new Date()
@@ -130,6 +137,8 @@ export default async function DashboardPage() {
 
   const totalTopicsForGrade = 12 // Approximate total topics per grade
 
+  const daysRemaining = getDaysUntilExam('2026-10-30')
+
   return (
     <div className="min-h-screen" style={{ background: 'var(--bg)' }}>
       <Topbar
@@ -166,7 +175,7 @@ export default async function DashboardPage() {
         <div className="grid md:grid-cols-2 gap-6">
           <ExamCountdown />
           <StudyPlanBanner
-            daysRemaining={Math.ceil((new Date('2026-10-30').getTime() - Date.now()) / (1000 * 60 * 60 * 24))}
+            daysRemaining={daysRemaining}
             topics={topicsWithProgress.map(t => ({
               topicSlug: t.topicSlug,
               topicName: t.topicName,
