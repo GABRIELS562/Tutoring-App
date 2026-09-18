@@ -27,10 +27,18 @@ This topic covers:
 • **Exchange Rates** - Converting between currencies
 • **Population Growth** - Applying compound growth to populations`
         },
+        // PROVISIONAL video picks — auto-filled 2026-09-18 from docs/client-updates/video-candidates; client to confirm.
         {
           type: 'video',
-          title: 'Watch: Finance and Growth — Mindset Learn',
-          videoId: 'MINDSET_FINANCE_GR10'
+          title: 'Watch: Financial Maths Grade 10 | Simple Interest Introduction — Kevinmathscience',
+          videoId: 'AKU4lSQvrnI',
+          videoIdAf: 'OEZNES1qBuE',
+          titleAf: 'Watch: Enkelvoudig en Saamgestelde rente - lang metode Wisk Gelet — TheWhiteboardSA'
+        },
+        {
+          type: 'video',
+          title: 'Watch: Financial Maths Grade 10 Past Paper Exam Question 1 — Miss Martins Maths and Science',
+          videoId: '3cj331uG3uI'
         }
       ]
     }

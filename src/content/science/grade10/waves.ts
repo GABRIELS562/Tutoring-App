@@ -27,10 +27,18 @@ This topic covers:
 • **Standing Waves** - Nodes and antinodes
 • **Wave Behaviour** - Reflection, refraction at boundaries`
         },
+        // PROVISIONAL video picks — auto-filled 2026-09-18 from docs/client-updates/video-candidates; client to confirm.
         {
           type: 'video',
-          title: 'Watch: Transverse Waves — Mindset Learn',
-          videoId: 'MINDSET_WAVES_GR10'
+          title: 'Watch: Grade 10 Transverse Waves Points in phase and points out of phase — Miss Martins Maths and Science',
+          videoId: 'PGgeSD7vPOQ',
+          videoIdAf: 'fhCoYWh97Nc',
+          titleAf: 'Watch: Transversale golwe: Graad 10 Fisika — Ekstra Wetenskap Klasse'
+        },
+        {
+          type: 'video',
+          title: 'Watch: Grade 10 Transverse waves Exam question Wavelength — Miss Martins Maths and Science',
+          videoId: 'o7BDo4CcQOI'
         }
       ]
     }

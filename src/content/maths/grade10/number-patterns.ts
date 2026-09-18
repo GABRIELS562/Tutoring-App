@@ -26,10 +26,18 @@ This topic covers:
 • **Quadratic Sequences** - $T_n = an^2 + bn + c$
 • **Pattern Recognition** - Identifying types of sequences`
         },
+        // PROVISIONAL video picks — auto-filled 2026-09-18 from docs/client-updates/video-candidates; client to confirm.
         {
           type: 'video',
-          title: 'Watch: Number Patterns — Mindset Learn',
-          videoId: 'MINDSET_NUMBER_PATTERNS_GR10'
+          title: 'Watch: Quadratic number patterns grade 11: introduction and examples — Kevinmathscience',
+          videoId: 'Ws_tyxB-Xyo',
+          videoIdAf: 'C7igJjQ_rsM',
+          titleAf: 'Watch: Graad 10 Wiskunde Hersiening: Getalpatrone | Vrae uit Vorige Vraestelle (KABV) — Smart Culture Education'
+        },
+        {
+          type: 'video',
+          title: 'Watch: Quadratic Pattern Grade 11: Exam — Kevinmathscience',
+          videoId: 'GzFLsWU5jlY'
         }
       ]
     }

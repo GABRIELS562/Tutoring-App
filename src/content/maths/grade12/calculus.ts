@@ -33,10 +33,18 @@ In the meantime, practice with past papers available in the Papers section.`
           type: 'tip',
           body: `Calculus is worth approximately 35% of Paper 1. Master differentiation rules first — they form the foundation for everything else in this topic.`
         },
+        // PROVISIONAL video picks — auto-filled 2026-09-18 from docs/client-updates/video-candidates; client to confirm.
         {
           type: 'video',
-          title: 'Watch: Introduction to Calculus — Mindset Learn',
-          videoId: 'MINDSET_CALCULUS_GR12'
+          title: 'Watch: Determine Cubic Equation Calculus grade 12 — Kevinmathscience',
+          videoId: 'UzVKkR-XArM',
+          videoIdAf: 'n3XE5NtY-Ls',
+          titleAf: 'Watch: Differensiasie - Verduideliking en Voorbeelde || Wiskunde Graad 12 — CollieMath Studio'
+        },
+        {
+          type: 'video',
+          title: 'Watch: Lesson 7: How To Solve Optimisation Questions | Area, Volume & Cost | Grade 12 Calculus — Mlungisi Nkosi Maths & Science',
+          videoId: '1ye4FhvMazo'
         }
       ]
     }

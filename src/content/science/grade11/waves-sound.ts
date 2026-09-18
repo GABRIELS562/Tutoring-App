@@ -27,10 +27,18 @@ This topic covers:
 • **Applications of Doppler Effect** - Speed traps, medical imaging, astronomy
 • **Superposition and Interference** - Constructive and destructive interference`
         },
+        // PROVISIONAL video picks — auto-filled 2026-09-18 from docs/client-updates/video-candidates; client to confirm.
         {
           type: 'video',
-          title: 'Watch: Waves and Sound — Mindset Learn',
-          videoId: 'MINDSET_WAVES_SOUND_GR11'
+          title: 'Watch: Grade 11 - Diffraction | Huygen’s Principle & Wavefronts | November 2017 | Mlungisi Nkosi — Mlungisi Nkosi Maths & Science',
+          videoId: 'KXRnmQGweJE',
+          videoIdAf: '4r76JWyXLnw',
+          titleAf: 'Watch: Hoe om vir Graad 11 Fisiese Wetenskap te leer — Juf. OK se Wetenskap Akademie'
+        },
+        {
+          type: 'video',
+          title: 'Watch: 2D & 3D Wavefronts — Mindset',
+          videoId: 'IQ_HH68wmHw'
         }
       ]
     }

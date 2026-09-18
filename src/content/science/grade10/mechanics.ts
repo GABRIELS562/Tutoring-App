@@ -27,10 +27,18 @@ This topic covers:
 • **Forces** - Normal, friction, tension, weight
 • **Newton's Laws** - First, second, and third law basics`
         },
+        // PROVISIONAL video picks — auto-filled 2026-09-18 from docs/client-updates/video-candidates; client to confirm.
         {
           type: 'video',
-          title: 'Watch: Mechanics — Mindset Learn',
-          videoId: 'MINDSET_MECHANICS_GR10'
+          title: 'Watch: Grade 10 Mechanics Past Paper Question Motion in One Dimension — Miss Martins Maths and Science',
+          videoId: 'gtiOPVVKkU4',
+          videoIdAf: '0pf1ilcCd2c',
+          titleAf: 'Watch: Hoe om vir Graad 10 Fisiese Wetenskap te leer — Juf. OK se Wetenskap Akademie'
+        },
+        {
+          type: 'video',
+          title: 'Watch: Grade 10 Mechanics: Equations of Motion Exam Question PART 1 — Miss Martins Maths and Science',
+          videoId: '-wHXFMMEltw'
         }
       ]
     }

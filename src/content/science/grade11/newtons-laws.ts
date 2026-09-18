@@ -27,10 +27,18 @@ This topic covers:
 • **Applications** - Objects on inclined planes, connected systems, friction problems
 • **Universal Gravitation** - Weight and gravitational force`
         },
+        // PROVISIONAL video picks — auto-filled 2026-09-18 from docs/client-updates/video-candidates; client to confirm.
         {
           type: 'video',
-          title: "Watch: Newton's Laws — Mindset Learn",
-          videoId: 'MINDSET_NEWTONS_LAWS_GR11'
+          title: 'Watch: Grade 11 Newton Laws: Objects on a slope — Kevinmathscience',
+          videoId: 'HmoNMxId4-Y',
+          videoIdAf: 'FA5DBBNyS8E',
+          titleAf: 'Watch: Newton se wette: Trek krag teen \'n hoek — HenBot Wetenskap'
+        },
+        {
+          type: 'video',
+          title: 'Watch: Newton Law Gravity Grade 11 — Kevinmathscience',
+          videoId: 'AFwr05QW3aY'
         }
       ]
     }

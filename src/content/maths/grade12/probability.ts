@@ -34,6 +34,19 @@ In the meantime, practice with past papers available in the Papers section.`
         {
           type: 'tip',
           body: `Remember: Permutations = "Position matters" (arrangements), Combinations = "Collection only" (selections). Use $^nP_r$ for arrangements and $^nC_r$ for selections.`
+        },
+        // PROVISIONAL video picks — auto-filled 2026-09-18 from docs/client-updates/video-candidates; client to confirm.
+        {
+          type: 'video',
+          title: 'Watch: Probability Maths Lit Part 1 — Kevinmathscience',
+          videoId: 'kMJVyxYiato',
+          videoIdAf: '5HNopMSeyLg',
+          titleAf: 'Watch: Waarskynlikheid Graad12: L1 Fundamentele Telbeginsel Wiskunde — Online Maths by Miss Pythagoras'
+        },
+        {
+          type: 'video',
+          title: 'Watch: Gr 12 probability # 1 — Kevinmathscience',
+          videoId: 'loYKqFQcksY'
         }
       ]
     }

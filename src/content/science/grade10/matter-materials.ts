@@ -28,10 +28,18 @@ This topic covers:
 • **Molecular Structure** - Shapes of simple molecules
 • **Physical and Chemical Changes** - Distinguishing between them`
         },
+        // PROVISIONAL video picks — auto-filled 2026-09-18 from docs/client-updates/video-candidates; client to confirm.
         {
           type: 'video',
-          title: 'Watch: Matter and Materials — Mindset Learn',
-          videoId: 'MINDSET_MATTER_MATERIALS_GR10'
+          title: 'Watch: Grade 10 Classification of Matter: Properties of materials — Miss Martins Maths and Science',
+          videoId: '5M4hJjp3-lQ',
+          videoIdAf: '0pf1ilcCd2c',
+          titleAf: 'Watch: Hoe om vir Graad 10 Fisiese Wetenskap te leer — Juf. OK se Wetenskap Akademie'
+        },
+        {
+          type: 'video',
+          title: 'Watch: Water of Crystallization | Chemistry Grade 10-12 — Miss Martins Maths and Science',
+          videoId: 'oADmMF84wbA'
         }
       ]
     }

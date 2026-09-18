@@ -27,10 +27,18 @@ This topic covers:
 • **Special Angles** - 30°, 45°, 60° exact values
 • **Problems in 2D** - Angles of elevation and depression`
         },
+        // PROVISIONAL video picks — auto-filled 2026-09-18 from docs/client-updates/video-candidates; client to confirm.
         {
           type: 'video',
-          title: 'Watch: Introduction to Trigonometry — Mindset Learn',
-          videoId: 'MINDSET_TRIG_GR10'
+          title: 'Watch: Sin Triangle Grade 10 — Kevinmathscience',
+          videoId: '4jSqFXdmKR0',
+          videoIdAf: 'U3rGPy484Ro',
+          titleAf: 'Watch: Graad 10 Trigonometrie — YCDM - YouCanDoMaths'
+        },
+        {
+          type: 'video',
+          title: 'Watch: Trigonometry 2D Grade 10 Angle of elevation and depression — Miss Martins Maths and Science',
+          videoId: 'KvBqPFfzfEM'
         }
       ]
     }

@@ -26,10 +26,18 @@ This topic covers:
 • **Parallel Lines** - Equal gradients ($m_1 = m_2$)
 • **Perpendicular Lines** - Product of gradients = -1 ($m_1 \\times m_2 = -1$)`
         },
+        // PROVISIONAL video picks — auto-filled 2026-09-18 from docs/client-updates/video-candidates; client to confirm.
         {
           type: 'video',
-          title: 'Watch: Analytical Geometry — Mindset Learn',
-          videoId: 'MINDSET_ANALYTICAL_GEOMETRY_GR10'
+          title: 'Watch: Analytical Geometry Grade 10: Distance formula - length of a line — Miss Martins Maths and Science',
+          videoId: 'VDCxnhnkzJg',
+          videoIdAf: '4kCOeJdhECM',
+          titleAf: 'Watch: Gr10 Junie Eksamen voorbereiding: Analitiese Meetkunde — Lichelle Barnard'
+        },
+        {
+          type: 'video',
+          title: 'Watch: Analytical Geometry Grade 10 Exam Question — Kevinmathscience',
+          videoId: 'w1QwFixKjBo'
         }
       ]
     }

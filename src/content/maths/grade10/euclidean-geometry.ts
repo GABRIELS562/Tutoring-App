@@ -27,10 +27,18 @@ This topic covers:
 • **Quadrilaterals** - Properties of parallelograms, rectangles, rhombi, squares, kites, trapeziums
 • **Proving Properties** - Writing geometric proofs with reasons`
         },
+        // PROVISIONAL video picks — auto-filled 2026-09-18 from docs/client-updates/video-candidates; client to confirm.
         {
           type: 'video',
-          title: 'Watch: Euclidean Geometry — Mindset Learn',
-          videoId: 'MINDSET_EUCLIDEAN_GEOMETRY_GR10'
+          title: 'Watch: Exam Questions Grade 10 Euclidean Geometry — Kevinmathscience',
+          videoId: 'g5b1Ygc-Tn4',
+          videoIdAf: 'BSDa-8njr2w',
+          titleAf: 'Watch: Euklidiese Meetkunde Voorbeelde - Verduideliking || Wiskunde Graad 10 — CollieMath Studio'
+        },
+        {
+          type: 'video',
+          title: 'Watch: Grade 10 Euclidean Geometry Exam Questions Part 1 — Miss Martins Maths and Science',
+          videoId: 'lJHk-dG-Or4'
         }
       ]
     }

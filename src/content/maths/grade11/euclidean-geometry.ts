@@ -36,10 +36,18 @@ In the meantime, practice with past papers available in the Papers section.`
           type: 'tip',
           body: `Circle geometry requires you to state theorems correctly. Practice writing "angle at centre = 2 × angle at circumference" and similar statements — examiners are strict about wording!`
         },
+        // PROVISIONAL video picks — auto-filled 2026-09-18 from docs/client-updates/video-candidates; client to confirm.
         {
           type: 'video',
-          title: 'Watch: Euclidean Geometry — Mindset Learn',
-          videoId: 'MINDSET_EUCLIDEAN_GEOMETRY_GR11'
+          title: 'Watch: Circle Geometry Grade 11 : Practice — Kevinmathscience',
+          videoId: 'bc6x2GQcMbU',
+          videoIdAf: 'ULsEMok0Ksk',
+          titleAf: 'Watch: Sirkelmeetkunde vraagstukke 1 euklidiese graad 11 (wiskvaw) (wiskdo) — VAW-Vereniging vir Afrikaanse Wiskunde-onderwysers'
+        },
+        {
+          type: 'video',
+          title: 'Watch: Euclidean Geometry Grade 11: Exam question — Kevinmathscience',
+          videoId: 'lQE642ILPDY'
         }
       ]
     }

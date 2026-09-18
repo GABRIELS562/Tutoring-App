@@ -26,10 +26,18 @@ This topic covers:
 • **Literal Equations** - Changing the subject of a formula
 • **Word Problems** - Setting up and solving equations from context`
         },
+        // PROVISIONAL video picks — auto-filled 2026-09-18 from docs/client-updates/video-candidates; client to confirm.
         {
           type: 'video',
-          title: 'Watch: Equations and Inequalities — Mindset Learn',
-          videoId: 'MINDSET_EQUATIONS_GR10'
+          title: 'Watch: Grade 10 Inequalities — Kevinmathscience',
+          videoId: 'OFX7zmbEmro',
+          videoIdAf: '8IUh8jx2vrM',
+          titleAf: 'Watch: Gr10 (CAPS) Vergelykings en Ongelykhede — Philpotts Consultancy'
+        },
+        {
+          type: 'video',
+          title: 'Watch: Exam Equations Grade 10 — Kevinmathscience',
+          videoId: 'zHNvf3hMlSk'
         }
       ]
     }

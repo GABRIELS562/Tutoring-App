@@ -32,10 +32,18 @@ In the meantime, practice with past papers available in the Papers section.`
           type: 'tip',
           body: `The equation of a circle with centre $(a, b)$ and radius $r$ is $(x-a)^2 + (y-b)^2 = r^2$. Memorise this — it appears in every Paper 2 exam.`
         },
+        // PROVISIONAL video picks — auto-filled 2026-09-18 from docs/client-updates/video-candidates; client to confirm.
         {
           type: 'video',
-          title: 'Watch: Analytical Geometry — Mindset Learn',
-          videoId: 'MINDSET_ANALYTICAL_GEOMETRY_GR12'
+          title: 'Watch: Analytical Geometry Grade 12 Exam Questions — Kevinmathscience',
+          videoId: 'LxMkIbspJAw',
+          videoIdAf: '9YT8XPAM9Vc',
+          titleAf: 'Watch: Analitiese Meetkunde Graad 12 Wiskunde: L1 Sirkel met oorsprong middelpunt — Online Maths by Miss Pythagoras'
+        },
+        {
+          type: 'video',
+          title: 'Watch: Analytical Geometry Grade 12 Exam Questions — Kevinmathscience',
+          videoId: 'O9mO17v2-e8'
         }
       ]
     }

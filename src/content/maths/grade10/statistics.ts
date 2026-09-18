@@ -27,10 +27,18 @@ This topic covers:
 • **Histograms** - Drawing and interpreting frequency histograms
 • **Frequency Polygons** - Connecting midpoints of histogram bars`
         },
+        // PROVISIONAL video picks — auto-filled 2026-09-18 from docs/client-updates/video-candidates; client to confirm.
         {
           type: 'video',
-          title: 'Watch: Statistics — Mindset Learn',
-          videoId: 'MINDSET_STATISTICS_GR10'
+          title: 'Watch: Statistics Grade 10: Mean, mode, median — Kevinmathscience',
+          videoId: 'xi8VjMmWdgI',
+          videoIdAf: 'twoRWkbvv_o',
+          titleAf: 'Watch: Graad 10 Wiskunde Les 1 Statistiek — Rochelle Van der Merwe'
+        },
+        {
+          type: 'video',
+          title: 'Watch: Statistics Grade 10: Exam Question — Kevinmathscience',
+          videoId: 'Hc-BUqBaUkQ'
         }
       ]
     }

@@ -33,10 +33,18 @@ In the meantime, practice with past papers available in the Papers section.`
           type: 'tip',
           body: `For perpendicular lines: $m_1 \\times m_2 = -1$. For parallel lines: $m_1 = m_2$. These relationships appear in almost every analytical geometry question.`
         },
+        // PROVISIONAL video picks — auto-filled 2026-09-18 from docs/client-updates/video-candidates; client to confirm.
         {
           type: 'video',
-          title: 'Watch: Analytical Geometry — Mindset Learn',
-          videoId: 'MINDSET_ANALYTICAL_GEOMETRY_GR11'
+          title: 'Watch: Grade 11 Analytical geometry: angle of inclination — Kevinmathscience',
+          videoId: 'VB4jH92V-tg',
+          videoIdAf: '_Rc6KZtQtVM',
+          titleAf: 'Watch: Graad 11 Euklidiese Meetkunde #1: Inleiding — WiskundeMetMargie'
+        },
+        {
+          type: 'video',
+          title: 'Watch: Grade 11 Analytical Geometry Angle of Inclination Introduction and practice — Miss Martins Maths and Science',
+          videoId: 'lrmASs4NOww'
         }
       ]
     }

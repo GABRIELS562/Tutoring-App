@@ -26,10 +26,18 @@ This topic covers:
 • **Theorem of Pythagoras (converse)** - Proving right angles
 • **Advanced Riders** - Multi-step geometric proofs`
         },
+        // PROVISIONAL video picks — auto-filled 2026-09-18 from docs/client-updates/video-candidates; client to confirm.
         {
           type: 'video',
-          title: 'Watch: Euclidean Geometry — Mindset Learn',
-          videoId: 'MINDSET_EUCLIDEAN_GEOMETRY_GR12'
+          title: 'Watch: Grade 12 Euclidean Geometry Exam question # 1 — Kevinmathscience',
+          videoId: 'nWn-HjCP9wY',
+          videoIdAf: 'GbXpQ2YDdNQ',
+          titleAf: 'Watch: Eweredigheid en Gelykvormigheid Verduideliking Via Voorbeelde || Wiskunde Graad 12 — CollieMath Studio'
+        },
+        {
+          type: 'video',
+          title: 'Watch: EUCLIDEAN GEOMETRY | PROPORTIONALITY GRADE 12 [ ISIZULU ] — Isinamuva Tutoring',
+          videoId: '122eVl0o_C8'
         }
       ]
     }

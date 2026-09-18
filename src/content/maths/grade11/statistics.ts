@@ -27,10 +27,18 @@ This topic covers:
 • **Ogives (Cumulative Frequency Curves)** - Reading percentiles and quartiles
 • **Scatter Plots and Correlation** - Identifying trends and relationships`
         },
+        // PROVISIONAL video picks — auto-filled 2026-09-18 from docs/client-updates/video-candidates; client to confirm.
         {
           type: 'video',
-          title: 'Watch: Statistics — Mindset Learn',
-          videoId: 'MINDSET_STATISTICS_GR11'
+          title: 'Watch: Statistics Grade 11: Ogive curve — Kevinmathscience',
+          videoId: 'CTj0OE6lkkg',
+          videoIdAf: 'v0NWn7nXALU',
+          titleAf: 'Watch: Gr 11 en 12 Ogief Statistiek Deel 1 - Die Basics — But They Ask It In A Funny Way'
+        },
+        {
+          type: 'video',
+          title: 'Watch: Statistics Grade 11 Exam Questions — Kevinmathscience',
+          videoId: 'Amf60jAYIaI'
         }
       ]
     }

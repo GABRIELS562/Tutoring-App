@@ -27,10 +27,18 @@ This topic covers:
 • **Sketching Graphs** - Domain, range, intercepts, asymptotes
 • **Transformations** - Effects of $a$ and $q$ on graphs`
         },
+        // PROVISIONAL video picks — auto-filled 2026-09-18 from docs/client-updates/video-candidates; client to confirm.
         {
           type: 'video',
-          title: 'Watch: Functions and Graphs — Mindset Learn',
-          videoId: 'MINDSET_FUNCTIONS_GR10'
+          title: 'Watch: Exam Functions Grade 10 — Kevinmathscience',
+          videoId: '1RnuVXYcVpE',
+          videoIdAf: '90DcF3f3V7c',
+          titleAf: 'Watch: Funksies Parabool Graad10: L6 Grafiek Interpretasie Eksamen vraag — Online Maths by Miss Pythagoras'
+        },
+        {
+          type: 'video',
+          title: 'Watch: 🚀 Grade 10 Mathematics | Straight Line Functions Made Easy — SmartPrep MathsScience',
+          videoId: 'ZqRXA19yhMM'
         }
       ]
     }

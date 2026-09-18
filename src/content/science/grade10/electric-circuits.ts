@@ -28,10 +28,18 @@ This topic covers:
 • **Resistors in Series and Parallel** - Calculating total resistance
 • **Power** - $P = VI = I^2R = \\frac{V^2}{R}$`
         },
+        // PROVISIONAL video picks — auto-filled 2026-09-18 from docs/client-updates/video-candidates; client to confirm.
         {
           type: 'video',
-          title: 'Watch: Electric Circuits — Mindset Learn',
-          videoId: 'MINDSET_ELECTRIC_CIRCUITS_GR10'
+          title: 'Watch: Circuits grade 10 | Part 1 — Kevinmathscience',
+          videoId: 'imoShDLnQqE',
+          videoIdAf: 'xO7N97B1RB0',
+          titleAf: 'Watch: Stroombane: Berekeninge Graad 10 Fisika — Ekstra Wetenskap Klasse'
+        },
+        {
+          type: 'video',
+          title: 'Watch: Circuits Grade 10 | Calculations — Kevinmathscience',
+          videoId: '5WRqdTr9WmQ'
         }
       ]
     }

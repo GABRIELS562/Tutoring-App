@@ -26,10 +26,18 @@ This topic covers:
 • **Complementary Events** - $P(A') = 1 - P(A)$
 • **The Addition Rule** - $P(A \\text{ or } B) = P(A) + P(B) - P(A \\text{ and } B)$`
         },
+        // PROVISIONAL video picks — auto-filled 2026-09-18 from docs/client-updates/video-candidates; client to confirm.
         {
           type: 'video',
-          title: 'Watch: Probability — Mindset Learn',
-          videoId: 'MINDSET_PROBABILITY_GR10'
+          title: 'Watch: Probability Grade 10 | Introduction — Kevinmathscience',
+          videoId: 'Hqbbyh5OEtc',
+          videoIdAf: 'ZRZQV5YLuPc',
+          titleAf: 'Watch: Graad 10 Waarskynlikheid — YCDM - YouCanDoMaths'
+        },
+        {
+          type: 'video',
+          title: 'Watch: Probability Grade 10 | Exam Question — Kevinmathscience',
+          videoId: 'iBoBTRrp-w8'
         }
       ]
     }
