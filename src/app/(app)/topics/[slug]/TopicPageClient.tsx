@@ -6,6 +6,7 @@ import Topbar from '@/components/layout/Topbar'
 import NoteBlock from '@/components/notes/NoteBlock'
 import { ChevronDown, BookOpen, FileText, Star, ArrowRight, Download, Check, Loader2, WifiOff, AlertCircle } from 'lucide-react'
 import type { TopicContent } from '@/types'
+import { useUser } from '@/context/UserContext'
 import {
   isTopicDownloaded,
   getDownloadedTopicCount,
@@ -29,7 +30,8 @@ export default function TopicPageClient({ slug, content }: TopicPageClientProps)
   const [downloadState, setDownloadState] = useState<'idle' | 'downloading' | 'downloaded' | 'error' | 'limit_reached'>('idle')
   const [downloadProgress, setDownloadProgress] = useState('')
   const isOnline = useOnlineStatus()
-  const [isPremium] = useState(false) // TODO: Get from user context
+  const { user } = useUser()
+  const isPremium = user?.isPremium ?? false
 
   // Check if topic is already cached (IndexedDB + Cache API)
   useEffect(() => {

@@ -1,0 +1,36 @@
+import type { TopicContent } from '@/types'
+
+export const fixtureTopic: TopicContent = {
+  id: 'fixture-gr10',
+  slug: 'fixture-gr10',
+  subject: 'maths',
+  grade: 10,
+  paper: 1,
+  title: 'Fixture Topic',
+  capsWeight: 10,
+  sections: [
+    {
+      id: 'coming-soon',
+      title: 'Fixture Topic',
+      blocks: [
+        {
+          type: 'theory',
+          title: 'What this topic covers',
+          body: `• **Fixture Point** - A placeholder bullet for the fixture theory block`
+        },
+        {
+          type: 'video',
+          title: 'Watch: Fixture — Placeholder',
+          videoId: 'PLACEHOLDER_FIXTURE_GR10'
+        },
+        {
+          type: 'example',
+          title: 'A worked example that must survive the fill script untouched',
+          body: `This example block immediately follows the video block. It must never be consumed by the video-block region replacement, even across repeated runs.`
+        }
+      ]
+    }
+  ]
+}
+
+export default fixtureTopic

@@ -15,29 +15,34 @@ export const calculusGr12: TopicContent = {
       blocks: [
         {
           type: 'theory',
-          title: 'Content Under Development',
-          body: `This topic is currently being developed. Check back soon for comprehensive content on:
-
-• **Limits and Continuity** - Understanding the foundation of calculus
+          title: 'What this topic covers',
+          body: `• **Limits and Continuity** - Understanding the foundation of calculus
 • **Differentiation from First Principles** - The definition of the derivative
 • **Rules of Differentiation** - Power rule, product rule, quotient rule, chain rule
 • **Applications of Derivatives** - Tangents, normals, rates of change
 • **Curve Sketching** - Using calculus to analyze functions
 • **Optimization Problems** - Finding maxima and minima
 • **Integration** - The reverse of differentiation
-• **Area Under Curves** - Definite integrals and applications
-
-In the meantime, practice with past papers available in the Papers section.`
+• **Area Under Curves** - Definite integrals and applications`
         },
         {
           type: 'tip',
           body: `Calculus is worth approximately 35% of Paper 1. Master differentiation rules first — they form the foundation for everything else in this topic.`
         },
+        // PROVISIONAL video picks — auto-filled 2026-09-18 from docs/client-updates/video-candidates; client to confirm.
         {
           type: 'video',
-          title: 'Watch: Introduction to Calculus — Mindset Learn',
-          videoId: 'MINDSET_CALCULUS_GR12'
+          title: 'Watch: Determine Cubic Equation Calculus grade 12 — Kevinmathscience',
+          videoId: 'UzVKkR-XArM',
+          videoIdAf: 'n3XE5NtY-Ls',
+          titleAf: 'Watch: Differensiasie - Verduideliking en Voorbeelde || Wiskunde Graad 12 — CollieMath Studio'
+        },
+        {
+          type: 'video',
+          title: 'Watch: Lesson 7: How To Solve Optimisation Questions | Area, Volume & Cost | Grade 12 Calculus — Mlungisi Nkosi Maths & Science',
+          videoId: '1ye4FhvMazo'
         }
+        // TODO(curator): add { type: 'formula', formulas: [...] } block
       ]
     }
   ]

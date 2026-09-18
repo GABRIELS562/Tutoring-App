@@ -15,11 +15,8 @@ export const statisticsGr11: TopicContent = {
       blocks: [
         {
           type: 'theory',
-          title: 'Full Notes Coming Soon',
-          body: `Full notes for this topic are coming soon. In the meantime, watch the Mindset Learn video below.
-
-This topic covers:
-• **Measures of Central Tendency** - Mean, median, mode for grouped and ungrouped data
+          title: 'What this topic covers',
+          body: `• **Measures of Central Tendency** - Mean, median, mode for grouped and ungrouped data
 • **Measures of Dispersion** - Range, variance, standard deviation
 • **Five Number Summary** - Min, Q1, median, Q3, max
 • **Box and Whisker Plots** - Drawing and interpreting
@@ -27,11 +24,20 @@ This topic covers:
 • **Ogives (Cumulative Frequency Curves)** - Reading percentiles and quartiles
 • **Scatter Plots and Correlation** - Identifying trends and relationships`
         },
+        // PROVISIONAL video picks — auto-filled 2026-09-18 from docs/client-updates/video-candidates; client to confirm.
         {
           type: 'video',
-          title: 'Watch: Statistics — Mindset Learn',
-          videoId: 'MINDSET_STATISTICS_GR11'
+          title: 'Watch: Statistics Grade 11: Ogive curve — Kevinmathscience',
+          videoId: 'CTj0OE6lkkg',
+          videoIdAf: 'v0NWn7nXALU',
+          titleAf: 'Watch: Gr 11 en 12 Ogief Statistiek Deel 1 - Die Basics — But They Ask It In A Funny Way'
+        },
+        {
+          type: 'video',
+          title: 'Watch: Statistics Grade 11 Exam Questions — Kevinmathscience',
+          videoId: 'Amf60jAYIaI'
         }
+        // TODO(curator): add { type: 'formula', formulas: [...] } block
       ]
     }
   ]

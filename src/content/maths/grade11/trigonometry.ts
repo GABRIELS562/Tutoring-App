@@ -156,10 +156,11 @@ Reduction formulae let you express any angle as an acute angle (0° to 90°) usi
             }
           ]
         },
+        // PROVISIONAL video picks — auto-filled 2026-09-18 from docs/client-updates/video-candidates; client to confirm.
         {
           type: 'video',
-          title: 'Mindset Learn: Reduction Formulae',
-          videoId: 'jlyFkQ8HXPA'
+          title: 'Watch: Trig Functions Grade 11 Exam Questions — Kevinmathscience',
+          videoId: 'cZoEfccMapk'
         }
       ]
     },
@@ -237,10 +238,13 @@ From the square identity, you can rearrange to get:
           type: 'tip',
           body: `Start with the messier side — always. Look for $1 - \\cos^2\\theta$ (that's $\\sin^2\\theta$!) or chances to factor. See a sum of squares? Try the square identity. This pattern appears in 90% of identity proofs.`
         },
+        // PROVISIONAL video picks — auto-filled 2026-09-18 from docs/client-updates/video-candidates; client to confirm.
         {
           type: 'video',
-          title: 'Watch: Trigonometric Identities — Mindset Learn',
-          videoId: 'MINDSET_TRIG_IDENTITIES_GR11'
+          title: 'Watch: Trigonometry Grade 11 Exam Questions — Kevinmathscience',
+          videoId: 'IhXnVk8PuJY',
+          videoIdAf: 'Jiz_6sQY418',
+          titleAf: 'Watch: Graad 11 Trig identiteite (bewys) — Mathfanatics'
         }
       ]
     },
@@ -361,10 +365,11 @@ Here's your approach for each function:
             }
           ]
         },
+        // PROVISIONAL video picks — auto-filled 2026-09-18 from docs/client-updates/video-candidates; client to confirm.
         {
           type: 'video',
-          title: 'Watch: Solving Trig Equations — Mindset Learn',
-          videoId: 'MINDSET_TRIG_EQUATIONS_GR11'
+          title: 'Watch: General Solutions Grade 11 Trigonometry PART 1 — Miss Martins Maths and Science',
+          videoId: 'rEFv51neoUc'
         }
       ]
     },
@@ -578,10 +583,11 @@ Notice: When $A = 90°$, you get $\\cos 90° = 0$, so it simplifies to $a^2 = b^
             }
           ]
         },
+        // PROVISIONAL video picks — auto-filled 2026-09-18 from docs/client-updates/video-candidates; client to confirm.
         {
           type: 'video',
-          title: 'Mindset Learn: Sine and Cosine Rules',
-          videoId: 'TOgPBM_1I5Y'
+          title: 'Watch: Trig functions grade 11 and 12: Determine Equation — Kevinmathscience',
+          videoId: 'Optfjw6HGZw'
         }
       ]
     }
