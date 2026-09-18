@@ -99,6 +99,7 @@ export default function PromptChallengeGame({ userId, onComplete }: PromptChalle
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           mode: 'prompt_evaluation',
+          challengeId: currentScenario.id,
           scenarioContext: currentScenario.context,
           scenarioTask: currentScenario.task,
           studentPrompt: userPrompt,
@@ -113,8 +114,13 @@ export default function PromptChallengeGame({ userId, onComplete }: PromptChalle
         throw new Error(data.error || 'Failed to evaluate')
       }
 
+      // The server persists the attempt (with its own server-computed
+      // score) as part of this same request now - see the prompt_evaluation
+      // branch of /api/ai-hint. `data.attempt` carries the saved id, final
+      // xpEarned (including any badge bonus) and newBadges when Supabase is
+      // configured; it's absent in demo mode.
       const evalResult: PromptEvaluationResult = data.evaluation
-      const xpEarned = evalResult.score * PROMPT_CHALLENGE_XP_PER_STAR
+      const xpEarned: number = data.attempt?.xpEarned ?? evalResult.score * PROMPT_CHALLENGE_XP_PER_STAR
 
       setEvaluation(evalResult)
 
@@ -127,25 +133,6 @@ export default function PromptChallengeGame({ userId, onComplete }: PromptChalle
       }
 
       setAttempts(prev => [...prev.filter(a => a.scenarioId !== currentScenario.id), newAttempt])
-
-      // Save to Supabase via API
-      try {
-        await fetch('/api/ai-skills/save-attempt', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            userId,
-            challengeId: currentScenario.id,
-            studentPrompt: userPrompt,
-            aiScore: evalResult.score,
-            aiFeedback: `${evalResult.what_worked} ${evalResult.what_to_improve}`,
-            improvedPrompt: evalResult.improved_prompt,
-          }),
-        })
-      } catch (saveError) {
-        console.error('Error saving attempt:', saveError)
-        // Continue anyway - local state is saved
-      }
     } catch (error) {
       console.error('Evaluation error:', error)
     } finally {

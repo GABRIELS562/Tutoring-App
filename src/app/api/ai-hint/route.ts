@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { z } from 'zod'
 import { getApiSupabase } from '@/lib/supabase/api'
 import { requireUser, authErrorResponse } from '@/lib/auth/require-user'
+import { badges, PROMPT_CHALLENGE_XP_PER_STAR } from '@/content/ai-skills'
 
 const FREE_HINT_LIMIT = 5
 const FREE_CAMERA_LIMIT = 1
@@ -23,6 +24,7 @@ const HintRequestSchema = z.object({
   // For camera_scan mode
   imageBase64: z.string().optional(),
   // For prompt_evaluation mode
+  challengeId: z.string().optional(),
   scenarioContext: z.string().optional(),
   scenarioTask: z.string().optional(),
   studentPrompt: z.string().optional(),
@@ -304,6 +306,107 @@ async function updateUsageRecord(
   }
 }
 
+interface PromptEvaluation {
+  score: number
+  what_worked: string
+  what_to_improve: string
+  improved_prompt: string
+  encouragement: string
+}
+
+interface PersistedPromptChallengeAttempt {
+  id: string
+  xpEarned: number
+  newBadges: string[]
+  totalChallengesCompleted: number
+}
+
+/**
+ * Persists a prompt-challenge attempt using the score Angelo just computed
+ * server-side in this same request — never a client-supplied score. This is
+ * what /api/ai-skills/save-attempt used to do by trusting a client `aiScore`
+ * field; folding it in here removes that trust boundary entirely.
+ * Returns null when there is nothing to persist (demo mode, or the caller
+ * didn't send a challengeId).
+ */
+async function persistPromptChallengeAttempt(
+  userId: string,
+  challengeId: string | undefined,
+  studentPrompt: string | undefined,
+  evaluation: PromptEvaluation
+): Promise<PersistedPromptChallengeAttempt | null> {
+  const supabase = getApiSupabase()
+  if (!supabase || !challengeId) {
+    return null
+  }
+
+  const xpEarned = evaluation.score * PROMPT_CHALLENGE_XP_PER_STAR
+
+  const { data: attempt, error: insertError } = await supabase
+    .from('prompt_challenge_attempts')
+    .insert({
+      user_id: userId,
+      challenge_id: challengeId,
+      student_prompt: studentPrompt || '',
+      ai_score: evaluation.score,
+      ai_feedback: `${evaluation.what_worked} ${evaluation.what_to_improve}`,
+      improved_prompt: evaluation.improved_prompt,
+      xp_earned: xpEarned,
+    })
+    .select('id')
+    .single()
+
+  if (insertError || !attempt) {
+    console.error('Error saving prompt challenge attempt:', insertError)
+    return null
+  }
+
+  const { data: userData, error: fetchError } = await supabase
+    .from('users')
+    .select('badges, xp, prompt_challenges_completed')
+    .eq('id', userId)
+    .single()
+
+  if (fetchError || !userData) {
+    console.error('Error fetching user for prompt challenge attempt:', fetchError)
+    return { id: attempt.id, xpEarned, newBadges: [], totalChallengesCompleted: 0 }
+  }
+
+  const currentBadges: string[] = userData.badges || []
+  const currentXP: number = userData.xp || 0
+  const challengesCompleted: number = userData.prompt_challenges_completed || 0
+  const newBadges: string[] = []
+
+  if (evaluation.score === 5 && !currentBadges.includes('prompt-master')) {
+    newBadges.push('prompt-master')
+  }
+
+  let totalXpEarned = xpEarned
+  for (const badgeId of newBadges) {
+    totalXpEarned += badges[badgeId as keyof typeof badges]?.xpReward || 0
+  }
+
+  const { error: updateError } = await supabase
+    .from('users')
+    .update({
+      xp: currentXP + totalXpEarned,
+      badges: [...currentBadges, ...newBadges],
+      prompt_challenges_completed: challengesCompleted + 1,
+    })
+    .eq('id', userId)
+
+  if (updateError) {
+    console.error('Error updating user after prompt challenge attempt:', updateError)
+  }
+
+  return {
+    id: attempt.id,
+    xpEarned: totalXpEarned,
+    newBadges,
+    totalChallengesCompleted: challengesCompleted + 1,
+  }
+}
+
 export async function POST(request: NextRequest) {
   let user
   try {
@@ -386,9 +489,17 @@ export async function POST(request: NextRequest) {
           encouragement: "You're thinking about how to ask — that alone puts you ahead of most students.",
         }
 
+        const attempt = await persistPromptChallengeAttempt(
+          userId,
+          body.challengeId,
+          body.studentPrompt,
+          mockEvaluation
+        )
+
         return NextResponse.json({
           evaluation: mockEvaluation,
           isDemo: true,
+          ...(attempt ? { attempt } : {}),
         })
       }
 
@@ -532,21 +643,39 @@ export async function POST(request: NextRequest) {
           encouragement: "Keep practising!",
         }
 
+        const attempt = await persistPromptChallengeAttempt(
+          userId,
+          body.challengeId,
+          body.studentPrompt,
+          evaluation
+        )
+
         return NextResponse.json({
           evaluation,
           remaining,
+          ...(attempt ? { attempt } : {}),
         })
       } catch {
         // Fallback if JSON parsing fails
+        const fallbackEvaluation = {
+          score: 3,
+          what_worked: "Your prompt shows effort",
+          what_to_improve: "Try being more specific about context and format",
+          improved_prompt: body.studentPrompt || '',
+          encouragement: "Keep practising — prompt engineering is a skill that improves with use.",
+        }
+
+        const attempt = await persistPromptChallengeAttempt(
+          userId,
+          body.challengeId,
+          body.studentPrompt,
+          fallbackEvaluation
+        )
+
         return NextResponse.json({
-          evaluation: {
-            score: 3,
-            what_worked: "Your prompt shows effort",
-            what_to_improve: "Try being more specific about context and format",
-            improved_prompt: body.studentPrompt || '',
-            encouragement: "Keep practising — prompt engineering is a skill that improves with use.",
-          },
+          evaluation: fallbackEvaluation,
           remaining,
+          ...(attempt ? { attempt } : {}),
         })
       }
     }
