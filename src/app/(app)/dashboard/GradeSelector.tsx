@@ -5,15 +5,14 @@ import { useRouter } from 'next/navigation'
 
 type GradeSelectorProps = {
   currentGrade: number
-  userId: string
 }
 
-async function updateGradeAction(userId: string, grade: number): Promise<{ success: boolean; demo?: boolean }> {
+async function updateGradeAction(grade: number): Promise<{ success: boolean; demo?: boolean }> {
   try {
     const res = await fetch('/api/update-grade', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ userId, grade }),
+      body: JSON.stringify({ grade }),
     })
     if (res.ok) {
       return await res.json()
@@ -24,7 +23,7 @@ async function updateGradeAction(userId: string, grade: number): Promise<{ succe
   }
 }
 
-export default function GradeSelector({ currentGrade, userId }: GradeSelectorProps) {
+export default function GradeSelector({ currentGrade }: GradeSelectorProps) {
   const [selectedGrade, setSelectedGrade] = useState(currentGrade)
   const [isPending, startTransition] = useTransition()
   const router = useRouter()
@@ -33,7 +32,7 @@ export default function GradeSelector({ currentGrade, userId }: GradeSelectorPro
     if (grade === selectedGrade) return
     setSelectedGrade(grade)
     startTransition(async () => {
-      const result = await updateGradeAction(userId, grade)
+      const result = await updateGradeAction(grade)
       // Only refresh if it's a real user update (not demo mode)
       if (result.success && !result.demo) {
         router.refresh()

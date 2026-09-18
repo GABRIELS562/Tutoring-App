@@ -40,14 +40,21 @@ export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl
 
   // Protected routes
-  const protectedRoutes = ['/dashboard', '/subjects', '/topics', '/papers', '/progress', '/admin']
+  const protectedRoutes = ['/dashboard', '/subjects', '/topics', '/papers', '/progress', '/admin', '/api/admin']
   const authRoutes = ['/login', '/signup']
 
   const isProtectedRoute = protectedRoutes.some(route => pathname.startsWith(route))
   const isAuthRoute = authRoutes.some(route => pathname === route)
 
-  // Redirect unauthenticated users to login
+  // Unauthenticated access to a protected route: API routes get a 401 JSON
+  // body (a redirect makes no sense for a fetch caller), page routes get
+  // redirected to /login. Route-level requireAdmin() still enforces the
+  // admin role check for /api/admin — this only guarantees a session exists.
   if (isProtectedRoute && !user) {
+    if (pathname.startsWith('/api/')) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+    }
+
     const url = request.nextUrl.clone()
     url.pathname = '/login'
     return NextResponse.redirect(url)

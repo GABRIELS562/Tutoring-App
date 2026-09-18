@@ -1,8 +1,15 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { requireAdmin, authErrorResponse } from '@/lib/auth/require-user'
 
 const ANTHROPIC_API_URL = 'https://api.anthropic.com/v1/messages'
 
 export async function POST(request: NextRequest) {
+  try {
+    await requireAdmin()
+  } catch (err) {
+    return authErrorResponse(err)
+  }
+
   try {
     const body = await request.json()
     const { questionText } = body

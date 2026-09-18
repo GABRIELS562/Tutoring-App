@@ -5,22 +5,35 @@ import Link from 'next/link'
 import { ArrowLeft, Lock } from 'lucide-react'
 import { moduleOrder } from '@/content/ai-skills'
 import CertificateGenerator from '@/components/ai/CertificateGenerator'
+import IssueCertificate from '@/components/ai/IssueCertificate'
 
 export const metadata = {
   title: 'AI Literacy Certificate | Angelo Tutoring',
   description: 'Download your AI Literacy Certificate from Angelo Tutoring. Prove your AI skills to employers with a verifiable digital credential.',
 }
 
-function generateCertificateId(): string {
-  const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789'
-  let id = 'AT-2026-'
-  for (let i = 0; i < 4; i++) {
-    id += chars.charAt(Math.floor(Math.random() * chars.length))
-  }
-  return id
+interface CertificateInfo {
+  studentName: string
+  certificateId: string
+  avgPromptScore: number
+  modulesCompleted: number
+  issuedAt: string
 }
 
-async function getCertificateData() {
+interface CertificateReadState {
+  isEligible: boolean
+  certificate: CertificateInfo | null
+}
+
+/**
+ * Read-only: checks module-completion eligibility and whether a
+ * certificate has already been issued, both via the visitor's own
+ * session (RLS's *_select_own policies). Never inserts anything - a
+ * certificate that doesn't exist yet is issued server-side by
+ * IssueCertificate calling POST /api/ai-skills/issue-certificate
+ * (requireUser + the service-role client), not by this page.
+ */
+async function getCertificateReadState(): Promise<CertificateReadState> {
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
   const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
 
@@ -62,7 +75,6 @@ async function getCertificateData() {
     redirect('/login')
   }
 
-  // Get user data
   const { data: userData } = await supabase
     .from('users')
     .select('name, ai_modules_completed')
@@ -76,66 +88,32 @@ async function getCertificateData() {
     return { isEligible: false, certificate: null }
   }
 
-  // Check for existing certificate
   const { data: existingCert } = await supabase
     .from('ai_certificates')
     .select('*')
     .eq('user_id', user.id)
-    .single()
+    .maybeSingle()
 
-  if (existingCert) {
-    return {
-      isEligible: true,
-      certificate: {
-        studentName: existingCert.student_name,
-        certificateId: existingCert.certificate_id,
-        avgPromptScore: parseFloat(existingCert.avg_prompt_score || '4.0'),
-        modulesCompleted: existingCert.modules_completed,
-        issuedAt: existingCert.issued_at,
-      },
-    }
-  }
-
-  // Get average prompt score
-  const { data: attempts } = await supabase
-    .from('prompt_challenge_attempts')
-    .select('ai_score')
-    .eq('user_id', user.id)
-
-  const avgScore = attempts && attempts.length > 0
-    ? attempts.reduce((sum, a) => sum + (a.ai_score || 0), 0) / attempts.length
-    : 4.0
-
-  // Create new certificate
-  const newCertId = generateCertificateId()
-  const studentName = userData?.name || 'Student'
-
-  const { error } = await supabase.from('ai_certificates').insert({
-    user_id: user.id,
-    certificate_id: newCertId,
-    student_name: studentName,
-    avg_prompt_score: avgScore,
-    modules_completed: 5,
-  })
-
-  if (error) {
-    console.error('Error creating certificate:', error)
+  if (!existingCert) {
+    // Eligible, nothing issued yet - IssueCertificate (client component)
+    // calls the issuance route.
+    return { isEligible: true, certificate: null }
   }
 
   return {
     isEligible: true,
     certificate: {
-      studentName,
-      certificateId: newCertId,
-      avgPromptScore: avgScore,
-      modulesCompleted: 5,
-      issuedAt: new Date().toISOString(),
+      studentName: existingCert.student_name,
+      certificateId: existingCert.certificate_id,
+      avgPromptScore: parseFloat(existingCert.avg_prompt_score || '4.0'),
+      modulesCompleted: existingCert.modules_completed,
+      issuedAt: existingCert.issued_at,
     },
   }
 }
 
 export default async function CertificatePage() {
-  const { isEligible, certificate } = await getCertificateData()
+  const { isEligible, certificate } = await getCertificateReadState()
 
   if (!isEligible) {
     return (
@@ -197,7 +175,7 @@ export default async function CertificatePage() {
         </p>
       </div>
 
-      {certificate && (
+      {certificate ? (
         <CertificateGenerator
           studentName={certificate.studentName}
           certificateId={certificate.certificateId}
@@ -205,6 +183,8 @@ export default async function CertificatePage() {
           modulesCompleted={certificate.modulesCompleted}
           issuedAt={certificate.issuedAt}
         />
+      ) : (
+        <IssueCertificate />
       )}
     </div>
   )

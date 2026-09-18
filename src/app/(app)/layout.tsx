@@ -112,7 +112,7 @@ export default async function AppLayout({
           {children}
         </main>
         <InstallPrompt />
-        <CameraScan userId={user?.id || 'demo-user'} />
+        <CameraScan />
       </div>
     </UserProvider>
   )

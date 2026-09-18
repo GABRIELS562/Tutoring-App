@@ -1,7 +1,14 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getQuestionsForTopic, saveQuestion, deleteQuestion } from '@/db/queries/admin'
+import { requireAdmin, authErrorResponse } from '@/lib/auth/require-user'
 
 export async function GET(request: NextRequest) {
+  try {
+    await requireAdmin()
+  } catch (err) {
+    return authErrorResponse(err)
+  }
+
   try {
     const { searchParams } = new URL(request.url)
     const topicId = searchParams.get('topicId')
@@ -25,6 +32,12 @@ export async function GET(request: NextRequest) {
 }
 
 export async function POST(request: NextRequest) {
+  try {
+    await requireAdmin()
+  } catch (err) {
+    return authErrorResponse(err)
+  }
+
   try {
     const body = await request.json()
     const {
@@ -82,6 +95,12 @@ export async function POST(request: NextRequest) {
 }
 
 export async function DELETE(request: NextRequest) {
+  try {
+    await requireAdmin()
+  } catch (err) {
+    return authErrorResponse(err)
+  }
+
   try {
     const body = await request.json()
     const { questionId } = body

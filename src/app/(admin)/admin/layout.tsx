@@ -1,7 +1,5 @@
-import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
-import { createServerClient } from '@supabase/ssr'
-import { isUserAdmin } from '@/db/queries/admin'
+import { isDemoAuth, requireAdmin, AuthError } from '@/lib/auth/require-user'
 import AdminNav from './AdminNav'
 
 export const dynamic = 'force-dynamic'
@@ -11,57 +9,33 @@ export default async function AdminLayout({
 }: {
   children: React.ReactNode
 }) {
-  // Check authentication and admin status
-  let isAdmin = false
-  let userName = ''
+  if (isDemoAuth()) {
+    return renderAdmin(children, 'Demo Admin')
+  }
 
+  // Delegates the actual session/admin-role check to requireAdmin() (same
+  // helper every admin API route uses) instead of re-implementing it here
+  // - one place owns the isUserAdmin lookup and the ADMIN_EMAIL fallback.
+  // Fail CLOSED: any error maps to a redirect, never to admin access.
+  // A 401 (no session) goes to /login; a 403 (authenticated, not admin)
+  // goes to /dashboard; anything else (a genuinely unexpected error) also
+  // goes to /login, same as a missing session.
   try {
-    const cookieStore = await cookies()
-    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
-    const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
-
-    if (supabaseUrl && supabaseKey) {
-      const supabase = createServerClient(supabaseUrl, supabaseKey, {
-        cookies: {
-          getAll() {
-            return cookieStore.getAll()
-          },
-          setAll() {},
-        },
-      })
-
-      const { data: { user } } = await supabase.auth.getUser()
-
-      if (!user) {
-        redirect('/login')
-      }
-
-      isAdmin = await isUserAdmin(user.id)
-      userName = user.email || 'Admin'
-
-      if (!isAdmin) {
-        // Check for demo/dev mode - allow access if ADMIN_EMAIL matches
-        const adminEmail = process.env.ADMIN_EMAIL
-        if (adminEmail && user.email === adminEmail) {
-          isAdmin = true
-        }
-      }
-    } else {
-      // Demo mode - allow access
-      isAdmin = true
-      userName = 'Demo Admin'
-    }
+    const user = await requireAdmin()
+    return renderAdmin(children, user.email || 'Admin')
   } catch (error) {
-    console.error('Admin auth error:', error)
-    // In case of error, allow demo access
-    isAdmin = true
-    userName = 'Demo Admin'
-  }
+    if (error instanceof AuthError && error.status === 403) {
+      redirect('/dashboard')
+    }
 
-  if (!isAdmin) {
-    redirect('/dashboard')
+    if (!(error instanceof AuthError)) {
+      console.error('Admin auth error:', error)
+    }
+    redirect('/login')
   }
+}
 
+function renderAdmin(children: React.ReactNode, userName: string) {
   return (
     <div className="min-h-screen" style={{ background: 'var(--bg)' }}>
       <AdminNav userName={userName} />

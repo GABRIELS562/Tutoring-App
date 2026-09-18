@@ -1,252 +1,66 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { z } from 'zod'
 import { getApiSupabase } from '@/lib/supabase/api'
+import { requireUser, authErrorResponse } from '@/lib/auth/require-user'
+import { badges, PROMPT_CHALLENGE_XP_PER_STAR } from '@/content/ai-skills'
+import { checkPremiumStatus } from '@/db/queries/users'
+import { isDemoMode } from '@/db'
+import {
+  HintRequestSchema,
+  type HintMode,
+  getModeSpecificPrompt,
+  getSystemPromptForMode,
+} from './prompts'
 
 const FREE_HINT_LIMIT = 5
 const FREE_CAMERA_LIMIT = 1
 const ANTHROPIC_API_URL = 'https://api.anthropic.com/v1/messages'
 
-// Zod schema for request validation
-const HintRequestSchema = z.object({
-  mode: z.enum(['step_hint', 'wrong_answer', 'camera_scan', 'prompt_evaluation', 'general_question', 'cv_help']).default('step_hint'),
-  userId: z.string().min(1, 'userId is required'),
-  isPremium: z.boolean().optional(),
-  locale: z.enum(['en', 'af']).optional().default('en'), // Language preference
-  // For step_hint mode
-  questionText: z.string().optional(),
-  stepNumber: z.number().optional(),
-  hint: z.string().optional(),
-  // For wrong_answer mode
-  selectedAnswer: z.string().optional(),
-  correctAnswer: z.string().optional(),
-  topicName: z.string().optional(),
-  // For camera_scan mode
-  imageBase64: z.string().optional(),
-  // For prompt_evaluation mode
-  scenarioContext: z.string().optional(),
-  scenarioTask: z.string().optional(),
-  studentPrompt: z.string().optional(),
-  difficulty: z.enum(['basic', 'advanced']).optional(),
-  technique: z.string().optional(),
-  // For general_question mode
-  userQuestion: z.string().optional(),
-  // For cv_help mode
-  cvDraft: z.string().optional(),
-})
-
-type HintRequest = z.infer<typeof HintRequestSchema>
-type HintMode = HintRequest['mode']
-
-// Angelo's personality prompt - exact 10 rules from spec (English)
-const ANGELO_SYSTEM_PROMPT_EN = `You are Angelo, a supportive maths tutor for South African high schoolers.
-
-RULES:
-1. Never give the full answer
-2. Reply in ≤80 words
-3. Use simple English suitable for ESL learners
-4. Reference SA curriculum (CAPS, NSC)
-5. If the question is unclear, ask one clarifying question
-6. Always end with an encouraging nudge or guiding question
-7. If you detect a diagram is needed but none is provided, describe what the student should draw
-8. Use Socratic questioning to lead them to the insight
-9. Celebrate small wins ("Nice! You've got the right idea...")
-10. Never say "Great question!" or other hollow affirmations`
-
-// Angelo's personality prompt - Afrikaans version
-const ANGELO_SYSTEM_PROMPT_AF = `Jy is Angelo, 'n ondersteunende wiskunde tutor vir Suid-Afrikaanse hoërskool leerlinge.
-
-REËLS:
-1. Moet nooit die volle antwoord gee nie
-2. Antwoord in ≤80 woorde
-3. Gebruik eenvoudige Afrikaans
-4. Verwys na die SA kurrikulum (KABV, NSS)
-5. As die vraag onduidelik is, vra een opklarende vraag
-6. Eindig altyd met 'n bemoedigende stoot of leidende vraag
-7. As 'n diagram nodig is maar nie verskaf is nie, beskryf wat die leerder moet teken
-8. Gebruik Sokratiese bevraging om hulle na die insig te lei
-9. Vier klein oorwinnings ("Mooi! Jy's op die regte spoor...")
-10. Moet nooit "Goeie vraag!" of ander hol komplimente sê nie
-
-BELANGRIK: Antwoord ALTYD in Afrikaans.`
-
-// System prompt for evaluating student prompts in the AI Skills course
-const PROMPT_EVALUATION_SYSTEM = `You are an AI literacy coach helping South African students learn prompt engineering.
-
-Your task: Evaluate how well the student's prompt would work to get a useful AI response.
-
-Return a JSON object with exactly these fields:
-{
-  "score": <number 1-5>,
-  "what_worked": "<1-2 sentences on what was good about their prompt>",
-  "what_to_improve": "<1-2 sentences on what could be better>",
-  "improved_prompt": "<your rewritten version of their prompt>",
-  "encouragement": "<1 sentence of genuine encouragement, no hollow praise>"
-}
-
-Scoring guide:
-1 = Vague or unusable prompt
-2 = Missing most key elements
-3 = Has basics but could be much clearer
-4 = Good prompt with minor improvements possible
-5 = Excellent prompt that would get great results
-
-Be honest but kind. SA students respond well to direct feedback with encouragement.`
-
-// Technique-specific evaluation criteria
-const TECHNIQUE_CRITERIA: Record<string, string> = {
-  'chain-of-thought': `This challenge tests CHAIN OF THOUGHT prompting. Look for:
-- Asks AI to "think step by step" or "show working"
-- Breaks down reasoning explicitly
-- Requests verification of each step`,
-  'few-shot': `This challenge tests FEW-SHOT prompting. Look for:
-- Provides clear examples of desired output
-- Shows input-output pattern
-- Maintains consistency across examples`,
-  'role-prompting': `This challenge tests ROLE PROMPTING. Look for:
-- Assigns a specific persona/role to AI
-- Role is relevant to the task
-- Role adds expertise or perspective`,
-  'structured-output': `This challenge tests STRUCTURED OUTPUT. Look for:
-- Specifies exact format (table, list, JSON, etc.)
-- Clear column headers or structure
-- Appropriate format for the content`,
-  'tree-of-thoughts': `This challenge tests TREE OF THOUGHTS. Look for:
-- Asks for multiple approaches/options
-- Requests comparison of alternatives
-- Asks for recommendation based on criteria`,
-  'prompt-chaining': `This challenge tests PROMPT CHAINING. Look for:
-- Breaks complex task into steps
-- Each step builds on previous
-- Clear sequence of prompts`,
-  'meta-prompting': `This challenge tests META PROMPTING. Look for:
-- Asks AI to help formulate/improve the prompt
-- Describes the end goal clearly
-- Asks for optimal prompt structure`,
-  'negative-constraints': `This challenge tests NEGATIVE CONSTRAINTS. Look for:
-- Uses "don't", "avoid", "without", "no"
-- Clear boundaries on what to exclude
-- Constraints improve output quality`,
-  'iterative-refinement': `This challenge tests ITERATIVE REFINEMENT. Look for:
-- Multiple prompts that build on each other
-- Specific improvement requests
-- Refines rather than restarts`,
-  'combined': `This is an ADVANCED COMBINED challenge. Look for:
-- Uses multiple techniques together
-- Includes role, context, format, AND constraints
-- Well-structured and comprehensive`,
-}
-
-// System prompt for general AI questions in practicals (English)
-const GENERAL_QUESTION_SYSTEM_EN = `You are Angelo AI, helping South African students learn about AI capabilities and limitations.
-
-Keep responses under 150 words. Use simple English. Be direct and practical.
-If the student is testing AI's limits, be honest about what you can and can't do.
-Reference SA context where relevant.`
-
-// System prompt for general AI questions in practicals (Afrikaans)
-const GENERAL_QUESTION_SYSTEM_AF = `Jy is Angelo AI, en help Suid-Afrikaanse leerlinge om oor KI se vermoëns en beperkings te leer.
-
-Hou antwoorde onder 150 woorde. Gebruik eenvoudige Afrikaans. Wees direk en prakties.
-As die leerling KI se grense toets, wees eerlik oor wat jy kan en nie kan doen nie.
-Verwys na SA konteks waar relevant.
-
-BELANGRIK: Antwoord ALTYD in Afrikaans.`
-
-// System prompt for CV help (English)
-const CV_HELP_SYSTEM_EN = `You are helping a South African student create a professional statement about their AI skills for their CV.
-
-Guidelines:
-- Keep it professional but accessible
-- Focus on specific, demonstrable skills
-- Make it relevant to SA job market
-- Avoid buzzwords and hollow claims
-- 2-3 sentences maximum
-- Sound like a confident young person, not a robot`
-
-// System prompt for CV help (Afrikaans)
-const CV_HELP_SYSTEM_AF = `Jy help 'n Suid-Afrikaanse leerling om 'n professionele stelling oor hul KI-vaardighede vir hul CV te skep.
-
-Riglyne:
-- Hou dit professioneel maar toeganklik
-- Fokus op spesifieke, demonstreerbare vaardighede
-- Maak dit relevant vir die SA arbeidsmark
-- Vermy modewoorde en hol aansprake
-- Maksimum 2-3 sinne
-- Klink soos 'n selfversekerde jong persoon, nie 'n robot nie
-
-BELANGRIK: Antwoord ALTYD in Afrikaans.`
-
-function getModeSpecificPrompt(body: HintRequest): string {
-  switch (body.mode) {
-    case 'step_hint':
-      return `The student is stuck on step ${body.stepNumber} of this problem: "${body.questionText}". ${body.hint ? `The hint is: ${body.hint}.` : ''} Give them a gentle nudge in the right direction.`
-
-    case 'wrong_answer':
-      return `The student got this question wrong: "${body.questionText}"
-They selected answer "${body.selectedAnswer}" but the correct answer was "${body.correctAnswer}".
-Topic: ${body.topicName || 'Mathematics'}
-
-Explain why their answer was wrong and guide them to understand the correct approach. Don't just give the answer — help them see WHY.`
-
-    case 'camera_scan':
-      return `The student has photographed a maths problem they're stuck on. Analyze the image and:
-1. Identify what type of problem it is
-2. Give them a starting point or first step
-3. Ask a guiding question to help them think through it
-
-Remember: Guide, don't solve!`
-
-    case 'prompt_evaluation': {
-      const techniqueGuidance = body.technique && TECHNIQUE_CRITERIA[body.technique]
-        ? `\n\nSPECIFIC TECHNIQUE BEING TESTED:\n${TECHNIQUE_CRITERIA[body.technique]}\n\nScore the prompt based on how well it demonstrates this technique.`
-        : ''
-      const difficultyNote = body.difficulty === 'advanced'
-        ? '\n\nNOTE: This is an ADVANCED challenge. The student should demonstrate specific prompt engineering techniques, not just basic prompting.'
-        : ''
-      return `SCENARIO CONTEXT: ${body.scenarioContext}
-
-TASK: ${body.scenarioTask}${techniqueGuidance}${difficultyNote}
-
-STUDENT'S PROMPT: "${body.studentPrompt}"
-
-Evaluate this prompt and return your assessment as a JSON object.`
-    }
-
-    case 'general_question':
-      return body.userQuestion || 'Help me understand AI better.'
-
-    case 'cv_help':
-      return `The student wrote this draft for their CV's AI skills section:
-
-"${body.cvDraft}"
-
-Help them refine this into a professional 2-3 sentence statement they can use on job applications. Keep their voice but make it polished.`
-
-    default:
-      return `Help this student with their maths question: "${body.questionText}"`
+/**
+ * Premium status is never trusted from the client - a request body field
+ * was previously read directly (`isPremium` in HintRequestSchema), which
+ * let anyone bypass the free-tier daily limits by sending
+ * `{ isPremium: true }`. Resolved server-side instead, via the same
+ * Drizzle-backed check used elsewhere (checkPremiumStatus). In demo mode
+ * (no DATABASE_URL) there is no real user row to check, so premium is
+ * always false; any other lookup failure also defaults to false (fail
+ * closed on a benefit, not a restriction).
+ */
+async function resolveIsPremium(userId: string): Promise<boolean> {
+  if (isDemoMode) {
+    return false
   }
-}
 
-function getSystemPromptForMode(mode: HintMode, locale: 'en' | 'af' = 'en'): string {
-  const isAfrikaans = locale === 'af'
-
-  switch (mode) {
-    case 'prompt_evaluation':
-      // Prompt evaluation always in English (evaluating English prompts)
-      return PROMPT_EVALUATION_SYSTEM
-    case 'general_question':
-      return isAfrikaans ? GENERAL_QUESTION_SYSTEM_AF : GENERAL_QUESTION_SYSTEM_EN
-    case 'cv_help':
-      return isAfrikaans ? CV_HELP_SYSTEM_AF : CV_HELP_SYSTEM_EN
-    default:
-      return isAfrikaans ? ANGELO_SYSTEM_PROMPT_AF : ANGELO_SYSTEM_PROMPT_EN
+  try {
+    return await checkPremiumStatus(userId)
+  } catch (error) {
+    console.error('Error checking premium status:', error)
+    return false
   }
 }
 
 // Get or create usage record for today
-async function getUsageRecord(userId: string, today: string) {
+interface UsageRecord {
+  id: string
+  hint_count: number
+  camera_count: number
+}
+
+type UsageLookup =
+  | { ok: true; record: UsageRecord | null }
+  | { ok: false }
+
+/**
+ * Fails CLOSED on an unexpected DB error: only a genuine "no rows found"
+ * (PGRST116) is treated as zero usage. Any other error used to be
+ * swallowed and also treated as zero usage - which meant a transient DB
+ * problem silently bypassed the free-tier daily limit instead of
+ * blocking the request. The caller doing the rate-limit gate check
+ * (POST, below) returns 503 when `ok` is false rather than proceeding.
+ */
+async function getUsageRecord(userId: string, today: string): Promise<UsageLookup> {
   const supabase = getApiSupabase()
-  if (!supabase) return null
+  if (!supabase) return { ok: true, record: null } // Demo mode
 
   const { data, error } = await supabase
     .from('ai_hint_usage')
@@ -256,12 +70,13 @@ async function getUsageRecord(userId: string, today: string) {
     .single()
 
   if (error && error.code !== 'PGRST116') {
-    // PGRST116 = no rows found, which is fine
+    // PGRST116 = no rows found, which is fine - anything else is a real
+    // failure and must not be treated as "zero usage."
     console.error('Error fetching usage:', error)
-    return null
+    return { ok: false }
   }
 
-  return data
+  return { ok: true, record: data }
 }
 
 // Create or update usage record
@@ -269,7 +84,7 @@ async function updateUsageRecord(
   userId: string,
   today: string,
   mode: HintMode,
-  existingRecord: { id: string; hint_count: number; camera_count: number } | null
+  existingRecord: UsageRecord | null
 ) {
   const supabase = getApiSupabase()
   if (!supabase) return // Demo mode - skip usage tracking
@@ -279,10 +94,14 @@ async function updateUsageRecord(
       ? { camera_count: existingRecord.camera_count + 1, updated_at: new Date().toISOString() }
       : { hint_count: existingRecord.hint_count + 1, updated_at: new Date().toISOString() }
 
-    await supabase
+    const { error } = await supabase
       .from('ai_hint_usage')
       .update(updates)
       .eq('id', existingRecord.id)
+
+    if (error) {
+      console.error('Error updating usage record:', error)
+    }
   } else {
     const newRecord = {
       user_id: userId,
@@ -291,11 +110,206 @@ async function updateUsageRecord(
       camera_count: mode === 'camera_scan' ? 1 : 0,
     }
 
-    await supabase.from('ai_hint_usage').insert(newRecord)
+    const { error } = await supabase.from('ai_hint_usage').insert(newRecord)
+
+    if (error) {
+      console.error('Error inserting usage record:', error)
+    }
+  }
+}
+
+// Validates the JSON the model returns for prompt_evaluation before it is
+// ever trusted for persistence/XP: the model is an external, untrusted
+// input just like the request body. Caps string lengths generously above
+// what the prompt asks for (1-2 sentences) to reject a runaway/adversarial
+// response without being brittle about normal-length answers.
+const MODEL_FIELD_MAX_LENGTH = 600
+
+const PromptEvaluationSchema = z.object({
+  score: z.number().int().min(1).max(5),
+  what_worked: z.string().max(MODEL_FIELD_MAX_LENGTH),
+  what_to_improve: z.string().max(MODEL_FIELD_MAX_LENGTH),
+  improved_prompt: z.string().max(MODEL_FIELD_MAX_LENGTH),
+  encouragement: z.string().max(MODEL_FIELD_MAX_LENGTH),
+})
+
+type PromptEvaluation = z.infer<typeof PromptEvaluationSchema>
+
+interface PersistedPromptChallengeAttempt {
+  id: string
+  xpEarned: number
+  newBadges: string[]
+  totalChallengesCompleted: number
+}
+
+/**
+ * Persists a prompt-challenge attempt using the score Angelo just computed
+ * server-side in this same request — never a client-supplied score. This is
+ * what /api/ai-skills/save-attempt used to do by trusting a client `aiScore`
+ * field; folding it in here removes that trust boundary entirely.
+ * Returns null when there is nothing to persist (demo mode, or the caller
+ * didn't send a challengeId).
+ */
+/**
+ * Idempotent per (user_id, challenge_id) - a UNIQUE constraint on the
+ * table backs this up at the DB level (see
+ * supabase/migrations/0001_rls.sql and prompt_challenge_attempts in
+ * schema.ts). Without this, calling the same challenge twice (a retry, a
+ * duplicated request, or a student redoing a challenge) inserted a second
+ * row and awarded XP/a badge a second time.
+ *
+ * Simplest-acceptable policy (matches what the security review signed
+ * off on): XP and the prompt-master badge are awarded once, on the
+ * FIRST completion of a given challenge. A later attempt only updates
+ * the stored row when it beats the previous best score - it never earns
+ * additional XP, never re-awards a badge, and never increments
+ * prompt_challenges_completed again. Trade-off: a student who first
+ * scores below 5 and later nails a 5/5 on a repeat won't retroactively
+ * get the prompt-master badge from that repeat.
+ */
+async function persistPromptChallengeAttempt(
+  userId: string,
+  challengeId: string | undefined,
+  studentPrompt: string | undefined,
+  evaluation: PromptEvaluation
+): Promise<PersistedPromptChallengeAttempt | null> {
+  const supabase = getApiSupabase()
+  if (!supabase || !challengeId) {
+    return null
+  }
+
+  const { data: existing, error: existingError } = await supabase
+    .from('prompt_challenge_attempts')
+    .select('id, ai_score, xp_earned')
+    .eq('user_id', userId)
+    .eq('challenge_id', challengeId)
+    .maybeSingle()
+
+  if (existingError) {
+    console.error('Error checking existing prompt challenge attempt:', existingError)
+    return null
+  }
+
+  if (existing) {
+    return updateExistingAttempt(supabase, existing, studentPrompt, evaluation)
+  }
+
+  return insertFirstAttempt(supabase, userId, challengeId, studentPrompt, evaluation)
+}
+
+type SupabaseLike = NonNullable<ReturnType<typeof getApiSupabase>>
+
+async function updateExistingAttempt(
+  supabase: SupabaseLike,
+  existing: { id: string; ai_score: number | null },
+  studentPrompt: string | undefined,
+  evaluation: PromptEvaluation
+): Promise<PersistedPromptChallengeAttempt> {
+  const previousBest = existing.ai_score ?? 0
+
+  if (evaluation.score > previousBest) {
+    const { error: updateError } = await supabase
+      .from('prompt_challenge_attempts')
+      .update({
+        student_prompt: studentPrompt || '',
+        ai_score: evaluation.score,
+        ai_feedback: `${evaluation.what_worked} ${evaluation.what_to_improve}`,
+        improved_prompt: evaluation.improved_prompt,
+      })
+      .eq('id', existing.id)
+
+    if (updateError) {
+      console.error('Error updating prompt challenge attempt:', updateError)
+    }
+  }
+
+  // No XP/badge/completion-count change on a repeat - those are awarded
+  // once, on first completion (insertFirstAttempt).
+  return { id: existing.id, xpEarned: 0, newBadges: [], totalChallengesCompleted: 0 }
+}
+
+async function insertFirstAttempt(
+  supabase: SupabaseLike,
+  userId: string,
+  challengeId: string,
+  studentPrompt: string | undefined,
+  evaluation: PromptEvaluation
+): Promise<PersistedPromptChallengeAttempt | null> {
+  const xpEarned = evaluation.score * PROMPT_CHALLENGE_XP_PER_STAR
+
+  const { data: attempt, error: insertError } = await supabase
+    .from('prompt_challenge_attempts')
+    .insert({
+      user_id: userId,
+      challenge_id: challengeId,
+      student_prompt: studentPrompt || '',
+      ai_score: evaluation.score,
+      ai_feedback: `${evaluation.what_worked} ${evaluation.what_to_improve}`,
+      improved_prompt: evaluation.improved_prompt,
+      xp_earned: xpEarned,
+    })
+    .select('id')
+    .single()
+
+  if (insertError || !attempt) {
+    console.error('Error saving prompt challenge attempt:', insertError)
+    return null
+  }
+
+  const { data: userData, error: fetchError } = await supabase
+    .from('users')
+    .select('badges, xp, prompt_challenges_completed')
+    .eq('id', userId)
+    .single()
+
+  if (fetchError || !userData) {
+    console.error('Error fetching user for prompt challenge attempt:', fetchError)
+    return { id: attempt.id, xpEarned, newBadges: [], totalChallengesCompleted: 0 }
+  }
+
+  const currentBadges: string[] = userData.badges || []
+  const currentXP: number = userData.xp || 0
+  const challengesCompleted: number = userData.prompt_challenges_completed || 0
+  const newBadges: string[] = []
+
+  if (evaluation.score === 5 && !currentBadges.includes('prompt-master')) {
+    newBadges.push('prompt-master')
+  }
+
+  let totalXpEarned = xpEarned
+  for (const badgeId of newBadges) {
+    totalXpEarned += badges[badgeId as keyof typeof badges]?.xpReward || 0
+  }
+
+  const { error: updateError } = await supabase
+    .from('users')
+    .update({
+      xp: currentXP + totalXpEarned,
+      badges: [...currentBadges, ...newBadges],
+      prompt_challenges_completed: challengesCompleted + 1,
+    })
+    .eq('id', userId)
+
+  if (updateError) {
+    console.error('Error updating user after prompt challenge attempt:', updateError)
+  }
+
+  return {
+    id: attempt.id,
+    xpEarned: totalXpEarned,
+    newBadges,
+    totalChallengesCompleted: challengesCompleted + 1,
   }
 }
 
 export async function POST(request: NextRequest) {
+  let user
+  try {
+    user = await requireUser()
+  } catch (err) {
+    return authErrorResponse(err)
+  }
+
   try {
     const rawBody = await request.json()
 
@@ -315,13 +329,26 @@ export async function POST(request: NextRequest) {
     }
 
     const body = parseResult.data
-    const { mode, userId, isPremium, imageBase64, locale } = body
+    const userId = user.id
+    const { mode, imageBase64, locale } = body
+    const isPremium = await resolveIsPremium(userId)
 
     const today = new Date().toISOString().split('T')[0]
 
     // Check rate limit for free tier users
     if (!isPremium) {
-      const usageRecord = await getUsageRecord(userId, today)
+      const usageLookup = await getUsageRecord(userId, today)
+
+      if (!usageLookup.ok) {
+        // Fail closed: an unexpected DB error must not silently bypass
+        // the free-tier daily limit by being treated as "zero usage."
+        return NextResponse.json(
+          { error: 'Usage check unavailable, try again' },
+          { status: 503 }
+        )
+      }
+
+      const usageRecord = usageLookup.record
 
       if (usageRecord) {
         if (mode === 'camera_scan') {
@@ -369,9 +396,17 @@ export async function POST(request: NextRequest) {
           encouragement: "You're thinking about how to ask — that alone puts you ahead of most students.",
         }
 
+        const attempt = await persistPromptChallengeAttempt(
+          userId,
+          body.challengeId,
+          body.studentPrompt,
+          mockEvaluation
+        )
+
         return NextResponse.json({
           evaluation: mockEvaluation,
           isDemo: true,
+          ...(attempt ? { attempt } : {}),
         })
       }
 
@@ -412,8 +447,13 @@ export async function POST(request: NextRequest) {
       const responses = mockResponses[mode] || mockResponses.step_hint
       const randomHint = responses[Math.floor(Math.random() * responses.length)]
 
-      // Calculate remaining for the response
-      const usageRecord = await getUsageRecord(userId, today)
+      // Calculate remaining for the response. This is best-effort display
+      // info for a request that has already been granted (the rate-limit
+      // gate above already ran) - a lookup failure here just falls back
+      // to the existing "unknown count" default rather than failing the
+      // whole response, unlike the gating check.
+      const usageLookupForDisplay = await getUsageRecord(userId, today)
+      const usageRecord = usageLookupForDisplay.ok ? usageLookupForDisplay.record : null
       let remaining: number | string = 'unlimited'
       if (!isPremium) {
         if (mode === 'camera_scan') {
@@ -491,8 +531,11 @@ export async function POST(request: NextRequest) {
     const data = await response.json()
     const aiResponse = data.content?.[0]?.text || ''
 
-    // Calculate remaining for response
-    const usageRecord = await getUsageRecord(userId, today)
+    // Calculate remaining for response - best-effort display info for an
+    // already-granted, already-completed request; see the comment on the
+    // equivalent lookup in the no-API-key branch above.
+    const usageLookupForDisplay = await getUsageRecord(userId, today)
+    const usageRecord = usageLookupForDisplay.ok ? usageLookupForDisplay.record : null
     let remaining: number | string = 'unlimited'
     if (!isPremium) {
       if (mode === 'camera_scan') {
@@ -502,36 +545,56 @@ export async function POST(request: NextRequest) {
       }
     }
 
-    // Handle prompt_evaluation mode - parse JSON response
+    // Handle prompt_evaluation mode - parse and VALIDATE the model's JSON.
+    // The model's output is untrusted input, exactly like the request body:
+    // a malformed or out-of-range value (e.g. score: 99) must never be
+    // persisted or earn XP. Any parse/validation failure falls back to the
+    // same canned response, flagged with parseError so the client knows
+    // nothing was saved.
     if (mode === 'prompt_evaluation') {
+      const fallbackEvaluation: PromptEvaluation = {
+        score: 3,
+        what_worked: "Your prompt shows effort",
+        what_to_improve: "Try being more specific about context and format",
+        improved_prompt: body.studentPrompt || '',
+        encouragement: "Keep practising — prompt engineering is a skill that improves with use.",
+      }
+
+      let rawEvaluation: unknown = null
       try {
         // Extract JSON from response (in case it's wrapped in markdown code blocks)
         const jsonMatch = aiResponse.match(/\{[\s\S]*\}/)
-        const evaluation = jsonMatch ? JSON.parse(jsonMatch[0]) : {
-          score: 3,
-          what_worked: "Unable to parse evaluation",
-          what_to_improve: "Please try again",
-          improved_prompt: body.studentPrompt || '',
-          encouragement: "Keep practising!",
-        }
+        rawEvaluation = jsonMatch ? JSON.parse(jsonMatch[0]) : null
+      } catch (parseError) {
+        console.error('Error parsing model evaluation JSON:', parseError)
+        rawEvaluation = null
+      }
 
+      const validation = PromptEvaluationSchema.safeParse(rawEvaluation)
+
+      if (!validation.success) {
+        console.error('Model evaluation failed validation:', validation.error.issues)
         return NextResponse.json({
-          evaluation,
+          evaluation: fallbackEvaluation,
           remaining,
-        })
-      } catch {
-        // Fallback if JSON parsing fails
-        return NextResponse.json({
-          evaluation: {
-            score: 3,
-            what_worked: "Your prompt shows effort",
-            what_to_improve: "Try being more specific about context and format",
-            improved_prompt: body.studentPrompt || '',
-            encouragement: "Keep practising — prompt engineering is a skill that improves with use.",
-          },
-          remaining,
+          parseError: true,
         })
       }
+
+      const evaluation = validation.data
+
+      const attempt = await persistPromptChallengeAttempt(
+        userId,
+        body.challengeId,
+        body.studentPrompt,
+        evaluation
+      )
+
+      return NextResponse.json({
+        evaluation,
+        remaining,
+        ...(attempt ? { attempt } : {}),
+      })
     }
 
     return NextResponse.json({
