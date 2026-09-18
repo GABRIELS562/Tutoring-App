@@ -168,14 +168,6 @@ export default function NoteBlock({ block, topicSlug = 'topic', sectionId = 'sec
               title={title || 'Video'}
             />
           </div>
-          <a
-            href={`https://www.youtube.com/watch?v=${videoId}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{ fontSize: '12px', color: 'var(--muted)' }}
-          >
-            {t('openInYouTube')}
-          </a>
         </div>
       )
     }
