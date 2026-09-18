@@ -16,12 +16,52 @@ import type { NextRequest } from 'next/server'
 const DEFAULT_WINDOW_MS = 10 * 60 * 1000 // 10 minutes
 const DEFAULT_MAX_REQUESTS = 30
 
+// This Map has no TTL of its own - every distinct key (e.g. a client IP)
+// gets an entry that only goes away when something removes it. Without a
+// cap, a flood of requests from many distinct keys (or just normal growth
+// over a long-running process) grows it forever. MAX_BUCKETS bounds that:
+// a new key first sweeps out anything already expired (usually enough on
+// its own), then, if still at capacity, evicts the oldest-inserted entry
+// (Map preserves insertion order) so the store is self-bounding under load
+// instead of failing open (allowing everyone through) or failing closed
+// (blocking everyone) once full.
+const MAX_BUCKETS = 1000
+
 interface Bucket {
   count: number
   resetAt: number
 }
 
 const buckets = new Map<string, Bucket>()
+
+function pruneIfAtCapacity(now: number): void {
+  if (buckets.size < MAX_BUCKETS) {
+    return
+  }
+
+  for (const [key, bucket] of buckets) {
+    if (bucket.resetAt <= now) {
+      buckets.delete(key)
+    }
+  }
+
+  while (buckets.size >= MAX_BUCKETS) {
+    const oldestKey = buckets.keys().next().value
+    if (oldestKey === undefined) {
+      break
+    }
+    buckets.delete(oldestKey)
+  }
+}
+
+/**
+ * Test-only: the number of buckets currently tracked, to verify
+ * pruning/capping behaviour from outside without depending on other
+ * internals. Not used by application code.
+ */
+export function _debugBucketCount(): number {
+  return buckets.size
+}
 
 export interface RateLimitOptions {
   windowMs?: number
@@ -42,6 +82,11 @@ export function checkRateLimit(
   const existing = buckets.get(key)
 
   if (!existing || existing.resetAt <= now) {
+    // Only prune when this key is genuinely new to the Map - resetting an
+    // existing (expired) entry in place doesn't grow buckets.size.
+    if (!existing) {
+      pruneIfAtCapacity(now)
+    }
     const resetAt = now + windowMs
     buckets.set(key, { count: 1, resetAt })
     return { allowed: true, remaining: max - 1, resetAt }

@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest'
-import { checkRateLimit } from '@/lib/rate-limit'
+import { checkRateLimit, _debugBucketCount } from '@/lib/rate-limit'
 
 describe('checkRateLimit', () => {
   beforeEach(() => {
@@ -61,5 +61,38 @@ describe('checkRateLimit', () => {
       expect(checkRateLimit(key).allowed).toBe(true)
     }
     expect(checkRateLimit(key).allowed).toBe(false)
+  })
+
+  it('caps total tracked buckets so a flood of distinct keys cannot grow the store forever', () => {
+    const prefix = `cap-flood-${Math.random()}-`
+    const baseline = _debugBucketCount()
+
+    // Comfortably exceed the internal cap (1000) with distinct, still-live
+    // keys - nothing here expires, so only the hard cap can bound this.
+    for (let i = 0; i < 1050; i++) {
+      checkRateLimit(`${prefix}${i}`, { max: 5, windowMs: 10 * 60 * 1000 })
+    }
+
+    expect(_debugBucketCount()).toBeLessThanOrEqual(1000)
+    // And it actually grew close to the cap, rather than e.g. silently
+    // refusing to track anything past baseline.
+    expect(_debugBucketCount()).toBeGreaterThan(baseline)
+  })
+
+  it('sweeps expired buckets once the map is at capacity, not just a single oldest one', () => {
+    const prefix = `sweep-${Math.random()}-`
+
+    // Fill up to the cap with entries that expire almost immediately.
+    for (let i = 0; i < 1000; i++) {
+      checkRateLimit(`${prefix}${i}`, { max: 1, windowMs: 1 })
+    }
+    vi.advanceTimersByTime(2) // now every one of those 1000 is expired
+
+    // One more distinct key pushes the map to/over the cap and triggers a
+    // prune - which should clear out the (now expired) entries in bulk,
+    // not just evict a single oldest one.
+    checkRateLimit(`${prefix}trigger`, { max: 1, windowMs: 60_000 })
+
+    expect(_debugBucketCount()).toBeLessThan(50)
   })
 })
