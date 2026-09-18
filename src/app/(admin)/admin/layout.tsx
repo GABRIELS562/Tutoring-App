@@ -1,6 +1,5 @@
 import { redirect } from 'next/navigation'
-import { isDemoAuth, getSessionUser, type SessionUser } from '@/lib/auth/require-user'
-import { isUserAdmin } from '@/db/queries/admin'
+import { isDemoAuth, requireAdmin, AuthError } from '@/lib/auth/require-user'
 import AdminNav from './AdminNav'
 
 export const dynamic = 'force-dynamic'
@@ -14,33 +13,26 @@ export default async function AdminLayout({
     return renderAdmin(children, 'Demo Admin')
   }
 
-  // Fail CLOSED: any error resolving the session or checking admin status
-  // sends the user to /login. isAdmin is never set to true from a catch.
-  let user: SessionUser | null
-  let isAdminByRole = false
-
+  // Delegates the actual session/admin-role check to requireAdmin() (same
+  // helper every admin API route uses) instead of re-implementing it here
+  // - one place owns the isUserAdmin lookup and the ADMIN_EMAIL fallback.
+  // Fail CLOSED: any error maps to a redirect, never to admin access.
+  // A 401 (no session) goes to /login; a 403 (authenticated, not admin)
+  // goes to /dashboard; anything else (a genuinely unexpected error) also
+  // goes to /login, same as a missing session.
   try {
-    user = await getSessionUser()
-    if (user) {
-      isAdminByRole = await isUserAdmin(user.id)
-    }
+    const user = await requireAdmin()
+    return renderAdmin(children, user.email || 'Admin')
   } catch (error) {
-    console.error('Admin auth error:', error)
+    if (error instanceof AuthError && error.status === 403) {
+      redirect('/dashboard')
+    }
+
+    if (!(error instanceof AuthError)) {
+      console.error('Admin auth error:', error)
+    }
     redirect('/login')
   }
-
-  if (!user) {
-    redirect('/login')
-  }
-
-  const adminEmail = process.env.ADMIN_EMAIL
-  const isAdminByEmail = Boolean(adminEmail && user.email && user.email === adminEmail)
-
-  if (!isAdminByRole && !isAdminByEmail) {
-    redirect('/dashboard')
-  }
-
-  return renderAdmin(children, user.email || 'Admin')
 }
 
 function renderAdmin(children: React.ReactNode, userName: string) {

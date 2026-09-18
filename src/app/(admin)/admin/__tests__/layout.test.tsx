@@ -1,17 +1,20 @@
-import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
+import { describe, it, expect, vi, beforeEach } from 'vitest'
 
 const isDemoAuthMock = vi.fn()
-const getSessionUserMock = vi.fn()
-const isUserAdminMock = vi.fn()
+const requireAdminMock = vi.fn()
 
-vi.mock('@/lib/auth/require-user', () => ({
-  isDemoAuth: isDemoAuthMock,
-  getSessionUser: getSessionUserMock,
-}))
+vi.mock('@/lib/auth/require-user', async () => {
+  const actual = await vi.importActual<typeof import('@/lib/auth/require-user')>(
+    '@/lib/auth/require-user'
+  )
+  return {
+    ...actual,
+    isDemoAuth: isDemoAuthMock,
+    requireAdmin: requireAdminMock,
+  }
+})
 
-vi.mock('@/db/queries/admin', () => ({
-  isUserAdmin: isUserAdminMock,
-}))
+const { AuthError } = await import('@/lib/auth/require-user')
 
 class RedirectSignal extends Error {
   path: string
@@ -35,68 +38,48 @@ vi.mock('@/app/(admin)/admin/AdminNav', () => ({
 
 const { default: AdminLayout } = await import('@/app/(admin)/admin/layout')
 
-const ORIGINAL_ENV = { ...process.env }
-
-describe('AdminLayout (fail closed)', () => {
+describe('AdminLayout (fail closed, delegates to src/lib/auth/require-user)', () => {
   beforeEach(() => {
     vi.clearAllMocks()
-    delete process.env.ADMIN_EMAIL
   })
 
-  afterEach(() => {
-    process.env = { ...ORIGINAL_ENV }
-  })
-
-  it('allows access in demo mode without calling Supabase', async () => {
+  it('allows access in demo mode without calling requireAdmin', async () => {
     isDemoAuthMock.mockReturnValue(true)
 
     const result = await AdminLayout({ children: null })
 
     expect(result).toBeTruthy()
-    expect(getSessionUserMock).not.toHaveBeenCalled()
+    expect(requireAdminMock).not.toHaveBeenCalled()
     expect(redirectMock).not.toHaveBeenCalled()
   })
 
-  it('redirects to /login (fails closed) when getSessionUser throws', async () => {
+  it('redirects to /login (fails closed) on an unexpected error from requireAdmin', async () => {
     isDemoAuthMock.mockReturnValue(false)
-    getSessionUserMock.mockRejectedValueOnce(new Error('db unreachable'))
+    requireAdminMock.mockRejectedValueOnce(new Error('db unreachable'))
 
     await expect(AdminLayout({ children: null })).rejects.toThrow('NEXT_REDIRECT:/login')
     expect(redirectMock).toHaveBeenCalledWith('/login')
   })
 
-  it('redirects to /login when there is no session', async () => {
+  it('redirects to /login when requireAdmin throws a 401 AuthError (no session)', async () => {
     isDemoAuthMock.mockReturnValue(false)
-    getSessionUserMock.mockResolvedValueOnce(null)
+    requireAdminMock.mockRejectedValueOnce(new AuthError('Unauthorized', 401))
 
     await expect(AdminLayout({ children: null })).rejects.toThrow('NEXT_REDIRECT:/login')
     expect(redirectMock).toHaveBeenCalledWith('/login')
   })
 
-  it('redirects to /dashboard for an authenticated non-admin', async () => {
+  it('redirects to /dashboard when requireAdmin throws a 403 AuthError (authenticated non-admin)', async () => {
     isDemoAuthMock.mockReturnValue(false)
-    getSessionUserMock.mockResolvedValueOnce({ id: 'u1', email: 'student@example.com' })
-    isUserAdminMock.mockResolvedValueOnce(false)
+    requireAdminMock.mockRejectedValueOnce(new AuthError('Forbidden', 403))
 
     await expect(AdminLayout({ children: null })).rejects.toThrow('NEXT_REDIRECT:/dashboard')
     expect(redirectMock).toHaveBeenCalledWith('/dashboard')
   })
 
-  it('renders for an admin session (isUserAdmin true)', async () => {
+  it('renders for an admin session', async () => {
     isDemoAuthMock.mockReturnValue(false)
-    getSessionUserMock.mockResolvedValueOnce({ id: 'admin-1', email: 'admin@example.com' })
-    isUserAdminMock.mockResolvedValueOnce(true)
-
-    const result = await AdminLayout({ children: null })
-    expect(result).toBeTruthy()
-    expect(redirectMock).not.toHaveBeenCalled()
-  })
-
-  it('renders when ADMIN_EMAIL matches even if isUserAdmin is false', async () => {
-    process.env.ADMIN_EMAIL = 'owner@example.com'
-    isDemoAuthMock.mockReturnValue(false)
-    getSessionUserMock.mockResolvedValueOnce({ id: 'owner-1', email: 'owner@example.com' })
-    isUserAdminMock.mockResolvedValueOnce(false)
+    requireAdminMock.mockResolvedValueOnce({ id: 'admin-1', email: 'admin@example.com' })
 
     const result = await AdminLayout({ children: null })
     expect(result).toBeTruthy()

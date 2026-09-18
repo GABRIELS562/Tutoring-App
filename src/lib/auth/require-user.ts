@@ -122,7 +122,9 @@ export async function requireAdmin(): Promise<SessionUser> {
   }
 
   const adminEmail = process.env.ADMIN_EMAIL
-  const isAdminByEmail = Boolean(adminEmail && user.email && user.email === adminEmail)
+  const isAdminByEmail = Boolean(
+    adminEmail && user.email && user.email.toLowerCase() === adminEmail.toLowerCase()
+  )
   const isAdminByRole = await isUserAdmin(user.id)
 
   if (!isAdminByRole && !isAdminByEmail) {

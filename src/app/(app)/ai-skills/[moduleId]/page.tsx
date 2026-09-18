@@ -33,10 +33,7 @@ async function getUserData() {
   const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
 
   if (!supabaseUrl || !supabaseKey) {
-    return {
-      userId: 'demo-user',
-      completedModules: [] as string[],
-    }
+    return { completedModules: [] as string[] }
   }
 
   const cookieStore = await cookies()
@@ -60,10 +57,7 @@ async function getUserData() {
   const { data: { user } } = await supabase.auth.getUser()
 
   if (!user) {
-    return {
-      userId: 'demo-user',
-      completedModules: [] as string[],
-    }
+    return { completedModules: [] as string[] }
   }
 
   const { data: userData } = await supabase
@@ -72,10 +66,7 @@ async function getUserData() {
     .eq('id', user.id)
     .single()
 
-  return {
-    userId: user.id,
-    completedModules: userData?.ai_modules_completed || [],
-  }
+  return { completedModules: userData?.ai_modules_completed || [] }
 }
 
 export default async function AIModulePage({ params }: PageProps) {

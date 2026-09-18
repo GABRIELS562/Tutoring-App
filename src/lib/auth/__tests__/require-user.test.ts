@@ -189,6 +189,21 @@ describe('require-user auth helpers', () => {
       const user = await requireAdmin()
       expect(user.id).toBe('owner-1')
     })
+
+    it('matches ADMIN_EMAIL case-insensitively', async () => {
+      setEnv({
+        NEXT_PUBLIC_SUPABASE_URL: 'https://example.supabase.co',
+        NEXT_PUBLIC_SUPABASE_ANON_KEY: 'anon-key',
+        ADMIN_EMAIL: 'Owner@Example.com',
+      })
+      getUserMock.mockResolvedValueOnce({
+        data: { user: { id: 'owner-1', email: 'owner@example.com' } },
+      })
+      isUserAdminMock.mockResolvedValueOnce(false)
+
+      const user = await requireAdmin()
+      expect(user.id).toBe('owner-1')
+    })
   })
 
   describe('authErrorResponse', () => {
