@@ -40,9 +40,27 @@ async function resolveIsPremium(userId: string): Promise<boolean> {
 }
 
 // Get or create usage record for today
-async function getUsageRecord(userId: string, today: string) {
+interface UsageRecord {
+  id: string
+  hint_count: number
+  camera_count: number
+}
+
+type UsageLookup =
+  | { ok: true; record: UsageRecord | null }
+  | { ok: false }
+
+/**
+ * Fails CLOSED on an unexpected DB error: only a genuine "no rows found"
+ * (PGRST116) is treated as zero usage. Any other error used to be
+ * swallowed and also treated as zero usage - which meant a transient DB
+ * problem silently bypassed the free-tier daily limit instead of
+ * blocking the request. The caller doing the rate-limit gate check
+ * (POST, below) returns 503 when `ok` is false rather than proceeding.
+ */
+async function getUsageRecord(userId: string, today: string): Promise<UsageLookup> {
   const supabase = getApiSupabase()
-  if (!supabase) return null
+  if (!supabase) return { ok: true, record: null } // Demo mode
 
   const { data, error } = await supabase
     .from('ai_hint_usage')
@@ -52,12 +70,13 @@ async function getUsageRecord(userId: string, today: string) {
     .single()
 
   if (error && error.code !== 'PGRST116') {
-    // PGRST116 = no rows found, which is fine
+    // PGRST116 = no rows found, which is fine - anything else is a real
+    // failure and must not be treated as "zero usage."
     console.error('Error fetching usage:', error)
-    return null
+    return { ok: false }
   }
 
-  return data
+  return { ok: true, record: data }
 }
 
 // Create or update usage record
@@ -65,7 +84,7 @@ async function updateUsageRecord(
   userId: string,
   today: string,
   mode: HintMode,
-  existingRecord: { id: string; hint_count: number; camera_count: number } | null
+  existingRecord: UsageRecord | null
 ) {
   const supabase = getApiSupabase()
   if (!supabase) return // Demo mode - skip usage tracking
@@ -75,10 +94,14 @@ async function updateUsageRecord(
       ? { camera_count: existingRecord.camera_count + 1, updated_at: new Date().toISOString() }
       : { hint_count: existingRecord.hint_count + 1, updated_at: new Date().toISOString() }
 
-    await supabase
+    const { error } = await supabase
       .from('ai_hint_usage')
       .update(updates)
       .eq('id', existingRecord.id)
+
+    if (error) {
+      console.error('Error updating usage record:', error)
+    }
   } else {
     const newRecord = {
       user_id: userId,
@@ -87,7 +110,11 @@ async function updateUsageRecord(
       camera_count: mode === 'camera_scan' ? 1 : 0,
     }
 
-    await supabase.from('ai_hint_usage').insert(newRecord)
+    const { error } = await supabase.from('ai_hint_usage').insert(newRecord)
+
+    if (error) {
+      console.error('Error inserting usage record:', error)
+    }
   }
 }
 
@@ -310,7 +337,18 @@ export async function POST(request: NextRequest) {
 
     // Check rate limit for free tier users
     if (!isPremium) {
-      const usageRecord = await getUsageRecord(userId, today)
+      const usageLookup = await getUsageRecord(userId, today)
+
+      if (!usageLookup.ok) {
+        // Fail closed: an unexpected DB error must not silently bypass
+        // the free-tier daily limit by being treated as "zero usage."
+        return NextResponse.json(
+          { error: 'Usage check unavailable, try again' },
+          { status: 503 }
+        )
+      }
+
+      const usageRecord = usageLookup.record
 
       if (usageRecord) {
         if (mode === 'camera_scan') {
@@ -409,8 +447,13 @@ export async function POST(request: NextRequest) {
       const responses = mockResponses[mode] || mockResponses.step_hint
       const randomHint = responses[Math.floor(Math.random() * responses.length)]
 
-      // Calculate remaining for the response
-      const usageRecord = await getUsageRecord(userId, today)
+      // Calculate remaining for the response. This is best-effort display
+      // info for a request that has already been granted (the rate-limit
+      // gate above already ran) - a lookup failure here just falls back
+      // to the existing "unknown count" default rather than failing the
+      // whole response, unlike the gating check.
+      const usageLookupForDisplay = await getUsageRecord(userId, today)
+      const usageRecord = usageLookupForDisplay.ok ? usageLookupForDisplay.record : null
       let remaining: number | string = 'unlimited'
       if (!isPremium) {
         if (mode === 'camera_scan') {
@@ -488,8 +531,11 @@ export async function POST(request: NextRequest) {
     const data = await response.json()
     const aiResponse = data.content?.[0]?.text || ''
 
-    // Calculate remaining for response
-    const usageRecord = await getUsageRecord(userId, today)
+    // Calculate remaining for response - best-effort display info for an
+    // already-granted, already-completed request; see the comment on the
+    // equivalent lookup in the no-API-key branch above.
+    const usageLookupForDisplay = await getUsageRecord(userId, today)
+    const usageRecord = usageLookupForDisplay.ok ? usageLookupForDisplay.record : null
     let remaining: number | string = 'unlimited'
     if (!isPremium) {
       if (mode === 'camera_scan') {
