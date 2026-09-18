@@ -55,9 +55,15 @@ CREATE POLICY "users_update_own" ON users
   USING (id = auth.uid())
   WITH CHECK (id = auth.uid());
 
--- Intentionally no public/insert policy: new rows are created by the
--- service role (e.g. on signup) or the (app)/layout.tsx fallback path,
--- both of which bypass RLS or run server-side with the service key.
+-- signup/page.tsx inserts the public.users row itself, client-side, with
+-- the anon key (createBrowserClient + supabase.auth.signUp(), then a plain
+-- .from('users').insert(...) using the just-created session) - without this
+-- policy that insert is silently blocked once RLS is enabled, breaking
+-- signup. id must match the just-authenticated user, same as select/update.
+DROP POLICY IF EXISTS "users_insert_own" ON users;
+CREATE POLICY "users_insert_own" ON users
+  FOR INSERT
+  WITH CHECK (id = auth.uid());
 
 
 -- =============================================================================
@@ -145,11 +151,12 @@ CREATE POLICY "prompt_challenge_attempts_update_own" ON prompt_challenge_attempt
 
 
 -- =============================================================================
--- 5. ai_certificates — own rows for select/insert/update, PLUS a public
---    SELECT policy because /api/verify/[certificateId] must work for an
---    anonymous visitor scanning a certificate's QR code. A view is used to
---    keep the anonymously-readable surface to only the columns a verifier
---    needs (never `id`/`user_id`).
+-- 5. ai_certificates — own row for select only. Issuance is server-side
+--    (POST /api/ai-skills/issue-certificate, service role, bypasses RLS)
+--    so there is deliberately no INSERT policy for any client role - see
+--    "no client inserts" below. Anonymous verification
+--    (/api/verify/[certificateId]) goes through the public_certificates
+--    view, never the base table - see the REVOKE below.
 -- =============================================================================
 
 ALTER TABLE ai_certificates ENABLE ROW LEVEL SECURITY;
@@ -159,10 +166,14 @@ CREATE POLICY "ai_certificates_select_own" ON ai_certificates
   FOR SELECT
   USING (user_id = auth.uid());
 
+-- No client inserts: certificate issuance moved server-side
+-- (POST /api/ai-skills/issue-certificate using the service-role client,
+-- which bypasses RLS entirely). The previous "ai_certificates_insert_own"
+-- policy let the certificate page insert a row directly from the user's
+-- own anon-key session; that path is gone, so the policy is removed
+-- rather than left dangling and unused. If it exists from a prior run of
+-- this migration, drop it explicitly (no corresponding CREATE below).
 DROP POLICY IF EXISTS "ai_certificates_insert_own" ON ai_certificates;
-CREATE POLICY "ai_certificates_insert_own" ON ai_certificates
-  FOR INSERT
-  WITH CHECK (user_id = auth.uid());
 
 DROP POLICY IF EXISTS "ai_certificates_update_own" ON ai_certificates;
 CREATE POLICY "ai_certificates_update_own" ON ai_certificates
@@ -170,20 +181,39 @@ CREATE POLICY "ai_certificates_update_own" ON ai_certificates
   USING (user_id = auth.uid())
   WITH CHECK (user_id = auth.uid());
 
--- Public, anonymous verification: anyone with a certificate_id (e.g. from
--- a QR code) can look it up. This is by design — that's what "verifiable
--- credential" means — but it is still scoped by a policy (not "RLS off")
--- and normally satisfied through the service-role client, which bypasses
--- RLS anyway. This policy exists for the anon-key-fallback path.
+-- No more blanket public SELECT policy on the base table (previously
+-- "ai_certificates_select_public", USING (true)) - that exposed every
+-- column, including `id`/`user_id`, to anon via the RLS-anon-key-fallback
+-- path. Anonymous verification now goes ONLY through the
+-- public_certificates view below, which exposes just the columns a
+-- verifier needs. Drop it explicitly so a prior run of this migration
+-- doesn't leave it behind.
 DROP POLICY IF EXISTS "ai_certificates_select_public" ON ai_certificates;
-CREATE POLICY "ai_certificates_select_public" ON ai_certificates
-  FOR SELECT
-  USING (true);
 
--- Narrower surface for direct anon/authenticated Supabase client access:
--- exposes only what a verifier needs, never `id` or `user_id`.
+-- Revoke the default anon table-level grant on the base table: anon must
+-- go through public_certificates (below), never ai_certificates directly.
+-- `authenticated` keeps its default grant, narrowed to their own row by
+-- ai_certificates_select_own above (used by the certificate page to read
+-- back an already-issued certificate with the visitor's own session).
+REVOKE SELECT ON ai_certificates FROM anon;
+
+-- Column-restricted, anonymous-readable surface for verification: exposes
+-- only what a verifier needs, never `id` or `user_id`.
+--
+-- security_invoker = false (the default - stated explicitly here so it's
+-- not mistaken for an oversight): the view runs with the VIEW OWNER's
+-- privileges, not the querying role's. Table owners are exempt from their
+-- own table's RLS policies (unless the table has FORCE ROW LEVEL SECURITY,
+-- which this migration does not set), so a view owned by the role that
+-- ran this migration (typically the Supabase project's `postgres`/admin
+-- role) can read every row of ai_certificates regardless of the querying
+-- role - which is required here, since anon has no auth.uid() and would
+-- otherwise match zero rows under ai_certificates_select_own. The SELECT
+-- list is the only restriction anon gets: which columns, not which rows -
+-- by design, since a certificate is meant to be verifiable by anyone who
+-- has its id.
 CREATE OR REPLACE VIEW public_certificates
-  WITH (security_invoker = true) AS
+  WITH (security_invoker = false) AS
 SELECT
   certificate_id,
   student_name,

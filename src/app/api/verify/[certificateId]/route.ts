@@ -48,8 +48,14 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
   try {
     const supabase = createClient(supabaseUrl, supabaseKey)
 
+    // Reads the public_certificates view, never the ai_certificates base
+    // table: the RLS migration (0001_rls.sql) revokes anon SELECT on the
+    // base table and only grants it on this column-restricted view, so an
+    // anon-key fallback here (SUPABASE_SERVICE_ROLE_KEY unset) would
+    // otherwise return zero rows. The view exposes exactly the columns
+    // used below - never `id`/`user_id`.
     const { data: certificate, error } = await supabase
-      .from('ai_certificates')
+      .from('public_certificates')
       .select('*')
       .eq('certificate_id', certificateId)
       .single()

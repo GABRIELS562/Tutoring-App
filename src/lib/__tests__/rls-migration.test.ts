@@ -58,19 +58,41 @@ describe('supabase/migrations/0001_rls.sql', () => {
     expectPolicy('ai_hint_usage', 'user_id = auth.uid()::text')
   })
 
-  it('adds a public SELECT policy on ai_certificates for anonymous verification', () => {
+  it('adds a users_insert_own policy so client-side signup can insert its own row', () => {
+    expect(sql).toMatch(/DROP POLICY IF EXISTS "users_insert_own" ON users/)
+    expectPolicy('users', 'id = auth.uid()')
     expect(sql).toMatch(
-      /CREATE POLICY "ai_certificates_select_public" ON ai_certificates[\s\S]*?USING \(true\)/
+      /CREATE POLICY "users_insert_own" ON users[\s\S]*?FOR INSERT[\s\S]*?WITH CHECK \(id = auth\.uid\(\)\)/
     )
   })
 
-  it('defines a public_certificates view that excludes id and user_id', () => {
+  it('removes the blanket public SELECT policy on the ai_certificates base table', () => {
+    expect(sql).toMatch(/DROP POLICY IF EXISTS "ai_certificates_select_public" ON ai_certificates/)
+    // Explicitly must NOT define it again (no matching CREATE POLICY).
+    expect(sql).not.toMatch(/CREATE POLICY "ai_certificates_select_public"/)
+  })
+
+  it('removes the ai_certificates_insert_own policy - issuance is server-side only', () => {
+    expect(sql).toMatch(/DROP POLICY IF EXISTS "ai_certificates_insert_own" ON ai_certificates/)
+    expect(sql).not.toMatch(/CREATE POLICY "ai_certificates_insert_own"/)
+  })
+
+  it('revokes anon SELECT on the ai_certificates base table', () => {
+    expect(sql).toMatch(/REVOKE SELECT ON ai_certificates FROM anon/)
+  })
+
+  it('defines public_certificates as security_invoker = false, excluding id and user_id', () => {
+    expect(sql).toMatch(/security_invoker = false/)
     const viewMatch = sql.match(/CREATE OR REPLACE VIEW public_certificates[\s\S]*?FROM ai_certificates;/)
     expect(viewMatch).toBeTruthy()
     const viewSql = viewMatch![0]
     expect(viewSql).not.toMatch(/\buser_id\b/)
     expect(viewSql).toMatch(/certificate_id/)
     expect(viewSql).toMatch(/student_name/)
+  })
+
+  it('grants anon SELECT on the public_certificates view', () => {
+    expect(sql).toMatch(/GRANT SELECT ON public_certificates TO anon, authenticated/)
   })
 
   it('adds public SELECT policies for every read-only content table', () => {
