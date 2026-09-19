@@ -1,12 +1,16 @@
-# Afrikaans copy pending native-speaker review
+# Afrikaans copy pending native-speaker review (TODO(review-af))
 
 Phase 5 wired `useTranslations`/`getTranslations` across the app. Where a key
 already existed in both `src/messages/en.json` and `src/messages/af.json`,
 the existing (already-reviewed) Afrikaans copy was reused as-is. Every key
 listed below is **new** in this phase: plain, correct Afrikaans in the school
 register, "jy" form, written by the agent doing the wiring — not yet checked
-by a native speaker. Each is marked `// TODO(review-af)` at its call site (or
-grouped by file below where a single component uses several).
+by a native speaker.
+
+JSON has no comment syntax, so there is no literal `// TODO(review-af)`
+marker at each key in `af.json` itself — this list **is** that marker, grouped
+by message namespace (which corresponds 1:1 with the file/component that
+introduced the keys). Treat every entry below as carrying a `TODO(review-af)`.
 
 Once reviewed, delete a row here after confirming (or correcting) the
 `af.json` value; no code change is needed unless the copy itself changes.
