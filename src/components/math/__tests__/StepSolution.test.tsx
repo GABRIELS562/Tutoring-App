@@ -172,4 +172,37 @@ describe('StepSolution "Ask Angelo about this step"', () => {
     expect(screen.getByText('Reply for step one')).toBeInTheDocument()
     expect(screen.getByText('Reply for step two')).toBeInTheDocument()
   })
+
+  it('marks decorative icons aria-hidden so screen readers only announce the button/label text', async () => {
+    const user = userEvent.setup()
+    global.fetch = vi.fn(
+      () =>
+        new Promise(() => {
+          /* never resolves - keeps the loading state (Loader2 icon) visible */
+        })
+    ) as unknown as typeof fetch
+
+    const { container } = render(<StepSolution steps={steps} questionText="Solve for x and y" />)
+
+    // HelpCircle + Chevron (hint toggle) - only steps with a hint render this.
+    const hintToggle = screen.getByRole('button', { name: /show hint/i })
+    for (const icon of hintToggle.querySelectorAll('svg')) {
+      expect(icon).toHaveAttribute('aria-hidden', 'true')
+    }
+
+    // MessageCircle (idle "Ask Angelo about this step")
+    const askButtons = screen.getAllByRole('button', { name: /ask angelo about this step/i })
+    for (const icon of askButtons[0].querySelectorAll('svg')) {
+      expect(icon).toHaveAttribute('aria-hidden', 'true')
+    }
+
+    // Loader2 (loading state, once clicked)
+    await user.click(askButtons[0])
+    const loadingButton = screen.getByRole('button', { name: /angelo is thinking/i })
+    for (const icon of loadingButton.querySelectorAll('svg')) {
+      expect(icon).toHaveAttribute('aria-hidden', 'true')
+    }
+
+    expect(container.querySelectorAll('svg').length).toBeGreaterThan(0)
+  })
 })

@@ -130,12 +130,12 @@ function StepRow({
             className="flex items-center gap-1.5 text-xs font-medium mb-2 transition-colors"
             style={{ color: 'var(--muted-custom)' }}
           >
-            <HelpCircle className="w-3.5 h-3.5" />
+            <HelpCircle className="w-3.5 h-3.5" aria-hidden="true" />
             {showHint ? 'Hide hint' : 'Show hint'}
             {showHint ? (
-              <ChevronUp className="w-3 h-3" />
+              <ChevronUp className="w-3 h-3" aria-hidden="true" />
             ) : (
-              <ChevronDown className="w-3 h-3" />
+              <ChevronDown className="w-3 h-3" aria-hidden="true" />
             )}
           </button>
         )}
@@ -183,12 +183,12 @@ function StepRow({
             >
               {askingAngelo ? (
                 <>
-                  <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                  <Loader2 className="w-3.5 h-3.5 animate-spin" aria-hidden="true" />
                   Angelo is thinking...
                 </>
               ) : (
                 <>
-                  <MessageCircle className="w-3.5 h-3.5" />
+                  <MessageCircle className="w-3.5 h-3.5" aria-hidden="true" />
                   Ask Angelo about this step
                 </>
               )}
