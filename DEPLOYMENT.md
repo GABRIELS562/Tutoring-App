@@ -84,3 +84,11 @@ account-level cap is the actual backstop.
 call) records `user_id`, `mode`, `model`, and input/output/cache token
 counts per call — for after-the-fact visibility and a future admin usage
 view, not prevention. Service-role only (RLS enabled, no policies).
+
+The per-user free-tier daily limit (`FREE_HINT_LIMIT`/`FREE_CAMERA_LIMIT`
+in `src/app/api/ai-hint/route.ts`) has a known, accepted check-then-act
+race under concurrent requests from the same user — see the comment
+above `checkFreeTierLimit()`'s call site in that file. It bounds a
+student's worst-case overshoot to a handful of extra hints, not
+unbounded spend, so it is not a substitute for the account-level spend
+cap above.

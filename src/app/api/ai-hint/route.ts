@@ -736,6 +736,28 @@ export async function POST(request: NextRequest) {
     // daily limit resets at SAST midnight, not 02:00 SAST (UTC midnight).
     const today = getTodaySAST()
 
+    // KNOWN RACE (accepted risk): checkFreeTierLimit() reads today's
+    // usage and decides to allow the request; the actual increment
+    // (incrementUsageRecord(), via the atomic increment_hint_usage() RPC
+    // - see that function's doc comment) only happens after the model
+    // call succeeds, further down in this function. Two concurrent
+    // requests from the same free-tier user can both read the same
+    // pre-increment count, both pass this gate, and both succeed -
+    // overshooting FREE_HINT_LIMIT/FREE_CAMERA_LIMIT by up to
+    // (concurrent request count - 1). The atomic RPC prevents a
+    // corrupted/lost increment; it does not prevent this
+    // check-then-act (TOCTOU) overshoot, which is a different problem
+    // (reserving a slot vs. recording that one was used).
+    // Accepted for now: bounded by client concurrency - a browser/app
+    // client fires these requests one "Ask Angelo" click at a time, so
+    // overshoot needs either a malicious client issuing concurrent
+    // requests or a genuine double-click race, and even then the
+    // worst case is a handful of extra free hints, not unbounded spend
+    // (see DEPLOYMENT.md's "Monthly spend cap" note). A proper fix would
+    // reserve the slot atomically as part of the same RPC that gates the
+    // request (e.g. increment_hint_usage() itself refusing once at the
+    // limit, moving the check inside the atomic operation) -
+    // reservation-based fix deferred, not scoped for this pass.
     if (!isPremium) {
       const limitResponse = await checkFreeTierLimit(userId, today, mode)
       if (limitResponse) {
