@@ -3,10 +3,11 @@ import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import QuizEngine from '../QuizEngine'
 import type { QuestionWithDetails } from '@/db/queries/questions'
+import type { recordAnswer, completeQuiz } from '@/app/(app)/topics/[slug]/practice/actions'
 
 const { recordAnswerMock, completeQuizMock } = vi.hoisted(() => ({
-  recordAnswerMock: vi.fn(async () => ({ ok: true as const })),
-  completeQuizMock: vi.fn(async () => ({ ok: true as const })),
+  recordAnswerMock: vi.fn<typeof recordAnswer>(async () => ({ ok: true, xpEarned: 0 })),
+  completeQuizMock: vi.fn<typeof completeQuiz>(async () => ({ ok: true })),
 }))
 
 vi.mock('@/app/(app)/topics/[slug]/practice/actions', () => ({
@@ -142,6 +143,105 @@ describe('QuizEngine answer persistence', () => {
 
     // Assert
     expect(recordAnswerMock).not.toHaveBeenCalled()
+  })
+
+  it('displays the server-reported xpEarned, never a client-guessed amount', async () => {
+    // Arrange - server says this particular answer was worth 10 (could
+    // be 0 for a repeat-correct answer; the client never assumes)
+    recordAnswerMock.mockResolvedValueOnce({ ok: true, xpEarned: 10 })
+    const user = userEvent.setup()
+    const q1 = makeQuestion({ id: 'q1' })
+    const q2 = makeQuestion({ id: 'q2', questionText: 'Second question' })
+    render(
+      <QuizEngine
+        topicSlug="trig-gr11"
+        grade={11}
+        userId="user-1"
+        initialQuestions={[q1, q2]}
+        isDemo={false}
+      />
+    )
+
+    // Act
+    await user.click(screen.getByText('Four'))
+    await user.click(screen.getByRole('button', { name: /next question/i }))
+    // Complete the quiz to reach the XP summary screen
+    await user.click(screen.getByText('Four'))
+    await user.click(screen.getByRole('button', { name: /next question/i }))
+
+    // Assert
+    expect(screen.getByText('+10')).toBeInTheDocument()
+  })
+
+  it('shows an inline "Not saved" state and does not count XP when recordAnswer fails', async () => {
+    // Arrange
+    recordAnswerMock.mockResolvedValueOnce({ ok: false, error: 'Could not save your answer' })
+    const user = userEvent.setup()
+    render(
+      <QuizEngine
+        topicSlug="trig-gr11"
+        grade={11}
+        userId="user-1"
+        initialQuestions={[makeQuestion()]}
+        isDemo={false}
+      />
+    )
+
+    // Act
+    await user.click(screen.getByText('Four'))
+
+    // Assert
+    expect(screen.getByText('Not saved — retry')).toBeInTheDocument()
+  })
+
+  it('retrying a failed save clears the inline error once it succeeds', async () => {
+    // Arrange
+    recordAnswerMock
+      .mockResolvedValueOnce({ ok: false, error: 'Could not save your answer' })
+      .mockResolvedValueOnce({ ok: true, xpEarned: 10 })
+    const user = userEvent.setup()
+    render(
+      <QuizEngine
+        topicSlug="trig-gr11"
+        grade={11}
+        userId="user-1"
+        initialQuestions={[makeQuestion()]}
+        isDemo={false}
+      />
+    )
+    await user.click(screen.getByText('Four'))
+    expect(screen.getByText('Not saved — retry')).toBeInTheDocument()
+
+    // Act
+    await user.click(screen.getByRole('button', { name: 'Retry' }))
+
+    // Assert
+    expect(screen.queryByText('Not saved — retry')).not.toBeInTheDocument()
+    expect(recordAnswerMock).toHaveBeenCalledTimes(2)
+  })
+
+  it('blocks further questions when the server reports out_of_hearts, even if local hearts looked fine', async () => {
+    // Arrange - server is authoritative: local hearts prop says plenty
+    // left, but the server says otherwise (e.g. a second tab used them)
+    recordAnswerMock.mockResolvedValueOnce({ ok: false, error: 'out_of_hearts' })
+    const user = userEvent.setup()
+    render(
+      <QuizEngine
+        topicSlug="trig-gr11"
+        grade={11}
+        userId="user-1"
+        initialQuestions={[makeQuestion()]}
+        isDemo={false}
+        hearts={5}
+      />
+    )
+
+    // Act
+    await user.click(screen.getByText('Four'))
+
+    // Assert
+    expect(screen.getByText('Out of hearts')).toBeInTheDocument()
+    expect(screen.queryByText('Not saved — retry')).not.toBeInTheDocument()
   })
 })
 

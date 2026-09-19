@@ -2,6 +2,7 @@ import { db } from '@/db'
 import { questions, questionOptions, steps, topics, studentProgress, users } from '@/db/schema'
 import { eq, and, sql } from 'drizzle-orm'
 import { todaySast, yesterdaySast } from '@/lib/dates'
+import { XP_PER_CORRECT_ANSWER, MAX_HEARTS } from '@/lib/game-rules'
 
 export type QuestionWithDetails = {
   id: string
@@ -114,13 +115,20 @@ export async function getQuestionsByTopic(
   }
 }
 
+/**
+ * Persists one answer AND, when it earns XP, atomically applies that
+ * XP to users.xp in the same call - the server is the only source of
+ * truth for how much XP an answer is worth. A question already marked
+ * 'correct' on a prior attempt earns nothing on a repeat correct
+ * answer (checked against the existing row's status before awarding),
+ * so replaying the same question can't be used to farm XP.
+ */
 export async function saveProgress(
   userId: string,
   questionId: string,
   correct: boolean
 ): Promise<{ xpEarned: number } | null> {
   try {
-    const xpToAward = correct ? 10 : 0
     const status = correct ? 'correct' : 'incorrect'
 
     // Check if progress record exists
@@ -135,6 +143,9 @@ export async function saveProgress(
       )
       .limit(1)
 
+    const wasAlreadyCorrect = existing.length > 0 && existing[0].status === 'correct'
+    const xpToAward = correct && !wasAlreadyCorrect ? XP_PER_CORRECT_ANSWER : 0
+
     if (existing.length > 0) {
       // Update existing record
       await db
@@ -143,7 +154,9 @@ export async function saveProgress(
           status,
           attempts: sql`${studentProgress.attempts} + 1`,
           lastAttemptedAt: new Date(),
-          xpEarned: correct ? sql`${studentProgress.xpEarned} + ${xpToAward}` : studentProgress.xpEarned,
+          xpEarned: xpToAward > 0
+            ? sql`${studentProgress.xpEarned} + ${xpToAward}`
+            : studentProgress.xpEarned,
         })
         .where(eq(studentProgress.id, existing[0].id))
     } else {
@@ -158,14 +171,19 @@ export async function saveProgress(
       })
     }
 
+    if (xpToAward > 0) {
+      await db
+        .update(users)
+        .set({ xp: sql`${users.xp} + ${xpToAward}` })
+        .where(eq(users.id, userId))
+    }
+
     return { xpEarned: xpToAward }
   } catch (error) {
     console.error('Error saving progress:', error)
     return null
   }
 }
-
-const MAX_HEARTS = 5
 
 /**
  * Pure decision of whether a day rollover should refill hearts, kept
@@ -176,10 +194,13 @@ export function refillHeartsIfNewDay(isNewDay: boolean, maxHearts: number = MAX_
   return isNewDay ? maxHearts : undefined
 }
 
-export async function updateUserXP(
-  userId: string,
-  xpToAdd: number
-): Promise<{ newXp: number; newStreak: number } | null> {
+/**
+ * Advances a user's streak (and refills hearts on a day rollover) for
+ * the current SAST day. Does NOT touch XP - saveProgress() is the only
+ * place XP is awarded, atomically, at the moment it's earned. Call
+ * this once per completed quiz.
+ */
+export async function touchStreak(userId: string): Promise<{ newStreak: number } | null> {
   try {
     // Get current user data
     const userRows = await db
@@ -217,23 +238,21 @@ export async function updateUserXP(
       isNewDay = true
     }
 
-    const newXp = (user.xp || 0) + xpToAdd
     const refilledHearts = refillHeartsIfNewDay(isNewDay)
 
     // Update user
     await db
       .update(users)
       .set({
-        xp: newXp,
         streakCount: newStreak,
         lastActiveDate: today,
         ...(refilledHearts !== undefined ? { hearts: refilledHearts } : {}),
       })
       .where(eq(users.id, userId))
 
-    return { newXp, newStreak }
+    return { newStreak }
   } catch (error) {
-    console.error('Error updating user XP:', error)
+    console.error('Error updating streak:', error)
     return null
   }
 }

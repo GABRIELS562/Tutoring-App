@@ -1,5 +1,6 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
 import { todaySast, yesterdaySast } from '@/lib/dates'
+import { XP_PER_CORRECT_ANSWER } from '@/lib/game-rules'
 
 // A minimal chainable, thenable mock of the drizzle query builder: every
 // chain method returns the same object, and awaiting it (or calling
@@ -39,7 +40,7 @@ vi.mock('@/db', () => ({ db: dbMock }))
 const {
   refillHeartsIfNewDay,
   decrementHearts,
-  updateUserXP,
+  touchStreak,
   saveProgress,
 } = await import('../questions')
 
@@ -117,7 +118,7 @@ describe('decrementHearts', () => {
   })
 })
 
-describe('updateUserXP', () => {
+describe('touchStreak', () => {
   // Pinned well clear of the SAST/UTC boundary so the fixture dates
   // below (built from the same todaySast/yesterdaySast helper the
   // function under test uses) are unambiguous.
@@ -140,13 +141,15 @@ describe('updateUserXP', () => {
     const updateChain = makeChain(undefined)
     dbMock.update.mockReturnValueOnce(updateChain)
 
-    const result = await updateUserXP('u1', 10)
+    const result = await touchStreak('u1')
 
-    expect(result).toEqual({ newXp: 10, newStreak: 1 })
+    expect(result).toEqual({ newStreak: 1 })
     // A new day (first activity) refills hearts in the same update call.
+    // Never touches xp - saveProgress() is the only place XP is set.
     expect(updateChain.set).toHaveBeenCalledWith(
       expect.objectContaining({ hearts: 5, lastActiveDate: todaySast() })
     )
+    expect(updateChain.set.mock.calls[0][0]).not.toHaveProperty('xp')
   })
 
   it('increments the streak when last active yesterday (SAST)', async () => {
@@ -156,9 +159,9 @@ describe('updateUserXP', () => {
     const updateChain = makeChain(undefined)
     dbMock.update.mockReturnValueOnce(updateChain)
 
-    const result = await updateUserXP('u1', 10)
+    const result = await touchStreak('u1')
 
-    expect(result).toEqual({ newXp: 110, newStreak: 5 })
+    expect(result).toEqual({ newStreak: 5 })
     expect(updateChain.set).toHaveBeenCalledWith(
       expect.objectContaining({ hearts: 5 })
     )
@@ -171,9 +174,9 @@ describe('updateUserXP', () => {
     const updateChain = makeChain(undefined)
     dbMock.update.mockReturnValueOnce(updateChain)
 
-    const result = await updateUserXP('u1', 10)
+    const result = await touchStreak('u1')
 
-    expect(result).toEqual({ newXp: 110, newStreak: 4 })
+    expect(result).toEqual({ newStreak: 4 })
     const setArg = updateChain.set.mock.calls[0][0]
     expect(setArg).not.toHaveProperty('hearts')
   })
@@ -184,9 +187,9 @@ describe('updateUserXP', () => {
     )
     dbMock.update.mockReturnValueOnce(makeChain(undefined))
 
-    const result = await updateUserXP('u1', 10)
+    const result = await touchStreak('u1')
 
-    expect(result).toEqual({ newXp: 110, newStreak: 1 })
+    expect(result).toEqual({ newStreak: 1 })
   })
 
   it('treats a student active at 23:30 UTC as already on the next SAST day', async () => {
@@ -200,16 +203,16 @@ describe('updateUserXP', () => {
     const updateChain = makeChain(undefined)
     dbMock.update.mockReturnValueOnce(updateChain)
 
-    const result = await updateUserXP('u1', 10)
+    const result = await touchStreak('u1')
 
-    expect(result).toEqual({ newXp: 10, newStreak: 1 })
+    expect(result).toEqual({ newStreak: 1 })
     expect(updateChain.set.mock.calls[0][0]).not.toHaveProperty('hearts')
   })
 
   it('returns null when the user does not exist', async () => {
     dbMock.select.mockReturnValueOnce(makeChain([]))
 
-    const result = await updateUserXP('missing', 10)
+    const result = await touchStreak('missing')
 
     expect(result).toBeNull()
   })
@@ -220,21 +223,37 @@ describe('saveProgress', () => {
     vi.clearAllMocks()
   })
 
-  it('inserts a new progress record when none exists', async () => {
+  it('inserts a new progress record when none exists, and awards XP', async () => {
     dbMock.select.mockReturnValueOnce(makeChain([]))
     const insertChain = makeChain(undefined)
     dbMock.insert.mockReturnValueOnce(insertChain)
+    const xpUpdateChain = makeChain(undefined)
+    dbMock.update.mockReturnValueOnce(xpUpdateChain)
 
     const result = await saveProgress('u1', 'q1', true)
 
-    expect(result).toEqual({ xpEarned: 10 })
+    expect(result).toEqual({ xpEarned: XP_PER_CORRECT_ANSWER })
     expect(insertChain.values).toHaveBeenCalledWith(
       expect.objectContaining({ userId: 'u1', questionId: 'q1', status: 'correct' })
     )
   })
 
-  it('updates an existing progress record instead of inserting a duplicate', async () => {
-    dbMock.select.mockReturnValueOnce(makeChain([{ id: 'progress-1' }]))
+  it('applies awarded XP to users.xp atomically, in the same call', async () => {
+    dbMock.select.mockReturnValueOnce(makeChain([]))
+    dbMock.insert.mockReturnValueOnce(makeChain(undefined))
+    const xpUpdateChain = makeChain(undefined)
+    dbMock.update.mockReturnValueOnce(xpUpdateChain)
+
+    await saveProgress('u1', 'q1', true)
+
+    expect(dbMock.update).toHaveBeenCalledTimes(1)
+    const setArg = xpUpdateChain.set.mock.calls[0][0]
+    expect(setArg).toHaveProperty('xp')
+    expect(typeof setArg.xp).not.toBe('number') // a SQL fragment (xp + 10), not a client-trusted number
+  })
+
+  it('updates an existing progress record instead of inserting a duplicate, and awards nothing for a wrong answer', async () => {
+    dbMock.select.mockReturnValueOnce(makeChain([{ id: 'progress-1', status: 'incorrect' }]))
     const updateChain = makeChain(undefined)
     dbMock.update.mockReturnValueOnce(updateChain)
 
@@ -245,5 +264,33 @@ describe('saveProgress', () => {
     expect(updateChain.set).toHaveBeenCalledWith(
       expect.objectContaining({ status: 'incorrect' })
     )
+    // No xp update call at all when nothing was earned.
+    expect(dbMock.update).toHaveBeenCalledTimes(1)
+  })
+
+  it('does not re-award XP for a question already marked correct (no XP farming via repeat answers)', async () => {
+    dbMock.select.mockReturnValueOnce(makeChain([{ id: 'progress-1', status: 'correct' }]))
+    const updateChain = makeChain(undefined)
+    dbMock.update.mockReturnValueOnce(updateChain)
+
+    const result = await saveProgress('u1', 'q1', true)
+
+    expect(result).toEqual({ xpEarned: 0 })
+    // Only the student_progress row update - no second call to add xp.
+    expect(dbMock.update).toHaveBeenCalledTimes(1)
+  })
+
+  it('awards XP once when a question moves from incorrect to correct', async () => {
+    dbMock.select.mockReturnValueOnce(makeChain([{ id: 'progress-1', status: 'incorrect' }]))
+    const progressUpdateChain = makeChain(undefined)
+    const xpUpdateChain = makeChain(undefined)
+    dbMock.update
+      .mockReturnValueOnce(progressUpdateChain)
+      .mockReturnValueOnce(xpUpdateChain)
+
+    const result = await saveProgress('u1', 'q1', true)
+
+    expect(result).toEqual({ xpEarned: XP_PER_CORRECT_ANSWER })
+    expect(dbMock.update).toHaveBeenCalledTimes(2)
   })
 })

@@ -7,6 +7,7 @@ import Link from 'next/link'
 import QuestionCard from './QuestionCard'
 import type { QuestionWithDetails } from '@/db/queries/questions'
 import { recordAnswer, completeQuiz } from '@/app/(app)/topics/[slug]/practice/actions'
+import { XP_PER_CORRECT_ANSWER, MAX_HEARTS } from '@/lib/game-rules'
 
 type QuizEngineProps = {
   topicSlug: string
@@ -184,6 +185,12 @@ export default function QuizEngine({
   // question that used their last heart - they still get to see that
   // question's feedback/step solution first.
   const [blockedOnHearts, setBlockedOnHearts] = useState(false)
+  // Set when the last recordAnswer/completeQuiz call failed to persist;
+  // the answer/XP already reflected in local state was NOT counted
+  // server-side, so we show an inline retry instead of pretending it
+  // saved. Holds what to retry (a question answer, or the final
+  // completeQuiz call).
+  const [saveError, setSaveError] = useState<{ retry: () => void } | null>(null)
 
   // These props are accepted for future difficulty-aware retry logic
   // and grade-scoped question fetching (already applied server-side by
@@ -199,8 +206,36 @@ export default function QuizEngine({
   const shouldPersist = !isDemo && !usingMockQuestions && userId !== 'demo-user'
 
   const wrongCount = answers.filter((a) => a === false).length
-  const heartsRemaining = Math.max(0, (hearts ?? 5) - wrongCount)
+  const heartsRemaining = Math.max(0, (hearts ?? MAX_HEARTS) - wrongCount)
   const outOfHearts = !isPremium && heartsRemaining <= 0
+
+  // XP is display-only here, summed from what the server actually
+  // awarded (recordAnswer's xpEarned) - never assumed client-side. In
+  // demo mode / for mock questions there is no server award to sum, so
+  // we show an optimistic client-only total instead (it's never
+  // persisted either way).
+  const persistAnswer = async (questionId: string, correct: boolean) => {
+    try {
+      const result = await recordAnswer(questionId, correct)
+
+      if (!result.ok) {
+        if (result.error === 'out_of_hearts') {
+          setBlockedOnHearts(true)
+        } else {
+          setSaveError({ retry: () => persistAnswer(questionId, correct) })
+        }
+        return
+      }
+
+      setSaveError(null)
+      if ('xpEarned' in result && result.xpEarned) {
+        setTotalXpEarned((xp) => xp + result.xpEarned)
+      }
+    } catch (error) {
+      console.error('Failed to record answer:', error)
+      setSaveError({ retry: () => persistAnswer(questionId, correct) })
+    }
+  }
 
   const handleAnswer = async (selectedLetter: string, correct: boolean) => {
     const newAnswers = [...answers, correct]
@@ -208,15 +243,31 @@ export default function QuizEngine({
 
     if (correct) {
       setScore(score + 1)
-      setTotalXpEarned(totalXpEarned + 10)
     }
 
-    if (shouldPersist) {
-      try {
-        await recordAnswer(questions[currentIndex].id, correct)
-      } catch (error) {
-        console.error('Failed to record answer:', error)
+    if (!shouldPersist) {
+      // Demo/mock questions: nothing to save, so show an optimistic
+      // client-only XP total.
+      if (correct) {
+        setTotalXpEarned((xp) => xp + XP_PER_CORRECT_ANSWER)
       }
+      return
+    }
+
+    await persistAnswer(questions[currentIndex].id, correct)
+  }
+
+  const persistCompleteQuiz = async () => {
+    try {
+      const result = await completeQuiz()
+      if (!result.ok) {
+        setSaveError({ retry: persistCompleteQuiz })
+        return
+      }
+      setSaveError(null)
+    } catch (error) {
+      console.error('Failed to save streak:', error)
+      setSaveError({ retry: persistCompleteQuiz })
     }
   }
 
@@ -234,11 +285,7 @@ export default function QuizEngine({
     setComplete(true)
 
     if (shouldPersist) {
-      try {
-        await completeQuiz(totalXpEarned)
-      } catch (error) {
-        console.error('Failed to save XP:', error)
-      }
+      await persistCompleteQuiz()
     }
   }
 
@@ -249,6 +296,7 @@ export default function QuizEngine({
     setComplete(false)
     setTotalXpEarned(0)
     setBlockedOnHearts(false)
+    setSaveError(null)
     // Shuffle questions
     setQuestions([...questions].sort(() => Math.random() - 0.5))
   }
@@ -450,6 +498,26 @@ export default function QuizEngine({
           />
         </div>
       </div>
+
+      {/* Save error (inline, non-blocking) */}
+      {saveError && (
+        <div
+          className="mb-4 flex items-center justify-between gap-3 rounded-lg px-3 py-2 text-sm"
+          style={{
+            background: 'rgba(230, 57, 70, 0.1)',
+            border: '1px solid var(--accent-red)',
+            color: 'var(--accent-red)',
+          }}
+        >
+          <span>Not saved — retry</span>
+          <button
+            onClick={() => saveError.retry()}
+            className="font-semibold underline"
+          >
+            Retry
+          </button>
+        </div>
+      )}
 
       {/* Question Card */}
       <AnimatePresence mode="wait">
