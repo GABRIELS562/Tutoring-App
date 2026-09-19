@@ -21,8 +21,8 @@ Vercel (app) + Supabase (auth/DB) + Cloudflare (DNS). No Docker, no GitLab — n
 | `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Supabase anon/public key |
 | `SUPABASE_SERVICE_ROLE_KEY` | Server-only; falls back to anon key if unset |
 | `DATABASE_URL` | Pooled (6543) at runtime, direct (5432) for migrations |
-| `ANTHROPIC_API_KEY` | AI hints (`api/ai-hint`) |
-| `ANTHROPIC_MODEL` | Not read by the code yet (wired in Phase 4); will default to `claude-sonnet-5` |
+| `ANTHROPIC_API_KEY` | AI hints (`api/ai-hint`) and step generation (`api/admin/generate-steps`), via `src/lib/claude.ts` |
+| `ANTHROPIC_MODEL` | Optional. Defaults to `claude-sonnet-5` (`getClaudeModel()` in `src/lib/claude.ts`) |
 | `ADMIN_EMAIL` | **Grants admin** to this Supabase user — set carefully |
 
 ## DNS
@@ -39,26 +39,32 @@ npm run db:seed-questions
 npm run db:seed-papers
 ```
 
-## Applying Row Level Security (release gate)
+## Applying Row Level Security and DB functions (release gate)
 
 `npm run db:push` only manages table shape — it does not (and can't)
-apply RLS policies. **Every environment must run `npm run db:rls` after
+apply RLS policies or Postgres functions. **Every environment must run
+`npm run db:rls` and `npm run db:functions` after
 `db:push`/`db:generate`+migrate, before it is considered live**:
 
 ```bash
-npm run db:push   # or drizzle-kit migrate, once migrations exist
-npm run db:rls    # applies supabase/migrations/0001_rls.sql
+npm run db:push        # or drizzle-kit migrate, once migrations exist
+npm run db:rls          # applies supabase/migrations/0001_rls.sql
+npm run db:functions    # applies supabase/migrations/0002_functions.sql (depends on 0001's unique constraint)
 ```
 
-`db:rls` runs `scripts/apply-sql.ts` against `DATABASE_URL` (use the
+Both run `scripts/apply-sql.ts` against `DATABASE_URL` (use the
 **direct**, port-5432 connection — same as migrations, not the pooled
-one) inside a single transaction: it commits only if the whole file
-succeeds, and rolls back cleanly on any error. It is safe to re-run —
-the migration itself is idempotent (`DROP POLICY IF EXISTS` /
-`DROP CONSTRAINT IF EXISTS` guards throughout).
+one) inside a single transaction: each commits only if its whole file
+succeeds, and rolls back cleanly on any error. Both are safe to re-run —
+the migrations themselves are idempotent (`DROP POLICY IF EXISTS` /
+`DROP CONSTRAINT IF EXISTS` / `CREATE OR REPLACE FUNCTION` guards
+throughout).
 
 Treat this as a hard release gate, not a one-time setup step: without
-it, every table it covers is either fully open (RLS never enabled) or
-running with stale policies after a schema change that recreates a
-table. Re-run it after any migration that touches
-`supabase/migrations/0001_rls.sql`'s tables.
+`db:rls`, every table it covers is either fully open (RLS never enabled)
+or running with stale policies after a schema change that recreates a
+table. Without `db:functions`, `POST /api/ai-hint` fails every request
+for a free-tier user once code that calls `increment_hint_usage()` is
+deployed (the function won't exist). Re-run both after any migration
+that touches `supabase/migrations/0001_rls.sql` or `0002_functions.sql`'s
+tables.

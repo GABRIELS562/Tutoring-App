@@ -101,6 +101,11 @@ function makeSupabaseMock() {
 
       throw new Error(`Unexpected table in test mock: ${table}`)
     },
+    // Stands in for the increment_hint_usage() RPC the route calls via
+    // supabase.rpc() to atomically bump usage - these tests are about
+    // model-output validation, not usage-count correctness, so a fixed
+    // non-error response is enough to let the route proceed.
+    rpc: async () => ({ data: { id: 'usage-1', hint_count: 1, camera_count: 0 }, error: null }),
   }
 
   return { client, insertedRows, updateCalls }

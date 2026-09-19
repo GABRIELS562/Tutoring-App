@@ -107,6 +107,13 @@ describe('supabase/migrations/0001_rls.sql', () => {
     }
   })
 
+  it('adds a UNIQUE (user_id, usage_date) constraint on ai_hint_usage, idempotently', () => {
+    expect(sql).toMatch(/DROP CONSTRAINT IF EXISTS ai_hint_usage_user_date_unique/)
+    expect(sql).toMatch(
+      /ADD CONSTRAINT ai_hint_usage_user_date_unique\s+UNIQUE \(user_id, usage_date\)/
+    )
+  })
+
   it('adds a UNIQUE (user_id, challenge_id) constraint on prompt_challenge_attempts, idempotently', () => {
     expect(sql).toMatch(
       /DROP CONSTRAINT IF EXISTS prompt_challenge_attempts_user_challenge_unique/

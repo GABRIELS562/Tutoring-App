@@ -7,6 +7,7 @@ import { badges, PROMPT_CHALLENGE_XP_PER_STAR } from '@/content/ai-skills'
 import { checkPremiumStatus } from '@/db/queries/users'
 import { isDemoMode } from '@/db'
 import { getClaudeClient, createTutorMessage, ClaudeError, type ClaudeErrorKind } from '@/lib/claude'
+import { getTodaySAST } from '@/lib/date/today-sast'
 import {
   HintRequestSchema,
   type HintMode,
@@ -106,43 +107,64 @@ async function getUsageRecord(userId: string, today: string): Promise<UsageLooku
   return { ok: true, record: data }
 }
 
-// Create or update usage record
-async function updateUsageRecord(
+/**
+ * Atomically increments today's hint_count or camera_count for a user via
+ * the increment_hint_usage() Postgres function (see
+ * supabase/migrations/0002_functions.sql), which does the whole
+ * insert-if-missing-or-update-plus-one as one SQL statement
+ * (INSERT ... ON CONFLICT (user_id, usage_date) DO UPDATE SET
+ * <field> = <field> + 1). A plain "read the row, then write count + 1"
+ * from application code (the previous implementation, via
+ * updateUsageRecord) is a read-then-write race: two concurrent requests
+ * can both read the same starting count and both land on the same
+ * incremented value, silently granting an extra hint beyond the daily
+ * limit.
+ *
+ * Callers must invoke this only AFTER a response is actually going to be
+ * returned to the student (i.e. after a successful demo-mode response or
+ * a successful real model call) - a failed model call must not consume
+ * quota. Returns null in demo mode (nothing to persist) or on an
+ * unexpected DB error (logged; the response still goes out since the
+ * hint/evaluation was already generated - only the "remaining" count
+ * display degrades).
+ */
+async function incrementUsageRecord(
   userId: string,
   today: string,
-  mode: HintMode,
-  existingRecord: UsageRecord | null
-) {
+  mode: HintMode
+): Promise<UsageRecord | null> {
   const supabase = getApiSupabase()
-  if (!supabase) return // Demo mode - skip usage tracking
+  if (!supabase) return null // Demo mode - skip usage tracking
 
-  if (existingRecord) {
-    const updates = mode === 'camera_scan'
-      ? { camera_count: existingRecord.camera_count + 1, updated_at: new Date().toISOString() }
-      : { hint_count: existingRecord.hint_count + 1, updated_at: new Date().toISOString() }
+  const field: 'hint_count' | 'camera_count' = mode === 'camera_scan' ? 'camera_count' : 'hint_count'
 
-    const { error } = await supabase
-      .from('ai_hint_usage')
-      .update(updates)
-      .eq('id', existingRecord.id)
+  const { data, error } = await supabase.rpc('increment_hint_usage', {
+    p_user_id: userId,
+    p_usage_date: today,
+    p_field: field,
+  })
 
-    if (error) {
-      console.error('Error updating usage record:', error)
-    }
-  } else {
-    const newRecord = {
-      user_id: userId,
-      usage_date: today,
-      hint_count: mode === 'camera_scan' ? 0 : 1,
-      camera_count: mode === 'camera_scan' ? 1 : 0,
-    }
-
-    const { error } = await supabase.from('ai_hint_usage').insert(newRecord)
-
-    if (error) {
-      console.error('Error inserting usage record:', error)
-    }
+  if (error) {
+    console.error('Error incrementing usage record:', error)
+    return null
   }
+
+  return data as UsageRecord | null
+}
+
+/**
+ * How many free-tier uses remain today, for display only - the gating
+ * decision already happened against the pre-increment usage record in
+ * POST, below. Falls back to "this request was the last free one" (1
+ * consumed) when the increment's result is unavailable, matching the
+ * previous best-effort behaviour rather than failing the whole response
+ * over a display-only number.
+ */
+function computeRemaining(mode: HintMode, usageRecord: UsageRecord | null): number {
+  if (mode === 'camera_scan') {
+    return FREE_CAMERA_LIMIT - (usageRecord?.camera_count ?? 1)
+  }
+  return FREE_HINT_LIMIT - (usageRecord?.hint_count ?? 1)
 }
 
 // Validates the JSON the model returns for prompt_evaluation before it is
@@ -360,9 +382,16 @@ export async function POST(request: NextRequest) {
     const { mode, imageBase64, locale } = body
     const isPremium = await resolveIsPremium(userId)
 
-    const today = new Date().toISOString().split('T')[0]
+    // "Today" in SAST (Africa/Johannesburg), never UTC - see
+    // src/lib/date/today-sast.ts. The free-tier daily limit resets at
+    // SAST midnight, not at 02:00 SAST (UTC midnight).
+    const today = getTodaySAST()
 
-    // Check rate limit for free tier users
+    // Check rate limit for free tier users. This only READS today's
+    // usage row to decide whether to allow the request - the actual
+    // increment happens later, after a response is successfully
+    // produced (see the incrementUsageRecord() calls below), so a
+    // failed model call never consumes quota.
     if (!isPremium) {
       const usageLookup = await getUsageRecord(userId, today)
 
@@ -404,15 +433,14 @@ export async function POST(request: NextRequest) {
           }
         }
       }
-
-      // Update usage after rate limit check passes
-      await updateUsageRecord(userId, today, mode, usageRecord)
     }
 
     const claudeClient = getClaudeClient()
 
     // If no API key, return a helpful mock response (without hollow affirmations)
     if (!claudeClient) {
+      let responseBody: Record<string, unknown>
+
       // Special handling for prompt_evaluation mode - return structured JSON
       if (mode === 'prompt_evaluation') {
         const mockEvaluation = {
@@ -430,71 +458,63 @@ export async function POST(request: NextRequest) {
           mockEvaluation
         )
 
-        return NextResponse.json({
+        responseBody = {
           evaluation: mockEvaluation,
           isDemo: true,
           ...(attempt ? { attempt } : {}),
-        })
-      }
-
-      // Special handling for cv_help mode
-      if (mode === 'cv_help') {
-        return NextResponse.json({
+        }
+      } else if (mode === 'cv_help') {
+        // Special handling for cv_help mode
+        responseBody = {
           hint: "Proficient in AI-assisted research and problem-solving. Experienced in crafting effective prompts to extract useful information from AI tools. Committed to ethical AI use and continuous learning in this rapidly evolving field.",
           isDemo: true,
-        })
-      }
-
-      // Special handling for general_question mode
-      if (mode === 'general_question') {
-        return NextResponse.json({
+        }
+      } else if (mode === 'general_question') {
+        // Special handling for general_question mode
+        responseBody = {
           hint: "AI works by predicting what comes next based on patterns it learned from text. It doesn't actually 'understand' — it matches patterns. That's why it can sound confident even when wrong. Your job is to verify anything important.",
           isDemo: true,
-        })
+        }
+      } else {
+        const mockResponses: Record<string, string[]> = {
+          step_hint: [
+            `Let's think about this step by step. What do you already know about the problem? Sometimes writing out what we know helps us see the path forward.`,
+            `You're on the right track! Remember, in maths we often need to identify what type of problem this is first. Is it a reduction formula? An identity? That'll tell us which tool to use.`,
+            `This trips up many students! Try drawing a quick sketch or writing out the given information. What does the question actually want us to find?`,
+          ],
+          wrong_answer: [
+            `I see what happened there — you made a common mistake. Let's think about why "${body.selectedAnswer}" doesn't work here. What happens if you plug that answer back into the original equation?`,
+            `Close! The key thing you might have missed is checking which quadrant we're in. Remember CAST? That tells us the sign of our answer. Try again with that in mind!`,
+            `Almost there! This looks like a straightforward calculation, but there's a subtlety. What if you tried working backwards from the correct answer to see the pattern?`,
+          ],
+          camera_scan: [
+            `I can see you've got a maths problem there! This looks like algebraic manipulation. Start by identifying all the terms — what do you need to solve for?`,
+            `Nice, that's a geometry problem! First step: label everything you know on the diagram. What relationships can you spot between the angles or sides?`,
+            `I see this is a trig problem. Remember to check: is this asking for an angle or a ratio? That determines which approach we use. What do you think?`,
+          ],
+        }
+
+        const responses = mockResponses[mode] || mockResponses.step_hint
+        const randomHint = responses[Math.floor(Math.random() * responses.length)]
+        responseBody = { hint: randomHint, isDemo: true }
       }
 
-      const mockResponses: Record<string, string[]> = {
-        step_hint: [
-          `Let's think about this step by step. What do you already know about the problem? Sometimes writing out what we know helps us see the path forward.`,
-          `You're on the right track! Remember, in maths we often need to identify what type of problem this is first. Is it a reduction formula? An identity? That'll tell us which tool to use.`,
-          `This trips up many students! Try drawing a quick sketch or writing out the given information. What does the question actually want us to find?`,
-        ],
-        wrong_answer: [
-          `I see what happened there — you made a common mistake. Let's think about why "${body.selectedAnswer}" doesn't work here. What happens if you plug that answer back into the original equation?`,
-          `Close! The key thing you might have missed is checking which quadrant we're in. Remember CAST? That tells us the sign of our answer. Try again with that in mind!`,
-          `Almost there! This looks like a straightforward calculation, but there's a subtlety. What if you tried working backwards from the correct answer to see the pattern?`,
-        ],
-        camera_scan: [
-          `I can see you've got a maths problem there! This looks like algebraic manipulation. Start by identifying all the terms — what do you need to solve for?`,
-          `Nice, that's a geometry problem! First step: label everything you know on the diagram. What relationships can you spot between the angles or sides?`,
-          `I see this is a trig problem. Remember to check: is this asking for an angle or a ratio? That determines which approach we use. What do you think?`,
-        ],
-      }
-
-      const responses = mockResponses[mode] || mockResponses.step_hint
-      const randomHint = responses[Math.floor(Math.random() * responses.length)]
-
-      // Calculate remaining for the response. This is best-effort display
-      // info for a request that has already been granted (the rate-limit
-      // gate above already ran) - a lookup failure here just falls back
-      // to the existing "unknown count" default rather than failing the
-      // whole response, unlike the gating check.
-      const usageLookupForDisplay = await getUsageRecord(userId, today)
-      const usageRecord = usageLookupForDisplay.ok ? usageLookupForDisplay.record : null
-      let remaining: number | string = 'unlimited'
+      // Demo-mode responses always "succeed" (there is no real model call
+      // that can fail), so usage is recorded once the response content
+      // above is decided - same "only after success" rule as the real
+      // model branch below. Matches the original behaviour of only
+      // surfacing `remaining` for the plain hint modes (step_hint,
+      // wrong_answer, camera_scan) - prompt_evaluation/cv_help/
+      // general_question never reported it, even though they still
+      // consumed quota.
       if (!isPremium) {
-        if (mode === 'camera_scan') {
-          remaining = FREE_CAMERA_LIMIT - (usageRecord?.camera_count || 1)
-        } else {
-          remaining = FREE_HINT_LIMIT - (usageRecord?.hint_count || 1)
+        const usageRecord = await incrementUsageRecord(userId, today, mode)
+        if (mode !== 'prompt_evaluation' && mode !== 'cv_help' && mode !== 'general_question') {
+          responseBody.remaining = computeRemaining(mode, usageRecord)
         }
       }
 
-      return NextResponse.json({
-        hint: randomHint,
-        remaining,
-        isDemo: true,
-      })
+      return NextResponse.json(responseBody)
     }
 
     // Build the messages array
@@ -550,18 +570,13 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // Calculate remaining for response - best-effort display info for an
-    // already-granted, already-completed request; see the comment on the
-    // equivalent lookup in the no-API-key branch above.
-    const usageLookupForDisplay = await getUsageRecord(userId, today)
-    const usageRecord = usageLookupForDisplay.ok ? usageLookupForDisplay.record : null
+    // The model call above succeeded - only now is usage recorded (see
+    // incrementUsageRecord()'s doc comment: a failed call must not
+    // consume quota, so this could not happen any earlier).
     let remaining: number | string = 'unlimited'
     if (!isPremium) {
-      if (mode === 'camera_scan') {
-        remaining = FREE_CAMERA_LIMIT - (usageRecord?.camera_count || 1)
-      } else {
-        remaining = FREE_HINT_LIMIT - (usageRecord?.hint_count || 1)
-      }
+      const usageRecord = await incrementUsageRecord(userId, today, mode)
+      remaining = computeRemaining(mode, usageRecord)
     }
 
     // Handle prompt_evaluation mode - parse and VALIDATE the model's JSON.

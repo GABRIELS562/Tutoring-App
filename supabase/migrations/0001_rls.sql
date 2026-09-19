@@ -96,6 +96,21 @@ CREATE POLICY "student_progress_update_own" ON student_progress
 --    tables, so auth.uid() (uuid) must be cast to text to compare.
 -- =============================================================================
 
+-- One usage row per (user, day): backs both a DB-level guarantee against
+-- duplicate rows and the atomic increment_hint_usage() Postgres function
+-- (supabase/migrations/0002_functions.sql) that api/ai-hint/route.ts
+-- calls via supabase.rpc() to bump hint_count/camera_count - its
+-- ON CONFLICT (user_id, usage_date) clause requires this constraint to
+-- exist. Matches the `unique(...)` in src/db/schema.ts. Same
+-- drop-then-add idempotency pattern as
+-- prompt_challenge_attempts_user_challenge_unique above (Postgres has no
+-- ADD CONSTRAINT IF NOT EXISTS).
+ALTER TABLE ai_hint_usage
+  DROP CONSTRAINT IF EXISTS ai_hint_usage_user_date_unique;
+ALTER TABLE ai_hint_usage
+  ADD CONSTRAINT ai_hint_usage_user_date_unique
+  UNIQUE (user_id, usage_date);
+
 ALTER TABLE ai_hint_usage ENABLE ROW LEVEL SECURITY;
 
 DROP POLICY IF EXISTS "ai_hint_usage_select_own" ON ai_hint_usage;

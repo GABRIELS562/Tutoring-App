@@ -136,6 +136,14 @@ export const aiHintUsage = pgTable('ai_hint_usage', {
 }, (table) => [
   index('ai_hint_usage_user_id_idx').on(table.userId),
   index('ai_hint_usage_user_date_idx').on(table.userId, table.usageDate),
+  // One usage row per (user, day): backs the atomic
+  // increment_hint_usage() Postgres function (see
+  // supabase/migrations/0002_functions.sql) that api/ai-hint/route.ts
+  // calls via supabase.rpc() - its ON CONFLICT (user_id, usage_date)
+  // clause depends on this constraint existing. Without it, two
+  // concurrent requests on the same day could each insert their own row
+  // instead of one being forced to update the other's.
+  unique('ai_hint_usage_user_date_unique').on(table.userId, table.usageDate),
 ])
 
 // Table 10: ai_certificates
