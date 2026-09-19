@@ -232,3 +232,22 @@
 .animate-slide-up {
   animation: slide-up 0.3s ease-out forwards;
 }
+
+/*
+ * Global focus-visible fallback (WCAG 2.4.7 Focus Visible).
+ *
+ * Most interactive elements in this app pair `outline-none` with their
+ * own `focus:ring-*` replacement, which is fine. This rule is a safety
+ * net for anything that doesn't (or won't, in future code) - a visible
+ * outline on keyboard focus, never on mouse click (:focus-visible skips
+ * that). Deliberately left unlayered (outside any @layer block): Tailwind
+ * v4 puts component/utility classes like `focus:outline-none` inside
+ * `@layer utilities`, and per the CSS cascade layers spec, normal
+ * unlayered declarations beat any layered declaration regardless of
+ * selector specificity or source order - so this can't be silently
+ * overridden by a utility class the way a `@layer base` rule could be.
+ */
+:focus-visible {
+  outline: 2px solid var(--ring, #e63946);
+  outline-offset: 2px;
+}

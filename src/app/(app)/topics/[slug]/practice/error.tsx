@@ -3,6 +3,7 @@
 import { useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { AlertCircle, RefreshCw } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 
 export default function PracticeError({
   error,
@@ -12,6 +13,8 @@ export default function PracticeError({
   reset: () => void
 }) {
   const router = useRouter()
+  const t = useTranslations('common')
+  const tPractice = useTranslations('practice')
 
   useEffect(() => {
     console.error('Practice error:', error)
@@ -35,10 +38,10 @@ export default function PracticeError({
           <AlertCircle className="w-8 h-8" style={{ color: 'var(--accent-red)' }} />
         </div>
         <h2 className="text-xl font-bold mb-2" style={{ color: 'var(--text)' }}>
-          Something went wrong
+          {t('error')}
         </h2>
         <p className="text-sm mb-6" style={{ color: 'var(--muted-custom)' }}>
-          There was an error loading practice questions. Please try again.
+          {tPractice('loadErrorMessage')}
         </p>
         <button
           onClick={handleRetry}
@@ -46,7 +49,7 @@ export default function PracticeError({
           style={{ background: 'var(--accent-red)', color: 'white' }}
         >
           <RefreshCw className="w-4 h-4" />
-          Retry
+          {t('retry')}
         </button>
       </div>
     </div>

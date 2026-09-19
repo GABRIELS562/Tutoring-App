@@ -4,8 +4,12 @@ import { useState, useRef } from 'react'
 import { Camera, X, Loader2, RotateCcw } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { downscaleImage } from '@/lib/image/downscale'
+import { useTranslations } from 'next-intl'
 
 export default function CameraScan() {
+  const t = useTranslations('cameraScan')
+  const tCommon = useTranslations('common')
+  const tQuiz = useTranslations('quiz')
   const [isOpen, setIsOpen] = useState(false)
   const [image, setImage] = useState<string | null>(null)
   const [loading, setLoading] = useState(false)
@@ -63,16 +67,16 @@ export default function CameraScan() {
 
       if (!res.ok) {
         if (res.status === 429) {
-          setError(data.message || "You've used your 5 free hints today. Come back tomorrow!")
+          setError(data.message || t('hintLimitReached'))
         } else {
-          setError(data.error || 'Failed to analyze image')
+          setError(data.error || t('failedToAnalyze'))
         }
         return
       }
 
       setResponse(data.hint)
     } catch (err) {
-      setError('Failed to connect to Angelo. Please try again.')
+      setError(t('failedToConnect'))
       console.error('Camera scan error:', err)
     } finally {
       setLoading(false)
@@ -100,8 +104,8 @@ export default function CameraScan() {
         onClick={handleCameraClick}
         className="fixed bottom-24 right-4 md:bottom-6 md:right-6 z-40 w-14 h-14 rounded-full shadow-lg flex items-center justify-center transition-all hover:scale-110 active:scale-95"
         style={{ background: 'var(--accent-red)' }}
-        title="Scan a question"
-        aria-label="Scan a question with camera"
+        title={t('scanQuestion')}
+        aria-label={t('scanQuestionWithCamera')}
       >
         <Camera className="w-6 h-6 text-white" />
       </button>
@@ -131,12 +135,13 @@ export default function CameraScan() {
               style={{ background: 'var(--surface)', borderBottom: '1px solid var(--border-custom)' }}
             >
               <h2 className="font-semibold" style={{ color: 'var(--text)' }}>
-                Ask Angelo
+                {t('askAngelo')}
               </h2>
               <button
                 onClick={handleClose}
                 className="p-2 rounded-lg transition-colors hover:bg-white/10"
                 style={{ color: 'var(--text)' }}
+                aria-label={tCommon('close')}
               >
                 <X className="w-5 h-5" />
               </button>
@@ -150,7 +155,7 @@ export default function CameraScan() {
                   <div className="rounded-xl overflow-hidden" style={{ border: '1px solid var(--border-custom)' }}>
                     <img
                       src={image}
-                      alt="Captured question"
+                      alt={t('capturedQuestionAlt')}
                       className="w-full h-auto max-h-[40vh] object-contain"
                       style={{ background: 'var(--surface2)' }}
                     />
@@ -168,10 +173,10 @@ export default function CameraScan() {
                       style={{ color: 'var(--accent-red)' }}
                     />
                     <p className="font-medium" style={{ color: 'var(--text)' }}>
-                      Angelo is reading your question...
+                      {t('readingQuestion')}
                     </p>
                     <p className="text-sm mt-1" style={{ color: 'var(--muted-custom)' }}>
-                      This may take a few seconds
+                      {t('mayTakeSeconds')}
                     </p>
                   </div>
                 )}
@@ -204,7 +209,7 @@ export default function CameraScan() {
                       </div>
                       <div className="flex-1 min-w-0">
                         <p className="text-xs font-medium mb-1" style={{ color: 'var(--teal)' }}>
-                          Angelo says:
+                          {tQuiz('angeloSays')}
                         </p>
                         <p className="text-sm leading-relaxed" style={{ color: 'var(--text)' }}>
                           {response}
@@ -222,7 +227,7 @@ export default function CameraScan() {
                     style={{ background: 'var(--accent-red)' }}
                   >
                     <RotateCcw className="w-4 h-4" />
-                    Ask another question
+                    {t('askAnotherQuestion')}
                   </button>
                 )}
               </div>

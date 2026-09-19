@@ -5,8 +5,10 @@ import { createBrowserClient } from '@supabase/ssr'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { Loader2 } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 
 export default function SignupPage() {
+  const t = useTranslations('auth')
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -20,23 +22,23 @@ export default function SignupPage() {
     const newErrors: Record<string, string> = {}
 
     if (!name.trim()) {
-      newErrors.name = 'Full name is required'
+      newErrors.name = t('fullNameRequired')
     }
 
     if (!email.trim()) {
-      newErrors.email = 'Email is required'
+      newErrors.email = t('emailRequired')
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      newErrors.email = 'Invalid email address'
+      newErrors.email = t('emailInvalid')
     }
 
     if (!password) {
-      newErrors.password = 'Password is required'
+      newErrors.password = t('passwordRequired')
     } else if (password.length < 8) {
-      newErrors.password = 'Password must be at least 8 characters'
+      newErrors.password = t('passwordMinLength')
     }
 
     if (!grade) {
-      newErrors.grade = 'Please select your grade'
+      newErrors.grade = t('gradeRequired')
     }
 
     setErrors(newErrors)
@@ -54,7 +56,7 @@ export default function SignupPage() {
     const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
 
     if (!supabaseUrl || !supabaseKey) {
-      setErrors({ form: 'Supabase is not configured. Please set environment variables.' })
+      setErrors({ form: t('supabaseNotConfigured') })
       setLoading(false)
       return
     }
@@ -105,7 +107,7 @@ export default function SignupPage() {
       router.push('/dashboard')
       router.refresh()
     } catch {
-      setErrors({ form: 'An unexpected error occurred' })
+      setErrors({ form: t('unexpectedError') })
       setLoading(false)
     }
   }
@@ -133,13 +135,13 @@ export default function SignupPage() {
           className="text-2xl font-bold text-center mb-2"
           style={{ color: 'var(--text)' }}
         >
-          Create your account
+          {t('createAccount')}
         </h1>
         <p
           className="text-center mb-8"
           style={{ color: 'var(--muted-custom)' }}
         >
-          Start your learning journey today
+          {t('createAccountSubtitle')}
         </p>
 
         <form onSubmit={handleSubmit} className="space-y-4">
@@ -162,7 +164,7 @@ export default function SignupPage() {
               className="block text-sm font-medium mb-2"
               style={{ color: 'var(--text)' }}
             >
-              Full name
+              {t('fullName')}
             </label>
             <input
               id="name"
@@ -175,7 +177,7 @@ export default function SignupPage() {
                 color: 'var(--text)',
                 border: errors.name ? '1px solid var(--accent-red)' : '1px solid var(--border-custom)',
               }}
-              placeholder="John Doe"
+              placeholder={t('fullNamePlaceholder')}
             />
             {errors.name && (
               <p className="mt-1 text-sm" style={{ color: 'var(--accent-red)' }}>{errors.name}</p>
@@ -188,7 +190,7 @@ export default function SignupPage() {
               className="block text-sm font-medium mb-2"
               style={{ color: 'var(--text)' }}
             >
-              Email
+              {t('email')}
             </label>
             <input
               id="email"
@@ -201,7 +203,7 @@ export default function SignupPage() {
                 color: 'var(--text)',
                 border: errors.email ? '1px solid var(--accent-red)' : '1px solid var(--border-custom)',
               }}
-              placeholder="you@example.com"
+              placeholder={t('emailPlaceholder')}
             />
             {errors.email && (
               <p className="mt-1 text-sm" style={{ color: 'var(--accent-red)' }}>{errors.email}</p>
@@ -214,7 +216,7 @@ export default function SignupPage() {
               className="block text-sm font-medium mb-2"
               style={{ color: 'var(--text)' }}
             >
-              Password
+              {t('password')}
             </label>
             <input
               id="password"
@@ -227,7 +229,7 @@ export default function SignupPage() {
                 color: 'var(--text)',
                 border: errors.password ? '1px solid var(--accent-red)' : '1px solid var(--border-custom)',
               }}
-              placeholder="••••••••"
+              placeholder={t('passwordPlaceholder')}
             />
             {errors.password && (
               <p className="mt-1 text-sm" style={{ color: 'var(--accent-red)' }}>{errors.password}</p>
@@ -240,7 +242,7 @@ export default function SignupPage() {
               className="block text-sm font-medium mb-2"
               style={{ color: 'var(--text)' }}
             >
-              Grade
+              {t('grade')}
             </label>
             <select
               id="grade"
@@ -253,10 +255,10 @@ export default function SignupPage() {
                 border: errors.grade ? '1px solid var(--accent-red)' : '1px solid var(--border-custom)',
               }}
             >
-              <option value="">Select your grade</option>
-              <option value="10">Grade 10</option>
-              <option value="11">Grade 11</option>
-              <option value="12">Grade 12</option>
+              <option value="">{t('gradeSelectPlaceholder')}</option>
+              <option value="10">{t('grade')} 10</option>
+              <option value="11">{t('grade')} 11</option>
+              <option value="12">{t('grade')} 12</option>
             </select>
             {errors.grade && (
               <p className="mt-1 text-sm" style={{ color: 'var(--accent-red)' }}>{errors.grade}</p>
@@ -269,7 +271,7 @@ export default function SignupPage() {
               className="block text-sm font-medium mb-2"
               style={{ color: 'var(--text)' }}
             >
-              School <span style={{ color: 'var(--muted-custom)' }}>(optional)</span>
+              {t('school')} <span style={{ color: 'var(--muted-custom)' }}>(optional)</span>
             </label>
             <input
               id="school"
@@ -282,7 +284,7 @@ export default function SignupPage() {
                 color: 'var(--text)',
                 border: '1px solid var(--border-custom)',
               }}
-              placeholder="Your school name"
+              placeholder={t('schoolPlaceholder')}
             />
           </div>
 
@@ -295,10 +297,10 @@ export default function SignupPage() {
             {loading ? (
               <>
                 <Loader2 className="w-5 h-5 animate-spin" />
-                Creating account...
+                {t('creatingAccount')}
               </>
             ) : (
-              'Create account'
+              t('createAccount')
             )}
           </button>
         </form>
@@ -307,13 +309,13 @@ export default function SignupPage() {
           className="text-center mt-6 text-sm"
           style={{ color: 'var(--muted-custom)' }}
         >
-          Already have an account?{' '}
+          {t('hasAccount')}{' '}
           <Link
             href="/login"
             className="font-semibold hover:underline"
             style={{ color: 'var(--accent-red)' }}
           >
-            Sign in
+            {t('signIn')}
           </Link>
         </p>
       </div>

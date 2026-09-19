@@ -1,8 +1,11 @@
 import Link from 'next/link'
 import { headers } from 'next/headers'
+import { getTranslations } from 'next-intl/server'
 import { CheckCircle2, XCircle } from 'lucide-react'
 import { lookupCertificate, type VerifiedCertificate } from '@/lib/certificates/verify-certificate'
 import { checkRateLimit, getClientIp } from '@/lib/rate-limit'
+
+type VerifyTranslator = Awaited<ReturnType<typeof getTranslations<'verify'>>>
 
 interface VerifyPageProps {
   params: Promise<{ certificateId: string }>
@@ -59,11 +62,12 @@ export async function generateMetadata({ params }: VerifyPageProps) {
  * agree on what counts as a valid certificate.
  *
  * Not under (app)/(admin) - no session/auth is required or expected, and
- * src/middleware.ts's protected-route list does not include /verify.
+ * src/proxy.ts's protected-route list does not include /verify.
  */
 export default async function VerifyCertificatePage({ params }: VerifyPageProps) {
   const { certificateId } = await params
   const certificate = await resolveCertificate(certificateId)
+  const t = await getTranslations('verify')
 
   return (
     <div
@@ -71,15 +75,15 @@ export default async function VerifyCertificatePage({ params }: VerifyPageProps)
       style={{ background: 'var(--bg)' }}
     >
       {certificate ? (
-        <ValidCertificateCard certificate={certificate} />
+        <ValidCertificateCard certificate={certificate} t={t} />
       ) : (
-        <NotFoundCard certificateId={certificateId} />
+        <NotFoundCard certificateId={certificateId} t={t} />
       )}
     </div>
   )
 }
 
-function ValidCertificateCard({ certificate }: { certificate: VerifiedCertificate }) {
+function ValidCertificateCard({ certificate, t }: { certificate: VerifiedCertificate; t: VerifyTranslator }) {
   const formattedDate = new Date(certificate.issuedAt).toLocaleDateString('en-ZA', {
     year: 'numeric',
     month: 'long',
@@ -103,14 +107,13 @@ function ValidCertificateCard({ certificate }: { certificate: VerifiedCertificat
           className="text-xs font-semibold uppercase tracking-wide"
           style={{ color: 'var(--teal)' }}
         >
-          Valid certificate
+          {t('validCertificate')}
         </p>
         <h1 className="text-xl font-bold mt-1" style={{ color: 'var(--text)' }}>
           {certificate.studentName}
         </h1>
         <p className="text-sm mt-1" style={{ color: 'var(--muted-custom)' }}>
-          has successfully completed the{' '}
-          <strong style={{ color: 'var(--text)' }}>{certificate.course}</strong>
+          {t('completedCourse', { course: certificate.course })}
         </p>
       </div>
 
@@ -119,23 +122,23 @@ function ValidCertificateCard({ certificate }: { certificate: VerifiedCertificat
         style={{ background: 'var(--surface2)' }}
       >
         <div>
-          <p style={{ color: 'var(--muted-custom)' }}>Issued</p>
+          <p style={{ color: 'var(--muted-custom)' }}>{t('issued')}</p>
           <p className="font-medium" style={{ color: 'var(--text)' }}>{formattedDate}</p>
         </div>
         <div>
-          <p style={{ color: 'var(--muted-custom)' }}>Modules completed</p>
+          <p style={{ color: 'var(--muted-custom)' }}>{t('modulesCompleted')}</p>
           <p className="font-medium" style={{ color: 'var(--text)' }}>
-            {certificate.modulesCompleted} / 5
+            {t('modulesOutOf', { completed: certificate.modulesCompleted, total: 5 })}
           </p>
         </div>
         <div>
-          <p style={{ color: 'var(--muted-custom)' }}>Average score</p>
+          <p style={{ color: 'var(--muted-custom)' }}>{t('averageScore')}</p>
           <p className="font-medium" style={{ color: 'var(--text)' }}>
-            {certificate.avgPromptScore.toFixed(1)} / 5
+            {t('scoreOutOf', { score: certificate.avgPromptScore.toFixed(1), total: 5 })}
           </p>
         </div>
         <div>
-          <p style={{ color: 'var(--muted-custom)' }}>Certificate ID</p>
+          <p style={{ color: 'var(--muted-custom)' }}>{t('certificateIdLabel')}</p>
           <p className="font-mono text-xs break-all" style={{ color: 'var(--text)' }}>
             {certificate.certificateId}
           </p>
@@ -143,13 +146,13 @@ function ValidCertificateCard({ certificate }: { certificate: VerifiedCertificat
       </div>
 
       <p className="text-xs" style={{ color: 'var(--muted-custom)' }}>
-        Issued by {certificate.issuer}
+        {t('issuedBy', { issuer: certificate.issuer })}
       </p>
     </div>
   )
 }
 
-function NotFoundCard({ certificateId }: { certificateId: string }) {
+function NotFoundCard({ certificateId, t }: { certificateId: string; t: VerifyTranslator }) {
   return (
     <div
       className="max-w-md w-full rounded-xl p-8 text-center space-y-4"
@@ -162,19 +165,19 @@ function NotFoundCard({ certificateId }: { certificateId: string }) {
         <XCircle className="w-8 h-8" style={{ color: 'var(--accent-red)' }} />
       </div>
       <h1 className="text-xl font-bold" style={{ color: 'var(--text)' }}>
-        Certificate not found
+        {t('certificateNotFound')}
       </h1>
       <p className="text-sm" style={{ color: 'var(--muted-custom)' }}>
-        We couldn&apos;t find a certificate with ID{' '}
-        <code className="font-mono break-all">{certificateId}</code>. Double-check
-        the link or QR code and try again.
+        {t('notFoundPrefix')}{' '}
+        <code className="font-mono break-all">{certificateId}</code>
+        {t('notFoundSuffix')}
       </p>
       <Link
         href="/"
         className="inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium"
         style={{ background: 'var(--ai-purple)', color: 'white' }}
       >
-        Go to Angelo Tutoring
+        {t('goToAngelo')}
       </Link>
     </div>
   )

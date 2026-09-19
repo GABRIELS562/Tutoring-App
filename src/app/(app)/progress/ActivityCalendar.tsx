@@ -1,5 +1,7 @@
 'use client'
 
+import { useTranslations } from 'next-intl'
+
 type ActivityData = {
   date: string
   count: number
@@ -17,6 +19,7 @@ function getActivityColor(count: number): string {
 }
 
 export default function ActivityCalendar({ data }: ActivityCalendarProps) {
+  const t = useTranslations('progress')
   // Organize data into weeks (8 weeks × 7 days)
   const weeks: ActivityData[][] = []
   for (let i = 0; i < 8; i++) {
@@ -60,7 +63,7 @@ export default function ActivityCalendar({ data }: ActivityCalendarProps) {
                 style={{
                   background: getActivityColor(day.count),
                 }}
-                title={`${day.date}: ${day.count} questions`}
+                title={`${day.date}: ${t('questionsCount', { count: day.count })}`}
               />
             ))}
           </div>
@@ -69,30 +72,30 @@ export default function ActivityCalendar({ data }: ActivityCalendarProps) {
 
       {/* Legend */}
       <div className="flex items-center justify-end gap-2 mt-4">
-        <span className="text-xs" style={{ color: 'var(--muted-custom)' }}>Less</span>
+        <span className="text-xs" style={{ color: 'var(--muted-custom)' }}>{t('less')}</span>
         <div className="flex gap-1">
           <div
             className="w-4 h-4 rounded-sm"
             style={{ background: 'var(--surface2)' }}
-            title="0 questions"
+            title={t('zeroQuestions')}
           />
           <div
             className="w-4 h-4 rounded-sm"
             style={{ background: 'rgba(230, 57, 70, 0.3)' }}
-            title="1-5 questions"
+            title={t('oneToFive')}
           />
           <div
             className="w-4 h-4 rounded-sm"
             style={{ background: 'rgba(230, 57, 70, 0.6)' }}
-            title="6-10 questions"
+            title={t('sixToTen')}
           />
           <div
             className="w-4 h-4 rounded-sm"
             style={{ background: 'var(--accent-red)' }}
-            title="10+ questions"
+            title={t('tenPlus')}
           />
         </div>
-        <span className="text-xs" style={{ color: 'var(--muted-custom)' }}>More</span>
+        <span className="text-xs" style={{ color: 'var(--muted-custom)' }}>{t('more')}</span>
       </div>
     </div>
   )

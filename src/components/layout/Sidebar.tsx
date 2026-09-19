@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
 import { createBrowserClient } from '@supabase/ssr'
+import { useTranslations } from 'next-intl'
 import {
   Home,
   BookOpen,
@@ -13,18 +14,32 @@ import {
   Brain,
 } from 'lucide-react'
 
-const navItems = [
-  { icon: Home, label: 'Dashboard', href: '/dashboard' },
-  { icon: BookOpen, label: 'Subjects', href: '/subjects' },
-  { icon: Brain, label: 'AI Skills', href: '/ai-skills', isAI: true },
-  { icon: PenTool, label: 'Practice', href: '/topics/trig-gr11/practice' },
-  { icon: FileText, label: 'Past Papers', href: '/papers' },
-  { icon: BarChart3, label: 'Progress', href: '/progress' },
-]
+const NAV_ICONS = {
+  dashboard: Home,
+  subjects: BookOpen,
+  aiSkills: Brain,
+  practice: PenTool,
+  papers: FileText,
+  progress: BarChart3,
+} as const
 
 export default function Sidebar() {
   const pathname = usePathname()
   const router = useRouter()
+  const tHome = useTranslations('home')
+  const tSubjects = useTranslations('subjects')
+  const tNav = useTranslations('nav')
+  const tPractice = useTranslations('practice')
+  const tProgress = useTranslations('progress')
+
+  const navItems = [
+    { key: 'dashboard', icon: NAV_ICONS.dashboard, label: tHome('dashboardTitle'), href: '/dashboard' },
+    { key: 'subjects', icon: NAV_ICONS.subjects, label: tSubjects('title'), href: '/subjects' },
+    { key: 'aiSkills', icon: NAV_ICONS.aiSkills, label: tNav('aiSkills'), href: '/ai-skills', isAI: true },
+    { key: 'practice', icon: NAV_ICONS.practice, label: tPractice('title'), href: '/topics/trig-gr11/practice' },
+    { key: 'papers', icon: NAV_ICONS.papers, label: tNav('papers'), href: '/papers' },
+    { key: 'progress', icon: NAV_ICONS.progress, label: tProgress('title'), href: '/progress' },
+  ]
 
   const handleSignOut = async () => {
     const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
@@ -73,6 +88,7 @@ export default function Sidebar() {
               <Link
                 key={item.href}
                 href={item.href}
+                aria-current={active ? 'page' : undefined}
                 className="relative group w-10 h-10 rounded-lg flex items-center justify-center transition-all"
                 style={{
                   background: active ? activeBg : 'transparent',
@@ -97,13 +113,14 @@ export default function Sidebar() {
           onClick={handleSignOut}
           className="w-10 h-10 rounded-lg flex items-center justify-center transition-all hover:bg-red-500/10 group relative"
           style={{ color: 'var(--muted-custom)' }}
+          aria-label={tNav('signOut')}
         >
           <LogOut className="w-5 h-5" />
           <span
             className="absolute left-full ml-3 px-2 py-1 rounded text-xs font-medium whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"
             style={{ background: 'var(--surface2)', color: 'var(--text)' }}
           >
-            Sign out
+            {tNav('signOut')}
           </span>
         </button>
       </aside>
@@ -123,6 +140,7 @@ export default function Sidebar() {
             <Link
               key={item.href}
               href={item.href}
+              aria-current={active ? 'page' : undefined}
               className="flex flex-col items-center justify-center gap-1 px-3 py-2 rounded-lg transition-all"
               style={{
                 color: active ? activeColor : 'var(--muted-custom)',

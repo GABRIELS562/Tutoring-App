@@ -1,12 +1,35 @@
 'use client'
 
-import { useState } from 'react'
+import { Suspense, useState } from 'react'
 import { createBrowserClient } from '@supabase/ssr'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import { Loader2 } from 'lucide-react'
+import { useTranslations } from 'next-intl'
+
+function ResetSuccessFlash() {
+  const t = useTranslations('auth')
+  const searchParams = useSearchParams()
+
+  if (searchParams.get('reset') !== 'success') return null
+
+  return (
+    <div
+      className="p-3 rounded-lg text-sm mb-5"
+      role="status"
+      style={{
+        background: 'rgba(34, 197, 94, 0.1)',
+        color: 'var(--text)',
+        border: '1px solid rgba(34, 197, 94, 0.4)',
+      }}
+    >
+      {t('passwordUpdatedFlash')}
+    </div>
+  )
+}
 
 export default function LoginPage() {
+  const t = useTranslations('auth')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState<string | null>(null)
@@ -47,7 +70,7 @@ export default function LoginPage() {
       router.push('/dashboard')
       router.refresh()
     } catch {
-      setError('An unexpected error occurred')
+      setError(t('unexpectedError'))
       setLoading(false)
     }
   }
@@ -75,19 +98,24 @@ export default function LoginPage() {
           className="text-2xl font-bold text-center mb-2"
           style={{ color: 'var(--text)' }}
         >
-          Welcome back
+          {t('welcomeBack')}
         </h1>
         <p
           className="text-center mb-8"
           style={{ color: 'var(--muted-custom)' }}
         >
-          Sign in to continue learning
+          {t('signInSubtitle')}
         </p>
+
+        <Suspense fallback={null}>
+          <ResetSuccessFlash />
+        </Suspense>
 
         <form onSubmit={handleSubmit} className="space-y-5">
           {error && (
             <div
               className="p-3 rounded-lg text-sm"
+              role="alert"
               style={{
                 background: 'rgba(230, 57, 70, 0.1)',
                 color: 'var(--accent-red)',
@@ -104,7 +132,7 @@ export default function LoginPage() {
               className="block text-sm font-medium mb-2"
               style={{ color: 'var(--text)' }}
             >
-              Email
+              {t('email')}
             </label>
             <input
               id="email"
@@ -118,18 +146,27 @@ export default function LoginPage() {
                 color: 'var(--text)',
                 border: '1px solid var(--border-custom)',
               }}
-              placeholder="you@example.com"
+              placeholder={t('emailPlaceholder')}
             />
           </div>
 
           <div>
-            <label
-              htmlFor="password"
-              className="block text-sm font-medium mb-2"
-              style={{ color: 'var(--text)' }}
-            >
-              Password
-            </label>
+            <div className="flex items-center justify-between mb-2">
+              <label
+                htmlFor="password"
+                className="block text-sm font-medium"
+                style={{ color: 'var(--text)' }}
+              >
+                {t('password')}
+              </label>
+              <Link
+                href="/forgot-password"
+                className="text-sm font-medium hover:underline"
+                style={{ color: 'var(--accent-red)' }}
+              >
+                {t('forgotPassword')}
+              </Link>
+            </div>
             <input
               id="password"
               type="password"
@@ -142,7 +179,7 @@ export default function LoginPage() {
                 color: 'var(--text)',
                 border: '1px solid var(--border-custom)',
               }}
-              placeholder="••••••••"
+              placeholder={t('passwordPlaceholder')}
             />
           </div>
 
@@ -154,11 +191,11 @@ export default function LoginPage() {
           >
             {loading ? (
               <>
-                <Loader2 className="w-5 h-5 animate-spin" />
-                Signing in...
+                <Loader2 className="w-5 h-5 animate-spin" aria-hidden="true" />
+                {t('signingIn')}
               </>
             ) : (
-              'Sign in'
+              t('signIn')
             )}
           </button>
         </form>
@@ -169,7 +206,7 @@ export default function LoginPage() {
             <div className="w-full border-t" style={{ borderColor: 'var(--border-custom)' }}></div>
           </div>
           <div className="relative flex justify-center text-sm">
-            <span className="px-2" style={{ background: 'var(--surface)', color: 'var(--muted-custom)' }}>or</span>
+            <span className="px-2" style={{ background: 'var(--surface)', color: 'var(--muted-custom)' }}>{t('or')}</span>
           </div>
         </div>
 
@@ -182,20 +219,20 @@ export default function LoginPage() {
             border: '1px solid var(--border-custom)'
           }}
         >
-          Continue as Demo User
+          {t('continueAsDemo')}
         </button>
 
         <p
           className="text-center mt-6 text-sm"
           style={{ color: 'var(--muted-custom)' }}
         >
-          Don&apos;t have an account?{' '}
+          {t('noAccount')}{' '}
           <Link
             href="/signup"
             className="font-semibold hover:underline"
             style={{ color: 'var(--accent-red)' }}
           >
-            Sign up
+            {t('signUp')}
           </Link>
         </p>
       </div>

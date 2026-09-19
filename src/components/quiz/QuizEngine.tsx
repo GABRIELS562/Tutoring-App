@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { Trophy, RefreshCw, BookOpen, ArrowRight, Loader2, Heart } from 'lucide-react'
 import Link from 'next/link'
 import QuestionCard from './QuestionCard'
+import { useTranslations } from 'next-intl'
 import type { QuestionWithDetails } from '@/db/queries/questions'
 import { recordAnswer, completeQuiz } from '@/app/(app)/topics/[slug]/practice/actions'
 import { XP_PER_CORRECT_ANSWER, MAX_HEARTS } from '@/lib/game-rules'
@@ -167,6 +168,8 @@ export default function QuizEngine({
   hearts,
   isPremium = false,
 }: QuizEngineProps) {
+  const t = useTranslations('quiz')
+  const tPractice = useTranslations('practice')
   // Real questions from the database win. Mock questions are only ever
   // shown in demo mode (no DATABASE_URL) - with a real, configured
   // database and zero questions, we show an empty state instead.
@@ -315,7 +318,7 @@ export default function QuizEngine({
     return (
       <div className="flex flex-col items-center justify-center py-20">
         <Loader2 className="w-8 h-8 animate-spin mb-4" style={{ color: 'var(--accent-red)' }} />
-        <p style={{ color: 'var(--muted-custom)' }}>Loading questions...</p>
+        <p style={{ color: 'var(--muted-custom)' }}>{t('loadingQuestions')}</p>
       </div>
     )
   }
@@ -324,7 +327,7 @@ export default function QuizEngine({
     return (
       <div className="text-center py-20">
         <p className="text-lg mb-4" style={{ color: 'var(--text)' }}>
-          No questions yet for this topic.
+          {t('noQuestionsYet')}
         </p>
         <Link
           href={`/topics/${topicSlug}`}
@@ -332,7 +335,7 @@ export default function QuizEngine({
           style={{ background: 'var(--accent-red)', color: 'white' }}
         >
           <BookOpen className="w-4 h-4" />
-          Back to notes
+          {tPractice('backToNotes')}
         </Link>
       </div>
     )
@@ -342,10 +345,10 @@ export default function QuizEngine({
     return (
       <div className="text-center py-20">
         <p className="text-lg font-semibold mb-2" style={{ color: 'var(--text)' }}>
-          Out of hearts
+          {t('outOfHearts')}
         </p>
         <p className="text-sm mb-4" style={{ color: 'var(--muted-custom)' }}>
-          Come back tomorrow for a fresh set of hearts, or go Premium for unlimited practice.
+          {t('outOfHeartsMessage')}
         </p>
         <Link
           href={`/topics/${topicSlug}`}
@@ -353,7 +356,7 @@ export default function QuizEngine({
           style={{ background: 'var(--accent-red)', color: 'white' }}
         >
           <BookOpen className="w-4 h-4" />
-          Back to notes
+          {tPractice('backToNotes')}
         </Link>
       </div>
     )
@@ -386,7 +389,7 @@ export default function QuizEngine({
 
         {/* Score */}
         <h2 className="text-2xl font-bold mb-2" style={{ color: 'var(--text)' }}>
-          {accuracy >= 80 ? 'Excellent work!' : accuracy >= 60 ? 'Good effort!' : 'Keep practicing!'}
+          {accuracy >= 80 ? t('excellentWork') : accuracy >= 60 ? t('goodEffort') : t('keepPracticing')}
         </h2>
         <p className="text-4xl font-bold mb-4" style={{ color: 'var(--text)' }}>
           {score} / {questions.length}
@@ -400,7 +403,7 @@ export default function QuizEngine({
           className="mb-6"
         >
           <p className="text-sm mb-1" style={{ color: 'var(--muted-custom)' }}>
-            XP Earned
+            {t('xpEarned')}
           </p>
           <p
             className="text-3xl font-bold"
@@ -426,7 +429,7 @@ export default function QuizEngine({
                 : 'var(--accent-red)',
           }}
         >
-          {accuracy}% accuracy
+          {t('accuracyPercent', { percent: accuracy })}
         </div>
 
         {/* Action Buttons */}
@@ -440,7 +443,7 @@ export default function QuizEngine({
             }}
           >
             <RefreshCw className="w-4 h-4" />
-            Try again
+            {t('tryAgain')}
           </button>
 
           <Link
@@ -453,7 +456,7 @@ export default function QuizEngine({
             }}
           >
             <BookOpen className="w-4 h-4" />
-            Back to notes
+            {tPractice('backToNotes')}
           </Link>
 
           <Link
@@ -464,7 +467,7 @@ export default function QuizEngine({
               color: 'var(--accent-red)',
             }}
           >
-            Next topic
+            {t('nextTopic')}
             <ArrowRight className="w-4 h-4" />
           </Link>
         </div>
@@ -478,17 +481,17 @@ export default function QuizEngine({
       <div className="mb-6">
         <div className="flex items-center justify-between mb-2">
           <span className="text-sm font-medium" style={{ color: 'var(--text)' }}>
-            Question {currentIndex + 1} of {questions.length}
+            {t('questionOfTotal', { current: currentIndex + 1, total: questions.length })}
           </span>
           <span className="flex items-center gap-2 text-sm" style={{ color: 'var(--muted-custom)' }}>
-            <span>Score: {score}/{answers.length}</span>
+            <span>{t('scoreOf', { score, total: answers.length })}</span>
             {isPremium ? (
-              <span className="flex items-center gap-1" aria-label="Unlimited hearts (Premium)">
+              <span className="flex items-center gap-1" aria-label={t('unlimitedHeartsLabel')}>
                 <Heart className="w-3.5 h-3.5" style={{ color: 'var(--accent-red)' }} />
-                <span>Unlimited</span>
+                <span>{t('unlimited')}</span>
               </span>
             ) : (
-              <span className="flex items-center gap-1" aria-label={`${heartsRemaining} hearts remaining`}>
+              <span className="flex items-center gap-1" aria-label={t('heartsRemainingLabel', { count: heartsRemaining })}>
                 <Heart className="w-3.5 h-3.5" style={{ color: 'var(--accent-red)' }} />
                 <span>{heartsRemaining}</span>
               </span>
@@ -519,12 +522,12 @@ export default function QuizEngine({
             color: 'var(--accent-red)',
           }}
         >
-          <span>Not saved — retry</span>
+          <span>{t('notSavedRetry')}</span>
           <button
             onClick={() => saveError.retry()}
             className="font-semibold underline"
           >
-            Retry
+            {t('retryButton')}
           </button>
         </div>
       )}

@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { getTranslations } from 'next-intl/server'
 import Topbar from '@/components/layout/Topbar'
 import { getTopicsForSubjectGrade, type RegisteredTopic } from '@/content/registry'
 import { getSessionUser } from '@/lib/auth/require-user'
@@ -14,21 +15,22 @@ type SubjectPageProps = {
 
 export default async function SubjectPage({ params }: SubjectPageProps) {
   const { subject } = await params
+  const t = await getTranslations('subjects')
 
   if (subject !== 'maths' && subject !== 'science') {
     return (
       <div>
-        <Topbar title="Subject Not Found" />
+        <Topbar title={t('subjectNotFound')} />
         <div className="p-6">
           <p style={{ color: 'var(--muted-custom)' }}>
-            Subject &quot;{subject}&quot; not found.
+            {t('subjectNotFoundMessage', { subject })}
           </p>
           <Link
             href="/subjects"
             className="inline-flex items-center gap-2 mt-4 px-4 py-2 rounded-lg"
             style={{ background: 'var(--accent-red)', color: 'white' }}
           >
-            Back to Subjects
+            {t('backToSubjects')}
           </Link>
         </div>
       </div>

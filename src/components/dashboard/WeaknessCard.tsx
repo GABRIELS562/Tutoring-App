@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import { AlertTriangle, ArrowRight } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 import type { Weakness } from '@/lib/weaknessDetector'
 
 type WeaknessCardProps = {
@@ -9,6 +10,7 @@ type WeaknessCardProps = {
 }
 
 export default function WeaknessCard({ weakness }: WeaknessCardProps) {
+  const t = useTranslations('weaknessCard')
   const accuracyPercent = Math.round(weakness.accuracy * 100)
   const correctCount = Math.round(weakness.accuracy * weakness.totalAttempts)
 
@@ -31,28 +33,33 @@ export default function WeaknessCard({ weakness }: WeaknessCardProps) {
 
         <div className="flex-1 min-w-0">
           {/* Header */}
-          <h3 className="font-semibold text-sm mb-1" style={{ color: 'var(--text)' }}>
-            Angelo spotted this
-          </h3>
+          <h2 className="font-semibold text-sm mb-1" style={{ color: 'var(--text)' }}>
+            {t('spotted')}
+          </h2>
 
           {/* Issue Description */}
           <p className="text-sm mb-2" style={{ color: 'var(--text)' }}>
-            You keep getting <strong style={{ color: 'var(--gold)' }}>{weakness.specificIssue}</strong> wrong
-            in {weakness.topicName}.
+            {t('issueDescription', { issue: weakness.specificIssue, topic: weakness.topicName })}
           </p>
 
           {/* Stats */}
           <p className="text-xs mb-3" style={{ color: 'var(--muted-custom)' }}>
-            You&apos;ve attempted it {weakness.totalAttempts} times and got it right{' '}
-            <span
-              style={{
-                color: accuracyPercent < 40 ? 'var(--accent-red)' : 'var(--gold)',
-                fontWeight: 600,
-              }}
-            >
-              {accuracyPercent}%
-            </span>{' '}
-            of the time ({correctCount}/{weakness.totalAttempts}).
+            {t.rich('attempted', {
+              attempts: weakness.totalAttempts,
+              percentValue: accuracyPercent,
+              correct: correctCount,
+              total: weakness.totalAttempts,
+              percent: (chunks) => (
+                <span
+                  style={{
+                    color: accuracyPercent < 40 ? 'var(--accent-red)' : 'var(--gold)',
+                    fontWeight: 600,
+                  }}
+                >
+                  {chunks}
+                </span>
+              ),
+            })}
           </p>
 
           {/* Action Button */}
@@ -61,7 +68,7 @@ export default function WeaknessCard({ weakness }: WeaknessCardProps) {
             className="inline-flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-semibold text-white transition-all hover:opacity-90"
             style={{ background: 'var(--accent-red)' }}
           >
-            Fix this now
+            {t('fixNow')}
             <ArrowRight className="w-4 h-4" />
           </Link>
         </div>

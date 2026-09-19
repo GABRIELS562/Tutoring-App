@@ -2,6 +2,7 @@
 
 import { ClipboardList, ChevronRight } from 'lucide-react'
 import Link from 'next/link'
+import { useTranslations } from 'next-intl'
 
 type TopicProgress = {
   topicSlug: string
@@ -14,35 +15,37 @@ type StudyPlanBannerProps = {
   topics?: TopicProgress[]
 }
 
-// Angelo's expert-recommended order (highest impact first)
+// Angelo's expert-recommended order (highest impact first). nameKey/reasonKey
+// resolve against the "studyPlan" message namespace at render time.
 const RECOMMENDED_ORDER = [
   {
     slug: 'trig-gr11',
-    name: 'Trigonometry',
-    reason: 'highest mark weight',
+    nameKey: 'topicTrig',
+    reasonKey: 'reasonTrig',
     priority: 1,
   },
   {
     slug: 'euclidean-geometry',
-    name: 'Euclidean Geometry',
-    reason: 'most improved with practice',
+    nameKey: 'topicEuclidean',
+    reasonKey: 'reasonEuclidean',
     priority: 2,
   },
   {
     slug: 'analytical-geometry',
-    name: 'Analytical Geometry',
-    reason: 'quickest wins',
+    nameKey: 'topicAnalytical',
+    reasonKey: 'reasonAnalytical',
     priority: 3,
   },
   {
     slug: 'statistics',
-    name: 'Statistics',
-    reason: 'guaranteed marks',
+    nameKey: 'topicStatistics',
+    reasonKey: 'reasonStatistics',
     priority: 4,
   },
-]
+] as const
 
 export default function StudyPlanBanner({ daysRemaining, topics = [] }: StudyPlanBannerProps) {
+  const t = useTranslations('studyPlan')
   // Filter out completed topics
   const completedSlugs = new Set(topics.filter(t => t.completed).map(t => t.topicSlug))
   const remainingTopics = RECOMMENDED_ORDER.filter(t => !completedSlugs.has(t.slug))
@@ -59,7 +62,7 @@ export default function StudyPlanBanner({ daysRemaining, topics = [] }: StudyPla
         <div className="flex items-center gap-3">
           <ClipboardList className="w-5 h-5" style={{ color: 'var(--teal)' }} />
           <p className="text-sm font-medium" style={{ color: 'var(--text)' }}>
-            Amazing! You&apos;ve covered all the key topics. Now focus on past papers!
+            {t('allTopicsCovered')}
           </p>
         </div>
       </div>
@@ -77,16 +80,14 @@ export default function StudyPlanBanner({ daysRemaining, topics = [] }: StudyPla
       {/* Header */}
       <div className="flex items-center gap-2 mb-3">
         <ClipboardList className="w-5 h-5" style={{ color: 'var(--accent-red)' }} />
-        <h3 className="font-semibold" style={{ color: 'var(--text)' }}>
-          Angelo&apos;s Study Plan
-        </h3>
+        <h2 className="font-semibold" style={{ color: 'var(--text)' }}>
+          {t('title')}
+        </h2>
       </div>
 
       {/* Summary */}
       <p className="text-sm mb-4" style={{ color: 'var(--muted-custom)' }}>
-        With <strong style={{ color: 'var(--text)' }}>{daysRemaining} days</strong> left and{' '}
-        <strong style={{ color: 'var(--text)' }}>{remainingTopics.length} topics</strong> remaining,
-        here&apos;s the recommended order:
+        {t('summary', { days: daysRemaining, topicCount: remainingTopics.length })}
       </p>
 
       {/* Topic List */}
@@ -115,10 +116,10 @@ export default function StudyPlanBanner({ daysRemaining, topics = [] }: StudyPla
 
               <div>
                 <p className="text-sm font-medium" style={{ color: 'var(--text)' }}>
-                  {topic.name}
+                  {t(topic.nameKey)}
                 </p>
                 <p className="text-xs" style={{ color: 'var(--muted-custom)' }}>
-                  {topic.reason}
+                  {t(topic.reasonKey)}
                 </p>
               </div>
             </div>
@@ -135,7 +136,7 @@ export default function StudyPlanBanner({ daysRemaining, topics = [] }: StudyPla
           className="mt-4 w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg font-semibold text-white text-sm transition-all hover:opacity-90"
           style={{ background: 'var(--accent-red)' }}
         >
-          Start with {remainingTopics[0].name}
+          {t('startWith', { topicName: t(remainingTopics[0].nameKey) })}
           <ChevronRight className="w-4 h-4" />
         </Link>
       )}

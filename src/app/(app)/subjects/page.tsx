@@ -3,46 +3,49 @@
 import Link from 'next/link'
 import Topbar from '@/components/layout/Topbar'
 import { useUser } from '@/context/UserContext'
+import { useTranslations } from 'next-intl'
 import { Calculator, Atom, ChevronRight, BookOpen, Target } from 'lucide-react'
 
 const subjects = [
   {
     id: 'maths',
-    name: 'Mathematics',
+    nameKey: 'mathematics',
     icon: Calculator,
-    description: 'Algebra, Trigonometry, Calculus, Geometry and more',
+    descriptionKey: 'mathsDescription',
     color: 'var(--accent-red)',
     topics: 12,
     progress: 45,
   },
   {
     id: 'science',
-    name: 'Physical Science',
+    nameKey: 'physicalScience',
     icon: Atom,
-    description: 'Physics, Chemistry, Mechanics and Waves',
+    descriptionKey: 'scienceDescription',
     color: 'var(--teal)',
     topics: 10,
     progress: 30,
   },
-]
+] as const
 
 export default function SubjectsPage() {
   const { user } = useUser()
+  const t = useTranslations('subjects')
+  const tHome = useTranslations('home')
 
   return (
     <div>
       <Topbar
-        title="Subjects"
-        subtitle={user?.grade ? `Grade ${user.grade} • CAPS Curriculum` : 'CAPS Curriculum'}
+        title={t('title')}
+        subtitle={user?.grade ? tHome('gradeCurriculum', { grade: user.grade }) : tHome('capsCurriculum')}
       />
       <div className="p-4 md:p-6 max-w-4xl mx-auto">
         {/* Header */}
         <div className="mb-6">
-          <h1 className="text-2xl font-bold mb-2" style={{ color: 'var(--text)' }}>
-            Choose a Subject
-          </h1>
+          <h2 className="text-2xl font-bold mb-2" style={{ color: 'var(--text)' }}>
+            {t('chooseSubject')}
+          </h2>
           <p style={{ color: 'var(--muted-custom)' }}>
-            Select a subject to start learning. Track your progress and master each topic.
+            {t('chooseSubjectDesc')}
           </p>
         </div>
 
@@ -76,10 +79,10 @@ export default function SubjectsPage() {
 
                 {/* Subject Info */}
                 <h2 className="text-xl font-bold mb-2" style={{ color: 'var(--text)' }}>
-                  {subject.name}
+                  {t(subject.nameKey)}
                 </h2>
                 <p className="text-sm mb-4" style={{ color: 'var(--muted-custom)' }}>
-                  {subject.description}
+                  {t(subject.descriptionKey)}
                 </p>
 
                 {/* Stats */}
@@ -87,13 +90,13 @@ export default function SubjectsPage() {
                   <div className="flex items-center gap-1.5">
                     <BookOpen className="w-4 h-4" style={{ color: 'var(--muted-custom)' }} />
                     <span className="text-sm" style={{ color: 'var(--muted-custom)' }}>
-                      {subject.topics} topics
+                      {t('topicCount', { count: subject.topics })}
                     </span>
                   </div>
                   <div className="flex items-center gap-1.5">
                     <Target className="w-4 h-4" style={{ color: 'var(--muted-custom)' }} />
                     <span className="text-sm" style={{ color: 'var(--muted-custom)' }}>
-                      {subject.progress}% complete
+                      {t('percentComplete', { percent: subject.progress })}
                     </span>
                   </div>
                 </div>
@@ -132,10 +135,10 @@ export default function SubjectsPage() {
           </div>
           <div>
             <p className="font-medium mb-1" style={{ color: 'var(--text)' }}>
-              CAPS Aligned Content
+              {t('capsAligned')}
             </p>
             <p className="text-sm" style={{ color: 'var(--muted-custom)' }}>
-              All topics follow the South African CAPS curriculum for Grade 10, 11, and 12.
+              {t('capsAlignedDesc')}
             </p>
           </div>
         </div>

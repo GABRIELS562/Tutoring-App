@@ -1,6 +1,7 @@
 'use client'
 
 import { Trophy } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 
 type LeaderboardEntry = {
   id: string
@@ -22,10 +23,12 @@ function getMedalColor(rank: number): string | null {
 }
 
 export default function Leaderboard({ data, currentUserId }: LeaderboardProps) {
+  const t = useTranslations('progress')
+
   if (data.length === 0) {
     return (
       <div className="h-[300px] flex items-center justify-center">
-        <p style={{ color: 'var(--muted-custom)' }}>No leaderboard data yet.</p>
+        <p style={{ color: 'var(--muted-custom)' }}>{t('noLeaderboardData')}</p>
       </div>
     )
   }
@@ -38,10 +41,10 @@ export default function Leaderboard({ data, currentUserId }: LeaderboardProps) {
             className="text-left text-xs"
             style={{ color: 'var(--muted-custom)' }}
           >
-            <th className="pb-3 font-medium">Rank</th>
-            <th className="pb-3 font-medium">Name</th>
-            <th className="pb-3 font-medium hidden sm:table-cell">School</th>
-            <th className="pb-3 font-medium text-right">XP</th>
+            <th className="pb-3 font-medium">{t('rank')}</th>
+            <th className="pb-3 font-medium">{t('name')}</th>
+            <th className="pb-3 font-medium hidden sm:table-cell">{t('school')}</th>
+            <th className="pb-3 font-medium text-right">{t('xp')}</th>
           </tr>
         </thead>
         <tbody>
@@ -85,7 +88,7 @@ export default function Leaderboard({ data, currentUserId }: LeaderboardProps) {
                   >
                     {entry.name}
                     {isCurrentUser && (
-                      <span className="ml-2 text-xs">(You)</span>
+                      <span className="ml-2 text-xs">{t('you')}</span>
                     )}
                   </span>
                 </td>

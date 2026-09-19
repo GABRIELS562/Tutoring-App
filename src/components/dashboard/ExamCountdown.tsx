@@ -1,6 +1,7 @@
 'use client'
 
 import { Calendar, Clock } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 
 // NSC 2026 Exam Dates (Official)
 const EXAM_DATES = {
@@ -15,11 +16,12 @@ type ExamCountdownProps = {
 }
 
 export default function ExamCountdown({ subject = 'maths' }: ExamCountdownProps) {
+  const t = useTranslations('examCountdown')
   const now = new Date()
 
   // Focus on Paper 2 (highest failure rate)
   const targetDate = subject === 'maths' ? EXAM_DATES['maths-paper2'] : EXAM_DATES['science-paper2']
-  const examName = subject === 'maths' ? 'Mathematics Paper 2' : 'Physical Science Paper 2'
+  const examName = subject === 'maths' ? t('mathsP2') : t('scienceP2')
 
   // Calculate days remaining
   const diffTime = targetDate.getTime() - now.getTime()
@@ -63,9 +65,9 @@ export default function ExamCountdown({ subject = 'maths' }: ExamCountdownProps)
           />
         </div>
         <div>
-          <h3 className="font-semibold" style={{ color: 'var(--text)' }}>
-            Exam Countdown
-          </h3>
+          <h2 className="font-semibold" style={{ color: 'var(--text)' }}>
+            {t('title')}
+          </h2>
           <p className="text-xs" style={{ color: 'var(--muted-custom)' }}>
             {examName}
           </p>
@@ -84,18 +86,18 @@ export default function ExamCountdown({ subject = 'maths' }: ExamCountdownProps)
             {daysRemaining}
           </span>
           <span className="text-lg" style={{ color: 'var(--text)' }}>
-            days
+            {t('days')}
           </span>
         </div>
         <p className="text-sm" style={{ color: 'var(--muted-custom)' }}>
-          until {examName}
+          {t('until', { examName })}
         </p>
       </div>
 
       {/* Progress Bar */}
       <div className="mb-4">
         <div className="flex items-center justify-between text-xs mb-1.5">
-          <span style={{ color: 'var(--muted-custom)' }}>Year progress</span>
+          <span style={{ color: 'var(--muted-custom)' }}>{t('yearProgress')}</span>
           <span style={{ color: 'var(--muted-custom)' }}>{Math.round(progressPercent)}%</span>
         </div>
         <div
@@ -123,12 +125,12 @@ export default function ExamCountdown({ subject = 'maths' }: ExamCountdownProps)
       >
         <Clock className="w-4 h-4 shrink-0 mt-0.5" style={{ color: 'var(--accent-red)' }} />
         <p className="text-xs leading-relaxed" style={{ color: 'var(--text)' }}>
-          <strong style={{ color: 'var(--accent-red)' }}>Angelo&apos;s advice:</strong>{' '}
+          <strong style={{ color: 'var(--accent-red)' }}>{t('angelosAdvice')}</strong>{' '}
           {isUrgent
-            ? 'Final stretch! Focus on past papers and your weakest topics.'
+            ? t('adviceUrgent')
             : isWarning
-            ? 'Time to intensify. Practice every day and track your progress.'
-            : 'Good time to master the fundamentals. Focus on Paper 2 topics now.'}
+            ? t('adviceWarning')
+            : t('adviceNormal')}
         </p>
       </div>
     </div>
