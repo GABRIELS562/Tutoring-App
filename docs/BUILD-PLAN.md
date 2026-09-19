@@ -1,6 +1,6 @@
 # Angelo Tutoring — Build Plan (pre-client-reply work)
 
-**Date:** 18 September 2026 · **Source:** five parallel specialist reviews of the codebase (security, data layer, frontend, AI/admin, infra) plus the 17 Sep status audit.
+**Date:** 18 September 2026 · **Status (19 Sep):** Phases 0–5 merged to `develop` (388 tests, build clean). Phase 6 awaits a Supabase project + Anthropic key. · **Source:** five parallel specialist reviews of the codebase (security, data layer, frontend, AI/admin, infra) plus the 17 Sep status audit.
 **Goal:** everything that can be built *without* a client decision, ordered so that each phase leaves the app safer and more real than the last. Estimates are developer-days; with agents running phases in parallel the wall-clock is roughly half.
 
 ---
