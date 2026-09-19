@@ -8,7 +8,7 @@ import { checkPremiumStatus } from '@/db/queries/users'
 import { isDemoMode } from '@/db'
 import { getClaudeClient, createTutorMessage, getClaudeModel, ClaudeError, type ClaudeErrorKind } from '@/lib/claude'
 import { logClaudeUsage } from '@/lib/claude-usage-log'
-import { getTodaySAST } from '@/lib/date/today-sast'
+import { todaySast } from '@/lib/dates'
 import {
   HintRequestSchema,
   type HintRequest,
@@ -734,7 +734,7 @@ export async function POST(request: NextRequest) {
 
     // "Today" in SAST (Africa/Johannesburg), never UTC - the free-tier
     // daily limit resets at SAST midnight, not 02:00 SAST (UTC midnight).
-    const today = getTodaySAST()
+    const today = todaySast()
 
     // KNOWN RACE (accepted risk): checkFreeTierLimit() reads today's
     // usage and decides to allow the request; the actual increment
