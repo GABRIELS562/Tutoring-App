@@ -33,12 +33,15 @@ type QuestionCardProps = {
   }
   onAnswer: (selectedLetter: string, correct: boolean) => void
   onNext: () => void
+  /** True while this question's answer hasn't saved yet - blocks moving on. */
+  nextDisabled?: boolean
 }
 
 export default function QuestionCard({
   question,
   onAnswer,
   onNext,
+  nextDisabled = false,
 }: QuestionCardProps) {
   const [selectedLetter, setSelectedLetter] = useState<string | null>(null)
   const [answered, setAnswered] = useState(false)
@@ -283,7 +286,9 @@ export default function QuestionCard({
         >
           <button
             onClick={onNext}
-            className="flex items-center gap-2 px-5 py-2.5 rounded-lg font-semibold text-white transition-all hover:opacity-90"
+            disabled={nextDisabled}
+            aria-disabled={nextDisabled}
+            className="flex items-center gap-2 px-5 py-2.5 rounded-lg font-semibold text-white transition-all hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:opacity-50"
             style={{ background: 'var(--accent-red)' }}
           >
             Next question

@@ -272,6 +272,16 @@ export default function QuizEngine({
   }
 
   const handleNext = async () => {
+    // Defense in depth: the Next button is already disabled while
+    // saveError is set (QuestionCard's nextDisabled prop), but guard
+    // here too in case it's ever reached another way (e.g. a
+    // programmatic call). The unsaved answer must be retried
+    // successfully - or the save error cleared by a successful retry -
+    // before the student can move on.
+    if (saveError) {
+      return
+    }
+
     if (outOfHearts) {
       setBlockedOnHearts(true)
       return
@@ -526,6 +536,7 @@ export default function QuizEngine({
           question={questions[currentIndex]}
           onAnswer={handleAnswer}
           onNext={handleNext}
+          nextDisabled={Boolean(saveError)}
         />
       </AnimatePresence>
     </div>

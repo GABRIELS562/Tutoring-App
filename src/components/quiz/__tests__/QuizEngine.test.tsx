@@ -173,7 +173,7 @@ describe('QuizEngine answer persistence', () => {
     expect(screen.getByText('+10')).toBeInTheDocument()
   })
 
-  it('shows an inline "Not saved" state and does not count XP when recordAnswer fails', async () => {
+  it('shows an inline "Not saved" state, disables Next, and does not count XP when recordAnswer fails', async () => {
     // Arrange
     recordAnswerMock.mockResolvedValueOnce({ ok: false, error: 'Could not save your answer' })
     const user = userEvent.setup()
@@ -192,9 +192,35 @@ describe('QuizEngine answer persistence', () => {
 
     // Assert
     expect(screen.getByText('Not saved — retry')).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: /next question/i })).toBeDisabled()
   })
 
-  it('retrying a failed save clears the inline error once it succeeds', async () => {
+  it('clicking Next while a save is failing does not advance the question', async () => {
+    // Arrange
+    recordAnswerMock.mockResolvedValueOnce({ ok: false, error: 'Could not save your answer' })
+    const user = userEvent.setup()
+    render(
+      <QuizEngine
+        topicSlug="trig-gr11"
+        grade={11}
+        userId="user-1"
+        initialQuestions={[makeQuestion({ questionText: 'First question' }), makeQuestion({ id: 'q2', questionText: 'Second question' })]}
+        isDemo={false}
+      />
+    )
+    await user.click(screen.getByText('Four'))
+    expect(screen.getByText('Not saved — retry')).toBeInTheDocument()
+
+    // Act - the button is disabled, but assert the handler itself also
+    // refuses to advance (defense in depth), not just the disabled attribute
+    await user.click(screen.getByRole('button', { name: /next question/i }))
+
+    // Assert
+    expect(screen.getByText('First question')).toBeInTheDocument()
+    expect(screen.queryByText('Second question')).not.toBeInTheDocument()
+  })
+
+  it('retrying a failed save clears the inline error and re-enables Next once it succeeds', async () => {
     // Arrange
     recordAnswerMock
       .mockResolvedValueOnce({ ok: false, error: 'Could not save your answer' })
@@ -211,6 +237,7 @@ describe('QuizEngine answer persistence', () => {
     )
     await user.click(screen.getByText('Four'))
     expect(screen.getByText('Not saved — retry')).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: /next question/i })).toBeDisabled()
 
     // Act
     await user.click(screen.getByRole('button', { name: 'Retry' }))
@@ -218,6 +245,7 @@ describe('QuizEngine answer persistence', () => {
     // Assert
     expect(screen.queryByText('Not saved — retry')).not.toBeInTheDocument()
     expect(recordAnswerMock).toHaveBeenCalledTimes(2)
+    expect(screen.getByRole('button', { name: /next question/i })).toBeEnabled()
   })
 
   it('blocks further questions when the server reports out_of_hearts, even if local hearts looked fine', async () => {
