@@ -28,7 +28,10 @@ export default function CertificateGenerator({
       try {
         // Dynamic import for QR code generation
         const QRCode = (await import('qrcode')).default
-        const verifyUrl = `${window.location.origin}/api/verify/${certificateId}`
+        // Points at the human-readable verify page (src/app/verify/[certificateId]/page.tsx),
+        // not the JSON API route - someone scanning this QR code should
+        // see a styled "valid certificate" card, not raw JSON.
+        const verifyUrl = `${window.location.origin}/verify/${certificateId}`
         const dataUrl = await QRCode.toDataURL(verifyUrl, {
           width: 120,
           margin: 1,
@@ -247,7 +250,7 @@ export default function CertificateGenerator({
           className="text-sm px-3 py-1 rounded inline-block"
           style={{ background: 'var(--surface2)', color: 'var(--ai-purple)' }}
         >
-          {typeof window !== 'undefined' ? `${window.location.origin}/api/verify/${certificateId}` : ''}
+          {typeof window !== 'undefined' ? `${window.location.origin}/verify/${certificateId}` : ''}
         </code>
         <p className="text-xs" style={{ color: 'var(--muted-custom)' }}>
           Add this link or QR code to your CV for employer verification
