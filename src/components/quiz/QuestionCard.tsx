@@ -202,7 +202,7 @@ export default function QuestionCard({
 
       {/* Step Solution (shown after answer) */}
       {answered && question.steps && question.steps.length > 0 && (
-        <StepSolution steps={question.steps} />
+        <StepSolution steps={question.steps} questionText={question.questionText} />
       )}
 
       {/* Ask Angelo Button (shown after incorrect answer) */}

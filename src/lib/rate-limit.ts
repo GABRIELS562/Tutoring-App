@@ -1,5 +1,3 @@
-import type { NextRequest } from 'next/server'
-
 /**
  * Minimal in-memory, per-key rate limiter.
  *
@@ -101,13 +99,26 @@ export function checkRateLimit(
 }
 
 /**
+ * The minimal shape getClientIp() needs - satisfied by both a
+ * NextRequest's `.headers` (a standard Headers instance, in a route
+ * handler) and next/headers's `headers()` result (a ReadonlyHeaders, in
+ * a Server Component) - so the same function works in both surfaces
+ * (e.g. api/verify/[certificateId]/route.ts and
+ * app/verify/[certificateId]/page.tsx both rate-limit the same
+ * "verify:<ip>" key).
+ */
+export interface HeaderGetter {
+  get(name: string): string | null
+}
+
+/**
  * Best-effort client IP for rate-limit keying: the first entry of
  * X-Forwarded-For (set by Vercel/most proxies), falling back to a
  * constant so requests with no forwarded header still share one bucket
  * instead of bypassing the limit entirely.
  */
-export function getClientIp(request: NextRequest): string {
-  const forwardedFor = request.headers.get('x-forwarded-for')
+export function getClientIp(headersLike: HeaderGetter): string {
+  const forwardedFor = headersLike.get('x-forwarded-for')
   if (forwardedFor) {
     return forwardedFor.split(',')[0].trim()
   }

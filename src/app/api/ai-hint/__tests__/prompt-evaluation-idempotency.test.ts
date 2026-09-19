@@ -3,6 +3,7 @@ import { NextRequest } from 'next/server'
 
 const requireUserMock = vi.fn()
 const getApiSupabaseMock = vi.fn()
+const createTutorMessageMock = vi.fn()
 
 vi.mock('@/lib/auth/require-user', async () => {
   const actual = await vi.importActual<typeof import('@/lib/auth/require-user')>(
@@ -25,6 +26,21 @@ vi.mock('@/db/queries/users', () => ({
 vi.mock('@/db', () => ({
   isDemoMode: false,
 }))
+
+// The route now calls the shared src/lib/claude.ts helper (SDK-backed)
+// instead of raw fetch(ANTHROPIC_API_URL, ...) - mock it at that
+// boundary instead of global.fetch. getClaudeClient() just needs to be
+// truthy so the route takes the "real" branch instead of its demo-mode
+// fallback; ClaudeError is re-exported from the real module so
+// `error instanceof ClaudeError` checks in the route still work.
+vi.mock('@/lib/claude', async () => {
+  const actual = await vi.importActual<typeof import('@/lib/claude')>('@/lib/claude')
+  return {
+    ...actual,
+    getClaudeClient: vi.fn(() => ({})),
+    createTutorMessage: createTutorMessageMock,
+  }
+})
 
 const { POST } = await import('@/app/api/ai-hint/route')
 
@@ -109,6 +125,11 @@ function makeStatefulSupabaseMock() {
 
       throw new Error(`Unexpected table in test mock: ${table}`)
     },
+    // Stands in for the increment_hint_usage() RPC the route now calls
+    // via supabase.rpc() to atomically bump usage - these tests are
+    // about prompt-challenge idempotency, not usage-count correctness,
+    // so a fixed non-error response is enough to let the route proceed.
+    rpc: async () => ({ data: { id: 'usage-1', hint_count: 1, camera_count: 0 }, error: null }),
   }
 
   return { client, attempts, userRow, usersUpdateCalls }
@@ -122,27 +143,18 @@ function makeRequest(body: Record<string, unknown>) {
   })
 }
 
-function mockAnthropicResponse(score: number) {
+function mockTutorMessage(score: number) {
   return {
-    ok: true,
-    text: async () => '',
-    json: async () => ({
-      content: [
-        {
-          text: JSON.stringify({
-            score,
-            what_worked: 'worked',
-            what_to_improve: 'improve',
-            improved_prompt: 'improved',
-            encouragement: 'encouragement',
-          }),
-        },
-      ],
+    text: JSON.stringify({
+      score,
+      what_worked: 'worked',
+      what_to_improve: 'improve',
+      improved_prompt: 'improved',
+      encouragement: 'encouragement',
     }),
-  } as Response
+    usage: { input_tokens: 10, output_tokens: 10 },
+  }
 }
-
-const ORIGINAL_FETCH = global.fetch
 
 describe('POST /api/ai-hint prompt_evaluation is idempotent per (user, challenge)', () => {
   beforeEach(() => {
@@ -153,16 +165,14 @@ describe('POST /api/ai-hint prompt_evaluation is idempotent per (user, challenge
 
   afterEach(() => {
     delete process.env.ANTHROPIC_API_KEY
-    global.fetch = ORIGINAL_FETCH
   })
 
   it('awards XP once; a repeat attempt with a higher score updates the row but earns no extra XP', async () => {
     const { client, attempts, userRow } = makeStatefulSupabaseMock()
     getApiSupabaseMock.mockReturnValue(client)
-    global.fetch = vi
-      .fn()
-      .mockResolvedValueOnce(mockAnthropicResponse(3))
-      .mockResolvedValueOnce(mockAnthropicResponse(5))
+    createTutorMessageMock
+      .mockResolvedValueOnce(mockTutorMessage(3))
+      .mockResolvedValueOnce(mockTutorMessage(5))
 
     const req = () =>
       makeRequest({
@@ -195,10 +205,9 @@ describe('POST /api/ai-hint prompt_evaluation is idempotent per (user, challenge
   it('does not lower the stored score when a repeat attempt scores worse', async () => {
     const { client, attempts } = makeStatefulSupabaseMock()
     getApiSupabaseMock.mockReturnValue(client)
-    global.fetch = vi
-      .fn()
-      .mockResolvedValueOnce(mockAnthropicResponse(4))
-      .mockResolvedValueOnce(mockAnthropicResponse(2))
+    createTutorMessageMock
+      .mockResolvedValueOnce(mockTutorMessage(4))
+      .mockResolvedValueOnce(mockTutorMessage(2))
 
     const req = () =>
       makeRequest({

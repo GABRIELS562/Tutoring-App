@@ -3,6 +3,7 @@
 import { useState, useRef } from 'react'
 import { Camera, X, Loader2, RotateCcw } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
+import { downscaleImage } from '@/lib/image/downscale'
 
 export default function CameraScan() {
   const [isOpen, setIsOpen] = useState(false)
@@ -23,6 +24,12 @@ export default function CameraScan() {
       const file = (e.target as HTMLInputElement).files?.[0]
       if (!file) return
 
+      // Downscale before base64-encoding - a phone photo can be 4000px+
+      // on the long edge and several MB; the model doesn't need more
+      // than MAX_LONG_EDGE_PX to read a maths question off it, and a
+      // smaller image means less request payload and fewer input tokens.
+      const downscaled = await downscaleImage(file)
+
       // Convert to base64
       const reader = new FileReader()
       reader.onload = () => {
@@ -31,7 +38,7 @@ export default function CameraScan() {
         setIsOpen(true)
         analyzeImage(base64)
       }
-      reader.readAsDataURL(file)
+      reader.readAsDataURL(downscaled)
     }
 
     input.click()

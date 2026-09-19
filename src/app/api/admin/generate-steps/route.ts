@@ -1,11 +1,36 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { requireAdmin, authErrorResponse } from '@/lib/auth/require-user'
+import { getClaudeClient, createTutorMessage, getClaudeModel, ClaudeError, type ClaudeErrorKind } from '@/lib/claude'
+import { logClaudeUsage } from '@/lib/claude-usage-log'
 
-const ANTHROPIC_API_URL = 'https://api.anthropic.com/v1/messages'
+// mode label for ai_usage_log rows from this route - there's no HintMode
+// equivalent here (generate-steps isn't part of api/ai-hint), so this is
+// its own literal.
+const USAGE_LOG_MODE = 'generate_steps'
+
+// See the identical comment in src/app/api/ai-hint/route.ts - this route
+// also calls the Anthropic API and must outlive Vercel's default
+// function timeout, comfortably longer than the SDK client's own 30s
+// timeout + retries in src/lib/claude.ts.
+export const maxDuration = 60
+
+function claudeErrorStatus(kind: ClaudeErrorKind): number {
+  switch (kind) {
+    case 'rate_limit':
+    case 'timeout':
+    case 'server':
+      return 503
+    case 'auth':
+    case 'unknown':
+    default:
+      return 500
+  }
+}
 
 export async function POST(request: NextRequest) {
+  let admin
   try {
-    await requireAdmin()
+    admin = await requireAdmin()
   } catch (err) {
     return authErrorResponse(err)
   }
@@ -21,10 +46,10 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    const apiKey = process.env.ANTHROPIC_API_KEY
+    const claudeClient = getClaudeClient()
 
     // If no API key, return mock steps for demo
-    if (!apiKey) {
+    if (!claudeClient) {
       const mockSteps = [
         {
           instruction: 'Identify what the question is asking for',
@@ -74,16 +99,9 @@ Respond in JSON format only:
 
 Focus on trigonometry, algebra, functions, and calculus common in NSC exams.`
 
-    const response = await fetch(ANTHROPIC_API_URL, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'x-api-key': apiKey,
-        'anthropic-version': '2023-06-01',
-      },
-      body: JSON.stringify({
-        model: 'claude-3-haiku-20240307',
-        max_tokens: 1000,
+    let content: string
+    try {
+      const result = await createTutorMessage({
         system: systemPrompt,
         messages: [
           {
@@ -91,20 +109,20 @@ Focus on trigonometry, algebra, functions, and calculus common in NSC exams.`
             content: `Generate step-by-step solution steps for this maths question:\n\n${questionText}`,
           },
         ],
-      }),
-    })
-
-    if (!response.ok) {
-      const error = await response.text()
+        maxTokens: 1000,
+      })
+      content = result.text
+      // Fire-and-forget: never awaited, never allowed to fail this
+      // response - see logClaudeUsage()'s doc comment.
+      logClaudeUsage({ userId: admin.id, mode: USAGE_LOG_MODE, model: getClaudeModel(), usage: result.usage })
+    } catch (error) {
       console.error('Anthropic API error:', error)
+      const status = error instanceof ClaudeError ? claudeErrorStatus(error.kind) : 500
       return NextResponse.json(
         { error: 'Failed to generate steps' },
-        { status: 500 }
+        { status }
       )
     }
-
-    const data = await response.json()
-    const content = data.content?.[0]?.text || ''
 
     // Parse JSON from response
     try {

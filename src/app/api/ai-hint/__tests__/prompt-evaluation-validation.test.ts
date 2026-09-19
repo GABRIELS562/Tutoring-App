@@ -3,6 +3,7 @@ import { NextRequest } from 'next/server'
 
 const requireUserMock = vi.fn()
 const getApiSupabaseMock = vi.fn()
+const createTutorMessageMock = vi.fn()
 
 vi.mock('@/lib/auth/require-user', async () => {
   const actual = await vi.importActual<typeof import('@/lib/auth/require-user')>(
@@ -25,6 +26,18 @@ vi.mock('@/db/queries/users', () => ({
 vi.mock('@/db', () => ({
   isDemoMode: false,
 }))
+
+// The route calls the shared src/lib/claude.ts helper (SDK-backed) rather
+// than raw fetch(ANTHROPIC_API_URL, ...) - mock at that boundary. See the
+// identical comment in prompt-evaluation-idempotency.test.ts.
+vi.mock('@/lib/claude', async () => {
+  const actual = await vi.importActual<typeof import('@/lib/claude')>('@/lib/claude')
+  return {
+    ...actual,
+    getClaudeClient: vi.fn(() => ({})),
+    createTutorMessage: createTutorMessageMock,
+  }
+})
 
 const { POST } = await import('@/app/api/ai-hint/route')
 
@@ -88,6 +101,11 @@ function makeSupabaseMock() {
 
       throw new Error(`Unexpected table in test mock: ${table}`)
     },
+    // Stands in for the increment_hint_usage() RPC the route calls via
+    // supabase.rpc() to atomically bump usage - these tests are about
+    // model-output validation, not usage-count correctness, so a fixed
+    // non-error response is enough to let the route proceed.
+    rpc: async () => ({ data: { id: 'usage-1', hint_count: 1, camera_count: 0 }, error: null }),
   }
 
   return { client, insertedRows, updateCalls }
@@ -101,17 +119,12 @@ function makeRequest(body: Record<string, unknown>) {
   })
 }
 
-function mockAnthropicResponse(evaluation: unknown) {
+function mockTutorMessage(evaluation: unknown) {
   return {
-    ok: true,
-    text: async () => '',
-    json: async () => ({
-      content: [{ text: JSON.stringify(evaluation) }],
-    }),
-  } as Response
+    text: JSON.stringify(evaluation),
+    usage: { input_tokens: 10, output_tokens: 10 },
+  }
 }
-
-const ORIGINAL_FETCH = global.fetch
 
 describe('POST /api/ai-hint prompt_evaluation validates the model JSON', () => {
   beforeEach(() => {
@@ -122,14 +135,13 @@ describe('POST /api/ai-hint prompt_evaluation validates the model JSON', () => {
 
   afterEach(() => {
     delete process.env.ANTHROPIC_API_KEY
-    global.fetch = ORIGINAL_FETCH
   })
 
   it('rejects an out-of-range score (99): no insert, no XP, canned fallback with parseError', async () => {
     const { client, insertedRows, updateCalls } = makeSupabaseMock()
     getApiSupabaseMock.mockReturnValue(client)
-    global.fetch = vi.fn().mockResolvedValue(
-      mockAnthropicResponse({
+    createTutorMessageMock.mockResolvedValue(
+      mockTutorMessage({
         score: 99,
         what_worked: 'x',
         what_to_improve: 'y',
@@ -159,8 +171,8 @@ describe('POST /api/ai-hint prompt_evaluation validates the model JSON', () => {
   it('rejects an oversized field from the model: no insert, canned fallback with parseError', async () => {
     const { client, insertedRows } = makeSupabaseMock()
     getApiSupabaseMock.mockReturnValue(client)
-    global.fetch = vi.fn().mockResolvedValue(
-      mockAnthropicResponse({
+    createTutorMessageMock.mockResolvedValue(
+      mockTutorMessage({
         score: 4,
         what_worked: 'x'.repeat(601),
         what_to_improve: 'y',
@@ -187,8 +199,8 @@ describe('POST /api/ai-hint prompt_evaluation validates the model JSON', () => {
   it('accepts a valid in-range evaluation and persists it normally', async () => {
     const { client, insertedRows } = makeSupabaseMock()
     getApiSupabaseMock.mockReturnValue(client)
-    global.fetch = vi.fn().mockResolvedValue(
-      mockAnthropicResponse({
+    createTutorMessageMock.mockResolvedValue(
+      mockTutorMessage({
         score: 4,
         what_worked: 'Clear context',
         what_to_improve: 'Add a format constraint',
