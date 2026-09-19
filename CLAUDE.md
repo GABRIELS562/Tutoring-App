@@ -55,10 +55,10 @@ There is no single feature flag. Each layer degrades on its own:
 
 | Layer | Condition | Behaviour |
 |---|---|---|
-| `src/middleware.ts` | Supabase env missing (dev only) | Passes every request through; `/api/admin/*` gets 401 JSON when a session is required |
+| `src/proxy.ts` | Supabase env missing (dev only) | Passes every request through; `/api/admin/*` gets 401 JSON when a session is required |
 | `(app)/layout.tsx` | Supabase env missing (dev only) | Returns a hard-coded `Demo Student` user |
 | `(admin)/admin/layout.tsx` | `isDemoAuth()` only | Calls `requireAdmin()`; **fails closed** on any error (redirects to `/login`). `ADMIN_EMAIL` (case-insensitive) also grants admin |
-| `src/lib/env.ts` | `NODE_ENV === 'production'` | `assertProductionEnv()` throws at boot (root layout + middleware) if Supabase env or `DATABASE_URL` is missing — demo mode is unreachable in production |
+| `src/lib/env.ts` | `NODE_ENV === 'production'` | `assertProductionEnv()` throws at boot (root layout + proxy) if Supabase env or `DATABASE_URL` is missing — demo mode is unreachable in production |
 | `src/db/index.ts` | `DATABASE_URL` missing | Exports a Proxy that **throws** on any property access |
 | `src/lib/supabase/api.ts` | Supabase env missing | `withSupabase()` returns the caller's `demoFallback` silently |
 | `QuizEngine.tsx` | no `initialQuestions` | Falls back to in-file mock questions |
@@ -76,7 +76,7 @@ When editing a table, keep both in sync: the Drizzle schema and any `.from('tabl
 
 ### Auth & user data flow
 
-Supabase SSR. Middleware protects `/dashboard`, `/subjects`, `/topics`, `/papers`, `/progress`, `/admin`, `/api/admin` and bounces logged-in users off `/login`/`/signup`. `(app)/layout.tsx` fetches the `users` row and passes it into `UserProvider`; client components read it with `useUser()` from `src/context/UserContext.tsx`. Admin status is `users.is_admin` (checked via `isUserAdmin` in `queries/admin.ts`).
+Supabase SSR. The proxy protects `/dashboard`, `/subjects`, `/topics`, `/papers`, `/progress`, `/admin`, `/api/admin` and bounces logged-in users off `/login`/`/signup`. `(app)/layout.tsx` fetches the `users` row and passes it into `UserProvider`; client components read it with `useUser()` from `src/context/UserContext.tsx`. Admin status is `users.is_admin` (checked via `isUserAdmin` in `queries/admin.ts`).
 
 ### Adding a curriculum topic touches two places
 
@@ -122,5 +122,5 @@ Shadcn (`components.json`, base-nova style) in `src/components/ui/`; Tailwind v4
 - `SUPABASE_SERVICE_ROLE_KEY` is only referenced in `src/lib/supabase/api.ts` — server routes silently fall back to the anon key when it is unset, so writes become subject to the RLS policies in `0001_rls.sql`.
 - The RLS and functions migrations have never been run against a live Postgres; first real run is a pre-launch step (`DEPLOYMENT.md`).
 - The free-tier AI quota is check-then-act (bounded by client concurrency) — documented accepted risk in `ai-hint/route.ts`.
-- `next-pwa` is unmaintained (2022); `middleware.ts` → `proxy.ts` migration is pending (Next 16 deprecation warning). i18n strings exist for `en`/`af` but most pages still hard-code English (Phase 5).
+- `next-pwa` is unmaintained (2022); `middleware.ts` → `proxy.ts` migration is done (Phase 5). i18n strings exist for `en`/`af` but most pages still hard-code English (Phase 5).
 - Progress: `docs/BUILD-PLAN.md` — Phases 0–4 merged; Phase 5 (i18n/a11y/password reset) and Phase 6 (real services) outstanding.

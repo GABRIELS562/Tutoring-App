@@ -59,7 +59,7 @@ export async function generateMetadata({ params }: VerifyPageProps) {
  * agree on what counts as a valid certificate.
  *
  * Not under (app)/(admin) - no session/auth is required or expected, and
- * src/middleware.ts's protected-route list does not include /verify.
+ * src/proxy.ts's protected-route list does not include /verify.
  */
 export default async function VerifyCertificatePage({ params }: VerifyPageProps) {
   const { certificateId } = await params
