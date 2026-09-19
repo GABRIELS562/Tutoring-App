@@ -17,6 +17,14 @@ import {
 const FREE_HINT_LIMIT = 5
 const FREE_CAMERA_LIMIT = 1
 
+// Vercel serverless functions default to 10s (Hobby) / 15s (Pro), which a
+// vision request (camera_scan) or a slower model response can exceed.
+// The SDK client itself times out at 30s with up to 2 retries
+// (src/lib/claude.ts) - maxDuration must be comfortably longer than that
+// or Vercel would kill the function mid-retry instead of letting the SDK
+// give up on its own terms.
+export const maxDuration = 60
+
 // Maps a ClaudeError's normalized kind to the HTTP status this route
 // returns to the client. rate_limit/timeout/server are all "the model
 // service is having trouble, try again shortly" (503); auth (our own

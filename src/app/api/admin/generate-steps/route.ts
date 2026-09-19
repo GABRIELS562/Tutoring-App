@@ -2,6 +2,12 @@ import { NextRequest, NextResponse } from 'next/server'
 import { requireAdmin, authErrorResponse } from '@/lib/auth/require-user'
 import { getClaudeClient, createTutorMessage, ClaudeError, type ClaudeErrorKind } from '@/lib/claude'
 
+// See the identical comment in src/app/api/ai-hint/route.ts - this route
+// also calls the Anthropic API and must outlive Vercel's default
+// function timeout, comfortably longer than the SDK client's own 30s
+// timeout + retries in src/lib/claude.ts.
+export const maxDuration = 60
+
 function claudeErrorStatus(kind: ClaudeErrorKind): number {
   switch (kind) {
     case 'rate_limit':

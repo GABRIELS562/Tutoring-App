@@ -14,7 +14,13 @@ vi.mock('@/lib/auth/require-user', async () => {
 })
 
 const { AuthError } = await import('@/lib/auth/require-user')
-const { POST } = await import('@/app/api/admin/generate-steps/route')
+const { POST, maxDuration } = await import('@/app/api/admin/generate-steps/route')
+
+describe('generate-steps route config', () => {
+  it('sets maxDuration to 60s so a slow model call outlives the SDK client timeout + retries', () => {
+    expect(maxDuration).toBe(60)
+  })
+})
 
 function makeRequest(body: Record<string, unknown>) {
   return new NextRequest('http://localhost/api/admin/generate-steps', {
