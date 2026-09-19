@@ -1,65 +1,48 @@
-import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
+import { describe, it, expect, vi, beforeEach } from 'vitest'
 
-const executeMock = vi.fn()
-let isDemoModeValue = true
+const checkDbMock = vi.fn()
+const checkSupabaseMock = vi.fn()
 
-vi.mock('@/db', () => ({
-  get isDemoMode() {
-    return isDemoModeValue
-  },
-  db: { execute: executeMock },
+vi.mock('@/lib/health-check', () => ({
+  checkDb: checkDbMock,
+  checkSupabase: checkSupabaseMock,
 }))
 
-const { GET, HEALTH_CHECK_TIMEOUT_MS } = await import('@/app/api/health/route')
+const { GET } = await import('@/app/api/health/route')
 
-const ORIGINAL_FETCH = global.fetch
-const ORIGINAL_ENV = { ...process.env }
-
-describe('GET /api/health', () => {
+describe('GET /api/health (orchestration - see src/lib/__tests__/health-check.test.ts for check behaviour)', () => {
   beforeEach(() => {
     vi.clearAllMocks()
-    isDemoModeValue = true
-    process.env = { ...ORIGINAL_ENV }
-    delete process.env.DATABASE_URL
-    delete process.env.NEXT_PUBLIC_SUPABASE_URL
-    delete process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
   })
 
-  afterEach(() => {
-    global.fetch = ORIGINAL_FETCH
-    process.env = { ...ORIGINAL_ENV }
+  it('returns 200 with ok: true when both checks are "skipped"', async () => {
+    checkDbMock.mockResolvedValue('skipped')
+    checkSupabaseMock.mockResolvedValue('skipped')
+
+    const res = await GET()
+    const body = await res.json()
+
+    expect(res.status).toBe(200)
+    expect(body).toEqual({
+      ok: true,
+      checks: { db: 'skipped', supabase: 'skipped', time: expect.any(String) },
+    })
   })
 
-  it('reports both checks as "skipped" and 200 when nothing is configured', async () => {
+  it('returns 200 with ok: true when both checks are "ok"', async () => {
+    checkDbMock.mockResolvedValue('ok')
+    checkSupabaseMock.mockResolvedValue('ok')
+
     const res = await GET()
     const body = await res.json()
 
     expect(res.status).toBe(200)
     expect(body.ok).toBe(true)
-    expect(body.checks.db).toBe('skipped')
-    expect(body.checks.supabase).toBe('skipped')
-    expect(typeof body.checks.time).toBe('string')
-    expect(executeMock).not.toHaveBeenCalled()
   })
 
-  it('pings the db with select 1 and reports "ok" when DATABASE_URL is set and the query succeeds', async () => {
-    process.env.DATABASE_URL = 'postgres://user:pass@localhost:5432/db'
-    isDemoModeValue = false
-    executeMock.mockResolvedValueOnce({ rows: [{ '?column?': 1 }] })
-
-    const res = await GET()
-    const body = await res.json()
-
-    expect(res.status).toBe(200)
-    expect(body.checks.db).toBe('ok')
-    expect(executeMock).toHaveBeenCalledTimes(1)
-  })
-
-  it('reports "error" and 503 when the db ping fails', async () => {
-    process.env.DATABASE_URL = 'postgres://user:pass@localhost:5432/db'
-    isDemoModeValue = false
-    executeMock.mockRejectedValueOnce(new Error('connection refused'))
-    const consoleErrorSpy = vi.spyOn(console, 'error').mockImplementation(() => {})
+  it('returns 503 with ok: false when db errors', async () => {
+    checkDbMock.mockResolvedValue('error')
+    checkSupabaseMock.mockResolvedValue('skipped')
 
     const res = await GET()
     const body = await res.json()
@@ -67,29 +50,11 @@ describe('GET /api/health', () => {
     expect(res.status).toBe(503)
     expect(body.ok).toBe(false)
     expect(body.checks.db).toBe('error')
-    consoleErrorSpy.mockRestore()
   })
 
-  it('pings Supabase auth health and reports "ok" on a 200 response', async () => {
-    process.env.NEXT_PUBLIC_SUPABASE_URL = 'https://example.supabase.co'
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY = 'anon-key'
-    global.fetch = vi.fn().mockResolvedValue({ ok: true, status: 200 })
-
-    const res = await GET()
-    const body = await res.json()
-
-    expect(res.status).toBe(200)
-    expect(body.checks.supabase).toBe('ok')
-    expect(global.fetch).toHaveBeenCalledWith(
-      'https://example.supabase.co/auth/v1/health',
-      expect.objectContaining({ method: 'GET' })
-    )
-  })
-
-  it('reports "error" and 503 when the Supabase auth ping returns a non-ok status', async () => {
-    process.env.NEXT_PUBLIC_SUPABASE_URL = 'https://example.supabase.co'
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY = 'anon-key'
-    global.fetch = vi.fn().mockResolvedValue({ ok: false, status: 500 })
+  it('returns 503 with ok: false when supabase errors', async () => {
+    checkDbMock.mockResolvedValue('skipped')
+    checkSupabaseMock.mockResolvedValue('error')
 
     const res = await GET()
     const body = await res.json()
@@ -99,130 +64,14 @@ describe('GET /api/health', () => {
     expect(body.checks.supabase).toBe('error')
   })
 
-  it('reports "error" when the Supabase auth ping throws (network failure)', async () => {
-    process.env.NEXT_PUBLIC_SUPABASE_URL = 'https://example.supabase.co'
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY = 'anon-key'
-    global.fetch = vi.fn().mockRejectedValue(new Error('network unreachable'))
-    const consoleErrorSpy = vi.spyOn(console, 'error').mockImplementation(() => {})
+  it('includes an ISO time string and never leaks anything beyond the check statuses', async () => {
+    checkDbMock.mockResolvedValue('ok')
+    checkSupabaseMock.mockResolvedValue('ok')
 
     const res = await GET()
     const body = await res.json()
 
-    expect(res.status).toBe(503)
-    expect(body.checks.supabase).toBe('error')
-    consoleErrorSpy.mockRestore()
-  })
-
-  it('is 200 overall when db is ok and supabase is skipped (and vice versa)', async () => {
-    process.env.DATABASE_URL = 'postgres://user:pass@localhost:5432/db'
-    isDemoModeValue = false
-    executeMock.mockResolvedValueOnce({ rows: [] })
-
-    const res = await GET()
-    const body = await res.json()
-
-    expect(res.status).toBe(200)
-    expect(body.ok).toBe(true)
-    expect(body.checks.db).toBe('ok')
-    expect(body.checks.supabase).toBe('skipped')
-  })
-
-  it('never leaks env values (DATABASE_URL / Supabase URL) in the response body', async () => {
-    process.env.DATABASE_URL = 'postgres://secret-user:secret-pass@localhost:5432/db'
-    process.env.NEXT_PUBLIC_SUPABASE_URL = 'https://super-secret-project.supabase.co'
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY = 'anon-key'
-    isDemoModeValue = false
-    executeMock.mockResolvedValueOnce({ rows: [] })
-    global.fetch = vi.fn().mockResolvedValue({ ok: true, status: 200 })
-
-    const res = await GET()
-    const rawBody = await res.text()
-
-    expect(rawBody).not.toContain('secret-user')
-    expect(rawBody).not.toContain('secret-pass')
-    expect(rawBody).not.toContain('super-secret-project')
-  })
-
-  describe('bounded timeouts', () => {
-    afterEach(() => {
-      vi.useRealTimers()
-    })
-
-    it('reports db "error" and overall 503 when the db ping hangs past HEALTH_CHECK_TIMEOUT_MS', async () => {
-      process.env.DATABASE_URL = 'postgres://user:pass@localhost:5432/db'
-      isDemoModeValue = false
-      // Never resolves - simulates a hung query.
-      executeMock.mockReturnValueOnce(new Promise(() => {}))
-      const consoleErrorSpy = vi.spyOn(console, 'error').mockImplementation(() => {})
-
-      vi.useFakeTimers()
-      const resultPromise = GET()
-      await vi.advanceTimersByTimeAsync(HEALTH_CHECK_TIMEOUT_MS)
-      const res = await resultPromise
-      const body = await res.json()
-
-      expect(res.status).toBe(503)
-      expect(body.ok).toBe(false)
-      expect(body.checks.db).toBe('error')
-      expect(consoleErrorSpy).toHaveBeenCalledWith(
-        'Health check: database ping failed',
-        expect.any(Error)
-      )
-    })
-
-    it('resolves before the timeout when the db ping is fast (no false timeout)', async () => {
-      process.env.DATABASE_URL = 'postgres://user:pass@localhost:5432/db'
-      isDemoModeValue = false
-      executeMock.mockResolvedValueOnce({ rows: [] })
-
-      vi.useFakeTimers()
-      const resultPromise = GET()
-      await vi.advanceTimersByTimeAsync(0)
-      const res = await resultPromise
-      const body = await res.json()
-
-      expect(res.status).toBe(200)
-      expect(body.checks.db).toBe('ok')
-    })
-
-    it('passes AbortSignal.timeout(HEALTH_CHECK_TIMEOUT_MS) to the Supabase fetch', async () => {
-      process.env.NEXT_PUBLIC_SUPABASE_URL = 'https://example.supabase.co'
-      const timeoutSpy = vi.spyOn(AbortSignal, 'timeout')
-      global.fetch = vi.fn().mockResolvedValue({ ok: true, status: 200 })
-
-      await GET()
-
-      expect(timeoutSpy).toHaveBeenCalledWith(HEALTH_CHECK_TIMEOUT_MS)
-      const [, init] = (global.fetch as ReturnType<typeof vi.fn>).mock.calls[0]
-      expect(init.signal).toBeInstanceOf(AbortSignal)
-    })
-
-    it('reports supabase "error" and overall 503 when the fetch is aborted (timeout fires)', async () => {
-      process.env.NEXT_PUBLIC_SUPABASE_URL = 'https://example.supabase.co'
-      const controller = new AbortController()
-      vi.spyOn(AbortSignal, 'timeout').mockReturnValue(controller.signal)
-      const consoleErrorSpy = vi.spyOn(console, 'error').mockImplementation(() => {})
-
-      global.fetch = vi.fn().mockImplementation(
-        (_url: string, init: RequestInit) =>
-          new Promise((_, reject) => {
-            init.signal?.addEventListener('abort', () => {
-              reject(new DOMException('The operation was aborted.', 'AbortError'))
-            })
-          })
-      )
-
-      const resultPromise = GET()
-      controller.abort()
-      const res = await resultPromise
-      const body = await res.json()
-
-      expect(res.status).toBe(503)
-      expect(body.checks.supabase).toBe('error')
-      expect(consoleErrorSpy).toHaveBeenCalledWith(
-        'Health check: Supabase auth ping failed',
-        expect.anything()
-      )
-    })
+    expect(new Date(body.checks.time).toISOString()).toBe(body.checks.time)
+    expect(Object.keys(body.checks).sort()).toEqual(['db', 'supabase', 'time'])
   })
 })
