@@ -1,6 +1,7 @@
 import { db } from '@/db'
 import { questions, questionOptions, steps, topics, studentProgress, users } from '@/db/schema'
 import { eq, and, sql } from 'drizzle-orm'
+import { todaySast, yesterdaySast } from '@/lib/dates'
 
 export type QuestionWithDetails = {
   id: string
@@ -192,32 +193,26 @@ export async function updateUserXP(
     }
 
     const user = userRows[0]
-    const today = new Date().toISOString().split('T')[0]
+    // SAST (Africa/Johannesburg), not the server's UTC day - a student
+    // active at, say, 23:30 UTC is at 01:30 the next SAST day, and
+    // should already be on a new streak day. lastActiveDate is stored
+    // as the SAST 'YYYY-MM-DD' string this same helper produced, so a
+    // plain string comparison is enough - no Date parsing needed.
+    const today = todaySast()
+    const yesterday = yesterdaySast()
     const lastActive = user.lastActiveDate
 
     let newStreak = user.streakCount || 0
     let isNewDay = false
 
-    if (lastActive) {
-      const lastActiveDate = new Date(lastActive)
-      const yesterday = new Date()
-      yesterday.setDate(yesterday.getDate() - 1)
-      const yesterdayStr = yesterday.toISOString().split('T')[0]
-      const lastActiveStr = lastActiveDate.toISOString().split('T')[0]
-
-      if (lastActiveStr === today) {
-        // Already active today, keep streak
-      } else if (lastActiveStr === yesterdayStr) {
-        // Was active yesterday, increment streak
-        newStreak += 1
-        isNewDay = true
-      } else {
-        // Missed a day, reset streak to 1
-        newStreak = 1
-        isNewDay = true
-      }
+    if (lastActive === today) {
+      // Already active today, keep streak
+    } else if (lastActive === yesterday) {
+      // Was active yesterday, increment streak
+      newStreak += 1
+      isNewDay = true
     } else {
-      // First activity, start streak at 1
+      // First activity ever, or missed a day - (re)start streak at 1
       newStreak = 1
       isNewDay = true
     }

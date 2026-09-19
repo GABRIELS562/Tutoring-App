@@ -1,4 +1,5 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest'
+import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
+import { todaySast, yesterdaySast } from '@/lib/dates'
 
 // A minimal chainable, thenable mock of the drizzle query builder: every
 // chain method returns the same object, and awaiting it (or calling
@@ -100,8 +101,19 @@ describe('decrementHearts', () => {
 })
 
 describe('updateUserXP', () => {
+  // Pinned well clear of the SAST/UTC boundary so the fixture dates
+  // below (built from the same todaySast/yesterdaySast helper the
+  // function under test uses) are unambiguous.
+  const NOW = new Date('2026-09-19T10:00:00.000Z')
+
   beforeEach(() => {
     vi.clearAllMocks()
+    vi.useFakeTimers()
+    vi.setSystemTime(NOW)
+  })
+
+  afterEach(() => {
+    vi.useRealTimers()
   })
 
   it('starts the streak at 1 on first-ever activity (no lastActiveDate)', async () => {
@@ -116,16 +128,13 @@ describe('updateUserXP', () => {
     expect(result).toEqual({ newXp: 10, newStreak: 1 })
     // A new day (first activity) refills hearts in the same update call.
     expect(updateChain.set).toHaveBeenCalledWith(
-      expect.objectContaining({ hearts: 5 })
+      expect.objectContaining({ hearts: 5, lastActiveDate: todaySast() })
     )
   })
 
-  it('increments the streak when last active yesterday', async () => {
-    const yesterday = new Date()
-    yesterday.setDate(yesterday.getDate() - 1)
-
+  it('increments the streak when last active yesterday (SAST)', async () => {
     dbMock.select.mockReturnValueOnce(
-      makeChain([{ id: 'u1', xp: 100, streakCount: 4, lastActiveDate: yesterday.toISOString() }])
+      makeChain([{ id: 'u1', xp: 100, streakCount: 4, lastActiveDate: yesterdaySast() }])
     )
     const updateChain = makeChain(undefined)
     dbMock.update.mockReturnValueOnce(updateChain)
@@ -138,11 +147,9 @@ describe('updateUserXP', () => {
     )
   })
 
-  it('keeps the streak and does not refill hearts when already active today', async () => {
-    const today = new Date().toISOString()
-
+  it('keeps the streak and does not refill hearts when already active today (SAST)', async () => {
     dbMock.select.mockReturnValueOnce(
-      makeChain([{ id: 'u1', xp: 100, streakCount: 4, lastActiveDate: today }])
+      makeChain([{ id: 'u1', xp: 100, streakCount: 4, lastActiveDate: todaySast() }])
     )
     const updateChain = makeChain(undefined)
     dbMock.update.mockReturnValueOnce(updateChain)
@@ -155,17 +162,31 @@ describe('updateUserXP', () => {
   })
 
   it('resets the streak to 1 after missing more than a day', async () => {
-    const longAgo = new Date()
-    longAgo.setDate(longAgo.getDate() - 5)
-
     dbMock.select.mockReturnValueOnce(
-      makeChain([{ id: 'u1', xp: 100, streakCount: 9, lastActiveDate: longAgo.toISOString() }])
+      makeChain([{ id: 'u1', xp: 100, streakCount: 9, lastActiveDate: '2026-09-01' }])
     )
     dbMock.update.mockReturnValueOnce(makeChain(undefined))
 
     const result = await updateUserXP('u1', 10)
 
     expect(result).toEqual({ newXp: 110, newStreak: 1 })
+  })
+
+  it('treats a student active at 23:30 UTC as already on the next SAST day', async () => {
+    // 23:30 UTC is 01:30 SAST the next day - lastActiveDate written by
+    // an earlier call *today* (in SAST terms) should still count as
+    // "already active today", not roll the streak.
+    vi.setSystemTime(new Date('2026-09-19T23:30:00.000Z'))
+    dbMock.select.mockReturnValueOnce(
+      makeChain([{ id: 'u1', xp: 0, streakCount: 1, lastActiveDate: '2026-09-20' }])
+    )
+    const updateChain = makeChain(undefined)
+    dbMock.update.mockReturnValueOnce(updateChain)
+
+    const result = await updateUserXP('u1', 10)
+
+    expect(result).toEqual({ newXp: 10, newStreak: 1 })
+    expect(updateChain.set.mock.calls[0][0]).not.toHaveProperty('hearts')
   })
 
   it('returns null when the user does not exist', async () => {
