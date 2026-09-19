@@ -18,6 +18,14 @@ import {
 const FREE_HINT_LIMIT = 5
 const FREE_CAMERA_LIMIT = 1
 
+// A base64 data URL string longer than this is rejected with 413 before
+// any DB/model work. 4,000,000 chars comfortably covers a photo
+// downscaled to a 1280px long edge at JPEG quality 0.75 (see
+// src/lib/image/downscale.ts) while staying well under Vercel's request
+// body size limit - base64 inflates binary size by ~4/3, so 4,000,000
+// chars is ~3MB of actual image data.
+const MAX_IMAGE_BASE64_LENGTH = 4_000_000
+
 // Vercel serverless functions default to 10s (Hobby) / 15s (Pro), which a
 // vision request (camera_scan) or a slower model response can exceed.
 // The SDK client itself times out at 30s with up to 2 retries
@@ -380,6 +388,23 @@ export async function POST(request: NextRequest) {
     const body = parseResult.data
     const userId = user.id
     const { mode, imageBase64, locale } = body
+
+    // The client (CameraScan.tsx) downscales to a 1280px long edge before
+    // base64-encoding (src/lib/image/downscale.ts), so a well-behaved
+    // client never gets near this. This is the server-side backstop: it
+    // rejects a request before any DB/model work happens - protects
+    // against a client that skips the downscale (old cached bundle,
+    // direct API call) and against Vercel's request body size cap.
+    if (imageBase64 && imageBase64.length > MAX_IMAGE_BASE64_LENGTH) {
+      return NextResponse.json(
+        {
+          error: 'Image too large',
+          message: 'That photo is too large to send. Please retake it or crop it closer to the question and try again.',
+        },
+        { status: 413 }
+      )
+    }
+
     const isPremium = await resolveIsPremium(userId)
 
     // "Today" in SAST (Africa/Johannesburg), never UTC - see
