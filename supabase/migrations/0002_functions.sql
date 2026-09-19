@@ -35,6 +35,17 @@ CREATE OR REPLACE FUNCTION increment_hint_usage(
 )
 RETURNS ai_hint_usage
 LANGUAGE plpgsql
+-- Pins the name-resolution search_path for the duration of the function,
+-- independent of whatever search_path the calling role/session has set.
+-- Without this, a role that can create objects in a schema earlier in
+-- its own search_path (e.g. a "public"-like writable schema ahead of
+-- the real public) could shadow `ai_hint_usage` or `format`/`now` with
+-- a same-named object of its own, and this SECURITY-INVOKER function
+-- (see the "not SECURITY DEFINER" note below) would silently operate on
+-- the attacker's object instead of the real one. pg_temp stays last so
+-- session-local temp objects are still resolvable, matching Postgres's
+-- own hardening guidance for functions.
+SET search_path = public, pg_temp
 AS $$
 DECLARE
   v_hint_count integer := 0;

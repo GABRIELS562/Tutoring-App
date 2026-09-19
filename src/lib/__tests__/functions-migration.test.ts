@@ -36,6 +36,10 @@ describe('supabase/migrations/0002_functions.sql', () => {
     expect(sql).toMatch(/format\(\s*'INSERT INTO ai_hint_usage[\s\S]*?%I[\s\S]*?',\s*p_field, p_field\s*\)/)
   })
 
+  it('pins search_path to public, pg_temp (blocks search-path hijacking)', () => {
+    expect(sql).toMatch(/SET search_path = public, pg_temp/)
+  })
+
   it('is not SECURITY DEFINER - it runs as the calling role, subject to RLS', () => {
     // Checks the actual function-definition clause, not the file overall
     // - the header comment explains the *absence* of SECURITY DEFINER in
