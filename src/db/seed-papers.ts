@@ -1,5 +1,6 @@
 import { db } from './index'
 import { pastPapers } from './schema'
+import { pastPaperExists } from './queries/topics'
 
 // Past paper records with real URLs from stanmorephysics.com and education.gov.za
 const papers = [
@@ -614,13 +615,23 @@ const papers = [
 async function seedPapers() {
   console.log('Seeding past papers...')
 
+  let inserted = 0
+  let skipped = 0
+
   try {
     for (const paper of papers) {
+      if (await pastPaperExists(paper)) {
+        console.log(`Skipped (already exists): Grade ${paper.grade} ${paper.subject} ${paper.year} Paper ${paper.paperNumber}`)
+        skipped += 1
+        continue
+      }
+
       await db.insert(pastPapers).values(paper)
       console.log(`Inserted: Grade ${paper.grade} ${paper.subject} ${paper.year} Paper ${paper.paperNumber}`)
+      inserted += 1
     }
 
-    console.log(`\nSuccessfully seeded ${papers.length} past papers!`)
+    console.log(`\nDone - inserted ${inserted}, skipped ${skipped} already-seeded papers (${papers.length} total).`)
   } catch (error) {
     console.error('Error seeding papers:', error)
     process.exit(1)

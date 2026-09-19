@@ -71,6 +71,21 @@ CREATE POLICY "users_insert_own" ON users
 -- 2. student_progress — own rows only, by user_id = auth.uid()
 -- =============================================================================
 
+-- One row per (user, question): saveProgress() in
+-- src/db/queries/questions.ts depends on this to upsert-and-lock the row
+-- (INSERT ... ON CONFLICT DO NOTHING, then SELECT ... FOR UPDATE within a
+-- transaction) instead of two concurrent first-time answers to the same
+-- question racing to insert duplicate rows and each awarding XP. Matches
+-- the `uniqueIndex(...)` in src/db/schema.ts. Postgres has no
+-- `ADD CONSTRAINT IF NOT EXISTS`, so this drops-then-adds (same
+-- idempotency pattern as the DROP POLICY IF EXISTS guards below) to stay
+-- safe to re-run.
+ALTER TABLE student_progress
+  DROP CONSTRAINT IF EXISTS student_progress_user_question_unique;
+ALTER TABLE student_progress
+  ADD CONSTRAINT student_progress_user_question_unique
+  UNIQUE (user_id, question_id);
+
 ALTER TABLE student_progress ENABLE ROW LEVEL SECURITY;
 
 DROP POLICY IF EXISTS "student_progress_select_own" ON student_progress;

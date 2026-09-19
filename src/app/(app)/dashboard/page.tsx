@@ -119,14 +119,19 @@ export default async function DashboardPage() {
 
   const { user, totalQuestionsAnswered, correctAnswers, topicsStarted, recentActivity, topicsWithProgress } = data
 
-  // Analyze weaknesses - use real data for authenticated users, mock for demo
+  // Analyze weaknesses - use real data for authenticated users, mock
+  // only for demo mode. A real user whose analysis comes back empty
+  // (no topic with >= 3 attempts and < 60% accuracy) never falls back
+  // to the mock weaknesses - that would show them someone else's
+  // fabricated struggle. They get a plain "not enough signal yet" nudge
+  // instead.
   let weaknesses: Weakness[] = []
+  let showWeaknessPrompt = false
   if (totalQuestionsAnswered >= 10) {
     if (isRealUser && user?.grade) {
       weaknesses = await analyzeWeaknesses(userId, user.grade)
-    }
-    // Fall back to mock if no real weaknesses found or in demo mode
-    if (weaknesses.length === 0) {
+      showWeaknessPrompt = weaknesses.length === 0
+    } else {
       weaknesses = getMockWeaknesses()
     }
   }
@@ -187,6 +192,16 @@ export default async function DashboardPage() {
         {/* Weakness Detection (show after 10+ questions) */}
         {totalQuestionsAnswered >= 10 && weaknesses.length > 0 && (
           <WeaknessCard weakness={weaknesses[0]} />
+        )}
+        {showWeaknessPrompt && (
+          <div
+            className="rounded-xl p-4 text-center"
+            style={{ background: 'var(--surface)', border: '1px solid var(--border-custom)' }}
+          >
+            <p className="text-sm" style={{ color: 'var(--muted-custom)' }}>
+              Answer 10 questions to see your weak spots
+            </p>
+          </div>
         )}
 
         {/* Section 2: Stats Row */}

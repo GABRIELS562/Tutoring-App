@@ -128,6 +128,15 @@ describe('supabase/migrations/0001_rls.sql', () => {
     )
   })
 
+  it('adds a UNIQUE (user_id, question_id) constraint on student_progress, idempotently', () => {
+    expect(sql).toMatch(
+      /DROP CONSTRAINT IF EXISTS student_progress_user_question_unique/
+    )
+    expect(sql).toMatch(
+      /ADD CONSTRAINT student_progress_user_question_unique\s+UNIQUE \(user_id, question_id\)/
+    )
+  })
+
   it('every CREATE POLICY is preceded by a matching DROP POLICY IF EXISTS (idempotent re-runs)', () => {
     const policyNames = Array.from(sql.matchAll(/CREATE POLICY "([^"]+)"/g)).map((m) => m[1])
     expect(policyNames.length).toBeGreaterThan(0)

@@ -5,7 +5,15 @@ import { eq, sql } from 'drizzle-orm'
 /**
  * Get user by ID
  */
-export async function getUserById(userId: string) {
+/**
+ * Explicit return type: without it, TS infers `result[0] || null` as
+ * just the non-null row type (it statically knows an object literal
+ * type is always truthy, so it drops the `null` branch) - which then
+ * lets a caller skip the not-found check and crash at runtime on a
+ * missing user. The annotation makes the real possibility of `null`
+ * part of the type callers see.
+ */
+export async function getUserById(userId: string): Promise<typeof users.$inferSelect | null> {
   const result = await db
     .select()
     .from(users)
@@ -60,39 +68,6 @@ export async function updateUserProfile(userId: string, data: {
     .set(data)
     .where(eq(users.id, userId))
     .returning()
-  return result[0]
-}
-
-/**
- * Update user XP and streak
- */
-export async function updateUserXP(userId: string, xpToAdd: number) {
-  const today = new Date().toISOString().split('T')[0]
-
-  const user = await getUserById(userId)
-  if (!user) return null
-
-  const lastActive = user.lastActiveDate?.toString()
-  const yesterday = new Date(Date.now() - 86400000).toISOString().split('T')[0]
-
-  // Calculate new streak
-  let newStreak = user.streakCount || 0
-  if (lastActive === yesterday) {
-    newStreak += 1
-  } else if (lastActive !== today) {
-    newStreak = 1
-  }
-
-  const result = await db
-    .update(users)
-    .set({
-      xp: sql`${users.xp} + ${xpToAdd}`,
-      streakCount: newStreak,
-      lastActiveDate: today,
-    })
-    .where(eq(users.id, userId))
-    .returning()
-
   return result[0]
 }
 

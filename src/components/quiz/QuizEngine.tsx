@@ -2,10 +2,12 @@
 
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Trophy, RefreshCw, BookOpen, ArrowRight, Loader2 } from 'lucide-react'
+import { Trophy, RefreshCw, BookOpen, ArrowRight, Loader2, Heart } from 'lucide-react'
 import Link from 'next/link'
 import QuestionCard from './QuestionCard'
 import type { QuestionWithDetails } from '@/db/queries/questions'
+import { recordAnswer, completeQuiz } from '@/app/(app)/topics/[slug]/practice/actions'
+import { XP_PER_CORRECT_ANSWER, MAX_HEARTS } from '@/lib/game-rules'
 
 type QuizEngineProps = {
   topicSlug: string
@@ -13,6 +15,12 @@ type QuizEngineProps = {
   userId: string
   difficulty?: number
   initialQuestions?: QuestionWithDetails[]
+  /** True only when the database is unconfigured (no DATABASE_URL). */
+  isDemo: boolean
+  /** Remaining hearts for this session, from the session user. */
+  hearts?: number
+  /** Premium users have unlimited hearts. */
+  isPremium?: boolean
 }
 
 // Mock questions for demo when database isn't connected
@@ -152,12 +160,20 @@ const mockQuestions: QuestionWithDetails[] = [
 export default function QuizEngine({
   topicSlug,
   grade: _grade,
-  userId: _userId,
+  userId,
   difficulty: _difficulty,
   initialQuestions,
+  isDemo,
+  hearts,
+  isPremium = false,
 }: QuizEngineProps) {
-  // Use mock questions as fallback when database isn't connected
-  const questionsToUse = initialQuestions && initialQuestions.length > 0 ? initialQuestions : mockQuestions
+  // Real questions from the database win. Mock questions are only ever
+  // shown in demo mode (no DATABASE_URL) - with a real, configured
+  // database and zero questions, we show an empty state instead.
+  const hasRealQuestions = Boolean(initialQuestions && initialQuestions.length > 0)
+  const usingMockQuestions = !hasRealQuestions && isDemo
+  const questionsToUse = hasRealQuestions ? initialQuestions! : usingMockQuestions ? mockQuestions : []
+
   const [questions, setQuestions] = useState<QuestionWithDetails[]>(questionsToUse)
   const [currentIndex, setCurrentIndex] = useState(0)
   const [answers, setAnswers] = useState<boolean[]>([])
@@ -165,11 +181,61 @@ export default function QuizEngine({
   const [complete, setComplete] = useState(false)
   const loading = false // No async loading needed with fallback
   const [totalXpEarned, setTotalXpEarned] = useState(0)
+  // Blocking only takes effect once the student tries to move past the
+  // question that used their last heart - they still get to see that
+  // question's feedback/step solution first.
+  const [blockedOnHearts, setBlockedOnHearts] = useState(false)
+  // Set when the last recordAnswer/completeQuiz call failed to persist;
+  // the answer/XP already reflected in local state was NOT counted
+  // server-side, so we show an inline retry instead of pretending it
+  // saved. Holds what to retry (a question answer, or the final
+  // completeQuiz call).
+  const [saveError, setSaveError] = useState<{ retry: () => void } | null>(null)
 
-  // These props will be used when implementing real progress tracking
+  // These props are accepted for future difficulty-aware retry logic
+  // and grade-scoped question fetching (already applied server-side by
+  // the caller via getQuestionsByTopic).
   void _grade
-  void _userId
   void _difficulty
+
+  // Progress isn't persisted for demo mode, for mock/placeholder
+  // questions (no real question/topic to attach it to), or for the
+  // demo-user fallback id (defense in depth if isDemo and userId were
+  // ever to disagree - the server actions derive the real id from the
+  // session regardless, but there is nothing to save for 'demo-user').
+  const shouldPersist = !isDemo && !usingMockQuestions && userId !== 'demo-user'
+
+  const wrongCount = answers.filter((a) => a === false).length
+  const heartsRemaining = Math.max(0, (hearts ?? MAX_HEARTS) - wrongCount)
+  const outOfHearts = !isPremium && heartsRemaining <= 0
+
+  // XP is display-only here, summed from what the server actually
+  // awarded (recordAnswer's xpEarned) - never assumed client-side. In
+  // demo mode / for mock questions there is no server award to sum, so
+  // we show an optimistic client-only total instead (it's never
+  // persisted either way).
+  const persistAnswer = async (questionId: string, correct: boolean) => {
+    try {
+      const result = await recordAnswer(questionId, correct)
+
+      if (!result.ok) {
+        if (result.error === 'out_of_hearts') {
+          setBlockedOnHearts(true)
+        } else {
+          setSaveError({ retry: () => persistAnswer(questionId, correct) })
+        }
+        return
+      }
+
+      setSaveError(null)
+      if ('xpEarned' in result && result.xpEarned) {
+        setTotalXpEarned((xp) => xp + result.xpEarned)
+      }
+    } catch (error) {
+      console.error('Failed to record answer:', error)
+      setSaveError({ retry: () => persistAnswer(questionId, correct) })
+    }
+  }
 
   const handleAnswer = async (selectedLetter: string, correct: boolean) => {
     const newAnswers = [...answers, correct]
@@ -177,19 +243,59 @@ export default function QuizEngine({
 
     if (correct) {
       setScore(score + 1)
-      setTotalXpEarned(totalXpEarned + 10)
     }
 
-    // In a real app, this would call the server action
-    // await saveProgress(userId, questions[currentIndex].id, correct)
+    if (!shouldPersist) {
+      // Demo/mock questions: nothing to save, so show an optimistic
+      // client-only XP total.
+      if (correct) {
+        setTotalXpEarned((xp) => xp + XP_PER_CORRECT_ANSWER)
+      }
+      return
+    }
+
+    await persistAnswer(questions[currentIndex].id, correct)
   }
 
-  const handleNext = () => {
+  const persistCompleteQuiz = async () => {
+    try {
+      const result = await completeQuiz()
+      if (!result.ok) {
+        setSaveError({ retry: persistCompleteQuiz })
+        return
+      }
+      setSaveError(null)
+    } catch (error) {
+      console.error('Failed to save streak:', error)
+      setSaveError({ retry: persistCompleteQuiz })
+    }
+  }
+
+  const handleNext = async () => {
+    // Defense in depth: the Next button is already disabled while
+    // saveError is set (QuestionCard's nextDisabled prop), but guard
+    // here too in case it's ever reached another way (e.g. a
+    // programmatic call). The unsaved answer must be retried
+    // successfully - or the save error cleared by a successful retry -
+    // before the student can move on.
+    if (saveError) {
+      return
+    }
+
+    if (outOfHearts) {
+      setBlockedOnHearts(true)
+      return
+    }
+
     if (currentIndex < questions.length - 1) {
       setCurrentIndex(currentIndex + 1)
-    } else {
-      setComplete(true)
-      // In a real app: await updateUserXP(userId, totalXpEarned)
+      return
+    }
+
+    setComplete(true)
+
+    if (shouldPersist) {
+      await persistCompleteQuiz()
     }
   }
 
@@ -199,6 +305,8 @@ export default function QuizEngine({
     setScore(0)
     setComplete(false)
     setTotalXpEarned(0)
+    setBlockedOnHearts(false)
+    setSaveError(null)
     // Shuffle questions
     setQuestions([...questions].sort(() => Math.random() - 0.5))
   }
@@ -216,7 +324,28 @@ export default function QuizEngine({
     return (
       <div className="text-center py-20">
         <p className="text-lg mb-4" style={{ color: 'var(--text)' }}>
-          No questions available for this topic yet.
+          No questions yet for this topic.
+        </p>
+        <Link
+          href={`/topics/${topicSlug}`}
+          className="inline-flex items-center gap-2 px-4 py-2 rounded-lg"
+          style={{ background: 'var(--accent-red)', color: 'white' }}
+        >
+          <BookOpen className="w-4 h-4" />
+          Back to notes
+        </Link>
+      </div>
+    )
+  }
+
+  if (blockedOnHearts && !complete) {
+    return (
+      <div className="text-center py-20">
+        <p className="text-lg font-semibold mb-2" style={{ color: 'var(--text)' }}>
+          Out of hearts
+        </p>
+        <p className="text-sm mb-4" style={{ color: 'var(--muted-custom)' }}>
+          Come back tomorrow for a fresh set of hearts, or go Premium for unlimited practice.
         </p>
         <Link
           href={`/topics/${topicSlug}`}
@@ -351,8 +480,19 @@ export default function QuizEngine({
           <span className="text-sm font-medium" style={{ color: 'var(--text)' }}>
             Question {currentIndex + 1} of {questions.length}
           </span>
-          <span className="text-sm" style={{ color: 'var(--muted-custom)' }}>
-            Score: {score}/{answers.length}
+          <span className="flex items-center gap-2 text-sm" style={{ color: 'var(--muted-custom)' }}>
+            <span>Score: {score}/{answers.length}</span>
+            {isPremium ? (
+              <span className="flex items-center gap-1" aria-label="Unlimited hearts (Premium)">
+                <Heart className="w-3.5 h-3.5" style={{ color: 'var(--accent-red)' }} />
+                <span>Unlimited</span>
+              </span>
+            ) : (
+              <span className="flex items-center gap-1" aria-label={`${heartsRemaining} hearts remaining`}>
+                <Heart className="w-3.5 h-3.5" style={{ color: 'var(--accent-red)' }} />
+                <span>{heartsRemaining}</span>
+              </span>
+            )}
           </span>
         </div>
         <div
@@ -369,6 +509,26 @@ export default function QuizEngine({
         </div>
       </div>
 
+      {/* Save error (inline, non-blocking) */}
+      {saveError && (
+        <div
+          className="mb-4 flex items-center justify-between gap-3 rounded-lg px-3 py-2 text-sm"
+          style={{
+            background: 'rgba(230, 57, 70, 0.1)',
+            border: '1px solid var(--accent-red)',
+            color: 'var(--accent-red)',
+          }}
+        >
+          <span>Not saved — retry</span>
+          <button
+            onClick={() => saveError.retry()}
+            className="font-semibold underline"
+          >
+            Retry
+          </button>
+        </div>
+      )}
+
       {/* Question Card */}
       <AnimatePresence mode="wait">
         <QuestionCard
@@ -376,6 +536,7 @@ export default function QuizEngine({
           question={questions[currentIndex]}
           onAnswer={handleAnswer}
           onNext={handleNext}
+          nextDisabled={Boolean(saveError)}
         />
       </AnimatePresence>
     </div>
