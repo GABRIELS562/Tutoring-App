@@ -63,9 +63,9 @@ export default function PracticePageClient({
             {t('backToNotes')}
           </Link>
 
-          <h1 className="text-lg font-bold" style={{ color: 'var(--text)' }}>
+          <h2 className="text-lg font-bold" style={{ color: 'var(--text)' }}>
             {topicName}
-          </h1>
+          </h2>
         </div>
 
         {/* Difficulty Filter */}

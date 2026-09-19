@@ -75,9 +75,9 @@ export default function SubjectPageClient({
             <Icon className="w-8 h-8" style={{ color: info.color }} />
           </div>
           <div>
-            <h1 className="text-2xl font-bold" style={{ color: 'var(--text)' }}>
+            <h2 className="text-2xl font-bold" style={{ color: 'var(--text)' }}>
               {name}
-            </h1>
+            </h2>
             <p style={{ color: 'var(--muted-custom)' }}>
               {t('topicCount', { count: topics.length })}
             </p>

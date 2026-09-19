@@ -166,9 +166,9 @@ export default async function DashboardPage() {
         >
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
             <div>
-              <h1 className="text-2xl md:text-3xl font-bold text-white mb-2">
+              <h2 className="text-2xl md:text-3xl font-bold text-white mb-2">
                 {getGreeting(t)}, {user?.name?.split(' ')[0] || t('studentFallback')}!
-              </h1>
+              </h2>
               <p className="text-white/80">
                 {user?.streakCount && user.streakCount > 0
                   ? t('streakActive', { days: user.streakCount })
