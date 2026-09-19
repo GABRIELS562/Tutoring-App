@@ -27,7 +27,7 @@ The application's software foundation is approximately 70% complete. The curricu
 | Product overall | Approximately 45 to 50% of a commercially ready version |
 | Topics with verified videos loaded | 28 of 28 (English); 26 of 28 (Afrikaans) |
 | Practice questions in the bank | 6 (one topic) |
-| Automated tests | 159 passing on every change |
+| Automated tests | 388 passing on every change |
 | Deployed environment | None yet |
 
 Three points deserve your attention before anything else:
@@ -83,8 +83,11 @@ The following was completed between 17 and 18 September 2026 and does not depend
 
 | Area | Completed | Effect |
 |--------------|------------------------------------|--------------------------|
-| Engineering quality | Automated checks now run on every change: code style, type checking, a test suite of 159 tests, and a full production build. Thirteen outstanding code-quality errors corrected. Obsolete deployment files for an approach we are not pursuing removed. Web framework updated to close a published security advisory. | Defects are caught before they reach a student. |
+| Engineering quality | Automated checks now run on every change: code style, type checking, a test suite of 388 tests, and a full production build. Thirteen outstanding code-quality errors corrected. Obsolete deployment files for an approach we are not pursuing removed. Web framework updated to close a published security advisory. | Defects are caught before they reach a student. |
 | Video content | All 28 topics now carry real, verified YouTube videos instead of placeholders: two English videos per topic and one Afrikaans video where a suitable one exists. Each video was checked to confirm it plays inside the application. The two videos previously chosen for Grade 11 Trigonometry had been removed from YouTube by their owner and were replaced. | Every topic page now works. A weekly automated check will flag any video removed in future. |
+| Quizzes and progress | Quizzes now load real questions from the database and save every answer. Points, hearts and streaks are calculated on the server and cannot be altered from the student's device. Broken topic links on the Subjects page were repaired and the Past Papers screen now reads from the database. | The core learning loop works end to end. |
+| AI tutor | Moved to the current model generation with a cost-saving cache, a South African day boundary for daily limits, and automatic photo downscaling. Certificates now verify on a readable page rather than raw data. Every call is logged for spend visibility, and a health endpoint was added for monitoring. | Lower cost per hint and a measurable, capped AI bill. |
+| Afrikaans and accessibility | 218 interface strings moved into the translation system so the Afrikaans interface is now complete (pending native-speaker review of the new phrases). Password reset was built. Pinch-zoom re-enabled, keyboard skip link, heading structure corrected, and automated accessibility checks added. | An Afrikaans learner sees an Afrikaans application; the product meets basic accessibility expectations. |
 | Security | All nine server routes now verify the caller's identity before acting; previously none did. The administration area now denies access when it cannot confirm a user's role, rather than allowing it. Certificate identifiers are cryptographically random. A database access-policy file has been written for application when the database is provisioned. | Student data will be protected from the first real deployment. Passed two rounds of independent security review; merged. |
 
 # 5. Proposed infrastructure and running costs
