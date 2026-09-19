@@ -7,14 +7,7 @@ import NoteBlock from '@/components/notes/NoteBlock'
 import { ChevronDown, BookOpen, FileText, Star, ArrowRight, Download, Check, Loader2, WifiOff, AlertCircle } from 'lucide-react'
 import type { TopicContent } from '@/types'
 import { useUser } from '@/context/UserContext'
-import {
-  isTopicDownloaded,
-  getDownloadedTopicCount,
-  storeTopic,
-  storeQuestions,
-  storeAudio,
-  type OfflineQuestion,
-} from '@/lib/offlineStorage'
+import { isTopicDownloaded, getDownloadedTopicCount, storeTopic } from '@/lib/offlineStorage'
 import { useOnlineStatus } from '@/hooks/useOnlineStatus'
 
 const FREE_TIER_OFFLINE_LIMIT = 2
@@ -75,10 +68,20 @@ export default function TopicPageClient({ slug, content }: TopicPageClientProps)
     }
 
     setDownloadState('downloading')
-    setDownloadProgress('Caching pages...')
+    setDownloadProgress('Saving notes...')
 
     try {
-      // 1. Cache pages with Cache API
+      // Cache the notes and practice pages with the Cache API so they're
+      // readable offline. This mirrors what the service worker's CacheFirst
+      // runtime caching already does for topic pages on a normal visit -
+      // this button just guarantees it's cached now, on demand, and records
+      // the topic as "saved" (see storeTopic below) so we can enforce the
+      // free-tier limit and show "Saved for offline" in the UI.
+      //
+      // Deliberately does NOT fetch/store questions or audio in IndexedDB:
+      // nothing in the app reads them back yet (offline quiz/audio playback
+      // is a future phase - see src/lib/offlineStorage.ts), so writing them
+      // here was dead weight that made the button's label a lie.
       const cache = await caches.open('angelo-offline-topics')
       const pageResponse = await fetch(`/topics/${slug}`)
       await cache.put(`/topics/${slug}`, pageResponse.clone())
@@ -86,64 +89,12 @@ export default function TopicPageClient({ slug, content }: TopicPageClientProps)
       const practiceResponse = await fetch(`/topics/${slug}/practice`)
       await cache.put(`/topics/${slug}/practice`, practiceResponse.clone())
 
-      // 2. Fetch and store questions from API
-      setDownloadProgress('Downloading questions...')
-      let questionCount = 0
-      try {
-        const questionsRes = await fetch(`/api/admin/questions?topicSlug=${slug}`)
-        if (questionsRes.ok) {
-          const questionsData = await questionsRes.json()
-          if (questionsData.questions && questionsData.questions.length > 0) {
-            const offlineQuestions: OfflineQuestion[] = questionsData.questions.map((q: {
-              id: string
-              questionText: string
-              marks?: number
-              difficulty?: number
-              options?: { optionLetter: string; optionText: string; isCorrect: boolean }[]
-            }) => ({
-              id: q.id,
-              topicSlug: slug,
-              questionText: q.questionText,
-              marks: q.marks || 0,
-              difficulty: q.difficulty || 1,
-              options: q.options?.map((opt: { optionLetter: string; optionText: string; isCorrect: boolean }) => ({
-                letter: opt.optionLetter,
-                text: opt.optionText,
-                isCorrect: opt.isCorrect,
-              })) || [],
-            }))
-            await storeQuestions(offlineQuestions)
-            questionCount = offlineQuestions.length
-          }
-        }
-      } catch (err) {
-        console.warn('Could not fetch questions for offline:', err)
-      }
-
-      // 3. Download and cache audio files for each section
-      setDownloadProgress('Downloading audio...')
-      let audioCount = 0
-      for (const section of content.sections) {
-        const audioPath = `/audio/${slug}/${section.id}.mp3`
-        try {
-          const audioRes = await fetch(audioPath)
-          if (audioRes.ok) {
-            const blob = await audioRes.blob()
-            await storeAudio(slug, section.id, blob)
-            audioCount++
-          }
-        } catch {
-          // Audio file doesn't exist, skip
-        }
-      }
-
-      // 4. Store topic metadata in IndexedDB
       await storeTopic({
         slug,
         title: content.title,
         downloadedAt: new Date().toISOString(),
-        questionCount,
-        audioCount,
+        questionCount: 0,
+        audioCount: 0,
       })
 
       setDownloadProgress('')
@@ -191,7 +142,7 @@ export default function TopicPageClient({ slug, content }: TopicPageClientProps)
             ))}
           </nav>
 
-          {/* Download for Offline Button */}
+          {/* Save Notes for Offline Button */}
           <div className="mt-6 pt-4" style={{ borderTop: '1px solid var(--border-custom)' }}>
             <button
               onClick={handleDownloadForOffline}
@@ -220,25 +171,25 @@ export default function TopicPageClient({ slug, content }: TopicPageClientProps)
               {downloadState === 'downloading' && (
                 <>
                   <Loader2 className="w-4 h-4 animate-spin" />
-                  {downloadProgress || 'Downloading...'}
+                  {downloadProgress || 'Saving...'}
                 </>
               )}
               {downloadState === 'downloaded' && (
                 <>
                   <Check className="w-4 h-4" />
-                  Available offline
+                  Saved for offline
                 </>
               )}
               {downloadState === 'idle' && (
                 <>
                   <Download className="w-4 h-4" />
-                  Download for offline
+                  Save notes for offline
                 </>
               )}
               {downloadState === 'error' && (
                 <>
                   <WifiOff className="w-4 h-4" />
-                  Download failed
+                  Save failed
                 </>
               )}
               {downloadState === 'limit_reached' && (
@@ -248,6 +199,9 @@ export default function TopicPageClient({ slug, content }: TopicPageClientProps)
                 </>
               )}
             </button>
+            <p className="mt-2 text-xs" style={{ color: 'var(--muted-custom)' }}>
+              Notes and formulas are cached automatically for offline reading. Save this topic to keep its notes available without a connection.
+            </p>
 
             {/* Offline indicator */}
             {!isOnline && (
