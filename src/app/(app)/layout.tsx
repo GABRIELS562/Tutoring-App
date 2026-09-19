@@ -1,9 +1,9 @@
 import { redirect } from 'next/navigation'
 import { createServerClient } from '@supabase/ssr'
 import { cookies } from 'next/headers'
-import { getTranslations } from 'next-intl/server'
 import { UserProvider, UserData } from '@/context/UserContext'
 import Sidebar from '@/components/layout/Sidebar'
+import SkipLink from '@/components/layout/SkipLink'
 import InstallPrompt from '@/components/InstallPrompt'
 import CameraScan from '@/components/ai/CameraScan'
 
@@ -97,7 +97,6 @@ export default async function AppLayout({
   children: React.ReactNode
 }) {
   const user = await getUser()
-  const t = await getTranslations('common')
 
   // Only redirect if Supabase is configured and user is null
   const supabaseConfigured = process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
@@ -107,17 +106,13 @@ export default async function AppLayout({
 
   return (
     <UserProvider user={user}>
-      <a
-        href="#main-content"
-        className="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-[100] focus:rounded-lg focus:px-4 focus:py-2 focus:font-semibold focus:text-white"
-        style={{ background: 'var(--accent-red)' }}
-      >
-        {t('skipToContent')}
-      </a>
+      <SkipLink />
       <div className="min-h-screen" style={{ background: 'var(--bg)' }}>
         <Sidebar />
-        {/* Main content area */}
-        <main id="main-content" className="md:ml-[60px] pb-20 md:pb-0">
+        {/* Main content area. tabIndex={-1} makes it a valid programmatic
+            focus target for SkipLink - without it, .focus() from script
+            is a no-op on a non-interactive element like <main>. */}
+        <main id="main-content" tabIndex={-1} className="md:ml-[60px] pb-20 md:pb-0">
           {children}
         </main>
         <InstallPrompt />
