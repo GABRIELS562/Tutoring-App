@@ -103,6 +103,38 @@ export async function getAllPastPapers(
   }
 }
 
+export type PastPaperNaturalKey = {
+  subject: string
+  grade: number
+  year: number
+  paperNumber: number
+  examType: string
+}
+
+/**
+ * A paper is considered a duplicate of one already seeded when its
+ * subject, grade, year, paper number and exam type all match - the
+ * natural key for a past paper (there's no unique constraint on the
+ * table, so seed-papers.ts checks this before inserting).
+ */
+export async function pastPaperExists(paper: PastPaperNaturalKey): Promise<boolean> {
+  const existing = await db
+    .select({ id: pastPapers.id })
+    .from(pastPapers)
+    .where(
+      and(
+        eq(pastPapers.subject, paper.subject),
+        eq(pastPapers.grade, paper.grade),
+        eq(pastPapers.year, paper.year),
+        eq(pastPapers.paperNumber, paper.paperNumber),
+        eq(pastPapers.examType, paper.examType)
+      )
+    )
+    .limit(1)
+
+  return existing.length > 0
+}
+
 export async function getPastPaperById(id: string): Promise<PastPaperRecord | null> {
   try {
     const results = await db
