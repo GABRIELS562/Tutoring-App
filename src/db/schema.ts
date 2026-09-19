@@ -1,4 +1,4 @@
-import { pgTable, uuid, text, integer, boolean, timestamp, date, decimal, index, unique } from 'drizzle-orm/pg-core'
+import { pgTable, uuid, text, integer, boolean, timestamp, date, decimal, index, unique, uniqueIndex } from 'drizzle-orm/pg-core'
 
 // Table 1: users
 export const users = pgTable('users', {
@@ -108,7 +108,12 @@ export const studentProgress = pgTable('student_progress', {
 }, (table) => [
   index('student_progress_user_id_idx').on(table.userId),
   index('student_progress_question_id_idx').on(table.questionId),
-  index('student_progress_user_question_idx').on(table.userId, table.questionId),
+  // One row per (user, question): saveProgress() in
+  // db/queries/questions.ts depends on this to upsert-and-lock the row
+  // (INSERT ... ON CONFLICT DO NOTHING, then SELECT ... FOR UPDATE)
+  // instead of two concurrent first-time answers to the same question
+  // racing to insert duplicate rows and each awarding XP.
+  uniqueIndex('student_progress_user_question_unique').on(table.userId, table.questionId),
 ])
 
 // Table 8: past_papers
