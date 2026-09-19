@@ -1,10 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server'
+import type Anthropic from '@anthropic-ai/sdk'
 import { z } from 'zod'
 import { getApiSupabase } from '@/lib/supabase/api'
 import { requireUser, authErrorResponse } from '@/lib/auth/require-user'
 import { badges, PROMPT_CHALLENGE_XP_PER_STAR } from '@/content/ai-skills'
 import { checkPremiumStatus } from '@/db/queries/users'
 import { isDemoMode } from '@/db'
+import { getClaudeClient, createTutorMessage, ClaudeError, type ClaudeErrorKind } from '@/lib/claude'
 import {
   HintRequestSchema,
   type HintMode,
@@ -14,7 +16,24 @@ import {
 
 const FREE_HINT_LIMIT = 5
 const FREE_CAMERA_LIMIT = 1
-const ANTHROPIC_API_URL = 'https://api.anthropic.com/v1/messages'
+
+// Maps a ClaudeError's normalized kind to the HTTP status this route
+// returns to the client. rate_limit/timeout/server are all "the model
+// service is having trouble, try again shortly" (503); auth (our own
+// misconfigured API key) and unknown are treated as an internal error
+// (500) - neither is something the student can retry their way out of.
+function claudeErrorStatus(kind: ClaudeErrorKind): number {
+  switch (kind) {
+    case 'rate_limit':
+    case 'timeout':
+    case 'server':
+      return 503
+    case 'auth':
+    case 'unknown':
+    default:
+      return 500
+  }
+}
 
 /**
  * Premium status is never trusted from the client - a request body field
@@ -382,10 +401,10 @@ export async function POST(request: NextRequest) {
       await updateUsageRecord(userId, today, mode, usageRecord)
     }
 
-    const apiKey = process.env.ANTHROPIC_API_KEY
+    const claudeClient = getClaudeClient()
 
     // If no API key, return a helpful mock response (without hollow affirmations)
-    if (!apiKey) {
+    if (!claudeClient) {
       // Special handling for prompt_evaluation mode - return structured JSON
       if (mode === 'prompt_evaluation') {
         const mockEvaluation = {
@@ -471,7 +490,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Build the messages array
-    const messages: { role: 'user'; content: string | { type: string; source?: { type: string; media_type: string; data: string }; text?: string }[] }[] = []
+    const messages: Anthropic.MessageParam[] = []
 
     if (mode === 'camera_scan' && imageBase64) {
       // Vision request with image
@@ -500,36 +519,28 @@ export async function POST(request: NextRequest) {
       })
     }
 
-    // Call Anthropic API with correct model and token limit
+    // Call Anthropic via the shared helper (src/lib/claude.ts): correct
+    // model (env-driven, see getClaudeModel()), cached system prompt,
+    // SDK-managed timeout/retries.
     const systemPrompt = getSystemPromptForMode(mode, locale)
     const maxTokens = mode === 'prompt_evaluation' ? 400 : 150
 
-    const response = await fetch(ANTHROPIC_API_URL, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'x-api-key': apiKey,
-        'anthropic-version': '2023-06-01',
-      },
-      body: JSON.stringify({
-        model: 'claude-sonnet-4-20250514',
-        max_tokens: maxTokens,
+    let aiResponse: string
+    try {
+      const result = await createTutorMessage({
         system: systemPrompt,
         messages,
-      }),
-    })
-
-    if (!response.ok) {
-      const error = await response.text()
+        maxTokens,
+      })
+      aiResponse = result.text
+    } catch (error) {
       console.error('Anthropic API error:', error)
+      const status = error instanceof ClaudeError ? claudeErrorStatus(error.kind) : 500
       return NextResponse.json(
         { error: 'Failed to get AI hint' },
-        { status: 500 }
+        { status }
       )
     }
-
-    const data = await response.json()
-    const aiResponse = data.content?.[0]?.text || ''
 
     // Calculate remaining for response - best-effort display info for an
     // already-granted, already-completed request; see the comment on the

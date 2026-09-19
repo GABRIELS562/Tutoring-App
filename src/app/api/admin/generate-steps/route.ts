@@ -1,7 +1,19 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { requireAdmin, authErrorResponse } from '@/lib/auth/require-user'
+import { getClaudeClient, createTutorMessage, ClaudeError, type ClaudeErrorKind } from '@/lib/claude'
 
-const ANTHROPIC_API_URL = 'https://api.anthropic.com/v1/messages'
+function claudeErrorStatus(kind: ClaudeErrorKind): number {
+  switch (kind) {
+    case 'rate_limit':
+    case 'timeout':
+    case 'server':
+      return 503
+    case 'auth':
+    case 'unknown':
+    default:
+      return 500
+  }
+}
 
 export async function POST(request: NextRequest) {
   try {
@@ -21,10 +33,10 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    const apiKey = process.env.ANTHROPIC_API_KEY
+    const claudeClient = getClaudeClient()
 
     // If no API key, return mock steps for demo
-    if (!apiKey) {
+    if (!claudeClient) {
       const mockSteps = [
         {
           instruction: 'Identify what the question is asking for',
@@ -74,16 +86,9 @@ Respond in JSON format only:
 
 Focus on trigonometry, algebra, functions, and calculus common in NSC exams.`
 
-    const response = await fetch(ANTHROPIC_API_URL, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'x-api-key': apiKey,
-        'anthropic-version': '2023-06-01',
-      },
-      body: JSON.stringify({
-        model: 'claude-3-haiku-20240307',
-        max_tokens: 1000,
+    let content: string
+    try {
+      const result = await createTutorMessage({
         system: systemPrompt,
         messages: [
           {
@@ -91,20 +96,17 @@ Focus on trigonometry, algebra, functions, and calculus common in NSC exams.`
             content: `Generate step-by-step solution steps for this maths question:\n\n${questionText}`,
           },
         ],
-      }),
-    })
-
-    if (!response.ok) {
-      const error = await response.text()
+        maxTokens: 1000,
+      })
+      content = result.text
+    } catch (error) {
       console.error('Anthropic API error:', error)
+      const status = error instanceof ClaudeError ? claudeErrorStatus(error.kind) : 500
       return NextResponse.json(
         { error: 'Failed to generate steps' },
-        { status: 500 }
+        { status }
       )
     }
-
-    const data = await response.json()
-    const content = data.content?.[0]?.text || ''
 
     // Parse JSON from response
     try {
