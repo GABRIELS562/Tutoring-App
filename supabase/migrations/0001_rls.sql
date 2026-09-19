@@ -290,3 +290,20 @@ DROP POLICY IF EXISTS "notes_select_public" ON notes;
 CREATE POLICY "notes_select_public" ON notes
   FOR SELECT
   USING (true);
+
+
+-- =============================================================================
+-- 8. ai_usage_log — service-role only, NO policies (deliberately). Written
+--    by src/lib/claude-usage-log.ts (via the service-role client, which
+--    bypasses RLS) after every successful Anthropic call, for spend
+--    visibility - see DEPLOYMENT.md "Monthly spend cap". This is an
+--    internal spend/usage log, not a student-facing table like
+--    ai_hint_usage, so unlike every other table in this migration it gets
+--    no SELECT/INSERT/UPDATE/DELETE policy at all: enabling RLS with zero
+--    policies denies every operation to the anon and authenticated roles
+--    by default (Postgres RLS fails closed when no policy matches),
+--    leaving only the service role - which bypasses RLS entirely - able
+--    to read or write this table.
+-- =============================================================================
+
+ALTER TABLE ai_usage_log ENABLE ROW LEVEL SECURITY;

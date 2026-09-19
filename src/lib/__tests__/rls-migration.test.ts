@@ -107,6 +107,11 @@ describe('supabase/migrations/0001_rls.sql', () => {
     }
   })
 
+  it('enables RLS on ai_usage_log with no policies at all (service-role only)', () => {
+    expectRlsEnabled('ai_usage_log')
+    expect(sql).not.toMatch(/CREATE POLICY "ai_usage_log_/)
+  })
+
   it('adds a UNIQUE (user_id, usage_date) constraint on ai_hint_usage, idempotently', () => {
     expect(sql).toMatch(/DROP CONSTRAINT IF EXISTS ai_hint_usage_user_date_unique/)
     expect(sql).toMatch(

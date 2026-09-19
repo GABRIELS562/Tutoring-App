@@ -47,8 +47,8 @@ function makeRequest(body: Record<string, unknown>) {
   })
 }
 
-/** A minimal ai_hint_usage-shaped Supabase client for these tests. */
-function makeSupabaseMock(rpcMock: ReturnType<typeof vi.fn>) {
+/** A minimal ai_hint_usage/ai_usage_log-shaped Supabase client for these tests. */
+function makeSupabaseMock(rpcMock: ReturnType<typeof vi.fn>, usageLogInsertMock?: ReturnType<typeof vi.fn>) {
   return {
     from(table: string) {
       if (table === 'ai_hint_usage') {
@@ -60,6 +60,11 @@ function makeSupabaseMock(rpcMock: ReturnType<typeof vi.fn>) {
               }),
             }),
           }),
+        }
+      }
+      if (table === 'ai_usage_log') {
+        return {
+          insert: usageLogInsertMock ?? (() => Promise.resolve({ error: null })),
         }
       }
       throw new Error(`Unexpected table in test mock: ${table}`)
@@ -162,5 +167,32 @@ describe('POST /api/ai-hint usage increment timing and day key', () => {
       'increment_hint_usage',
       expect.objectContaining({ p_usage_date: '2026-03-15' })
     )
+  })
+
+  it('logs usage to ai_usage_log (fire-and-forget) after a successful call', async () => {
+    const rpcMock = vi.fn().mockResolvedValue({
+      data: { id: 'usage-1', hint_count: 1, camera_count: 0 },
+      error: null,
+    })
+    const usageLogInsertMock = vi.fn().mockResolvedValue({ error: null })
+    getApiSupabaseMock.mockReturnValue(makeSupabaseMock(rpcMock, usageLogInsertMock))
+    createTutorMessageMock.mockResolvedValueOnce({
+      text: 'Here is a nudge.',
+      usage: { input_tokens: 42, output_tokens: 17, cache_read_input_tokens: 5 },
+    })
+
+    const res = await POST(
+      makeRequest({ mode: 'step_hint', questionText: 'q', stepNumber: 1 })
+    )
+    expect(res.status).toBe(200)
+
+    expect(usageLogInsertMock).toHaveBeenCalledWith({
+      user_id: 'free-user-1',
+      mode: 'step_hint',
+      model: 'claude-sonnet-5',
+      input_tokens: 42,
+      output_tokens: 17,
+      cache_read_tokens: 5,
+    })
   })
 })

@@ -1,6 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { requireAdmin, authErrorResponse } from '@/lib/auth/require-user'
-import { getClaudeClient, createTutorMessage, ClaudeError, type ClaudeErrorKind } from '@/lib/claude'
+import { getClaudeClient, createTutorMessage, getClaudeModel, ClaudeError, type ClaudeErrorKind } from '@/lib/claude'
+import { logClaudeUsage } from '@/lib/claude-usage-log'
+
+// mode label for ai_usage_log rows from this route - there's no HintMode
+// equivalent here (generate-steps isn't part of api/ai-hint), so this is
+// its own literal.
+const USAGE_LOG_MODE = 'generate_steps'
 
 // See the identical comment in src/app/api/ai-hint/route.ts - this route
 // also calls the Anthropic API and must outlive Vercel's default
@@ -22,8 +28,9 @@ function claudeErrorStatus(kind: ClaudeErrorKind): number {
 }
 
 export async function POST(request: NextRequest) {
+  let admin
   try {
-    await requireAdmin()
+    admin = await requireAdmin()
   } catch (err) {
     return authErrorResponse(err)
   }
@@ -105,6 +112,9 @@ Focus on trigonometry, algebra, functions, and calculus common in NSC exams.`
         maxTokens: 1000,
       })
       content = result.text
+      // Fire-and-forget: never awaited, never allowed to fail this
+      // response - see logClaudeUsage()'s doc comment.
+      logClaudeUsage({ userId: admin.id, mode: USAGE_LOG_MODE, model: getClaudeModel(), usage: result.usage })
     } catch (error) {
       console.error('Anthropic API error:', error)
       const status = error instanceof ClaudeError ? claudeErrorStatus(error.kind) : 500

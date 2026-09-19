@@ -6,7 +6,8 @@ import { requireUser, authErrorResponse } from '@/lib/auth/require-user'
 import { badges, PROMPT_CHALLENGE_XP_PER_STAR } from '@/content/ai-skills'
 import { checkPremiumStatus } from '@/db/queries/users'
 import { isDemoMode } from '@/db'
-import { getClaudeClient, createTutorMessage, ClaudeError, type ClaudeErrorKind } from '@/lib/claude'
+import { getClaudeClient, createTutorMessage, getClaudeModel, ClaudeError, type ClaudeErrorKind } from '@/lib/claude'
+import { logClaudeUsage } from '@/lib/claude-usage-log'
 import { getTodaySAST } from '@/lib/date/today-sast'
 import {
   HintRequestSchema,
@@ -586,6 +587,9 @@ export async function POST(request: NextRequest) {
         maxTokens,
       })
       aiResponse = result.text
+      // Fire-and-forget: never awaited, never allowed to fail this
+      // response - see logClaudeUsage()'s doc comment.
+      logClaudeUsage({ userId, mode, model: getClaudeModel(), usage: result.usage })
     } catch (error) {
       console.error('Anthropic API error:', error)
       const status = error instanceof ClaudeError ? claudeErrorStatus(error.kind) : 500

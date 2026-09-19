@@ -178,3 +178,26 @@ export const promptChallengeAttempts = pgTable('prompt_challenge_attempts', {
   // attempt updates the existing row instead of inserting a duplicate.
   unique('prompt_challenge_attempts_user_challenge_unique').on(table.userId, table.challengeId),
 ])
+
+// Table 12: ai_usage_log - spend visibility, not enforcement. One row per
+// successful Anthropic call (src/lib/claude-usage-log.ts, called from
+// api/ai-hint and api/admin/generate-steps after createTutorMessage()
+// succeeds), for a future admin usage view and manual cost auditing. The
+// actual spend cap is the monthly limit set on the Anthropic account at
+// provisioning (see DEPLOYMENT.md) - this table cannot prevent overspend
+// on its own, only make it visible after the fact. Service-role only:
+// RLS is enabled with no policies (supabase/migrations/0001_rls.sql),
+// so anon/authenticated get zero access.
+export const aiUsageLog = pgTable('ai_usage_log', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  userId: text('user_id').notNull(), // text, not uuid - matches ai_hint_usage (stores 'demo-user' too)
+  mode: text('mode').notNull(), // HintMode from api/ai-hint/prompts.ts, or 'generate_steps'
+  model: text('model').notNull(), // getClaudeModel() at call time
+  inputTokens: integer('input_tokens').default(0),
+  outputTokens: integer('output_tokens').default(0),
+  cacheReadTokens: integer('cache_read_tokens').default(0),
+  createdAt: timestamp('created_at').defaultNow(),
+}, (table) => [
+  index('ai_usage_log_user_id_idx').on(table.userId),
+  index('ai_usage_log_created_at_idx').on(table.createdAt),
+])
