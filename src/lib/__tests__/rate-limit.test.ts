@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest'
-import { checkRateLimit, _debugBucketCount } from '@/lib/rate-limit'
+import { checkRateLimit, getClientIp, _debugBucketCount } from '@/lib/rate-limit'
 
 describe('checkRateLimit', () => {
   beforeEach(() => {
@@ -94,5 +94,30 @@ describe('checkRateLimit', () => {
     checkRateLimit(`${prefix}trigger`, { max: 1, windowMs: 60_000 })
 
     expect(_debugBucketCount()).toBeLessThan(50)
+  })
+})
+
+describe('getClientIp', () => {
+  it('takes the first entry of x-forwarded-for', () => {
+    const headers = { get: (name: string) => (name === 'x-forwarded-for' ? '203.0.113.5, 10.0.0.1' : null) }
+    expect(getClientIp(headers)).toBe('203.0.113.5')
+  })
+
+  it('falls back to "unknown" when x-forwarded-for is absent', () => {
+    const headers = { get: () => null }
+    expect(getClientIp(headers)).toBe('unknown')
+  })
+
+  it('accepts a standard Headers instance (NextRequest.headers)', () => {
+    const headers = new Headers({ 'x-forwarded-for': '198.51.100.7' })
+    expect(getClientIp(headers)).toBe('198.51.100.7')
+  })
+
+  it('accepts a next/headers ReadonlyHeaders-shaped object (Server Components)', () => {
+    // Only relies on .get() - the same minimal shape next/headers's
+    // headers() result satisfies, so this stands in without importing
+    // next/headers (which requires the Next.js request-scope context).
+    const headers = { get: (name: string) => (name === 'x-forwarded-for' ? '192.0.2.1' : null) }
+    expect(getClientIp(headers)).toBe('192.0.2.1')
   })
 })

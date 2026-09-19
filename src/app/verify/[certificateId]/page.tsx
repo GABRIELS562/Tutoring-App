@@ -1,9 +1,45 @@
 import Link from 'next/link'
+import { headers } from 'next/headers'
 import { CheckCircle2, XCircle } from 'lucide-react'
 import { lookupCertificate, type VerifiedCertificate } from '@/lib/certificates/verify-certificate'
+import { checkRateLimit, getClientIp } from '@/lib/rate-limit'
 
 interface VerifyPageProps {
   params: Promise<{ certificateId: string }>
+}
+
+// Real certificate ids (src/lib/certificate-id.ts) are always this exact
+// shape - AT-<4-digit year>-<8 uppercase alphanumeric>. Rejecting
+// anything else before ever touching the rate limiter or the database is
+// a cheap fail-fast: it costs nothing to check, and it means a flood of
+// obviously-malformed ids (typos, injection-shaped garbage, scraped
+// junk) never consumes rate-limit budget or a DB round trip.
+const CERTIFICATE_ID_PATTERN = /^AT-\d{4}-[A-Z0-9]{8}$/
+
+/**
+ * Resolves a certificate for display, applying the same guards as the
+ * JSON API route (src/app/api/verify/[certificateId]/route.ts) in the
+ * same order: id shape first (fail fast, no rate-limit/DB cost for
+ * garbage), then the shared "verify:<ip>" rate limit (best-effort,
+ * per-process - see src/lib/rate-limit.ts), then the actual lookup.
+ *
+ * A rejected id and a rate-limited request both resolve to null here,
+ * same as a genuinely nonexistent certificate - the page renders the
+ * same "not found" card for all three with no distinct message, so a
+ * scraper learns nothing about *why* a given id didn't verify.
+ */
+async function resolveCertificate(certificateId: string): Promise<VerifiedCertificate | null> {
+  if (!CERTIFICATE_ID_PATTERN.test(certificateId)) {
+    return null
+  }
+
+  const headersList = await headers()
+  const rateLimit = checkRateLimit(`verify:${getClientIp(headersList)}`)
+  if (!rateLimit.allowed) {
+    return null
+  }
+
+  return lookupCertificate(certificateId)
 }
 
 export async function generateMetadata({ params }: VerifyPageProps) {
@@ -27,7 +63,7 @@ export async function generateMetadata({ params }: VerifyPageProps) {
  */
 export default async function VerifyCertificatePage({ params }: VerifyPageProps) {
   const { certificateId } = await params
-  const certificate = await lookupCertificate(certificateId)
+  const certificate = await resolveCertificate(certificateId)
 
   return (
     <div
