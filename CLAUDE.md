@@ -122,5 +122,5 @@ Shadcn (`components.json`, base-nova style) in `src/components/ui/`; Tailwind v4
 - `SUPABASE_SERVICE_ROLE_KEY` is only referenced in `src/lib/supabase/api.ts` — server routes silently fall back to the anon key when it is unset, so writes become subject to the RLS policies in `0001_rls.sql`.
 - The RLS and functions migrations have never been run against a live Postgres; first real run is a pre-launch step (`DEPLOYMENT.md`).
 - The free-tier AI quota is check-then-act (bounded by client concurrency) — documented accepted risk in `ai-hint/route.ts`.
-- `next-pwa` is unmaintained (2022); `middleware.ts` → `proxy.ts` migration is done (Phase 5). i18n strings exist for `en`/`af` but most pages still hard-code English (Phase 5).
-- Progress: `docs/BUILD-PLAN.md` — Phases 0–4 merged; Phase 5 (i18n/a11y/password reset) and Phase 6 (real services) outstanding.
+- `next-pwa` is unmaintained (2022).
+- Progress: `docs/BUILD-PLAN.md` — Phases 0–4 merged; Phase 5 (i18n/a11y/password reset, branch `phase-5/i18n-a11y-ux`) done, pending merge to `develop`; Phase 6 (real services) outstanding.
