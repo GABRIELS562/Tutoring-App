@@ -25,7 +25,6 @@ export default function TopicPageClient({ slug, content }: TopicPageClientProps)
   const [tocOpen, setTocOpen] = useState(false)
   const [activeSection, setActiveSection] = useState<string | null>(null)
   const [downloadState, setDownloadState] = useState<'idle' | 'downloading' | 'downloaded' | 'error' | 'limit_reached'>('idle')
-  const [downloadProgress, setDownloadProgress] = useState('')
   const isOnline = useOnlineStatus()
   const { user } = useUser()
   const isPremium = user?.isPremium ?? false
@@ -72,7 +71,6 @@ export default function TopicPageClient({ slug, content }: TopicPageClientProps)
     }
 
     setDownloadState('downloading')
-    setDownloadProgress(t('saving'))
 
     try {
       // Cache the notes and practice pages with the Cache API so they're
@@ -101,12 +99,10 @@ export default function TopicPageClient({ slug, content }: TopicPageClientProps)
         audioCount: 0,
       })
 
-      setDownloadProgress('')
       setDownloadState('downloaded')
     } catch (error) {
       console.error('Failed to cache topic:', error)
       setDownloadState('error')
-      setDownloadProgress('')
       setTimeout(() => setDownloadState('idle'), 3000)
     }
   }
@@ -177,7 +173,7 @@ export default function TopicPageClient({ slug, content }: TopicPageClientProps)
               {downloadState === 'downloading' && (
                 <>
                   <Loader2 className="w-4 h-4 animate-spin" />
-                  {downloadProgress || t('saving')}
+                  {t('saving')}
                 </>
               )}
               {downloadState === 'downloaded' && (
