@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useRef, useEffect } from 'react'
+import { useState, useRef, useEffect, useId } from 'react'
 import { useRouter } from 'next/navigation'
 import { Globe, Check } from 'lucide-react'
 import { useTranslations } from 'next-intl'
@@ -18,6 +18,8 @@ export default function LanguageToggle({ variant = 'dropdown', showLabel = false
   const currentLocale = useLocaleCookie()
   const [dropdownOpen, setDropdownOpen] = useState(false)
   const dropdownRef = useRef<HTMLDivElement>(null)
+  const triggerRef = useRef<HTMLButtonElement>(null)
+  const panelId = useId()
   const router = useRouter()
 
   // The accessible name must announce the language a click will switch TO,
@@ -36,6 +38,23 @@ export default function LanguageToggle({ variant = 'dropdown', showLabel = false
     document.addEventListener('mousedown', handleClickOutside)
     return () => document.removeEventListener('mousedown', handleClickOutside)
   }, [])
+
+  // Escape closes the menu and returns focus to the trigger - without
+  // this, a keyboard user who opens the menu and backs out with Escape
+  // (the standard way to dismiss any menu/dialog) loses their place on
+  // the page entirely, since nothing else moves focus for them.
+  useEffect(() => {
+    if (!dropdownOpen) return
+
+    const handleEscape = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setDropdownOpen(false)
+        triggerRef.current?.focus()
+      }
+    }
+    document.addEventListener('keydown', handleEscape)
+    return () => document.removeEventListener('keydown', handleEscape)
+  }, [dropdownOpen])
 
   const handleLocaleChange = (locale: Locale) => {
     setLocaleCookie(locale) // notifies useLocaleCookie subscribers immediately
@@ -72,11 +91,13 @@ export default function LanguageToggle({ variant = 'dropdown', showLabel = false
   return (
     <div className="relative" ref={dropdownRef}>
       <button
+        ref={triggerRef}
         onClick={() => setDropdownOpen(!dropdownOpen)}
         className="flex items-center gap-2 px-2.5 py-1.5 rounded-lg text-sm font-medium transition-colors hover:bg-white/5"
         style={{ color: 'var(--text)' }}
         aria-label={switchToLabel}
         aria-expanded={dropdownOpen}
+        aria-controls={panelId}
       >
         <Globe className="w-4 h-4" style={{ color: 'var(--muted-custom)' }} />
         <span>{localeFlags[currentLocale]}</span>
@@ -85,6 +106,7 @@ export default function LanguageToggle({ variant = 'dropdown', showLabel = false
 
       {dropdownOpen && (
         <div
+          id={panelId}
           className="absolute right-0 top-full mt-2 w-40 rounded-lg shadow-lg py-1 z-50"
           style={{ background: 'var(--surface2)', border: '1px solid var(--border-custom)' }}
         >

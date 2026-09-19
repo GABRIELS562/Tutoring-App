@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useRef, useEffect } from 'react'
+import { useState, useRef, useEffect, useId } from 'react'
 import { useRouter } from 'next/navigation'
 import { createBrowserClient } from '@supabase/ssr'
 import { useUser } from '@/context/UserContext'
@@ -23,6 +23,8 @@ export default function Topbar({ title, subtitle }: TopbarProps) {
   const [dropdownOpen, setDropdownOpen] = useState(false)
   const isOnline = useOnlineStatus()
   const dropdownRef = useRef<HTMLDivElement>(null)
+  const triggerRef = useRef<HTMLButtonElement>(null)
+  const menuId = useId()
   const router = useRouter()
 
   // Close dropdown when clicking outside
@@ -35,6 +37,23 @@ export default function Topbar({ title, subtitle }: TopbarProps) {
     document.addEventListener('mousedown', handleClickOutside)
     return () => document.removeEventListener('mousedown', handleClickOutside)
   }, [])
+
+  // Escape closes the menu and returns focus to the trigger, same as
+  // LanguageToggle - standard menu-dismissal behaviour that nothing else
+  // here provides (clicking outside works, but a keyboard user relies on
+  // Escape).
+  useEffect(() => {
+    if (!dropdownOpen) return
+
+    const handleEscape = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setDropdownOpen(false)
+        triggerRef.current?.focus()
+      }
+    }
+    document.addEventListener('keydown', handleEscape)
+    return () => document.removeEventListener('keydown', handleEscape)
+  }, [dropdownOpen])
 
   const handleSignOut = async () => {
     const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
@@ -121,10 +140,12 @@ export default function Topbar({ title, subtitle }: TopbarProps) {
         {/* Avatar Dropdown */}
         <div className="relative" ref={dropdownRef}>
           <button
+            ref={triggerRef}
             onClick={() => setDropdownOpen(!dropdownOpen)}
             className="flex items-center gap-2 rounded-full focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring)]"
             aria-label={t('userMenu')}
             aria-expanded={dropdownOpen}
+            aria-controls={menuId}
           >
             <div
               className="w-9 h-9 rounded-full flex items-center justify-center text-white text-sm font-semibold"
@@ -144,6 +165,7 @@ export default function Topbar({ title, subtitle }: TopbarProps) {
           {/* Dropdown Menu */}
           {dropdownOpen && (
             <div
+              id={menuId}
               className="absolute right-0 top-full mt-2 w-48 rounded-lg shadow-lg py-1 z-50"
               style={{ background: 'var(--surface2)', border: '1px solid var(--border-custom)' }}
             >
