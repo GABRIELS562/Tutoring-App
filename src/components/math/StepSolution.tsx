@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { HelpCircle, ChevronDown, ChevronUp } from 'lucide-react'
+import { HelpCircle, ChevronDown, ChevronUp, MessageCircle, Loader2 } from 'lucide-react'
 import MathRenderer from './MathRenderer'
 
 type Step = {
@@ -15,10 +15,80 @@ type Step = {
 
 type StepSolutionProps = {
   steps: Step[]
+  /** The full question text - sent to /api/ai-hint's step_hint mode so
+   * Angelo has context for the step, not just the step's own instruction. */
+  questionText: string
 }
 
-function StepRow({ step, index }: { step: Step; index: number }) {
+/** Free-tier daily hint quota, shared across every step in this
+ * solution (and every other 'Ask Angelo' surface) - not per step. */
+type RemainingHints = number | 'unlimited' | null
+
+function StepRow({
+  step,
+  index,
+  questionText,
+  remainingHints,
+  onRemainingHintsChange,
+}: {
+  step: Step
+  index: number
+  questionText: string
+  remainingHints: RemainingHints
+  onRemainingHintsChange: (remaining: RemainingHints) => void
+}) {
   const [showHint, setShowHint] = useState(false)
+  const [askingAngelo, setAskingAngelo] = useState(false)
+  const [angeloResponse, setAngeloResponse] = useState<string | null>(null)
+  const [angeloError, setAngeloError] = useState<string | null>(null)
+
+  const quotaExhausted = remainingHints === 0
+
+  // Mirrors the "Ask Angelo" pattern in QuestionCard.tsx (fetch, loading,
+  // error, and 429-quota handling) - the step_hint mode this calls was
+  // previously wired up server-side (prompts.ts, api/ai-hint/route.ts)
+  // but had no caller anywhere in the UI.
+  const handleAskAngelo = async () => {
+    setAskingAngelo(true)
+    setAngeloError(null)
+
+    try {
+      const response = await fetch('/api/ai-hint', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          mode: 'step_hint',
+          questionText,
+          stepNumber: step.stepNumber,
+          hint: step.hint ?? undefined,
+        }),
+      })
+
+      const data = await response.json()
+
+      if (response.status === 429) {
+        setAngeloError(
+          data.message || 'Daily hint limit reached. Upgrade to Premium for unlimited hints!'
+        )
+        onRemainingHintsChange(0)
+        return
+      }
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Failed to get help')
+      }
+
+      setAngeloResponse(data.hint)
+      if (data.remaining === 'unlimited' || typeof data.remaining === 'number') {
+        onRemainingHintsChange(data.remaining)
+      }
+    } catch (error) {
+      setAngeloError('Something went wrong. Please try again.')
+      console.error('Ask Angelo (step hint) error:', error)
+    } finally {
+      setAskingAngelo(false)
+    }
+  }
 
   return (
     <motion.div
@@ -97,12 +167,80 @@ function StepRow({ step, index }: { step: Step; index: number }) {
             {step.explanation}
           </p>
         )}
+
+        {/* Ask Angelo about this step */}
+        {!angeloResponse && (
+          <div className="mt-3">
+            <button
+              onClick={handleAskAngelo}
+              disabled={askingAngelo || quotaExhausted}
+              className="flex items-center gap-2 px-3 py-2 rounded-lg text-xs font-medium transition-all hover:opacity-90 disabled:opacity-50"
+              style={{
+                background: 'rgba(42, 157, 143, 0.15)',
+                color: 'var(--teal)',
+                border: '1px solid var(--teal)',
+              }}
+            >
+              {askingAngelo ? (
+                <>
+                  <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                  Angelo is thinking...
+                </>
+              ) : (
+                <>
+                  <MessageCircle className="w-3.5 h-3.5" />
+                  Ask Angelo about this step
+                </>
+              )}
+            </button>
+            {angeloError && (
+              <p className="mt-2 text-xs" style={{ color: 'var(--accent-red)' }}>
+                {angeloError}
+              </p>
+            )}
+          </div>
+        )}
+
+        {/* Angelo's Response */}
+        {angeloResponse && (
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="mt-3 p-3 rounded-lg"
+            style={{
+              background: 'rgba(42, 157, 143, 0.1)',
+              border: '1px solid var(--teal)',
+            }}
+          >
+            <div className="flex items-start gap-2">
+              <div
+                className="w-6 h-6 rounded-full flex items-center justify-center shrink-0 text-[10px] font-bold text-white"
+                style={{ background: 'var(--teal)' }}
+              >
+                AT
+              </div>
+              <div>
+                <p className="text-xs font-medium mb-1" style={{ color: 'var(--teal)' }}>
+                  Angelo says:
+                </p>
+                <p className="text-sm" style={{ color: 'var(--text)' }}>
+                  {angeloResponse}
+                </p>
+              </div>
+            </div>
+          </motion.div>
+        )}
       </div>
     </motion.div>
   )
 }
 
-export default function StepSolution({ steps }: StepSolutionProps) {
+export default function StepSolution({ steps, questionText }: StepSolutionProps) {
+  // Shared across all steps in this solution - a 429 on one step means
+  // every other step's button should reflect the same exhausted quota
+  // rather than letting the student trigger the same rejection again.
+  const [remainingHints, setRemainingHints] = useState<RemainingHints>(null)
+
   if (!steps || steps.length === 0) {
     return null
   }
@@ -127,7 +265,14 @@ export default function StepSolution({ steps }: StepSolutionProps) {
 
       <div className="space-y-4">
         {steps.map((step, index) => (
-          <StepRow key={step.stepNumber} step={step} index={index} />
+          <StepRow
+            key={step.stepNumber}
+            step={step}
+            index={index}
+            questionText={questionText}
+            remainingHints={remainingHints}
+            onRemainingHintsChange={setRemainingHints}
+          />
         ))}
       </div>
     </motion.div>
