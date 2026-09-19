@@ -65,9 +65,9 @@ export default function ExamCountdown({ subject = 'maths' }: ExamCountdownProps)
           />
         </div>
         <div>
-          <h3 className="font-semibold" style={{ color: 'var(--text)' }}>
+          <h2 className="font-semibold" style={{ color: 'var(--text)' }}>
             {t('title')}
-          </h3>
+          </h2>
           <p className="text-xs" style={{ color: 'var(--muted-custom)' }}>
             {examName}
           </p>

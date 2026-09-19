@@ -33,9 +33,9 @@ export default function WeaknessCard({ weakness }: WeaknessCardProps) {
 
         <div className="flex-1 min-w-0">
           {/* Header */}
-          <h3 className="font-semibold text-sm mb-1" style={{ color: 'var(--text)' }}>
+          <h2 className="font-semibold text-sm mb-1" style={{ color: 'var(--text)' }}>
             {t('spotted')}
-          </h3>
+          </h2>
 
           {/* Issue Description */}
           <p className="text-sm mb-2" style={{ color: 'var(--text)' }}>

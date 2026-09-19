@@ -1,6 +1,27 @@
 import '@testing-library/jest-dom/vitest'
-import { vi } from 'vitest'
+import { vi, expect } from 'vitest'
+// vitest-axe@0.1.0 declares its own matcher export as type-only in its
+// .d.ts (`export type { t as toHaveNoViolations }`), even though the
+// runtime value is a real function - import via require to get the value
+// without TypeScript refusing it as "used as a value", and type it loosely
+// (the real signature is `(results: AxeResults) => RawMatcherResult`).
+import { createRequire } from 'node:module'
 import en from './src/messages/en.json'
+
+const require = createRequire(import.meta.url)
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const axeMatchers = require('vitest-axe/matchers') as Record<string, (...args: any[]) => any>
+
+// vitest-axe@0.1.0's own `vitest-axe/extend-expect` side-effect import ships
+// an empty dist/extend-expect.js (packaging bug in that release) and never
+// actually calls expect.extend - register the matcher by hand instead.
+expect.extend(axeMatchers)
+
+declare module 'vitest' {
+  interface Assertion {
+    toHaveNoViolations(): void
+  }
+}
 
 type Messages = typeof en
 

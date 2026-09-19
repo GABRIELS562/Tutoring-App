@@ -10,7 +10,8 @@
     "close": "Close",
     "search": "Search",
     "offline": "Offline",
-    "online": "Online"
+    "online": "Online",
+    "skipToContent": "Skip to content"
   },
   "nav": {
     "home": "Home",

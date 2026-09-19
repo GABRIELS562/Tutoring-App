@@ -121,15 +121,17 @@ export default function TopicPageClient({ slug, content }: TopicPageClientProps)
       <div className="flex">
         {/* Desktop Table of Contents - Left Sidebar */}
         <aside
+          aria-labelledby="topic-toc-heading"
           className="hidden lg:block w-[240px] flex-shrink-0 h-[calc(100vh-52px)] sticky top-[52px] overflow-y-auto p-4"
           style={{ background: 'var(--surface)', borderRight: '1px solid var(--border-custom)' }}
         >
-          <h3
+          <h2
+            id="topic-toc-heading"
             className="text-xs font-semibold uppercase tracking-wider mb-4"
             style={{ color: 'var(--muted-custom)' }}
           >
             {t('contents')}
-          </h3>
+          </h2>
           <nav className="space-y-1">
             {content.sections.map((section) => (
               <button
@@ -262,12 +264,12 @@ export default function TopicPageClient({ slug, content }: TopicPageClientProps)
             <div className="mb-8">
               <div className="flex items-start justify-between gap-4">
                 <div>
-                  <h1
+                  <h2
                     className="text-2xl md:text-3xl font-bold mb-2"
                     style={{ color: 'var(--text)' }}
                   >
                     {content.title}
-                  </h1>
+                  </h2>
                   <p style={{ color: 'var(--muted-custom)' }}>
                     {tTopics('grade')} {content.grade} {content.subject === 'maths' ? tSubjects('mathematics') : tSubjects('physicalScience')}
                     {content.paper && ` • ${t('paperWord')} ${content.paper}`}
@@ -279,6 +281,9 @@ export default function TopicPageClient({ slug, content }: TopicPageClientProps)
                   onClick={handleDownloadForOffline}
                   disabled={downloadState === 'downloading' || downloadState === 'downloaded'}
                   className="lg:hidden flex-shrink-0 p-2 rounded-lg"
+                  aria-label={
+                    downloadState === 'downloaded' ? t('savedForOffline') : t('saveNotesForOffline')
+                  }
                   style={{
                     background: downloadState === 'downloaded'
                       ? 'rgba(42, 157, 143, 0.15)'
@@ -302,12 +307,12 @@ export default function TopicPageClient({ slug, content }: TopicPageClientProps)
             {/* Sections */}
             {content.sections.map((section) => (
               <section key={section.id} id={section.id} className="mb-12 scroll-mt-20">
-                <h2
+                <h3
                   className="text-xl font-bold mb-4 pb-2"
                   style={{ color: 'var(--text)', borderBottom: '1px solid var(--border-custom)' }}
                 >
                   {section.title}
-                </h2>
+                </h3>
                 {section.blocks.map((block, blockIndex) => (
                   <NoteBlock
                     key={blockIndex}
@@ -335,18 +340,20 @@ export default function TopicPageClient({ slug, content }: TopicPageClientProps)
 
         {/* Desktop Metadata Card - Right Sidebar */}
         <aside
+          aria-labelledby="topic-info-heading"
           className="hidden xl:block w-[200px] flex-shrink-0 p-4"
         >
           <div
             className="sticky top-[68px] rounded-lg p-4"
             style={{ background: 'var(--surface)', border: '1px solid var(--border-custom)' }}
           >
-            <h3
+            <h2
+              id="topic-info-heading"
               className="text-xs font-semibold uppercase tracking-wider mb-4"
               style={{ color: 'var(--muted-custom)' }}
             >
               {t('topicInfo')}
-            </h3>
+            </h2>
 
             {/* Grade Badge */}
             <div className="flex items-center gap-2 mb-3">

@@ -122,7 +122,7 @@ export default function Topbar({ title, subtitle }: TopbarProps) {
         <div className="relative" ref={dropdownRef}>
           <button
             onClick={() => setDropdownOpen(!dropdownOpen)}
-            className="flex items-center gap-2 focus:outline-none"
+            className="flex items-center gap-2 rounded-full focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring)]"
             aria-label={t('userMenu')}
             aria-expanded={dropdownOpen}
           >

@@ -183,9 +183,9 @@ export default function PapersPageClient({ papers }: PapersPageClientProps) {
             >
               <div className="flex items-start justify-between mb-3">
                 <div>
-                  <h3 className="font-bold text-base" style={{ color: 'var(--text)' }}>
+                  <h2 className="font-bold text-base" style={{ color: 'var(--text)' }}>
                     {formatSubject(paper.subject)}
-                  </h3>
+                  </h2>
                   <p className="text-sm" style={{ color: 'var(--muted-custom)' }}>
                     {t('gradeAndPaper', { grade: paper.grade, number: paper.paperNumber })}
                   </p>
