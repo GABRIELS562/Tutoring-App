@@ -5,6 +5,7 @@ import { motion } from 'framer-motion'
 import { ArrowRight, MessageCircle, Loader2 } from 'lucide-react'
 import MathRenderer from '@/components/math/MathRenderer'
 import StepSolution from '@/components/math/StepSolution'
+import { useTranslations } from 'next-intl'
 
 type Option = {
   id: string
@@ -43,6 +44,7 @@ export default function QuestionCard({
   onNext,
   nextDisabled = false,
 }: QuestionCardProps) {
+  const t = useTranslations('quiz')
   const [selectedLetter, setSelectedLetter] = useState<string | null>(null)
   const [answered, setAnswered] = useState(false)
   const [askingAngelo, setAskingAngelo] = useState(false)
@@ -73,7 +75,7 @@ export default function QuestionCard({
       const data = await response.json()
 
       if (response.status === 429) {
-        setAngeloError(data.message || 'Daily hint limit reached. Upgrade to Premium for unlimited hints!')
+        setAngeloError(data.message || t('dailyHintLimitReached'))
         return
       }
 
@@ -83,7 +85,7 @@ export default function QuestionCard({
 
       setAngeloResponse(data.hint)
     } catch (error) {
-      setAngeloError('Something went wrong. Please try again.')
+      setAngeloError(t('somethingWentWrongRetry'))
       console.error('Ask Angelo error:', error)
     } finally {
       setAskingAngelo(false)
@@ -229,12 +231,12 @@ export default function QuestionCard({
             {askingAngelo ? (
               <>
                 <Loader2 className="w-4 h-4 animate-spin" />
-                Angelo is thinking...
+                {t('angeloThinking')}
               </>
             ) : (
               <>
                 <MessageCircle className="w-4 h-4" />
-                Ask Angelo why I got this wrong
+                {t('askAngeloWhy')}
               </>
             )}
           </button>
@@ -266,7 +268,7 @@ export default function QuestionCard({
             </div>
             <div>
               <p className="text-sm font-medium mb-1" style={{ color: 'var(--teal)' }}>
-                Angelo says:
+                {t('angeloSays')}
               </p>
               <p className="text-sm" style={{ color: 'var(--text)' }}>
                 {angeloResponse}
@@ -291,7 +293,7 @@ export default function QuestionCard({
             className="flex items-center gap-2 px-5 py-2.5 rounded-lg font-semibold text-white transition-all hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:opacity-50"
             style={{ background: 'var(--accent-red)' }}
           >
-            Next question
+            {t('nextQuestion')}
             <ArrowRight className="w-4 h-4" />
           </button>
         </motion.div>

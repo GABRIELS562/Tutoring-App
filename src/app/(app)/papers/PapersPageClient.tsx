@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { FileText, BookOpen, Filter, X, ChevronDown, ExternalLink, Shield } from 'lucide-react'
 import Topbar from '@/components/layout/Topbar'
+import { useTranslations } from 'next-intl'
 import type { PastPaperRecord } from '@/db/queries/topics'
 
 type PapersPageClientProps = {
@@ -10,6 +11,7 @@ type PapersPageClientProps = {
 }
 
 export default function PapersPageClient({ papers }: PapersPageClientProps) {
+  const t = useTranslations('papers')
   const [subjectFilter, setSubjectFilter] = useState('')
   const [gradeFilter, setGradeFilter] = useState('')
   const [yearFilter, setYearFilter] = useState('')
@@ -30,7 +32,7 @@ export default function PapersPageClient({ papers }: PapersPageClientProps) {
   })
 
   const formatSubject = (subject: string) => {
-    return subject === 'maths' ? 'Mathematics' : 'Physical Science'
+    return subject === 'maths' ? t('mathematics') : t('physicalScience')
   }
 
   const clearFilters = () => {
@@ -51,7 +53,7 @@ export default function PapersPageClient({ papers }: PapersPageClientProps) {
 
   return (
     <div className="min-h-screen" style={{ background: 'var(--bg)' }}>
-      <Topbar title="Past Papers" subtitle="Official DBE Exam Papers" />
+      <Topbar title={t('title')} subtitle={t('pageSubtitle')} />
 
       <div className="p-4 md:p-6 max-w-6xl mx-auto">
         {/* Filter Bar */}
@@ -66,13 +68,13 @@ export default function PapersPageClient({ papers }: PapersPageClientProps) {
           >
             <span className="flex items-center gap-2 font-medium">
               <Filter className="w-4 h-4" />
-              Filters
+              {t('filters')}
               {hasActiveFilters && (
                 <span
                   className="px-2 py-0.5 text-xs rounded-full"
                   style={{ background: 'var(--accent-red)', color: 'white' }}
                 >
-                  Active
+                  {t('active')}
                 </span>
               )}
             </span>
@@ -85,7 +87,7 @@ export default function PapersPageClient({ papers }: PapersPageClientProps) {
             <div className="grid grid-cols-3 md:grid-cols-4 gap-3">
               <div>
                 <label htmlFor="papers-subject-filter" className="block text-xs font-medium mb-1.5" style={{ color: 'var(--muted-custom)' }}>
-                  Subject
+                  {t('subject')}
                 </label>
                 <select
                   id="papers-subject-filter"
@@ -94,15 +96,15 @@ export default function PapersPageClient({ papers }: PapersPageClientProps) {
                   className="w-full px-3 py-2 rounded-lg text-sm"
                   style={{ background: 'var(--surface2)', color: 'var(--text)', border: '1px solid var(--border-custom)' }}
                 >
-                  <option value="">All Subjects</option>
-                  <option value="maths">Mathematics</option>
-                  <option value="science">Physical Science</option>
+                  <option value="">{t('allSubjects')}</option>
+                  <option value="maths">{t('mathematics')}</option>
+                  <option value="science">{t('physicalScience')}</option>
                 </select>
               </div>
 
               <div>
                 <label htmlFor="papers-grade-filter" className="block text-xs font-medium mb-1.5" style={{ color: 'var(--muted-custom)' }}>
-                  Grade
+                  {t('gradeLabel')}
                 </label>
                 <select
                   id="papers-grade-filter"
@@ -111,16 +113,16 @@ export default function PapersPageClient({ papers }: PapersPageClientProps) {
                   className="w-full px-3 py-2 rounded-lg text-sm"
                   style={{ background: 'var(--surface2)', color: 'var(--text)', border: '1px solid var(--border-custom)' }}
                 >
-                  <option value="">All Grades</option>
-                  <option value="12">Grade 12</option>
-                  <option value="11">Grade 11</option>
-                  <option value="10">Grade 10</option>
+                  <option value="">{t('allGrades')}</option>
+                  <option value="12">{t('grade12')}</option>
+                  <option value="11">{t('grade11')}</option>
+                  <option value="10">{t('grade10')}</option>
                 </select>
               </div>
 
               <div>
                 <label htmlFor="papers-year-filter" className="block text-xs font-medium mb-1.5" style={{ color: 'var(--muted-custom)' }}>
-                  Year
+                  {t('year')}
                 </label>
                 <select
                   id="papers-year-filter"
@@ -129,7 +131,7 @@ export default function PapersPageClient({ papers }: PapersPageClientProps) {
                   className="w-full px-3 py-2 rounded-lg text-sm"
                   style={{ background: 'var(--surface2)', color: 'var(--text)', border: '1px solid var(--border-custom)' }}
                 >
-                  <option value="">All Years</option>
+                  <option value="">{t('allYears')}</option>
                   {years.map(year => (
                     <option key={year} value={year}>{year}</option>
                   ))}
@@ -144,7 +146,7 @@ export default function PapersPageClient({ papers }: PapersPageClientProps) {
                 style={{ color: 'var(--accent-red)' }}
               >
                 <X className="w-4 h-4" />
-                Clear filters
+                {t('clearFilters')}
               </button>
             )}
           </div>
@@ -158,17 +160,17 @@ export default function PapersPageClient({ papers }: PapersPageClientProps) {
           <Shield className="w-5 h-5 mt-0.5 flex-shrink-0" style={{ color: 'var(--teal)' }} />
           <div>
             <p className="text-sm font-medium" style={{ color: 'var(--text)' }}>
-              Official Government Source
+              {t('officialSource')}
             </p>
             <p className="text-xs mt-0.5" style={{ color: 'var(--muted-custom)' }}>
-              Papers sourced directly from <strong>education.gov.za</strong> - Department of Basic Education. Free public domain documents.
+              {t('sourcedPrefix')} <strong>education.gov.za</strong> {t('sourcedSuffix')}
             </p>
           </div>
         </div>
 
         {/* Results */}
         <p className="text-sm mb-4" style={{ color: 'var(--muted-custom)' }}>
-          Showing {sortedPapers.length} paper{sortedPapers.length !== 1 ? 's' : ''}
+          {sortedPapers.length === 1 ? t('showingOne') : t('showingOther', { count: sortedPapers.length })}
         </p>
 
         {/* Papers Grid */}
@@ -185,7 +187,7 @@ export default function PapersPageClient({ papers }: PapersPageClientProps) {
                     {formatSubject(paper.subject)}
                   </h3>
                   <p className="text-sm" style={{ color: 'var(--muted-custom)' }}>
-                    Grade {paper.grade} • Paper {paper.paperNumber}
+                    {t('gradeAndPaper', { grade: paper.grade, number: paper.paperNumber })}
                   </p>
                 </div>
                 <span
@@ -216,7 +218,7 @@ export default function PapersPageClient({ papers }: PapersPageClientProps) {
 
               {paper.topicsCovered && (
                 <div className="mb-4">
-                  <p className="text-xs mb-1.5" style={{ color: 'var(--muted-custom)' }}>Topics:</p>
+                  <p className="text-xs mb-1.5" style={{ color: 'var(--muted-custom)' }}>{t('topicsLabel')}</p>
                   <div className="flex flex-wrap gap-1">
                     {paper.topicsCovered.slice(0, 3).map((topic, i) => (
                       <span
@@ -238,7 +240,7 @@ export default function PapersPageClient({ papers }: PapersPageClientProps) {
                   style={{ background: 'var(--accent-red)', color: 'white' }}
                 >
                   <FileText className="w-4 h-4" />
-                  Paper
+                  {t('paperButton')}
                   <ExternalLink className="w-3 h-3" />
                 </button>
                 {paper.memoUrl && (
@@ -248,7 +250,7 @@ export default function PapersPageClient({ papers }: PapersPageClientProps) {
                     style={{ background: 'var(--surface2)', color: 'var(--text)', border: '1px solid var(--border-custom)' }}
                   >
                     <BookOpen className="w-4 h-4" />
-                    Memo
+                    {t('memoButton')}
                     <ExternalLink className="w-3 h-3" />
                   </button>
                 )}
@@ -263,9 +265,9 @@ export default function PapersPageClient({ papers }: PapersPageClientProps) {
             style={{ background: 'var(--surface)', border: '1px solid var(--border-custom)' }}
           >
             <FileText className="w-12 h-12 mx-auto mb-3 opacity-50" style={{ color: 'var(--muted-custom)' }} />
-            <p className="font-medium mb-1" style={{ color: 'var(--text)' }}>No papers found</p>
+            <p className="font-medium mb-1" style={{ color: 'var(--text)' }}>{t('noPapersFound')}</p>
             <p className="text-sm" style={{ color: 'var(--muted-custom)' }}>
-              {papers.length === 0 ? 'No past papers have been added yet.' : 'Try adjusting your filters'}
+              {papers.length === 0 ? t('noPapersYet') : t('tryAdjustingFilters')}
             </p>
           </div>
         )}

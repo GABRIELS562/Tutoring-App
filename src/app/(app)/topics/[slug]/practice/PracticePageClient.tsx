@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { ArrowLeft, Star } from 'lucide-react'
 import Topbar from '@/components/layout/Topbar'
+import { useTranslations } from 'next-intl'
 import QuizEngine from '@/components/quiz/QuizEngine'
 import { useUser } from '@/context/UserContext'
 import type { QuestionWithDetails } from '@/db/queries/questions'
@@ -27,6 +28,9 @@ export default function PracticePageClient({
 }: PracticePageClientProps) {
   const { user } = useUser()
   const router = useRouter()
+  const t = useTranslations('practice')
+  const tTopics = useTranslations('topics')
+  const tTopicPage = useTranslations('topicPage')
 
   // router.replace() re-renders the server component with the new
   // searchParams, which re-fetches questions server-side - no full
@@ -43,8 +47,8 @@ export default function PracticePageClient({
   return (
     <div className="min-h-screen" style={{ background: 'var(--bg)' }}>
       <Topbar
-        title="Practice"
-        subtitle={`${topicName} • Grade ${user?.grade || 11}${topicPaper ? ` Paper ${topicPaper}` : ''}`}
+        title={t('title')}
+        subtitle={`${topicName} • ${tTopics('grade')} ${user?.grade || 11}${topicPaper ? ` ${tTopicPage('paperWord')} ${topicPaper}` : ''}`}
       />
 
       <div className="p-4 md:p-6 max-w-3xl mx-auto">
@@ -56,7 +60,7 @@ export default function PracticePageClient({
             style={{ color: 'var(--muted-custom)' }}
           >
             <ArrowLeft className="w-4 h-4" />
-            Back to notes
+            {t('backToNotes')}
           </Link>
 
           <h1 className="text-lg font-bold" style={{ color: 'var(--text)' }}>
@@ -76,7 +80,7 @@ export default function PracticePageClient({
               borderColor: !difficulty ? 'var(--accent-red)' : 'var(--border-custom)',
             }}
           >
-            All
+            {t('all')}
           </button>
           <button
             onClick={() => setDifficulty(1)}
@@ -88,7 +92,7 @@ export default function PracticePageClient({
               borderColor: difficulty === 1 ? 'var(--accent-red)' : 'var(--border-custom)',
             }}
           >
-            Easy
+            {t('easy')}
             <Star className="w-3.5 h-3.5" style={{ color: difficulty === 1 ? 'white' : 'var(--gold)' }} />
           </button>
           <button
@@ -101,7 +105,7 @@ export default function PracticePageClient({
               borderColor: difficulty === 2 ? 'var(--accent-red)' : 'var(--border-custom)',
             }}
           >
-            Medium
+            {t('medium')}
             <span style={{ color: difficulty === 2 ? 'white' : 'var(--gold)' }}>★★</span>
           </button>
           <button
@@ -114,7 +118,7 @@ export default function PracticePageClient({
               borderColor: difficulty === 3 ? 'var(--accent-red)' : 'var(--border-custom)',
             }}
           >
-            Hard
+            {t('hard')}
             <span style={{ color: difficulty === 3 ? 'white' : 'var(--gold)' }}>★★★</span>
           </button>
         </div>

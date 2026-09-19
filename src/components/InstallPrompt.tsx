@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { Download, X } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 
 interface BeforeInstallPromptEvent extends Event {
   prompt: () => Promise<void>
@@ -9,6 +10,7 @@ interface BeforeInstallPromptEvent extends Event {
 }
 
 export default function InstallPrompt() {
+  const t = useTranslations('installPrompt')
   const [canShow, setCanShow] = useState(false)
   const [isIOS, setIsIOS] = useState(false)
   const [deferredPrompt, setDeferredPrompt] = useState<BeforeInstallPromptEvent | null>(null)
@@ -86,12 +88,10 @@ export default function InstallPrompt() {
           </div>
           <div className="flex-1 min-w-0">
             <h3 className="font-semibold mb-1" style={{ color: 'var(--text)' }}>
-              Install Angelo Tutoring
+              {t('title')}
             </h3>
             <p className="text-sm mb-3" style={{ color: 'var(--muted-custom)' }}>
-              {isIOS
-                ? 'Tap the share button and select "Add to Home Screen" for the best experience.'
-                : 'Install the app on your device for quick access and offline learning.'}
+              {isIOS ? t('iosInstructions') : t('androidInstructions')}
             </p>
             <div className="flex gap-2">
               {!isIOS && (
@@ -100,7 +100,7 @@ export default function InstallPrompt() {
                   className="px-4 py-2 rounded-lg font-medium text-sm transition-colors"
                   style={{ background: 'var(--accent-red)', color: 'white' }}
                 >
-                  Install
+                  {t('install')}
                 </button>
               )}
               <button
@@ -108,7 +108,7 @@ export default function InstallPrompt() {
                 className="px-4 py-2 rounded-lg font-medium text-sm transition-colors"
                 style={{ background: 'var(--surface2)', color: 'var(--text)' }}
               >
-                {isIOS ? 'Got it' : 'Not now'}
+                {isIOS ? t('gotIt') : t('notNow')}
               </button>
             </div>
           </div>
@@ -116,6 +116,7 @@ export default function InstallPrompt() {
             onClick={handleDismiss}
             className="p-1 rounded-lg transition-colors shrink-0"
             style={{ color: 'var(--muted-custom)' }}
+            aria-label={t('dismiss')}
           >
             <X className="w-5 h-5" />
           </button>

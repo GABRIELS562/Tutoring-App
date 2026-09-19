@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { Globe, Check } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 import { locales, localeNames, localeFlags, type Locale } from '@/i18n/routing'
 import { setLocaleCookie } from '@/lib/locale'
 import { useLocaleCookie } from '@/hooks/useLocaleCookie'
@@ -13,10 +14,17 @@ type LanguageToggleProps = {
 }
 
 export default function LanguageToggle({ variant = 'dropdown', showLabel = false }: LanguageToggleProps) {
+  const t = useTranslations('language')
   const currentLocale = useLocaleCookie()
   const [dropdownOpen, setDropdownOpen] = useState(false)
   const dropdownRef = useRef<HTMLDivElement>(null)
   const router = useRouter()
+
+  // The accessible name must announce the language a click will switch TO,
+  // not just "change language" - with exactly two locales, that's simply
+  // the other one.
+  const targetLocale = locales.find((locale) => locale !== currentLocale) ?? locales[0]
+  const switchToLabel = t('switchTo', { language: localeNames[targetLocale] })
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -67,7 +75,8 @@ export default function LanguageToggle({ variant = 'dropdown', showLabel = false
         onClick={() => setDropdownOpen(!dropdownOpen)}
         className="flex items-center gap-2 px-2.5 py-1.5 rounded-lg text-sm font-medium transition-colors hover:bg-white/5"
         style={{ color: 'var(--text)' }}
-        aria-label="Change language"
+        aria-label={switchToLabel}
+        aria-expanded={dropdownOpen}
       >
         <Globe className="w-4 h-4" style={{ color: 'var(--muted-custom)' }} />
         <span>{localeFlags[currentLocale]}</span>

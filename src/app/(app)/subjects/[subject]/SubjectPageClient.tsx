@@ -4,6 +4,7 @@ import { useState } from 'react'
 import Link from 'next/link'
 import Topbar from '@/components/layout/Topbar'
 import { useUser } from '@/context/UserContext'
+import { useTranslations } from 'next-intl'
 import type { RegisteredTopic } from '@/content/registry'
 import {
   Calculator,
@@ -25,12 +26,12 @@ type SubjectPageClientProps = {
 
 const subjectInfo = {
   maths: {
-    name: 'Mathematics',
+    nameKey: 'mathematics',
     icon: Calculator,
     color: 'var(--accent-red)',
   },
   science: {
-    name: 'Physical Science',
+    nameKey: 'physicalScience',
     icon: Atom,
     color: 'var(--teal)',
   },
@@ -42,10 +43,14 @@ export default function SubjectPageClient({
   progressBySlug,
 }: SubjectPageClientProps) {
   const { user } = useUser()
+  const t = useTranslations('subjects')
+  const tTopics = useTranslations('topics')
+  const tHome = useTranslations('home')
   const [selectedGrade, setSelectedGrade] = useState<Grade>((user?.grade as Grade) || 11)
 
   const info = subjectInfo[subject]
   const Icon = info.icon
+  const name = t(info.nameKey)
   const topics = topicsByGrade[selectedGrade] || []
 
   // A grade tab beyond the student's real grade is a preview - the
@@ -57,8 +62,8 @@ export default function SubjectPageClient({
   return (
     <div>
       <Topbar
-        title={info.name}
-        subtitle={`Grade ${selectedGrade} • CAPS Curriculum`}
+        title={name}
+        subtitle={tHome('gradeCurriculum', { grade: selectedGrade })}
       />
       <div className="p-4 md:p-6 max-w-4xl mx-auto">
         {/* Subject Header */}
@@ -71,10 +76,10 @@ export default function SubjectPageClient({
           </div>
           <div>
             <h1 className="text-2xl font-bold" style={{ color: 'var(--text)' }}>
-              {info.name}
+              {name}
             </h1>
             <p style={{ color: 'var(--muted-custom)' }}>
-              {topics.length} topic{topics.length !== 1 ? 's' : ''}
+              {topics.length === 1 ? t('topicCountOne') : t('topicCountOther', { count: topics.length })}
             </p>
           </div>
         </div>
@@ -92,14 +97,14 @@ export default function SubjectPageClient({
                 border: `1px solid ${selectedGrade === grade ? info.color : 'var(--border-custom)'}`,
               }}
             >
-              Grade {grade}
+              {tTopics('grade')} {grade}
             </button>
           ))}
         </div>
 
         {tabLocked && (
           <p className="text-sm mb-4" style={{ color: 'var(--muted-custom)' }}>
-            You&apos;re previewing Grade {selectedGrade} content. It unlocks once you reach that grade.
+            {t('previewingGrade', { grade: selectedGrade })}
           </p>
         )}
 
@@ -148,7 +153,7 @@ export default function SubjectPageClient({
                     )}
                     {isLocked && (
                       <span className="text-xs font-medium" style={{ color: 'var(--muted-custom)' }}>
-                        Locked
+                        {tTopics('locked')}
                       </span>
                     )}
                   </div>
@@ -216,7 +221,7 @@ export default function SubjectPageClient({
               style={{ background: 'var(--surface)', border: '1px solid var(--border-custom)' }}
             >
               <p style={{ color: 'var(--muted-custom)' }}>
-                No topics available for Grade {selectedGrade} yet.
+                {t('noTopicsForGrade', { grade: selectedGrade })}
               </p>
             </div>
           )}
@@ -229,7 +234,7 @@ export default function SubjectPageClient({
             className="text-sm font-medium hover:underline"
             style={{ color: info.color }}
           >
-            ← Back to all subjects
+            {t('backToAllSubjects')}
           </Link>
         </div>
       </div>

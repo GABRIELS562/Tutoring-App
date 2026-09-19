@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Topbar from '@/components/layout/Topbar'
 import NoteBlock from '@/components/notes/NoteBlock'
+import { useTranslations } from 'next-intl'
 import { ChevronDown, BookOpen, FileText, Star, ArrowRight, Download, Check, Loader2, WifiOff, AlertCircle } from 'lucide-react'
 import type { TopicContent } from '@/types'
 import { useUser } from '@/context/UserContext'
@@ -18,6 +19,9 @@ type TopicPageClientProps = {
 }
 
 export default function TopicPageClient({ slug, content }: TopicPageClientProps) {
+  const t = useTranslations('topicPage')
+  const tTopics = useTranslations('topics')
+  const tSubjects = useTranslations('subjects')
   const [tocOpen, setTocOpen] = useState(false)
   const [activeSection, setActiveSection] = useState<string | null>(null)
   const [downloadState, setDownloadState] = useState<'idle' | 'downloading' | 'downloaded' | 'error' | 'limit_reached'>('idle')
@@ -68,7 +72,7 @@ export default function TopicPageClient({ slug, content }: TopicPageClientProps)
     }
 
     setDownloadState('downloading')
-    setDownloadProgress('Saving notes...')
+    setDownloadProgress(t('saving'))
 
     try {
       // Cache the notes and practice pages with the Cache API so they're
@@ -111,7 +115,7 @@ export default function TopicPageClient({ slug, content }: TopicPageClientProps)
     <div>
       <Topbar
         title={content.title}
-        subtitle={`Grade ${content.grade} • ${content.subject === 'maths' ? 'Mathematics' : 'Physical Science'}${content.paper ? ` Paper ${content.paper}` : ''}`}
+        subtitle={`${tTopics('grade')} ${content.grade} • ${content.subject === 'maths' ? tSubjects('mathematics') : tSubjects('physicalScience')}${content.paper ? ` ${t('paperWord')} ${content.paper}` : ''}`}
       />
 
       <div className="flex">
@@ -124,7 +128,7 @@ export default function TopicPageClient({ slug, content }: TopicPageClientProps)
             className="text-xs font-semibold uppercase tracking-wider mb-4"
             style={{ color: 'var(--muted-custom)' }}
           >
-            Contents
+            {t('contents')}
           </h3>
           <nav className="space-y-1">
             {content.sections.map((section) => (
@@ -171,36 +175,36 @@ export default function TopicPageClient({ slug, content }: TopicPageClientProps)
               {downloadState === 'downloading' && (
                 <>
                   <Loader2 className="w-4 h-4 animate-spin" />
-                  {downloadProgress || 'Saving...'}
+                  {downloadProgress || t('saving')}
                 </>
               )}
               {downloadState === 'downloaded' && (
                 <>
                   <Check className="w-4 h-4" />
-                  Saved for offline
+                  {t('savedForOffline')}
                 </>
               )}
               {downloadState === 'idle' && (
                 <>
                   <Download className="w-4 h-4" />
-                  Save notes for offline
+                  {t('saveNotesForOffline')}
                 </>
               )}
               {downloadState === 'error' && (
                 <>
                   <WifiOff className="w-4 h-4" />
-                  Save failed
+                  {t('saveFailed')}
                 </>
               )}
               {downloadState === 'limit_reached' && (
                 <>
                   <AlertCircle className="w-4 h-4" />
-                  Free limit reached (2 topics)
+                  {t('freeLimitReached', { limit: FREE_TIER_OFFLINE_LIMIT })}
                 </>
               )}
             </button>
             <p className="mt-2 text-xs" style={{ color: 'var(--muted-custom)' }}>
-              Notes and formulas are cached automatically for offline reading. Save this topic to keep its notes available without a connection.
+              {t('offlineDescription')}
             </p>
 
             {/* Offline indicator */}
@@ -210,7 +214,7 @@ export default function TopicPageClient({ slug, content }: TopicPageClientProps)
                 style={{ background: 'rgba(244, 162, 97, 0.15)', color: 'var(--gold)' }}
               >
                 <WifiOff className="w-3 h-3" />
-                You&apos;re offline
+                {t('youAreOffline')}
               </div>
             )}
           </div>
@@ -226,7 +230,7 @@ export default function TopicPageClient({ slug, content }: TopicPageClientProps)
             className="w-full flex items-center justify-between px-4 py-2 rounded-lg text-sm font-medium"
             style={{ background: 'var(--surface2)', color: 'var(--text)' }}
           >
-            <span>Jump to section</span>
+            <span>{t('jumpToSection')}</span>
             <ChevronDown
               className="w-4 h-4 transition-transform"
               style={{ transform: tocOpen ? 'rotate(180deg)' : 'rotate(0)' }}
@@ -265,8 +269,8 @@ export default function TopicPageClient({ slug, content }: TopicPageClientProps)
                     {content.title}
                   </h1>
                   <p style={{ color: 'var(--muted-custom)' }}>
-                    Grade {content.grade} {content.subject === 'maths' ? 'Mathematics' : 'Physical Science'}
-                    {content.paper && ` • Paper ${content.paper}`}
+                    {tTopics('grade')} {content.grade} {content.subject === 'maths' ? tSubjects('mathematics') : tSubjects('physicalScience')}
+                    {content.paper && ` • ${t('paperWord')} ${content.paper}`}
                   </p>
                 </div>
 
@@ -322,7 +326,7 @@ export default function TopicPageClient({ slug, content }: TopicPageClientProps)
                 className="inline-flex items-center gap-3 px-6 py-3 rounded-lg font-semibold text-white transition-all hover:opacity-90"
                 style={{ background: 'var(--accent-red)' }}
               >
-                Practice this topic
+                {t('practiceThisTopic')}
                 <ArrowRight className="w-5 h-5" />
               </Link>
             </div>
@@ -341,7 +345,7 @@ export default function TopicPageClient({ slug, content }: TopicPageClientProps)
               className="text-xs font-semibold uppercase tracking-wider mb-4"
               style={{ color: 'var(--muted-custom)' }}
             >
-              Topic Info
+              {t('topicInfo')}
             </h3>
 
             {/* Grade Badge */}
@@ -351,7 +355,7 @@ export default function TopicPageClient({ slug, content }: TopicPageClientProps)
                 className="px-2 py-0.5 rounded text-xs font-medium text-white"
                 style={{ background: 'var(--accent-red)' }}
               >
-                Grade {content.grade}
+                {tTopics('grade')} {content.grade}
               </span>
             </div>
 
@@ -363,7 +367,7 @@ export default function TopicPageClient({ slug, content }: TopicPageClientProps)
                   className="px-2 py-0.5 rounded text-xs font-medium"
                   style={{ background: 'var(--surface2)', color: 'var(--text)' }}
                 >
-                  Paper {content.paper}
+                  {t('paperWord')} {content.paper}
                 </span>
               </div>
             )}
@@ -372,7 +376,7 @@ export default function TopicPageClient({ slug, content }: TopicPageClientProps)
             <div className="flex items-center gap-2 mb-4">
               <Star className="w-4 h-4" style={{ color: 'var(--gold)' }} />
               <span className="text-sm" style={{ color: 'var(--text)' }}>
-                {content.capsWeight}% of Paper
+                {t('percentOfPaper', { percent: content.capsWeight })}
               </span>
             </div>
 
@@ -382,20 +386,23 @@ export default function TopicPageClient({ slug, content }: TopicPageClientProps)
               style={{ background: 'rgba(244, 162, 97, 0.1)', border: '1px solid var(--gold)' }}
             >
               <p className="font-semibold mb-1" style={{ color: 'var(--gold)' }}>
-                High Priority
+                {t('highPriority')}
               </p>
               <p style={{ color: 'var(--text)' }}>
-                This topic appears in every NSC exam. Master it!
+                {t('highPriorityDesc')}
               </p>
             </div>
 
             {/* Quick Stats */}
             <div className="mt-4 pt-4" style={{ borderTop: '1px solid var(--border-custom)' }}>
               <p className="text-xs mb-2" style={{ color: 'var(--muted-custom)' }}>
-                {content.sections.length} sections
+                {content.sections.length === 1 ? t('sectionsCountOne') : t('sectionsCountOther', { count: content.sections.length })}
               </p>
               <p className="text-xs" style={{ color: 'var(--muted-custom)' }}>
-                {content.sections.reduce((acc, s) => acc + s.blocks.length, 0)} content blocks
+                {(() => {
+                  const blockCount = content.sections.reduce((acc, section) => acc + section.blocks.length, 0)
+                  return blockCount === 1 ? t('contentBlocksCountOne') : t('contentBlocksCountOther', { count: blockCount })
+                })()}
               </p>
             </div>
           </div>

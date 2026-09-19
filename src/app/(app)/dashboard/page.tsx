@@ -1,6 +1,7 @@
 import { cookies } from 'next/headers'
 import { createServerClient } from '@supabase/ssr'
 import Link from 'next/link'
+import { getTranslations } from 'next-intl/server'
 import {
   BookOpen,
   Target,
@@ -22,11 +23,13 @@ import { analyzeWeaknesses, getMockWeaknesses, type Weakness } from '@/lib/weakn
 
 export const dynamic = 'force-dynamic'
 
-function getGreeting(): string {
+type HomeTranslator = Awaited<ReturnType<typeof getTranslations<'home'>>>
+
+function getGreeting(t: HomeTranslator): string {
   const hour = new Date().getHours()
-  if (hour < 12) return 'Good morning'
-  if (hour < 17) return 'Good afternoon'
-  return 'Good evening'
+  if (hour < 12) return t('goodMorning')
+  if (hour < 17) return t('goodAfternoon')
+  return t('goodEvening')
 }
 
 // Plain helper (not a component/hook) so the impure Date.now() read doesn't
@@ -36,19 +39,19 @@ function getDaysUntilExam(examDateIso: string): number {
   return Math.ceil((new Date(examDateIso).getTime() - Date.now()) / (1000 * 60 * 60 * 24))
 }
 
-function formatTimeAgo(date: Date | null): string {
-  if (!date) return 'recently'
+function formatTimeAgo(date: Date | null, t: HomeTranslator): string {
+  if (!date) return t('recently')
   const now = new Date()
   const diffMs = now.getTime() - new Date(date).getTime()
   const diffMins = Math.floor(diffMs / 60000)
   const diffHours = Math.floor(diffMins / 60)
   const diffDays = Math.floor(diffHours / 24)
 
-  if (diffMins < 1) return 'just now'
-  if (diffMins < 60) return `${diffMins}m ago`
-  if (diffHours < 24) return `${diffHours}h ago`
-  if (diffDays === 1) return 'yesterday'
-  return `${diffDays}d ago`
+  if (diffMins < 1) return t('timeAgoJustNow')
+  if (diffMins < 60) return t('timeAgoMinutes', { minutes: diffMins })
+  if (diffHours < 24) return t('timeAgoHours', { hours: diffHours })
+  if (diffDays === 1) return t('timeAgoYesterday')
+  return t('timeAgoDays', { days: diffDays })
 }
 
 // Mock data for demo mode
@@ -83,6 +86,8 @@ const mockDashboardData: DashboardData = {
 }
 
 export default async function DashboardPage() {
+  const t = await getTranslations('home')
+  const tNav = await getTranslations('nav')
   let userId = 'demo-user'
   let data = mockDashboardData
   let isRealUser = false
@@ -147,8 +152,8 @@ export default async function DashboardPage() {
   return (
     <div className="min-h-screen" style={{ background: 'var(--bg)' }}>
       <Topbar
-        title="Dashboard"
-        subtitle={user?.grade ? `Grade ${user.grade} • CAPS Curriculum` : 'CAPS Curriculum'}
+        title={t('dashboardTitle')}
+        subtitle={user?.grade ? t('gradeCurriculum', { grade: user.grade }) : t('capsCurriculum')}
       />
 
       <div className="p-4 md:p-6 max-w-6xl mx-auto space-y-6">
@@ -162,14 +167,12 @@ export default async function DashboardPage() {
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
             <div>
               <h1 className="text-2xl md:text-3xl font-bold text-white mb-2">
-                {getGreeting()}, {user?.name?.split(' ')[0] || 'Student'}!
+                {getGreeting(t)}, {user?.name?.split(' ')[0] || t('studentFallback')}!
               </h1>
               <p className="text-white/80">
-                {user?.streakCount && user.streakCount > 0 ? (
-                  <>You&apos;re on a <span className="font-semibold text-white">{user.streakCount}-day streak</span>. Keep it up!</>
-                ) : (
-                  <>Start practicing today to begin your streak!</>
-                )}
+                {user?.streakCount && user.streakCount > 0
+                  ? t('streakActive', { days: user.streakCount })
+                  : t('streakStart')}
               </p>
             </div>
             <GradeSelector currentGrade={user?.grade || 11} />
@@ -199,7 +202,7 @@ export default async function DashboardPage() {
             style={{ background: 'var(--surface)', border: '1px solid var(--border-custom)' }}
           >
             <p className="text-sm" style={{ color: 'var(--muted-custom)' }}>
-              Answer 10 questions to see your weak spots
+              {t('answerToSeeWeakSpots')}
             </p>
           </div>
         )}
@@ -223,7 +226,7 @@ export default async function DashboardPage() {
               {topicsStarted}/{totalTopicsForGrade}
             </p>
             <p className="text-sm" style={{ color: 'var(--muted-custom)' }}>
-              Topics started
+              {t('topicsStarted')}
             </p>
           </div>
 
@@ -244,7 +247,7 @@ export default async function DashboardPage() {
               {totalQuestionsAnswered}
             </p>
             <p className="text-sm" style={{ color: 'var(--muted-custom)' }}>
-              Questions answered
+              {t('questionsAnswered')}
             </p>
           </div>
 
@@ -289,7 +292,7 @@ export default async function DashboardPage() {
               {accuracy}%
             </p>
             <p className="text-sm" style={{ color: 'var(--muted-custom)' }}>
-              Accuracy
+              {t('accuracy')}
             </p>
           </div>
 
@@ -310,7 +313,7 @@ export default async function DashboardPage() {
               {user?.streakCount || 0}
             </p>
             <p className="text-sm" style={{ color: 'var(--muted-custom)' }}>
-              Day streak
+              {t('dayStreak')}
             </p>
           </div>
         </div>
@@ -324,7 +327,7 @@ export default async function DashboardPage() {
           >
             <div className="flex items-center justify-between mb-4">
               <h2 className="font-semibold" style={{ color: 'var(--text)' }}>
-                Continue learning
+                {t('continueLearning')}
               </h2>
               <TrendingUp className="w-5 h-5" style={{ color: 'var(--muted-custom)' }} />
             </div>
@@ -374,7 +377,7 @@ export default async function DashboardPage() {
                   style={{ color: 'var(--muted-custom)' }}
                 />
                 <p className="text-sm" style={{ color: 'var(--muted-custom)' }}>
-                  Start practicing to track your progress
+                  {t('startPracticingToTrack')}
                 </p>
               </div>
             )}
@@ -387,7 +390,7 @@ export default async function DashboardPage() {
           >
             <div className="flex items-center justify-between mb-4">
               <h2 className="font-semibold" style={{ color: 'var(--text)' }}>
-                Recent activity
+                {t('recentActivity')}
               </h2>
               <Clock className="w-5 h-5" style={{ color: 'var(--muted-custom)' }} />
             </div>
@@ -418,7 +421,7 @@ export default async function DashboardPage() {
                         className="text-xs truncate"
                         style={{ color: 'var(--muted-custom)' }}
                       >
-                        {activity.status === 'correct' ? '✓ Correct' : '✗ Incorrect'} • {formatTimeAgo(activity.lastAttemptedAt)}
+                        {activity.status === 'correct' ? `✓ ${t('correct')}` : `✗ ${t('incorrect')}`} • {formatTimeAgo(activity.lastAttemptedAt, t)}
                       </p>
                     </div>
                   </div>
@@ -431,7 +434,7 @@ export default async function DashboardPage() {
                   style={{ color: 'var(--muted-custom)' }}
                 />
                 <p className="text-sm" style={{ color: 'var(--muted-custom)' }}>
-                  No recent activity yet
+                  {t('noRecentActivity')}
                 </p>
               </div>
             )}
@@ -447,9 +450,9 @@ export default async function DashboardPage() {
             style={{ background: 'var(--accent-red)' }}
           >
             <div>
-              <h3 className="font-semibold text-white mb-1">Practice</h3>
+              <h3 className="font-semibold text-white mb-1">{t('practice')}</h3>
               <p className="text-sm text-white/80">
-                Continue where you left off
+                {t('continueWhereLeftOff')}
               </p>
             </div>
             <ArrowRight className="w-5 h-5 text-white group-hover:translate-x-1 transition-transform" />
@@ -462,9 +465,9 @@ export default async function DashboardPage() {
             style={{ background: 'var(--ai-purple)' }}
           >
             <div>
-              <h3 className="font-semibold text-white mb-1">AI Skills</h3>
+              <h3 className="font-semibold text-white mb-1">{tNav('aiSkills')}</h3>
               <p className="text-sm text-white/80">
-                Learn to use AI effectively
+                {t('learnToUseAI')}
               </p>
             </div>
             <Brain className="w-5 h-5 text-white group-hover:scale-110 transition-transform" />
@@ -478,10 +481,10 @@ export default async function DashboardPage() {
           >
             <div>
               <h3 className="font-semibold mb-1" style={{ color: 'var(--text)' }}>
-                Past Papers
+                {tNav('papers')}
               </h3>
               <p className="text-sm" style={{ color: 'var(--muted-custom)' }}>
-                NSC exam papers & memos
+                {t('examPapersMemos')}
               </p>
             </div>
             <FileText className="w-5 h-5 group-hover:scale-110 transition-transform" style={{ color: 'var(--gold)' }} />
@@ -495,10 +498,10 @@ export default async function DashboardPage() {
           >
             <div>
               <h3 className="font-semibold mb-1" style={{ color: 'var(--text)' }}>
-                View Progress
+                {t('viewProgress')}
               </h3>
               <p className="text-sm" style={{ color: 'var(--muted-custom)' }}>
-                Charts & leaderboard
+                {t('chartsLeaderboard')}
               </p>
             </div>
             <TrendingUp className="w-5 h-5 group-hover:scale-110 transition-transform" style={{ color: 'var(--teal)' }} />

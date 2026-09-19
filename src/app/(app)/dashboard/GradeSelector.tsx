@@ -2,6 +2,7 @@
 
 import { useState, useTransition } from 'react'
 import { useRouter } from 'next/navigation'
+import { useTranslations } from 'next-intl'
 
 type GradeSelectorProps = {
   currentGrade: number
@@ -24,6 +25,7 @@ async function updateGradeAction(grade: number): Promise<{ success: boolean; dem
 }
 
 export default function GradeSelector({ currentGrade }: GradeSelectorProps) {
+  const t = useTranslations('topics')
   const [selectedGrade, setSelectedGrade] = useState(currentGrade)
   const [isPending, startTransition] = useTransition()
   const router = useRouter()
@@ -57,7 +59,7 @@ export default function GradeSelector({ currentGrade }: GradeSelectorProps) {
             color: selectedGrade === grade ? 'var(--accent-red)' : 'white',
           }}
         >
-          Grade {grade}
+          {t('grade')} {grade}
         </button>
       ))}
     </div>

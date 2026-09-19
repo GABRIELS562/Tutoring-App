@@ -7,6 +7,7 @@ import { useUser } from '@/context/UserContext'
 import { Flame, Gem, User, Settings, LogOut, ChevronDown, WifiOff } from 'lucide-react'
 import LanguageToggle from './LanguageToggle'
 import { useOnlineStatus } from '@/hooks/useOnlineStatus'
+import { useTranslations } from 'next-intl'
 
 type TopbarProps = {
   title: string
@@ -15,6 +16,10 @@ type TopbarProps = {
 
 export default function Topbar({ title, subtitle }: TopbarProps) {
   const { user } = useUser()
+  const t = useTranslations('topbar')
+  const tCommon = useTranslations('common')
+  const tNav = useTranslations('nav')
+  const tTopics = useTranslations('topics')
   const [dropdownOpen, setDropdownOpen] = useState(false)
   const isOnline = useOnlineStatus()
   const dropdownRef = useRef<HTMLDivElement>(null)
@@ -81,7 +86,7 @@ export default function Topbar({ title, subtitle }: TopbarProps) {
             style={{ background: 'rgba(244, 162, 97, 0.15)', color: 'var(--gold)' }}
           >
             <WifiOff className="w-3 h-3" />
-            <span className="hidden sm:inline">Offline</span>
+            <span className="hidden sm:inline">{tCommon('offline')}</span>
           </div>
         )}
 
@@ -109,7 +114,7 @@ export default function Topbar({ title, subtitle }: TopbarProps) {
             className="hidden md:flex items-center px-2.5 py-1 rounded-full text-sm font-medium text-white"
             style={{ background: 'var(--accent-red)' }}
           >
-            Grade {user.grade}
+            {tTopics('grade')} {user.grade}
           </div>
         )}
 
@@ -118,6 +123,8 @@ export default function Topbar({ title, subtitle }: TopbarProps) {
           <button
             onClick={() => setDropdownOpen(!dropdownOpen)}
             className="flex items-center gap-2 focus:outline-none"
+            aria-label={t('userMenu')}
+            aria-expanded={dropdownOpen}
           >
             <div
               className="w-9 h-9 rounded-full flex items-center justify-center text-white text-sm font-semibold"
@@ -142,7 +149,7 @@ export default function Topbar({ title, subtitle }: TopbarProps) {
             >
               <div className="px-4 py-2 border-b" style={{ borderColor: 'var(--border-custom)' }}>
                 <p className="text-sm font-medium" style={{ color: 'var(--text)' }}>
-                  {user?.name || 'User'}
+                  {user?.name || t('userFallback')}
                 </p>
                 <p className="text-xs" style={{ color: 'var(--muted-custom)' }}>
                   {user?.email}
@@ -158,7 +165,7 @@ export default function Topbar({ title, subtitle }: TopbarProps) {
                 style={{ color: 'var(--text)' }}
               >
                 <User className="w-4 h-4" />
-                Profile
+                {tNav('profile')}
               </button>
 
               <button
@@ -170,7 +177,7 @@ export default function Topbar({ title, subtitle }: TopbarProps) {
                 style={{ color: 'var(--text)' }}
               >
                 <Settings className="w-4 h-4" />
-                Settings
+                {tNav('settings')}
               </button>
 
               <div className="border-t my-1" style={{ borderColor: 'var(--border-custom)' }} />
@@ -181,7 +188,7 @@ export default function Topbar({ title, subtitle }: TopbarProps) {
                 style={{ color: 'var(--accent-red)' }}
               >
                 <LogOut className="w-4 h-4" />
-                Sign out
+                {tNav('signOut')}
               </button>
             </div>
           )}

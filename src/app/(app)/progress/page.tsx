@@ -1,5 +1,6 @@
 import { cookies } from 'next/headers'
 import { createServerClient } from '@supabase/ssr'
+import { getTranslations } from 'next-intl/server'
 import Topbar from '@/components/layout/Topbar'
 import { getProgressData, getLeaderboard, getDashboardData } from '@/db/queries/progress'
 import XPLineChart from './XPLineChart'
@@ -58,6 +59,7 @@ const mockLeaderboard: { id: string; name: string; school: string | null; xp: nu
 ]
 
 export default async function ProgressPage() {
+  const t = await getTranslations('progress')
   let userId = 'demo-user'
   let userGrade = 11
   let progressData = mockProgressData
@@ -103,8 +105,8 @@ export default async function ProgressPage() {
   return (
     <div className="min-h-screen" style={{ background: 'var(--bg)' }}>
       <Topbar
-        title="Progress"
-        subtitle="Your learning journey"
+        title={t('title')}
+        subtitle={t('subtitle')}
       />
 
       <div className="p-4 md:p-6 max-w-6xl mx-auto space-y-6">
@@ -114,7 +116,7 @@ export default async function ProgressPage() {
           style={{ background: 'var(--surface)', border: '1px solid var(--border-custom)' }}
         >
           <h2 className="font-semibold mb-4" style={{ color: 'var(--text)' }}>
-            XP Earned (Last 14 Days)
+            {t('xpEarned')}
           </h2>
           <XPLineChart data={progressData.weeklyXP} />
         </div>
@@ -125,7 +127,7 @@ export default async function ProgressPage() {
           style={{ background: 'var(--surface)', border: '1px solid var(--border-custom)' }}
         >
           <h2 className="font-semibold mb-4" style={{ color: 'var(--text)' }}>
-            Accuracy by Topic
+            {t('accuracyByTopic')}
           </h2>
           <AccuracyBarChart data={progressData.topicAccuracy} />
         </div>
@@ -138,7 +140,7 @@ export default async function ProgressPage() {
             style={{ background: 'var(--surface)', border: '1px solid var(--border-custom)' }}
           >
             <h2 className="font-semibold mb-4" style={{ color: 'var(--text)' }}>
-              Activity Calendar
+              {t('activityCalendarTitle')}
             </h2>
             <ActivityCalendar data={progressData.activityCalendar} />
           </div>
@@ -149,7 +151,7 @@ export default async function ProgressPage() {
             style={{ background: 'var(--surface)', border: '1px solid var(--border-custom)' }}
           >
             <h2 className="font-semibold mb-4" style={{ color: 'var(--text)' }}>
-              Grade {userGrade} Leaderboard
+              {t('gradeLeaderboard', { grade: userGrade })}
             </h2>
             <Leaderboard data={leaderboard} currentUserId={userId} />
           </div>
