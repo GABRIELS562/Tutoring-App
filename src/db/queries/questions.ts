@@ -164,6 +164,17 @@ export async function saveProgress(
   }
 }
 
+const MAX_HEARTS = 5
+
+/**
+ * Pure decision of whether a day rollover should refill hearts, kept
+ * separate from the DB call so it's trivially unit-testable. Returns
+ * the hearts value to set, or undefined when no refill is due.
+ */
+export function refillHeartsIfNewDay(isNewDay: boolean, maxHearts: number = MAX_HEARTS): number | undefined {
+  return isNewDay ? maxHearts : undefined
+}
+
 export async function updateUserXP(
   userId: string,
   xpToAdd: number
@@ -185,6 +196,7 @@ export async function updateUserXP(
     const lastActive = user.lastActiveDate
 
     let newStreak = user.streakCount || 0
+    let isNewDay = false
 
     if (lastActive) {
       const lastActiveDate = new Date(lastActive)
@@ -198,16 +210,20 @@ export async function updateUserXP(
       } else if (lastActiveStr === yesterdayStr) {
         // Was active yesterday, increment streak
         newStreak += 1
+        isNewDay = true
       } else {
         // Missed a day, reset streak to 1
         newStreak = 1
+        isNewDay = true
       }
     } else {
       // First activity, start streak at 1
       newStreak = 1
+      isNewDay = true
     }
 
     const newXp = (user.xp || 0) + xpToAdd
+    const refilledHearts = refillHeartsIfNewDay(isNewDay)
 
     // Update user
     await db
@@ -216,12 +232,44 @@ export async function updateUserXP(
         xp: newXp,
         streakCount: newStreak,
         lastActiveDate: today,
+        ...(refilledHearts !== undefined ? { hearts: refilledHearts } : {}),
       })
       .where(eq(users.id, userId))
 
     return { newXp, newStreak }
   } catch (error) {
     console.error('Error updating user XP:', error)
+    return null
+  }
+}
+
+/**
+ * Decrements a user's hearts by 1, floored at 0. Called from
+ * recordAnswer() when the student answers incorrectly.
+ */
+export async function decrementHearts(userId: string): Promise<{ hearts: number } | null> {
+  try {
+    const userRows = await db
+      .select()
+      .from(users)
+      .where(eq(users.id, userId))
+      .limit(1)
+
+    if (userRows.length === 0) {
+      return null
+    }
+
+    const currentHearts = userRows[0].hearts ?? MAX_HEARTS
+    const newHearts = Math.max(0, currentHearts - 1)
+
+    await db
+      .update(users)
+      .set({ hearts: newHearts })
+      .where(eq(users.id, userId))
+
+    return { hearts: newHearts }
+  } catch (error) {
+    console.error('Error decrementing hearts:', error)
     return null
   }
 }

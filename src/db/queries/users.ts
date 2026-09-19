@@ -64,39 +64,6 @@ export async function updateUserProfile(userId: string, data: {
 }
 
 /**
- * Update user XP and streak
- */
-export async function updateUserXP(userId: string, xpToAdd: number) {
-  const today = new Date().toISOString().split('T')[0]
-
-  const user = await getUserById(userId)
-  if (!user) return null
-
-  const lastActive = user.lastActiveDate?.toString()
-  const yesterday = new Date(Date.now() - 86400000).toISOString().split('T')[0]
-
-  // Calculate new streak
-  let newStreak = user.streakCount || 0
-  if (lastActive === yesterday) {
-    newStreak += 1
-  } else if (lastActive !== today) {
-    newStreak = 1
-  }
-
-  const result = await db
-    .update(users)
-    .set({
-      xp: sql`${users.xp} + ${xpToAdd}`,
-      streakCount: newStreak,
-      lastActiveDate: today,
-    })
-    .where(eq(users.id, userId))
-    .returning()
-
-  return result[0]
-}
-
-/**
  * Mark AI module as completed
  */
 export async function completeAIModule(userId: string, moduleId: string) {
