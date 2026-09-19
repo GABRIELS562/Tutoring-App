@@ -198,7 +198,10 @@
     "invalidResetLink": "This password reset link is invalid or has expired.",
     "requestNewLink": "Request a new link",
     "passwordUpdatedFlash": "Your password has been updated. Sign in with your new password.",
-    "demoModeResetMessage": "Password reset isn't available in demo mode. Use the \"Continue as Demo User\" button on the sign-in page instead."
+    "demoModeResetMessage": "Password reset isn't available in demo mode. Use the \"Continue as Demo User\" button on the sign-in page instead.",
+    "normalSessionMessage": "You're already signed in. To change your password, use Account settings instead.",
+    "goToDashboard": "Go to dashboard",
+    "checkingSession": "Checking your session..."
   },
   "video": {
     "watch": "Watch Video",

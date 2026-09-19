@@ -198,7 +198,10 @@
     "invalidResetLink": "Hierdie wagwoordherstelskakel is ongeldig of het verval.",
     "requestNewLink": "Vra 'n nuwe skakel aan",
     "passwordUpdatedFlash": "Jou wagwoord is opgedateer. Meld aan met jou nuwe wagwoord.",
-    "demoModeResetMessage": "Wagwoordherstel is nie in demo-modus beskikbaar nie. Gebruik eerder die \"Gaan voort as Demo-gebruiker\"-knoppie op die aanmeldbladsy."
+    "demoModeResetMessage": "Wagwoordherstel is nie in demo-modus beskikbaar nie. Gebruik eerder die \"Gaan voort as Demo-gebruiker\"-knoppie op die aanmeldbladsy.",
+    "normalSessionMessage": "Jy is reeds aangemeld. Gebruik eerder Rekeninginstellings om jou wagwoord te verander.",
+    "goToDashboard": "Gaan na paneelbord",
+    "checkingSession": "Gaan tans jou sessie na..."
   },
   "video": {
     "watch": "Kyk Video",

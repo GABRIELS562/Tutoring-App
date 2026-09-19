@@ -1,6 +1,6 @@
 'use client'
 
-import { Suspense, useState } from 'react'
+import { Suspense, useEffect, useState } from 'react'
 import { createBrowserClient } from '@supabase/ssr'
 import { useRouter, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
@@ -8,6 +8,67 @@ import { Loader2 } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 
 const MIN_PASSWORD_LENGTH = 8
+
+/**
+ * `updateUser({ password })` must only ever run inside the short-lived
+ * session Supabase creates from a password-recovery email link - never in
+ * an ordinary logged-in session (which would let anyone who finds this
+ * page while already signed in silently change their own password with
+ * no re-authentication, or worse, be tricked into doing it for someone
+ * else's shared/kiosk session). Distinguished two ways: the
+ * `PASSWORD_RECOVERY` auth event (fires as soon as the SDK processes the
+ * recovery link, including possibly before this component mounts its
+ * listener) and, as a fallback for a session that already existed when
+ * this component mounted, the `amr` (Authentication Methods Reference)
+ * claim on the JWT via `getClaims()` - a recovery session carries
+ * `{ method: 'recovery' }` there, an ordinary one carries `{ method:
+ * 'password' }` (or similar).
+ */
+type SessionGate = 'checking' | 'recovery' | 'normal' | 'none'
+
+function isRecoveryAmr(amr: unknown): boolean {
+  if (!Array.isArray(amr)) return false
+  return amr.some((entry) => typeof entry === 'object' && entry !== null && 'method' in entry && entry.method === 'recovery')
+}
+
+function useSessionGate(isDemoMode: boolean, supabaseUrl?: string, supabaseKey?: string): SessionGate {
+  const [gate, setGate] = useState<SessionGate>('checking')
+
+  useEffect(() => {
+    if (isDemoMode || !supabaseUrl || !supabaseKey) return
+
+    const supabase = createBrowserClient(supabaseUrl, supabaseKey)
+    let cancelled = false
+
+    supabase.auth.getClaims().then(({ data, error }) => {
+      if (cancelled) return
+      setGate((current) => {
+        // The PASSWORD_RECOVERY event (below) is authoritative and may
+        // already have resolved this before the getClaims() round trip
+        // finishes - never downgrade away from a confirmed recovery gate.
+        if (current === 'recovery') return current
+        if (error || !data) return 'none'
+        return isRecoveryAmr(data.claims.amr) ? 'recovery' : 'normal'
+      })
+    })
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event) => {
+      if (cancelled) return
+      if (event === 'PASSWORD_RECOVERY') {
+        setGate('recovery')
+      } else if (event === 'SIGNED_OUT') {
+        setGate('none')
+      }
+    })
+
+    return () => {
+      cancelled = true
+      subscription.unsubscribe()
+    }
+  }, [isDemoMode, supabaseUrl, supabaseKey])
+
+  return gate
+}
 
 function ResetPasswordForm() {
   const t = useTranslations('auth')
@@ -23,6 +84,7 @@ function ResetPasswordForm() {
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
   const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
   const isDemoMode = !supabaseUrl || !supabaseKey
+  const sessionGate = useSessionGate(isDemoMode, supabaseUrl, supabaseKey)
 
   const validate = () => {
     const newErrors: Record<string, string> = {}
@@ -76,7 +138,7 @@ function ResetPasswordForm() {
     )
   }
 
-  if (linkInvalid) {
+  if (linkInvalid || sessionGate === 'none') {
     return (
       <>
         <p
@@ -92,6 +154,31 @@ function ResetPasswordForm() {
           style={{ background: 'var(--accent-red)' }}
         >
           {t('requestNewLink')}
+        </Link>
+      </>
+    )
+  }
+
+  if (sessionGate === 'checking') {
+    return (
+      <p role="status" className="text-center mb-8" style={{ color: 'var(--muted-custom)' }}>
+        {t('checkingSession')}
+      </p>
+    )
+  }
+
+  if (sessionGate === 'normal') {
+    return (
+      <>
+        <p className="text-center mb-8" style={{ color: 'var(--muted-custom)' }}>
+          {t('normalSessionMessage')}
+        </p>
+        <Link
+          href="/dashboard"
+          className="block w-full py-3 rounded-lg font-semibold text-white text-center transition-all hover:opacity-90"
+          style={{ background: 'var(--accent-red)' }}
+        >
+          {t('goToDashboard')}
         </Link>
       </>
     )

@@ -62,6 +62,9 @@ flow (`src/app/(auth)/forgot-password`, `src/app/(auth)/reset-password`):
 - `auth.requestNewLink`
 - `auth.passwordUpdatedFlash`
 - `auth.demoModeResetMessage`
+- `auth.normalSessionMessage`
+- `auth.goToDashboard`
+- `auth.checkingSession`
 
 ## Task 5.1 sweep (dashboard, progress, papers, formulas, subjects, topics,
 practice, quiz, layout, install prompt, camera scan, verify page)
