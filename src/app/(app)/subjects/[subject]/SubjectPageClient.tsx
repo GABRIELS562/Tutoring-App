@@ -79,7 +79,7 @@ export default function SubjectPageClient({
               {name}
             </h1>
             <p style={{ color: 'var(--muted-custom)' }}>
-              {topics.length === 1 ? t('topicCountOne') : t('topicCountOther', { count: topics.length })}
+              {t('topicCount', { count: topics.length })}
             </p>
           </div>
         </div>

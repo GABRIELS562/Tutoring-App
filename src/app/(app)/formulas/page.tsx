@@ -164,7 +164,7 @@ export default function FormulasPage() {
         {/* Expand/Collapse Controls */}
         <div className="flex items-center justify-between mb-4">
           <p className="text-sm" style={{ color: 'var(--muted-custom)' }}>
-            {filteredFormulas.length === 1 ? t('formulaCountOne') : t('formulaCountOther', { count: filteredFormulas.length })}
+            {t('formulaCount', { count: filteredFormulas.length })}
           </p>
           <div className="flex gap-2">
             <button

@@ -170,7 +170,7 @@ export default function PapersPageClient({ papers }: PapersPageClientProps) {
 
         {/* Results */}
         <p className="text-sm mb-4" style={{ color: 'var(--muted-custom)' }}>
-          {sortedPapers.length === 1 ? t('showingOne') : t('showingOther', { count: sortedPapers.length })}
+          {t('showingCount', { count: sortedPapers.length })}
         </p>
 
         {/* Papers Grid */}

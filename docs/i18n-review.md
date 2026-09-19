@@ -102,8 +102,7 @@ where a matching one already existed (e.g. `nav.papers`, `nav.aiSkills`,
 - `formulas.all`
 - `formulas.collapseAll`
 - `formulas.expandAll`
-- `formulas.formulaCountOne`
-- `formulas.formulaCountOther`
+- `formulas.formulaCount`
 - `formulas.grAbbrev`
 - `formulas.mathematics`
 - `formulas.noFormulasFound`
@@ -179,8 +178,7 @@ where a matching one already existed (e.g. `nav.papers`, `nav.aiSkills`,
 - `papers.pageSubtitle`
 - `papers.paperButton`
 - `papers.physicalScience`
-- `papers.showingOne`
-- `papers.showingOther`
+- `papers.showingCount`
 - `papers.sourcedPrefix`
 - `papers.sourcedSuffix`
 - `papers.subject`
@@ -279,9 +277,7 @@ where a matching one already existed (e.g. `nav.papers`, `nav.aiSkills`,
 - `subjects.subjectNotFound`
 - `subjects.subjectNotFoundMessage`
 - `subjects.title`
-- `subjects.topicCountOne`
-- `subjects.topicCountOther`
-- `subjects.topicsCount`
+- `subjects.topicCount`
 
 ### `topbar` namespace
 
@@ -290,8 +286,7 @@ where a matching one already existed (e.g. `nav.papers`, `nav.aiSkills`,
 
 ### `topicPage` namespace
 
-- `topicPage.contentBlocksCountOne`
-- `topicPage.contentBlocksCountOther`
+- `topicPage.contentBlocksCount`
 - `topicPage.contents`
 - `topicPage.freeLimitReached`
 - `topicPage.highPriority`
@@ -305,8 +300,7 @@ where a matching one already existed (e.g. `nav.papers`, `nav.aiSkills`,
 - `topicPage.saveNotesForOffline`
 - `topicPage.savedForOffline`
 - `topicPage.saving`
-- `topicPage.sectionsCountOne`
-- `topicPage.sectionsCountOther`
+- `topicPage.sectionsCount`
 - `topicPage.topicInfo`
 - `topicPage.youAreOffline`
 

@@ -106,15 +106,14 @@
     "officialSource": "Official Government Source",
     "sourcedPrefix": "Papers sourced directly from",
     "sourcedSuffix": "- Department of Basic Education. Free public domain documents.",
-    "showingOne": "Showing 1 paper",
-    "showingOther": "Showing {count} papers",
     "topicsLabel": "Topics:",
     "paperButton": "Paper",
     "memoButton": "Memo",
     "noPapersFound": "No papers found",
     "noPapersYet": "No past papers have been added yet.",
     "tryAdjustingFilters": "Try adjusting your filters",
-    "gradeAndPaper": "Grade {grade} • Paper {number}"
+    "gradeAndPaper": "Grade {grade} • Paper {number}",
+    "showingCount": "{count, plural, one {Showing 1 paper} other {Showing # papers}}"
   },
   "formulas": {
     "title": "Formula Sheet",
@@ -126,13 +125,12 @@
     "mathematics": "Mathematics",
     "physicalScience": "Physical Science",
     "grAbbrev": "Gr {grade}",
-    "formulaCountOne": "1 formula found",
-    "formulaCountOther": "{count} formulas found",
     "expandAll": "Expand all",
     "collapseAll": "Collapse all",
     "practiceArrow": "Practice →",
     "noFormulasFound": "No formulas found",
-    "tryAdjustingSearch": "Try adjusting your search or filters"
+    "tryAdjustingSearch": "Try adjusting your search or filters",
+    "formulaCount": "{count, plural, one {1 formula found} other {# formulas found}}"
   },
   "ai": {
     "title": "AI Skills",
@@ -266,7 +264,7 @@
     "name": "Name",
     "school": "School",
     "xp": "XP",
-    "questionsCount": "{count} questions",
+    "questionsCount": "{count, plural, one {1 question} other {# questions}}",
     "zeroQuestions": "0 questions",
     "oneToFive": "1-5 questions",
     "sixToTen": "6-10 questions",
@@ -282,18 +280,16 @@
     "physicalScience": "Physical Science",
     "mathsDescription": "Algebra, Trigonometry, Calculus, Geometry and more",
     "scienceDescription": "Physics, Chemistry, Mechanics and Waves",
-    "topicsCount": "{count} topics",
     "percentComplete": "{percent}% complete",
     "capsAligned": "CAPS Aligned Content",
     "capsAlignedDesc": "All topics follow the South African CAPS curriculum for Grade 10, 11, and 12.",
     "subjectNotFound": "Subject Not Found",
     "subjectNotFoundMessage": "Subject \"{subject}\" not found.",
     "backToSubjects": "Back to Subjects",
-    "topicCountOne": "1 topic",
-    "topicCountOther": "{count} topics",
     "previewingGrade": "You're previewing Grade {grade} content. It unlocks once you reach that grade.",
     "noTopicsForGrade": "No topics available for Grade {grade} yet.",
-    "backToAllSubjects": "← Back to all subjects"
+    "backToAllSubjects": "← Back to all subjects",
+    "topicCount": "{count, plural, one {1 topic} other {# topics}}"
   },
   "topicPage": {
     "contents": "Contents",
@@ -309,12 +305,10 @@
     "topicInfo": "Topic Info",
     "highPriority": "High Priority",
     "highPriorityDesc": "This topic appears in every NSC exam. Master it!",
-    "sectionsCountOne": "1 section",
-    "sectionsCountOther": "{count} sections",
-    "contentBlocksCountOne": "1 content block",
-    "contentBlocksCountOther": "{count} content blocks",
     "paperWord": "Paper",
-    "percentOfPaper": "{percent}% of Paper"
+    "percentOfPaper": "{percent}% of Paper",
+    "sectionsCount": "{count, plural, one {1 section} other {# sections}}",
+    "contentBlocksCount": "{count, plural, one {1 content block} other {# content blocks}}"
   },
   "practice": {
     "title": "Practice",
@@ -341,7 +335,7 @@
     "scoreOf": "Score: {score}/{total}",
     "unlimitedHeartsLabel": "Unlimited hearts (Premium)",
     "unlimited": "Unlimited",
-    "heartsRemainingLabel": "{count} hearts remaining",
+    "heartsRemainingLabel": "{count, plural, one {1 heart remaining} other {# hearts remaining}}",
     "notSavedRetry": "Not saved — retry",
     "retryButton": "Retry",
     "dailyHintLimitReached": "Daily hint limit reached. Upgrade to Premium for unlimited hints!",

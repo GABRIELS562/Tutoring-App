@@ -106,15 +106,14 @@
     "officialSource": "Amptelike Regeringsbron",
     "sourcedPrefix": "Vraestelle direk verkry vanaf",
     "sourcedSuffix": "- Departement van Basiese Onderwys. Gratis publieke domein dokumente.",
-    "showingOne": "Wys 1 vraestel",
-    "showingOther": "Wys {count} vraestelle",
     "topicsLabel": "Onderwerpe:",
     "paperButton": "Vraestel",
     "memoButton": "Memo",
     "noPapersFound": "Geen vraestelle gevind nie",
     "noPapersYet": "Nog geen vorige vraestelle bygevoeg nie.",
     "tryAdjustingFilters": "Probeer om jou filters aan te pas",
-    "gradeAndPaper": "Graad {grade} • Vraestel {number}"
+    "gradeAndPaper": "Graad {grade} • Vraestel {number}",
+    "showingCount": "{count, plural, one {Wys 1 vraestel} other {Wys # vraestelle}}"
   },
   "formulas": {
     "title": "Formuleblad",
@@ -126,13 +125,12 @@
     "mathematics": "Wiskunde",
     "physicalScience": "Fisiese Wetenskap",
     "grAbbrev": "Gr {grade}",
-    "formulaCountOne": "1 formule gevind",
-    "formulaCountOther": "{count} formules gevind",
     "expandAll": "Brei almal uit",
     "collapseAll": "Vou almal in",
     "practiceArrow": "Oefen →",
     "noFormulasFound": "Geen formules gevind nie",
-    "tryAdjustingSearch": "Probeer om jou soektog of filters aan te pas"
+    "tryAdjustingSearch": "Probeer om jou soektog of filters aan te pas",
+    "formulaCount": "{count, plural, one {1 formule gevind} other {# formules gevind}}"
   },
   "ai": {
     "title": "KI-Vaardighede",
@@ -266,7 +264,7 @@
     "name": "Naam",
     "school": "Skool",
     "xp": "XP",
-    "questionsCount": "{count} vrae",
+    "questionsCount": "{count, plural, one {1 vraag} other {# vrae}}",
     "zeroQuestions": "0 vrae",
     "oneToFive": "1-5 vrae",
     "sixToTen": "6-10 vrae",
@@ -282,18 +280,16 @@
     "physicalScience": "Fisiese Wetenskap",
     "mathsDescription": "Algebra, Trigonometrie, Calculus, Meetkunde en meer",
     "scienceDescription": "Fisika, Chemie, Meganika en Golwe",
-    "topicsCount": "{count} onderwerpe",
     "percentComplete": "{percent}% voltooi",
     "capsAligned": "KABV-belynde Inhoud",
     "capsAlignedDesc": "Alle onderwerpe volg die Suid-Afrikaanse KABV-kurrikulum vir Graad 10, 11, en 12.",
     "subjectNotFound": "Vak Nie Gevind Nie",
     "subjectNotFoundMessage": "Vak \"{subject}\" nie gevind nie.",
     "backToSubjects": "Terug na Vakke",
-    "topicCountOne": "1 onderwerp",
-    "topicCountOther": "{count} onderwerpe",
     "previewingGrade": "Jy loer na Graad {grade}-inhoud. Dit sluit oop sodra jy daardie graad bereik.",
     "noTopicsForGrade": "Nog geen onderwerpe vir Graad {grade} beskikbaar nie.",
-    "backToAllSubjects": "← Terug na alle vakke"
+    "backToAllSubjects": "← Terug na alle vakke",
+    "topicCount": "{count, plural, one {1 onderwerp} other {# onderwerpe}}"
   },
   "topicPage": {
     "contents": "Inhoud",
@@ -309,12 +305,10 @@
     "topicInfo": "Onderwerpinligting",
     "highPriority": "Hoë Prioriteit",
     "highPriorityDesc": "Hierdie onderwerp verskyn in elke NSS-eksamen. Bemeester dit!",
-    "sectionsCountOne": "1 afdeling",
-    "sectionsCountOther": "{count} afdelings",
-    "contentBlocksCountOne": "1 inhoudblok",
-    "contentBlocksCountOther": "{count} inhoudblokke",
     "paperWord": "Vraestel",
-    "percentOfPaper": "{percent}% van Vraestel"
+    "percentOfPaper": "{percent}% van Vraestel",
+    "sectionsCount": "{count, plural, one {1 afdeling} other {# afdelings}}",
+    "contentBlocksCount": "{count, plural, one {1 inhoudblok} other {# inhoudblokke}}"
   },
   "practice": {
     "title": "Oefen",
@@ -341,7 +335,7 @@
     "scoreOf": "Telling: {score}/{total}",
     "unlimitedHeartsLabel": "Onbeperkte harte (Premium)",
     "unlimited": "Onbeperk",
-    "heartsRemainingLabel": "{count} harte oor",
+    "heartsRemainingLabel": "{count, plural, one {1 hart oor} other {# harte oor}}",
     "notSavedRetry": "Nie gestoor nie — probeer weer",
     "retryButton": "Probeer weer",
     "dailyHintLimitReached": "Daaglikse wenklimiet bereik. Gradeer op na Premium vir onbeperkte wenke!",

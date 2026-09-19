@@ -403,12 +403,12 @@ export default function TopicPageClient({ slug, content }: TopicPageClientProps)
             {/* Quick Stats */}
             <div className="mt-4 pt-4" style={{ borderTop: '1px solid var(--border-custom)' }}>
               <p className="text-xs mb-2" style={{ color: 'var(--muted-custom)' }}>
-                {content.sections.length === 1 ? t('sectionsCountOne') : t('sectionsCountOther', { count: content.sections.length })}
+                {t('sectionsCount', { count: content.sections.length })}
               </p>
               <p className="text-xs" style={{ color: 'var(--muted-custom)' }}>
                 {(() => {
                   const blockCount = content.sections.reduce((acc, section) => acc + section.blocks.length, 0)
-                  return blockCount === 1 ? t('contentBlocksCountOne') : t('contentBlocksCountOther', { count: blockCount })
+                  return t('contentBlocksCount', { count: blockCount })
                 })()}
               </p>
             </div>

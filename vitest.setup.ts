@@ -6,6 +6,12 @@ import { vi, expect } from 'vitest'
 // without TypeScript refusing it as "used as a value", and type it loosely
 // (the real signature is `(results: AxeResults) => RawMatcherResult`).
 import { createRequire } from 'node:module'
+// The real ICU translator implementation next-intl's useTranslations/
+// getTranslations are built on. Imported directly from use-intl (not
+// 'next-intl') because this file replaces the 'next-intl' module itself
+// via vi.mock below - importing from the module we're mocking would be
+// circular.
+import { createTranslator, IntlErrorCode, type IntlError } from 'use-intl/core'
 import en from './src/messages/en.json'
 
 const require = createRequire(import.meta.url)
@@ -23,36 +29,38 @@ declare module 'vitest' {
   }
 }
 
-type Messages = typeof en
-
-function getMessage(namespace: string | undefined, key: string): unknown {
-  const path = namespace ? `${namespace}.${key}` : key
-  return path
-    .split('.')
-    .reduce<unknown>((node, segment) => {
-      if (typeof node !== 'object' || node === null) return undefined
-      return (node as Record<string, unknown>)[segment]
-    }, en as Messages)
-}
-
-function interpolate(message: unknown, key: string, values?: Record<string, unknown>): string {
-  if (typeof message !== 'string') return key // missing key: fall back to the key itself, same as next-intl's dev warning path
-  if (!values) return message
-  return Object.entries(values).reduce(
-    (acc, [name, value]) => acc.replaceAll(`{${name}}`, String(value)),
-    message
-  )
+function onTranslationError(error: IntlError): void {
+  if (error.code === IntlErrorCode.MISSING_MESSAGE) {
+    // error.originalMessage is use-intl's own
+    // "Could not resolve `ns.key` in messages for locale `en`." - pull the
+    // `ns.key` path back out so the failure points straight at the missing
+    // key instead of a generic message.
+    const match = error.originalMessage?.match(/`([^`]+)`/)
+    throw new Error(`Missing i18n key: ${match?.[1] ?? error.originalMessage ?? 'unknown'}`)
+  }
+  throw error
 }
 
 /**
- * Real messages, fake plumbing: every test gets the actual English copy
- * from src/messages/en.json without needing a NextIntlClientProvider or
- * request-scoped locale, so assertions can match real UI text. A test
- * that needs a different locale/behaviour can still `vi.mock('next-intl', ...)`
- * (or 'next-intl/server') locally - that file-level mock wins over this one.
+ * Real messages, real ICU (plurals, `t.rich`, interpolation), fake
+ * plumbing: every test gets the actual English copy from
+ * src/messages/en.json evaluated through next-intl's real formatter
+ * (use-intl's createTranslator) without needing a NextIntlClientProvider
+ * or request-scoped locale, so assertions can match real UI text and
+ * `{count, plural, ...}` messages resolve correctly instead of being
+ * hand-rolled. A missing key throws (rather than silently rendering the
+ * key) so a typo'd namespace/key fails the test that exercises it, not
+ * some unrelated snapshot. A test that needs different locale/behaviour
+ * can still `vi.mock('next-intl', ...)` (or 'next-intl/server') locally -
+ * that file-level mock wins over this one.
  */
 function makeTranslator(namespace?: string) {
-  return (key: string, values?: Record<string, unknown>) => interpolate(getMessage(namespace, key), key, values)
+  return createTranslator({
+    locale: 'en',
+    messages: en,
+    namespace: namespace as never,
+    onError: onTranslationError,
+  })
 }
 
 vi.mock('next-intl', () => ({

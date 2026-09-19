@@ -90,7 +90,7 @@ export default function SubjectsPage() {
                   <div className="flex items-center gap-1.5">
                     <BookOpen className="w-4 h-4" style={{ color: 'var(--muted-custom)' }} />
                     <span className="text-sm" style={{ color: 'var(--muted-custom)' }}>
-                      {t('topicsCount', { count: subject.topics })}
+                      {t('topicCount', { count: subject.topics })}
                     </span>
                   </div>
                   <div className="flex items-center gap-1.5">
