@@ -44,16 +44,22 @@ export default function WeaknessCard({ weakness }: WeaknessCardProps) {
 
           {/* Stats */}
           <p className="text-xs mb-3" style={{ color: 'var(--muted-custom)' }}>
-            {t('attemptedPrefix', { attempts: weakness.totalAttempts })}{' '}
-            <span
-              style={{
-                color: accuracyPercent < 40 ? 'var(--accent-red)' : 'var(--gold)',
-                fontWeight: 600,
-              }}
-            >
-              {accuracyPercent}%
-            </span>{' '}
-            {t('attemptedSuffix', { correct: correctCount, total: weakness.totalAttempts })}
+            {t.rich('attempted', {
+              attempts: weakness.totalAttempts,
+              percentValue: accuracyPercent,
+              correct: correctCount,
+              total: weakness.totalAttempts,
+              percent: (chunks) => (
+                <span
+                  style={{
+                    color: accuracyPercent < 40 ? 'var(--accent-red)' : 'var(--gold)',
+                    fontWeight: 600,
+                  }}
+                >
+                  {chunks}
+                </span>
+              ),
+            })}
           </p>
 
           {/* Action Button */}

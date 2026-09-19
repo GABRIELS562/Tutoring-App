@@ -247,9 +247,8 @@
   "weaknessCard": {
     "spotted": "Angelo het dit raakgesien",
     "issueDescription": "Jy kry {issue} in {topic} steeds verkeerd.",
-    "attemptedPrefix": "Jy het dit {attempts} keer probeer en dit reg gekry",
-    "attemptedSuffix": "van die tyd ({correct}/{total}).",
-    "fixNow": "Maak dit nou reg"
+    "fixNow": "Maak dit nou reg",
+    "attempted": "Jy het dit {attempts} keer probeer en dit <percent>{percentValue}%</percent> van die tyd reg gekry ({correct}/{total})."
   },
   "progress": {
     "title": "Vordering",

@@ -322,8 +322,7 @@ where a matching one already existed (e.g. `nav.papers`, `nav.aiSkills`,
 
 ### `weaknessCard` namespace
 
-- `weaknessCard.attemptedPrefix`
-- `weaknessCard.attemptedSuffix`
+- `weaknessCard.attempted`
 - `weaknessCard.fixNow`
 - `weaknessCard.issueDescription`
 - `weaknessCard.spotted`

@@ -247,9 +247,8 @@
   "weaknessCard": {
     "spotted": "Angelo spotted this",
     "issueDescription": "You keep getting {issue} wrong in {topic}.",
-    "attemptedPrefix": "You've attempted it {attempts} times and got it right",
-    "attemptedSuffix": "of the time ({correct}/{total}).",
-    "fixNow": "Fix this now"
+    "fixNow": "Fix this now",
+    "attempted": "You've attempted it {attempts} times and got it right <percent>{percentValue}%</percent> of the time ({correct}/{total})."
   },
   "progress": {
     "title": "Progress",
