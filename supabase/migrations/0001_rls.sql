@@ -111,6 +111,21 @@ CREATE POLICY "student_progress_update_own" ON student_progress
 --    tables, so auth.uid() (uuid) must be cast to text to compare.
 -- =============================================================================
 
+-- One usage row per (user, day): backs both a DB-level guarantee against
+-- duplicate rows and the atomic increment_hint_usage() Postgres function
+-- (supabase/migrations/0002_functions.sql) that api/ai-hint/route.ts
+-- calls via supabase.rpc() to bump hint_count/camera_count - its
+-- ON CONFLICT (user_id, usage_date) clause requires this constraint to
+-- exist. Matches the `unique(...)` in src/db/schema.ts. Same
+-- drop-then-add idempotency pattern as
+-- prompt_challenge_attempts_user_challenge_unique above (Postgres has no
+-- ADD CONSTRAINT IF NOT EXISTS).
+ALTER TABLE ai_hint_usage
+  DROP CONSTRAINT IF EXISTS ai_hint_usage_user_date_unique;
+ALTER TABLE ai_hint_usage
+  ADD CONSTRAINT ai_hint_usage_user_date_unique
+  UNIQUE (user_id, usage_date);
+
 ALTER TABLE ai_hint_usage ENABLE ROW LEVEL SECURITY;
 
 DROP POLICY IF EXISTS "ai_hint_usage_select_own" ON ai_hint_usage;
@@ -290,3 +305,20 @@ DROP POLICY IF EXISTS "notes_select_public" ON notes;
 CREATE POLICY "notes_select_public" ON notes
   FOR SELECT
   USING (true);
+
+
+-- =============================================================================
+-- 8. ai_usage_log — service-role only, NO policies (deliberately). Written
+--    by src/lib/claude-usage-log.ts (via the service-role client, which
+--    bypasses RLS) after every successful Anthropic call, for spend
+--    visibility - see DEPLOYMENT.md "Monthly spend cap". This is an
+--    internal spend/usage log, not a student-facing table like
+--    ai_hint_usage, so unlike every other table in this migration it gets
+--    no SELECT/INSERT/UPDATE/DELETE policy at all: enabling RLS with zero
+--    policies denies every operation to the anon and authenticated roles
+--    by default (Postgres RLS fails closed when no policy matches),
+--    leaving only the service role - which bypasses RLS entirely - able
+--    to read or write this table.
+-- =============================================================================
+
+ALTER TABLE ai_usage_log ENABLE ROW LEVEL SECURITY;

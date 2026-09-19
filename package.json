@@ -19,9 +19,11 @@
     "db:seed-topics": "tsx src/db/seed-topics.ts",
     "db:seed-dev": "tsx src/db/seed-dev-users.ts",
     "check:videos": "tsx scripts/check-videos.ts",
-    "db:rls": "tsx scripts/apply-sql.ts supabase/migrations/0001_rls.sql"
+    "db:rls": "tsx scripts/apply-sql.ts supabase/migrations/0001_rls.sql",
+    "db:functions": "tsx scripts/apply-sql.ts supabase/migrations/0002_functions.sql"
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "^0.127.0",
     "@base-ui/react": "^1.3.0",
     "@radix-ui/react-dialog": "^1.1.15",
     "@radix-ui/react-dropdown-menu": "^2.1.16",

@@ -65,6 +65,7 @@ describe('POST /api/ai-hint fails closed on an unexpected usage-lookup error', (
         }
         throw new Error(`Unexpected table in test mock: ${table}`)
       },
+      rpc: insertSpy,
     })
 
     const res = await POST(makeRequest({ mode: 'step_hint', questionText: 'q', stepNumber: 1 }))
@@ -94,6 +95,10 @@ describe('POST /api/ai-hint fails closed on an unexpected usage-lookup error', (
         }
         throw new Error(`Unexpected table in test mock: ${table}`)
       },
+      rpc: async () => ({
+        data: { id: 'usage-1', hint_count: 1, camera_count: 0 },
+        error: null,
+      }),
     })
 
     const res = await POST(makeRequest({ mode: 'step_hint', questionText: 'q', stepNumber: 1 }))

@@ -18,7 +18,13 @@ vi.mock('@/lib/supabase/api', () => ({
 }))
 
 const { AuthError } = await import('@/lib/auth/require-user')
-const { POST } = await import('@/app/api/ai-hint/route')
+const { POST, maxDuration } = await import('@/app/api/ai-hint/route')
+
+describe('ai-hint route config', () => {
+  it('sets maxDuration to 60s so a slow model call outlives the SDK client timeout + retries', () => {
+    expect(maxDuration).toBe(60)
+  })
+})
 
 function makeRequest(body: Record<string, unknown>) {
   return new NextRequest('http://localhost/api/ai-hint', {
