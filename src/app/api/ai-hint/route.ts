@@ -11,6 +11,7 @@ import { logClaudeUsage } from '@/lib/claude-usage-log'
 import { getTodaySAST } from '@/lib/date/today-sast'
 import {
   HintRequestSchema,
+  type HintRequest,
   type HintMode,
   getModeSpecificPrompt,
   getSystemPromptForMode,
@@ -26,6 +27,14 @@ const FREE_CAMERA_LIMIT = 1
 // body size limit - base64 inflates binary size by ~4/3, so 4,000,000
 // chars is ~3MB of actual image data.
 const MAX_IMAGE_BASE64_LENGTH = 4_000_000
+
+// max_tokens per createTutorMessage() call. prompt_evaluation gets more
+// room because its response is structured JSON with four free-text
+// fields (see PromptEvaluationSchema); every other mode replies with a
+// single short (<=80-word, see prompts.ts's ANGELO_SYSTEM_PROMPT rules)
+// tutoring nudge.
+const PROMPT_EVALUATION_MAX_TOKENS = 400
+const HINT_MAX_TOKENS = 150
 
 // Vercel serverless functions default to 10s (Hobby) / 15s (Pro), which a
 // vision request (camera_scan) or a slower model response can exceed.
@@ -92,8 +101,8 @@ type UsageLookup =
  * (PGRST116) is treated as zero usage. Any other error used to be
  * swallowed and also treated as zero usage - which meant a transient DB
  * problem silently bypassed the free-tier daily limit instead of
- * blocking the request. The caller doing the rate-limit gate check
- * (POST, below) returns 503 when `ok` is false rather than proceeding.
+ * blocking the request. checkFreeTierLimit() (below) returns 503 when
+ * `ok` is false rather than proceeding.
  */
 async function getUsageRecord(userId: string, today: string): Promise<UsageLookup> {
   const supabase = getApiSupabase()
@@ -114,6 +123,65 @@ async function getUsageRecord(userId: string, today: string): Promise<UsageLooku
   }
 
   return { ok: true, record: data }
+}
+
+/**
+ * Reads today's usage for a free-tier user and decides whether the
+ * request may proceed. Returns a NextResponse to send immediately when
+ * it must be blocked (503 on an unexpected lookup failure - fail closed;
+ * 429 once the daily hint/camera-scan limit is reached), or null when
+ * the request should continue. Never increments usage itself - that only
+ * happens after a response is successfully produced (see
+ * incrementUsageRecord()'s doc comment: a failed model call must not
+ * consume quota).
+ */
+async function checkFreeTierLimit(
+  userId: string,
+  today: string,
+  mode: HintMode
+): Promise<NextResponse | null> {
+  const usageLookup = await getUsageRecord(userId, today)
+
+  if (!usageLookup.ok) {
+    return NextResponse.json(
+      { error: 'Usage check unavailable, try again' },
+      { status: 503 }
+    )
+  }
+
+  const usageRecord = usageLookup.record
+  if (!usageRecord) {
+    return null
+  }
+
+  if (mode === 'camera_scan') {
+    if (usageRecord.camera_count >= FREE_CAMERA_LIMIT) {
+      return NextResponse.json(
+        {
+          error: 'Daily camera scan limit reached',
+          message: `You've used your free camera scan today! Come back tomorrow or upgrade to Premium for unlimited scans.`,
+          remaining: 0,
+          type: 'camera',
+        },
+        { status: 429 }
+      )
+    }
+    return null
+  }
+
+  if (usageRecord.hint_count >= FREE_HINT_LIMIT) {
+    return NextResponse.json(
+      {
+        error: 'Daily AI hint limit reached',
+        message: `You've used your ${FREE_HINT_LIMIT} free hints today! Come back tomorrow or upgrade to Premium for unlimited AI help.`,
+        remaining: 0,
+        type: 'hint',
+      },
+      { status: 429 }
+    )
+  }
+
+  return null
 }
 
 /**
@@ -164,10 +232,10 @@ async function incrementUsageRecord(
 /**
  * How many free-tier uses remain today, for display only - the gating
  * decision already happened against the pre-increment usage record in
- * POST, below. Falls back to "this request was the last free one" (1
- * consumed) when the increment's result is unavailable, matching the
- * previous best-effort behaviour rather than failing the whole response
- * over a display-only number.
+ * checkFreeTierLimit(), above. Falls back to "this request was the last
+ * free one" (1 consumed) when the increment's result is unavailable,
+ * matching the previous best-effort behaviour rather than failing the
+ * whole response over a display-only number.
  */
 function computeRemaining(mode: HintMode, usageRecord: UsageRecord | null): number {
   if (mode === 'camera_scan') {
@@ -201,14 +269,6 @@ interface PersistedPromptChallengeAttempt {
 }
 
 /**
- * Persists a prompt-challenge attempt using the score Angelo just computed
- * server-side in this same request — never a client-supplied score. This is
- * what /api/ai-skills/save-attempt used to do by trusting a client `aiScore`
- * field; folding it in here removes that trust boundary entirely.
- * Returns null when there is nothing to persist (demo mode, or the caller
- * didn't send a challengeId).
- */
-/**
  * Idempotent per (user_id, challenge_id) - a UNIQUE constraint on the
  * table backs this up at the DB level (see
  * supabase/migrations/0001_rls.sql and prompt_challenge_attempts in
@@ -224,6 +284,10 @@ interface PersistedPromptChallengeAttempt {
  * prompt_challenges_completed again. Trade-off: a student who first
  * scores below 5 and later nails a 5/5 on a repeat won't retroactively
  * get the prompt-master badge from that repeat.
+ *
+ * Persists using the score Angelo just computed server-side in this same
+ * request — never a client-supplied score. Returns null when there is
+ * nothing to persist (demo mode, or the caller didn't send a challengeId).
  */
 async function persistPromptChallengeAttempt(
   userId: string,
@@ -360,195 +424,138 @@ async function insertFirstAttempt(
   }
 }
 
-export async function POST(request: NextRequest) {
-  let user
-  try {
-    user = await requireUser()
-  } catch (err) {
-    return authErrorResponse(err)
+interface DemoResponse {
+  responseBody: Record<string, unknown>
+  /**
+   * Whether this mode's demo response includes a `remaining` quota
+   * count. Matches the pre-refactor behaviour: prompt_evaluation/
+   * cv_help/general_question never reported it (even though they still
+   * consumed quota) - only the plain hint modes (step_hint, wrong_answer,
+   * camera_scan) do.
+   */
+  reportsRemaining: boolean
+}
+
+/**
+ * Builds the demo-mode response body AND records usage for it - demo
+ * responses always "succeed" (there is no real model call that can
+ * fail), so usage is recorded once the content is decided, same
+ * "only after success" rule the real-model path follows in POST.
+ */
+async function buildAndTrackDemoResponse(
+  mode: HintMode,
+  body: HintRequest,
+  userId: string,
+  isPremium: boolean,
+  today: string
+): Promise<Record<string, unknown>> {
+  const { responseBody, reportsRemaining } = await buildDemoResponse(mode, body, userId)
+
+  if (!isPremium) {
+    const usageRecord = await incrementUsageRecord(userId, today, mode)
+    if (reportsRemaining) {
+      responseBody.remaining = computeRemaining(mode, usageRecord)
+    }
   }
 
-  try {
-    const rawBody = await request.json()
+  return responseBody
+}
 
-    // Validate request with Zod
-    const parseResult = HintRequestSchema.safeParse(rawBody)
-    if (!parseResult.success) {
-      return NextResponse.json(
-        {
-          error: 'Invalid request',
-          details: parseResult.error.issues.map(i => ({
-            field: i.path.join('.'),
-            message: i.message,
-          })),
-        },
-        { status: 400 }
-      )
+/**
+ * Builds the canned response for demo mode (no ANTHROPIC_API_KEY) for a
+ * given mode - the "helpful mock response, without hollow affirmations"
+ * every mode falls back to. prompt_evaluation also persists a demo
+ * prompt-challenge attempt, same as the real-model path does.
+ */
+async function buildDemoResponse(
+  mode: HintMode,
+  body: HintRequest,
+  userId: string
+): Promise<DemoResponse> {
+  if (mode === 'prompt_evaluation') {
+    const mockEvaluation = {
+      score: 3,
+      what_worked: "You identified the general topic and asked for help.",
+      what_to_improve: "Add more context about your situation, specify the format you want, and include any constraints.",
+      improved_prompt: `I'm a Grade 11 student preparing for my ${body.scenarioContext?.includes('Maths') ? 'Maths' : 'upcoming'} exam. ${body.studentPrompt} Please give me a structured study plan with specific steps I can follow in the next 2 hours.`,
+      encouragement: "You're thinking about how to ask — that alone puts you ahead of most students.",
     }
 
-    const body = parseResult.data
-    const userId = user.id
-    const { mode, imageBase64, locale } = body
+    const attempt = await persistPromptChallengeAttempt(
+      userId,
+      body.challengeId,
+      body.studentPrompt,
+      mockEvaluation
+    )
 
-    // The client (CameraScan.tsx) downscales to a 1280px long edge before
-    // base64-encoding (src/lib/image/downscale.ts), so a well-behaved
-    // client never gets near this. This is the server-side backstop: it
-    // rejects a request before any DB/model work happens - protects
-    // against a client that skips the downscale (old cached bundle,
-    // direct API call) and against Vercel's request body size cap.
-    if (imageBase64 && imageBase64.length > MAX_IMAGE_BASE64_LENGTH) {
-      return NextResponse.json(
-        {
-          error: 'Image too large',
-          message: 'That photo is too large to send. Please retake it or crop it closer to the question and try again.',
-        },
-        { status: 413 }
-      )
+    return {
+      responseBody: {
+        evaluation: mockEvaluation,
+        isDemo: true,
+        ...(attempt ? { attempt } : {}),
+      },
+      reportsRemaining: false,
     }
+  }
 
-    const isPremium = await resolveIsPremium(userId)
-
-    // "Today" in SAST (Africa/Johannesburg), never UTC - see
-    // src/lib/date/today-sast.ts. The free-tier daily limit resets at
-    // SAST midnight, not at 02:00 SAST (UTC midnight).
-    const today = getTodaySAST()
-
-    // Check rate limit for free tier users. This only READS today's
-    // usage row to decide whether to allow the request - the actual
-    // increment happens later, after a response is successfully
-    // produced (see the incrementUsageRecord() calls below), so a
-    // failed model call never consumes quota.
-    if (!isPremium) {
-      const usageLookup = await getUsageRecord(userId, today)
-
-      if (!usageLookup.ok) {
-        // Fail closed: an unexpected DB error must not silently bypass
-        // the free-tier daily limit by being treated as "zero usage."
-        return NextResponse.json(
-          { error: 'Usage check unavailable, try again' },
-          { status: 503 }
-        )
-      }
-
-      const usageRecord = usageLookup.record
-
-      if (usageRecord) {
-        if (mode === 'camera_scan') {
-          if (usageRecord.camera_count >= FREE_CAMERA_LIMIT) {
-            return NextResponse.json(
-              {
-                error: 'Daily camera scan limit reached',
-                message: `You've used your free camera scan today! Come back tomorrow or upgrade to Premium for unlimited scans.`,
-                remaining: 0,
-                type: 'camera',
-              },
-              { status: 429 }
-            )
-          }
-        } else {
-          if (usageRecord.hint_count >= FREE_HINT_LIMIT) {
-            return NextResponse.json(
-              {
-                error: 'Daily AI hint limit reached',
-                message: `You've used your ${FREE_HINT_LIMIT} free hints today! Come back tomorrow or upgrade to Premium for unlimited AI help.`,
-                remaining: 0,
-                type: 'hint',
-              },
-              { status: 429 }
-            )
-          }
-        }
-      }
+  if (mode === 'cv_help') {
+    return {
+      responseBody: {
+        hint: "Proficient in AI-assisted research and problem-solving. Experienced in crafting effective prompts to extract useful information from AI tools. Committed to ethical AI use and continuous learning in this rapidly evolving field.",
+        isDemo: true,
+      },
+      reportsRemaining: false,
     }
+  }
 
-    const claudeClient = getClaudeClient()
-
-    // If no API key, return a helpful mock response (without hollow affirmations)
-    if (!claudeClient) {
-      let responseBody: Record<string, unknown>
-
-      // Special handling for prompt_evaluation mode - return structured JSON
-      if (mode === 'prompt_evaluation') {
-        const mockEvaluation = {
-          score: 3,
-          what_worked: "You identified the general topic and asked for help.",
-          what_to_improve: "Add more context about your situation, specify the format you want, and include any constraints.",
-          improved_prompt: `I'm a Grade 11 student preparing for my ${body.scenarioContext?.includes('Maths') ? 'Maths' : 'upcoming'} exam. ${body.studentPrompt} Please give me a structured study plan with specific steps I can follow in the next 2 hours.`,
-          encouragement: "You're thinking about how to ask — that alone puts you ahead of most students.",
-        }
-
-        const attempt = await persistPromptChallengeAttempt(
-          userId,
-          body.challengeId,
-          body.studentPrompt,
-          mockEvaluation
-        )
-
-        responseBody = {
-          evaluation: mockEvaluation,
-          isDemo: true,
-          ...(attempt ? { attempt } : {}),
-        }
-      } else if (mode === 'cv_help') {
-        // Special handling for cv_help mode
-        responseBody = {
-          hint: "Proficient in AI-assisted research and problem-solving. Experienced in crafting effective prompts to extract useful information from AI tools. Committed to ethical AI use and continuous learning in this rapidly evolving field.",
-          isDemo: true,
-        }
-      } else if (mode === 'general_question') {
-        // Special handling for general_question mode
-        responseBody = {
-          hint: "AI works by predicting what comes next based on patterns it learned from text. It doesn't actually 'understand' — it matches patterns. That's why it can sound confident even when wrong. Your job is to verify anything important.",
-          isDemo: true,
-        }
-      } else {
-        const mockResponses: Record<string, string[]> = {
-          step_hint: [
-            `Let's think about this step by step. What do you already know about the problem? Sometimes writing out what we know helps us see the path forward.`,
-            `You're on the right track! Remember, in maths we often need to identify what type of problem this is first. Is it a reduction formula? An identity? That'll tell us which tool to use.`,
-            `This trips up many students! Try drawing a quick sketch or writing out the given information. What does the question actually want us to find?`,
-          ],
-          wrong_answer: [
-            `I see what happened there — you made a common mistake. Let's think about why "${body.selectedAnswer}" doesn't work here. What happens if you plug that answer back into the original equation?`,
-            `Close! The key thing you might have missed is checking which quadrant we're in. Remember CAST? That tells us the sign of our answer. Try again with that in mind!`,
-            `Almost there! This looks like a straightforward calculation, but there's a subtlety. What if you tried working backwards from the correct answer to see the pattern?`,
-          ],
-          camera_scan: [
-            `I can see you've got a maths problem there! This looks like algebraic manipulation. Start by identifying all the terms — what do you need to solve for?`,
-            `Nice, that's a geometry problem! First step: label everything you know on the diagram. What relationships can you spot between the angles or sides?`,
-            `I see this is a trig problem. Remember to check: is this asking for an angle or a ratio? That determines which approach we use. What do you think?`,
-          ],
-        }
-
-        const responses = mockResponses[mode] || mockResponses.step_hint
-        const randomHint = responses[Math.floor(Math.random() * responses.length)]
-        responseBody = { hint: randomHint, isDemo: true }
-      }
-
-      // Demo-mode responses always "succeed" (there is no real model call
-      // that can fail), so usage is recorded once the response content
-      // above is decided - same "only after success" rule as the real
-      // model branch below. Matches the original behaviour of only
-      // surfacing `remaining` for the plain hint modes (step_hint,
-      // wrong_answer, camera_scan) - prompt_evaluation/cv_help/
-      // general_question never reported it, even though they still
-      // consumed quota.
-      if (!isPremium) {
-        const usageRecord = await incrementUsageRecord(userId, today, mode)
-        if (mode !== 'prompt_evaluation' && mode !== 'cv_help' && mode !== 'general_question') {
-          responseBody.remaining = computeRemaining(mode, usageRecord)
-        }
-      }
-
-      return NextResponse.json(responseBody)
+  if (mode === 'general_question') {
+    return {
+      responseBody: {
+        hint: "AI works by predicting what comes next based on patterns it learned from text. It doesn't actually 'understand' — it matches patterns. That's why it can sound confident even when wrong. Your job is to verify anything important.",
+        isDemo: true,
+      },
+      reportsRemaining: false,
     }
+  }
 
-    // Build the messages array
-    const messages: Anthropic.MessageParam[] = []
+  const mockResponses: Record<string, string[]> = {
+    step_hint: [
+      `Let's think about this step by step. What do you already know about the problem? Sometimes writing out what we know helps us see the path forward.`,
+      `You're on the right track! Remember, in maths we often need to identify what type of problem this is first. Is it a reduction formula? An identity? That'll tell us which tool to use.`,
+      `This trips up many students! Try drawing a quick sketch or writing out the given information. What does the question actually want us to find?`,
+    ],
+    wrong_answer: [
+      `I see what happened there — you made a common mistake. Let's think about why "${body.selectedAnswer}" doesn't work here. What happens if you plug that answer back into the original equation?`,
+      `Close! The key thing you might have missed is checking which quadrant we're in. Remember CAST? That tells us the sign of our answer. Try again with that in mind!`,
+      `Almost there! This looks like a straightforward calculation, but there's a subtlety. What if you tried working backwards from the correct answer to see the pattern?`,
+    ],
+    camera_scan: [
+      `I can see you've got a maths problem there! This looks like algebraic manipulation. Start by identifying all the terms — what do you need to solve for?`,
+      `Nice, that's a geometry problem! First step: label everything you know on the diagram. What relationships can you spot between the angles or sides?`,
+      `I see this is a trig problem. Remember to check: is this asking for an angle or a ratio? That determines which approach we use. What do you think?`,
+    ],
+  }
 
-    if (mode === 'camera_scan' && imageBase64) {
-      // Vision request with image
-      messages.push({
+  const responses = mockResponses[mode] || mockResponses.step_hint
+  const randomHint = responses[Math.floor(Math.random() * responses.length)]
+
+  return {
+    responseBody: { hint: randomHint, isDemo: true },
+    reportsRemaining: true,
+  }
+}
+
+/** Builds the Anthropic messages array for a request - a vision message
+ * (image + text) for camera_scan with an image attached, text-only
+ * otherwise. */
+function buildMessages(
+  mode: HintMode,
+  imageBase64: string | undefined,
+  body: HintRequest
+): Anthropic.MessageParam[] {
+  if (mode === 'camera_scan' && imageBase64) {
+    return [
+      {
         role: 'user',
         content: [
           {
@@ -564,39 +571,187 @@ export async function POST(request: NextRequest) {
             text: getModeSpecificPrompt(body),
           },
         ],
-      })
-    } else {
-      // Text-only request
-      messages.push({
-        role: 'user',
-        content: getModeSpecificPrompt(body),
-      })
+      },
+    ]
+  }
+
+  return [{ role: 'user', content: getModeSpecificPrompt(body) }]
+}
+
+/**
+ * Parses, validates, and persists the model's prompt_evaluation JSON
+ * response. The model's output is untrusted input, exactly like the
+ * request body: a malformed or out-of-range value (e.g. score: 99) must
+ * never be persisted or earn XP. Any parse/validation failure falls back
+ * to a canned response, flagged with parseError so the client knows
+ * nothing was saved. Returns the response body to send (always 200 -
+ * both the fallback and success shapes are "the request succeeded, here
+ * is what came of it").
+ */
+async function handlePromptEvaluation(
+  aiResponse: string,
+  userId: string,
+  body: HintRequest,
+  remaining: number | string
+): Promise<Record<string, unknown>> {
+  const fallbackEvaluation: PromptEvaluation = {
+    score: 3,
+    what_worked: "Your prompt shows effort",
+    what_to_improve: "Try being more specific about context and format",
+    improved_prompt: body.studentPrompt || '',
+    encouragement: "Keep practising — prompt engineering is a skill that improves with use.",
+  }
+
+  let rawEvaluation: unknown = null
+  try {
+    // Extract JSON from response (in case it's wrapped in markdown code blocks)
+    const jsonMatch = aiResponse.match(/\{[\s\S]*\}/)
+    rawEvaluation = jsonMatch ? JSON.parse(jsonMatch[0]) : null
+  } catch (parseError) {
+    console.error('Error parsing model evaluation JSON:', parseError)
+    rawEvaluation = null
+  }
+
+  const validation = PromptEvaluationSchema.safeParse(rawEvaluation)
+
+  if (!validation.success) {
+    console.error('Model evaluation failed validation:', validation.error.issues)
+    return { evaluation: fallbackEvaluation, remaining, parseError: true }
+  }
+
+  const evaluation = validation.data
+  const attempt = await persistPromptChallengeAttempt(userId, body.challengeId, body.studentPrompt, evaluation)
+
+  return { evaluation, remaining, ...(attempt ? { attempt } : {}) }
+}
+
+type ParsedHintRequest =
+  | { ok: true; body: HintRequest }
+  | { ok: false; response: NextResponse }
+
+/** Zod-validates the raw request body against HintRequestSchema. */
+function parseHintRequestBody(rawBody: unknown): ParsedHintRequest {
+  const parseResult = HintRequestSchema.safeParse(rawBody)
+
+  if (!parseResult.success) {
+    return {
+      ok: false,
+      response: NextResponse.json(
+        {
+          error: 'Invalid request',
+          details: parseResult.error.issues.map(i => ({
+            field: i.path.join('.'),
+            message: i.message,
+          })),
+        },
+        { status: 400 }
+      ),
+    }
+  }
+
+  return { ok: true, body: parseResult.data }
+}
+
+/**
+ * Server-side backstop for the client-side downscale (CameraScan.tsx +
+ * src/lib/image/downscale.ts) - protects against a client that skips it
+ * (stale cached bundle, direct API call). Returns a 413 response when
+ * imageBase64 is oversized, null otherwise.
+ */
+function oversizedImageResponse(imageBase64: string | undefined): NextResponse | null {
+  if (imageBase64 && imageBase64.length > MAX_IMAGE_BASE64_LENGTH) {
+    return NextResponse.json(
+      {
+        error: 'Image too large',
+        message: 'That photo is too large to send. Please retake it or crop it closer to the question and try again.',
+      },
+      { status: 413 }
+    )
+  }
+  return null
+}
+
+type ModelCallResult =
+  | { ok: true; aiResponse: string }
+  | { ok: false; errorResponse: NextResponse }
+
+/**
+ * Calls Anthropic via the shared helper (src/lib/claude.ts) for a
+ * non-demo request: builds the messages/system prompt/max_tokens, logs
+ * usage (fire-and-forget) on success, and maps a thrown ClaudeError to
+ * the HTTP status/body this route returns on failure.
+ */
+async function callModel(
+  mode: HintMode,
+  locale: 'en' | 'af',
+  body: HintRequest,
+  imageBase64: string | undefined,
+  userId: string
+): Promise<ModelCallResult> {
+  const messages = buildMessages(mode, imageBase64, body)
+  const systemPrompt = getSystemPromptForMode(mode, locale)
+  const maxTokens = mode === 'prompt_evaluation' ? PROMPT_EVALUATION_MAX_TOKENS : HINT_MAX_TOKENS
+
+  try {
+    const result = await createTutorMessage({ system: systemPrompt, messages, maxTokens })
+    // Fire-and-forget: never awaited, never allowed to fail this
+    // response - see logClaudeUsage()'s doc comment.
+    logClaudeUsage({ userId, mode, model: getClaudeModel(), usage: result.usage })
+    return { ok: true, aiResponse: result.text }
+  } catch (error) {
+    console.error('Anthropic API error:', error)
+    const status = error instanceof ClaudeError ? claudeErrorStatus(error.kind) : 500
+    return { ok: false, errorResponse: NextResponse.json({ error: 'Failed to get AI hint' }, { status }) }
+  }
+}
+
+export async function POST(request: NextRequest) {
+  let user
+  try {
+    user = await requireUser()
+  } catch (err) {
+    return authErrorResponse(err)
+  }
+
+  try {
+    const rawBody = await request.json()
+
+    const parsed = parseHintRequestBody(rawBody)
+    if (!parsed.ok) {
+      return parsed.response
     }
 
-    // Call Anthropic via the shared helper (src/lib/claude.ts): correct
-    // model (env-driven, see getClaudeModel()), cached system prompt,
-    // SDK-managed timeout/retries.
-    const systemPrompt = getSystemPromptForMode(mode, locale)
-    const maxTokens = mode === 'prompt_evaluation' ? 400 : 150
+    const body = parsed.body
+    const userId = user.id
+    const { mode, imageBase64, locale } = body
 
-    let aiResponse: string
-    try {
-      const result = await createTutorMessage({
-        system: systemPrompt,
-        messages,
-        maxTokens,
-      })
-      aiResponse = result.text
-      // Fire-and-forget: never awaited, never allowed to fail this
-      // response - see logClaudeUsage()'s doc comment.
-      logClaudeUsage({ userId, mode, model: getClaudeModel(), usage: result.usage })
-    } catch (error) {
-      console.error('Anthropic API error:', error)
-      const status = error instanceof ClaudeError ? claudeErrorStatus(error.kind) : 500
-      return NextResponse.json(
-        { error: 'Failed to get AI hint' },
-        { status }
-      )
+    const oversized = oversizedImageResponse(imageBase64)
+    if (oversized) {
+      return oversized
+    }
+
+    const isPremium = await resolveIsPremium(userId)
+
+    // "Today" in SAST (Africa/Johannesburg), never UTC - the free-tier
+    // daily limit resets at SAST midnight, not 02:00 SAST (UTC midnight).
+    const today = getTodaySAST()
+
+    if (!isPremium) {
+      const limitResponse = await checkFreeTierLimit(userId, today, mode)
+      if (limitResponse) {
+        return limitResponse
+      }
+    }
+
+    const claudeClient = getClaudeClient()
+    if (!claudeClient) {
+      const responseBody = await buildAndTrackDemoResponse(mode, body, userId, isPremium, today)
+      return NextResponse.json(responseBody)
+    }
+
+    const modelResult = await callModel(mode, locale, body, imageBase64, userId)
+    if (!modelResult.ok) {
+      return modelResult.errorResponse
     }
 
     // The model call above succeeded - only now is usage recorded (see
@@ -608,60 +763,14 @@ export async function POST(request: NextRequest) {
       remaining = computeRemaining(mode, usageRecord)
     }
 
-    // Handle prompt_evaluation mode - parse and VALIDATE the model's JSON.
-    // The model's output is untrusted input, exactly like the request body:
-    // a malformed or out-of-range value (e.g. score: 99) must never be
-    // persisted or earn XP. Any parse/validation failure falls back to the
-    // same canned response, flagged with parseError so the client knows
-    // nothing was saved.
     if (mode === 'prompt_evaluation') {
-      const fallbackEvaluation: PromptEvaluation = {
-        score: 3,
-        what_worked: "Your prompt shows effort",
-        what_to_improve: "Try being more specific about context and format",
-        improved_prompt: body.studentPrompt || '',
-        encouragement: "Keep practising — prompt engineering is a skill that improves with use.",
-      }
-
-      let rawEvaluation: unknown = null
-      try {
-        // Extract JSON from response (in case it's wrapped in markdown code blocks)
-        const jsonMatch = aiResponse.match(/\{[\s\S]*\}/)
-        rawEvaluation = jsonMatch ? JSON.parse(jsonMatch[0]) : null
-      } catch (parseError) {
-        console.error('Error parsing model evaluation JSON:', parseError)
-        rawEvaluation = null
-      }
-
-      const validation = PromptEvaluationSchema.safeParse(rawEvaluation)
-
-      if (!validation.success) {
-        console.error('Model evaluation failed validation:', validation.error.issues)
-        return NextResponse.json({
-          evaluation: fallbackEvaluation,
-          remaining,
-          parseError: true,
-        })
-      }
-
-      const evaluation = validation.data
-
-      const attempt = await persistPromptChallengeAttempt(
-        userId,
-        body.challengeId,
-        body.studentPrompt,
-        evaluation
+      return NextResponse.json(
+        await handlePromptEvaluation(modelResult.aiResponse, userId, body, remaining)
       )
-
-      return NextResponse.json({
-        evaluation,
-        remaining,
-        ...(attempt ? { attempt } : {}),
-      })
     }
 
     return NextResponse.json({
-      hint: aiResponse || 'Sorry, I couldn\'t generate a response right now. Try again!',
+      hint: modelResult.aiResponse || 'Sorry, I couldn\'t generate a response right now. Try again!',
       remaining,
     })
   } catch (error) {
