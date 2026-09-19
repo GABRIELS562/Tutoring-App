@@ -1,6 +1,7 @@
 import { db } from './index'
 import { users, questions, topics, studentProgress } from './schema'
 import { eq, and } from 'drizzle-orm'
+import { MAX_HEARTS } from '@/lib/game-rules'
 
 /**
  * Fixed-uuid dev fixtures - one student per grade, so grade-scoped
@@ -18,7 +19,7 @@ const DEV_USERS = [
     school: 'Dev Fixture High',
     xp: 120,
     streakCount: 2,
-    hearts: 5,
+    hearts: MAX_HEARTS,
     isPremium: false,
   },
   {
@@ -29,7 +30,7 @@ const DEV_USERS = [
     school: 'Dev Fixture High',
     xp: 480,
     streakCount: 9,
-    hearts: 3,
+    hearts: MAX_HEARTS - 2, // has already used a couple of hearts, for a realistic fixture
     isPremium: true,
   },
   {
@@ -40,7 +41,7 @@ const DEV_USERS = [
     school: 'Dev Fixture High',
     xp: 30,
     streakCount: 0,
-    hearts: 5,
+    hearts: MAX_HEARTS,
     isPremium: false,
   },
 ] as const
