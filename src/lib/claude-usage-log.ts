@@ -37,9 +37,11 @@ export function logClaudeUsage({ userId, mode, model, usage }: LogClaudeUsageArg
   // the caller as an async insert error. Nothing here may ever reach the
   // caller as a thrown exception.
   try {
-    supabase
-      .from('ai_usage_log')
-      .insert({
+    // Wrapped in Promise.resolve(): the Supabase query builder returns a
+    // thenable (PromiseLike), not a full Promise, so it has no .catch()
+    // of its own - Promise.resolve() upgrades it to a real Promise.
+    Promise.resolve(
+      supabase.from('ai_usage_log').insert({
         user_id: userId,
         mode,
         model,
@@ -47,10 +49,21 @@ export function logClaudeUsage({ userId, mode, model, usage }: LogClaudeUsageArg
         output_tokens: usage.output_tokens ?? 0,
         cache_read_tokens: usage.cache_read_input_tokens ?? 0,
       })
+    )
       .then(({ error }: { error: unknown }) => {
         if (error) {
           console.error('Error logging AI usage:', error)
         }
+      })
+      // The Supabase client normally resolves with { error } rather than
+      // rejecting, but this .catch() covers the case where the returned
+      // promise itself rejects (a lower-level network/transport failure) -
+      // without it, that rejection is unhandled: Node logs a scary
+      // "UnhandledPromiseRejection" (and, depending on version/flags, can
+      // crash the process) for something that is, by design, not supposed
+      // to affect the request at all.
+      .catch((error: unknown) => {
+        console.error('Error logging AI usage:', error)
       })
   } catch (error) {
     console.error('Error logging AI usage:', error)

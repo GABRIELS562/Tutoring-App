@@ -107,6 +107,45 @@ describe('logClaudeUsage', () => {
     )
   })
 
+  it('does not produce an unhandled rejection when the insert promise itself rejects', async () => {
+    const consoleErrorSpy = vi.spyOn(console, 'error').mockImplementation(() => {})
+    const insertMock = vi.fn().mockReturnValue(Promise.reject(new Error('connection reset')))
+    getApiSupabaseMock.mockReturnValue({
+      from: vi.fn(() => ({ insert: insertMock })),
+    })
+
+    const unhandledRejections: unknown[] = []
+    const onUnhandledRejection = (reason: unknown) => {
+      unhandledRejections.push(reason)
+    }
+    process.on('unhandledRejection', onUnhandledRejection)
+
+    try {
+      expect(() =>
+        logClaudeUsage({
+          userId: 'user-1',
+          mode: 'step_hint',
+          model: 'claude-sonnet-5',
+          usage: { input_tokens: 1, output_tokens: 1, cache_read_input_tokens: 0 } as never,
+        })
+      ).not.toThrow()
+
+      // Flush the microtask queue (and give Node a macrotask turn, which
+      // is when it decides a rejected promise went unhandled) so both the
+      // .catch() and any potential unhandledRejection event have a chance
+      // to fire before we assert.
+      await new Promise((resolve) => setTimeout(resolve, 0))
+    } finally {
+      process.off('unhandledRejection', onUnhandledRejection)
+    }
+
+    expect(unhandledRejections).toEqual([])
+    expect(consoleErrorSpy).toHaveBeenCalledWith(
+      'Error logging AI usage:',
+      expect.objectContaining({ message: 'connection reset' })
+    )
+  })
+
   it('does not throw when the Supabase client itself throws synchronously', () => {
     const consoleErrorSpy = vi.spyOn(console, 'error').mockImplementation(() => {})
     getApiSupabaseMock.mockReturnValue({
