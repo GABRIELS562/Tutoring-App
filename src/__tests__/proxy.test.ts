@@ -50,4 +50,26 @@ describe('proxy', () => {
     expect(res.status).toBe(307)
     expect(res.headers.get('location')).toContain('/login')
   })
+
+  describe.each(['/forgot-password', '/reset-password', '/auth/callback'])(
+    'password reset route %s',
+    (route) => {
+      it('is reachable without a session (not redirected to /login)', async () => {
+        getUserMock.mockResolvedValueOnce({ data: { user: null } })
+
+        const res = await proxy(makeRequest(route))
+
+        expect(res.status).not.toBe(307)
+        expect(res.status).not.toBe(401)
+      })
+
+      it('does not bounce a logged-in user away (unlike /login and /signup)', async () => {
+        getUserMock.mockResolvedValueOnce({ data: { user: { id: 'u1' } } })
+
+        const res = await proxy(makeRequest(route))
+
+        expect(res.headers.get('location')).toBeNull()
+      })
+    }
+  )
 })
