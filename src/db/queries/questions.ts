@@ -244,25 +244,24 @@ export async function updateUserXP(
  */
 export async function decrementHearts(userId: string): Promise<{ hearts: number } | null> {
   try {
-    const userRows = await db
-      .select()
-      .from(users)
+    // A single atomic UPDATE ... RETURNING instead of read-then-write:
+    // two concurrent wrong answers (e.g. two tabs) can't both read the
+    // same starting value and each write hearts - 1, losing a
+    // decrement. GREATEST(...) does the floor-at-0 in SQL; COALESCE
+    // guards the (should-never-happen, since the column defaults to
+    // MAX_HEARTS) case of a null hearts value.
+    const result = await db
+      .update(users)
+      .set({ hearts: sql`GREATEST(COALESCE(${users.hearts}, ${MAX_HEARTS}) - 1, 0)` })
       .where(eq(users.id, userId))
-      .limit(1)
+      .returning({ hearts: users.hearts })
 
-    if (userRows.length === 0) {
+    const row = result[0]
+    if (!row || row.hearts === null) {
       return null
     }
 
-    const currentHearts = userRows[0].hearts ?? MAX_HEARTS
-    const newHearts = Math.max(0, currentHearts - 1)
-
-    await db
-      .update(users)
-      .set({ hearts: newHearts })
-      .where(eq(users.id, userId))
-
-    return { hearts: newHearts }
+    return { hearts: row.hearts }
   } catch (error) {
     console.error('Error decrementing hearts:', error)
     return null

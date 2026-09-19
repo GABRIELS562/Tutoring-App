@@ -62,36 +62,53 @@ describe('decrementHearts', () => {
     vi.clearAllMocks()
   })
 
-  it('decrements hearts by 1', async () => {
-    dbMock.select.mockReturnValueOnce(makeChain([{ hearts: 3 }]))
-    dbMock.update.mockReturnValueOnce(makeChain(undefined))
+  it('performs a single atomic UPDATE ... RETURNING (no read-then-write)', async () => {
+    const updateChain = makeChain([{ hearts: 2 }])
+    dbMock.update.mockReturnValueOnce(updateChain)
 
     const result = await decrementHearts('user-1')
 
     expect(result).toEqual({ hearts: 2 })
+    expect(dbMock.select).not.toHaveBeenCalled()
+    expect(dbMock.update).toHaveBeenCalledTimes(1)
   })
 
-  it('floors at 0 and never goes negative', async () => {
-    dbMock.select.mockReturnValueOnce(makeChain([{ hearts: 0 }]))
-    dbMock.update.mockReturnValueOnce(makeChain(undefined))
+  it('floors at 0 in SQL via GREATEST(hearts - 1, 0)', async () => {
+    const updateChain = makeChain([{ hearts: 0 }])
+    dbMock.update.mockReturnValueOnce(updateChain)
 
     const result = await decrementHearts('user-1')
 
     expect(result).toEqual({ hearts: 0 })
+
+    const setArg = updateChain.set.mock.calls[0][0]
+    expect(setArg).toHaveProperty('hearts')
+    // Not a plain number - a SQL fragment computed in the database.
+    expect(typeof setArg.hearts).not.toBe('number')
+    const rendered = setArg.hearts.queryChunks
+      .map((chunk: unknown) => {
+        if (chunk && typeof chunk === 'object' && 'value' in chunk) {
+          return (chunk as { value: string[] }).value.join('')
+        }
+        return ''
+      })
+      .join('<param>')
+    expect(rendered).toContain('GREATEST(')
+    expect(rendered).toContain('COALESCE(')
+    expect(rendered).toContain('- 1, 0)')
   })
 
-  it('returns null when the user does not exist', async () => {
-    dbMock.select.mockReturnValueOnce(makeChain([]))
+  it('returns null when the user does not exist (no row to RETURNING)', async () => {
+    dbMock.update.mockReturnValueOnce(makeChain([]))
 
     const result = await decrementHearts('missing-user')
 
     expect(result).toBeNull()
-    expect(dbMock.update).not.toHaveBeenCalled()
   })
 
   it('returns null and does not throw on a DB error', async () => {
-    dbMock.select.mockReturnValueOnce({
-      from: () => { throw new Error('db down') },
+    dbMock.update.mockReturnValueOnce({
+      set: () => { throw new Error('db down') },
     })
 
     const result = await decrementHearts('user-1')
