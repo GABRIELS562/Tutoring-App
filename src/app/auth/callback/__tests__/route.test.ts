@@ -42,6 +42,26 @@ describe('GET /auth/callback', () => {
     expect(res.headers.get('location')).toBe('http://localhost/dashboard')
   })
 
+  describe('open-redirect protection on the next param', () => {
+    it('falls back to /dashboard for a protocol-relative next (//evil.com)', async () => {
+      exchangeCodeForSessionMock.mockResolvedValueOnce({ error: null })
+
+      const res = await GET(makeRequest('/auth/callback?code=abc123&next=//evil.com'))
+
+      expect(res.headers.get('location')).toBe('http://localhost/dashboard')
+    })
+
+    it('falls back to /dashboard for an absolute next (https://evil.com)', async () => {
+      exchangeCodeForSessionMock.mockResolvedValueOnce({ error: null })
+
+      const res = await GET(
+        makeRequest(`/auth/callback?code=abc123&next=${encodeURIComponent('https://evil.com')}`)
+      )
+
+      expect(res.headers.get('location')).toBe('http://localhost/dashboard')
+    })
+  })
+
   it('redirects to reset-password with an error flag when the exchange fails', async () => {
     exchangeCodeForSessionMock.mockResolvedValueOnce({ error: new Error('expired') })
 
