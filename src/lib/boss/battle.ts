@@ -96,6 +96,7 @@ export type BattleAction =
   | { type: 'ASK_ANGELO' }
   | { type: 'NEXT_ROUND' }
   | { type: 'RETREAT' }
+  | { type: 'RESTORE_HP'; hp: number }
 
 export const INITIAL_SHIELDS = 3
 export const VIDEO_SHIELD_BONUS = 1
@@ -322,6 +323,16 @@ export function battleReducer(state: BattleState, action: BattleAction): BattleS
     case 'RETREAT':
       if (state.phase === 'victory' || state.phase === 'retreat' || state.phase === 'intro') return state
       return { ...state, phase: 'retreat' }
+
+    case 'RESTORE_HP': {
+      // Client-only, dispatched once after mount from a saved localStorage
+      // value (see src/lib/boss/storage.ts) - only valid pre-battle so a
+      // stale/late dispatch can never yank HP out from under an in-progress
+      // fight.
+      if (state.phase !== 'intro') return state
+      const bossHp = Math.max(0, Math.min(state.bossMaxHp, action.hp))
+      return { ...state, bossHp }
+    }
 
     default:
       return state

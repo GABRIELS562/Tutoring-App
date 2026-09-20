@@ -276,6 +276,21 @@ describe('victory', () => {
   })
 })
 
+describe('RESTORE_HP', () => {
+  it('clamps to [0, bossMaxHp] and only applies during intro', () => {
+    const initial = createBattleState([makeQuestion({ marks: 10 })])
+    const restored = battleReducer(initial, { type: 'RESTORE_HP', hp: 4 })
+    expect(restored.bossHp).toBe(4)
+
+    const clamped = battleReducer(initial, { type: 'RESTORE_HP', hp: 999 })
+    expect(clamped.bossHp).toBe(10)
+
+    const started = readyToBattle(initial)
+    const ignored = battleReducer(started, { type: 'RESTORE_HP', hp: 2 })
+    expect(ignored.bossHp).toBe(10)
+  })
+})
+
 describe('selectors', () => {
   it('getCurrentQuestion / getCurrentStep return null past the end', () => {
     const state = createBattleState([])
