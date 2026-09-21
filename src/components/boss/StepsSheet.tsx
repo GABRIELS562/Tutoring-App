@@ -232,7 +232,7 @@ export default function StepsSheet({
                   type="button"
                   onClick={() => setConfirmAngelo(true)}
                   disabled={askingAngelo || shields <= 0}
-                  className="flex items-center gap-2 px-3 py-2 rounded-lg text-xs font-medium disabled:opacity-40"
+                  className="flex items-center gap-2 min-h-11 min-w-11 px-3 py-2 rounded-lg text-xs font-medium disabled:opacity-40"
                   style={{ background: 'rgba(45, 212, 191, 0.12)', color: 'var(--teal)', border: '1px solid var(--teal)' }}
                 >
                   {askingAngelo ? (
@@ -298,7 +298,7 @@ export default function StepsSheet({
                 <button
                   type="button"
                   onClick={() => setConfirmAngelo(false)}
-                  className="flex-1 px-4 py-2 rounded-lg text-sm font-medium"
+                  className="flex-1 min-h-11 min-w-11 px-4 py-2 rounded-lg text-sm font-medium"
                   style={{ background: 'var(--surface2)', color: 'var(--text)' }}
                 >
                   {t('cancel')}
@@ -306,7 +306,7 @@ export default function StepsSheet({
                 <button
                   type="button"
                   onClick={handleAskAngelo}
-                  className="flex-1 px-4 py-2 rounded-lg text-sm font-semibold text-white"
+                  className="flex-1 min-h-11 min-w-11 px-4 py-2 rounded-lg text-sm font-semibold text-white"
                   style={{ background: 'var(--teal)' }}
                 >
                   {t('confirmAskAngeloAction')}

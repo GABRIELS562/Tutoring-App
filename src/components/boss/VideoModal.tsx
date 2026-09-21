@@ -91,7 +91,7 @@ export default function VideoModal({
             type="button"
             onClick={handleClose}
             aria-label={t('closeVideo')}
-            className="p-1.5 rounded-full"
+            className="flex items-center justify-center min-h-11 min-w-11 -my-1.5 -mr-1.5 rounded-full"
             style={{ color: 'var(--muted-custom)' }}
           >
             <X className="w-5 h-5" />

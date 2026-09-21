@@ -89,7 +89,7 @@ export default function BattleScreen({
         <button
           type="button"
           onClick={() => setConfirmRetreat(true)}
-          className="flex items-center gap-1 text-xs font-medium"
+          className="flex items-center justify-center gap-1 min-h-11 min-w-11 px-3 py-2 -my-2 -mr-2 text-xs font-medium"
           style={{ color: 'var(--muted-custom)' }}
         >
           <Flag className="w-3.5 h-3.5" aria-hidden="true" />
@@ -217,7 +217,7 @@ export default function BattleScreen({
               <button
                 type="button"
                 onClick={() => setConfirmRetreat(false)}
-                className="flex-1 px-4 py-2 rounded-lg text-sm font-medium"
+                className="flex-1 min-h-11 min-w-11 px-4 py-2 rounded-lg text-sm font-medium"
                 style={{ background: 'var(--surface2)', color: 'var(--text)' }}
               >
                 {t('cancel')}
@@ -225,7 +225,7 @@ export default function BattleScreen({
               <button
                 type="button"
                 onClick={onRetreat}
-                className="flex-1 px-4 py-2 rounded-lg text-sm font-semibold text-white"
+                className="flex-1 min-h-11 min-w-11 px-4 py-2 rounded-lg text-sm font-semibold text-white"
                 style={{ background: 'var(--accent-red)' }}
               >
                 {t('retreat')}
