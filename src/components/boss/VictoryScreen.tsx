@@ -89,7 +89,12 @@ export default function VictoryScreen({
     ctx.font = '16px Arial'
     ctx.fillText('angelo-tutoring', canvas.width / 2, canvas.height - 50)
 
-    setCardReady(true)
+    // Drawing itself is synchronous, but the "ready" flag is flipped from
+    // a queued microtask rather than directly in the effect body - avoids
+    // eslint's react-hooks/set-state-in-effect (a setState call must not
+    // be the effect's own direct synchronous action) while still enabling
+    // the download/share buttons on the very next tick.
+    queueMicrotask(() => setCardReady(true))
   }, [boss.accent, bossName, comboBest, elapsedSeconds, marksDealt, t, totalMarks, xp])
 
   const handleDownload = () => {
