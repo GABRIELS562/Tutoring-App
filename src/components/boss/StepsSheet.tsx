@@ -6,6 +6,7 @@ import { useTranslations } from 'next-intl'
 import { ArrowRight, Check, HelpCircle, ListChecks, Loader2, MessageCircle, X as XIcon } from 'lucide-react'
 import MathRenderer from '@/components/math/MathRenderer'
 import { asMath } from '@/lib/boss/math-text'
+import { useMotionSafe } from '@/hooks/useMotionSafe'
 import type { BattleQuestion, RevealMode, StepResult } from '@/lib/boss/battle'
 
 type LocalStage = 'instruction' | 'revealed' | 'explained'
@@ -41,6 +42,7 @@ export default function StepsSheet({
   onContinue,
 }: StepsSheetProps) {
   const t = useTranslations('boss')
+  const { transition, variant } = useMotionSafe()
   const [stage, setStage] = useState<LocalStage>('instruction')
   const [confirmAngelo, setConfirmAngelo] = useState(false)
   const [askingAngelo, setAskingAngelo] = useState(false)
@@ -95,10 +97,10 @@ export default function StepsSheet({
 
   return (
     <motion.div
-      initial={{ y: '100%' }}
-      animate={{ y: 0 }}
-      exit={{ y: '100%' }}
-      transition={{ type: 'spring', damping: 28, stiffness: 260 }}
+      initial={variant({ y: '100%' }, { opacity: 0 })}
+      animate={variant({ y: 0 }, { opacity: 1 })}
+      exit={variant({ y: '100%' }, { opacity: 0 })}
+      transition={transition({ type: 'spring', damping: 28, stiffness: 260 })}
       className="fixed inset-x-0 bottom-0 z-40 max-h-[85vh] overflow-y-auto rounded-t-2xl p-4 pb-[calc(1rem+env(safe-area-inset-bottom,0px))]"
       style={{ background: 'var(--surface)', border: '1px solid var(--border-custom)', borderBottom: 'none' }}
     >
@@ -266,6 +268,7 @@ export default function StepsSheet({
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
+            transition={transition({ duration: 0.2 })}
             className="fixed inset-0 z-50 flex items-center justify-center p-4"
           >
             <button

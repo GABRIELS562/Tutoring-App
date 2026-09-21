@@ -6,6 +6,7 @@ import { Flag, Swords } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 import MathRenderer from '@/components/math/MathRenderer'
 import { ACCENT_TEXT_LIGHT, ACCENT_TEXT_DARK } from '@/lib/color/contrast'
+import { useMotionSafe } from '@/hooks/useMotionSafe'
 import BossFigure, { type BossVisualState } from './BossFigure'
 import HpBar from './HpBar'
 import ShieldsAndCombo from './ShieldsAndCombo'
@@ -55,6 +56,7 @@ export default function BattleScreen({
   onRetreat,
 }: BattleScreenProps) {
   const t = useTranslations('boss')
+  const { transition, variant } = useMotionSafe()
   const [confirmRetreat, setConfirmRetreat] = useState(false)
 
   const handleOptionClick = (letter: string, correct: boolean) => {
@@ -98,9 +100,9 @@ export default function BattleScreen({
       {/* Question Card */}
       <motion.div
         key={question.id}
-        initial={{ opacity: 0, y: 12 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.25 }}
+        initial={variant({ opacity: 0, y: 12 }, { opacity: 0 })}
+        animate={variant({ opacity: 1, y: 0 }, { opacity: 1 })}
+        transition={transition({ duration: 0.25 })}
         className="rounded-xl p-4"
         style={{ background: 'var(--surface)', border: '1px solid var(--border-custom)' }}
       >
@@ -161,8 +163,9 @@ export default function BattleScreen({
 
         {isFeedbackPhase && (
           <motion.div
-            initial={{ opacity: 0, y: 8 }}
-            animate={{ opacity: 1, y: 0 }}
+            initial={variant({ opacity: 0, y: 8 }, { opacity: 0 })}
+            animate={variant({ opacity: 1, y: 0 }, { opacity: 1 })}
+            transition={transition({ duration: 0.25 })}
             className="mt-4 flex items-center justify-between gap-3 rounded-lg p-3"
             style={{ background: 'rgba(42, 157, 143, 0.1)', border: '1px solid var(--teal)' }}
           >

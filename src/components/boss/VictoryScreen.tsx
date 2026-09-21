@@ -7,6 +7,7 @@ import { useTranslations } from 'next-intl'
 import { Trophy, Download, Share2, RefreshCw, BookOpen } from 'lucide-react'
 import BossFigure from './BossFigure'
 import { ACCENT_TEXT_LIGHT, ACCENT_TEXT_DARK } from '@/lib/color/contrast'
+import { useMotionSafe } from '@/hooks/useMotionSafe'
 import type { Boss } from '@/content/bosses'
 
 type VictoryScreenProps = {
@@ -39,6 +40,7 @@ export default function VictoryScreen({
   onPlayAgain,
 }: VictoryScreenProps) {
   const t = useTranslations('boss')
+  const { transition, variant } = useMotionSafe()
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const [cardReady, setCardReady] = useState(false)
 
@@ -126,7 +128,12 @@ export default function VictoryScreen({
 
   return (
     <div className="max-w-md mx-auto px-4 py-8 text-center">
-      <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ type: 'spring', delay: 0.1 }} className="w-24 h-24 mx-auto mb-4">
+      <motion.div
+        initial={variant({ scale: 0 }, { opacity: 0 })}
+        animate={variant({ scale: 1 }, { opacity: 1 })}
+        transition={transition({ type: 'spring', delay: 0.1 })}
+        className="w-24 h-24 mx-auto mb-4"
+      >
         <BossFigure variant={boss.svgVariant} accent={boss.accent} state="defeated" />
       </motion.div>
 
