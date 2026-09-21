@@ -12,6 +12,7 @@ import { isTopicDownloaded, getDownloadedTopicCount, storeTopic } from '@/lib/of
 import { useOnlineStatus } from '@/hooks/useOnlineStatus'
 import { useLocaleCookie } from '@/hooks/useLocaleCookie'
 import { getBossForTopic } from '@/content/bosses'
+import { ACCENT_TEXT_LIGHT, ACCENT_TEXT_DARK } from '@/lib/color/contrast'
 
 const FREE_TIER_OFFLINE_LIMIT = 2
 
@@ -339,8 +340,8 @@ export default function TopicPageClient({ slug, content }: TopicPageClientProps)
 
               <Link
                 href={`/topics/${slug}/boss`}
-                className="flex-1 flex items-center justify-between gap-3 px-6 py-3 rounded-lg font-semibold text-white transition-all hover:opacity-90"
-                style={{ background: boss.accent }}
+                className="flex-1 flex items-center justify-between gap-3 px-6 py-3 rounded-lg font-semibold transition-all hover:opacity-90"
+                style={{ background: boss.accent, color: boss.onAccent === 'light' ? ACCENT_TEXT_LIGHT : ACCENT_TEXT_DARK }}
               >
                 <span className="flex flex-col items-start">
                   <span className="flex items-center gap-2">

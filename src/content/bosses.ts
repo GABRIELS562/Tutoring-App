@@ -10,6 +10,8 @@
  * on a valid topic.
  */
 
+import { pickAccentTextColor } from '@/lib/color/contrast'
+
 export type BossSvgVariant = 'tangent' | 'delta' | 'circle' | 'newton' | 'circuit' | 'dice' | 'generic'
 
 export type Boss = {
@@ -21,10 +23,23 @@ export type Boss = {
   /** Hex accent colour driving the boss's glow, HP bar, and UI accents on the battle screen. */
   accent: string
   svgVariant: BossSvgVariant
+  /**
+   * Which text colour reads legibly on top of `accent` (WCAG AA, >= 4.5:1)
+   * - derived once below via pickAccentTextColor rather than hard-coded,
+   * so a future accent tweak can't silently drift out of contrast. See
+   * src/lib/color/contrast.ts.
+   */
+  onAccent: 'light' | 'dark'
+}
+
+type BossWithoutContrast = Omit<Boss, 'onAccent'>
+
+function withOnAccent(boss: BossWithoutContrast): Boss {
+  return { ...boss, onAccent: pickAccentTextColor(boss.accent) }
 }
 
 const bossRegistry: Record<string, Boss> = {
-  'trig-gr11': {
+  'trig-gr11': withOnAccent({
     id: 'tangent-titan',
     name: 'The Tangent Titan',
     nameAf: 'Die Tangens-Titaan',
@@ -32,8 +47,8 @@ const bossRegistry: Record<string, Boss> = {
     taglineAf: 'Bemeester die eenheidsirkel, of word daardeur verswelg.',
     accent: '#e63946',
     svgVariant: 'tangent',
-  },
-  'calculus-gr12': {
+  }),
+  'calculus-gr12': withOnAccent({
     id: 'delta-differentiator',
     name: 'Delta the Differentiator',
     nameAf: 'Delta die Differensieerder',
@@ -41,8 +56,8 @@ const bossRegistry: Record<string, Boss> = {
     taglineAf: 'Elke kurwe het ’n geheim. Vind die gradiënt voor dit jou vind.',
     accent: '#8b5cf6',
     svgVariant: 'delta',
-  },
-  'euclidean-geometry-gr12': {
+  }),
+  'euclidean-geometry-gr12': withOnAccent({
     id: 'circle-warden',
     name: 'The Circle Warden',
     nameAf: 'Die Sirkelwag',
@@ -50,8 +65,8 @@ const bossRegistry: Record<string, Boss> = {
     taglineAf: 'Wagter van elke koord, raaklyn en koordevierhoek.',
     accent: '#2dd4bf',
     svgVariant: 'circle',
-  },
-  'newtons-laws-gr11': {
+  }),
+  'newtons-laws-gr11': withOnAccent({
     id: 'newtons-shadow',
     name: "Newton's Shadow",
     nameAf: "Newton se Skaduwee",
@@ -59,8 +74,8 @@ const bossRegistry: Record<string, Boss> = {
     taglineAf: 'Vir elke krag wat jy gooi, wag ’n gelyke en teenoorgestelde krag.',
     accent: '#f4a261',
     svgVariant: 'newton',
-  },
-  'electric-circuits-gr10': {
+  }),
+  'electric-circuits-gr10': withOnAccent({
     id: 'short-circuit',
     name: 'The Short Circuit',
     nameAf: 'Die Kortsluiting',
@@ -68,8 +83,8 @@ const bossRegistry: Record<string, Boss> = {
     taglineAf: 'Weerstand is nie hier nutteloos nie - dit is die hele punt.',
     accent: '#f4d35e',
     svgVariant: 'circuit',
-  },
-  'probability-gr12': {
+  }),
+  'probability-gr12': withOnAccent({
     id: 'lady-luck',
     name: 'Lady Luck',
     nameAf: 'Vrou Fortuin',
@@ -77,10 +92,10 @@ const bossRegistry: Record<string, Boss> = {
     taglineAf: 'Die kanse begunstig wie dit korrek bereken.',
     accent: '#ff6b9d',
     svgVariant: 'dice',
-  },
+  }),
 }
 
-const genericBoss: Boss = {
+const genericBoss: Boss = withOnAccent({
   id: 'exam-guardian',
   name: 'The Exam Guardian',
   nameAf: 'Die Eksamenwag',
@@ -88,7 +103,12 @@ const genericBoss: Boss = {
   taglineAf: 'Elke onderwerp het ’n poortwagter. Hierdie een is joune.',
   accent: '#7d8590',
   svgVariant: 'generic',
-}
+})
+
+/** Every registered boss plus the generic fallback, keyed the same way as
+ * bossRegistry (the fallback under 'generic') - for tooling/tests that
+ * need to iterate the full set rather than resolve a single topic slug. */
+export const bosses: Record<string, Boss> = { ...bossRegistry, generic: genericBoss }
 
 /** Always returns a boss - falls back to a generic gatekeeper for any topic
  * slug that doesn't have a named boss yet. */

@@ -23,6 +23,7 @@ import WeaknessCard from '@/components/dashboard/WeaknessCard'
 import { analyzeWeaknesses, getMockWeaknesses, type Weakness } from '@/lib/weaknessDetector'
 import { getTopicsForSubjectGrade } from '@/content/registry'
 import { getBossForTopic } from '@/content/bosses'
+import { ACCENT_TEXT_LIGHT, ACCENT_TEXT_DARK } from '@/lib/color/contrast'
 import type { Grade } from '@/types'
 
 export const dynamic = 'force-dynamic'
@@ -496,8 +497,8 @@ export default async function DashboardPage() {
                     </div>
                     <Link
                       href={`/topics/${topic.slug}/boss`}
-                      className="inline-flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-semibold text-white transition-all hover:opacity-90"
-                      style={{ background: boss.accent }}
+                      className="inline-flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-semibold transition-all hover:opacity-90"
+                      style={{ background: boss.accent, color: boss.onAccent === 'light' ? ACCENT_TEXT_LIGHT : ACCENT_TEXT_DARK }}
                     >
                       <Swords className="w-3.5 h-3.5" aria-hidden="true" />
                       {tBoss('fight')}

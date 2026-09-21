@@ -6,6 +6,7 @@ import { motion } from 'framer-motion'
 import { useTranslations } from 'next-intl'
 import { Trophy, Download, Share2, RefreshCw, BookOpen } from 'lucide-react'
 import BossFigure from './BossFigure'
+import { ACCENT_TEXT_LIGHT, ACCENT_TEXT_DARK } from '@/lib/color/contrast'
 import type { Boss } from '@/content/bosses'
 
 type VictoryScreenProps = {
@@ -178,8 +179,8 @@ export default function VictoryScreen({
             type="button"
             onClick={handleShare}
             disabled={!cardReady}
-            className="flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-lg font-medium disabled:opacity-50 text-white"
-            style={{ background: boss.accent }}
+            className="flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-lg font-medium disabled:opacity-50"
+            style={{ background: boss.accent, color: boss.onAccent === 'light' ? ACCENT_TEXT_LIGHT : ACCENT_TEXT_DARK }}
           >
             <Share2 className="w-4 h-4" aria-hidden="true" />
             {t('share')}

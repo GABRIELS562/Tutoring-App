@@ -5,6 +5,7 @@ import { motion } from 'framer-motion'
 import { Flag, Swords } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 import MathRenderer from '@/components/math/MathRenderer'
+import { ACCENT_TEXT_LIGHT, ACCENT_TEXT_DARK } from '@/lib/color/contrast'
 import BossFigure, { type BossVisualState } from './BossFigure'
 import HpBar from './HpBar'
 import ShieldsAndCombo from './ShieldsAndCombo'
@@ -105,8 +106,8 @@ export default function BattleScreen({
       >
         <div className="flex items-center gap-2 mb-3">
           <span
-            className="px-2 py-0.5 rounded-full text-xs font-bold text-white"
-            style={{ background: boss.accent }}
+            className="px-2 py-0.5 rounded-full text-xs font-bold"
+            style={{ background: boss.accent, color: boss.onAccent === 'light' ? ACCENT_TEXT_LIGHT : ACCENT_TEXT_DARK }}
           >
             {t('worthMarks', { marks: question.marks })}
           </span>
