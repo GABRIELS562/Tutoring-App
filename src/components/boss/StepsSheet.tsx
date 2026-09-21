@@ -3,13 +3,36 @@
 import { useEffect, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useTranslations } from 'next-intl'
-import { ArrowRight, Check, HelpCircle, ListChecks, Loader2, MessageCircle, X as XIcon } from 'lucide-react'
+import { ArrowRight, Check, Circle, GripHorizontal, HelpCircle, ListChecks, Loader2, MessageCircle, X as XIcon } from 'lucide-react'
 import MathRenderer from '@/components/math/MathRenderer'
 import { asMath } from '@/lib/boss/math-text'
 import { useMotionSafe } from '@/hooks/useMotionSafe'
 import type { BattleQuestion, RevealMode, StepResult } from '@/lib/boss/battle'
 
 type LocalStage = 'instruction' | 'revealed' | 'explained'
+
+/** ✓ knew it / ✗ didn't / ○ pending, one dot per step - surfaces the
+ * stepResults the reducer already tracks so a student can see progress
+ * through the current question's step review at a glance. */
+function StepDots({ stepResults, t }: { stepResults: readonly StepResult[]; t: ReturnType<typeof useTranslations> }) {
+  if (stepResults.length === 0) return null
+
+  return (
+    <span className="flex items-center gap-1 shrink-0" role="list" aria-label={t('stepProgressAriaLabel')}>
+      {stepResults.map((result, index) => (
+        <span key={index} role="listitem" title={t(`stepStatus.${result}`)}>
+          {result === 'knew_it' ? (
+            <Check className="w-3.5 h-3.5" style={{ color: 'var(--teal)' }} aria-hidden="true" />
+          ) : result === 'didnt_know' ? (
+            <XIcon className="w-3.5 h-3.5" style={{ color: 'var(--accent-red)' }} aria-hidden="true" />
+          ) : (
+            <Circle className="w-2.5 h-2.5" style={{ color: 'var(--border-custom)' }} aria-hidden="true" />
+          )}
+        </span>
+      ))}
+    </span>
+  )
+}
 
 type StepsSheetProps = {
   question: BattleQuestion
@@ -44,6 +67,11 @@ export default function StepsSheet({
   const t = useTranslations('boss')
   const { transition, variant } = useMotionSafe()
   const [stage, setStage] = useState<LocalStage>('instruction')
+  // Peek control: shrinks the sheet to a compact header so the question
+  // card underneath (rendered by BattleScreen) is visible again. Starts
+  // expanded every time a fresh StepsSheet mounts (a new question's step
+  // review), which is the desired default.
+  const [collapsed, setCollapsed] = useState(false)
   const [confirmAngelo, setConfirmAngelo] = useState(false)
   const [askingAngelo, setAskingAngelo] = useState(false)
   const [angeloResponse, setAngeloResponse] = useState<string | null>(null)
@@ -101,18 +129,33 @@ export default function StepsSheet({
       animate={variant({ y: 0 }, { opacity: 1 })}
       exit={variant({ y: '100%' }, { opacity: 0 })}
       transition={transition({ type: 'spring', damping: 28, stiffness: 260 })}
-      className="fixed inset-x-0 bottom-0 z-40 max-h-[85vh] overflow-y-auto rounded-t-2xl p-4 pb-[calc(1rem+env(safe-area-inset-bottom,0px))]"
+      className={`fixed inset-x-0 bottom-0 z-40 rounded-t-2xl p-4 pb-[calc(1rem+env(safe-area-inset-bottom,0px))] ${
+        collapsed ? 'h-14 overflow-hidden' : 'max-h-[85vh] overflow-y-auto'
+      }`}
       style={{ background: 'var(--surface)', border: '1px solid var(--border-custom)', borderBottom: 'none' }}
     >
       <div className="max-w-lg mx-auto">
-        <div className="flex items-center gap-2 mb-4">
-          <ListChecks className="w-4 h-4" style={{ color: 'var(--teal)' }} aria-hidden="true" />
-          <h2 className="text-sm font-bold" style={{ color: 'var(--text)' }}>
-            {isReviewOnly ? t('reviewTitle') : t('stepByStepTitle')}
-          </h2>
+        <div className="flex items-center justify-between gap-2 mb-4">
+          <div className="flex items-center gap-2 min-w-0">
+            <ListChecks className="w-4 h-4 shrink-0" style={{ color: 'var(--teal)' }} aria-hidden="true" />
+            <h2 className="text-sm font-bold truncate" style={{ color: 'var(--text)' }}>
+              {isReviewOnly ? t('reviewTitle') : t('stepByStepTitle')}
+            </h2>
+            <StepDots stepResults={stepResults} t={t} />
+          </div>
+          <button
+            type="button"
+            onClick={() => setCollapsed((c) => !c)}
+            aria-expanded={!collapsed}
+            className="shrink-0 flex items-center gap-1.5 min-h-11 px-2.5 py-1.5 rounded-md text-xs font-semibold"
+            style={{ color: 'var(--teal)', background: 'rgba(45, 212, 191, 0.12)' }}
+          >
+            <GripHorizontal className="w-3.5 h-3.5" aria-hidden="true" />
+            {collapsed ? t('hideQuestion') : t('showQuestion')}
+          </button>
         </div>
 
-        {revealMode === 'short' && !done ? (
+        {!collapsed && (revealMode === 'short' && !done ? (
           <div>
             <p className="text-sm mb-3" style={{ color: 'var(--muted-custom)' }}>
               {t('shortAnswerIntro')}
@@ -259,7 +302,7 @@ export default function StepsSheet({
               </div>
             )}
           </div>
-        )}
+        ))}
       </div>
 
       <AnimatePresence>

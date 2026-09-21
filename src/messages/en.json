@@ -425,6 +425,14 @@
     "allStepsDone": "Nice work - you've been through every step.",
     "continue": "Continue",
     "stepOf": "Step {current} of {total}",
+    "showQuestion": "Show question",
+    "hideQuestion": "Hide question",
+    "stepProgressAriaLabel": "Step progress",
+    "stepStatus": {
+      "knew_it": "Knew it",
+      "didnt_know": "Didn't know",
+      "pending": "Not answered yet"
+    },
     "iKnowThis": "I know this",
     "didYouHaveThis": "Did you have this?",
     "yesIHadThis": "Yes, I had this",
