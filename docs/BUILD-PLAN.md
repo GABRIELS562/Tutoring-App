@@ -1,6 +1,6 @@
 # Angelo Tutoring — Build Plan (pre-client-reply work)
 
-**Date:** 18 September 2026 · **Status (19 Sep):** Phases 0–5 merged to `develop` (388 tests, build clean). Phase 6 awaits a Supabase project + Anthropic key. · **Source:** five parallel specialist reviews of the codebase (security, data layer, frontend, AI/admin, infra) plus the 17 Sep status audit.
+**Date:** 18 September 2026 · **Status (21 Sep):** Phases 0–5 merged to `develop` (388 tests, build clean). Phase 6 awaits a Supabase project + Anthropic key. Boss Battle prototype built on branch `phase-7/boss-battle` (§5) — note its "phase 7" is the git branch's own number, unrelated to the "Phase 7" backlog section below, which predates the idea. · **Source:** five parallel specialist reviews of the codebase (security, data layer, frontend, AI/admin, infra) plus the 17 Sep status audit.
 **Goal:** everything that can be built *without* a client decision, ordered so that each phase leaves the app safer and more real than the last. Estimates are developer-days; with agents running phases in parallel the wall-clock is roughly half.
 
 ---
@@ -149,3 +149,42 @@ A deployable preview on real infrastructure where: every route is authenticated,
 - Sonnet 5 for the tutor; Haiku 4.5 as the switch if cost bites.
 - Multiple-choice stays; written-answer is a Phase 8 conversation.
 - "Download for offline" relabelled rather than fully built.
+
+## 5. Boss Battle prototype (`phase-7/boss-battle` branch) — status
+
+Built and self-contained: a topic's Practice questions reframed as a fight
+against a cosmetic boss, sharing the same question bank (real or demo).
+Not part of the numbered Phases 0–7 backlog above (that "Phase 7" predates
+this feature) — tracked here instead.
+
+**Done:**
+- Route: `src/app/(app)/topics/[slug]/boss/page.tsx` — resolves the topic
+  (404 via `notFound()` on an unregistered slug), sources questions from
+  `getQuestionsByTopic` (real) or `demoQuestions` scoped to the slug with a
+  full-set fallback (demo), and renders `BossBattleClient`.
+- Reducer: `src/lib/boss/battle.ts` — damage/shields/combo/retreat/victory,
+  pure and unit-tested (`src/lib/boss/__tests__/battle.test.ts`).
+- Boss registry: `src/content/bosses.ts` — 6 named bosses + a generic
+  fallback so every topic is fightable.
+- Demo questions: `src/content/demo-questions.ts` (`demoQuestions`) — the
+  same fallback set `QuizEngine` already used, extracted so both share it.
+- UI: `src/components/boss/*` (intro/battle/steps/victory/retreat screens,
+  HUD, boss figure SVGs, video modal for the "+1 shield" theory video).
+- Entry points: "Battle the boss" card on the topic page, "Boss battles"
+  section on the dashboard.
+- i18n: full `boss` message namespace, both locales, parity test green,
+  0 flagged by `scripts/check-i18n-coverage.mjs`.
+- Tests: reducer unit tests, `BossBattleClient` happy-path/retreat-path
+  integration tests, a route test, an axe pass on the intro screen.
+
+**Known limitations (prototype scope, documented not fixed):**
+- Boss HP survives a retreat via `localStorage` only — per-device, not
+  per-account. No DB table for boss battles yet.
+- Afrikaans copy is a first pass by the agent that wired it, not yet
+  reviewed by a native speaker (see `docs/i18n-review.md`'s `boss`
+  namespace entry).
+
+**Not done / next if this becomes a real feature:** a `boss_attempts`
+(or similar) DB table so HP/XP persist per account instead of per device;
+a real "watch 30s of video" completion signal instead of a client-side
+timer; admin-authored boss copy instead of the hardcoded registry.
