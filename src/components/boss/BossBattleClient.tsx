@@ -31,6 +31,11 @@ type BossBattleClientProps = {
   topicName: string
   questions: QuestionWithDetails[]
   isDemo: boolean
+  /** Session user id (from getSessionUser() server-side) - used the same
+   * way QuizEngine uses it: defense in depth so a stray 'demo-user' id
+   * never persists a result, even if `isDemo` and the id were ever to
+   * disagree. */
+  userId: string
   video: BossVideo
 }
 
@@ -38,7 +43,7 @@ type BossBattleClientProps = {
  * again" can fully reset the session by remounting BossBattleSession under
  * a fresh key rather than needing a RESET action in the (deliberately
  * minimal) reducer. */
-export default function BossBattleClient({ topicSlug, topicName, questions, isDemo, video }: BossBattleClientProps) {
+export default function BossBattleClient({ topicSlug, topicName, questions, isDemo, userId, video }: BossBattleClientProps) {
   const t = useTranslations('boss')
   const [attempt, setAttempt] = useState(0)
 
@@ -73,6 +78,7 @@ export default function BossBattleClient({ topicSlug, topicName, questions, isDe
       topicName={topicName}
       questions={questions}
       isDemo={isDemo}
+      userId={userId}
       video={video}
       onRestart={() => setAttempt((a) => a + 1)}
     />
@@ -81,7 +87,7 @@ export default function BossBattleClient({ topicSlug, topicName, questions, isDe
 
 type BossBattleSessionProps = BossBattleClientProps & { onRestart: () => void }
 
-function BossBattleSession({ topicSlug, topicName, questions, isDemo, video, onRestart }: BossBattleSessionProps) {
+function BossBattleSession({ topicSlug, topicName, questions, isDemo, userId, video, onRestart }: BossBattleSessionProps) {
   const t = useTranslations('boss')
   const locale = useLocaleCookie()
   const boss = getBossForTopic(topicSlug)
@@ -121,34 +127,48 @@ function BossBattleSession({ topicSlug, topicName, questions, isDemo, video, onR
   }, [battleActive])
 
   // --- Boss "hit" pulse + floating damage number + accessible live region,
-  // all reactively derived from bossHp actually decreasing (the one true
-  // signal for "damage was dealt"), not duplicated from action handlers. ---
+  // all reactively derived from bossHp/shields actually changing (the one
+  // true signal for "damage was dealt" / "a shield was spent or earned"),
+  // not duplicated from action handlers.
+  //
+  // Adjusted during render - React's documented pattern for "adjusting
+  // state when a prop changes" (https://react.dev/learn/you-might-not-need-an-effect)
+  // - rather than in an Effect, since eslint's react-hooks/set-state-in-effect
+  // rule flags a synchronous setState call inside an Effect body. The one
+  // genuine side effect here (the 500ms revert-to-idle timer) still lives
+  // in its own Effect below, which only calls setState from an
+  // asynchronous timer callback, never synchronously in the Effect body. ---
   const [bossVisualState, setBossVisualState] = useState<BossVisualState>('idle')
   const [damageKey, setDamageKey] = useState(0)
   const [announcement, setAnnouncement] = useState('')
-  const prevHpRef = useRef(state.bossHp)
-  const prevShieldsRef = useRef(state.shields)
+  const [prevBossHp, setPrevBossHp] = useState(state.bossHp)
+  const [prevShields, setPrevShields] = useState(state.shields)
 
-  useEffect(() => {
-    if (state.bossHp < prevHpRef.current) {
+  if (state.bossHp !== prevBossHp) {
+    setPrevBossHp(state.bossHp)
+    if (state.bossHp < prevBossHp) {
       setDamageKey((k) => k + 1)
       setBossVisualState('hit')
-      setAnnouncement(t('announceDamage', { damage: prevHpRef.current - state.bossHp, hp: state.bossHp }))
-      const timer = setTimeout(() => setBossVisualState('idle'), 500)
-      prevHpRef.current = state.bossHp
-      return () => clearTimeout(timer)
+      setAnnouncement(t('announceDamage', { damage: prevBossHp - state.bossHp, hp: state.bossHp }))
     }
-    prevHpRef.current = state.bossHp
-  }, [state.bossHp, t])
+  }
 
-  useEffect(() => {
-    if (state.shields < prevShieldsRef.current) {
+  if (state.shields !== prevShields) {
+    setPrevShields(state.shields)
+    if (state.shields < prevShields) {
       setAnnouncement(t('announceShieldLost', { shields: state.shields }))
-    } else if (state.shields > prevShieldsRef.current) {
+    } else {
       setAnnouncement(t('announceShieldGained', { shields: state.shields }))
     }
-    prevShieldsRef.current = state.shields
-  }, [state.shields, t])
+  }
+
+  useEffect(() => {
+    if (bossVisualState !== 'hit') return
+    const timer = setTimeout(() => setBossVisualState('idle'), 500)
+    return () => clearTimeout(timer)
+    // damageKey forces the timer to restart on every hit, even a hit that
+    // lands while bossVisualState is still 'hit' from the previous one.
+  }, [bossVisualState, damageKey])
 
   // --- Persistence: boss HP survives a retreat, clears on victory. Demo
   // and real mode both use localStorage for this prototype (see
@@ -173,9 +193,13 @@ function BossBattleSession({ topicSlug, topicName, questions, isDemo, video, onR
   // call exists only so a real question's correct/wrong tally (streaks,
   // hearts elsewhere in the app) stays in sync with what the student
   // actually did here, per question, once. ---
+  // Same defense-in-depth as QuizEngine's shouldPersist: never write for
+  // demo mode, and never write for the 'demo-user' fallback id even if
+  // isDemo somehow disagreed - there is nothing real to attach it to.
+  const shouldPersist = !isDemo && userId !== 'demo-user'
   const persistedQuestionIds = useRef(new Set<string>())
   const persistMcqResult = (questionId: string, correct: boolean) => {
-    if (isDemo) return
+    if (!shouldPersist) return
     if (persistedQuestionIds.current.has(questionId)) return
     persistedQuestionIds.current.add(questionId)
     recordAnswer(questionId, correct).catch((error) => {

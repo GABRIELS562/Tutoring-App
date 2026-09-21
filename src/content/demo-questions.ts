@@ -6,7 +6,7 @@ import type { QuestionWithDetails } from '@/db/queries/questions'
  * QuizEngine.tsx; moved here so the Boss Battle prototype (BossBattleClient)
  * can use the exact same demo content instead of maintaining a second copy.
  */
-export const mockQuestions: QuestionWithDetails[] = [
+export const demoQuestions: QuestionWithDetails[] = [
   {
     id: '1',
     topicId: 'trig-1',

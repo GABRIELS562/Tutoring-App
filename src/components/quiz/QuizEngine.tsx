@@ -9,7 +9,7 @@ import { useTranslations } from 'next-intl'
 import type { QuestionWithDetails } from '@/db/queries/questions'
 import { recordAnswer, completeQuiz } from '@/app/(app)/topics/[slug]/practice/actions'
 import { XP_PER_CORRECT_ANSWER, MAX_HEARTS } from '@/lib/game-rules'
-import { mockQuestions } from '@/content/demo-questions'
+import { demoQuestions } from '@/content/demo-questions'
 
 type QuizEngineProps = {
   topicSlug: string
@@ -41,8 +41,8 @@ export default function QuizEngine({
   // shown in demo mode (no DATABASE_URL) - with a real, configured
   // database and zero questions, we show an empty state instead.
   const hasRealQuestions = Boolean(initialQuestions && initialQuestions.length > 0)
-  const usingMockQuestions = !hasRealQuestions && isDemo
-  const questionsToUse = hasRealQuestions ? initialQuestions! : usingMockQuestions ? mockQuestions : []
+  const usingDemoQuestions = !hasRealQuestions && isDemo
+  const questionsToUse = hasRealQuestions ? initialQuestions! : usingDemoQuestions ? demoQuestions : []
 
   const [questions, setQuestions] = useState<QuestionWithDetails[]>(questionsToUse)
   const [currentIndex, setCurrentIndex] = useState(0)
@@ -73,7 +73,7 @@ export default function QuizEngine({
   // demo-user fallback id (defense in depth if isDemo and userId were
   // ever to disagree - the server actions derive the real id from the
   // session regardless, but there is nothing to save for 'demo-user').
-  const shouldPersist = !isDemo && !usingMockQuestions && userId !== 'demo-user'
+  const shouldPersist = !isDemo && !usingDemoQuestions && userId !== 'demo-user'
 
   const wrongCount = answers.filter((a) => a === false).length
   const heartsRemaining = Math.max(0, (hearts ?? MAX_HEARTS) - wrongCount)
