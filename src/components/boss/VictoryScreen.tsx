@@ -92,12 +92,15 @@ export default function VictoryScreen({
     ctx.font = '16px Arial'
     ctx.fillText('angelo-tutoring', canvas.width / 2, canvas.height - 50)
 
-    // Drawing itself is synchronous, but the "ready" flag is flipped from
-    // a queued microtask rather than directly in the effect body - avoids
-    // eslint's react-hooks/set-state-in-effect (a setState call must not
-    // be the effect's own direct synchronous action) while still enabling
-    // the download/share buttons on the very next tick.
-    queueMicrotask(() => setCardReady(true))
+    // This effect's whole job is an imperative canvas draw (the share-card
+    // artwork) that setState can't express any other way - a genuine
+    // "synchronize with a non-React system" effect per React's own
+    // guidance, not a state-derived-from-props/state case the lint rule is
+    // meant to catch. setCardReady flips true only once the draw above has
+    // actually happened, so the download/share buttons stay disabled until
+    // there's really a finished canvas to read from.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setCardReady(true)
   }, [boss.accent, bossName, comboBest, elapsedSeconds, marksDealt, t, totalMarks, xp])
 
   const handleDownload = () => {
