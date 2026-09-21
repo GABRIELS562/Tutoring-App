@@ -329,3 +329,83 @@ where a matching one already existed (e.g. `nav.papers`, `nav.aiSkills`,
 - `weaknessCard.fixNow`
 - `weaknessCard.issueDescription`
 - `weaknessCard.spotted`
+
+## `boss` namespace (src/messages/{en,af}.json)
+
+Added for the Phase 7 Boss Battle prototype (`src/components/boss/*`,
+`src/app/(app)/topics/[slug]/boss/page.tsx`), plus the entry-point strings
+in `TopicPageClient.tsx` (the "Battle the boss" card) and the dashboard's
+"Boss battles" section:
+
+- `boss.allStepsDone`
+- `boss.announceDamage`
+- `boss.announceShieldGained`
+- `boss.announceShieldLost`
+- `boss.askAngeloCost`
+- `boss.askAngeloError`
+- `boss.backToNotes`
+- `boss.battleAgain`
+- `boss.bestCombo`
+- `boss.bossHpAriaLabel`
+- `boss.bossHpPreview`
+- `boss.bossSleepingBody`
+- `boss.bossSleeping`
+- `boss.cancel`
+- `boss.closeVideo`
+- `boss.comboMultiplier`
+- `boss.comboStreak`
+- `boss.confirmAskAngeloAction`
+- `boss.confirmAskAngeloBody`
+- `boss.confirmAskAngeloTitle`
+- `boss.confirmRetreatBody`
+- `boss.confirmRetreatTitle`
+- `boss.continue`
+- `boss.correctHit`
+- `boss.dailyHintLimitReached`
+- `boss.dashboardSectionTitle`
+- `boss.didYouHaveThis`
+- `boss.download`
+- `boss.entryCardCta`
+- `boss.entryCardSubtitle`
+- `boss.fight`
+- `boss.hpLabel`
+- `boss.iKnowThis`
+- `boss.marksDealt`
+- `boss.nextRound`
+- `boss.noExplanationAvailable`
+- `boss.noIDidNot`
+- `boss.noShieldsLeft`
+- `boss.questionCount`
+- `boss.readiness.got_this`
+- `boss.readiness.kind_of`
+- `boss.readiness.not_sure`
+- `boss.readinessQuestion`
+- `boss.retreatBody`
+- `boss.retreatTitle`
+- `boss.retreat`
+- `boss.reviewTitle`
+- `boss.roundOf`
+- `boss.shareCardHeadline`
+- `boss.shareCardMarks`
+- `boss.shareCardShareText`
+- `boss.shareCardStats`
+- `boss.shareCardXp`
+- `boss.share`
+- `boss.shieldsRemainingAriaLabel`
+- `boss.shortAnswerIntro`
+- `boss.showMeTheSteps`
+- `boss.startBattle`
+- `boss.stepByStepTitle`
+- `boss.stepOf`
+- `boss.timeTaken`
+- `boss.title`
+- `boss.tryAgain`
+- `boss.victoryTitle`
+- `boss.videoModalLabel`
+- `boss.videoShieldEarned`
+- `boss.videoShieldHint`
+- `boss.watchTheoryFirst`
+- `boss.worthMarks`
+- `boss.wrongAnswerHitBack`
+- `boss.xpEarned`
+- `boss.yesIHadThis`

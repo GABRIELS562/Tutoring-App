@@ -5,11 +5,13 @@ import Link from 'next/link'
 import Topbar from '@/components/layout/Topbar'
 import NoteBlock from '@/components/notes/NoteBlock'
 import { useTranslations } from 'next-intl'
-import { ChevronDown, BookOpen, FileText, Star, ArrowRight, Download, Check, Loader2, WifiOff, AlertCircle } from 'lucide-react'
+import { ChevronDown, BookOpen, FileText, Star, ArrowRight, Download, Check, Loader2, WifiOff, AlertCircle, Swords } from 'lucide-react'
 import type { TopicContent } from '@/types'
 import { useUser } from '@/context/UserContext'
 import { isTopicDownloaded, getDownloadedTopicCount, storeTopic } from '@/lib/offlineStorage'
 import { useOnlineStatus } from '@/hooks/useOnlineStatus'
+import { useLocaleCookie } from '@/hooks/useLocaleCookie'
+import { getBossForTopic } from '@/content/bosses'
 
 const FREE_TIER_OFFLINE_LIMIT = 2
 
@@ -22,12 +24,16 @@ export default function TopicPageClient({ slug, content }: TopicPageClientProps)
   const t = useTranslations('topicPage')
   const tTopics = useTranslations('topics')
   const tSubjects = useTranslations('subjects')
+  const tBoss = useTranslations('boss')
   const [tocOpen, setTocOpen] = useState(false)
   const [activeSection, setActiveSection] = useState<string | null>(null)
   const [downloadState, setDownloadState] = useState<'idle' | 'downloading' | 'downloaded' | 'error' | 'limit_reached'>('idle')
   const isOnline = useOnlineStatus()
   const { user } = useUser()
   const isPremium = user?.isPremium ?? false
+  const locale = useLocaleCookie()
+  const boss = getBossForTopic(slug)
+  const bossName = locale === 'af' ? boss.nameAf : boss.name
 
   // Check if topic is already cached (IndexedDB + Cache API)
   useEffect(() => {
@@ -320,15 +326,32 @@ export default function TopicPageClient({ slug, content }: TopicPageClientProps)
               </section>
             ))}
 
-            {/* Practice Button */}
-            <div className="mt-12 pt-8" style={{ borderTop: '1px solid var(--border-custom)' }}>
+            {/* Practice Button + Boss Battle card */}
+            <div className="mt-12 pt-8 flex flex-col sm:flex-row gap-4" style={{ borderTop: '1px solid var(--border-custom)' }}>
               <Link
                 href={`/topics/${slug}/practice`}
-                className="inline-flex items-center gap-3 px-6 py-3 rounded-lg font-semibold text-white transition-all hover:opacity-90"
+                className="inline-flex items-center justify-center gap-3 px-6 py-3 rounded-lg font-semibold text-white transition-all hover:opacity-90"
                 style={{ background: 'var(--accent-red)' }}
               >
                 {t('practiceThisTopic')}
                 <ArrowRight className="w-5 h-5" />
+              </Link>
+
+              <Link
+                href={`/topics/${slug}/boss`}
+                className="flex-1 flex items-center justify-between gap-3 px-6 py-3 rounded-lg font-semibold text-white transition-all hover:opacity-90"
+                style={{ background: boss.accent }}
+              >
+                <span className="flex flex-col items-start">
+                  <span className="flex items-center gap-2">
+                    <Swords className="w-4 h-4" aria-hidden="true" />
+                    {tBoss('entryCardCta')}
+                  </span>
+                  <span className="text-xs font-normal opacity-90 mt-0.5">
+                    {tBoss('entryCardSubtitle', { bossName })}
+                  </span>
+                </span>
+                <ArrowRight className="w-5 h-5 shrink-0" aria-hidden="true" />
               </Link>
             </div>
           </div>

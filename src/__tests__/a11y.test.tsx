@@ -151,6 +151,24 @@ describe('accessibility (axe)', () => {
     expect(await axe(container)).toHaveNoViolations()
   })
 
+  it('BossBattleClient (demo mode, intro screen) has no axe violations', async () => {
+    const { default: BossBattleClient } = await import('@/components/boss/BossBattleClient')
+    const { demoQuestions } = await import('@/content/demo-questions')
+
+    const { container } = render(
+      <BossBattleClient
+        topicSlug="trig-gr11"
+        topicName="Trigonometry"
+        questions={demoQuestions}
+        isDemo
+        userId="demo-user"
+        video={null}
+      />
+    )
+
+    expect(await axe(container)).toHaveNoViolations()
+  })
+
   it('Login has no axe violations', async () => {
     const { default: LoginPage } = await import('@/app/(auth)/login/page')
 

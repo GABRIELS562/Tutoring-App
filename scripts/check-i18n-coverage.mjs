@@ -43,12 +43,16 @@ const TARGET_FILES = [
   'src/app/(auth)/forgot-password/page.tsx',
   'src/app/(auth)/reset-password/page.tsx',
   'src/app/verify/[certificateId]/page.tsx',
+  // Phase 7 (Boss Battle prototype). dashboard/page.tsx is already listed
+  // above (Phase 5.1) and now also carries the "Boss battles" section.
+  'src/app/(app)/topics/[slug]/boss/page.tsx',
 ]
 
-// Expand subjects/[subject]/* and topics/[slug]/practice/* globs.
+// Expand subjects/[subject]/*, topics/[slug]/practice/* and boss/* globs.
 const globbed = [
   'src/app/(app)/subjects/[subject]/*.tsx',
   'src/app/(app)/topics/[slug]/practice/*.tsx',
+  'src/components/boss/*.tsx',
 ].flatMap((pattern) => globSync(pattern, { cwd: ROOT }))
 
 const files = [...new Set([...TARGET_FILES, ...globbed])]

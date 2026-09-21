@@ -1,7 +1,7 @@
 import { cookies } from 'next/headers'
 import { createServerClient } from '@supabase/ssr'
 import Link from 'next/link'
-import { getTranslations } from 'next-intl/server'
+import { getTranslations, getLocale } from 'next-intl/server'
 import {
   BookOpen,
   Target,
@@ -12,6 +12,7 @@ import {
   TrendingUp,
   Clock,
   Brain,
+  Swords,
 } from 'lucide-react'
 import Topbar from '@/components/layout/Topbar'
 import { getDashboardData, type DashboardData } from '@/db/queries/progress'
@@ -20,10 +21,22 @@ import ExamCountdown from '@/components/dashboard/ExamCountdown'
 import StudyPlanBanner from '@/components/dashboard/StudyPlanBanner'
 import WeaknessCard from '@/components/dashboard/WeaknessCard'
 import { analyzeWeaknesses, getMockWeaknesses, type Weakness } from '@/lib/weaknessDetector'
+import { getTopicsForSubjectGrade } from '@/content/registry'
+import { getBossForTopic } from '@/content/bosses'
+import type { Grade } from '@/types'
 
 export const dynamic = 'force-dynamic'
 
 type HomeTranslator = Awaited<ReturnType<typeof getTranslations<'home'>>>
+
+const VALID_GRADES: readonly Grade[] = [10, 11, 12]
+
+/** Narrows a student's stored grade (arbitrary `number | null` in the DB)
+ * down to the Grade union the content registry indexes by, defaulting to
+ * 11 the same way the rest of the dashboard already does. */
+function toGrade(grade: number | null | undefined): Grade {
+  return (VALID_GRADES as readonly number[]).includes(grade ?? NaN) ? (grade as Grade) : 11
+}
 
 function getGreeting(t: HomeTranslator): string {
   const hour = new Date().getHours()
@@ -88,6 +101,8 @@ const mockDashboardData: DashboardData = {
 export default async function DashboardPage() {
   const t = await getTranslations('home')
   const tNav = await getTranslations('nav')
+  const tBoss = await getTranslations('boss')
+  const locale = await getLocale()
   let userId = 'demo-user'
   let data = mockDashboardData
   let isRealUser = false
@@ -148,6 +163,12 @@ export default async function DashboardPage() {
   const totalTopicsForGrade = 12 // Approximate total topics per grade
 
   const daysRemaining = getDaysUntilExam('2026-10-30')
+
+  // Boss Battle entry points: 3 maths topics for the student's grade,
+  // each paired with its boss (getBossForTopic always returns one - a
+  // generic fallback for any topic without a named boss yet, see
+  // src/content/bosses.ts).
+  const bossTopics = getTopicsForSubjectGrade('maths', toGrade(user?.grade)).slice(0, 3)
 
   return (
     <div className="min-h-screen" style={{ background: 'var(--bg)' }}>
@@ -440,6 +461,53 @@ export default async function DashboardPage() {
             )}
           </div>
         </div>
+
+        {/* Section 3.5: Boss Battles */}
+        {bossTopics.length > 0 && (
+          <div
+            className="rounded-xl p-5"
+            style={{ background: 'var(--surface)', border: '1px solid var(--border-custom)' }}
+          >
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="font-semibold" style={{ color: 'var(--text)' }}>
+                {tBoss('dashboardSectionTitle')}
+              </h2>
+              <Swords className="w-5 h-5" style={{ color: 'var(--muted-custom)' }} />
+            </div>
+
+            <div className="grid gap-3 sm:grid-cols-3">
+              {bossTopics.map((topic) => {
+                const boss = getBossForTopic(topic.slug)
+                const bossName = locale === 'af' ? boss.nameAf : boss.name
+
+                return (
+                  <div
+                    key={topic.slug}
+                    className="rounded-lg p-4 flex flex-col justify-between gap-3"
+                    style={{ background: 'var(--surface2)', border: `1px solid ${boss.accent}` }}
+                  >
+                    <div>
+                      <p className="text-sm font-semibold" style={{ color: 'var(--text)' }}>
+                        {topic.title}
+                      </p>
+                      <p className="text-xs mt-0.5" style={{ color: 'var(--muted-custom)' }}>
+                        {bossName}
+                      </p>
+                    </div>
+                    <Link
+                      href={`/topics/${topic.slug}/boss`}
+                      className="inline-flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-semibold text-white transition-all hover:opacity-90"
+                      style={{ background: boss.accent }}
+                    >
+                      <Swords className="w-3.5 h-3.5" aria-hidden="true" />
+                      {tBoss('fight')}
+                    </Link>
+                  </div>
+                )
+              })}
+            </div>
+          </div>
+        )}
 
         {/* Section 4: Quick Actions */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">

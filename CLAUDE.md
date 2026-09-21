@@ -94,6 +94,16 @@ Videos: each `{ type: 'video', videoId, videoIdAf? }` block plays inside the pag
 - Six modes via Zod-validated `mode`: `step_hint` (StepSolution), `wrong_answer` (QuestionCard), `camera_scan` (image, client-downscaled to 1280px, server 413 above 4,000,000 chars), `prompt_evaluation` (model JSON validated by `PromptEvaluationSchema`, attempt persisted idempotently per user+challenge), `general_question`, `cv_help`.
 - Free-tier daily limits (`FREE_HINT_LIMIT = 5`, `FREE_CAMERA_LIMIT = 1`) in `ai_hint_usage`, day key = SAST (`todaySast()` in `src/lib/dates.ts`), increment via the `increment_hint_usage` RPC **after** a successful call; usage lookup fails closed (503). Premium status comes from the DB (`checkPremiumStatus`), never the body. Every successful call logs token counts to `ai_usage_log`. `export const maxDuration = 60`.
 
+### Boss Battle (`/topics/[slug]/boss`, Phase 7 prototype)
+
+Practice reframed as a fight: same question bank, cosmetic boss framing. Route is `src/app/(app)/topics/[slug]/boss/page.tsx` (server component, `notFound()` on an unregistered slug via `getTopicMeta`) → `src/components/boss/BossBattleClient.tsx` (orchestrator) → `IntroScreen`/`BattleScreen`/`StepsSheet`/`VictoryScreen`/`RetreatScreen`.
+
+- **Reducer** — `src/lib/boss/battle.ts`: the entire rules engine (damage, shields, combo, readiness-driven reveal depth, retreat, victory), pure and dependency-free (no Date.now()/DOM/localStorage) so it's unit-testable without mocking the browser. Boss HP = sum of question `marks`. `src/lib/boss/convert.ts` maps `QuestionWithDetails` → the reducer's `BattleQuestion` shape; `src/lib/boss/storage.ts` persists remaining HP to `localStorage` (prototype scope — no DB table yet, so it's per-device, not per-account).
+- **Boss registry** — `src/content/bosses.ts` (`getBossForTopic`): maps a topic slug to a boss (name/nameAf, tagline/taglineAf, accent colour, SVG variant). Mirrors `content/registry.ts`'s shape; always returns something, falling back to a generic "Exam Guardian" boss so no valid topic slug ever 404s on `/boss`.
+- **Demo questions** — `src/content/demo-questions.ts` (`demoQuestions`): the same fallback question set `QuizEngine` uses when there's no `DATABASE_URL`. The boss route filters it to the requested topic slug, falling back to the full set if none match, so every topic is playable in demo mode.
+- **Entry points**: a "Battle the boss" card next to the Practice CTA on the topic page (`TopicPageClient.tsx`), and a "Boss battles" section on the dashboard (3 topics for the student's grade via `getTopicsForSubjectGrade`).
+- i18n lives entirely in the `boss` message namespace (`src/messages/{en,af}.json`).
+
 ### i18n
 
 `next-intl`, locales `en` | `af`, **cookie-based (`NEXT_LOCALE`), `localePrefix: 'never'`** — no `/af/...` URLs. Server side reads the cookie in `src/i18n/request.ts`; client helpers in `src/lib/locale.ts`. Messages in `src/messages/{en,af}.json`.
@@ -104,7 +114,7 @@ Videos: each `{ type: 'video', videoId, videoIdAf? }` block plays inside the pag
 
 ### UI
 
-Shadcn (`components.json`, base-nova style) in `src/components/ui/`; Tailwind v4 via `@tailwindcss/postcss`; Lucide icons; Framer Motion; KaTeX through `react-katex` (`src/components/math/MathRenderer.tsx`); `react-pdf` for past papers (needs the `canvas`/`encoding` webpack aliases in `next.config.ts`). Feature components: `quiz/`, `ai/`, `gamification/`, `dashboard/`, `notes/`, `layout/`.
+Shadcn (`components.json`, base-nova style) in `src/components/ui/`; Tailwind v4 via `@tailwindcss/postcss`; Lucide icons; Framer Motion; KaTeX through `react-katex` (`src/components/math/MathRenderer.tsx`); `react-pdf` for past papers (needs the `canvas`/`encoding` webpack aliases in `next.config.ts`). Feature components: `quiz/`, `ai/`, `gamification/`, `dashboard/`, `notes/`, `layout/`, `boss/`.
 
 ## Environment variables
 
@@ -123,4 +133,5 @@ Shadcn (`components.json`, base-nova style) in `src/components/ui/`; Tailwind v4
 - The RLS and functions migrations have never been run against a live Postgres; first real run is a pre-launch step (`DEPLOYMENT.md`).
 - The free-tier AI quota is check-then-act (bounded by client concurrency) — documented accepted risk in `ai-hint/route.ts`.
 - `next-pwa` is unmaintained (2022).
-- Progress: `docs/BUILD-PLAN.md` — Phases 0–4 merged; Phase 5 (i18n/a11y/password reset, branch `phase-5/i18n-a11y-ux`) done, pending merge to `develop`; Phase 6 (real services) outstanding.
+- Progress: `docs/BUILD-PLAN.md` — Phases 0–4 merged; Phase 5 (i18n/a11y/password reset, branch `phase-5/i18n-a11y-ux`) done, pending merge to `develop`; Phase 6 (real services) outstanding; Phase 7 (Boss Battle prototype, branch `phase-7/boss-battle`) built, pending merge.
+- Boss Battle HP persistence is `localStorage`-only (see above) — a student's remaining boss HP is per-device, not per-account, until a DB table backs it.
