@@ -5,6 +5,8 @@ import { motion } from 'framer-motion'
 import { Flag, Swords } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 import MathRenderer from '@/components/math/MathRenderer'
+import { ACCENT_TEXT_LIGHT, ACCENT_TEXT_DARK } from '@/lib/color/contrast'
+import { useMotionSafe } from '@/hooks/useMotionSafe'
 import BossFigure, { type BossVisualState } from './BossFigure'
 import HpBar from './HpBar'
 import ShieldsAndCombo from './ShieldsAndCombo'
@@ -54,6 +56,7 @@ export default function BattleScreen({
   onRetreat,
 }: BattleScreenProps) {
   const t = useTranslations('boss')
+  const { transition, variant } = useMotionSafe()
   const [confirmRetreat, setConfirmRetreat] = useState(false)
 
   const handleOptionClick = (letter: string, correct: boolean) => {
@@ -86,7 +89,7 @@ export default function BattleScreen({
         <button
           type="button"
           onClick={() => setConfirmRetreat(true)}
-          className="flex items-center gap-1 text-xs font-medium"
+          className="flex items-center justify-center gap-1 min-h-11 min-w-11 px-3 py-2 -my-2 -mr-2 text-xs font-medium"
           style={{ color: 'var(--muted-custom)' }}
         >
           <Flag className="w-3.5 h-3.5" aria-hidden="true" />
@@ -97,16 +100,16 @@ export default function BattleScreen({
       {/* Question Card */}
       <motion.div
         key={question.id}
-        initial={{ opacity: 0, y: 12 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.25 }}
+        initial={variant({ opacity: 0, y: 12 }, { opacity: 0 })}
+        animate={variant({ opacity: 1, y: 0 }, { opacity: 1 })}
+        transition={transition({ duration: 0.25 })}
         className="rounded-xl p-4"
         style={{ background: 'var(--surface)', border: '1px solid var(--border-custom)' }}
       >
         <div className="flex items-center gap-2 mb-3">
           <span
-            className="px-2 py-0.5 rounded-full text-xs font-bold text-white"
-            style={{ background: boss.accent }}
+            className="px-2 py-0.5 rounded-full text-xs font-bold"
+            style={{ background: boss.accent, color: boss.onAccent === 'light' ? ACCENT_TEXT_LIGHT : ACCENT_TEXT_DARK }}
           >
             {t('worthMarks', { marks: question.marks })}
           </span>
@@ -160,8 +163,9 @@ export default function BattleScreen({
 
         {isFeedbackPhase && (
           <motion.div
-            initial={{ opacity: 0, y: 8 }}
-            animate={{ opacity: 1, y: 0 }}
+            initial={variant({ opacity: 0, y: 8 }, { opacity: 0 })}
+            animate={variant({ opacity: 1, y: 0 }, { opacity: 1 })}
+            transition={transition({ duration: 0.25 })}
             className="mt-4 flex items-center justify-between gap-3 rounded-lg p-3"
             style={{ background: 'rgba(42, 157, 143, 0.1)', border: '1px solid var(--teal)' }}
           >
@@ -213,7 +217,7 @@ export default function BattleScreen({
               <button
                 type="button"
                 onClick={() => setConfirmRetreat(false)}
-                className="flex-1 px-4 py-2 rounded-lg text-sm font-medium"
+                className="flex-1 min-h-11 min-w-11 px-4 py-2 rounded-lg text-sm font-medium"
                 style={{ background: 'var(--surface2)', color: 'var(--text)' }}
               >
                 {t('cancel')}
@@ -221,7 +225,7 @@ export default function BattleScreen({
               <button
                 type="button"
                 onClick={onRetreat}
-                className="flex-1 px-4 py-2 rounded-lg text-sm font-semibold text-white"
+                className="flex-1 min-h-11 min-w-11 px-4 py-2 rounded-lg text-sm font-semibold text-white"
                 style={{ background: 'var(--accent-red)' }}
               >
                 {t('retreat')}

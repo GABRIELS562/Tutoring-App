@@ -159,3 +159,55 @@ describe('BossBattleClient retreat path', () => {
     expect(recordAnswerMock).not.toHaveBeenCalled()
   })
 })
+
+describe('BossBattleClient real-mode persistence', () => {
+  it('calls recordAnswer exactly once per question for the MCQ result - not again for its step review, not again on a later re-render', async () => {
+    // Arrange
+    const user = userEvent.setup()
+    renderBattle({ isDemo: false, userId: 'real-student-1' })
+    await startBattle(user)
+
+    // Act/Assert - question 1 ('1', 2 marks): wrong MCQ persists the MCQ
+    // result immediately...
+    await answerMcq(user, WRONG_LETTER)
+    expect(recordAnswerMock).toHaveBeenCalledTimes(1)
+    expect(recordAnswerMock).toHaveBeenNthCalledWith(1, '1', false)
+
+    // ...and self-marking every step of its recovery review ("I know
+    // this" -> "Yes, I had this") must not add further calls - the boss
+    // battle's own step-level scoring is client-side only; recordAnswer
+    // only ever tracks the one real MCQ result per question.
+    await clearStepsWithFullCredit(user, demoQuestions[0].steps.length)
+    expect(recordAnswerMock).toHaveBeenCalledTimes(1)
+
+    // Question 2 ('2'): correct MCQ persists its own, second call.
+    await answerMcq(user, CORRECT_LETTER)
+    expect(recordAnswerMock).toHaveBeenCalledTimes(2)
+    expect(recordAnswerMock).toHaveBeenNthCalledWith(2, '2', true)
+
+    // Clicking through to the next round is a re-render of the same
+    // component tree, not a new answer - must not re-persist question 2.
+    await user.click(screen.getByText('Next round', { selector: 'button' }))
+    expect(recordAnswerMock).toHaveBeenCalledTimes(2)
+
+    // Question 3 ('3'): correct MCQ persists its own, third call - one
+    // recordAnswer call per question answered, no more, no fewer.
+    await answerMcq(user, CORRECT_LETTER)
+    expect(recordAnswerMock).toHaveBeenCalledTimes(3)
+    expect(recordAnswerMock).toHaveBeenNthCalledWith(3, '3', true)
+  })
+
+  it('still never persists to the server in demo mode, even when a non-demo userId is passed through', async () => {
+    // Arrange - isDemo is the source of truth; a stray real-looking userId
+    // must not be enough to turn persistence on by itself.
+    const user = userEvent.setup()
+    renderBattle({ isDemo: true, userId: 'real-student-1' })
+    await startBattle(user)
+
+    // Act
+    await answerMcq(user, CORRECT_LETTER)
+
+    // Assert
+    expect(recordAnswerMock).not.toHaveBeenCalled()
+  })
+})

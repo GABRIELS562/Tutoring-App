@@ -409,3 +409,13 @@ in `TopicPageClient.tsx` (the "Battle the boss" card) and the dashboard's
 - `boss.wrongAnswerHitBack`
 - `boss.xpEarned`
 - `boss.yesIHadThis`
+
+Added for the Phase 7 review-fix pass's step progress dots + peek/collapse
+control in `StepsSheet.tsx`:
+
+- `boss.showQuestion`
+- `boss.hideQuestion`
+- `boss.stepProgressAriaLabel`
+- `boss.stepStatus.knew_it`
+- `boss.stepStatus.didnt_know`
+- `boss.stepStatus.pending`

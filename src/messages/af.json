@@ -425,6 +425,14 @@
     "allStepsDone": "Mooi werk - jy het deur elke stap gegaan.",
     "continue": "Gaan voort",
     "stepOf": "Stap {current} van {total}",
+    "showQuestion": "Wys die vraag",
+    "hideQuestion": "Verberg die vraag",
+    "stepProgressAriaLabel": "Stap-vordering",
+    "stepStatus": {
+      "knew_it": "Het dit geweet",
+      "didnt_know": "Het dit nie geweet nie",
+      "pending": "Nog nie beantwoord nie"
+    },
     "iKnowThis": "Ek ken dit",
     "didYouHaveThis": "Het jy dit gehad?",
     "yesIHadThis": "Ja, ek het dit gehad",

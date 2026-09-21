@@ -5,6 +5,7 @@ import { motion } from 'framer-motion'
 import { useTranslations } from 'next-intl'
 import { RefreshCw, BookOpen } from 'lucide-react'
 import BossFigure from './BossFigure'
+import { useMotionSafe } from '@/hooks/useMotionSafe'
 import type { Boss } from '@/content/bosses'
 
 type RetreatScreenProps = {
@@ -29,10 +30,16 @@ export default function RetreatScreen({
   onTryAgain,
 }: RetreatScreenProps) {
   const t = useTranslations('boss')
+  const { transition, variant } = useMotionSafe()
 
   return (
     <div className="max-w-md mx-auto px-4 py-10 text-center">
-      <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="w-24 h-24 mx-auto mb-4">
+      <motion.div
+        initial={variant({ opacity: 0, y: 10 }, { opacity: 0 })}
+        animate={variant({ opacity: 1, y: 0 }, { opacity: 1 })}
+        transition={transition({ duration: 0.3 })}
+        className="w-24 h-24 mx-auto mb-4"
+      >
         <BossFigure variant={boss.svgVariant} accent={boss.accent} state="idle" />
       </motion.div>
 

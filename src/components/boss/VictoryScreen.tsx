@@ -6,6 +6,8 @@ import { motion } from 'framer-motion'
 import { useTranslations } from 'next-intl'
 import { Trophy, Download, Share2, RefreshCw, BookOpen } from 'lucide-react'
 import BossFigure from './BossFigure'
+import { ACCENT_TEXT_LIGHT, ACCENT_TEXT_DARK } from '@/lib/color/contrast'
+import { useMotionSafe } from '@/hooks/useMotionSafe'
 import type { Boss } from '@/content/bosses'
 
 type VictoryScreenProps = {
@@ -38,6 +40,7 @@ export default function VictoryScreen({
   onPlayAgain,
 }: VictoryScreenProps) {
   const t = useTranslations('boss')
+  const { transition, variant } = useMotionSafe()
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const [cardReady, setCardReady] = useState(false)
 
@@ -89,12 +92,15 @@ export default function VictoryScreen({
     ctx.font = '16px Arial'
     ctx.fillText('angelo-tutoring', canvas.width / 2, canvas.height - 50)
 
-    // Drawing itself is synchronous, but the "ready" flag is flipped from
-    // a queued microtask rather than directly in the effect body - avoids
-    // eslint's react-hooks/set-state-in-effect (a setState call must not
-    // be the effect's own direct synchronous action) while still enabling
-    // the download/share buttons on the very next tick.
-    queueMicrotask(() => setCardReady(true))
+    // This effect's whole job is an imperative canvas draw (the share-card
+    // artwork) that setState can't express any other way - a genuine
+    // "synchronize with a non-React system" effect per React's own
+    // guidance, not a state-derived-from-props/state case the lint rule is
+    // meant to catch. setCardReady flips true only once the draw above has
+    // actually happened, so the download/share buttons stay disabled until
+    // there's really a finished canvas to read from.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setCardReady(true)
   }, [boss.accent, bossName, comboBest, elapsedSeconds, marksDealt, t, totalMarks, xp])
 
   const handleDownload = () => {
@@ -125,7 +131,12 @@ export default function VictoryScreen({
 
   return (
     <div className="max-w-md mx-auto px-4 py-8 text-center">
-      <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ type: 'spring', delay: 0.1 }} className="w-24 h-24 mx-auto mb-4">
+      <motion.div
+        initial={variant({ scale: 0 }, { opacity: 0 })}
+        animate={variant({ scale: 1 }, { opacity: 1 })}
+        transition={transition({ type: 'spring', delay: 0.1 })}
+        className="w-24 h-24 mx-auto mb-4"
+      >
         <BossFigure variant={boss.svgVariant} accent={boss.accent} state="defeated" />
       </motion.div>
 
@@ -178,8 +189,8 @@ export default function VictoryScreen({
             type="button"
             onClick={handleShare}
             disabled={!cardReady}
-            className="flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-lg font-medium disabled:opacity-50 text-white"
-            style={{ background: boss.accent }}
+            className="flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-lg font-medium disabled:opacity-50"
+            style={{ background: boss.accent, color: boss.onAccent === 'light' ? ACCENT_TEXT_LIGHT : ACCENT_TEXT_DARK }}
           >
             <Share2 className="w-4 h-4" aria-hidden="true" />
             {t('share')}
