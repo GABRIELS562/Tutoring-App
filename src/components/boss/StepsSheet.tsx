@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { useTranslations } from 'next-intl'
 import { ArrowRight, Check, HelpCircle, ListChecks, Loader2, MessageCircle, X as XIcon } from 'lucide-react'
 import MathRenderer from '@/components/math/MathRenderer'
+import { asMath } from '@/lib/boss/math-text'
 import type { BattleQuestion, RevealMode, StepResult } from '@/lib/boss/battle'
 
 type LocalStage = 'instruction' | 'revealed' | 'explained'
@@ -118,7 +119,7 @@ export default function StepsSheet({
               className="p-3 rounded-lg font-mono text-sm mb-4"
               style={{ background: 'var(--bg)', border: '1px solid var(--border-custom)' }}
             >
-              <MathRenderer content={lastStep.correctAnswer} />
+              <MathRenderer content={asMath(lastStep.correctAnswer)} />
             </div>
             <button
               type="button"
@@ -150,7 +151,7 @@ export default function StepsSheet({
               {t('stepOf', { current: stepIndex + 1, total: totalSteps })}
             </p>
             <p className="text-sm mb-4" style={{ color: 'var(--text)' }}>
-              {currentStep.instruction}
+              <MathRenderer content={asMath(currentStep.instruction)} />
             </p>
 
             {stage === 'instruction' && (
@@ -170,7 +171,7 @@ export default function StepsSheet({
                   className="p-3 rounded-lg font-mono text-sm mb-3"
                   style={{ background: 'var(--bg)', border: '1px solid var(--border-custom)' }}
                 >
-                  <MathRenderer content={currentStep.correctAnswer} />
+                  <MathRenderer content={asMath(currentStep.correctAnswer)} />
                 </div>
 
                 {stage === 'revealed' && (
@@ -204,7 +205,9 @@ export default function StepsSheet({
                 {stage === 'explained' && (
                   <div>
                     <p className="text-xs mb-3" style={{ color: 'var(--muted-custom)' }}>
-                      {currentStep.explanation || currentStep.hint || t('noExplanationAvailable')}
+                      <MathRenderer
+                        content={asMath(currentStep.explanation || currentStep.hint || t('noExplanationAvailable'))}
+                      />
                     </p>
                     <button
                       type="button"
