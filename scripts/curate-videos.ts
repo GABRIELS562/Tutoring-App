@@ -23,7 +23,7 @@
  * Nothing is written to src/content by this script - curation is reviewed
  * first, then applied by scripts/apply-curated-videos.ts.
  */
-import { writeFileSync, mkdirSync } from 'node:fs'
+import { writeFileSync, mkdirSync, existsSync, readFileSync } from 'node:fs'
 import { capsCurriculum, type CapsTopic } from '../src/content/caps-curriculum'
 
 // Channels verified as South African CAPS teachers (Sept 2026 research,
@@ -192,6 +192,28 @@ function isMathsLit(title: string, channel: string): boolean {
 }
 
 /**
+ * Many CAPS channels teach Maths AND Physical Sciences, so a physics video
+ * can match a maths sub-topic on a shared word - "The general term Tn"
+ * matched "Grade 11 Physical Sciences Term 2 topics", and "parallel and
+ * perpendicular lines" matched a vectors video about perpendicular
+ * components. This is a maths curriculum; those are a different subject.
+ */
+export function isOtherSubject(title: string): boolean {
+  return /physical science|physics|chemistry|chemical|life science|biology|geography|accounting|economics|business studies|vectors? in 2d|newton/i.test(
+    title
+  )
+}
+
+/**
+ * "Term 2" is a school term, not the n-th term of a sequence. Without this,
+ * the Grade 11 general-term sub-topic matched a Physical Sciences
+ * "Term 2 topics" video.
+ */
+export function isSchoolTerm(subTopic: string, title: string): boolean {
+  return /\bterm\b/i.test(subTopic) && /\bterm\s*\d/i.test(title)
+}
+
+/**
  * Words that carry no topical signal - they appear in almost every maths
  * video title, so matching on them tells us nothing about relevance.
  */
@@ -245,11 +267,14 @@ function containsTerm(haystack: string, word: string): boolean {
 }
 
 function tokenise(text: string): string[] {
-  return text
-    .toLowerCase()
-    .replace(/[^a-z0-9²√\s-]/g, ' ')
+  const lower = text.toLowerCase().replace(/[^a-z0-9²√\s-]/g, ' ')
+  const words = lower
     .split(/[\s-]+/)
     .filter((word) => word.length > 2 && !STOPWORDS.has(word))
+  // "co-functions" must not be satisfied by a title saying only "functions",
+  // so the joined compound is a token in its own right.
+  const compounds = (lower.match(/\b[a-z]+-[a-z]+\b/g) ?? []).map((c) => c.replace('-', ''))
+  return [...new Set([...words, ...compounds])]
 }
 
 /**
@@ -270,6 +295,14 @@ const DISCRIMINATING = [
   'cyclic', 'chords', 'similarity', 'proportionality', 'optimisation',
   'quadratic', 'geometric', 'arithmetic', 'factorial', 'inequalities',
   'equations', 'patterns', 'functions', 'interest',
+  // Head nouns of short phrases where a single shared word is not enough:
+  // "the area rule" is not a video about the area of a circle, and
+  // "inclination of a line" is not any video mentioning a line.
+  'rule', 'term', 'inclination', 'cofunctions', 'perpendicular', 'parallel', 'sinking',
+  // Grade 12: each of these is the concept, so a video without the word is a
+  // different lesson - "Equation of Tangent Calculus" is not "tangents to circles".
+  'simultaneous', 'pythagoras', 'infinity', 'circle', 'cubic',
+  'annuities', 'skewed', 'deviation', 'diagrams', 'tangents', 'chords',
 ]
 
 /**
@@ -296,7 +329,10 @@ function requiredTerms(subTopic: string): string[] {
   const neutralised = new Set(
     EXCLUSIVE_PAIRS.filter(([a, b]) => tokens.includes(a) && tokens.includes(b)).flat()
   )
-  return DISCRIMINATING.filter((term) => tokens.includes(term) && !neutralised.has(term))
+  // Compare on stems: CAPS writes "Tangents to circles" while the term list
+  // holds "circle", and an exact match would silently drop the requirement.
+  const stems = new Set(tokens.map(stem))
+  return DISCRIMINATING.filter((term) => stems.has(stem(term)) && !neutralised.has(term))
 }
 
 export function hasRequiredTerms(subTopic: string, title: string): boolean {
@@ -325,16 +361,45 @@ export function relevance(subTopic: string, title: string): number {
 
   const raw = matched.length / wanted.length
 
+  const required = requiredTerms(subTopic)
+
+  // Backstop for short phrases that name no discriminating head noun: with
+  // so few words, every one must land or the match is coincidental. Generic
+  // form-nouns are exempt - CAPS writes "Box and whisker plots" where the
+  // channel titles it "Box and whisker", and that is the same lesson.
+  const mustMatch = wanted.filter((word) => !GENERIC_NOUNS.has(stem(word)))
+  if (
+    required.length === 0 &&
+    wanted.length <= SHORT_PHRASE_WORDS &&
+    mustMatch.some((word) => !matched.includes(word))
+  ) {
+    return 0
+  }
+
   // CAPS phrases sub-topics verbosely ("Gradient of a line segment") while
   // channels title tersely ("Gradient formula"), which scored 0.33 and was
   // rejected by a hundredth. When every DISCRIMINATING term is present the
   // video is on-topic by definition, so floor the score rather than lose it.
-  const required = requiredTerms(subTopic)
   if (required.length > 0 && hasRequiredTerms(subTopic, title)) {
     return Math.max(raw, 0.5)
   }
   return raw
 }
+
+/**
+ * At or below this many content words, a sub-topic is a precise phrase and
+ * every word must appear in the title. Above it, partial matching is fine
+ * because CAPS enumerates ("range, quartiles, percentiles") and no single
+ * video names them all.
+ */
+const SHORT_PHRASE_WORDS = 3
+
+/**
+ * Words that name the form a topic is presented in rather than the concept.
+ * They carry no discriminating power, so the short-phrase rule above does
+ * not insist on them.
+ */
+const GENERIC_NOUNS = new Set(['plot', 'graph', 'problem', 'example', 'method', 'question'])
 
 /** Below this, the video is about something else. */
 const MIN_RELEVANCE = 0.3
@@ -419,6 +484,8 @@ async function curateSubTopic(
       .filter((v) => v.durationSeconds <= MAX_DURATION_SECONDS)
       .filter(gradeFilter(allowAdjacent))
       .filter((v) => !isMathsLit(v.title, v.channel))
+      .filter((v) => !isOtherSubject(v.title))
+      .filter((v) => !isSchoolTerm(subTopic, v.title))
       .map((v) => {
         const saChannel = SA_CHANNELS.has(v.channel)
         return { ...v, saChannel, embeddable: false, score: 0 }
@@ -484,7 +551,16 @@ async function main() {
   console.log(`Curating Grade ${grade}: ${todo.length} sub-topics across ${topics.length} topics\n`)
 
   const out: CuratedSubTopic[] = []
+  // Seed with videos already curated for OTHER grades: one video cannot be
+  // the lesson for a Grade 10 sub-topic and a Grade 11 one as well.
   const usedVideoIds = new Set<string>()
+  for (const other of [10, 11, 12].filter((g) => g !== grade)) {
+    const path = `docs/curriculum/candidates-gr${other}.json`
+    if (!existsSync(path)) continue
+    for (const entry of JSON.parse(readFileSync(path, 'utf8')) as CuratedSubTopic[]) {
+      if (entry.pick) usedVideoIds.add(entry.pick.id)
+    }
+  }
   for (const [i, { topic, subTopic }] of todo.entries()) {
     const result = await curateSubTopic(topic, subTopic, usedVideoIds)
     if (result.pick) usedVideoIds.add(result.pick.id)

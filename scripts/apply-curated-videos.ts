@@ -38,16 +38,19 @@ interface Curated {
   usedAdjacentGrade?: boolean
 }
 
-const FILE_FOR_SLUG: Record<string, string> = {
-  'algebra-gr10': 'src/content/maths/grade10/algebra.ts',
-  'number-patterns-gr10': 'src/content/maths/grade10/number-patterns.ts',
-  'functions-gr10': 'src/content/maths/grade10/functions.ts',
-  'finance-gr10': 'src/content/maths/grade10/finance.ts',
-  'probability-gr10': 'src/content/maths/grade10/probability.ts',
-  'trig-gr10': 'src/content/maths/grade10/trigonometry.ts',
-  'euclidean-geometry-gr10': 'src/content/maths/grade10/euclidean-geometry.ts',
-  'analytical-geometry-gr10': 'src/content/maths/grade10/analytical-geometry.ts',
-  'statistics-gr10': 'src/content/maths/grade10/statistics.ts',
+/**
+ * Most slugs map straight to a file: `algebra-gr11` -> grade11/algebra.ts.
+ * Only the ones whose file was named differently need an entry here.
+ */
+const FILENAME_OVERRIDES: Record<string, string> = {
+  'trig-gr10': 'trigonometry',
+  'trig-gr11': 'trigonometry',
+}
+
+/** `algebra-gr11` -> `src/content/maths/grade11/algebra.ts` */
+function fileForSlug(slug: string, grade: number): string {
+  const name = FILENAME_OVERRIDES[slug] ?? slug.replace(/-gr1[012]$/, '')
+  return `src/content/maths/grade${grade}/${name}.ts`
 }
 
 /** Stable, readable section id from a sub-topic name. */
@@ -147,8 +150,8 @@ function main() {
 
   let changed = 0
   for (const topic of topics) {
-    const file = FILE_FOR_SLUG[topic.slug]
-    if (!file || !existsSync(file)) {
+    const file = fileForSlug(topic.slug, grade)
+    if (!existsSync(file)) {
       console.log(`  skip  ${topic.slug.padEnd(28)} (no content file yet)`)
       continue
     }
