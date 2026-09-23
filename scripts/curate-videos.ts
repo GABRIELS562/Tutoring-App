@@ -107,7 +107,61 @@ interface VideoRenderer {
   lengthText?: { simpleText?: string }
 }
 
+/**
+ * Searches and embed checks are cached to disk because the scorer is tuned by
+ * re-running it: a wrong pick is found by reading the output, the rules are
+ * corrected, and every grade is curated again. Without a cache each of those
+ * passes re-fetched ~150 YouTube pages, which got the run rate-limited from
+ * 14s to 2 minutes per sub-topic. The cache makes a re-score free, so a
+ * recheck costs nothing and never depends on the network being friendly.
+ *
+ * Only parsed results are stored, never page HTML. Delete the file to refetch.
+ */
+const CACHE_PATH = 'docs/curriculum/.search-cache.json'
+
+interface SearchCache {
+  searches: Record<string, Omit<Candidate, 'embeddable' | 'score' | 'saChannel'>[]>
+  embeddable: Record<string, boolean>
+}
+
+function loadCache(): SearchCache {
+  if (process.argv.includes('--no-cache')) return { searches: {}, embeddable: {} }
+  try {
+    const parsed = JSON.parse(readFileSync(CACHE_PATH, 'utf8')) as Partial<SearchCache>
+    return { searches: parsed.searches ?? {}, embeddable: parsed.embeddable ?? {} }
+  } catch {
+    return { searches: {}, embeddable: {} }
+  }
+}
+
+const cache: SearchCache = loadCache()
+let cacheDirty = false
+
+function saveCache(): void {
+  if (!cacheDirty) return
+  try {
+    writeFileSync(CACHE_PATH, JSON.stringify(cache))
+    cacheDirty = false
+  } catch (error) {
+    console.warn(`  could not write ${CACHE_PATH}: ${(error as Error).message}`)
+  }
+}
+
 async function searchYouTube(query: string): Promise<Omit<Candidate, 'embeddable' | 'score' | 'saChannel'>[]> {
+  const cached = cache.searches[query]
+  if (cached) return cached
+  const fetched = await searchYouTubeUncached(query)
+  // An empty result usually means we were throttled, not that YouTube has
+  // nothing - caching it would make the miss permanent.
+  if (fetched.length > 0) {
+    cache.searches[query] = fetched
+    cacheDirty = true
+    saveCache()
+  }
+  return fetched
+}
+
+async function searchYouTubeUncached(query: string): Promise<Omit<Candidate, 'embeddable' | 'score' | 'saChannel'>[]> {
   const url = `https://www.youtube.com/results?search_query=${encodeURIComponent(query)}`
   for (let attempt = 0; attempt < 4; attempt++) {
     try {
@@ -155,13 +209,20 @@ async function searchYouTube(query: string): Promise<Omit<Candidate, 'embeddable
 }
 
 async function isEmbeddable(videoId: string): Promise<boolean> {
+  const cached = cache.embeddable[videoId]
+  if (cached !== undefined) return cached
   const url = `https://www.youtube.com/oembed?format=json&url=${encodeURIComponent(
     `https://www.youtube.com/watch?v=${videoId}`
   )}`
   try {
     const res = await fetch(url, { headers: { 'User-Agent': 'Mozilla/5.0' } })
+    cache.embeddable[videoId] = res.ok
+    cacheDirty = true
+    saveCache()
     return res.ok
   } catch {
+    // A network failure is not evidence the video is unembeddable, so this
+    // one stays out of the cache.
     return false
   }
 }
