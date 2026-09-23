@@ -8,9 +8,10 @@ export const statisticsGr10: TopicContent = {
   paper: 2,
   title: 'Statistics',
   capsWeight: 15,
+  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
   sections: [
     {
-      id: 'coming-soon',
+      id: 'overview',
       title: 'Statistics',
       blocks: [
         {
@@ -23,21 +24,51 @@ export const statisticsGr10: TopicContent = {
 • **Grouped Data** - Frequency tables, class intervals
 • **Histograms** - Drawing and interpreting frequency histograms
 • **Frequency Polygons** - Connecting midpoints of histogram bars`
-        },
-        // PROVISIONAL video picks — auto-filled 2026-09-18 from docs/client-updates/video-candidates; client to confirm.
+        }
+      ]
+    },
+    {
+      id: 'data-collection-and-organisation',
+      title: 'Data collection and organisation',
+      blocks: [
+        {
+          type: 'video',
+          title: 'Watch: Statistics Grouped data Exam past paper Questions part 1 — Miss Martins Maths and Science',
+          videoId: 'h1oX1NBxWw4'
+        }
+      ]
+    },
+    {
+      id: 'measures-of-central-tendency-mean-median-mode',
+      title: 'Measures of central tendency: mean, median, mode',
+      blocks: [
         {
           type: 'video',
           title: 'Watch: Statistics Grade 10: Mean, mode, median — Kevinmathscience',
-          videoId: 'xi8VjMmWdgI',
-          videoIdAf: 'twoRWkbvv_o',
-          titleAf: 'Watch: Graad 10 Wiskunde Les 1 Statistiek — Rochelle Van der Merwe'
-        },
+          videoId: 'xi8VjMmWdgI'
+        }
+      ]
+    },
+    {
+      id: 'measures-of-dispersion-range-quartiles-percentil',
+      title: 'Measures of dispersion: range, quartiles, percentiles',
+      blocks: [
         {
           type: 'video',
-          title: 'Watch: Statistics Grade 10: Exam Question — Kevinmathscience',
-          videoId: 'Hc-BUqBaUkQ'
+          title: 'Watch: Statistics Grade 10: Quartiles — Kevinmathscience',
+          videoId: 'dxLjUO8tzSA'
         }
-        // TODO(curator): add { type: 'formula', formulas: [...] } block
+      ]
+    },
+    {
+      id: 'box-and-whisker-plots',
+      title: 'Box and whisker plots',
+      blocks: [
+        {
+          type: 'video',
+          title: 'Watch: Statistics Grade 10: Box and whisker — Kevinmathscience',
+          videoId: '94_ljD-J19Y'
+        }
       ]
     }
   ]

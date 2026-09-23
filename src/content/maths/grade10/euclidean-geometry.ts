@@ -8,9 +8,10 @@ export const euclideanGeometryGr10: TopicContent = {
   paper: 2,
   title: 'Euclidean Geometry',
   capsWeight: 20,
+  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
   sections: [
     {
-      id: 'coming-soon',
+      id: 'overview',
       title: 'Euclidean Geometry',
       blocks: [
         {
@@ -23,21 +24,40 @@ export const euclideanGeometryGr10: TopicContent = {
 • **Midpoint Theorem** - Line joining midpoints
 • **Quadrilaterals** - Properties of parallelograms, rectangles, rhombi, squares, kites, trapeziums
 • **Proving Properties** - Writing geometric proofs with reasons`
-        },
-        // PROVISIONAL video picks — auto-filled 2026-09-18 from docs/client-updates/video-candidates; client to confirm.
-        {
-          type: 'video',
-          title: 'Watch: Exam Questions Grade 10 Euclidean Geometry — Kevinmathscience',
-          videoId: 'g5b1Ygc-Tn4',
-          videoIdAf: 'BSDa-8njr2w',
-          titleAf: 'Watch: Euklidiese Meetkunde Voorbeelde - Verduideliking || Wiskunde Graad 10 — CollieMath Studio'
-        },
-        {
-          type: 'video',
-          title: 'Watch: Grade 10 Euclidean Geometry Exam Questions Part 1 — Miss Martins Maths and Science',
-          videoId: 'lJHk-dG-Or4'
         }
-        // TODO(curator): add { type: 'formula', formulas: [...] } block
+      ]
+    },
+    {
+      id: 'lines-angles-and-triangles',
+      title: 'Lines, angles and triangles',
+      blocks: [
+        {
+          type: 'video',
+          title: 'Watch: Sin Triangle Grade 10 — Kevinmathscience',
+          videoId: '4jSqFXdmKR0'
+        }
+      ]
+    },
+    {
+      id: 'properties-of-quadrilaterals-parallelograms-rect',
+      title: 'Properties of quadrilaterals: parallelograms, rectangles, rhombi, kites',
+      blocks: [
+        {
+          type: 'video',
+          title: 'Watch: Euclidean Geometry Grade 10: What is a parallelogram? — Kevinmathscience',
+          videoId: 'g5Z0eGEKtSs'
+        }
+      ]
+    },
+    {
+      id: 'the-midpoint-theorem',
+      title: 'The Midpoint Theorem',
+      blocks: [
+        {
+          type: 'video',
+          title: 'Watch: Euclidean Geometry Grade 10: Midpoint Theorem Introduction — Kevinmathscience',
+          videoId: 'tlqb3NSFQ_0'
+        }
       ]
     }
   ]

@@ -8,9 +8,10 @@ export const numberPatternsGr10: TopicContent = {
   paper: 1,
   title: 'Number Patterns',
   capsWeight: 10,
+  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
   sections: [
     {
-      id: 'coming-soon',
+      id: 'overview',
       title: 'Number Patterns',
       blocks: [
         {
@@ -22,21 +23,28 @@ export const numberPatternsGr10: TopicContent = {
 • **Linear Sequences** - $T_n = an + b$
 • **Quadratic Sequences** - $T_n = an^2 + bn + c$
 • **Pattern Recognition** - Identifying types of sequences`
-        },
-        // PROVISIONAL video picks — auto-filled 2026-09-18 from docs/client-updates/video-candidates; client to confirm.
-        {
-          type: 'video',
-          title: 'Watch: Quadratic number patterns grade 11: introduction and examples — Kevinmathscience',
-          videoId: 'Ws_tyxB-Xyo',
-          videoIdAf: 'C7igJjQ_rsM',
-          titleAf: 'Watch: Graad 10 Wiskunde Hersiening: Getalpatrone | Vrae uit Vorige Vraestelle (KABV) — Smart Culture Education'
-        },
-        {
-          type: 'video',
-          title: 'Watch: Quadratic Pattern Grade 11: Exam — Kevinmathscience',
-          videoId: 'GzFLsWU5jlY'
         }
-        // TODO(curator): add { type: 'formula', formulas: [...] } block
+      ]
+    },
+    {
+      id: 'investigating-and-extending-linear-arithmetic-se',
+      title: 'Investigating and extending linear (arithmetic) sequences',
+      blocks: [
+        {
+          type: 'video',
+          title: 'Watch: 2) Solve X Arithmetic Sequence | Intro — Kevinmathscience',
+          videoId: 'tH6Jsh20gUA'
+        }
+      ]
+    },
+    {
+      id: 'finding-the-general-formula-n-th-term-of-a-linea',
+      title: 'Finding the general formula (n-th term) of a linear sequence',
+      blocks: [
+        {
+          type: 'tip',
+          body: `We haven't found a CAPS video for this sub-topic yet. Ask Angelo if you're stuck on it.`
+        }
       ]
     }
   ]
