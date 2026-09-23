@@ -50,7 +50,7 @@ export default function NoteBlock({ block, topicSlug = 'topic', sectionId = 'sec
             />
           </div>
           <div
-            className="text-sm leading-relaxed"
+            className="text-sm leading-relaxed whitespace-pre-line"
             style={{ color: 'var(--text)', opacity: 0.9 }}
           >
             <MathRenderer content={block.body || ''} />

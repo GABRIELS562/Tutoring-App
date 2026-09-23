@@ -79,6 +79,23 @@ function parseMathContent(content: string): ParsedPart[] {
   return parts
 }
 
+/**
+ * Content files write emphasis as markdown (`**Exponent Laws**`), which used
+ * to reach the page as literal asterisks on every topic. Only bold is
+ * supported - that is all the curriculum content uses, and a full markdown
+ * parser here would fight the KaTeX splitting above.
+ */
+function renderText(text: string, keyPrefix: number) {
+  const segments = text.split(/(\*\*[^*]+\*\*)/g)
+  return segments.map((segment, i) => {
+    const bold = segment.match(/^\*\*([^*]+)\*\*$/)
+    if (bold) {
+      return <strong key={`${keyPrefix}-${i}`}>{bold[1]}</strong>
+    }
+    return <span key={`${keyPrefix}-${i}`}>{segment}</span>
+  })
+}
+
 function SafeInlineMath({ math }: { math: string }) {
   if (!isValidLatex(math, false)) {
     return (
@@ -113,7 +130,7 @@ export default function MathRenderer({ content, block = false }: MathRendererPro
           } else if (part.type === 'inline') {
             return <SafeInlineMath key={index} math={part.content} />
           } else {
-            return <span key={index}>{part.content}</span>
+            return renderText(part.content, index)
           }
         })}
       </div>
@@ -128,7 +145,7 @@ export default function MathRenderer({ content, block = false }: MathRendererPro
         } else if (part.type === 'inline') {
           return <SafeInlineMath key={index} math={part.content} />
         } else {
-          return <span key={index}>{part.content}</span>
+          return renderText(part.content, index)
         }
       })}
     </span>
