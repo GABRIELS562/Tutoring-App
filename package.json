@@ -20,7 +20,8 @@
     "db:seed-dev": "tsx src/db/seed-dev-users.ts",
     "check:videos": "tsx scripts/check-videos.ts",
     "db:rls": "tsx scripts/apply-sql.ts supabase/migrations/0001_rls.sql",
-    "db:functions": "tsx scripts/apply-sql.ts supabase/migrations/0002_functions.sql"
+    "db:functions": "tsx scripts/apply-sql.ts supabase/migrations/0002_functions.sql",
+    "curriculum:gaps": "tsx scripts/curriculum-gaps.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.127.0",
