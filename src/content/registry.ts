@@ -16,12 +16,22 @@ import { trigonometryGr11 } from '@/content/maths/grade11/trigonometry'
 import { analyticalGeometryGr11 } from '@/content/maths/grade11/analytical-geometry'
 import { euclideanGeometryGr11 } from '@/content/maths/grade11/euclidean-geometry'
 import { statisticsGr11 } from '@/content/maths/grade11/statistics'
+import { algebraGr11 } from '@/content/maths/grade11/algebra'
+import { numberPatternsGr11 } from '@/content/maths/grade11/number-patterns'
+import { functionsGr11 } from '@/content/maths/grade11/functions'
+import { financeGr11 } from '@/content/maths/grade11/finance'
+import { probabilityGr11 } from '@/content/maths/grade11/probability'
 // Import content - Grade 12 Mathematics
 import { calculusGr12 } from '@/content/maths/grade12/calculus'
 import { sequencesSeriesGr12 } from '@/content/maths/grade12/sequences-series'
 import { analyticalGeometryGr12 } from '@/content/maths/grade12/analytical-geometry'
 import { euclideanGeometryGr12 } from '@/content/maths/grade12/euclidean-geometry'
 import { probabilityGr12 } from '@/content/maths/grade12/probability'
+import { algebraGr12 } from '@/content/maths/grade12/algebra'
+import { functionsGr12 } from '@/content/maths/grade12/functions'
+import { financeGr12 } from '@/content/maths/grade12/finance'
+import { trigGr12 } from '@/content/maths/grade12/trig'
+import { statisticsGr12 } from '@/content/maths/grade12/statistics'
 // Import content - Grade 10 Physical Sciences
 import { mechanicsGr10 } from '@/content/science/grade10/mechanics'
 import { wavesGr10 } from '@/content/science/grade10/waves'
@@ -61,12 +71,22 @@ export const contentRegistry: Record<string, TopicContent> = {
   'analytical-geometry-gr11': analyticalGeometryGr11,
   'euclidean-geometry-gr11': euclideanGeometryGr11,
   'statistics-gr11': statisticsGr11,
+  'algebra-gr11': algebraGr11,
+  'number-patterns-gr11': numberPatternsGr11,
+  'functions-gr11': functionsGr11,
+  'finance-gr11': financeGr11,
+  'probability-gr11': probabilityGr11,
   // Grade 12 Mathematics
   'calculus-gr12': calculusGr12,
   'sequences-series-gr12': sequencesSeriesGr12,
   'analytical-geometry-gr12': analyticalGeometryGr12,
   'euclidean-geometry-gr12': euclideanGeometryGr12,
   'probability-gr12': probabilityGr12,
+  'algebra-gr12': algebraGr12,
+  'functions-gr12': functionsGr12,
+  'finance-gr12': financeGr12,
+  'trig-gr12': trigGr12,
+  'statistics-gr12': statisticsGr12,
   // Grade 10 Physical Sciences
   'mechanics-gr10': mechanicsGr10,
   'waves-gr10': wavesGr10,

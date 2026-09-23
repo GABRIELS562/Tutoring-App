@@ -9,6 +9,7 @@ export const financeGr10: TopicContent = {
   title: 'Finance and Growth',
   capsWeight: 10,
   // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
+  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
   sections: [
     {
       id: 'overview',

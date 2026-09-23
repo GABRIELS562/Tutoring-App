@@ -590,9 +590,20 @@
       "Number Patterns grade 10 Finding the general formula (n-th term) of a linear sequence"
     ],
     "candidates": [],
-    "pick": null,
-    "usedAdjacentGrade": false,
-    "note": "No embeddable, on-topic CAPS candidate found - left blank for manual search"
+    "pick": {
+      "id": "B8dKyX9g7Fk",
+      "title": "1) Gr 12 Arithmetic Sequence | Intro",
+      "channel": "Kevinmathscience",
+      "duration": "3:34",
+      "viewsText": "1,138,038 views",
+      "views": 1138038,
+      "durationSeconds": 214,
+      "embeddable": true,
+      "saChannel": true,
+      "score": 0
+    },
+    "usedAdjacentGrade": true,
+    "note": "Cross-grade: teaches Tn = a + (n-1)d, the Grade 10 general formula. The Grade 10-specific videos (My Class Series) block embedding."
   },
   {
     "slug": "functions-gr10",

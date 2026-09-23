@@ -9,6 +9,7 @@ export const euclideanGeometryGr10: TopicContent = {
   title: 'Euclidean Geometry',
   capsWeight: 20,
   // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
+  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
   sections: [
     {
       id: 'overview',
