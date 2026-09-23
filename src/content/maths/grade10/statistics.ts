@@ -10,6 +10,7 @@ export const statisticsGr10: TopicContent = {
   capsWeight: 15,
   // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
   // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
+  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
   sections: [
     {
       id: 'overview',
@@ -33,9 +34,8 @@ export const statisticsGr10: TopicContent = {
       title: 'Data collection and organisation',
       blocks: [
         {
-          type: 'video',
-          title: 'Watch: Statistics Grouped data Exam past paper Questions part 1 — Miss Martins Maths and Science',
-          videoId: 'h1oX1NBxWw4'
+          type: 'tip',
+          body: `We haven't found a CAPS video for this sub-topic yet. Ask Angelo if you're stuck on it.`
         }
       ]
     },

@@ -8,10 +8,11 @@ export const analyticalGeometryGr11: TopicContent = {
   paper: 2,
   title: 'Analytical Geometry',
   capsWeight: 15,
+  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
   sections: [
     {
-      id: 'coming-soon',
-      title: 'Coming Soon',
+      id: 'overview',
+      title: 'Analytical Geometry',
       blocks: [
         {
           type: 'theory',
@@ -24,25 +25,38 @@ export const analyticalGeometryGr11: TopicContent = {
 • **Inclination of a Line** - The angle a line makes with the positive $x$-axis
 • **Collinear Points** - Proving points lie on the same line
 • **Properties of Quadrilaterals** - Using analytical geometry to prove properties`
-        },
-        {
-          type: 'tip',
-          body: `For perpendicular lines: $m_1 \\times m_2 = -1$. For parallel lines: $m_1 = m_2$. These relationships appear in almost every analytical geometry question.`
-        },
-        // PROVISIONAL video picks — auto-filled 2026-09-18 from docs/client-updates/video-candidates; client to confirm.
+        }
+      ]
+    },
+    {
+      id: 'inclination-of-a-line',
+      title: 'Inclination of a line',
+      blocks: [
         {
           type: 'video',
           title: 'Watch: Grade 11 Analytical geometry: angle of inclination — Kevinmathscience',
-          videoId: 'VB4jH92V-tg',
-          videoIdAf: 'kwLfg5jJ2eI',
-          titleAf: 'Watch: Graad 11 Analitiese Meetkunde #6: Ewewydige (Parallele) Lyne — WiskundeMetMargie'
-        },
-        {
-          type: 'video',
-          title: 'Watch: Grade 11 Analytical Geometry Angle of Inclination Introduction and practice — Miss Martins Maths and Science',
-          videoId: 'lrmASs4NOww'
+          videoId: 'VB4jH92V-tg'
         }
-        // TODO(curator): add { type: 'formula', formulas: [...] } block
+      ]
+    },
+    {
+      id: 'parallel-and-perpendicular-lines',
+      title: 'Parallel and perpendicular lines',
+      blocks: [
+        {
+          type: 'tip',
+          body: `We haven't found a CAPS video for this sub-topic yet. Ask Angelo if you're stuck on it.`
+        }
+      ]
+    },
+    {
+      id: 'solving-geometric-shapes-analytically',
+      title: 'Solving geometric shapes analytically',
+      blocks: [
+        {
+          type: 'tip',
+          body: `We haven't found a CAPS video for this sub-topic yet. Ask Angelo if you're stuck on it.`
+        }
       ]
     }
   ]

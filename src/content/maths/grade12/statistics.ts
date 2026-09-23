@@ -11,6 +11,7 @@ export const statisticsGr12: TopicContent = {
   paper: 2,
   title: 'Statistics',
   capsWeight: 0,
+  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
   sections: [
     {
       id: 'overview',
@@ -31,8 +32,9 @@ export const statisticsGr12: TopicContent = {
       title: 'Bivariate data',
       blocks: [
         {
-          type: 'tip',
-          body: `A curated video for this sub-topic is on the way. Ask Angelo if you're stuck on it.`
+          type: 'video',
+          title: 'Watch: Mlungisi Nkosi | Grade 12 Mathematics | Statistics | Least Square Regression Line | Line of best fit — Mlungisi Nkosi Maths & Science',
+          videoId: 'cFYwJhUcPRM'
         }
       ]
     },
@@ -41,8 +43,9 @@ export const statisticsGr12: TopicContent = {
       title: 'Scatter plots and lines of best fit',
       blocks: [
         {
-          type: 'tip',
-          body: `A curated video for this sub-topic is on the way. Ask Angelo if you're stuck on it.`
+          type: 'video',
+          title: 'Watch: Statistics Grade 12 : line of best fit — Kevinmathscience',
+          videoId: 'yXbx5EHE1ag'
         }
       ]
     },
@@ -51,8 +54,9 @@ export const statisticsGr12: TopicContent = {
       title: 'The least-squares regression line y = A + Bx',
       blocks: [
         {
-          type: 'tip',
-          body: `A curated video for this sub-topic is on the way. Ask Angelo if you're stuck on it.`
+          type: 'video',
+          title: 'Watch: Statistics Grade 12 Mathematics September 2021 Trial | Scatter Plot, Least Squares Regression Line.. — Khoza Explains',
+          videoId: 'vEDMk4xVa8k'
         }
       ]
     },
@@ -62,7 +66,7 @@ export const statisticsGr12: TopicContent = {
       blocks: [
         {
           type: 'tip',
-          body: `A curated video for this sub-topic is on the way. Ask Angelo if you're stuck on it.`
+          body: `We haven't found a CAPS video for this sub-topic yet. Ask Angelo if you're stuck on it.`
         }
       ]
     }

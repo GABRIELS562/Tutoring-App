@@ -11,6 +11,7 @@ export const algebraGr12: TopicContent = {
   paper: 1,
   title: 'Algebra & Equations',
   capsWeight: 0,
+  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
   sections: [
     {
       id: 'overview',
@@ -30,8 +31,9 @@ export const algebraGr12: TopicContent = {
       title: 'Revision of quadratic equations and inequalities',
       blocks: [
         {
-          type: 'tip',
-          body: `A curated video for this sub-topic is on the way. Ask Angelo if you're stuck on it.`
+          type: 'video',
+          title: 'Watch: How to Solve Quadratic Equations & Inequalities | Grade 12 Pure & Technical Maths — Mlungisi Nkosi Maths & Science',
+          videoId: 'QLe6_aa1o6Q'
         }
       ]
     },
@@ -40,8 +42,9 @@ export const algebraGr12: TopicContent = {
       title: 'Advanced simultaneous equations',
       blocks: [
         {
-          type: 'tip',
-          body: `A curated video for this sub-topic is on the way. Ask Angelo if you're stuck on it.`
+          type: 'video',
+          title: 'Watch: Grade 12 - Revision | Simultaneous equation | Rationalising the denominator | May 2023 | Question 1B — Mlungisi Nkosi Maths & Science',
+          videoId: 'Pa1WrbJnxT0'
         }
       ]
     },
@@ -51,7 +54,7 @@ export const algebraGr12: TopicContent = {
       blocks: [
         {
           type: 'tip',
-          body: `A curated video for this sub-topic is on the way. Ask Angelo if you're stuck on it.`
+          body: `We haven't found a CAPS video for this sub-topic yet. Ask Angelo if you're stuck on it.`
         }
       ]
     }

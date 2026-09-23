@@ -8,10 +8,11 @@ export const sequencesSeriesGr12: TopicContent = {
   paper: 1,
   title: 'Sequences and Series',
   capsWeight: 25,
+  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
   sections: [
     {
-      id: 'coming-soon',
-      title: 'Coming Soon',
+      id: 'overview',
+      title: 'Patterns & Series',
       blocks: [
         {
           type: 'theory',
@@ -24,25 +25,50 @@ export const sequencesSeriesGr12: TopicContent = {
 • **Convergence** - When infinite series have a finite sum
 • **Mixed Problems** - Combining arithmetic and geometric concepts
 • **Real-World Applications** - Finance, growth, and decay problems`
-        },
+        }
+      ]
+    },
+    {
+      id: 'arithmetic-sequences-and-series',
+      title: 'Arithmetic sequences and series',
+      blocks: [
+        {
+          type: 'video',
+          title: 'Watch: 1) Gr 12 Arithmetic Sequence | Intro — Kevinmathscience',
+          videoId: 'B8dKyX9g7Fk'
+        }
+      ]
+    },
+    {
+      id: 'geometric-sequences-and-series',
+      title: 'Geometric sequences and series',
+      blocks: [
+        {
+          type: 'video',
+          title: 'Watch: 4)Gr 12 Geometric Sequence | Intro — Kevinmathscience',
+          videoId: 'ZSxq7Ay48NQ'
+        }
+      ]
+    },
+    {
+      id: 'sigma-notation',
+      title: 'Sigma notation',
+      blocks: [
+        {
+          type: 'video',
+          title: 'Watch: 15) Represent sigma notation | Intro — Kevinmathscience',
+          videoId: '4Pp6EMaMMXo'
+        }
+      ]
+    },
+    {
+      id: 'sum-to-infinity-of-a-convergent-geometric-series',
+      title: 'Sum to infinity of a convergent geometric series',
+      blocks: [
         {
           type: 'tip',
-          body: `Always identify whether a sequence is arithmetic (constant difference) or geometric (constant ratio) first. This determines which formulas to use.`
-        },
-        // PROVISIONAL video picks — auto-filled 2026-09-18 from docs/client-updates/video-candidates; client to confirm.
-        {
-          type: 'video',
-          title: 'Watch: Exam Question Series Sequences — Kevinmathscience',
-          videoId: 'DIOaZtU7XlA',
-          videoIdAf: 'Pu2B6FY7YkA',
-          titleAf: 'Watch: Graad 12, Vraestel 1, Vraag 2, Rye en Reekse Video 1: Teorie — Wizzkunde'
-        },
-        {
-          type: 'video',
-          title: 'Watch: Grade 12 Mathematics | Sequence and Series | Past Exam Questions | May/June 2021_Question 2 — Mlungisi Nkosi Maths & Science',
-          videoId: 'nBFLxEZko8o'
+          body: `We haven't found a CAPS video for this sub-topic yet. Ask Angelo if you're stuck on it.`
         }
-        // TODO(curator): add { type: 'formula', formulas: [...] } block
       ]
     }
   ]

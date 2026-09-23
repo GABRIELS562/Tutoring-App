@@ -10,6 +10,7 @@ export const numberPatternsGr10: TopicContent = {
   capsWeight: 10,
   // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
   // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
+  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
   sections: [
     {
       id: 'overview',
@@ -42,11 +43,10 @@ export const numberPatternsGr10: TopicContent = {
       id: 'finding-the-general-formula-n-th-term-of-a-linea',
       title: 'Finding the general formula (n-th term) of a linear sequence',
       blocks: [
-        // Labelled for an adjacent grade; CAPS covers this sub-topic in both.
         {
           type: 'video',
-          title: 'Watch: 1) Gr 12 Arithmetic Sequence | Intro — Kevinmathscience',
-          videoId: 'B8dKyX9g7Fk'
+          title: 'Watch: 10) Use Sn to find Term | Intro — Kevinmathscience',
+          videoId: 'q931Ceby54s'
         }
       ]
     }

@@ -11,6 +11,7 @@ export const algebraGr11: TopicContent = {
   paper: 1,
   title: 'Algebra & Equations',
   capsWeight: 0,
+  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
   sections: [
     {
       id: 'overview',
@@ -33,8 +34,9 @@ export const algebraGr11: TopicContent = {
       title: 'Surds and fractional exponents',
       blocks: [
         {
-          type: 'tip',
-          body: `A curated video for this sub-topic is on the way. Ask Angelo if you're stuck on it.`
+          type: 'video',
+          title: 'Watch: Surds Grade 11: Exam — Kevinmathscience',
+          videoId: 'p9TWK13yUqE'
         }
       ]
     },
@@ -43,8 +45,9 @@ export const algebraGr11: TopicContent = {
       title: 'Completing the square',
       blocks: [
         {
-          type: 'tip',
-          body: `A curated video for this sub-topic is on the way. Ask Angelo if you're stuck on it.`
+          type: 'video',
+          title: 'Watch: 5a) Completing square gr 11 | Try — Kevinmathscience',
+          videoId: 'yYJjoo8OI-0'
         }
       ]
     },
@@ -53,8 +56,9 @@ export const algebraGr11: TopicContent = {
       title: 'The quadratic formula',
       blocks: [
         {
-          type: 'tip',
-          body: `A curated video for this sub-topic is on the way. Ask Angelo if you're stuck on it.`
+          type: 'video',
+          title: 'Watch: 1) Quadratic formula grade 11 | Intro — Kevinmathscience',
+          videoId: 'XofwHRrFKNE'
         }
       ]
     },
@@ -63,8 +67,9 @@ export const algebraGr11: TopicContent = {
       title: 'Nature of roots (the discriminant)',
       blocks: [
         {
-          type: 'tip',
-          body: `A curated video for this sub-topic is on the way. Ask Angelo if you're stuck on it.`
+          type: 'video',
+          title: 'Watch: Grade 11 - Nature of Roots | Part 1 | Mlungisi Nkosi — Mlungisi Nkosi Maths & Science',
+          videoId: 'Auc6fj338nA'
         }
       ]
     },
@@ -73,8 +78,9 @@ export const algebraGr11: TopicContent = {
       title: 'Quadratic inequalities',
       blocks: [
         {
-          type: 'tip',
-          body: `A curated video for this sub-topic is on the way. Ask Angelo if you're stuck on it.`
+          type: 'video',
+          title: 'Watch: 2) Quadratic inequalities grade 11 | Intro — Kevinmathscience',
+          videoId: 'wFLTz5SCE8g'
         }
       ]
     },
@@ -83,8 +89,9 @@ export const algebraGr11: TopicContent = {
       title: 'Simultaneous equations: linear and quadratic',
       blocks: [
         {
-          type: 'tip',
-          body: `A curated video for this sub-topic is on the way. Ask Angelo if you're stuck on it.`
+          type: 'video',
+          title: 'Watch: 3) Simultaneous equations gr 11 | Intro — Kevinmathscience',
+          videoId: 'WJbeyscO6Is'
         }
       ]
     }

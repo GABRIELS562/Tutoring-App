@@ -10,6 +10,7 @@ export const probabilityGr10: TopicContent = {
   capsWeight: 10,
   // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
   // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
+  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
   sections: [
     {
       id: 'overview',
@@ -43,9 +44,8 @@ export const probabilityGr10: TopicContent = {
       title: 'Theoretical and relative frequency probability',
       blocks: [
         {
-          type: 'video',
-          title: 'Watch: Probability Grade 10 | Introduction — Kevinmathscience',
-          videoId: 'Hqbbyh5OEtc'
+          type: 'tip',
+          body: `We haven't found a CAPS video for this sub-topic yet. Ask Angelo if you're stuck on it.`
         }
       ]
     },
@@ -54,9 +54,8 @@ export const probabilityGr10: TopicContent = {
       title: 'The addition rule (identity rule)',
       blocks: [
         {
-          type: 'video',
-          title: 'Watch: Exponents Grade 10: Addition Rule — Kevinmathscience',
-          videoId: 'EQQV_PyZPFQ'
+          type: 'tip',
+          body: `We haven't found a CAPS video for this sub-topic yet. Ask Angelo if you're stuck on it.`
         }
       ]
     }

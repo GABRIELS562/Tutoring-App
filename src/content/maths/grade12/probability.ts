@@ -8,10 +8,11 @@ export const probabilityGr12: TopicContent = {
   paper: 1,
   title: 'Probability',
   capsWeight: 15,
+  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
   sections: [
     {
-      id: 'coming-soon',
-      title: 'Coming Soon',
+      id: 'overview',
+      title: 'Probability',
       blocks: [
         {
           type: 'theory',
@@ -26,25 +27,39 @@ export const probabilityGr12: TopicContent = {
 • **Dependent Events and Conditional Probability** - $P(A|B)$
 • **Tree Diagrams and Venn Diagrams** - Visual probability tools
 • **The Counting Principle in Probability** - Combining concepts`
-        },
+        }
+      ]
+    },
+    {
+      id: 'the-fundamental-counting-principle',
+      title: 'The fundamental counting principle',
+      blocks: [
+        {
+          type: 'video',
+          title: 'Watch: Mlungisi Nkosi | Fundamental Counting Principles | Part 1 | Independent Events — Mlungisi Nkosi Maths & Science',
+          videoId: 'FE4NQuZ0Nww'
+        }
+      ]
+    },
+    {
+      id: 'permutations-and-factorial-notation',
+      title: 'Permutations and factorial notation',
+      blocks: [
         {
           type: 'tip',
-          body: `Remember: Permutations = "Position matters" (arrangements), Combinations = "Collection only" (selections). Use $^nP_r$ for arrangements and $^nC_r$ for selections.`
-        },
-        // PROVISIONAL video picks — auto-filled 2026-09-18 from docs/client-updates/video-candidates; client to confirm.
-        {
-          type: 'video',
-          title: 'Watch: Probability Maths Lit Part 1 — Kevinmathscience',
-          videoId: 'kMJVyxYiato',
-          videoIdAf: '5HNopMSeyLg',
-          titleAf: 'Watch: Waarskynlikheid Graad12: L1 Fundamentele Telbeginsel Wiskunde — Online Maths by Miss Pythagoras'
-        },
-        {
-          type: 'video',
-          title: 'Watch: Gr 12 probability # 1 — Kevinmathscience',
-          videoId: 'loYKqFQcksY'
+          body: `We haven't found a CAPS video for this sub-topic yet. Ask Angelo if you're stuck on it.`
         }
-        // TODO(curator): add { type: 'formula', formulas: [...] } block
+      ]
+    },
+    {
+      id: 'applying-counting-principles-to-probability',
+      title: 'Applying counting principles to probability',
+      blocks: [
+        {
+          type: 'video',
+          title: 'Watch: Mlungisi Nkosi | Fundamental Counting Principle | Part 3 | Application | Passwords and Committees — Mlungisi Nkosi Maths & Science',
+          videoId: 'xcln78w1nrE'
+        }
       ]
     }
   ]

@@ -11,6 +11,7 @@ export const functionsGr11: TopicContent = {
   paper: 1,
   title: 'Functions & Graphs',
   capsWeight: 0,
+  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
   sections: [
     {
       id: 'overview',
@@ -31,8 +32,9 @@ export const functionsGr11: TopicContent = {
       title: 'The parabola y = a(x - p)² + q',
       blocks: [
         {
-          type: 'tip',
-          body: `A curated video for this sub-topic is on the way. Ask Angelo if you're stuck on it.`
+          type: 'video',
+          title: 'Watch: Draw Parabola Grade 11 | Part 1 | Grade 11 Functions — Kevinmathscience',
+          videoId: 'VEFdT971Tzs'
         }
       ]
     },
@@ -41,8 +43,9 @@ export const functionsGr11: TopicContent = {
       title: 'The hyperbola y = a/(x - p) + q',
       blocks: [
         {
-          type: 'tip',
-          body: `A curated video for this sub-topic is on the way. Ask Angelo if you're stuck on it.`
+          type: 'video',
+          title: 'Watch: Draw Hyperbola | Grade 11 Functions — Kevinmathscience',
+          videoId: 'L1KXB4w1uM8'
         }
       ]
     },
@@ -51,8 +54,9 @@ export const functionsGr11: TopicContent = {
       title: 'The exponential graph y = ab^(x - p) + q',
       blocks: [
         {
-          type: 'tip',
-          body: `A curated video for this sub-topic is on the way. Ask Angelo if you're stuck on it.`
+          type: 'video',
+          title: 'Watch: Exponential Equation Given Graph | Grade 11 Functions — Kevinmathscience',
+          videoId: 'mlk0Df2z9No'
         }
       ]
     },
@@ -61,8 +65,9 @@ export const functionsGr11: TopicContent = {
       title: 'Introduction to inverse functions',
       blocks: [
         {
-          type: 'tip',
-          body: `A curated video for this sub-topic is on the way. Ask Angelo if you're stuck on it.`
+          type: 'video',
+          title: 'Watch: 9a) Worksheet Functions Inverses — Kevinmathscience',
+          videoId: '25ey8Ea0jcM'
         }
       ]
     }

@@ -11,6 +11,7 @@ export const functionsGr12: TopicContent = {
   paper: 1,
   title: 'Functions & Graphs',
   capsWeight: 0,
+  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
   sections: [
     {
       id: 'overview',
@@ -30,8 +31,9 @@ export const functionsGr12: TopicContent = {
       title: 'Domain and range',
       blocks: [
         {
-          type: 'tip',
-          body: `A curated video for this sub-topic is on the way. Ask Angelo if you're stuck on it.`
+          type: 'video',
+          title: 'Watch: Parabola Domain Range Axis Symmetry Grade | 11 Functions — Kevinmathscience',
+          videoId: 'AEebC8oLN2M'
         }
       ]
     },
@@ -40,8 +42,9 @@ export const functionsGr12: TopicContent = {
       title: 'The formal definition of an inverse function',
       blocks: [
         {
-          type: 'tip',
-          body: `A curated video for this sub-topic is on the way. Ask Angelo if you're stuck on it.`
+          type: 'video',
+          title: 'Watch: Grade 12 Algebra Lesson 1.5| Functions : Inverse functions — Mlungisi Nkosi Maths & Science',
+          videoId: '0hIPK2-d2oM'
         }
       ]
     },
@@ -50,8 +53,9 @@ export const functionsGr12: TopicContent = {
       title: 'Restricting the domain of a quadratic to invert it (y = √x)',
       blocks: [
         {
-          type: 'tip',
-          body: `A curated video for this sub-topic is on the way. Ask Angelo if you're stuck on it.`
+          type: 'video',
+          title: 'Watch: 3) Inverse of parabola | Part 1 — Kevinmathscience',
+          videoId: '1b2BsuPmCfQ'
         }
       ]
     }

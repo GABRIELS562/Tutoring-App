@@ -11,6 +11,7 @@ export const numberPatternsGr11: TopicContent = {
   paper: 1,
   title: 'Number Patterns',
   capsWeight: 0,
+  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
   sections: [
     {
       id: 'overview',
@@ -29,8 +30,9 @@ export const numberPatternsGr11: TopicContent = {
       title: 'Quadratic number patterns and the second constant difference',
       blocks: [
         {
-          type: 'tip',
-          body: `A curated video for this sub-topic is on the way. Ask Angelo if you're stuck on it.`
+          type: 'video',
+          title: 'Watch: Quadratic number patterns grade 11: introduction and examples — Kevinmathscience',
+          videoId: 'Ws_tyxB-Xyo'
         }
       ]
     },
@@ -40,7 +42,7 @@ export const numberPatternsGr11: TopicContent = {
       blocks: [
         {
           type: 'tip',
-          body: `A curated video for this sub-topic is on the way. Ask Angelo if you're stuck on it.`
+          body: `We haven't found a CAPS video for this sub-topic yet. Ask Angelo if you're stuck on it.`
         }
       ]
     }

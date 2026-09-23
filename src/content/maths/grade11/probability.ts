@@ -11,6 +11,7 @@ export const probabilityGr11: TopicContent = {
   paper: 1,
   title: 'Probability',
   capsWeight: 0,
+  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
   sections: [
     {
       id: 'overview',
@@ -31,8 +32,9 @@ export const probabilityGr11: TopicContent = {
       title: 'Dependent and independent events',
       blocks: [
         {
-          type: 'tip',
-          body: `A curated video for this sub-topic is on the way. Ask Angelo if you're stuck on it.`
+          type: 'video',
+          title: 'Watch: Gr 11 Probability: Independent events — Kevinmathscience',
+          videoId: 'axJSsykVmfE'
         }
       ]
     },
@@ -42,7 +44,7 @@ export const probabilityGr11: TopicContent = {
       blocks: [
         {
           type: 'tip',
-          body: `A curated video for this sub-topic is on the way. Ask Angelo if you're stuck on it.`
+          body: `We haven't found a CAPS video for this sub-topic yet. Ask Angelo if you're stuck on it.`
         }
       ]
     },
@@ -51,8 +53,9 @@ export const probabilityGr11: TopicContent = {
       title: 'Tree diagrams',
       blocks: [
         {
-          type: 'tip',
-          body: `A curated video for this sub-topic is on the way. Ask Angelo if you're stuck on it.`
+          type: 'video',
+          title: 'Watch: Gr 11 Probability: Tree diagram — Kevinmathscience',
+          videoId: 'twLaGOvMVr8'
         }
       ]
     },
@@ -61,8 +64,9 @@ export const probabilityGr11: TopicContent = {
       title: 'Contingency (two-way) tables',
       blocks: [
         {
-          type: 'tip',
-          body: `A curated video for this sub-topic is on the way. Ask Angelo if you're stuck on it.`
+          type: 'video',
+          title: 'Watch: Gr 11 Probability: Contingency table — Kevinmathscience',
+          videoId: '1kMkeNoU7SU'
         }
       ]
     }

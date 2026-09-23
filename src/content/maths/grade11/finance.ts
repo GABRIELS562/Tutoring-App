@@ -11,6 +11,7 @@ export const financeGr11: TopicContent = {
   paper: 1,
   title: 'Finance & Growth',
   capsWeight: 0,
+  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
   sections: [
     {
       id: 'overview',
@@ -32,7 +33,7 @@ export const financeGr11: TopicContent = {
       blocks: [
         {
           type: 'tip',
-          body: `A curated video for this sub-topic is on the way. Ask Angelo if you're stuck on it.`
+          body: `We haven't found a CAPS video for this sub-topic yet. Ask Angelo if you're stuck on it.`
         }
       ]
     },
@@ -40,9 +41,11 @@ export const financeGr11: TopicContent = {
       id: 'future-value-annuities',
       title: 'Future value annuities',
       blocks: [
+        // Labelled for an adjacent grade; CAPS covers this sub-topic in both.
         {
-          type: 'tip',
-          body: `A curated video for this sub-topic is on the way. Ask Angelo if you're stuck on it.`
+          type: 'video',
+          title: 'Watch: Grade 12 Financial Maths Lesson 5 | Present-Value & Future-Value Annuities |  Mlungisi Nkosi — Mlungisi Nkosi Maths & Science',
+          videoId: '16Hw202Et5o'
         }
       ]
     },
@@ -52,7 +55,7 @@ export const financeGr11: TopicContent = {
       blocks: [
         {
           type: 'tip',
-          body: `A curated video for this sub-topic is on the way. Ask Angelo if you're stuck on it.`
+          body: `We haven't found a CAPS video for this sub-topic yet. Ask Angelo if you're stuck on it.`
         }
       ]
     },
@@ -61,8 +64,9 @@ export const financeGr11: TopicContent = {
       title: 'Nominal versus effective interest rates',
       blocks: [
         {
-          type: 'tip',
-          body: `A curated video for this sub-topic is on the way. Ask Angelo if you're stuck on it.`
+          type: 'video',
+          title: 'Watch: 04 Effective and nominal interest rates — Wiskunde_Mathematics_SUM',
+          videoId: 'dml0IOgpPWw'
         }
       ]
     }

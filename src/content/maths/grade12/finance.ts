@@ -11,6 +11,7 @@ export const financeGr12: TopicContent = {
   paper: 1,
   title: 'Finance & Growth',
   capsWeight: 0,
+  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
   sections: [
     {
       id: 'overview',
@@ -30,8 +31,9 @@ export const financeGr12: TopicContent = {
       title: 'Future value annuity formula',
       blocks: [
         {
-          type: 'tip',
-          body: `A curated video for this sub-topic is on the way. Ask Angelo if you're stuck on it.`
+          type: 'video',
+          title: 'Watch: Financial Mathematics Grade 12: L3 Future Value Annuities — Online Maths by Miss Pythagoras',
+          videoId: 'rlShQ-qRGmo'
         }
       ]
     },
@@ -40,8 +42,9 @@ export const financeGr12: TopicContent = {
       title: 'Present value annuity formula',
       blocks: [
         {
-          type: 'tip',
-          body: `A curated video for this sub-topic is on the way. Ask Angelo if you're stuck on it.`
+          type: 'video',
+          title: 'Watch: Grade 12 Financial Maths Present Value Annuity with Missed Payments (DBE/NSC Maths/CAPS) | NTE — NTE \\ New Technological Education',
+          videoId: 'du0inCjMRYw'
         }
       ]
     },
@@ -50,8 +53,9 @@ export const financeGr12: TopicContent = {
       title: 'Loan repayments and outstanding balances',
       blocks: [
         {
-          type: 'tip',
-          body: `A curated video for this sub-topic is on the way. Ask Angelo if you're stuck on it.`
+          type: 'video',
+          title: 'Watch: Outstanding balance grade 12: Present value method — Kevinmathscience',
+          videoId: 'OtG6hAC7L0Q'
         }
       ]
     }

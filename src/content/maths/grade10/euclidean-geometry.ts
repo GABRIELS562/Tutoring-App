@@ -10,6 +10,7 @@ export const euclideanGeometryGr10: TopicContent = {
   capsWeight: 20,
   // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
   // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
+  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
   sections: [
     {
       id: 'overview',
@@ -34,8 +35,8 @@ export const euclideanGeometryGr10: TopicContent = {
       blocks: [
         {
           type: 'video',
-          title: 'Watch: Sin Triangle Grade 10 — Kevinmathscience',
-          videoId: '4jSqFXdmKR0'
+          title: 'Watch: Euclidean Geometry Grade 10: Opposite angles Parallelogram — Kevinmathscience',
+          videoId: 'vWpzk0-tXzc'
         }
       ]
     },

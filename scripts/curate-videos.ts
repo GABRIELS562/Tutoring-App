@@ -227,6 +227,45 @@ async function isEmbeddable(videoId: string): Promise<boolean> {
   }
 }
 
+/**
+ * Titles that announce which CAPS topic they belong to. A video may name a
+ * topic other than the one we are curating - "Trig Triangles Grade 10: Find
+ * angle" was picked for the Euclidean Geometry sub-topic "Lines, angles and
+ * triangles", because both talk about triangles and angles.
+ *
+ * Only used to reject: a title naming a different topic and not this one is
+ * the wrong lesson. Titles naming no topic at all are left alone, since most
+ * are simply terse.
+ */
+const TOPIC_MARKERS: Record<string, RegExp> = {
+  // The ratio names matter as much as the word "trig": "Sin Triangle Grade
+  // 10" is a trigonometry lesson and was picked for Euclidean geometry.
+  // "tangent" is deliberately absent - it belongs to circle geometry too.
+  // "Special triangles"/"special angles" is the trig 30-60-90 lesson, not a
+  // Euclidean one, despite naming triangles and angles.
+  trig: /\btrig|\b(sin|cos|tan|sine|cosine)\b|rule|reduction formula|identities|special (triangle|angle)/i,
+  'euclidean-geometry': /euclidean|circle geometry|midpoint theorem|parallelogram|cyclic|proportionality|similarity/i,
+  'analytical-geometry': /analytical geometry|distance formula|gradient|inclination/i,
+  statistics: /statistic|ogive|box and whisker|standard deviation|regression|scatter/i,
+  finance: /financial math|interest|annuit|depreciation|hire purchase|exchange rate/i,
+  calculus: /calculus|derivative|differentiat|first principles/i,
+  probability: /probability|venn|tree diagram|contingency/i,
+}
+
+/** Which CAPS topic a slug belongs to, ignoring the grade suffix. */
+function topicKey(slug: string): string {
+  return slug.replace(/-gr1[012]$/, '')
+}
+
+export function isOtherMathsTopic(slug: string, title: string): boolean {
+  const key = topicKey(slug)
+  const own = TOPIC_MARKERS[key]
+  if (own?.test(title)) return false
+  return Object.entries(TOPIC_MARKERS).some(
+    ([other, pattern]) => other !== key && pattern.test(title)
+  )
+}
+
 function gradesNamedIn(title: string): number[] {
   return [...title.matchAll(/\bgr(?:ade)?\s*\.?\s*(\d{1,2})\b/gi)].map((m) => parseInt(m[1], 10))
 }
@@ -260,7 +299,7 @@ function isMathsLit(title: string, channel: string): boolean {
  * components. This is a maths curriculum; those are a different subject.
  */
 export function isOtherSubject(title: string): boolean {
-  return /physical science|physics|chemistry|chemical|life science|biology|geography|accounting|economics|business studies|vectors? in 2d|newton/i.test(
+  return /physical science|physics|chemistry|chemical|life science|biology|geography|accounting|economics|business studies|vectors? in 2d|newton|doppler|velocity|momentum|electric|circuit/i.test(
     title
   )
 }
@@ -321,10 +360,22 @@ function stem(word: string): string {
   return word.endsWith('ies') ? word.slice(0, -3) + 'y' : word.replace(/s$/, '')
 }
 
-/** Does `haystack` contain `word` in either singular or plural form? */
+/**
+ * Does `haystack` contain `word` as a whole word, singular or plural?
+ *
+ * Compares stemmed words rather than substrings. A plain `includes` let
+ * "term" match inside "Determine", so "Finding the general formula (n-th
+ * term)" was satisfied by "Hyperbola Grade 10: Determine Equation" - the
+ * required word was present as letters but not as the concept.
+ *
+ * Multi-word and hyphenated forms keep the substring test: they are specific
+ * enough not to collide, and tokenising would split them apart.
+ */
 function containsTerm(haystack: string, word: string): boolean {
-  const root = stem(word)
-  return haystack.includes(root) || haystack.includes(word)
+  if (/[\s-]/.test(word)) return haystack.includes(word)
+  const target = stem(word)
+  const words = haystack.match(/[a-z0-9²³]+/g) ?? []
+  return words.some((candidate) => stem(candidate) === target || candidate === word)
 }
 
 function tokenise(text: string): string[] {
@@ -377,6 +428,7 @@ const DISCRIMINATING = [
  * 370,000-view video titled simply "Depreciation".
  */
 const EXCLUSIVE_PAIRS: [string, string][] = [
+  ['dependent', 'independent'],
   ['simple', 'compound'],
   ['linear', 'quadratic'],
   ['arithmetic', 'geometric'],
@@ -428,9 +480,21 @@ export function relevance(subTopic: string, title: string): number {
   // so few words, every one must land or the match is coincidental. Generic
   // form-nouns are exempt - CAPS writes "Box and whisker plots" where the
   // channel titles it "Box and whisker", and that is the same lesson.
-  const mustMatch = wanted.filter((word) => !GENERIC_NOUNS.has(stem(word)))
+  // A comma means CAPS is enumerating ("Lines, angles and triangles"), not
+  // naming one precise concept, and no single video covers every item.
+  const isEnumeration = subTopic.includes(',')
+  // Either half of an exclusive pair standing alone still teaches the
+  // sub-topic: "Independent events" is the lesson for "Dependent and
+  // independent events".
+  const paired = new Set(
+    EXCLUSIVE_PAIRS.filter(([a, b]) => wanted.includes(a) && wanted.includes(b)).flat()
+  )
+  const mustMatch = wanted.filter(
+    (word) => !GENERIC_NOUNS.has(stem(word)) && !paired.has(word)
+  )
   if (
     required.length === 0 &&
+    !isEnumeration &&
     wanted.length <= SHORT_PHRASE_WORDS &&
     mustMatch.some((word) => !matched.includes(word))
   ) {
@@ -547,6 +611,7 @@ async function curateSubTopic(
       .filter((v) => !isMathsLit(v.title, v.channel))
       .filter((v) => !isOtherSubject(v.title))
       .filter((v) => !isSchoolTerm(subTopic, v.title))
+      .filter((v) => !isOtherMathsTopic(topic.slug, v.title))
       .map((v) => {
         const saChannel = SA_CHANNELS.has(v.channel)
         return { ...v, saChannel, embeddable: false, score: 0 }

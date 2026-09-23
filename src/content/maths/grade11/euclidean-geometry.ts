@@ -8,10 +8,11 @@ export const euclideanGeometryGr11: TopicContent = {
   paper: 2,
   title: 'Euclidean Geometry',
   capsWeight: 25,
+  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
   sections: [
     {
-      id: 'coming-soon',
-      title: 'Coming Soon',
+      id: 'overview',
+      title: 'Euclidean Geometry',
       blocks: [
         {
           type: 'theory',
@@ -27,25 +28,51 @@ export const euclideanGeometryGr11: TopicContent = {
 • **Theorem 8** - Two tangents from external point are equal
 • **Theorem 9** - Tan-chord angle equals angle in alternate segment
 • **Proving Theorems** - Structured proof writing with reasons`
-        },
-        {
-          type: 'tip',
-          body: `Circle geometry requires you to state theorems correctly. Practice writing "angle at centre = 2 × angle at circumference" and similar statements — examiners are strict about wording!`
-        },
-        // PROVISIONAL video picks — auto-filled 2026-09-18 from docs/client-updates/video-candidates; client to confirm.
-        {
-          type: 'video',
-          title: 'Watch: Circle Geometry Grade 11 : Practice — Kevinmathscience',
-          videoId: 'bc6x2GQcMbU',
-          videoIdAf: 'ULsEMok0Ksk',
-          titleAf: 'Watch: Sirkelmeetkunde vraagstukke 1 euklidiese graad 11 (wiskvaw) (wiskdo) — VAW-Vereniging vir Afrikaanse Wiskunde-onderwysers'
-        },
-        {
-          type: 'video',
-          title: 'Watch: Euclidean Geometry Grade 11: Exam question — Kevinmathscience',
-          videoId: 'lQE642ILPDY'
         }
-        // TODO(curator): add { type: 'formula', formulas: [...] } block
+      ]
+    },
+    {
+      id: 'circle-geometry-chords',
+      title: 'Circle geometry: chords',
+      blocks: [
+        {
+          type: 'video',
+          title: 'Watch: Circle Geometry Grade 11 : Tan- Chord Theorem Introduction — Kevinmathscience',
+          videoId: 'ktkiZMPSyWg'
+        }
+      ]
+    },
+    {
+      id: 'angles-at-the-centre-and-at-the-circumference',
+      title: 'Angles at the centre and at the circumference',
+      blocks: [
+        {
+          type: 'video',
+          title: 'Watch: Circle Geometry Grade 11 Euclidean Geometry: Angle at Centre = 2 x angle at circumference — Miss Martins Maths and Science',
+          videoId: '4Bvjpd91yGM'
+        }
+      ]
+    },
+    {
+      id: 'cyclic-quadrilaterals',
+      title: 'Cyclic quadrilaterals',
+      blocks: [
+        {
+          type: 'video',
+          title: 'Watch: Circle Geometry Grade 11 : Cyclic Quadrilateral — Kevinmathscience',
+          videoId: 'QzWrAgv77Wc'
+        }
+      ]
+    },
+    {
+      id: 'tangents-to-circles',
+      title: 'Tangents to circles',
+      blocks: [
+        {
+          type: 'video',
+          title: 'Watch: Circle Geometry Grade 11 : Common Tangent — Kevinmathscience',
+          videoId: '5rbzBMXkX54'
+        }
       ]
     }
   ]

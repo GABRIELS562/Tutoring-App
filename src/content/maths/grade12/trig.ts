@@ -11,6 +11,7 @@ export const trigGr12: TopicContent = {
   paper: 2,
   title: 'Trigonometry',
   capsWeight: 0,
+  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
   sections: [
     {
       id: 'overview',
@@ -32,7 +33,7 @@ export const trigGr12: TopicContent = {
       blocks: [
         {
           type: 'tip',
-          body: `A curated video for this sub-topic is on the way. Ask Angelo if you're stuck on it.`
+          body: `We haven't found a CAPS video for this sub-topic yet. Ask Angelo if you're stuck on it.`
         }
       ]
     },
@@ -41,8 +42,9 @@ export const trigGr12: TopicContent = {
       title: 'Double angle identities',
       blocks: [
         {
-          type: 'tip',
-          body: `A curated video for this sub-topic is on the way. Ask Angelo if you're stuck on it.`
+          type: 'video',
+          title: 'Watch: Lesson 4: How To Use Double Angle Identities | Grade 12 Trigonometry — Mlungisi Nkosi Maths & Science',
+          videoId: 'tSsf4d_G8vg'
         }
       ]
     },
@@ -51,8 +53,9 @@ export const trigGr12: TopicContent = {
       title: 'Expansion and simplification of trig expressions',
       blocks: [
         {
-          type: 'tip',
-          body: `A curated video for this sub-topic is on the way. Ask Angelo if you're stuck on it.`
+          type: 'video',
+          title: 'Watch: Simplify Trig Expressions | Reduction formulae and special angles | Trigonometry — Mlungisi Nkosi Maths & Science',
+          videoId: 'Z6ogwmKM1to'
         }
       ]
     },
@@ -61,8 +64,9 @@ export const trigGr12: TopicContent = {
       title: 'Trigonometry in three-dimensional problems',
       blocks: [
         {
-          type: 'tip',
-          body: `A curated video for this sub-topic is on the way. Ask Angelo if you're stuck on it.`
+          type: 'video',
+          title: 'Watch: Lesson 12: How To Solve 3D Trigonometry Problems | Grade 12 Trigonometry — Mlungisi Nkosi Maths & Science',
+          videoId: 't3H6YY-D4dA'
         }
       ]
     }
