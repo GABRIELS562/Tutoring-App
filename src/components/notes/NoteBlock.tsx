@@ -80,7 +80,7 @@ export default function NoteBlock({ block, topicSlug = 'topic', sectionId = 'sec
             style={{ color: 'var(--teal)' }}
           />
           <div className="flex-1 text-sm" style={{ color: 'var(--text)' }}>
-            <MathRenderer content={block.body || ''} />
+            <MathRenderer content={getLocalizedContent(block.body, block.bodyAf)} />
           </div>
           <VoicePlayer
             text={block.body || ''}
