@@ -1,0 +1,113 @@
+[
+  {
+    "legacySlug": "waves-gr10",
+    "title": "Transverse Waves",
+    "grade": 10,
+    "videos": [
+      {
+        "title": "Watch: Grade 10 Transverse Waves Points in phase and points out of phase — Miss Martins Maths and Science",
+        "videoId": "PGgeSD7vPOQ",
+        "videoIdAf": "fhCoYWh97Nc"
+      },
+      {
+        "title": "Watch: Grade 10 Transverse waves Exam question Wavelength — Miss Martins Maths and Science",
+        "videoId": "o7BDo4CcQOI"
+      }
+    ]
+  },
+  {
+    "legacySlug": "sound-gr10",
+    "title": "Sound",
+    "grade": 10,
+    "videos": [
+      {
+        "title": "Watch: Grade 10 Physics Sound waves — Miss Martins Maths and Science",
+        "videoId": "4IpqrR4vqOw",
+        "videoIdAf": "Ye7QmYuHeBE"
+      },
+      {
+        "title": "Watch: 5) Sound Waves Grade 10 — Kevinmathscience",
+        "videoId": "1u5GSxuSj7A"
+      }
+    ]
+  },
+  {
+    "legacySlug": "em-radiation-gr10",
+    "title": "Electromagnetic Radiation",
+    "grade": 10,
+    "videos": [
+      {
+        "title": "Watch: Grade 10 Electromagnetic Radiation Physics: Introduction — Miss Martins Maths and Science",
+        "videoId": "a4aHyWtV2Kw",
+        "videoIdAf": "nxug2Fhnud8"
+      },
+      {
+        "title": "Watch: Electromagnetic radiation calculations Grade 10 Physics — Miss Martins Maths and Science",
+        "videoId": "AAyPp8W9mWw"
+      }
+    ]
+  },
+  {
+    "legacySlug": "electric-circuits-gr10",
+    "title": "Electric Circuits",
+    "grade": 10,
+    "videos": [
+      {
+        "title": "Watch: Circuits grade 10 | Part 1 — Kevinmathscience",
+        "videoId": "imoShDLnQqE",
+        "videoIdAf": "xO7N97B1RB0"
+      },
+      {
+        "title": "Watch: Circuits Grade 10 | Calculations — Kevinmathscience",
+        "videoId": "5WRqdTr9WmQ"
+      }
+    ]
+  },
+  {
+    "legacySlug": "newtons-laws-gr11",
+    "title": "Newton's Laws",
+    "grade": 11,
+    "videos": [
+      {
+        "title": "Watch: Grade 11 Newton Laws: Objects on a slope — Kevinmathscience",
+        "videoId": "HmoNMxId4-Y",
+        "videoIdAf": "FA5DBBNyS8E"
+      },
+      {
+        "title": "Watch: Newton Law Gravity Grade 11 — Kevinmathscience",
+        "videoId": "AFwr05QW3aY"
+      }
+    ]
+  },
+  {
+    "legacySlug": "waves-sound-gr11",
+    "title": "Waves and Sound",
+    "grade": 11,
+    "videos": [
+      {
+        "title": "Watch: Grade 11 - Diffraction | Huygen’s Principle & Wavefronts | November 2017 | Mlungisi Nkosi — Mlungisi Nkosi Maths & Science",
+        "videoId": "KXRnmQGweJE"
+      },
+      {
+        "title": "Watch: 2D & 3D Wavefronts — Mindset",
+        "videoId": "IQ_HH68wmHw"
+      }
+    ]
+  },
+  {
+    "legacySlug": "momentum-gr12",
+    "title": "Momentum and Impulse",
+    "grade": 12,
+    "videos": [
+      {
+        "title": "Watch: 1) Momentum Gr 12 | Intro — Kevinmathscience",
+        "videoId": "JOyL0KJRe0g",
+        "videoIdAf": "2YERVz7HUMI"
+      },
+      {
+        "title": "Watch: Exam question momentum gr 12 — Kevinmathscience",
+        "videoId": "7Zq7PjYaySU"
+      }
+    ]
+  }
+]

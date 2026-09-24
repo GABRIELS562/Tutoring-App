@@ -52,16 +52,9 @@ import { trigGr12 } from '@/content/maths/grade12/trig'
 import { statisticsGr12 } from '@/content/maths/grade12/statistics'
 // Import content - Grade 10 Physical Sciences
 import { mechanicsGr10 } from '@/content/science/grade10/mechanics'
-import { wavesGr10 } from '@/content/science/grade10/waves'
-import { soundGr10 } from '@/content/science/grade10/sound'
-import { emRadiationGr10 } from '@/content/science/grade10/electromagnetic-radiation'
-import { electricCircuitsGr10 } from '@/content/science/grade10/electric-circuits'
 import { matterMaterialsGr10 } from '@/content/science/grade10/matter-materials'
 // Import content - Grade 11 Physical Sciences
-import { newtonsLawsGr11 } from '@/content/science/grade11/newtons-laws'
-import { wavesSoundGr11 } from '@/content/science/grade11/waves-sound'
 // Import content - Grade 12 Physical Sciences
-import { momentumGr12 } from '@/content/science/grade12/momentum'
 
 /**
  * Single source of truth mapping a URL slug to its TopicContent.
