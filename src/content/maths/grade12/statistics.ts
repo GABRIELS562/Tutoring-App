@@ -1,0 +1,76 @@
+import type { TopicContent } from '@/types'
+
+// Scaffolded from the CAPS handbook (src/content/caps-curriculum.ts).
+// One section per sub-topic; videos are filled by
+// scripts/apply-curated-videos.ts.
+export const statisticsGr12: TopicContent = {
+  id: 'statistics-gr12',
+  slug: 'statistics-gr12',
+  subject: 'maths',
+  grade: 12,
+  paper: 2,
+  title: 'Statistics',
+  capsWeight: 0,
+  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
+  sections: [
+    {
+      id: 'overview',
+      title: 'Statistics',
+      blocks: [
+        {
+          type: 'theory',
+          title: 'What this topic covers',
+          body: `• Bivariate data
+• Scatter plots and lines of best fit
+• The least-squares regression line y = A + Bx
+• The correlation coefficient r`
+        }
+      ]
+    },
+    {
+      id: 'bivariate-data',
+      title: 'Bivariate data',
+      blocks: [
+        {
+          type: 'video',
+          title: 'Watch: Mlungisi Nkosi | Grade 12 Mathematics | Statistics | Least Square Regression Line | Line of best fit — Mlungisi Nkosi Maths & Science',
+          videoId: 'cFYwJhUcPRM'
+        }
+      ]
+    },
+    {
+      id: 'scatter-plots-and-lines-of-best-fit',
+      title: 'Scatter plots and lines of best fit',
+      blocks: [
+        {
+          type: 'video',
+          title: 'Watch: Statistics Grade 12 : line of best fit — Kevinmathscience',
+          videoId: 'yXbx5EHE1ag'
+        }
+      ]
+    },
+    {
+      id: 'the-least-squares-regression-line-y-a-bx',
+      title: 'The least-squares regression line y = A + Bx',
+      blocks: [
+        {
+          type: 'video',
+          title: 'Watch: Statistics Grade 12 Mathematics September 2021 Trial | Scatter Plot, Least Squares Regression Line.. — Khoza Explains',
+          videoId: 'vEDMk4xVa8k'
+        }
+      ]
+    },
+    {
+      id: 'the-correlation-coefficient-r',
+      title: 'The correlation coefficient r',
+      blocks: [
+        {
+          type: 'tip',
+          body: `We haven't found a CAPS video for this sub-topic yet. Ask Angelo if you're stuck on it.`
+        }
+      ]
+    }
+  ]
+}
+
+export default statisticsGr12

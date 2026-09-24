@@ -8,9 +8,10 @@ export const euclideanGeometryGr12: TopicContent = {
   paper: 2,
   title: 'Euclidean Geometry',
   capsWeight: 25,
+  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
   sections: [
     {
-      id: 'coming-soon',
+      id: 'overview',
       title: 'Euclidean Geometry',
       blocks: [
         {
@@ -22,21 +23,40 @@ export const euclideanGeometryGr12: TopicContent = {
 • **Midpoint Theorem** - Applications and proofs
 • **Theorem of Pythagoras (converse)** - Proving right angles
 • **Advanced Riders** - Multi-step geometric proofs`
-        },
-        // PROVISIONAL video picks — auto-filled 2026-09-18 from docs/client-updates/video-candidates; client to confirm.
-        {
-          type: 'video',
-          title: 'Watch: Grade 12 Euclidean Geometry Exam question # 1 — Kevinmathscience',
-          videoId: 'nWn-HjCP9wY',
-          videoIdAf: 'GbXpQ2YDdNQ',
-          titleAf: 'Watch: Eweredigheid en Gelykvormigheid Verduideliking Via Voorbeelde || Wiskunde Graad 12 — CollieMath Studio'
-        },
-        {
-          type: 'video',
-          title: 'Watch: EUCLIDEAN GEOMETRY | PROPORTIONALITY GRADE 12 [ ISIZULU ] — Isinamuva Tutoring',
-          videoId: '122eVl0o_C8'
         }
-        // TODO(curator): add { type: 'formula', formulas: [...] } block
+      ]
+    },
+    {
+      id: 'proportionality-in-triangles',
+      title: 'Proportionality in triangles',
+      blocks: [
+        {
+          type: 'video',
+          title: 'Watch: Grade 12 Proportionality: Area of triangle #1 — Kevinmathscience',
+          videoId: '2jgK_SKwGL0'
+        }
+      ]
+    },
+    {
+      id: 'similarity-of-triangles',
+      title: 'Similarity of triangles',
+      blocks: [
+        {
+          type: 'video',
+          title: 'Watch: Grade 12 Similarity vs Proportionality theorem — Kevinmathscience',
+          videoId: 'GxJ1iQpps8I'
+        }
+      ]
+    },
+    {
+      id: 'the-theorem-of-pythagoras-proved-via-similarity',
+      title: 'The Theorem of Pythagoras proved via similarity',
+      blocks: [
+        {
+          type: 'video',
+          title: 'Watch: 04 Similarity Pythagoras Theorem — Mindset',
+          videoId: 'gBizyVMuPdw'
+        }
       ]
     }
   ]

@@ -8,10 +8,13 @@ export const trigonometryGr10: TopicContent = {
   paper: 2,
   title: 'Trigonometry',
   capsWeight: 20,
+  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
+  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
+  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
   sections: [
     {
-      id: 'coming-soon',
-      title: 'Introduction to Trigonometry',
+      id: 'overview',
+      title: 'Trigonometry',
       blocks: [
         {
           type: 'theory',
@@ -23,21 +26,51 @@ export const trigonometryGr10: TopicContent = {
 • **Finding Sides** - Using trig ratios to solve for unknown sides
 • **Special Angles** - 30°, 45°, 60° exact values
 • **Problems in 2D** - Angles of elevation and depression`
-        },
-        // PROVISIONAL video picks — auto-filled 2026-09-18 from docs/client-updates/video-candidates; client to confirm.
+        }
+      ]
+    },
+    {
+      id: 'trig-ratios-in-right-angled-triangles',
+      title: 'Trig ratios in right-angled triangles',
+      blocks: [
         {
           type: 'video',
-          title: 'Watch: Sin Triangle Grade 10 — Kevinmathscience',
-          videoId: '4jSqFXdmKR0',
-          videoIdAf: 'U3rGPy484Ro',
-          titleAf: 'Watch: Graad 10 Trigonometrie — YCDM - YouCanDoMaths'
-        },
+          title: 'Watch: Trig Triangles Grade 10 — Kevinmathscience',
+          videoId: '0Sr8YWwRX28'
+        }
+      ]
+    },
+    {
+      id: 'trig-ratios-on-the-cartesian-plane-0-to-360',
+      title: 'Trig ratios on the Cartesian plane (0° to 360°)',
+      blocks: [
+        {
+          type: 'video',
+          title: 'Watch: Grade 10 Trigonometry: Trig Ratios Sin, Cos and Tan — Miss Martins Maths and Science',
+          videoId: 'K5Odz79j7to'
+        }
+      ]
+    },
+    {
+      id: 'two-dimensional-problems-elevation-and-depressio',
+      title: 'Two-dimensional problems (elevation and depression)',
+      blocks: [
         {
           type: 'video',
           title: 'Watch: Trigonometry 2D Grade 10 Angle of elevation and depression — Miss Martins Maths and Science',
           videoId: 'KvBqPFfzfEM'
         }
-        // TODO(curator): add { type: 'formula', formulas: [...] } block
+      ]
+    },
+    {
+      id: 'basic-trig-graphs-sin-cos-tan',
+      title: 'Basic trig graphs: sin, cos, tan',
+      blocks: [
+        {
+          type: 'video',
+          title: 'Watch: Sin Graph Grade 10 — Kevinmathscience',
+          videoId: 'XmN3h5nTGis'
+        }
       ]
     }
   ]

@@ -8,10 +8,11 @@ export const analyticalGeometryGr12: TopicContent = {
   paper: 2,
   title: 'Analytical Geometry',
   capsWeight: 20,
+  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
   sections: [
     {
-      id: 'coming-soon',
-      title: 'Coming Soon',
+      id: 'overview',
+      title: 'Analytical Geometry',
       blocks: [
         {
           type: 'theory',
@@ -23,25 +24,51 @@ export const analyticalGeometryGr12: TopicContent = {
 • **Properties of Chords** - Perpendicular bisectors and midpoints
 • **Circles Through Three Points** - Determining circle equations
 • **Combined Problems** - Circles with straight line geometry`
-        },
-        {
-          type: 'tip',
-          body: `The equation of a circle with centre $(a, b)$ and radius $r$ is $(x-a)^2 + (y-b)^2 = r^2$. Memorise this — it appears in every Paper 2 exam.`
-        },
-        // PROVISIONAL video picks — auto-filled 2026-09-18 from docs/client-updates/video-candidates; client to confirm.
-        {
-          type: 'video',
-          title: 'Watch: Analytical Geometry Grade 12 Exam Questions — Kevinmathscience',
-          videoId: 'LxMkIbspJAw',
-          videoIdAf: '9YT8XPAM9Vc',
-          titleAf: 'Watch: Analitiese Meetkunde Graad 12 Wiskunde: L1 Sirkel met oorsprong middelpunt — Online Maths by Miss Pythagoras'
-        },
-        {
-          type: 'video',
-          title: 'Watch: Analytical Geometry Grade 12 Exam Questions — Kevinmathscience',
-          videoId: 'O9mO17v2-e8'
         }
-        // TODO(curator): add { type: 'formula', formulas: [...] } block
+      ]
+    },
+    {
+      id: 'the-equation-of-a-circle-centred-at-the-origin',
+      title: 'The equation of a circle centred at the origin',
+      blocks: [
+        {
+          type: 'video',
+          title: 'Watch: Equation of Circle Grade 12 — Kevinmathscience',
+          videoId: 'cjP4tmQtxEs'
+        }
+      ]
+    },
+    {
+      id: 'the-equation-of-a-circle-centred-at-any-point',
+      title: 'The equation of a circle centred at any point',
+      blocks: [
+        {
+          type: 'video',
+          title: 'Watch: Lesson 2: How To Find the Equation of a Circle & Tangent to a Circle | Analytical Geometry — Mlungisi Nkosi Maths & Science',
+          videoId: '4I9OcKET5Ys'
+        }
+      ]
+    },
+    {
+      id: 'tangents-to-circles-analytically',
+      title: 'Tangents to circles analytically',
+      blocks: [
+        {
+          type: 'video',
+          title: 'Watch: Analytical Geometry Grade 12: L4 Equation of a Tangent to Circle — Online Maths by Miss Pythagoras',
+          videoId: 'sQNItmXLyuI'
+        }
+      ]
+    },
+    {
+      id: 'intersecting-circles',
+      title: 'Intersecting circles',
+      blocks: [
+        {
+          type: 'video',
+          title: 'Watch: Does Line Intersect Circle Grade 12 — Kevinmathscience',
+          videoId: '9D8aMrzGbBc'
+        }
       ]
     }
   ]

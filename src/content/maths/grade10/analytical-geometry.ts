@@ -8,9 +8,12 @@ export const analyticalGeometryGr10: TopicContent = {
   paper: 2,
   title: 'Analytical Geometry',
   capsWeight: 15,
+  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
+  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
+  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
   sections: [
     {
-      id: 'coming-soon',
+      id: 'overview',
       title: 'Analytical Geometry',
       blocks: [
         {
@@ -22,21 +25,40 @@ export const analyticalGeometryGr10: TopicContent = {
 • **Equation of a Straight Line** - $y = mx + c$ and $y - y_1 = m(x - x_1)$
 • **Parallel Lines** - Equal gradients ($m_1 = m_2$)
 • **Perpendicular Lines** - Product of gradients = -1 ($m_1 \\times m_2 = -1$)`
-        },
-        // PROVISIONAL video picks — auto-filled 2026-09-18 from docs/client-updates/video-candidates; client to confirm.
-        {
-          type: 'video',
-          title: 'Watch: Analytical Geometry Grade 10: Distance formula - length of a line — Miss Martins Maths and Science',
-          videoId: 'VDCxnhnkzJg',
-          videoIdAf: '4kCOeJdhECM',
-          titleAf: 'Watch: Gr10 Junie Eksamen voorbereiding: Analitiese Meetkunde — Lichelle Barnard'
-        },
-        {
-          type: 'video',
-          title: 'Watch: Analytical Geometry Grade 10 Exam Question — Kevinmathscience',
-          videoId: 'w1QwFixKjBo'
         }
-        // TODO(curator): add { type: 'formula', formulas: [...] } block
+      ]
+    },
+    {
+      id: 'the-distance-formula',
+      title: 'The distance formula',
+      blocks: [
+        {
+          type: 'video',
+          title: 'Watch: Analytical Geometry Grade 10: Distance formula — Kevinmathscience',
+          videoId: 'H5hq7wkldj8'
+        }
+      ]
+    },
+    {
+      id: 'the-midpoint-formula',
+      title: 'The midpoint formula',
+      blocks: [
+        {
+          type: 'video',
+          title: 'Watch: Analytical Geometry Grade 10: Midpoint — Kevinmathscience',
+          videoId: 'HtNFDWGpE7U'
+        }
+      ]
+    },
+    {
+      id: 'gradient-of-a-line-segment',
+      title: 'Gradient of a line segment',
+      blocks: [
+        {
+          type: 'video',
+          title: 'Watch: Analytical Geometry Grade 10: Gradient formula — Kevinmathscience',
+          videoId: 'Pqafv6sV6Ng'
+        }
       ]
     }
   ]

@@ -8,9 +8,10 @@ export const statisticsGr11: TopicContent = {
   paper: 2,
   title: 'Statistics',
   capsWeight: 15,
+  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
   sections: [
     {
-      id: 'coming-soon',
+      id: 'overview',
       title: 'Statistics',
       blocks: [
         {
@@ -23,21 +24,48 @@ export const statisticsGr11: TopicContent = {
 • **Histograms and Frequency Polygons** - Displaying data
 • **Ogives (Cumulative Frequency Curves)** - Reading percentiles and quartiles
 • **Scatter Plots and Correlation** - Identifying trends and relationships`
-        },
-        // PROVISIONAL video picks — auto-filled 2026-09-18 from docs/client-updates/video-candidates; client to confirm.
+        }
+      ]
+    },
+    {
+      id: 'grouped-data-analysis',
+      title: 'Grouped data analysis',
+      blocks: [
+        {
+          type: 'tip',
+          body: `We haven't found a CAPS video for this sub-topic yet. Ask Angelo if you're stuck on it.`
+        }
+      ]
+    },
+    {
+      id: 'ogives-cumulative-frequency-graphs',
+      title: 'Ogives (cumulative frequency graphs)',
+      blocks: [
         {
           type: 'video',
           title: 'Watch: Statistics Grade 11: Ogive curve — Kevinmathscience',
-          videoId: 'CTj0OE6lkkg',
-          videoIdAf: 'v0NWn7nXALU',
-          titleAf: 'Watch: Gr 11 en 12 Ogief Statistiek Deel 1 - Die Basics — But They Ask It In A Funny Way'
-        },
-        {
-          type: 'video',
-          title: 'Watch: Statistics Grade 11 Exam Questions — Kevinmathscience',
-          videoId: 'Amf60jAYIaI'
+          videoId: 'CTj0OE6lkkg'
         }
-        // TODO(curator): add { type: 'formula', formulas: [...] } block
+      ]
+    },
+    {
+      id: 'variance-and-standard-deviation',
+      title: 'Variance and standard deviation',
+      blocks: [
+        {
+          type: 'tip',
+          body: `We haven't found a CAPS video for this sub-topic yet. Ask Angelo if you're stuck on it.`
+        }
+      ]
+    },
+    {
+      id: 'symmetric-and-skewed-data',
+      title: 'Symmetric and skewed data',
+      blocks: [
+        {
+          type: 'tip',
+          body: `We haven't found a CAPS video for this sub-topic yet. Ask Angelo if you're stuck on it.`
+        }
       ]
     }
   ]

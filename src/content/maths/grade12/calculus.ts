@@ -8,10 +8,11 @@ export const calculusGr12: TopicContent = {
   paper: 1,
   title: 'Calculus',
   capsWeight: 35,
+  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
   sections: [
     {
-      id: 'coming-soon',
-      title: 'Coming Soon',
+      id: 'overview',
+      title: 'Calculus',
       blocks: [
         {
           type: 'theory',
@@ -24,25 +25,72 @@ export const calculusGr12: TopicContent = {
 • **Optimization Problems** - Finding maxima and minima
 • **Integration** - The reverse of differentiation
 • **Area Under Curves** - Definite integrals and applications`
-        },
+        }
+      ]
+    },
+    {
+      id: 'the-definition-of-a-limit',
+      title: 'The definition of a limit',
+      blocks: [
+        {
+          type: 'video',
+          title: 'Watch: Limits Calculus Grade 12 — Kevinmathscience',
+          videoId: '4VUWIiudCk0'
+        }
+      ]
+    },
+    {
+      id: 'differentiation-from-first-principles',
+      title: 'Differentiation from first principles',
+      blocks: [
+        {
+          type: 'video',
+          title: 'Watch: First Principles Calculus Grade 12 — Kevinmathscience',
+          videoId: 'alUkVWVEP10'
+        }
+      ]
+    },
+    {
+      id: 'the-rules-of-differentiation',
+      title: 'The rules of differentiation',
+      blocks: [
         {
           type: 'tip',
-          body: `Calculus is worth approximately 35% of Paper 1. Master differentiation rules first — they form the foundation for everything else in this topic.`
-        },
-        // PROVISIONAL video picks — auto-filled 2026-09-18 from docs/client-updates/video-candidates; client to confirm.
-        {
-          type: 'video',
-          title: 'Watch: Determine Cubic Equation Calculus grade 12 — Kevinmathscience',
-          videoId: 'UzVKkR-XArM',
-          videoIdAf: 'n3XE5NtY-Ls',
-          titleAf: 'Watch: Differensiasie - Verduideliking en Voorbeelde || Wiskunde Graad 12 — CollieMath Studio'
-        },
-        {
-          type: 'video',
-          title: 'Watch: Lesson 7: How To Solve Optimisation Questions | Area, Volume & Cost | Grade 12 Calculus — Mlungisi Nkosi Maths & Science',
-          videoId: '1ye4FhvMazo'
+          body: `We haven't found a CAPS video for this sub-topic yet. Ask Angelo if you're stuck on it.`
         }
-        // TODO(curator): add { type: 'formula', formulas: [...] } block
+      ]
+    },
+    {
+      id: 'sketching-cubic-graphs',
+      title: 'Sketching cubic graphs',
+      blocks: [
+        {
+          type: 'video',
+          title: 'Watch: Draw Cubic Graph Grade 12 — Kevinmathscience',
+          videoId: '6rUoChk1awg'
+        }
+      ]
+    },
+    {
+      id: 'optimisation-problems',
+      title: 'Optimisation problems',
+      blocks: [
+        {
+          type: 'video',
+          title: 'Watch: Optimisation Gr 12 — Kevinmathscience',
+          videoId: 'xcEeslakFCY'
+        }
+      ]
+    },
+    {
+      id: 'rates-of-change',
+      title: 'Rates of change',
+      blocks: [
+        {
+          type: 'video',
+          title: 'Watch: Differential Calculus: Lesson: Rates of Change — Mindset',
+          videoId: '7ms2EI0LaxU'
+        }
       ]
     }
   ]

@@ -8,10 +8,13 @@ export const functionsGr10: TopicContent = {
   paper: 1,
   title: 'Functions and Graphs',
   capsWeight: 25,
+  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
+  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
+  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
   sections: [
     {
-      id: 'coming-soon',
-      title: 'Functions and Graphs',
+      id: 'overview',
+      title: 'Functions & Graphs',
       blocks: [
         {
           type: 'theory',
@@ -23,21 +26,51 @@ export const functionsGr10: TopicContent = {
 • **Exponential Functions** - $y = ab^x + q$, growth and decay
 • **Sketching Graphs** - Domain, range, intercepts, asymptotes
 • **Transformations** - Effects of $a$ and $q$ on graphs`
-        },
-        // PROVISIONAL video picks — auto-filled 2026-09-18 from docs/client-updates/video-candidates; client to confirm.
+        }
+      ]
+    },
+    {
+      id: 'the-linear-function-y-mx-c',
+      title: 'The linear function y = mx + c',
+      blocks: [
         {
           type: 'video',
           title: 'Watch: Exam Functions Grade 10 — Kevinmathscience',
-          videoId: '1RnuVXYcVpE',
-          videoIdAf: '90DcF3f3V7c',
-          titleAf: 'Watch: Funksies Parabool Graad10: L6 Grafiek Interpretasie Eksamen vraag — Online Maths by Miss Pythagoras'
-        },
+          videoId: '1RnuVXYcVpE'
+        }
+      ]
+    },
+    {
+      id: 'the-quadratic-function-y-ax',
+      title: 'The quadratic function y = ax²',
+      blocks: [
         {
           type: 'video',
-          title: 'Watch: 🚀 Grade 10 Mathematics | Straight Line Functions Made Easy — SmartPrep MathsScience',
-          videoId: 'ZqRXA19yhMM'
+          title: 'Watch: Parabola Grade 10 Functions (Introduction) — Miss Martins Maths and Science',
+          videoId: 'Nujt5qcZWqE'
         }
-        // TODO(curator): add { type: 'formula', formulas: [...] } block
+      ]
+    },
+    {
+      id: 'the-hyperbolic-function-y-a-x',
+      title: 'The hyperbolic function y = a/x',
+      blocks: [
+        {
+          type: 'video',
+          title: 'Watch: Hyperbola Grade 10 Functions Introduction — Miss Martins Maths and Science',
+          videoId: 'oWDjn_PRndg'
+        }
+      ]
+    },
+    {
+      id: 'the-exponential-function-y-ab-x',
+      title: 'The exponential function y = ab^x',
+      blocks: [
+        {
+          type: 'video',
+          title: 'Watch: Exponential Function grade 10: #1 — Kevinmathscience',
+          videoId: 'Ijfu6KuR6mQ'
+        }
       ]
     }
   ]
