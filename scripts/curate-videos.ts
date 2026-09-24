@@ -63,6 +63,20 @@ const SA_CHANNELS = new Set([
   'MathsG',
   'WeMathify',
   'Science Clinic',
+  // Physical Sciences channels, from a survey of ten CAPS science searches.
+  // Kevinmathscience and Miss Martins already dominate science as well as
+  // maths; these carry the rest. The Organic Chemistry Tutor, Tyler DeWitt
+  // and Professor Dave rank high on views but are American, not CAPS, so
+  // they are deliberately absent.
+  'Class Act Education',
+  'JuniorTukkie at the University of Pretoria',
+  'SABC Education Shows',
+  'Maths Zone African Motives',
+  'Mr X Mathematics and Science',
+  "Kevin's Classroom",
+  'Simple Science',
+  'Learnida',
+  'Nambane Academy',
 ])
 
 const MAX_DURATION_SECONDS = 2 * 60 * 60
