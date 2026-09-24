@@ -139,3 +139,17 @@ describe('CAPS topic guard', () => {
     expect(isOtherMathsTopic('algebra-gr10', 'Grade 10 Inequalities')).toBe(false)
   })
 })
+
+describe('Afrikaans track', () => {
+  it('treats Rekeningkunde depreciation as a different subject', () => {
+    expect(isOtherSubject('Gr 10 Rek Inleiding tot waardevermindering')).toBe(true)
+  })
+
+  it('does not reject a maths title merely for containing "rek" inside a word', () => {
+    expect(isOtherSubject('Rekenkundige Rye Graad 10')).toBe(false)
+  })
+
+  it('keeps an ordinary Afrikaans maths title', () => {
+    expect(isOtherSubject('Graad 10 Algebra Eksponent Wette')).toBe(false)
+  })
+})

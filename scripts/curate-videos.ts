@@ -25,6 +25,16 @@
  */
 import { writeFileSync, mkdirSync, existsSync, readFileSync } from 'node:fs'
 import { capsCurriculum, type CapsTopic } from '../src/content/caps-curriculum'
+import { AFRIKAANS_CHANNELS, AFRIKAANS_TERMS, afrikaansQueries } from './lib/afrikaans'
+
+/**
+ * `--lang af` curates the Afrikaans track into videoIdAf. It changes three
+ * things: which channels count, the vocabulary the scorer matches on, and how
+ * many views are credible - an Afrikaans CAPS video with 3,000 views is
+ * well-watched, where the English equivalent would be ignored.
+ */
+const IS_AFRIKAANS = process.argv.includes('--lang') &&
+  process.argv[process.argv.indexOf('--lang') + 1] === 'af'
 
 // Channels verified as South African CAPS teachers (Sept 2026 research,
 // see docs/client-updates/2026-09-17-status-and-video-shortlist.html).
@@ -267,7 +277,11 @@ export function isOtherMathsTopic(slug: string, title: string): boolean {
 }
 
 function gradesNamedIn(title: string): number[] {
-  return [...title.matchAll(/\bgr(?:ade)?\s*\.?\s*(\d{1,2})\b/gi)].map((m) => parseInt(m[1], 10))
+  // "graad" as well as "grade"/"gr": an Afrikaans title says "Graad 11", and
+  // without this the grade filter passes every Afrikaans video through.
+  return [...title.matchAll(/\b(?:gr(?:ade)?|graad)\s*\.?\s*(\d{1,2})\b/gi)].map((m) =>
+    parseInt(m[1], 10)
+  )
 }
 
 /** A title naming a grade OTHER than the one we want is the wrong video. */
@@ -288,7 +302,9 @@ function adjacentGrade(title: string, grade: number): boolean {
 }
 
 function isMathsLit(title: string, channel: string): boolean {
-  return /maths?\s*lit|mathematical literacy|geletterdheid/i.test(`${title} ${channel}`)
+  return /maths?\s*lit|mathematical literacy|geletterdheid|vloerplan|skaalverdeling|werklike afstand/i.test(
+    `${title} ${channel}`
+  )
 }
 
 /**
@@ -299,7 +315,7 @@ function isMathsLit(title: string, channel: string): boolean {
  * components. This is a maths curriculum; those are a different subject.
  */
 export function isOtherSubject(title: string): boolean {
-  return /physical science|physics|chemistry|chemical|life science|biology|geography|accounting|economics|business studies|vectors? in 2d|newton|doppler|velocity|momentum|electric|circuit/i.test(
+  return /physical science|physics|chemistry|chemical|life science|biology|geography|accounting|economics|business studies|vectors? in 2d|newton|doppler|velocity|momentum|electric|circuit|fisiese wetenskap|wetenskap|chemie|biologie|lewenswetenskappe|rekeningkunde|\brek\b|besigheidstudies/i.test(
     title
   )
 }
@@ -321,10 +337,13 @@ const STOPWORDS = new Set([
   'the', 'and', 'of', 'a', 'an', 'in', 'to', 'for', 'on', 'with', 'at', 'from', 'by',
   'grade', 'gr', 'maths', 'math', 'mathematics', 'caps', 'nsc', 'exam', 'lesson',
   'introduction', 'intro', 'basic', 'basics', 'part', 'video', 'using', 'its', 'their',
+  // Afrikaans equivalents, for --lang af
+  'graad', 'wiskunde', 'deel', 'inleiding', 'voorbeeld', 'voorbeelde', 'les', 'die', 'van',
+  'en', 'met', 'vir', 'op', 'se',
 ])
 
 /** Maths synonyms, so a title using different wording still matches. */
-const SYNONYMS: Record<string, string[]> = {
+const ENGLISH_SYNONYMS: Record<string, string[]> = {
   exponent: ['exponents', 'indices', 'index', 'powers'],
   exponents: ['exponent', 'indices', 'powers'],
   trinomial: ['trinomials'],
@@ -354,6 +373,24 @@ const SYNONYMS: Record<string, string[]> = {
   inverse: ['inverses'],
   discriminant: ['nature', 'roots'],
 }
+
+/**
+ * In Afrikaans mode the CAPS vocabulary is folded in as extra synonyms, which
+ * is what lets an English sub-topic ("Factorisation: trinomials") match an
+ * Afrikaans title ("Faktorisering van drieterme"). Everything downstream -
+ * the relevance gate, the required terms, the guards - then works unchanged.
+ */
+const SYNONYMS: Record<string, string[]> = IS_AFRIKAANS
+  ? Object.fromEntries(
+      [...new Set([...Object.keys(ENGLISH_SYNONYMS), ...Object.keys(AFRIKAANS_TERMS)])].map(
+        (word) => [
+          word,
+          [...(ENGLISH_SYNONYMS[word] ?? []), ...(AFRIKAANS_TERMS[word] ?? [])],
+        ]
+      )
+    )
+  : ENGLISH_SYNONYMS
+
 
 /** Crude singular/plural fold - "parallelograms" should match "Parallelogram". */
 function stem(word: string): string {
@@ -413,7 +450,7 @@ const DISCRIMINATING = [
   'rule', 'term', 'inclination', 'cofunctions', 'perpendicular', 'parallel', 'sinking',
   // Grade 12: each of these is the concept, so a video without the word is a
   // different lesson - "Equation of Tangent Calculus" is not "tangents to circles".
-  'simultaneous', 'pythagoras', 'infinity', 'circle', 'cubic',
+  'simultaneous', 'pythagoras', 'infinity', 'circle', 'cubic', 'cartesian',
   'annuities', 'skewed', 'deviation', 'diagrams', 'tangents', 'chords',
 ]
 
@@ -534,7 +571,7 @@ const MIN_RELEVANCE = 0.3
  * "most watched" is the brief. Below this we would rather report no pick
  * and search by hand.
  */
-const MIN_VIEWS = 2000
+const MIN_VIEWS = IS_AFRIKAANS ? 300 : 2000
 
 /**
  * Relevance is a GATE, not the ranking. Once a video is on-topic, the brief
@@ -567,6 +604,7 @@ function byTier(subTopic: string) {
 }
 
 function queriesFor(topic: CapsTopic, subTopic: string): string[] {
+  if (IS_AFRIKAANS) return afrikaansQueries(subTopic, topic.grade)
   const g = `grade ${topic.grade}`
   // The distinctive words of the sub-topic, without the connectives -
   // CAPS channels title tersely ("Gradient formula"), so a long natural
@@ -613,7 +651,7 @@ async function curateSubTopic(
       .filter((v) => !isSchoolTerm(subTopic, v.title))
       .filter((v) => !isOtherMathsTopic(topic.slug, v.title))
       .map((v) => {
-        const saChannel = SA_CHANNELS.has(v.channel)
+        const saChannel = (IS_AFRIKAANS ? AFRIKAANS_CHANNELS : SA_CHANNELS).has(v.channel)
         return { ...v, saChannel, embeddable: false, score: 0 }
     })
     // A video whose title is about a different sub-topic is not a candidate,
@@ -681,7 +719,7 @@ async function main() {
   // the lesson for a Grade 10 sub-topic and a Grade 11 one as well.
   const usedVideoIds = new Set<string>()
   for (const other of [10, 11, 12].filter((g) => g !== grade)) {
-    const path = `docs/curriculum/candidates-gr${other}.json`
+    const path = `docs/curriculum/candidates-${IS_AFRIKAANS ? 'af-' : ''}gr${other}.json`
     if (!existsSync(path)) continue
     for (const entry of JSON.parse(readFileSync(path, 'utf8')) as CuratedSubTopic[]) {
       if (entry.pick) usedVideoIds.add(entry.pick.id)
@@ -702,7 +740,7 @@ async function main() {
   }
 
   mkdirSync('docs/curriculum', { recursive: true })
-  const path = `docs/curriculum/candidates-gr${grade}.json`
+  const path = `docs/curriculum/candidates-${IS_AFRIKAANS ? 'af-' : ''}gr${grade}.json`
   writeFileSync(path, JSON.stringify(out, null, 2))
 
   const withPick = out.filter((o) => o.pick).length
