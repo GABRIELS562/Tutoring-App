@@ -153,3 +153,47 @@ describe('Afrikaans track', () => {
     expect(isOtherSubject('Graad 10 Algebra Eksponent Wette')).toBe(false)
   })
 })
+
+describe('Afrikaans near-miss picks', () => {
+  const rejects: [string, string][] = [
+    ['Nominal versus effective interest rates', 'Enkelvoudige en Saamgestelde Rente - Graad 11'],
+    ['Restricting the domain of a quadratic to invert it', '01 Kwadratiese getalpatrone Gr.12'],
+    ['Intersecting circles', 'Sirkels omtrek teenoor oppervlakte formules'],
+    ['Double angle identities', 'Gr 12 Wiskunde : Trigonometrie - Identiteite'],
+  ]
+
+  it.each(rejects)('%s does not accept "%s"', (subTopic, title) => {
+    expect(hasRequiredTerms(subTopic, title)).toBe(false)
+  })
+
+  it('still accepts the English videos that do name the concept', () => {
+    expect(
+      hasRequiredTerms('Nominal versus effective interest rates', '04 Effective and nominal interest rates')
+    ).toBe(true)
+    expect(
+      hasRequiredTerms('Double angle identities', 'Lesson 4: How To Use Double Angle Identities')
+    ).toBe(true)
+    expect(hasRequiredTerms('Domain and range', 'Parabola Domain Range Axis Symmetry')).toBe(true)
+  })
+})
+
+describe('sequences and number patterns are one family', () => {
+  it('lets a sequence video serve either CAPS slug', () => {
+    expect(isOtherMathsTopic('number-patterns-gr10', '2) Solve X Arithmetic Sequence | Intro')).toBe(
+      false
+    )
+    expect(isOtherMathsTopic('sequences-series-gr12', '1) Gr 12 Arithmetic Sequence | Intro')).toBe(
+      false
+    )
+  })
+
+  it('keeps a number-patterns video out of a functions sub-topic', () => {
+    expect(isOtherMathsTopic('functions-gr12', '01 Kwadratiese getalpatrone Gr.12')).toBe(true)
+  })
+
+  it('accepts an intersect title for the intersecting sub-topic', () => {
+    expect(hasRequiredTerms('Intersecting circles', 'Does Line Intersect Circle Grade 12')).toBe(
+      true
+    )
+  })
+})

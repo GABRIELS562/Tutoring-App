@@ -247,7 +247,11 @@ async function isEmbeddable(videoId: string): Promise<boolean> {
  * the wrong lesson. Titles naming no topic at all are left alone, since most
  * are simply terse.
  */
+const SEQUENCE_RE = /number pattern|getalpatro|sequence|series|\brye\b|reekse/i
+
 const TOPIC_MARKERS: Record<string, RegExp> = {
+  'number-patterns': SEQUENCE_RE,
+  'sequences-series': SEQUENCE_RE,
   // The ratio names matter as much as the word "trig": "Sin Triangle Grade
   // 10" is a trigonometry lesson and was picked for Euclidean geometry.
   // "tangent" is deliberately absent - it belongs to circle geometry too.
@@ -302,7 +306,7 @@ function adjacentGrade(title: string, grade: number): boolean {
 }
 
 function isMathsLit(title: string, channel: string): boolean {
-  return /maths?\s*lit|mathematical literacy|geletterdheid|vloerplan|skaalverdeling|werklike afstand/i.test(
+  return /maths?\s*lit|mathematical literacy|geletterdheid|wisk\s*gelet|vloerplan|skaalverdeling|werklike afstand/i.test(
     `${title} ${channel}`
   )
 }
@@ -344,6 +348,9 @@ const STOPWORDS = new Set([
 
 /** Maths synonyms, so a title using different wording still matches. */
 const ENGLISH_SYNONYMS: Record<string, string[]> = {
+  // "Does Line Intersect Circle" is the lesson for "Intersecting circles";
+  // the stemmer does not reach -ing forms on its own.
+  intersecting: ['intersect', 'intersects', 'intersection'],
   exponent: ['exponents', 'indices', 'index', 'powers'],
   exponents: ['exponent', 'indices', 'powers'],
   trinomial: ['trinomials'],
@@ -451,6 +458,7 @@ const DISCRIMINATING = [
   // Grade 12: each of these is the concept, so a video without the word is a
   // different lesson - "Equation of Tangent Calculus" is not "tangents to circles".
   'simultaneous', 'pythagoras', 'infinity', 'circle', 'cubic', 'cartesian',
+  'nominal', 'effective', 'intersecting', 'double',
   'annuities', 'skewed', 'deviation', 'diagrams', 'tangents', 'chords',
 ]
 

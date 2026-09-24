@@ -9,6 +9,7 @@ export const trigonometryGr11: TopicContent = {
   title: 'Trigonometry',
   capsWeight: 40,
   // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
+  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
   sections: [
     {
       id: 'reduction-formulae-in-the-four-quadrants',
@@ -17,7 +18,8 @@ export const trigonometryGr11: TopicContent = {
         {
           type: 'video',
           title: 'Watch: Reduction grade 11: Using Numbers and special angles. — Kevinmathscience',
-          videoId: '8QolMTcm8qE'
+          videoId: '8QolMTcm8qE',
+          videoIdAf: '_WEUtNaBVyg'
         }
       ]
     },
@@ -38,7 +40,8 @@ export const trigonometryGr11: TopicContent = {
         {
           type: 'video',
           title: 'Watch: Identities Grade 11: Practice — Kevinmathscience',
-          videoId: 'Cc03mGw1s_4'
+          videoId: 'Cc03mGw1s_4',
+          videoIdAf: 'dOwILHeOK_4'
         }
       ]
     },
@@ -49,7 +52,8 @@ export const trigonometryGr11: TopicContent = {
         {
           type: 'video',
           title: 'Watch: General Solution | Solving Trig Equations | Mlungisi Nkosi — Mlungisi Nkosi Maths & Science',
-          videoId: 'addxuEnZ_K8'
+          videoId: 'addxuEnZ_K8',
+          videoIdAf: 'KZXGPLKa8qI'
         }
       ]
     },
@@ -71,7 +75,8 @@ export const trigonometryGr11: TopicContent = {
         {
           type: 'video',
           title: 'Watch: Grade 11 - 2D Trigonometry | Sine rule, Cosine rule, Area rule | Mlungisi Nkosi — Mlungisi Nkosi Maths & Science',
-          videoId: 'UP5Pit-zJyY'
+          videoId: 'UP5Pit-zJyY',
+          videoIdAf: 'ZgUt5Cmxx28'
         }
       ]
     },

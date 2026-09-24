@@ -11,6 +11,7 @@ export const financeGr10: TopicContent = {
   // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
   // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
   // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
+  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
   sections: [
     {
       id: 'overview',
@@ -36,7 +37,8 @@ export const financeGr10: TopicContent = {
         {
           type: 'video',
           title: 'Watch: Financial Maths Grade 10 | Simple Interest Introduction — Kevinmathscience',
-          videoId: 'AKU4lSQvrnI'
+          videoId: 'AKU4lSQvrnI',
+          videoIdAf: 'u5Hee0AuS0c'
         }
       ]
     },
@@ -47,7 +49,8 @@ export const financeGr10: TopicContent = {
         {
           type: 'video',
           title: 'Watch: Financial Maths Grade 10 | Compound Interest | Introduction — Kevinmathscience',
-          videoId: 'JfxQPa9cvtM'
+          videoId: 'JfxQPa9cvtM',
+          videoIdAf: 'wx1oj6V5yYY'
         }
       ]
     },
@@ -59,7 +62,8 @@ export const financeGr10: TopicContent = {
         {
           type: 'video',
           title: 'Watch: Financial maths grade 11 | Depreciation — Kevinmathscience',
-          videoId: 'uXwERKx08C4'
+          videoId: 'uXwERKx08C4',
+          videoIdAf: '2S7XoVOFKJ4'
         }
       ]
     },

@@ -11,6 +11,7 @@ export const functionsGr10: TopicContent = {
   // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
   // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
   // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
+  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
   sections: [
     {
       id: 'overview',
@@ -36,7 +37,8 @@ export const functionsGr10: TopicContent = {
         {
           type: 'video',
           title: 'Watch: Exam Functions Grade 10 — Kevinmathscience',
-          videoId: '1RnuVXYcVpE'
+          videoId: '1RnuVXYcVpE',
+          videoIdAf: 'szNc_lCDmDQ'
         }
       ]
     },
@@ -58,7 +60,8 @@ export const functionsGr10: TopicContent = {
         {
           type: 'video',
           title: 'Watch: Hyperbola Grade 10 Functions Introduction — Miss Martins Maths and Science',
-          videoId: 'oWDjn_PRndg'
+          videoId: 'oWDjn_PRndg',
+          videoIdAf: '06baipkT2_k'
         }
       ]
     },

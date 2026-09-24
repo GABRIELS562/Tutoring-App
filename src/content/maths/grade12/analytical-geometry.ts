@@ -9,6 +9,7 @@ export const analyticalGeometryGr12: TopicContent = {
   title: 'Analytical Geometry',
   capsWeight: 20,
   // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
+  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
   sections: [
     {
       id: 'overview',
@@ -34,7 +35,8 @@ export const analyticalGeometryGr12: TopicContent = {
         {
           type: 'video',
           title: 'Watch: Equation of Circle Grade 12 — Kevinmathscience',
-          videoId: 'cjP4tmQtxEs'
+          videoId: 'cjP4tmQtxEs',
+          videoIdAf: 'MReI_dq_qbI'
         }
       ]
     },

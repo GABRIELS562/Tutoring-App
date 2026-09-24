@@ -12,6 +12,7 @@ export const functionsGr12: TopicContent = {
   title: 'Functions & Graphs',
   capsWeight: 0,
   // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
+  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
   sections: [
     {
       id: 'overview',
@@ -33,7 +34,8 @@ export const functionsGr12: TopicContent = {
         {
           type: 'video',
           title: 'Watch: Parabola Domain Range Axis Symmetry Grade | 11 Functions — Kevinmathscience',
-          videoId: 'AEebC8oLN2M'
+          videoId: 'AEebC8oLN2M',
+          videoIdAf: 'XugNFEZzBd4'
         }
       ]
     },
@@ -44,7 +46,8 @@ export const functionsGr12: TopicContent = {
         {
           type: 'video',
           title: 'Watch: Grade 12 Algebra Lesson 1.5| Functions : Inverse functions — Mlungisi Nkosi Maths & Science',
-          videoId: '0hIPK2-d2oM'
+          videoId: '0hIPK2-d2oM',
+          videoIdAf: 'Q0vjmaDK8X0'
         }
       ]
     },
@@ -55,7 +58,8 @@ export const functionsGr12: TopicContent = {
         {
           type: 'video',
           title: 'Watch: 3) Inverse of parabola | Part 1 — Kevinmathscience',
-          videoId: '1b2BsuPmCfQ'
+          videoId: '1b2BsuPmCfQ',
+          videoIdAf: 's8AkM-QJJ0U'
         }
       ]
     }

@@ -11,6 +11,7 @@ export const analyticalGeometryGr10: TopicContent = {
   // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
   // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
   // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
+  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
   sections: [
     {
       id: 'overview',
@@ -35,7 +36,8 @@ export const analyticalGeometryGr10: TopicContent = {
         {
           type: 'video',
           title: 'Watch: Analytical Geometry Grade 10: Distance formula — Kevinmathscience',
-          videoId: 'H5hq7wkldj8'
+          videoId: 'H5hq7wkldj8',
+          videoIdAf: 'Qk9O9PhyqtM'
         }
       ]
     },
@@ -46,7 +48,8 @@ export const analyticalGeometryGr10: TopicContent = {
         {
           type: 'video',
           title: 'Watch: Analytical Geometry Grade 10: Midpoint — Kevinmathscience',
-          videoId: 'HtNFDWGpE7U'
+          videoId: 'HtNFDWGpE7U',
+          videoIdAf: 'uNtfSc_RUZE'
         }
       ]
     },
@@ -57,7 +60,8 @@ export const analyticalGeometryGr10: TopicContent = {
         {
           type: 'video',
           title: 'Watch: Analytical Geometry Grade 10: Gradient formula — Kevinmathscience',
-          videoId: 'Pqafv6sV6Ng'
+          videoId: 'Pqafv6sV6Ng',
+          videoIdAf: 'n26GCtmwt0c'
         }
       ]
     }

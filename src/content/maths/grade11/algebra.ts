@@ -12,6 +12,7 @@ export const algebraGr11: TopicContent = {
   title: 'Algebra & Equations',
   capsWeight: 0,
   // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
+  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
   sections: [
     {
       id: 'overview',
@@ -36,7 +37,8 @@ export const algebraGr11: TopicContent = {
         {
           type: 'video',
           title: 'Watch: Surds Grade 11: Exam — Kevinmathscience',
-          videoId: 'p9TWK13yUqE'
+          videoId: 'p9TWK13yUqE',
+          videoIdAf: 'YXYA-f-sLgI'
         }
       ]
     },
@@ -58,7 +60,8 @@ export const algebraGr11: TopicContent = {
         {
           type: 'video',
           title: 'Watch: 1) Quadratic formula grade 11 | Intro — Kevinmathscience',
-          videoId: 'XofwHRrFKNE'
+          videoId: 'XofwHRrFKNE',
+          videoIdAf: 'leO4m8TsGWs'
         }
       ]
     },
@@ -80,7 +83,8 @@ export const algebraGr11: TopicContent = {
         {
           type: 'video',
           title: 'Watch: 2) Quadratic inequalities grade 11 | Intro — Kevinmathscience',
-          videoId: 'wFLTz5SCE8g'
+          videoId: 'wFLTz5SCE8g',
+          videoIdAf: 'a-HkT-f0C08'
         }
       ]
     },
@@ -91,7 +95,8 @@ export const algebraGr11: TopicContent = {
         {
           type: 'video',
           title: 'Watch: 3) Simultaneous equations gr 11 | Intro — Kevinmathscience',
-          videoId: 'WJbeyscO6Is'
+          videoId: 'WJbeyscO6Is',
+          videoIdAf: 'OtM4u_uQMSA'
         }
       ]
     }

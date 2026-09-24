@@ -1272,54 +1272,6 @@
         "saChannel": true,
         "embeddable": true,
         "score": 71.5
-      },
-      {
-        "id": "CGMDdSiUtyE",
-        "title": "Proving Trigonometric Identities Grade 12",
-        "channel": "Kevinmathscience",
-        "views": 295903,
-        "viewsText": "295,903 views",
-        "duration": "5:19",
-        "durationSeconds": 319,
-        "saChannel": true,
-        "embeddable": true,
-        "score": 70.2
-      },
-      {
-        "id": "GlPx9bo1_38",
-        "title": "Trigonometry Grade 12: Identity Exam",
-        "channel": "Kevinmathscience",
-        "views": 170876,
-        "viewsText": "170,876 views",
-        "duration": "4:06",
-        "durationSeconds": 246,
-        "saChannel": true,
-        "embeddable": true,
-        "score": 67.8
-      },
-      {
-        "id": "FDhO4SFMz-g",
-        "title": "trigonometric identities grade 12 practice",
-        "channel": "Kevinmathscience",
-        "views": 85364,
-        "viewsText": "85,364 views",
-        "duration": "2:11",
-        "durationSeconds": 131,
-        "saChannel": true,
-        "embeddable": true,
-        "score": 64.8
-      },
-      {
-        "id": "46JWe6MG0bA",
-        "title": "Trigonometry Grade 12: Identity Practice",
-        "channel": "Kevinmathscience",
-        "views": 64949,
-        "viewsText": "64,949 views",
-        "duration": "5:21",
-        "durationSeconds": 321,
-        "saChannel": true,
-        "embeddable": true,
-        "score": 63.6
       }
     ],
     "pick": {
@@ -1841,19 +1793,7 @@
         "durationSeconds": 244,
         "saChannel": true,
         "embeddable": true,
-        "score": 73
-      },
-      {
-        "id": "XcBHb3zPJxg",
-        "title": "Area and Perimeter: Circles",
-        "channel": "Kevinmathscience",
-        "views": 467837,
-        "viewsText": "467,837 views",
-        "duration": "10:18",
-        "durationSeconds": 618,
-        "saChannel": true,
-        "embeddable": true,
-        "score": 72.2
+        "score": 80.5
       },
       {
         "id": "o4xBwj4_MUk",
@@ -1865,7 +1805,7 @@
         "durationSeconds": 341,
         "saChannel": true,
         "embeddable": true,
-        "score": 72
+        "score": 79.5
       }
     ],
     "pick": {
@@ -1878,7 +1818,7 @@
       "durationSeconds": 244,
       "saChannel": true,
       "embeddable": true,
-      "score": 73
+      "score": 80.5
     },
     "usedAdjacentGrade": false
   },

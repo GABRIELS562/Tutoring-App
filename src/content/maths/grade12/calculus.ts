@@ -9,6 +9,7 @@ export const calculusGr12: TopicContent = {
   title: 'Calculus',
   capsWeight: 35,
   // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
+  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
   sections: [
     {
       id: 'overview',
@@ -46,7 +47,8 @@ export const calculusGr12: TopicContent = {
         {
           type: 'video',
           title: 'Watch: First Principles Calculus Grade 12 — Kevinmathscience',
-          videoId: 'alUkVWVEP10'
+          videoId: 'alUkVWVEP10',
+          videoIdAf: 'xW9vijvWp7c'
         }
       ]
     },
@@ -67,7 +69,8 @@ export const calculusGr12: TopicContent = {
         {
           type: 'video',
           title: 'Watch: Draw Cubic Graph Grade 12 — Kevinmathscience',
-          videoId: '6rUoChk1awg'
+          videoId: '6rUoChk1awg',
+          videoIdAf: 'hzr8uS7hisE'
         }
       ]
     },
@@ -89,7 +92,8 @@ export const calculusGr12: TopicContent = {
         {
           type: 'video',
           title: 'Watch: Differential Calculus: Lesson: Rates of Change — Mindset',
-          videoId: '7ms2EI0LaxU'
+          videoId: '7ms2EI0LaxU',
+          videoIdAf: 'h5w28ZLc4dw'
         }
       ]
     }

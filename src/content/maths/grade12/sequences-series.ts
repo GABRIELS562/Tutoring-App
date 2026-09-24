@@ -9,6 +9,7 @@ export const sequencesSeriesGr12: TopicContent = {
   title: 'Sequences and Series',
   capsWeight: 25,
   // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
+  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
   sections: [
     {
       id: 'overview',
@@ -35,7 +36,8 @@ export const sequencesSeriesGr12: TopicContent = {
         {
           type: 'video',
           title: 'Watch: 1) Gr 12 Arithmetic Sequence | Intro — Kevinmathscience',
-          videoId: 'B8dKyX9g7Fk'
+          videoId: 'B8dKyX9g7Fk',
+          videoIdAf: 'wVnS9l_uFSQ'
         }
       ]
     },
@@ -46,7 +48,8 @@ export const sequencesSeriesGr12: TopicContent = {
         {
           type: 'video',
           title: 'Watch: 4)Gr 12 Geometric Sequence | Intro — Kevinmathscience',
-          videoId: 'ZSxq7Ay48NQ'
+          videoId: 'ZSxq7Ay48NQ',
+          videoIdAf: 'dDQnZTK8GIw'
         }
       ]
     },
@@ -57,7 +60,8 @@ export const sequencesSeriesGr12: TopicContent = {
         {
           type: 'video',
           title: 'Watch: 15) Represent sigma notation | Intro — Kevinmathscience',
-          videoId: '4Pp6EMaMMXo'
+          videoId: '4Pp6EMaMMXo',
+          videoIdAf: 'SFeAvpRuTh8'
         }
       ]
     },

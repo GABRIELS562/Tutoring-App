@@ -11,6 +11,7 @@ export const trigonometryGr10: TopicContent = {
   // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
   // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
   // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
+  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
   sections: [
     {
       id: 'overview',
@@ -36,7 +37,8 @@ export const trigonometryGr10: TopicContent = {
         {
           type: 'video',
           title: 'Watch: Trig Triangles Grade 10 — Kevinmathscience',
-          videoId: '0Sr8YWwRX28'
+          videoId: '0Sr8YWwRX28',
+          videoIdAf: 'rg3_rjEEWZ0'
         }
       ]
     },
@@ -45,9 +47,8 @@ export const trigonometryGr10: TopicContent = {
       title: 'Trig ratios on the Cartesian plane (0° to 360°)',
       blocks: [
         {
-          type: 'video',
-          title: 'Watch: Grade 10 Trigonometry: Trig Ratios Sin, Cos and Tan — Miss Martins Maths and Science',
-          videoId: 'K5Odz79j7to'
+          type: 'tip',
+          body: `We haven't found a CAPS video for this sub-topic yet. Ask Angelo if you're stuck on it.`
         }
       ]
     },
@@ -69,7 +70,8 @@ export const trigonometryGr10: TopicContent = {
         {
           type: 'video',
           title: 'Watch: Sin Graph Grade 10 — Kevinmathscience',
-          videoId: 'XmN3h5nTGis'
+          videoId: 'XmN3h5nTGis',
+          videoIdAf: 'XT9ufKe7Khw'
         }
       ]
     }

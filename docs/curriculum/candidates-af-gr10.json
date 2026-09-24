@@ -363,18 +363,6 @@
         "score": 53.4
       },
       {
-        "id": "8naDLNF-GBY",
-        "title": "05 Gelyktydige vergelykings   eliminasie",
-        "channel": "Wiskunde_Mathematics_SUM",
-        "views": 2775,
-        "viewsText": "2,775 views",
-        "duration": "7:29",
-        "durationSeconds": 449,
-        "saChannel": true,
-        "embeddable": true,
-        "score": 52.4
-      },
-      {
         "id": "ICX1fevGMUk",
         "title": "06 Gelyktydige vergelykings   substitusie",
         "channel": "Wiskunde_Mathematics_SUM",
@@ -409,6 +397,18 @@
         "saChannel": true,
         "embeddable": true,
         "score": 47.5
+      },
+      {
+        "id": "-_69rp8V5oA",
+        "title": "Gelyktydige vergelykings Eliminasie gr10 N1 tot N4 (wiskdou)",
+        "channel": "Dou Kleefstra",
+        "views": 796,
+        "viewsText": "796 views",
+        "duration": "8:59",
+        "durationSeconds": 539,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 47
       }
     ],
     "pick": {
@@ -666,18 +666,6 @@
     ],
     "candidates": [
       {
-        "id": "OEZNES1qBuE",
-        "title": "Enkelvoudig en Saamgestelde rente - lang metode Wisk Gelet",
-        "channel": "TheWhiteboardSA",
-        "views": 14067,
-        "viewsText": "14,067 views",
-        "duration": "9:41",
-        "durationSeconds": 581,
-        "saChannel": true,
-        "embeddable": true,
-        "score": 64.5
-      },
-      {
         "id": "u5Hee0AuS0c",
         "title": "Enkelvoudige Rente",
         "channel": "Wiskunde Broers",
@@ -724,16 +712,28 @@
         "saChannel": true,
         "embeddable": true,
         "score": 55.6
+      },
+      {
+        "id": "T7zTTrn1ulE",
+        "title": "Graad 10 Wiskunde Les 1 Enkelvoudige en saamgestelde rente 13 tot 17 Julie",
+        "channel": "Rochelle Van der Merwe",
+        "views": 1774,
+        "viewsText": "1,774 views",
+        "duration": "8:14",
+        "durationSeconds": 494,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 55.5
       }
     ],
     "pick": {
-      "id": "OEZNES1qBuE",
-      "title": "Enkelvoudig en Saamgestelde rente - lang metode Wisk Gelet",
-      "channel": "TheWhiteboardSA",
-      "views": 14067,
-      "viewsText": "14,067 views",
-      "duration": "9:41",
-      "durationSeconds": 581,
+      "id": "u5Hee0AuS0c",
+      "title": "Enkelvoudige Rente",
+      "channel": "Wiskunde Broers",
+      "views": 14066,
+      "viewsText": "14,066 views",
+      "duration": "10:30",
+      "durationSeconds": 630,
       "saChannel": true,
       "embeddable": true,
       "score": 64.5
@@ -840,31 +840,31 @@
     ],
     "candidates": [
       {
-        "id": "k_qJdV9puww",
-        "title": "Gr 10 Rek Inleiding tot waardevermindering - Tanya Nel",
-        "channel": "Hoërskool Noordheuwel",
-        "views": 1607,
-        "viewsText": "1,607 views",
-        "duration": "25:15",
-        "durationSeconds": 1515,
+        "id": "2S7XoVOFKJ4",
+        "title": "Waardevermindering of Depresiasie Gr11&12",
+        "channel": "TheWhiteboardSA",
+        "views": 568,
+        "viewsText": "568 views",
+        "duration": "8:23",
+        "durationSeconds": 503,
         "saChannel": true,
         "embeddable": true,
-        "score": 42.6
+        "score": 43
       }
     ],
     "pick": {
-      "id": "k_qJdV9puww",
-      "title": "Gr 10 Rek Inleiding tot waardevermindering - Tanya Nel",
-      "channel": "Hoërskool Noordheuwel",
-      "views": 1607,
-      "viewsText": "1,607 views",
-      "duration": "25:15",
-      "durationSeconds": 1515,
+      "id": "2S7XoVOFKJ4",
+      "title": "Waardevermindering of Depresiasie Gr11&12",
+      "channel": "TheWhiteboardSA",
+      "views": 568,
+      "viewsText": "568 views",
+      "duration": "8:23",
+      "durationSeconds": 503,
       "saChannel": true,
       "embeddable": true,
-      "score": 42.6
+      "score": 43
     },
-    "usedAdjacentGrade": false
+    "usedAdjacentGrade": true
   },
   {
     "slug": "finance-gr10",
@@ -1107,71 +1107,35 @@
     "paper": 2,
     "subTopic": "Trig ratios on the Cartesian plane (0° to 360°)",
     "queries": [
-      "graad 10 wiskunde trigonometrie verhoudings",
-      "trigonometrie verhoudings graad 10",
-      "wiskunde trigonometrie verhoudings afrikaans"
+      "graad 10 wiskunde trigonometrie verhoudings cartesiese",
+      "trigonometrie verhoudings cartesiese graad 10",
+      "wiskunde trigonometrie verhoudings cartesiese afrikaans"
     ],
     "candidates": [
       {
-        "id": "Y3PcY_in_G8",
-        "title": "10 Omgekeerde trig verhoudings",
+        "id": "lbfvJw6Ywc8",
+        "title": "09 Trig berekeninge op die kartesiese vlak",
         "channel": "Wiskunde_Mathematics_SUM",
-        "views": 2923,
-        "viewsText": "2,923 views",
-        "duration": "4:26",
-        "durationSeconds": 266,
+        "views": 5003,
+        "viewsText": "5,003 views",
+        "duration": "7:36",
+        "durationSeconds": 456,
         "saChannel": true,
         "embeddable": true,
-        "score": 48.7
-      },
-      {
-        "id": "kUYdUiJOvik",
-        "title": "01 Definisie van trig verhoudings",
-        "channel": "Wiskunde_Mathematics_SUM",
-        "views": 2848,
-        "viewsText": "2,848 views",
-        "duration": "10:47",
-        "durationSeconds": 647,
-        "saChannel": true,
-        "embeddable": true,
-        "score": 48.5
-      },
-      {
-        "id": "MaJmwK90vbY",
-        "title": "06 Trig verhoudings van spesiale hoeke",
-        "channel": "Wiskunde_Mathematics_SUM",
-        "views": 2758,
-        "viewsText": "2,758 views",
-        "duration": "6:13",
-        "durationSeconds": 373,
-        "saChannel": true,
-        "embeddable": true,
-        "score": 48.4
-      },
-      {
-        "id": "xJ2y2IEvafo",
-        "title": "Graad 10 Trig Bepaal verhoudings",
-        "channel": "VAW-Vereniging vir Afrikaanse Wiskunde-onderwysers",
-        "views": 986,
-        "viewsText": "986 views",
-        "duration": "11:37",
-        "durationSeconds": 697,
-        "saChannel": true,
-        "embeddable": true,
-        "score": 43.9
+        "score": 52.5
       }
     ],
     "pick": {
-      "id": "Y3PcY_in_G8",
-      "title": "10 Omgekeerde trig verhoudings",
+      "id": "lbfvJw6Ywc8",
+      "title": "09 Trig berekeninge op die kartesiese vlak",
       "channel": "Wiskunde_Mathematics_SUM",
-      "views": 2923,
-      "viewsText": "2,923 views",
-      "duration": "4:26",
-      "durationSeconds": 266,
+      "views": 5003,
+      "viewsText": "5,003 views",
+      "duration": "7:36",
+      "durationSeconds": 456,
       "saChannel": true,
       "embeddable": true,
-      "score": 48.7
+      "score": 52.5
     },
     "usedAdjacentGrade": false
   },
@@ -1452,18 +1416,6 @@
     ],
     "candidates": [
       {
-        "id": "dvKsiu-UlUg",
-        "title": "Vloerplanne  - werklike afstand en afstand op die plan",
-        "channel": "TheWhiteboardSA",
-        "views": 19367,
-        "viewsText": "19,367 views",
-        "duration": "8:54",
-        "durationSeconds": 534,
-        "saChannel": true,
-        "embeddable": true,
-        "score": 58.4
-      },
-      {
         "id": "Qk9O9PhyqtM",
         "title": "Analitiese meetkunde Afstand graad 10 en ouer",
         "channel": "VAW-Vereniging vir Afrikaanse Wiskunde-onderwysers",
@@ -1477,16 +1429,16 @@
       }
     ],
     "pick": {
-      "id": "dvKsiu-UlUg",
-      "title": "Vloerplanne  - werklike afstand en afstand op die plan",
-      "channel": "TheWhiteboardSA",
-      "views": 19367,
-      "viewsText": "19,367 views",
-      "duration": "8:54",
-      "durationSeconds": 534,
+      "id": "Qk9O9PhyqtM",
+      "title": "Analitiese meetkunde Afstand graad 10 en ouer",
+      "channel": "VAW-Vereniging vir Afrikaanse Wiskunde-onderwysers",
+      "views": 2534,
+      "viewsText": "2,534 views",
+      "duration": "2:23",
+      "durationSeconds": 143,
       "saChannel": true,
       "embeddable": true,
-      "score": 58.4
+      "score": 49.5
     },
     "usedAdjacentGrade": false
   },

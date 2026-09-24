@@ -1,0 +1,1234 @@
+[
+  {
+    "slug": "algebra-gr12",
+    "topicTitle": "Algebra & Equations",
+    "grade": 12,
+    "paper": 1,
+    "subTopic": "Revision of quadratic equations and inequalities",
+    "queries": [
+      "graad 12 wiskunde kwadratiese vergelykings ongelykhede",
+      "kwadratiese vergelykings ongelykhede graad 12",
+      "wiskunde kwadratiese vergelykings ongelykhede afrikaans"
+    ],
+    "candidates": [],
+    "pick": null,
+    "usedAdjacentGrade": true,
+    "note": "No embeddable, on-topic CAPS candidate found - left blank for manual search"
+  },
+  {
+    "slug": "algebra-gr12",
+    "topicTitle": "Algebra & Equations",
+    "grade": 12,
+    "paper": 1,
+    "subTopic": "Advanced simultaneous equations",
+    "queries": [
+      "graad 12 wiskunde gelyktydige vergelykings",
+      "gelyktydige vergelykings graad 12",
+      "wiskunde gelyktydige vergelykings afrikaans"
+    ],
+    "candidates": [
+      {
+        "id": "8naDLNF-GBY",
+        "title": "05 Gelyktydige vergelykings   eliminasie",
+        "channel": "Wiskunde_Mathematics_SUM",
+        "views": 2775,
+        "viewsText": "2,775 views",
+        "duration": "7:29",
+        "durationSeconds": 449,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 52.4
+      },
+      {
+        "id": "ICX1fevGMUk",
+        "title": "06 Gelyktydige vergelykings   substitusie",
+        "channel": "Wiskunde_Mathematics_SUM",
+        "views": 2234,
+        "viewsText": "2,234 views",
+        "duration": "6:05",
+        "durationSeconds": 365,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 51.5
+      },
+      {
+        "id": "5sDb_ql2-WA",
+        "title": "W11.8 Gelyktydige vergelykings",
+        "channel": "Stefan Buys",
+        "views": 1776,
+        "viewsText": "1,776 views",
+        "duration": "6:21",
+        "durationSeconds": 381,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 50.5
+      }
+    ],
+    "pick": {
+      "id": "8naDLNF-GBY",
+      "title": "05 Gelyktydige vergelykings   eliminasie",
+      "channel": "Wiskunde_Mathematics_SUM",
+      "views": 2775,
+      "viewsText": "2,775 views",
+      "duration": "7:29",
+      "durationSeconds": 449,
+      "saChannel": true,
+      "embeddable": true,
+      "score": 52.4
+    },
+    "usedAdjacentGrade": false
+  },
+  {
+    "slug": "algebra-gr12",
+    "topicTitle": "Algebra & Equations",
+    "grade": 12,
+    "paper": 1,
+    "subTopic": "Logarithms applied to exponential equations",
+    "queries": [
+      "graad 12 wiskunde logaritmes eksponensiële vergelykings",
+      "logaritmes eksponensiële vergelykings graad 12",
+      "wiskunde logaritmes eksponensiële vergelykings afrikaans"
+    ],
+    "candidates": [],
+    "pick": null,
+    "usedAdjacentGrade": false,
+    "note": "No embeddable, on-topic CAPS candidate found - left blank for manual search"
+  },
+  {
+    "slug": "sequences-series-gr12",
+    "topicTitle": "Patterns & Series",
+    "grade": 12,
+    "paper": 1,
+    "subTopic": "Arithmetic sequences and series",
+    "queries": [
+      "graad 12 wiskunde rekenkundige rye reekse",
+      "rekenkundige rye reekse graad 12",
+      "wiskunde rekenkundige rye reekse afrikaans"
+    ],
+    "candidates": [
+      {
+        "id": "wVnS9l_uFSQ",
+        "title": "02 Rekenkundige rye Gr.12",
+        "channel": "Wiskunde_Mathematics_SUM",
+        "views": 12381,
+        "viewsText": "12,381 views",
+        "duration": "9:34",
+        "durationSeconds": 574,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 58.9
+      },
+      {
+        "id": "63TdoYjjdpg",
+        "title": "Rye en Reekse Graad12: L2 Rekenkundige Ry",
+        "channel": "Online Maths by Miss Pythagoras",
+        "views": 3046,
+        "viewsText": "3,046 views",
+        "duration": "12:38",
+        "durationSeconds": 758,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 57.8
+      },
+      {
+        "id": "65VpLah8Cr8",
+        "title": "Rekenkundige gemiddeldes Rye en reekse (wiskdou) Graad 12",
+        "channel": "Dou Kleefstra",
+        "views": 475,
+        "viewsText": "475 views",
+        "duration": "3:59",
+        "durationSeconds": 239,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 49.8
+      },
+      {
+        "id": "uDWBAWaOAbg",
+        "title": "W12 Bewyse van meetkundige en rekenkundige reekse",
+        "channel": "Stefan Buys",
+        "views": 339,
+        "viewsText": "339 views",
+        "duration": "19:26",
+        "durationSeconds": 1166,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 43.3
+      }
+    ],
+    "pick": {
+      "id": "wVnS9l_uFSQ",
+      "title": "02 Rekenkundige rye Gr.12",
+      "channel": "Wiskunde_Mathematics_SUM",
+      "views": 12381,
+      "viewsText": "12,381 views",
+      "duration": "9:34",
+      "durationSeconds": 574,
+      "saChannel": true,
+      "embeddable": true,
+      "score": 58.9
+    },
+    "usedAdjacentGrade": false
+  },
+  {
+    "slug": "sequences-series-gr12",
+    "topicTitle": "Patterns & Series",
+    "grade": 12,
+    "paper": 1,
+    "subTopic": "Geometric sequences and series",
+    "queries": [
+      "graad 12 wiskunde meetkundige rye reekse",
+      "meetkundige rye reekse graad 12",
+      "wiskunde meetkundige rye reekse afrikaans"
+    ],
+    "candidates": [
+      {
+        "id": "dDQnZTK8GIw",
+        "title": "Rye en Reekse Graad12: L3 Meetkundige Rye",
+        "channel": "Online Maths by Miss Pythagoras",
+        "views": 2588,
+        "viewsText": "2,588 views",
+        "duration": "13:47",
+        "durationSeconds": 827,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 57.1
+      },
+      {
+        "id": "djqcArEHqsI",
+        "title": "Rye en Reekse Graad12: L6 Meetkundige Reeks",
+        "channel": "Online Maths by Miss Pythagoras",
+        "views": 1831,
+        "viewsText": "1,831 views",
+        "duration": "12:00",
+        "durationSeconds": 720,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 55.6
+      },
+      {
+        "id": "uDWBAWaOAbg",
+        "title": "W12 Bewyse van meetkundige en rekenkundige reekse",
+        "channel": "Stefan Buys",
+        "views": 339,
+        "viewsText": "339 views",
+        "duration": "19:26",
+        "durationSeconds": 1166,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 43.3
+      }
+    ],
+    "pick": {
+      "id": "dDQnZTK8GIw",
+      "title": "Rye en Reekse Graad12: L3 Meetkundige Rye",
+      "channel": "Online Maths by Miss Pythagoras",
+      "views": 2588,
+      "viewsText": "2,588 views",
+      "duration": "13:47",
+      "durationSeconds": 827,
+      "saChannel": true,
+      "embeddable": true,
+      "score": 57.1
+    },
+    "usedAdjacentGrade": false
+  },
+  {
+    "slug": "sequences-series-gr12",
+    "topicTitle": "Patterns & Series",
+    "grade": 12,
+    "paper": 1,
+    "subTopic": "Sigma notation",
+    "queries": [
+      "graad 12 wiskunde sigma",
+      "sigma graad 12",
+      "wiskunde sigma afrikaans"
+    ],
+    "candidates": [
+      {
+        "id": "SFeAvpRuTh8",
+        "title": "08 Sigma notasie",
+        "channel": "Wiskunde_Mathematics_SUM",
+        "views": 7867,
+        "viewsText": "7,867 views",
+        "duration": "9:37",
+        "durationSeconds": 577,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 54.5
+      },
+      {
+        "id": "y27GlDvHQpk",
+        "title": "Rye en Reekse Graad12:L4 Sigma Notasie",
+        "channel": "Online Maths by Miss Pythagoras",
+        "views": 2536,
+        "viewsText": "2,536 views",
+        "duration": "8:20",
+        "durationSeconds": 500,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 49.5
+      },
+      {
+        "id": "wKvFZlXKoB4",
+        "title": "Graad 12 Sigma Notasie voorbeeld",
+        "channel": "VAW-Vereniging vir Afrikaanse Wiskunde-onderwysers",
+        "views": 1758,
+        "viewsText": "1,758 views",
+        "duration": "2:20",
+        "durationSeconds": 140,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 48
+      },
+      {
+        "id": "QJbpyCqchBc",
+        "title": "Sigma by rye en Reekse Gr12 (wiskdou)",
+        "channel": "Dou Kleefstra",
+        "views": 329,
+        "viewsText": "329 views",
+        "duration": "3:41",
+        "durationSeconds": 221,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 40.7
+      }
+    ],
+    "pick": {
+      "id": "SFeAvpRuTh8",
+      "title": "08 Sigma notasie",
+      "channel": "Wiskunde_Mathematics_SUM",
+      "views": 7867,
+      "viewsText": "7,867 views",
+      "duration": "9:37",
+      "durationSeconds": 577,
+      "saChannel": true,
+      "embeddable": true,
+      "score": 54.5
+    },
+    "usedAdjacentGrade": false
+  },
+  {
+    "slug": "sequences-series-gr12",
+    "topicTitle": "Patterns & Series",
+    "grade": 12,
+    "paper": 1,
+    "subTopic": "Sum to infinity of a convergent geometric series",
+    "queries": [
+      "graad 12 wiskunde som oneindig konvergente",
+      "som oneindig konvergente graad 12",
+      "wiskunde som oneindig konvergente afrikaans"
+    ],
+    "candidates": [],
+    "pick": null,
+    "usedAdjacentGrade": false,
+    "note": "No embeddable, on-topic CAPS candidate found - left blank for manual search"
+  },
+  {
+    "slug": "functions-gr12",
+    "topicTitle": "Functions & Graphs",
+    "grade": 12,
+    "paper": 1,
+    "subTopic": "Domain and range",
+    "queries": [
+      "graad 12 wiskunde definisieversameling waardeversameling",
+      "definisieversameling waardeversameling graad 12",
+      "wiskunde definisieversameling waardeversameling afrikaans"
+    ],
+    "candidates": [
+      {
+        "id": "XugNFEZzBd4",
+        "title": "Definisieversameling en Waardeversameling (wiskdou)",
+        "channel": "Dou Kleefstra",
+        "views": 8737,
+        "viewsText": "8,737 views",
+        "duration": "11:49",
+        "durationSeconds": 709,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 62.4
+      },
+      {
+        "id": "xnsGF7R4A0s",
+        "title": "15 Definisie  en waardeversameling",
+        "channel": "Wiskunde_Mathematics_SUM",
+        "views": 4255,
+        "viewsText": "4,255 views",
+        "duration": "8:48",
+        "durationSeconds": 528,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 59.3
+      },
+      {
+        "id": "MrBIQ7xapKE",
+        "title": "W10.6 Definisie en waardeversameling",
+        "channel": "Stefan Buys",
+        "views": 1940,
+        "viewsText": "1,940 views",
+        "duration": "10:13",
+        "durationSeconds": 613,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 55.9
+      },
+      {
+        "id": "HaBOqFOLris",
+        "title": "Funksies Definisie en Waarde versameling",
+        "channel": "Lekker Wiskunde",
+        "views": 556,
+        "viewsText": "556 views",
+        "duration": "9:46",
+        "durationSeconds": 586,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 50.5
+      }
+    ],
+    "pick": {
+      "id": "XugNFEZzBd4",
+      "title": "Definisieversameling en Waardeversameling (wiskdou)",
+      "channel": "Dou Kleefstra",
+      "views": 8737,
+      "viewsText": "8,737 views",
+      "duration": "11:49",
+      "durationSeconds": 709,
+      "saChannel": true,
+      "embeddable": true,
+      "score": 62.4
+    },
+    "usedAdjacentGrade": false
+  },
+  {
+    "slug": "functions-gr12",
+    "topicTitle": "Functions & Graphs",
+    "grade": 12,
+    "paper": 1,
+    "subTopic": "The formal definition of an inverse function",
+    "queries": [
+      "graad 12 wiskunde inverse",
+      "inverse graad 12",
+      "wiskunde inverse afrikaans"
+    ],
+    "candidates": [
+      {
+        "id": "Q0vjmaDK8X0",
+        "title": "Funksies Graad12: L2 Inverse van Reguitlyn",
+        "channel": "Online Maths by Miss Pythagoras",
+        "views": 2952,
+        "viewsText": "2,952 views",
+        "duration": "10:17",
+        "durationSeconds": 617,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 50.2
+      },
+      {
+        "id": "qp7f5QHLXgM",
+        "title": "Funksies Graad12: L3 Inverse van Parabool",
+        "channel": "Online Maths by Miss Pythagoras",
+        "views": 2774,
+        "viewsText": "2,774 views",
+        "duration": "8:31",
+        "durationSeconds": 511,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 49.9
+      },
+      {
+        "id": "Kh4hp_agT8s",
+        "title": "W12 Inverse funksies se vergelykings",
+        "channel": "Stefan Buys",
+        "views": 425,
+        "viewsText": "425 views",
+        "duration": "18:36",
+        "durationSeconds": 1116,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 41.8
+      }
+    ],
+    "pick": {
+      "id": "Q0vjmaDK8X0",
+      "title": "Funksies Graad12: L2 Inverse van Reguitlyn",
+      "channel": "Online Maths by Miss Pythagoras",
+      "views": 2952,
+      "viewsText": "2,952 views",
+      "duration": "10:17",
+      "durationSeconds": 617,
+      "saChannel": true,
+      "embeddable": true,
+      "score": 50.2
+    },
+    "usedAdjacentGrade": false
+  },
+  {
+    "slug": "functions-gr12",
+    "topicTitle": "Functions & Graphs",
+    "grade": 12,
+    "paper": 1,
+    "subTopic": "Restricting the domain of a quadratic to invert it (y = √x)",
+    "queries": [
+      "graad 12 wiskunde beperk definisieversameling kwadratiese",
+      "beperk definisieversameling kwadratiese graad 12",
+      "wiskunde beperk definisieversameling kwadratiese afrikaans"
+    ],
+    "candidates": [
+      {
+        "id": "s8AkM-QJJ0U",
+        "title": "02 Kwadratiese vergelykings",
+        "channel": "Wiskunde_Mathematics_SUM",
+        "views": 3439,
+        "viewsText": "3,439 views",
+        "duration": "6:08",
+        "durationSeconds": 368,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 50.9
+      },
+      {
+        "id": "9f99r5B0AZg",
+        "title": "09 Kwadratiese onglykhede",
+        "channel": "Wiskunde_Mathematics_SUM",
+        "views": 3098,
+        "viewsText": "3,098 views",
+        "duration": "14:31",
+        "durationSeconds": 871,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 50.4
+      }
+    ],
+    "pick": {
+      "id": "s8AkM-QJJ0U",
+      "title": "02 Kwadratiese vergelykings",
+      "channel": "Wiskunde_Mathematics_SUM",
+      "views": 3439,
+      "viewsText": "3,439 views",
+      "duration": "6:08",
+      "durationSeconds": 368,
+      "saChannel": true,
+      "embeddable": true,
+      "score": 50.9
+    },
+    "usedAdjacentGrade": false
+  },
+  {
+    "slug": "calculus-gr12",
+    "topicTitle": "Calculus",
+    "grade": 12,
+    "paper": 1,
+    "subTopic": "The definition of a limit",
+    "queries": [
+      "graad 12 wiskunde limiet",
+      "limiet graad 12",
+      "wiskunde limiet afrikaans"
+    ],
+    "candidates": [],
+    "pick": null,
+    "usedAdjacentGrade": false,
+    "note": "No embeddable, on-topic CAPS candidate found - left blank for manual search"
+  },
+  {
+    "slug": "calculus-gr12",
+    "topicTitle": "Calculus",
+    "grade": 12,
+    "paper": 1,
+    "subTopic": "Differentiation from first principles",
+    "queries": [
+      "graad 12 wiskunde differensiasie beginsels",
+      "differensiasie beginsels graad 12",
+      "wiskunde differensiasie beginsels afrikaans"
+    ],
+    "candidates": [
+      {
+        "id": "xW9vijvWp7c",
+        "title": "Differensiasie Graad12: L1 Bepaal die afgeleide deur middel van Eerste Beginsels",
+        "channel": "Online Maths by Miss Pythagoras",
+        "views": 6644,
+        "viewsText": "6,644 views",
+        "duration": "18:13",
+        "durationSeconds": 1093,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 56.2
+      },
+      {
+        "id": "qEZQjOUfbpk",
+        "title": "05 Nog eerste beginsels",
+        "channel": "Wiskunde_Mathematics_SUM",
+        "views": 5752,
+        "viewsText": "5,752 views",
+        "duration": "8:38",
+        "durationSeconds": 518,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 53.1
+      },
+      {
+        "id": "i0surgBMWY0",
+        "title": "Graad 12 Differensiasie met eerste beginsels 2020 04 17 080349",
+        "channel": "Rochelle Van der Merwe",
+        "views": 588,
+        "viewsText": "588 views",
+        "duration": "17:45",
+        "durationSeconds": 1065,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 45.7
+      }
+    ],
+    "pick": {
+      "id": "xW9vijvWp7c",
+      "title": "Differensiasie Graad12: L1 Bepaal die afgeleide deur middel van Eerste Beginsels",
+      "channel": "Online Maths by Miss Pythagoras",
+      "views": 6644,
+      "viewsText": "6,644 views",
+      "duration": "18:13",
+      "durationSeconds": 1093,
+      "saChannel": true,
+      "embeddable": true,
+      "score": 56.2
+    },
+    "usedAdjacentGrade": false
+  },
+  {
+    "slug": "calculus-gr12",
+    "topicTitle": "Calculus",
+    "grade": 12,
+    "paper": 1,
+    "subTopic": "The rules of differentiation",
+    "queries": [
+      "graad 12 wiskunde differensiasie",
+      "differensiasie graad 12",
+      "wiskunde differensiasie afrikaans"
+    ],
+    "candidates": [
+      {
+        "id": "iymP84P3njM",
+        "title": "4 Differensiasie reels deel 1",
+        "channel": "Wiskunde Graad 12 Juffrou Koorsen",
+        "views": 416,
+        "viewsText": "416 views",
+        "duration": "9:39",
+        "durationSeconds": 579,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 41.7
+      }
+    ],
+    "pick": {
+      "id": "iymP84P3njM",
+      "title": "4 Differensiasie reels deel 1",
+      "channel": "Wiskunde Graad 12 Juffrou Koorsen",
+      "views": 416,
+      "viewsText": "416 views",
+      "duration": "9:39",
+      "durationSeconds": 579,
+      "saChannel": true,
+      "embeddable": true,
+      "score": 41.7
+    },
+    "usedAdjacentGrade": false
+  },
+  {
+    "slug": "calculus-gr12",
+    "topicTitle": "Calculus",
+    "grade": 12,
+    "paper": 1,
+    "subTopic": "Sketching cubic graphs",
+    "queries": [
+      "graad 12 wiskunde derdegraadse grafieke",
+      "derdegraadse grafieke graad 12",
+      "wiskunde derdegraadse grafieke afrikaans"
+    ],
+    "candidates": [
+      {
+        "id": "hzr8uS7hisE",
+        "title": "Graad 12 Skets van derdegraadse funksie 2020 04 24 110529",
+        "channel": "Rochelle Van der Merwe",
+        "views": 512,
+        "viewsText": "512 views",
+        "duration": "13:57",
+        "durationSeconds": 837,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 42.6
+      }
+    ],
+    "pick": {
+      "id": "hzr8uS7hisE",
+      "title": "Graad 12 Skets van derdegraadse funksie 2020 04 24 110529",
+      "channel": "Rochelle Van der Merwe",
+      "views": 512,
+      "viewsText": "512 views",
+      "duration": "13:57",
+      "durationSeconds": 837,
+      "saChannel": true,
+      "embeddable": true,
+      "score": 42.6
+    },
+    "usedAdjacentGrade": false
+  },
+  {
+    "slug": "calculus-gr12",
+    "topicTitle": "Calculus",
+    "grade": 12,
+    "paper": 1,
+    "subTopic": "Optimisation problems",
+    "queries": [
+      "graad 12 wiskunde optimering",
+      "optimering graad 12",
+      "wiskunde optimering afrikaans"
+    ],
+    "candidates": [],
+    "pick": null,
+    "usedAdjacentGrade": false,
+    "note": "No embeddable, on-topic CAPS candidate found - left blank for manual search"
+  },
+  {
+    "slug": "calculus-gr12",
+    "topicTitle": "Calculus",
+    "grade": 12,
+    "paper": 1,
+    "subTopic": "Rates of change",
+    "queries": [
+      "graad 12 wiskunde tempo verandering",
+      "tempo verandering graad 12",
+      "wiskunde tempo verandering afrikaans"
+    ],
+    "candidates": [
+      {
+        "id": "h5w28ZLc4dw",
+        "title": "15  Tempo van verandering en beweging",
+        "channel": "Wiskunde_Mathematics_SUM",
+        "views": 3413,
+        "viewsText": "3,413 views",
+        "duration": "10:03",
+        "durationSeconds": 603,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 58.3
+      }
+    ],
+    "pick": {
+      "id": "h5w28ZLc4dw",
+      "title": "15  Tempo van verandering en beweging",
+      "channel": "Wiskunde_Mathematics_SUM",
+      "views": 3413,
+      "viewsText": "3,413 views",
+      "duration": "10:03",
+      "durationSeconds": 603,
+      "saChannel": true,
+      "embeddable": true,
+      "score": 58.3
+    },
+    "usedAdjacentGrade": false
+  },
+  {
+    "slug": "finance-gr12",
+    "topicTitle": "Finance & Growth",
+    "grade": 12,
+    "paper": 1,
+    "subTopic": "Future value annuity formula",
+    "queries": [],
+    "candidates": [],
+    "pick": null,
+    "usedAdjacentGrade": false,
+    "note": "No embeddable, on-topic CAPS candidate found - left blank for manual search"
+  },
+  {
+    "slug": "finance-gr12",
+    "topicTitle": "Finance & Growth",
+    "grade": 12,
+    "paper": 1,
+    "subTopic": "Present value annuity formula",
+    "queries": [],
+    "candidates": [],
+    "pick": null,
+    "usedAdjacentGrade": false,
+    "note": "No embeddable, on-topic CAPS candidate found - left blank for manual search"
+  },
+  {
+    "slug": "finance-gr12",
+    "topicTitle": "Finance & Growth",
+    "grade": 12,
+    "paper": 1,
+    "subTopic": "Loan repayments and outstanding balances",
+    "queries": [],
+    "candidates": [],
+    "pick": null,
+    "usedAdjacentGrade": false,
+    "note": "No embeddable, on-topic CAPS candidate found - left blank for manual search"
+  },
+  {
+    "slug": "probability-gr12",
+    "topicTitle": "Probability",
+    "grade": 12,
+    "paper": 1,
+    "subTopic": "The fundamental counting principle",
+    "queries": [
+      "graad 12 wiskunde tel",
+      "tel graad 12",
+      "wiskunde tel afrikaans"
+    ],
+    "candidates": [],
+    "pick": null,
+    "usedAdjacentGrade": false,
+    "note": "No embeddable, on-topic CAPS candidate found - left blank for manual search"
+  },
+  {
+    "slug": "probability-gr12",
+    "topicTitle": "Probability",
+    "grade": 12,
+    "paper": 1,
+    "subTopic": "Permutations and factorial notation",
+    "queries": [
+      "graad 12 wiskunde permutasies faktoriaal",
+      "permutasies faktoriaal graad 12",
+      "wiskunde permutasies faktoriaal afrikaans"
+    ],
+    "candidates": [],
+    "pick": null,
+    "usedAdjacentGrade": false,
+    "note": "No embeddable, on-topic CAPS candidate found - left blank for manual search"
+  },
+  {
+    "slug": "probability-gr12",
+    "topicTitle": "Probability",
+    "grade": 12,
+    "paper": 1,
+    "subTopic": "Applying counting principles to probability",
+    "queries": [
+      "graad 12 wiskunde tel beginsels waarskynlikheid",
+      "tel beginsels waarskynlikheid graad 12",
+      "wiskunde tel beginsels waarskynlikheid afrikaans"
+    ],
+    "candidates": [
+      {
+        "id": "yvoiVCv8vdA",
+        "title": "W12.1 Waarskynlikheid tel beginsel",
+        "channel": "Stefan Buys",
+        "views": 769,
+        "viewsText": "769 views",
+        "duration": "25:22",
+        "durationSeconds": 1522,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 43.1
+      }
+    ],
+    "pick": {
+      "id": "yvoiVCv8vdA",
+      "title": "W12.1 Waarskynlikheid tel beginsel",
+      "channel": "Stefan Buys",
+      "views": 769,
+      "viewsText": "769 views",
+      "duration": "25:22",
+      "durationSeconds": 1522,
+      "saChannel": true,
+      "embeddable": true,
+      "score": 43.1
+    },
+    "usedAdjacentGrade": false
+  },
+  {
+    "slug": "trig-gr12",
+    "topicTitle": "Trigonometry",
+    "grade": 12,
+    "paper": 2,
+    "subTopic": "Compound angle identities",
+    "queries": [
+      "graad 12 wiskunde saamgestelde hoek identiteite",
+      "saamgestelde hoek identiteite graad 12",
+      "wiskunde saamgestelde hoek identiteite afrikaans"
+    ],
+    "candidates": [],
+    "pick": null,
+    "usedAdjacentGrade": false,
+    "note": "No embeddable, on-topic CAPS candidate found - left blank for manual search"
+  },
+  {
+    "slug": "trig-gr12",
+    "topicTitle": "Trigonometry",
+    "grade": 12,
+    "paper": 2,
+    "subTopic": "Double angle identities",
+    "queries": [
+      "graad 12 wiskunde dubbel hoek identiteite",
+      "dubbel hoek identiteite graad 12",
+      "wiskunde dubbel hoek identiteite afrikaans"
+    ],
+    "candidates": [],
+    "pick": null,
+    "usedAdjacentGrade": false,
+    "note": "No embeddable, on-topic CAPS candidate found - left blank for manual search"
+  },
+  {
+    "slug": "trig-gr12",
+    "topicTitle": "Trigonometry",
+    "grade": 12,
+    "paper": 2,
+    "subTopic": "Expansion and simplification of trig expressions",
+    "queries": [
+      "graad 12 wiskunde trigonometrie",
+      "trigonometrie graad 12",
+      "wiskunde trigonometrie afrikaans"
+    ],
+    "candidates": [],
+    "pick": null,
+    "usedAdjacentGrade": false,
+    "note": "No embeddable, on-topic CAPS candidate found - left blank for manual search"
+  },
+  {
+    "slug": "trig-gr12",
+    "topicTitle": "Trigonometry",
+    "grade": 12,
+    "paper": 2,
+    "subTopic": "Trigonometry in three-dimensional problems",
+    "queries": [],
+    "candidates": [],
+    "pick": null,
+    "usedAdjacentGrade": false,
+    "note": "No embeddable, on-topic CAPS candidate found - left blank for manual search"
+  },
+  {
+    "slug": "euclidean-geometry-gr12",
+    "topicTitle": "Euclidean Geometry",
+    "grade": 12,
+    "paper": 2,
+    "subTopic": "Proportionality in triangles",
+    "queries": [
+      "graad 12 wiskunde eweredigheid driehoeke",
+      "eweredigheid driehoeke graad 12",
+      "wiskunde eweredigheid driehoeke afrikaans"
+    ],
+    "candidates": [
+      {
+        "id": "1dqCThLt2Fk",
+        "title": "Euklidiese Meetkunde Graad12: L1 Eweredigheid in Driehoeke( Lyn ewewydig een sy van driehoek)",
+        "channel": "Online Maths by Miss Pythagoras",
+        "views": 7969,
+        "viewsText": "7,969 views",
+        "duration": "15:40",
+        "durationSeconds": 940,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 62
+      },
+      {
+        "id": "hDLP8gZGsSk",
+        "title": "02 Omgekeerde eweredigheid",
+        "channel": "Wiskunde_Mathematics_SUM",
+        "views": 10740,
+        "viewsText": "10,740 views",
+        "duration": "7:40",
+        "durationSeconds": 460,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 55.8
+      },
+      {
+        "id": "Sj5pFbuGtK4",
+        "title": "Eweredigheid",
+        "channel": "Wiskunde Broers",
+        "views": 7721,
+        "viewsText": "7,721 views",
+        "duration": "8:19",
+        "durationSeconds": 499,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 54.4
+      },
+      {
+        "id": "Zq-8xtHxfoA",
+        "title": "Direkte en omgekeerde eweredigheid",
+        "channel": "TheWhiteboardSA",
+        "views": 5663,
+        "viewsText": "5,663 views",
+        "duration": "10:16",
+        "durationSeconds": 616,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 53
+      },
+      {
+        "id": "exdSGghaRjA",
+        "title": "05 Eweredigheid",
+        "channel": "Wiskunde_Mathematics_SUM",
+        "views": 3029,
+        "viewsText": "3,029 views",
+        "duration": "8:42",
+        "durationSeconds": 522,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 50.3
+      }
+    ],
+    "pick": {
+      "id": "1dqCThLt2Fk",
+      "title": "Euklidiese Meetkunde Graad12: L1 Eweredigheid in Driehoeke( Lyn ewewydig een sy van driehoek)",
+      "channel": "Online Maths by Miss Pythagoras",
+      "views": 7969,
+      "viewsText": "7,969 views",
+      "duration": "15:40",
+      "durationSeconds": 940,
+      "saChannel": true,
+      "embeddable": true,
+      "score": 62
+    },
+    "usedAdjacentGrade": false
+  },
+  {
+    "slug": "euclidean-geometry-gr12",
+    "topicTitle": "Euclidean Geometry",
+    "grade": 12,
+    "paper": 2,
+    "subTopic": "Similarity of triangles",
+    "queries": [
+      "graad 12 wiskunde gelykvormigheid driehoeke",
+      "gelykvormigheid driehoeke graad 12",
+      "wiskunde gelykvormigheid driehoeke afrikaans"
+    ],
+    "candidates": [
+      {
+        "id": "73durGFZlAc",
+        "title": "Euklidiese Meetkunde Graad12: L3 Gelykvormigheid in Driehoeke Deel1",
+        "channel": "Online Maths by Miss Pythagoras",
+        "views": 2973,
+        "viewsText": "2,973 views",
+        "duration": "16:21",
+        "durationSeconds": 981,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 57.7
+      },
+      {
+        "id": "AC34A55qp7Q",
+        "title": "02 Gelykvormigheid en kongruensie",
+        "channel": "Wiskunde_Mathematics_SUM",
+        "views": 13479,
+        "viewsText": "13,479 views",
+        "duration": "8:01",
+        "durationSeconds": 481,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 56.8
+      },
+      {
+        "id": "9uJhAvs0yc4",
+        "title": "Meetkunde en Kongruensie en Gelykvormigheid",
+        "channel": "Danike Aucamp_Wiskunde en Wetenskap ",
+        "views": 412,
+        "viewsText": "412 views",
+        "duration": "48:44",
+        "durationSeconds": 2924,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 31.6
+      }
+    ],
+    "pick": {
+      "id": "73durGFZlAc",
+      "title": "Euklidiese Meetkunde Graad12: L3 Gelykvormigheid in Driehoeke Deel1",
+      "channel": "Online Maths by Miss Pythagoras",
+      "views": 2973,
+      "viewsText": "2,973 views",
+      "duration": "16:21",
+      "durationSeconds": 981,
+      "saChannel": true,
+      "embeddable": true,
+      "score": 57.7
+    },
+    "usedAdjacentGrade": false
+  },
+  {
+    "slug": "euclidean-geometry-gr12",
+    "topicTitle": "Euclidean Geometry",
+    "grade": 12,
+    "paper": 2,
+    "subTopic": "The Theorem of Pythagoras proved via similarity",
+    "queries": [
+      "graad 12 wiskunde stelling pythagoras gelykvormigheid",
+      "stelling pythagoras gelykvormigheid graad 12",
+      "wiskunde stelling pythagoras gelykvormigheid afrikaans"
+    ],
+    "candidates": [],
+    "pick": null,
+    "usedAdjacentGrade": false,
+    "note": "No embeddable, on-topic CAPS candidate found - left blank for manual search"
+  },
+  {
+    "slug": "analytical-geometry-gr12",
+    "topicTitle": "Analytical Geometry",
+    "grade": 12,
+    "paper": 2,
+    "subTopic": "The equation of a circle centred at the origin",
+    "queries": [
+      "graad 12 wiskunde sirkel",
+      "sirkel graad 12",
+      "wiskunde sirkel afrikaans"
+    ],
+    "candidates": [
+      {
+        "id": "MReI_dq_qbI",
+        "title": "03 Sirkel vergelykings nie in standaardvorm",
+        "channel": "Wiskunde_Mathematics_SUM",
+        "views": 4329,
+        "viewsText": "4,329 views",
+        "duration": "3:57",
+        "durationSeconds": 237,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 51.9
+      }
+    ],
+    "pick": {
+      "id": "MReI_dq_qbI",
+      "title": "03 Sirkel vergelykings nie in standaardvorm",
+      "channel": "Wiskunde_Mathematics_SUM",
+      "views": 4329,
+      "viewsText": "4,329 views",
+      "duration": "3:57",
+      "durationSeconds": 237,
+      "saChannel": true,
+      "embeddable": true,
+      "score": 51.9
+    },
+    "usedAdjacentGrade": false
+  },
+  {
+    "slug": "analytical-geometry-gr12",
+    "topicTitle": "Analytical Geometry",
+    "grade": 12,
+    "paper": 2,
+    "subTopic": "The equation of a circle centred at any point",
+    "queries": [
+      "graad 12 wiskunde sirkel",
+      "sirkel graad 12",
+      "wiskunde sirkel afrikaans"
+    ],
+    "candidates": [],
+    "pick": null,
+    "usedAdjacentGrade": false,
+    "note": "No embeddable, on-topic CAPS candidate found - left blank for manual search"
+  },
+  {
+    "slug": "analytical-geometry-gr12",
+    "topicTitle": "Analytical Geometry",
+    "grade": 12,
+    "paper": 2,
+    "subTopic": "Tangents to circles analytically",
+    "queries": [
+      "graad 12 wiskunde raaklyne sirkels",
+      "raaklyne sirkels graad 12",
+      "wiskunde raaklyne sirkels afrikaans"
+    ],
+    "candidates": [],
+    "pick": null,
+    "usedAdjacentGrade": false,
+    "note": "No embeddable, on-topic CAPS candidate found - left blank for manual search"
+  },
+  {
+    "slug": "analytical-geometry-gr12",
+    "topicTitle": "Analytical Geometry",
+    "grade": 12,
+    "paper": 2,
+    "subTopic": "Intersecting circles",
+    "queries": [
+      "graad 12 wiskunde sny sirkels",
+      "sny sirkels graad 12",
+      "wiskunde sny sirkels afrikaans"
+    ],
+    "candidates": [],
+    "pick": null,
+    "usedAdjacentGrade": false,
+    "note": "No embeddable, on-topic CAPS candidate found - left blank for manual search"
+  },
+  {
+    "slug": "statistics-gr12",
+    "topicTitle": "Statistics",
+    "grade": 12,
+    "paper": 2,
+    "subTopic": "Bivariate data",
+    "queries": [
+      "graad 12 wiskunde tweeveranderlike data",
+      "tweeveranderlike data graad 12",
+      "wiskunde tweeveranderlike data afrikaans"
+    ],
+    "candidates": [],
+    "pick": null,
+    "usedAdjacentGrade": false,
+    "note": "No embeddable, on-topic CAPS candidate found - left blank for manual search"
+  },
+  {
+    "slug": "statistics-gr12",
+    "topicTitle": "Statistics",
+    "grade": 12,
+    "paper": 2,
+    "subTopic": "Scatter plots and lines of best fit",
+    "queries": [
+      "graad 12 wiskunde lyne",
+      "lyne graad 12",
+      "wiskunde lyne afrikaans"
+    ],
+    "candidates": [],
+    "pick": null,
+    "usedAdjacentGrade": false,
+    "note": "No embeddable, on-topic CAPS candidate found - left blank for manual search"
+  },
+  {
+    "slug": "statistics-gr12",
+    "topicTitle": "Statistics",
+    "grade": 12,
+    "paper": 2,
+    "subTopic": "The least-squares regression line y = A + Bx",
+    "queries": [
+      "graad 12 wiskunde kwadrate regressie",
+      "kwadrate regressie graad 12",
+      "wiskunde kwadrate regressie afrikaans"
+    ],
+    "candidates": [],
+    "pick": null,
+    "usedAdjacentGrade": false,
+    "note": "No embeddable, on-topic CAPS candidate found - left blank for manual search"
+  },
+  {
+    "slug": "statistics-gr12",
+    "topicTitle": "Statistics",
+    "grade": 12,
+    "paper": 2,
+    "subTopic": "The correlation coefficient r",
+    "queries": [
+      "graad 12 wiskunde korrelasie",
+      "korrelasie graad 12",
+      "wiskunde korrelasie afrikaans"
+    ],
+    "candidates": [
+      {
+        "id": "Jiml5rfBIlw",
+        "title": "Statistiek Graad12:L3 Korrelasie en korrelasiekoeffisiënt",
+        "channel": "Online Maths by Miss Pythagoras",
+        "views": 2992,
+        "viewsText": "2,992 views",
+        "duration": "10:49",
+        "durationSeconds": 649,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 50.3
+      }
+    ],
+    "pick": {
+      "id": "Jiml5rfBIlw",
+      "title": "Statistiek Graad12:L3 Korrelasie en korrelasiekoeffisiënt",
+      "channel": "Online Maths by Miss Pythagoras",
+      "views": 2992,
+      "viewsText": "2,992 views",
+      "duration": "10:49",
+      "durationSeconds": 649,
+      "saChannel": true,
+      "embeddable": true,
+      "score": 50.3
+    },
+    "usedAdjacentGrade": false
+  }
+]

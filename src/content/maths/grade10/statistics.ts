@@ -11,6 +11,7 @@ export const statisticsGr10: TopicContent = {
   // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
   // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
   // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
+  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
   sections: [
     {
       id: 'overview',
@@ -46,7 +47,8 @@ export const statisticsGr10: TopicContent = {
         {
           type: 'video',
           title: 'Watch: Statistics Grade 10: Mean, mode, median — Kevinmathscience',
-          videoId: 'xi8VjMmWdgI'
+          videoId: 'xi8VjMmWdgI',
+          videoIdAf: 'fkKU5F9LR7U'
         }
       ]
     },
@@ -57,7 +59,8 @@ export const statisticsGr10: TopicContent = {
         {
           type: 'video',
           title: 'Watch: Statistics Grade 10: Quartiles — Kevinmathscience',
-          videoId: 'dxLjUO8tzSA'
+          videoId: 'dxLjUO8tzSA',
+          videoIdAf: 'udHAZsQxn0Q'
         }
       ]
     },

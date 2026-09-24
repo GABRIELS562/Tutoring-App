@@ -12,6 +12,7 @@ export const algebraGr12: TopicContent = {
   title: 'Algebra & Equations',
   capsWeight: 0,
   // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
+  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
   sections: [
     {
       id: 'overview',
@@ -44,7 +45,8 @@ export const algebraGr12: TopicContent = {
         {
           type: 'video',
           title: 'Watch: Grade 12 - Revision | Simultaneous equation | Rationalising the denominator | May 2023 | Question 1B — Mlungisi Nkosi Maths & Science',
-          videoId: 'Pa1WrbJnxT0'
+          videoId: 'Pa1WrbJnxT0',
+          videoIdAf: '8naDLNF-GBY'
         }
       ]
     },

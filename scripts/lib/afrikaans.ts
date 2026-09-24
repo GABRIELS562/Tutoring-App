@@ -133,7 +133,9 @@ export const AFRIKAANS_TERMS: Record<string, string[]> = {
   cofunctions: ['kofunksies'],
   angle: ['hoek'],
   angles: ['hoeke'],
-  double: ['dubbel'],
+  double: ['dubbel', 'dubbele'],
+  intersecting: ['sny', 'snypunte', 'snydende'],
+  restricting: ['beperk', 'beperking'],
   // Euclidean geometry
   euclidean: ['euklidiese', 'euklidies'],
   geometry: ['meetkunde'],

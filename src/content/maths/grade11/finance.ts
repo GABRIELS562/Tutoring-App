@@ -12,6 +12,7 @@ export const financeGr11: TopicContent = {
   title: 'Finance & Growth',
   capsWeight: 0,
   // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
+  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
   sections: [
     {
       id: 'overview',
@@ -66,7 +67,8 @@ export const financeGr11: TopicContent = {
         {
           type: 'video',
           title: 'Watch: 04 Effective and nominal interest rates — Wiskunde_Mathematics_SUM',
-          videoId: 'dml0IOgpPWw'
+          videoId: 'dml0IOgpPWw',
+          videoIdAf: 'Rbgtx-bR9CI'
         }
       ]
     }

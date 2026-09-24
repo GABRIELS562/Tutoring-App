@@ -12,6 +12,7 @@ export const probabilityGr11: TopicContent = {
   title: 'Probability',
   capsWeight: 0,
   // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
+  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
   sections: [
     {
       id: 'overview',
@@ -34,7 +35,8 @@ export const probabilityGr11: TopicContent = {
         {
           type: 'video',
           title: 'Watch: Gr 11 Probability: Independent events — Kevinmathscience',
-          videoId: 'axJSsykVmfE'
+          videoId: 'axJSsykVmfE',
+          videoIdAf: 'X4qRoXGtfYo'
         }
       ]
     },
@@ -55,7 +57,8 @@ export const probabilityGr11: TopicContent = {
         {
           type: 'video',
           title: 'Watch: Gr 11 Probability: Tree diagram — Kevinmathscience',
-          videoId: 'twLaGOvMVr8'
+          videoId: 'twLaGOvMVr8',
+          videoIdAf: 'tl8N0x6fH48'
         }
       ]
     },

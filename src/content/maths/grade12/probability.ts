@@ -9,6 +9,7 @@ export const probabilityGr12: TopicContent = {
   title: 'Probability',
   capsWeight: 15,
   // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
+  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
   sections: [
     {
       id: 'overview',
@@ -58,7 +59,8 @@ export const probabilityGr12: TopicContent = {
         {
           type: 'video',
           title: 'Watch: Mlungisi Nkosi | Fundamental Counting Principle | Part 3 | Application | Passwords and Committees — Mlungisi Nkosi Maths & Science',
-          videoId: 'xcln78w1nrE'
+          videoId: 'xcln78w1nrE',
+          videoIdAf: 'yvoiVCv8vdA'
         }
       ]
     }

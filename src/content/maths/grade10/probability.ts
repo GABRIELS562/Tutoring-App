@@ -11,6 +11,7 @@ export const probabilityGr10: TopicContent = {
   // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
   // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
   // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
+  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
   sections: [
     {
       id: 'overview',
@@ -35,7 +36,8 @@ export const probabilityGr10: TopicContent = {
         {
           type: 'video',
           title: 'Watch: Probability Grade 10 | Venn Diagram — Kevinmathscience',
-          videoId: 'MCsC1N333jo'
+          videoId: 'MCsC1N333jo',
+          videoIdAf: 'wRnin4mx_WE'
         }
       ]
     },

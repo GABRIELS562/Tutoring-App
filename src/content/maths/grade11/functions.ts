@@ -12,6 +12,7 @@ export const functionsGr11: TopicContent = {
   title: 'Functions & Graphs',
   capsWeight: 0,
   // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
+  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
   sections: [
     {
       id: 'overview',
@@ -34,7 +35,8 @@ export const functionsGr11: TopicContent = {
         {
           type: 'video',
           title: 'Watch: Draw Parabola Grade 11 | Part 1 | Grade 11 Functions — Kevinmathscience',
-          videoId: 'VEFdT971Tzs'
+          videoId: 'VEFdT971Tzs',
+          videoIdAf: '9xYuxHVvht0'
         }
       ]
     },
@@ -45,7 +47,8 @@ export const functionsGr11: TopicContent = {
         {
           type: 'video',
           title: 'Watch: Draw Hyperbola | Grade 11 Functions — Kevinmathscience',
-          videoId: 'L1KXB4w1uM8'
+          videoId: 'L1KXB4w1uM8',
+          videoIdAf: 'iSTLoZj_RmY'
         }
       ]
     },
@@ -56,7 +59,8 @@ export const functionsGr11: TopicContent = {
         {
           type: 'video',
           title: 'Watch: Exponential Equation Given Graph | Grade 11 Functions — Kevinmathscience',
-          videoId: 'mlk0Df2z9No'
+          videoId: 'mlk0Df2z9No',
+          videoIdAf: 'jFQ48rc8r-c'
         }
       ]
     },
@@ -67,7 +71,8 @@ export const functionsGr11: TopicContent = {
         {
           type: 'video',
           title: 'Watch: 9a) Worksheet Functions Inverses — Kevinmathscience',
-          videoId: '25ey8Ea0jcM'
+          videoId: '25ey8Ea0jcM',
+          videoIdAf: '2KeZ2135_Ow'
         }
       ]
     }

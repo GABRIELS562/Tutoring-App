@@ -9,6 +9,7 @@ export const euclideanGeometryGr12: TopicContent = {
   title: 'Euclidean Geometry',
   capsWeight: 25,
   // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
+  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
   sections: [
     {
       id: 'overview',
@@ -33,7 +34,8 @@ export const euclideanGeometryGr12: TopicContent = {
         {
           type: 'video',
           title: 'Watch: Grade 12 Proportionality: Area of triangle #1 — Kevinmathscience',
-          videoId: '2jgK_SKwGL0'
+          videoId: '2jgK_SKwGL0',
+          videoIdAf: '1dqCThLt2Fk'
         }
       ]
     },
@@ -44,7 +46,8 @@ export const euclideanGeometryGr12: TopicContent = {
         {
           type: 'video',
           title: 'Watch: Grade 12 Similarity vs Proportionality theorem — Kevinmathscience',
-          videoId: 'GxJ1iQpps8I'
+          videoId: 'GxJ1iQpps8I',
+          videoIdAf: '73durGFZlAc'
         }
       ]
     },

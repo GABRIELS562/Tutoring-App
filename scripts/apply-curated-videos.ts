@@ -84,7 +84,18 @@ function overviewSection(source: string, topicTitle: string): string | null {
     }`
 }
 
-function sectionFor(entry: Curated): string {
+/**
+ * The Afrikaans pick for the same sub-topic, if one was found. Afrikaans
+ * coverage is thinner than English, so a section often carries videoId with
+ * no videoIdAf - NoteBlock then plays the English video for both locales,
+ * which is better than an empty player.
+ */
+function afrikaansPickFor(entry: Curated, afrikaans: Curated[]): Pick | null {
+  const match = afrikaans.find((c) => c.slug === entry.slug && c.subTopic === entry.subTopic)
+  return match?.pick ?? null
+}
+
+function sectionFor(entry: Curated, afrikaans: Curated[]): string {
   const id = sectionId(entry.subTopic)
   if (!entry.pick) {
     return `    {
@@ -99,6 +110,7 @@ function sectionFor(entry: Curated): string {
     }`
   }
   const p = entry.pick
+  const af = afrikaansPickFor(entry, afrikaans)
   const note = entry.usedAdjacentGrade
     ? `\n        // Labelled for an adjacent grade; CAPS covers this sub-topic in both.`
     : ''
@@ -109,14 +121,22 @@ function sectionFor(entry: Curated): string {
         {
           type: 'video',
           title: ${quote(`Watch: ${p.title} — ${p.channel}`)},
-          videoId: ${quote(p.id)}
+          videoId: ${quote(p.id)}${af ? `,\n          videoIdAf: ${quote(af.id)}` : ''}
         }
       ]
     }`
 }
 
-function rewrite(source: string, topicTitle: string, entries: Curated[]): string {
-  const sections = [overviewSection(source, topicTitle), ...entries.map(sectionFor)].filter(
+function rewrite(
+  source: string,
+  topicTitle: string,
+  entries: Curated[],
+  afrikaans: Curated[]
+): string {
+  const sections = [
+    overviewSection(source, topicTitle),
+    ...entries.map((entry) => sectionFor(entry, afrikaans)),
+  ].filter(
     Boolean
   ) as string[]
 
@@ -146,6 +166,11 @@ function main() {
     process.exit(1)
   }
   const curated: Curated[] = JSON.parse(readFileSync(path, 'utf8'))
+  const afPath = `docs/curriculum/candidates-af-gr${grade}.json`
+  const afrikaans: Curated[] = existsSync(afPath)
+    ? (JSON.parse(readFileSync(afPath, 'utf8')) as Curated[])
+    : []
+  if (afrikaans.length === 0) console.log(`  (no Afrikaans candidates at ${afPath})`)
   const topics = capsCurriculum.filter((t) => t.grade === grade)
 
   let changed = 0
@@ -162,10 +187,11 @@ function main() {
     if (entries.length === 0) continue
 
     const source = readFileSync(file, 'utf8')
-    const next = rewrite(source, topic.title, entries)
+    const next = rewrite(source, topic.title, entries, afrikaans)
     const videos = entries.filter((e) => e.pick).length
+    const afVideos = entries.filter((e) => e.pick && afrikaansPickFor(e, afrikaans)).length
     console.log(
-      `  ${dry ? 'dry ' : 'wrote'} ${topic.slug.padEnd(28)} ${entries.length} sections, ${videos} videos`
+      `  ${dry ? 'dry ' : 'wrote'} ${topic.slug.padEnd(28)} ${entries.length} sections, ${videos} videos, ${afVideos} af`
     )
     if (!dry) writeFileSync(file, next)
     changed++

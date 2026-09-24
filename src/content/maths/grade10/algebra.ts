@@ -11,6 +11,7 @@ export const algebraGr10: TopicContent = {
   // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
   // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
   // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
+  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
   sections: [
     {
       id: 'overview',
@@ -35,7 +36,8 @@ export const algebraGr10: TopicContent = {
         {
           type: 'video',
           title: 'Watch: Grade 11 Exponents | Grade 10 Exponent law and basic examples REVISION — Miss Martins Maths and Science',
-          videoId: 'EL1z_5pWAbk'
+          videoId: 'EL1z_5pWAbk',
+          videoIdAf: '2gasdlPK940'
         }
       ]
     },
@@ -46,7 +48,8 @@ export const algebraGr10: TopicContent = {
         {
           type: 'video',
           title: 'Watch: 8) Factorising trinomials grade 10 | Part 2 — Kevinmathscience',
-          videoId: 'Py1WZEpdcRg'
+          videoId: 'Py1WZEpdcRg',
+          videoIdAf: 'AJf7yfKFDIw'
         }
       ]
     },
@@ -57,7 +60,8 @@ export const algebraGr10: TopicContent = {
         {
           type: 'video',
           title: 'Watch: 10) Difference of Cubes Grade 10 — Kevinmathscience',
-          videoId: 'Dqjk_9taDoI'
+          videoId: 'Dqjk_9taDoI',
+          videoIdAf: 'tBSJm_TTXCo'
         }
       ]
     },
@@ -68,7 +72,8 @@ export const algebraGr10: TopicContent = {
         {
           type: 'video',
           title: 'Watch: Equations Grade 10: Linear Equation without fraction — Kevinmathscience',
-          videoId: 'LHAq_5VmxRU'
+          videoId: 'LHAq_5VmxRU',
+          videoIdAf: 'LZQnMy9ztfk'
         }
       ]
     },
@@ -79,7 +84,8 @@ export const algebraGr10: TopicContent = {
         {
           type: 'video',
           title: 'Watch: Quadratic Equations Grade 10 — Kevinmathscience',
-          videoId: 'z-aP8HQA-dk'
+          videoId: 'z-aP8HQA-dk',
+          videoIdAf: 'b4Z_V04fjVs'
         }
       ]
     },
@@ -90,7 +96,8 @@ export const algebraGr10: TopicContent = {
         {
           type: 'video',
           title: 'Watch: Simultaneous Equations grade 10 | Introduction to Elimination and Substitution — Kevinmathscience',
-          videoId: 'o5JosuKTUyA'
+          videoId: 'o5JosuKTUyA',
+          videoIdAf: 'zRS-ZFpvzR8'
         }
       ]
     },
@@ -101,7 +108,8 @@ export const algebraGr10: TopicContent = {
         {
           type: 'video',
           title: 'Watch: Grade 10 Inequalities — Kevinmathscience',
-          videoId: 'OFX7zmbEmro'
+          videoId: 'OFX7zmbEmro',
+          videoIdAf: 'A3sUu-gFfAw'
         }
       ]
     }

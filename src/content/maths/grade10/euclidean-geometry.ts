@@ -11,6 +11,7 @@ export const euclideanGeometryGr10: TopicContent = {
   // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
   // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
   // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
+  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
   sections: [
     {
       id: 'overview',
@@ -36,7 +37,8 @@ export const euclideanGeometryGr10: TopicContent = {
         {
           type: 'video',
           title: 'Watch: Euclidean Geometry Grade 10: Opposite angles Parallelogram — Kevinmathscience',
-          videoId: 'vWpzk0-tXzc'
+          videoId: 'vWpzk0-tXzc',
+          videoIdAf: 'ThYkub-VRLg'
         }
       ]
     },
@@ -47,7 +49,8 @@ export const euclideanGeometryGr10: TopicContent = {
         {
           type: 'video',
           title: 'Watch: Euclidean Geometry Grade 10: What is a parallelogram? — Kevinmathscience',
-          videoId: 'g5Z0eGEKtSs'
+          videoId: 'g5Z0eGEKtSs',
+          videoIdAf: 'I5X9Cx73Vz0'
         }
       ]
     },
@@ -58,7 +61,8 @@ export const euclideanGeometryGr10: TopicContent = {
         {
           type: 'video',
           title: 'Watch: Euclidean Geometry Grade 10: Midpoint Theorem Introduction — Kevinmathscience',
-          videoId: 'tlqb3NSFQ_0'
+          videoId: 'tlqb3NSFQ_0',
+          videoIdAf: 'v1-A2561yqk'
         }
       ]
     }

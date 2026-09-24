@@ -12,6 +12,7 @@ export const numberPatternsGr11: TopicContent = {
   title: 'Number Patterns',
   capsWeight: 0,
   // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
+  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
   sections: [
     {
       id: 'overview',

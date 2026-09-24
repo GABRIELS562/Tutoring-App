@@ -9,6 +9,7 @@ export const euclideanGeometryGr11: TopicContent = {
   title: 'Euclidean Geometry',
   capsWeight: 25,
   // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
+  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
   sections: [
     {
       id: 'overview',
@@ -60,7 +61,8 @@ export const euclideanGeometryGr11: TopicContent = {
         {
           type: 'video',
           title: 'Watch: Circle Geometry Grade 11 : Cyclic Quadrilateral — Kevinmathscience',
-          videoId: 'QzWrAgv77Wc'
+          videoId: 'QzWrAgv77Wc',
+          videoIdAf: 'BDJj5iCEDmc'
         }
       ]
     },
@@ -71,7 +73,8 @@ export const euclideanGeometryGr11: TopicContent = {
         {
           type: 'video',
           title: 'Watch: Circle Geometry Grade 11 : Common Tangent — Kevinmathscience',
-          videoId: '5rbzBMXkX54'
+          videoId: '5rbzBMXkX54',
+          videoIdAf: 'w5nJdK5AdFQ'
         }
       ]
     }

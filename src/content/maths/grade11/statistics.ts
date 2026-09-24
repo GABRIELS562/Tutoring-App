@@ -9,6 +9,7 @@ export const statisticsGr11: TopicContent = {
   title: 'Statistics',
   capsWeight: 15,
   // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
+  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
   sections: [
     {
       id: 'overview',
@@ -44,7 +45,8 @@ export const statisticsGr11: TopicContent = {
         {
           type: 'video',
           title: 'Watch: Statistics Grade 11: Ogive curve — Kevinmathscience',
-          videoId: 'CTj0OE6lkkg'
+          videoId: 'CTj0OE6lkkg',
+          videoIdAf: 'ucyLKgz8O_k'
         }
       ]
     },
