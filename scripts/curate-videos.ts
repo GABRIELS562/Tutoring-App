@@ -25,6 +25,17 @@
  */
 import { writeFileSync, mkdirSync, existsSync, readFileSync } from 'node:fs'
 import { capsCurriculum, type CapsTopic } from '../src/content/caps-curriculum'
+import { capsScienceCurriculum } from '../src/content/caps-science-curriculum'
+
+/**
+ * `--subject science` curates Physical Sciences instead of Maths. It changes
+ * which curriculum is read, which subjects count as the WRONG subject, and
+ * which words are discriminating - a maths video is the wrong answer for a
+ * science sub-topic exactly as a physics one was for a maths sub-topic.
+ */
+const SUBJECT: 'maths' | 'science' =
+  process.argv[process.argv.indexOf('--subject') + 1] === 'science' ? 'science' : 'maths'
+const IS_SCIENCE = SUBJECT === 'science'
 import { AFRIKAANS_CHANNELS, AFRIKAANS_TERMS, afrikaansQueries } from './lib/afrikaans'
 
 /**
@@ -261,6 +272,22 @@ async function isEmbeddable(videoId: string): Promise<boolean> {
  * the wrong lesson. Titles naming no topic at all are left alone, since most
  * are simply terse.
  */
+/**
+ * Science topic markers, the counterpart of the maths ones below. Keyed by
+ * the slug minus its grade suffix, so mechanics-gr10 and mechanics-gr12
+ * share an entry.
+ */
+const SCIENCE_TOPIC_MARKERS: Record<string, RegExp> = {
+  mechanics: /mechanic|momentum|impulse|projectile|newton|velocit|accelerat|displacement|friction|work.{0,12}energy|\bpower\b|gravitation/i,
+  'waves-sound-light': /wave|sound|light|doppler|refract|snell|diffract|optic|ultrasound|spectrum|photon|electromagnetic/i,
+  'electricity-magnetism': /electric|magnet|circuit|resistor|resistance|voltage|\bemf\b|ohm|coulomb|faraday|solenoid|generator|motor|alternating/i,
+  'optical-phenomena': /photo-?electric|work function|emission spectr|absorption spectr|photon/i,
+  'matter-materials': /atom|periodic|bonding|isotope|electron configuration|intermolecular|molecular shape|lewis|vsepr|gas law|kinetic (molecular )?theory/i,
+  'organic-chemistry': /organic|alkane|alkene|alcohol|ester|isomer|polymer|iupac|functional group|cracking/i,
+  'chemical-change': /stoichiometr|\bmole\b|molar|titration|redox|galvanic|electrolytic|equilibrium|catalyst|acid|\bbase|oxidation|precipitat|balancing|endothermic|exothermic/i,
+  'chemical-systems': /hydrosphere|lithosphere|mining|fertilizer|haber|ostwald|eutrophication|water quality|fossil fuel/i,
+}
+
 const SEQUENCE_RE = /number pattern|getalpatro|sequence|series|\brye\b|reekse/i
 
 const TOPIC_MARKERS: Record<string, RegExp> = {
@@ -286,12 +313,35 @@ function topicKey(slug: string): string {
 }
 
 export function isOtherMathsTopic(slug: string, title: string): boolean {
+  const markers = IS_SCIENCE ? SCIENCE_TOPIC_MARKERS : TOPIC_MARKERS
   const key = topicKey(slug)
-  const own = TOPIC_MARKERS[key]
+  const own = markers[key]
   if (own?.test(title)) return false
-  return Object.entries(TOPIC_MARKERS).some(
+  return Object.entries(markers).some(
     ([other, pattern]) => other !== key && pattern.test(title)
   )
+}
+
+/**
+ * Physical Sciences is one subject examined as two papers, and its halves
+ * share vocabulary: "power" is in Work Energy & Power and in electric
+ * circuits, "energy" is in mechanics and in bond energy, "conservation"
+ * covers momentum and mass. Maths never needed this because its papers do
+ * not compete for the same words.
+ *
+ * Only decides when a title clearly names one half and not the other; a
+ * title naming neither is left to the other filters.
+ */
+const PHYSICS_RE =
+  /\bphysics\b|mechanic|momentum|impulse|velocit|accelerat|projectile|newton|free body|friction|circuit|resistor|\bemf\b|voltage|\bcurrent\b|ohm|magnet|solenoid|faraday|doppler|photo-?electric|refract|snell|diffract|wavefront|generator|alternating current/i
+const CHEMISTRY_RE =
+  /\bchemistry\b|chemical|\bmole\b|molar|stoichiometr|titration|\bacid|\bbase[s]?\b|\bph\b|redox|galvanic|electrolytic|electrochem|organic|alkane|alkene|alcohol|ester|polymer|equilibrium|periodic table|bonding|intermolecular|gas law|fertilizer|haber|ostwald|isomer|oxidation number/i
+
+export function isWrongPaper(paper: 1 | 2, title: string): boolean {
+  const physics = PHYSICS_RE.test(title)
+  const chemistry = CHEMISTRY_RE.test(title)
+  if (paper === 1) return chemistry && !physics
+  return physics && !chemistry
 }
 
 function gradesNamedIn(title: string): number[] {
@@ -332,10 +382,25 @@ function isMathsLit(title: string, channel: string): boolean {
  * perpendicular lines" matched a vectors video about perpendicular
  * components. This is a maths curriculum; those are a different subject.
  */
+const NOT_MATHS =
+  /physical science|physics|chemistry|chemical|life science|biology|geography|accounting|economics|business studies|vectors? in 2d|newton|doppler|velocity|momentum|electric|circuit|fisiese wetenskap|wetenskap|chemie|biologie|lewenswetenskappe|rekeningkunde|\brek\b|besigheidstudies/i
+
+/**
+ * For science the same guard runs the other way: a maths lesson is the wrong
+ * answer for a science sub-topic. Natural Sciences is the Grade 8-9 subject
+ * that precedes Physical Sciences and covers the same words far more
+ * shallowly, so it is excluded too, as are Life Sciences and Maths Lit.
+ */
+const NOT_SCIENCE =
+  /\bmaths?\b|mathematic|wiskunde|algebra|\btrig\b|trigonometr|calculus|geometry|meetkunde|parabola|hyperbola|quadratic|logarithm|life science|lewenswetenskappe|biology|natural science|natuurwetenskap|accounting|economics|geography/i
+
+/** Pure form, so both directions are testable without re-reading argv. */
+export function isOtherSubjectFor(subject: 'maths' | 'science', title: string): boolean {
+  return (subject === 'science' ? NOT_SCIENCE : NOT_MATHS).test(title)
+}
+
 export function isOtherSubject(title: string): boolean {
-  return /physical science|physics|chemistry|chemical|life science|biology|geography|accounting|economics|business studies|vectors? in 2d|newton|doppler|velocity|momentum|electric|circuit|fisiese wetenskap|wetenskap|chemie|biologie|lewenswetenskappe|rekeningkunde|\brek\b|besigheidstudies/i.test(
-    title
-  )
+  return isOtherSubjectFor(SUBJECT, title)
 }
 
 /**
@@ -455,7 +520,26 @@ function tokenise(text: string): string[] {
  * two squares" video (squares are not cubes), and "the exponent laws"
  * matched "exponential equation" - both plausible-looking, both wrong.
  */
-const DISCRIMINATING = [
+const SCIENCE_DISCRIMINATING = [
+  // Physics concepts that name the lesson
+  'momentum', 'impulse', 'projectile', 'doppler', 'photoelectric', 'refraction',
+  'diffraction', 'snell', 'wavefront', 'coulomb', 'faraday', 'ohm', 'generator',
+  'motor', 'solenoid', 'emf', 'resistor', 'resistance', 'magnetic', 'electrostatic',
+  'acceleration', 'velocity', 'displacement', 'friction', 'gravitation', 'inertia',
+  'scalar', 'vector', 'photon', 'spectra', 'spectrum', 'ultrasound', 'longitudinal',
+  'transverse', 'amplitude', 'wavelength', 'frequency', 'work', 'power',
+  // Chemistry concepts that name the lesson
+  'stoichiometry', 'mole', 'molar', 'titration', 'redox', 'galvanic', 'electrolytic',
+  'equilibrium', 'catalyst', 'isomer', 'ester', 'alkane', 'alkene', 'polymer',
+  'polymerisation', 'cracking', 'substitution', 'elimination', 'oxidation',
+  'electronegativity', 'intermolecular', 'lewis', 'vsepr', 'isotope', 'periodic',
+  'precipitation', 'hydrolysis', 'haber', 'ostwald', 'eutrophication', 'fertilizer',
+  'lithosphere', 'hydrosphere', 'ionic', 'covalent', 'metallic', 'exothermic',
+  'endothermic', 'activation', 'empirical', 'concentration', 'electrolysis',
+  'functional', 'iupac', 'valence', 'kinetic', 'hydration',
+]
+
+const MATHS_DISCRIMINATING = [
   'cubes', 'squares', 'trinomials', 'laws', 'hyperbolic', 'exponential',
   'logarithms', 'sigma', 'ogives', 'annuities', 'permutations', 'inverse',
   'limit', 'principles', 'compound', 'simple', 'depreciation', 'hire',
@@ -504,7 +588,8 @@ function requiredTerms(subTopic: string): string[] {
   // Compare on stems: CAPS writes "Tangents to circles" while the term list
   // holds "circle", and an exact match would silently drop the requirement.
   const stems = new Set(tokens.map(stem))
-  return DISCRIMINATING.filter((term) => stems.has(stem(term)) && !neutralised.has(term))
+  const terms = IS_SCIENCE ? SCIENCE_DISCRIMINATING : MATHS_DISCRIMINATING
+  return terms.filter((term) => stems.has(stem(term)) && !neutralised.has(term))
 }
 
 export function hasRequiredTerms(subTopic: string, title: string): boolean {
@@ -628,6 +713,19 @@ function byTier(subTopic: string) {
 function queriesFor(topic: CapsTopic, subTopic: string): string[] {
   if (IS_AFRIKAANS) return afrikaansQueries(subTopic, topic.grade)
   const g = `grade ${topic.grade}`
+  if (IS_SCIENCE) {
+    // SA science channels title by subject name far more than maths ones do
+    // ("Physical Sciences Grade 11: Snell's Law"), so the subject goes in.
+    const terms = tokenise(subTopic).slice(0, 3).join(' ')
+    return [
+      `${subTopic} ${g} physical sciences caps`,
+      `physical sciences ${g} ${terms}`,
+      `${terms} ${g} south africa`,
+      `kevinmathscience ${terms} ${g}`,
+      `${topic.title} ${g} ${terms}`,
+      `${subTopic} ${g}`,
+    ]
+  }
   // The distinctive words of the sub-topic, without the connectives -
   // CAPS channels title tersely ("Gradient formula"), so a long natural
   // phrase matches nothing. The first run missed a 286k-view
@@ -672,6 +770,7 @@ async function curateSubTopic(
       .filter((v) => !isOtherSubject(v.title))
       .filter((v) => !isSchoolTerm(subTopic, v.title))
       .filter((v) => !isOtherMathsTopic(topic.slug, v.title))
+      .filter((v) => !(IS_SCIENCE && isWrongPaper(topic.paper, v.title)))
       .map((v) => {
         const saChannel = (IS_AFRIKAANS ? AFRIKAANS_CHANNELS : SA_CHANNELS).has(v.channel)
         return { ...v, saChannel, embeddable: false, score: 0 }
@@ -719,29 +818,50 @@ async function curateSubTopic(
   }
 }
 
+/** Where a grade's picks live; science and Afrikaans each get their own file. */
+function candidatesPath(grade: number): string {
+  const subject = IS_SCIENCE ? 'sci-' : ''
+  const lang = IS_AFRIKAANS ? 'af-' : ''
+  return `docs/curriculum/candidates-${subject}${lang}gr${grade}.json`
+}
+
 async function main() {
   const args = process.argv.slice(2)
   const gradeArg = args[args.indexOf('--grade') + 1]
   const grade = parseInt(gradeArg, 10)
   if (![10, 11, 12].includes(grade)) {
-    console.error('Usage: npx tsx scripts/curate-videos.ts --grade <10|11|12> [--limit N]')
+    console.error(
+      'Usage: npx tsx scripts/curate-videos.ts --grade <10|11|12> [--subject science] [--lang af] [--limit N]'
+    )
     process.exit(1)
   }
   const limitIdx = args.indexOf('--limit')
   const limit = limitIdx >= 0 ? parseInt(args[limitIdx + 1], 10) : Infinity
 
-  const topics = capsCurriculum.filter((t) => t.grade === grade)
+  const curriculum: CapsTopic[] = IS_SCIENCE
+    ? capsScienceCurriculum.map(({ slug, title, grade: g, paper, subTopics }) => ({
+        slug,
+        title,
+        grade: g,
+        paper,
+        subTopics,
+      }))
+    : capsCurriculum
+  const topics = curriculum.filter((t) => t.grade === grade)
   const units = topics.flatMap((topic) => topic.subTopics.map((subTopic) => ({ topic, subTopic })))
   const todo = units.slice(0, limit)
 
-  console.log(`Curating Grade ${grade}: ${todo.length} sub-topics across ${topics.length} topics\n`)
+  console.log(
+    `Curating ${IS_SCIENCE ? 'Physical Sciences' : 'Maths'} Grade ${grade}` +
+      `${IS_AFRIKAANS ? ' (Afrikaans)' : ''}: ${todo.length} sub-topics across ${topics.length} topics\n`
+  )
 
   const out: CuratedSubTopic[] = []
   // Seed with videos already curated for OTHER grades: one video cannot be
   // the lesson for a Grade 10 sub-topic and a Grade 11 one as well.
   const usedVideoIds = new Set<string>()
   for (const other of [10, 11, 12].filter((g) => g !== grade)) {
-    const path = `docs/curriculum/candidates-${IS_AFRIKAANS ? 'af-' : ''}gr${other}.json`
+    const path = candidatesPath(other)
     if (!existsSync(path)) continue
     for (const entry of JSON.parse(readFileSync(path, 'utf8')) as CuratedSubTopic[]) {
       if (entry.pick) usedVideoIds.add(entry.pick.id)
@@ -762,7 +882,7 @@ async function main() {
   }
 
   mkdirSync('docs/curriculum', { recursive: true })
-  const path = `docs/curriculum/candidates-${IS_AFRIKAANS ? 'af-' : ''}gr${grade}.json`
+  const path = candidatesPath(grade)
   writeFileSync(path, JSON.stringify(out, null, 2))
 
   const withPick = out.filter((o) => o.pick).length
