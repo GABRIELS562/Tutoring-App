@@ -285,7 +285,7 @@ async function isEmbeddable(videoId: string): Promise<boolean> {
  * share an entry.
  */
 const SCIENCE_TOPIC_MARKERS: Record<string, RegExp> = {
-  mechanics: /mechanic|momentum|impulse|projectile|newton|velocit|accelerat|displacement|friction|work.{0,12}energy|\bpower\b|gravitation/i,
+  mechanics: /mechanic|momentum|impulse|projectile|newton|velocit|accelerat|displacement|friction|work.{0,12}energy|\bwep\b|gravitation/i,
   'waves-sound-light': /wave|sound|light|doppler|refract|snell|diffract|optic|ultrasound|spectrum|photon|electromagnetic/i,
   'electricity-magnetism': /electric|magnet|circuit|resistor|resistance|voltage|\bemf\b|ohm|coulomb|faraday|solenoid|generator|motor|alternating/i,
   'optical-phenomena': /photo-?electric|work function|emission spectr|absorption spectr|photon/i,
@@ -558,6 +558,14 @@ const SCIENCE_DISCRIMINATING = [
   'lithosphere', 'hydrosphere', 'ionic', 'covalent', 'metallic', 'exothermic',
   'endothermic', 'activation', 'empirical', 'concentration', 'electrolysis',
   'functional', 'iupac', 'valence', 'kinetic', 'hydration',
+  // Grade 12 review: each of these names the lesson, and without it a video
+  // about the neighbouring concept stood in. "Equilibrium Graphs" was
+  // serving Le Chatelier, "General Formula | Alkanes" was serving addition
+  // reactions of alkenes, and "Exam question functions gr 12" - a maths
+  // title - was serving the function of N, P and K in plants.
+  'chatelier', 'addition', 'reversible', 'combustion', 'polymerisation',
+  'collision', 'nitrogen', 'phosphorus', 'potassium', 'eutrophication',
+  'threshold', 'conjugate', 'indicator', 'hydrolysis', 'phase', 'refractive',
 ]
 
 const MATHS_DISCRIMINATING = [
@@ -733,11 +741,27 @@ const MIN_VIEWS = IS_AFRIKAANS ? 300 : 2000
  * 52-minute video beat a 445,000-view, 5-minute one from Kevinmathscience,
  * purely because its title happened to contain the word "solving".
  */
+/**
+ * A walkthrough of past-paper questions, not a lesson. These rank well - they
+ * are popular and their titles carry the topic words - but a student opening
+ * a sub-topic for the first time wants to be taught it, not shown a memo.
+ * Grade 11 Mechanics picked four of them in a row before this.
+ *
+ * A penalty rather than a filter: where no lesson exists, an exam
+ * walkthrough still beats a blank.
+ */
+export function isExamWalkthrough(title: string): boolean {
+  return EXAM_WALKTHROUGH.test(title)
+}
+
+const EXAM_WALKTHROUGH = /exam question|exam practice|past paper|\bmemo\b|question paper|revision question|exam paper|walkthrough/i
+
 function scoreCandidate(c: Omit<Candidate, 'score'>, subTopic: string): number {
   const score =
     Math.log10(Math.max(c.views, 1)) * 10 +
     relevance(subTopic, c.title) * 15 +
     (c.saChannel ? 8 : 0) -
+    (EXAM_WALKTHROUGH.test(c.title) ? 12 : 0) -
     (c.durationSeconds > PREFERRED_MAX_SECONDS ? 5 : 0) -
     (c.durationSeconds > 45 * 60 ? 5 : 0)
   return Math.round(score * 10) / 10

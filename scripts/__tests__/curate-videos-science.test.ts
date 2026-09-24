@@ -16,7 +16,12 @@
  * These run with --subject science set, since the module reads argv once.
  */
 import { describe, it, expect } from 'vitest'
-import { isWrongPaper, isOtherSubjectFor, hasRequiredTermsFor } from '../curate-videos'
+import {
+  isWrongPaper,
+  isOtherSubjectFor,
+  hasRequiredTermsFor,
+  isExamWalkthrough,
+} from '../curate-videos'
 
 describe('the physics/chemistry paper guard', () => {
   it('keeps a chemistry video out of a physics sub-topic', () => {
@@ -144,5 +149,57 @@ describe('only a list after a colon is an enumeration', () => {
         'Redox reactions Grade 11 Chemistry'
       )
     ).toBe(true)
+  })
+})
+
+describe('Grade 12 near-miss picks', () => {
+  const rejects: [string, string][] = [
+    ["Le Chatelier's principle", 'Equilibrium Graphs grade 12: Introduction'],
+    ['Addition reactions of alkenes', 'General Formula Organic Chemistry Gr 12 | Alkanes'],
+    ['The function of nitrogen, phosphorus and potassium in plants', 'Exam question functions gr 12'],
+    ['Collision theory, activation energy and catalysts', 'Rate of Reaction Grade 12'],
+    ['Combustion of alkanes and the preparation of esters', 'Naming alkanes Grade 12'],
+  ]
+
+  it.each(rejects)('%s does not accept "%s"', (subTopic, title) => {
+    expect(hasRequiredTermsFor('science', subTopic, title)).toBe(false)
+  })
+
+  it('accepts the video that names the concept', () => {
+    expect(
+      hasRequiredTermsFor(
+        'science',
+        "Le Chatelier's principle",
+        "Le Chatelier's Principle Grade 12"
+      )
+    ).toBe(true)
+    expect(
+      hasRequiredTermsFor(
+        'science',
+        'Addition reactions of alkenes',
+        'Addition reactions of alkenes Grade 12'
+      )
+    ).toBe(true)
+  })
+})
+
+describe('lessons outrank exam walkthroughs', () => {
+  it('marks a past-paper walkthrough as such', () => {
+    const walkthroughs = [
+      'Newton laws exam questions',
+      "Newton's Laws Exam Practice Question Gr 11 and 12",
+      'Full Memo Grade 10 Physical Sciences March',
+      'Physical Sciences Grade 12 past paper walkthrough',
+    ]
+    for (const title of walkthroughs) expect(isExamWalkthrough(title)).toBe(true)
+  })
+
+  it('does not mark an ordinary lesson as one', () => {
+    const lessons = [
+      "Newton's Third Law of Motion Grade 11 Physics",
+      'Momentum and Impulse Grade 12',
+      'Questions about acids and bases',
+    ]
+    for (const title of lessons) expect(isExamWalkthrough(title)).toBe(false)
   })
 })
