@@ -36,6 +36,13 @@ import { capsScienceCurriculum } from '../src/content/caps-science-curriculum'
 const SUBJECT: 'maths' | 'science' =
   process.argv[process.argv.indexOf('--subject') + 1] === 'science' ? 'science' : 'maths'
 const IS_SCIENCE = SUBJECT === 'science'
+
+/**
+ * `--explain` prints, for each sub-topic, the best candidates that were
+ * rejected and which filter rejected them. A blank result is either "no such
+ * video exists" or "a filter is too strict", and those need telling apart.
+ */
+const EXPLAIN = process.argv.includes('--explain')
 import { AFRIKAANS_CHANNELS, AFRIKAANS_TERMS, afrikaansQueries } from './lib/afrikaans'
 
 /**
@@ -479,6 +486,19 @@ const SYNONYMS: Record<string, string[]> = IS_AFRIKAANS
 
 
 /** Crude singular/plural fold - "parallelograms" should match "Parallelogram". */
+/**
+ * Is this sub-topic listing alternatives rather than naming one concept?
+ *
+ * Only a comma list AFTER a colon counts - "Chemical bonding: covalent, ionic
+ * and metallic" names three bond types, any one of which is the lesson. A bare
+ * comma usually joins two different concepts instead: "Molar mass, percentage
+ * composition and empirical formula" is one topic covering all three, and
+ * relaxing it let a molar VOLUME video stand in for molar mass.
+ */
+function isEnumeratedList(subTopic: string): boolean {
+  return /:[^:]*,/.test(subTopic)
+}
+
 function stem(word: string): string {
   return word.endsWith('ies') ? word.slice(0, -3) + 'y' : word.replace(/s$/, '')
 }
@@ -528,6 +548,7 @@ const SCIENCE_DISCRIMINATING = [
   'acceleration', 'velocity', 'displacement', 'friction', 'gravitation', 'inertia',
   'scalar', 'vector', 'photon', 'spectra', 'spectrum', 'ultrasound', 'longitudinal',
   'transverse', 'amplitude', 'wavelength', 'frequency', 'work', 'power',
+  'instantaneous', 'superposition', 'pitch', 'loudness', 'compass', 'polarisation',
   // Chemistry concepts that name the lesson
   'stoichiometry', 'mole', 'molar', 'titration', 'redox', 'galvanic', 'electrolytic',
   'equilibrium', 'catalyst', 'isomer', 'ester', 'alkane', 'alkene', 'polymer',
@@ -580,7 +601,7 @@ const EXCLUSIVE_PAIRS: [string, string][] = [
 ]
 
 /** Discriminating terms this sub-topic names, which a title must also name. */
-function requiredTerms(subTopic: string): string[] {
+function requiredTerms(subTopic: string, subject: 'maths' | 'science' = SUBJECT): string[] {
   const tokens = tokenise(subTopic)
   const neutralised = new Set(
     EXCLUSIVE_PAIRS.filter(([a, b]) => tokens.includes(a) && tokens.includes(b)).flat()
@@ -588,15 +609,34 @@ function requiredTerms(subTopic: string): string[] {
   // Compare on stems: CAPS writes "Tangents to circles" while the term list
   // holds "circle", and an exact match would silently drop the requirement.
   const stems = new Set(tokens.map(stem))
-  const terms = IS_SCIENCE ? SCIENCE_DISCRIMINATING : MATHS_DISCRIMINATING
+  const terms = subject === 'science' ? SCIENCE_DISCRIMINATING : MATHS_DISCRIMINATING
   return terms.filter((term) => stems.has(stem(term)) && !neutralised.has(term))
 }
 
-export function hasRequiredTerms(subTopic: string, title: string): boolean {
+/** Pure form, so science rules are testable without re-reading argv. */
+export function hasRequiredTermsFor(
+  subject: 'maths' | 'science',
+  subTopic: string,
+  title: string
+): boolean {
   const haystack = ` ${title.toLowerCase()} `
-  return requiredTerms(subTopic).every((term) =>
+  const required = requiredTerms(subTopic, subject)
+  if (required.length === 0) return true
+
+  const matches = (term: string) =>
     [term, ...(SYNONYMS[term] ?? [])].some((form) => containsTerm(haystack, form))
-  )
+
+  // A comma means CAPS is listing alternatives - "Chemical bonding: covalent,
+  // ionic and metallic" is three bond types, and no single video names all
+  // three. Demanding every one of them left the whole sub-topic blank while
+  // Kevinmathscience had a perfectly good ionic bonding lesson. One of the
+  // listed concepts is enough; a sub-topic naming a single concept still has
+  // to match it.
+  return isEnumeratedList(subTopic) ? required.some(matches) : required.every(matches)
+}
+
+export function hasRequiredTerms(subTopic: string, title: string): boolean {
+  return hasRequiredTermsFor(SUBJECT, subTopic, title)
 }
 
 /**
@@ -626,6 +666,10 @@ export function relevance(subTopic: string, title: string): number {
   // channel titles it "Box and whisker", and that is the same lesson.
   // A comma means CAPS is enumerating ("Lines, angles and triangles"), not
   // naming one precise concept, and no single video covers every item.
+  // Looser than isEnumeratedList on purpose. Here any comma means CAPS is
+  // enumerating and no one video covers every item ("Lines, angles and
+  // triangles"), so partial matching is fine. Deciding whether a REQUIRED
+  // concept may be dropped is a stricter question - see isEnumeratedList.
   const isEnumeration = subTopic.includes(',')
   // Either half of an exclusive pair standing alone still teaches the
   // sub-topic: "Independent events" is the lesson for "Dependent and
@@ -760,6 +804,30 @@ async function curateSubTopic(
     allowAdjacent
       ? !wrongGrade(v.title, topic.grade) || adjacentGrade(v.title, topic.grade)
       : !wrongGrade(v.title, topic.grade)
+
+  if (EXPLAIN) {
+    const ranked = [...seen.values()].sort((a, b) => b.views - a.views).slice(0, 12)
+    console.log(`\n  --- ${subTopic}: ${seen.size} candidates found`)
+    for (const v of ranked) {
+      const why: string[] = []
+      if (!SA_CHANNELS.has(v.channel) && !(IS_AFRIKAANS && AFRIKAANS_CHANNELS.has(v.channel)))
+        why.push('not-a-CAPS-channel')
+      if (isMathsLit(v.title, v.channel)) why.push('maths-lit')
+      if (isOtherSubject(v.title)) why.push('other-subject')
+      if (isOtherMathsTopic(topic.slug, v.title)) why.push('other-topic')
+      if (IS_SCIENCE && isWrongPaper(topic.paper, v.title)) why.push('wrong-paper')
+      if (wrongGrade(v.title, topic.grade) && !adjacentGrade(v.title, topic.grade))
+        why.push('wrong-grade')
+      const rel = relevance(subTopic, v.title)
+      if (rel < MIN_RELEVANCE) why.push(`relevance ${rel.toFixed(2)}`)
+      else if (!hasRequiredTerms(subTopic, v.title)) why.push('missing-required-term')
+      if (v.views < MIN_VIEWS) why.push(`views ${v.views}`)
+      console.log(
+        `      ${String(v.views).padStart(8)}  ${why.length ? 'reject: ' + why.join(', ') : '** would accept **'}`
+      )
+      console.log(`                ${v.title.slice(0, 74)}  [${v.channel}]`)
+    }
+  }
 
   const shortlist = (allowAdjacent: boolean) =>
     [...seen.values()]

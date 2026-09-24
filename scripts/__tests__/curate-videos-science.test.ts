@@ -16,7 +16,7 @@
  * These run with --subject science set, since the module reads argv once.
  */
 import { describe, it, expect } from 'vitest'
-import { isWrongPaper, isOtherSubjectFor } from '../curate-videos'
+import { isWrongPaper, isOtherSubjectFor, hasRequiredTermsFor } from '../curate-videos'
 
 describe('the physics/chemistry paper guard', () => {
   it('keeps a chemistry video out of a physics sub-topic', () => {
@@ -84,5 +84,65 @@ describe('the subject guard runs both ways', () => {
       "Snell's Law Grade 11",
     ]
     for (const title of titles) expect(isOtherSubjectFor('science', title)).toBe(false)
+  })
+})
+
+describe('CAPS enumerations list alternatives, not requirements', () => {
+  it('accepts a video covering one of the listed bond types', () => {
+    // CAPS says "covalent, ionic and metallic"; no single video names all
+    // three, and demanding all of them left the sub-topic blank while
+    // Kevinmathscience had a perfectly good ionic bonding lesson.
+    expect(
+      hasRequiredTermsFor(
+        'science',
+        'Chemical bonding: covalent, ionic and metallic',
+        '24) Ionic Bonding Grade 10'
+      )
+    ).toBe(true)
+    expect(
+      hasRequiredTermsFor(
+        'science',
+        'Chemical bonding: covalent, ionic and metallic',
+        'Covalent Bonding Grade 10 Physical Sciences'
+      )
+    ).toBe(true)
+  })
+
+  it('still rejects a video about none of the listed concepts', () => {
+    expect(
+      hasRequiredTermsFor('science', 'Chemical bonding: covalent, ionic and metallic', 'Stoichiometry Grade 10')
+    ).toBe(false)
+  })
+
+  it('does not relax a sub-topic that names a single concept', () => {
+    // No comma, so the concept is still compulsory.
+    expect(hasRequiredTermsFor('science', 'Conservation of momentum', 'Stoichiometry Grade 10')).toBe(false)
+    expect(hasRequiredTermsFor('science', 'Conservation of momentum', 'Conservation of momentum Grade 12')).toBe(
+      true
+    )
+  })
+})
+
+describe('only a list after a colon is an enumeration', () => {
+  it('does not relax a comma that joins two different concepts', () => {
+    // No colon: this sub-topic covers both halves, and relaxing it let a
+    // stoichiometry video stand in for physical and chemical change.
+    expect(
+      hasRequiredTermsFor(
+        'science',
+        'Molar mass, percentage composition and empirical formula',
+        'Quantitative Aspects of Chemical Change: Molar Volume'
+      )
+    ).toBe(false)
+  })
+
+  it('still relaxes a genuine list after a colon', () => {
+    expect(
+      hasRequiredTermsFor(
+        'science',
+        'Reaction types: ion exchange, gas forming, acid-base and redox',
+        'Redox reactions Grade 11 Chemistry'
+      )
+    ).toBe(true)
   })
 })
