@@ -6,12 +6,12 @@ export const matterMaterialsGr10: TopicContent = {
   subject: 'science',
   grade: 10,
   paper: 2,
-  title: 'Matter and Materials',
+  title: 'Matter & Materials',
   capsWeight: 20,
   sections: [
     {
       id: 'coming-soon',
-      title: 'Matter and Materials',
+      title: 'Matter & Materials',
       blocks: [
         {
           type: 'theory',

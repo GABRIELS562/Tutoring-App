@@ -1,5 +1,23 @@
 import type { Grade, Subject, TopicContent } from '@/types'
 import { capsCurriculum } from '@/content/caps-curriculum'
+import { capsScienceCurriculum } from '@/content/caps-science-curriculum'
+import { wavesSoundLightGr10 } from '@/content/science/grade10/waves-sound-light'
+import { electricityMagnetismGr10 } from '@/content/science/grade10/electricity-magnetism'
+import { chemicalChangeGr10 } from '@/content/science/grade10/chemical-change'
+import { chemicalSystemsGr10 } from '@/content/science/grade10/chemical-systems'
+import { mechanicsGr11 } from '@/content/science/grade11/mechanics'
+import { wavesSoundLightGr11 } from '@/content/science/grade11/waves-sound-light'
+import { electricityMagnetismGr11 } from '@/content/science/grade11/electricity-magnetism'
+import { matterMaterialsGr11 } from '@/content/science/grade11/matter-materials'
+import { chemicalChangeGr11 } from '@/content/science/grade11/chemical-change'
+import { chemicalSystemsGr11 } from '@/content/science/grade11/chemical-systems'
+import { mechanicsGr12 } from '@/content/science/grade12/mechanics'
+import { wavesSoundLightGr12 } from '@/content/science/grade12/waves-sound-light'
+import { electricityMagnetismGr12 } from '@/content/science/grade12/electricity-magnetism'
+import { opticalPhenomenaGr12 } from '@/content/science/grade12/optical-phenomena'
+import { organicChemistryGr12 } from '@/content/science/grade12/organic-chemistry'
+import { chemicalChangeGr12 } from '@/content/science/grade12/chemical-change'
+import { chemicalSystemsGr12 } from '@/content/science/grade12/chemical-systems'
 
 // Import content - Grade 10 Mathematics
 import { trigonometryGr10 } from '@/content/maths/grade10/trigonometry'
@@ -54,6 +72,25 @@ import { momentumGr12 } from '@/content/science/grade12/momentum'
  * should read from here rather than hand-maintaining its own copy.
  */
 export const contentRegistry: Record<string, TopicContent> = {
+  // ---- CAPS Physical Sciences (src/content/caps-science-curriculum.ts)
+  'waves-sound-light-gr10': wavesSoundLightGr10,
+  'electricity-magnetism-gr10': electricityMagnetismGr10,
+  'chemical-change-gr10': chemicalChangeGr10,
+  'chemical-systems-gr10': chemicalSystemsGr10,
+  'mechanics-gr11': mechanicsGr11,
+  'waves-sound-light-gr11': wavesSoundLightGr11,
+  'electricity-magnetism-gr11': electricityMagnetismGr11,
+  'matter-materials-gr11': matterMaterialsGr11,
+  'chemical-change-gr11': chemicalChangeGr11,
+  'chemical-systems-gr11': chemicalSystemsGr11,
+  'mechanics-gr12': mechanicsGr12,
+  'waves-sound-light-gr12': wavesSoundLightGr12,
+  'electricity-magnetism-gr12': electricityMagnetismGr12,
+  'optical-phenomena-gr12': opticalPhenomenaGr12,
+  'organic-chemistry-gr12': organicChemistryGr12,
+  'chemical-change-gr12': chemicalChangeGr12,
+  'chemical-systems-gr12': chemicalSystemsGr12,
+
   // Grade 10 Mathematics
   'trig-gr10': trigonometryGr10,
   'functions-gr10': functionsGr10,
@@ -92,16 +129,16 @@ export const contentRegistry: Record<string, TopicContent> = {
   'statistics-gr12': statisticsGr12,
   // Grade 10 Physical Sciences
   'mechanics-gr10': mechanicsGr10,
-  'waves-gr10': wavesGr10,
-  'sound-gr10': soundGr10,
-  'em-radiation-gr10': emRadiationGr10,
-  'electric-circuits-gr10': electricCircuitsGr10,
+  'waves-gr10': wavesSoundLightGr10, // folded into the CAPS topic
+  'sound-gr10': wavesSoundLightGr10, // folded into the CAPS topic
+  'em-radiation-gr10': wavesSoundLightGr10, // folded into the CAPS topic
+  'electric-circuits-gr10': electricityMagnetismGr10, // folded into the CAPS topic
   'matter-materials-gr10': matterMaterialsGr10,
   // Grade 11 Physical Sciences
-  'newtons-laws-gr11': newtonsLawsGr11,
-  'waves-sound-gr11': wavesSoundGr11,
+  'newtons-laws-gr11': mechanicsGr11, // folded into the CAPS topic
+  'waves-sound-gr11': wavesSoundLightGr11, // folded into the CAPS topic
   // Grade 12 Physical Sciences
-  'momentum-gr12': momentumGr12,
+  'momentum-gr12': mechanicsGr12, // folded into the CAPS topic
 }
 
 export type TopicMeta = {
@@ -147,8 +184,10 @@ export type RegisteredTopic = {
  * Algebra. Anything not in the handbook keeps its position at the end.
  */
 function capsOrder(slug: string): number {
-  const index = capsCurriculum.findIndex((topic) => topic.slug === slug)
-  return index === -1 ? Number.MAX_SAFE_INTEGER : index
+  const maths = capsCurriculum.findIndex((topic) => topic.slug === slug)
+  if (maths !== -1) return maths
+  const science = capsScienceCurriculum.findIndex((topic) => topic.slug === slug)
+  return science === -1 ? Number.MAX_SAFE_INTEGER : science
 }
 
 export function getTopicsForSubjectGrade(subject: Subject, grade: Grade): RegisteredTopic[] {
