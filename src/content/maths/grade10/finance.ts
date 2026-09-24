@@ -6,7 +6,7 @@ export const financeGr10: TopicContent = {
   subject: 'maths',
   grade: 10,
   paper: 1,
-  title: 'Finance and Growth',
+  title: 'Finance & Growth',
   capsWeight: 10,
   // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
   // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts

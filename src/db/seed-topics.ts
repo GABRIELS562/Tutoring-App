@@ -15,16 +15,7 @@ const topicsData = [
     capsWeightPercent: 20,
     sortOrder: 1,
   },
-  {
-    subject: 'maths',
-    grade: 10,
-    paper: 1,
-    name: 'Equations and Inequalities',
-    slug: 'equations-gr10',
-    term: 1,
-    capsWeightPercent: 15,
-    sortOrder: 2,
-  },
+  
   {
     subject: 'maths',
     grade: 10,

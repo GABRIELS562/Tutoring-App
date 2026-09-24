@@ -6,7 +6,7 @@ export const functionsGr10: TopicContent = {
   subject: 'maths',
   grade: 10,
   paper: 1,
-  title: 'Functions and Graphs',
+  title: 'Functions & Graphs',
   capsWeight: 25,
   // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
   // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts

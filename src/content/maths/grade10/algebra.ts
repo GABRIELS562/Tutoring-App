@@ -6,7 +6,7 @@ export const algebraGr10: TopicContent = {
   subject: 'maths',
   grade: 10,
   paper: 1,
-  title: 'Algebraic Expressions',
+  title: 'Algebra & Equations',
   capsWeight: 20,
   // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
   // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts

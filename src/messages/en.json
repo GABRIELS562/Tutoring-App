@@ -291,7 +291,8 @@
     "previewingGrade": "You're previewing Grade {grade} content. It unlocks once you reach that grade.",
     "noTopicsForGrade": "No topics available for Grade {grade} yet.",
     "backToAllSubjects": "← Back to all subjects",
-    "topicCount": "{count, plural, one {1 topic} other {# topics}}"
+    "topicCount": "{count, plural, one {1 topic} other {# topics}}",
+    "paperHeading": "Paper {number}"
   },
   "topicPage": {
     "contents": "Contents",

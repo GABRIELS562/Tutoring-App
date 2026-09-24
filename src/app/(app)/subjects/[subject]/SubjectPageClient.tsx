@@ -108,9 +108,25 @@ export default function SubjectPageClient({
           </p>
         )}
 
-        {/* Topics List */}
-        <div className="space-y-3">
-          {topics.map((topic, index) => {
+        {/* Topics grouped by exam paper, as the CAPS handbook sets them out -
+            students revise and are examined per paper, so a flat list of ten
+            topics hides the one distinction that matters most to them. */}
+        <div className="space-y-6">
+          {([1, 2] as const).map((paper) => {
+            const paperTopics = topics.filter((topic) => topic.paper === paper)
+            if (paperTopics.length === 0) return null
+
+            return (
+              <section key={paper} aria-labelledby={`paper-${paper}-heading`}>
+                <h2
+                  id={`paper-${paper}-heading`}
+                  className="text-sm font-semibold uppercase tracking-wide mb-3"
+                  style={{ color: 'var(--muted-custom)' }}
+                >
+                  {t('paperHeading', { number: paper })}
+                </h2>
+                <div className="space-y-3">
+                  {paperTopics.map((topic, index) => {
             const progress = progressBySlug[topic.slug]
             const hasProgress = typeof progress === 'number'
             const isCompleted = hasProgress && progress >= 100
@@ -212,6 +228,10 @@ export default function SubjectPageClient({
               >
                 {content}
               </Link>
+            )
+                  })}
+                </div>
+              </section>
             )
           })}
 

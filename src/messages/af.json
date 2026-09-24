@@ -291,7 +291,8 @@
     "previewingGrade": "Jy loer na Graad {grade}-inhoud. Dit sluit oop sodra jy daardie graad bereik.",
     "noTopicsForGrade": "Nog geen onderwerpe vir Graad {grade} beskikbaar nie.",
     "backToAllSubjects": "← Terug na alle vakke",
-    "topicCount": "{count, plural, one {1 onderwerp} other {# onderwerpe}}"
+    "topicCount": "{count, plural, one {1 onderwerp} other {# onderwerpe}}",
+    "paperHeading": "Vraestel {number}"
   },
   "topicPage": {
     "contents": "Inhoud",

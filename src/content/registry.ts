@@ -1,4 +1,5 @@
 import type { Grade, Subject, TopicContent } from '@/types'
+import { capsCurriculum } from '@/content/caps-curriculum'
 
 // Import content - Grade 10 Mathematics
 import { trigonometryGr10 } from '@/content/maths/grade10/trigonometry'
@@ -7,7 +8,6 @@ import { euclideanGeometryGr10 } from '@/content/maths/grade10/euclidean-geometr
 import { analyticalGeometryGr10 } from '@/content/maths/grade10/analytical-geometry'
 import { statisticsGr10 } from '@/content/maths/grade10/statistics'
 import { algebraGr10 } from '@/content/maths/grade10/algebra'
-import { equationsGr10 } from '@/content/maths/grade10/equations'
 import { numberPatternsGr10 } from '@/content/maths/grade10/number-patterns'
 import { financeGr10 } from '@/content/maths/grade10/finance'
 import { probabilityGr10 } from '@/content/maths/grade10/probability'
@@ -61,7 +61,10 @@ export const contentRegistry: Record<string, TopicContent> = {
   'analytical-geometry-gr10': analyticalGeometryGr10,
   'statistics-gr10': statisticsGr10,
   'algebra-gr10': algebraGr10,
-  'equations-gr10': equationsGr10,
+  // Predates the CAPS handbook transcription and duplicated Algebra's
+  // equations and inequalities sub-topics, so it no longer appears as its own
+  // Grade 10 topic. Kept as an alias so existing links still resolve.
+  'equations-gr10': algebraGr10,
   'number-patterns-gr10': numberPatternsGr10,
   'finance-gr10': financeGr10,
   'probability-gr10': probabilityGr10,
@@ -136,6 +139,17 @@ export type RegisteredTopic = {
  * added in - the content files don't carry a numeric sortOrder field).
  * Dedupes aliases by keeping only the slug that matches `content.id`.
  */
+/**
+ * Topics in the order the CAPS handbook lists them, so the app reads the way
+ * the document a student revises from does. Registry insertion order put
+ * Calculus at the top of Grade 12 Paper 1 where the handbook starts with
+ * Algebra. Anything not in the handbook keeps its position at the end.
+ */
+function capsOrder(slug: string): number {
+  const index = capsCurriculum.findIndex((topic) => topic.slug === slug)
+  return index === -1 ? Number.MAX_SAFE_INTEGER : index
+}
+
 export function getTopicsForSubjectGrade(subject: Subject, grade: Grade): RegisteredTopic[] {
   const seen = new Set<string>()
   const result: RegisteredTopic[] = []
@@ -149,5 +163,5 @@ export function getTopicsForSubjectGrade(subject: Subject, grade: Grade): Regist
     result.push({ slug, title: content.title, paper: content.paper })
   }
 
-  return result
+  return result.sort((a, b) => capsOrder(a.slug) - capsOrder(b.slug))
 }

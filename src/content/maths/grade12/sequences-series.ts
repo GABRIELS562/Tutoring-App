@@ -6,7 +6,7 @@ export const sequencesSeriesGr12: TopicContent = {
   subject: 'maths',
   grade: 12,
   paper: 1,
-  title: 'Sequences and Series',
+  title: 'Patterns & Series',
   capsWeight: 25,
   // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
   // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
