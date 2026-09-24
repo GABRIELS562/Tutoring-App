@@ -39,7 +39,7 @@ export const trigonometryGr11: TopicContent = {
     {
       id: 'trigonometric-identities-tan-sin-cos-and-sin-cos',
       title: 'Trigonometric identities: tan = sin/cos and sin² + cos² = 1',
-      titleAf: 'Trigonometriese identiteite: tan = sin/kos en sin² + kos² = 1',
+      titleAf: 'Trigonometriese identiteite: tan = sin/cos en sin² + cos² = 1',
       blocks: [
         {
           type: 'video',
@@ -52,7 +52,7 @@ export const trigonometryGr11: TopicContent = {
     {
       id: 'general-solutions-of-trig-equations',
       title: 'General solutions of trig equations',
-      titleAf: 'Algemene oplossings van trigvergelykings',
+      titleAf: 'Algemene oplossings van trig vergelykings',
       blocks: [
         {
           type: 'video',

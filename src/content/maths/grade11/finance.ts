@@ -45,7 +45,7 @@ export const financeGr11: TopicContent = {
     {
       id: 'future-value-annuities',
       title: 'Future value annuities',
-      titleAf: 'Toekomstigewaarde-annuïteite',
+      titleAf: 'Toekomstige waarde-annuïteite',
       blocks: [
         // Labelled for an adjacent grade; CAPS covers this sub-topic in both.
         {
@@ -58,7 +58,7 @@ export const financeGr11: TopicContent = {
     {
       id: 'present-value-annuities',
       title: 'Present value annuities',
-      titleAf: 'Huidigewaarde-annuïteite',
+      titleAf: 'Huidige waarde-annuïteite',
       blocks: [
         {
           type: 'tip',

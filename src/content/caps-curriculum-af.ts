@@ -1,6 +1,10 @@
 /**
  * Afrikaans names for the CAPS topics and sub-topics in caps-curriculum.ts.
  *
+ * The abbreviations stay "sin", "cos", "tan": every Afrikaans channel writes
+ * cos, and "kos" is Afrikaans for food. "Trig" stays a separate word
+ * ("trig verhoudings", "trig grafieke") the way the channels write it.
+ *
  * Terminology is taken from how South African Afrikaans maths teachers
  * actually write it, not from a dictionary: 655 video titles from the
  * verified Afrikaans CAPS channels were mined for the standard forms, which
@@ -88,12 +92,12 @@ export const capsSubTopicsAf: Record<string, string> = {
   'The addition rule (identity rule)': 'Die optelreël (identiteitsreël)',
 
   // Grade 10 - Trigonometrie
-  'Trig ratios in right-angled triangles': 'Trigverhoudings in reghoekige driehoeke',
+  'Trig ratios in right-angled triangles': 'Trig verhoudings in reghoekige driehoeke',
   'Trig ratios on the Cartesian plane (0° to 360°)':
-    'Trigverhoudings op die Cartesiese vlak (0° tot 360°)',
+    'Trig verhoudings op die Cartesiese vlak (0° tot 360°)',
   'Two-dimensional problems (elevation and depression)':
     'Tweedimensionele probleme (elevasie en depressie)',
-  'Basic trig graphs: sin, cos, tan': 'Basiese triggrafieke: sin, kos, tan',
+  'Basic trig graphs: sin, cos, tan': 'Basiese trig grafieke: sin, cos, tan',
 
   // Grade 10 - Euklidiese Meetkunde
   'Lines, angles and triangles': 'Lyne, hoeke en driehoeke',
@@ -137,8 +141,8 @@ export const capsSubTopicsAf: Record<string, string> = {
 
   // Grade 11 - Finansiële Wiskunde
   'Sinking funds': 'Delgingsfondse',
-  'Future value annuities': 'Toekomstigewaarde-annuïteite',
-  'Present value annuities': 'Huidigewaarde-annuïteite',
+  'Future value annuities': 'Toekomstige waarde-annuïteite',
+  'Present value annuities': 'Huidige waarde-annuïteite',
   'Nominal versus effective interest rates': 'Nominale teenoor effektiewe rentekoerse',
 
   // Grade 11 - Waarskynlikheid
@@ -152,8 +156,8 @@ export const capsSubTopicsAf: Record<string, string> = {
   'Reduction formulae in the four quadrants': 'Herleidingsformules in die vier kwadrante',
   'Co-functions': 'Kofunksies',
   'Trigonometric identities: tan = sin/cos and sin² + cos² = 1':
-    'Trigonometriese identiteite: tan = sin/kos en sin² + kos² = 1',
-  'General solutions of trig equations': 'Algemene oplossings van trigvergelykings',
+    'Trigonometriese identiteite: tan = sin/cos en sin² + cos² = 1',
+  'General solutions of trig equations': 'Algemene oplossings van trig vergelykings',
   'The sine rule': 'Die sinusreël',
   'The cosine rule': 'Die kosinusreël',
   'The area rule': 'Die oppervlaktereël',
@@ -206,8 +210,8 @@ export const capsSubTopicsAf: Record<string, string> = {
   'Rates of change': 'Tempo van verandering',
 
   // Grade 12 - Finansiële Wiskunde
-  'Future value annuity formula': 'Toekomstigewaarde-annuïteitsformule',
-  'Present value annuity formula': 'Huidigewaarde-annuïteitsformule',
+  'Future value annuity formula': 'Formule vir toekomstige waarde-annuïteite',
+  'Present value annuity formula': 'Formule vir huidige waarde-annuïteite',
   'Loan repayments and outstanding balances':
     'Leningterugbetalings en uitstaande balanse',
 
@@ -221,7 +225,7 @@ export const capsSubTopicsAf: Record<string, string> = {
   'Compound angle identities': 'Saamgestelde hoek-identiteite',
   'Double angle identities': 'Dubbelhoek-identiteite',
   'Expansion and simplification of trig expressions':
-    'Uitbreiding en vereenvoudiging van triguitdrukkings',
+    'Uitbreiding en vereenvoudiging van trig uitdrukkings',
   'Trigonometry in three-dimensional problems':
     'Trigonometrie in driedimensionele probleme',
 

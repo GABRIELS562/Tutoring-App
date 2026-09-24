@@ -57,7 +57,7 @@ export const trigGr12: TopicContent = {
     {
       id: 'expansion-and-simplification-of-trig-expressions',
       title: 'Expansion and simplification of trig expressions',
-      titleAf: 'Uitbreiding en vereenvoudiging van triguitdrukkings',
+      titleAf: 'Uitbreiding en vereenvoudiging van trig uitdrukkings',
       blocks: [
         {
           type: 'video',

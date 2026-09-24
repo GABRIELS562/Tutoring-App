@@ -32,7 +32,7 @@ export const financeGr12: TopicContent = {
     {
       id: 'future-value-annuity-formula',
       title: 'Future value annuity formula',
-      titleAf: 'Toekomstigewaarde-annuïteitsformule',
+      titleAf: 'Formule vir toekomstige waarde-annuïteite',
       blocks: [
         {
           type: 'video',
@@ -44,7 +44,7 @@ export const financeGr12: TopicContent = {
     {
       id: 'present-value-annuity-formula',
       title: 'Present value annuity formula',
-      titleAf: 'Huidigewaarde-annuïteitsformule',
+      titleAf: 'Formule vir huidige waarde-annuïteite',
       blocks: [
         {
           type: 'video',

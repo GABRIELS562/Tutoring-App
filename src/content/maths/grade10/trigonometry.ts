@@ -33,7 +33,7 @@ export const trigonometryGr10: TopicContent = {
     {
       id: 'trig-ratios-in-right-angled-triangles',
       title: 'Trig ratios in right-angled triangles',
-      titleAf: 'Trigverhoudings in reghoekige driehoeke',
+      titleAf: 'Trig verhoudings in reghoekige driehoeke',
       blocks: [
         {
           type: 'video',
@@ -46,7 +46,7 @@ export const trigonometryGr10: TopicContent = {
     {
       id: 'trig-ratios-on-the-cartesian-plane-0-to-360',
       title: 'Trig ratios on the Cartesian plane (0° to 360°)',
-      titleAf: 'Trigverhoudings op die Cartesiese vlak (0° tot 360°)',
+      titleAf: 'Trig verhoudings op die Cartesiese vlak (0° tot 360°)',
       blocks: [
         {
           type: 'video',
@@ -70,7 +70,7 @@ export const trigonometryGr10: TopicContent = {
     {
       id: 'basic-trig-graphs-sin-cos-tan',
       title: 'Basic trig graphs: sin, cos, tan',
-      titleAf: 'Basiese triggrafieke: sin, kos, tan',
+      titleAf: 'Basiese trig grafieke: sin, cos, tan',
       blocks: [
         {
           type: 'video',
