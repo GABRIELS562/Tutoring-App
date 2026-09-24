@@ -10,6 +10,7 @@ export const calculusGr12: TopicContent = {
   capsWeight: 35,
   // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
   // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
+  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
   sections: [
     {
       id: 'overview',
@@ -57,8 +58,9 @@ export const calculusGr12: TopicContent = {
       title: 'The rules of differentiation',
       blocks: [
         {
-          type: 'tip',
-          body: `We haven't found a CAPS video for this sub-topic yet. Ask Angelo if you're stuck on it.`
+          type: 'video',
+          title: 'Kyk: 4 Differensiasie reels deel 1 — Wiskunde Graad 12 Juffrou Koorsen',
+          videoIdAf: 'iymP84P3njM'
         }
       ]
     },

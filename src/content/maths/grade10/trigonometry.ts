@@ -12,6 +12,7 @@ export const trigonometryGr10: TopicContent = {
   // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
   // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
   // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
+  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
   sections: [
     {
       id: 'overview',
@@ -47,8 +48,9 @@ export const trigonometryGr10: TopicContent = {
       title: 'Trig ratios on the Cartesian plane (0° to 360°)',
       blocks: [
         {
-          type: 'tip',
-          body: `We haven't found a CAPS video for this sub-topic yet. Ask Angelo if you're stuck on it.`
+          type: 'video',
+          title: 'Kyk: 09 Trig berekeninge op die kartesiese vlak — Wiskunde_Mathematics_SUM',
+          videoIdAf: 'lbfvJw6Ywc8'
         }
       ]
     },

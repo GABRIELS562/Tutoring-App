@@ -97,6 +97,26 @@ function afrikaansPickFor(entry: Curated, afrikaans: Curated[]): Pick | null {
 
 function sectionFor(entry: Curated, afrikaans: Curated[]): string {
   const id = sectionId(entry.subTopic)
+  const afOnly = afrikaansPickFor(entry, afrikaans)
+
+  // A handful of sub-topics have an Afrikaans video but no English one.
+  // Emitting the block with only videoIdAf gives Afrikaans students the
+  // lesson; NoteBlock shows its "no video available" note for English,
+  // rather than an empty player.
+  if (!entry.pick && afOnly) {
+    return `    {
+      id: ${quote(id)},
+      title: ${quote(entry.subTopic)},
+      blocks: [
+        {
+          type: 'video',
+          title: ${quote(`Kyk: ${afOnly.title} — ${afOnly.channel}`)},
+          videoIdAf: ${quote(afOnly.id)}
+        }
+      ]
+    }`
+  }
+
   if (!entry.pick) {
     return `    {
       id: ${quote(id)},

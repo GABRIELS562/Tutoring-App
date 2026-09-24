@@ -13,6 +13,7 @@ export const statisticsGr12: TopicContent = {
   capsWeight: 0,
   // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
   // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
+  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
   sections: [
     {
       id: 'overview',
@@ -66,8 +67,9 @@ export const statisticsGr12: TopicContent = {
       title: 'The correlation coefficient r',
       blocks: [
         {
-          type: 'tip',
-          body: `We haven't found a CAPS video for this sub-topic yet. Ask Angelo if you're stuck on it.`
+          type: 'video',
+          title: 'Kyk: Statistiek Graad12:L3 Korrelasie en korrelasiekoeffisiënt — Online Maths by Miss Pythagoras',
+          videoIdAf: 'Jiml5rfBIlw'
         }
       ]
     }
