@@ -4,7 +4,7 @@ import { useState } from 'react'
 import Link from 'next/link'
 import Topbar from '@/components/layout/Topbar'
 import { useUser } from '@/context/UserContext'
-import { useTranslations } from 'next-intl'
+import { useTranslations, useLocale } from 'next-intl'
 import type { RegisteredTopic } from '@/content/registry'
 import {
   Calculator,
@@ -44,6 +44,7 @@ export default function SubjectPageClient({
 }: SubjectPageClientProps) {
   const { user } = useUser()
   const t = useTranslations('subjects')
+  const locale = useLocale()
   const tTopics = useTranslations('topics')
   const tHome = useTranslations('home')
   const [selectedGrade, setSelectedGrade] = useState<Grade>((user?.grade as Grade) || 11)
@@ -162,7 +163,7 @@ export default function SubjectPageClient({
                       {index + 1}
                     </span>
                     <h3 className="font-semibold truncate" style={{ color: 'var(--text)' }}>
-                      {topic.title}
+                      {locale === 'af' && topic.titleAf ? topic.titleAf : topic.title}
                     </h3>
                     {isInProgress && (
                       <Star className="w-4 h-4 shrink-0" style={{ color: 'var(--gold)' }} />

@@ -128,6 +128,7 @@ export function getTopicMeta(slug: string): TopicMeta | null {
 }
 
 export type RegisteredTopic = {
+  titleAf?: string
   slug: string
   title: string
   paper: 1 | 2 | null
@@ -160,7 +161,12 @@ export function getTopicsForSubjectGrade(subject: Subject, grade: Grade): Regist
     if (seen.has(content.id)) continue
 
     seen.add(content.id)
-    result.push({ slug, title: content.title, paper: content.paper })
+    result.push({
+      slug,
+      title: content.title,
+      titleAf: content.titleAf,
+      paper: content.paper,
+    })
   }
 
   return result.sort((a, b) => capsOrder(a.slug) - capsOrder(b.slug))

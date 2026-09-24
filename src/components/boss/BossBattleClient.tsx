@@ -1,11 +1,10 @@
 'use client'
 
 import { useEffect, useReducer, useRef, useState } from 'react'
-import { useTranslations } from 'next-intl'
+import { useTranslations, useLocale } from 'next-intl'
 import { BookOpen } from 'lucide-react'
 import Link from 'next/link'
 import Topbar from '@/components/layout/Topbar'
-import { useLocaleCookie } from '@/hooks/useLocaleCookie'
 import { getBossForTopic } from '@/content/bosses'
 import type { QuestionWithDetails } from '@/db/queries/questions'
 import { recordAnswer } from '@/app/(app)/topics/[slug]/practice/actions'
@@ -89,7 +88,7 @@ type BossBattleSessionProps = BossBattleClientProps & { onRestart: () => void }
 
 function BossBattleSession({ topicSlug, topicName, questions, isDemo, userId, video, onRestart }: BossBattleSessionProps) {
   const t = useTranslations('boss')
-  const locale = useLocaleCookie()
+  const locale = useLocale()
   const boss = getBossForTopic(topicSlug)
   const bossName = locale === 'af' ? boss.nameAf : boss.name
   const bossTagline = locale === 'af' ? boss.taglineAf : boss.tagline

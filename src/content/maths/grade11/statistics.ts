@@ -7,19 +7,19 @@ export const statisticsGr11: TopicContent = {
   grade: 11,
   paper: 2,
   title: 'Statistics',
+  titleAf: 'Statistiek',
   capsWeight: 15,
-  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
-  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
-  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
   // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
   sections: [
     {
       id: 'overview',
       title: 'Statistics',
+      titleAf: 'Statistiek',
       blocks: [
         {
           type: 'theory',
           title: 'What this topic covers',
+          titleAf: 'Wat hierdie onderwerp dek',
           body: `• **Measures of Central Tendency** - Mean, median, mode for grouped and ungrouped data
 • **Measures of Dispersion** - Range, variance, standard deviation
 • **Five Number Summary** - Min, Q1, median, Q3, max
@@ -33,6 +33,7 @@ export const statisticsGr11: TopicContent = {
     {
       id: 'grouped-data-analysis',
       title: 'Grouped data analysis',
+      titleAf: 'Ontleding van gegroepeerde data',
       blocks: [
         {
           type: 'tip',
@@ -44,6 +45,7 @@ export const statisticsGr11: TopicContent = {
     {
       id: 'ogives-cumulative-frequency-graphs',
       title: 'Ogives (cumulative frequency graphs)',
+      titleAf: 'Ogiewe (kumulatiewe frekwensiegrafieke)',
       blocks: [
         {
           type: 'video',
@@ -56,6 +58,7 @@ export const statisticsGr11: TopicContent = {
     {
       id: 'variance-and-standard-deviation',
       title: 'Variance and standard deviation',
+      titleAf: 'Variansie en standaardafwyking',
       blocks: [
         {
           type: 'tip',
@@ -67,6 +70,7 @@ export const statisticsGr11: TopicContent = {
     {
       id: 'symmetric-and-skewed-data',
       title: 'Symmetric and skewed data',
+      titleAf: 'Simmetriese en skewe data',
       blocks: [
         {
           type: 'tip',

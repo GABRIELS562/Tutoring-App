@@ -7,19 +7,19 @@ export const calculusGr12: TopicContent = {
   grade: 12,
   paper: 1,
   title: 'Calculus',
+  titleAf: 'Differensiaalrekene',
   capsWeight: 35,
-  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
-  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
-  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
   // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
   sections: [
     {
       id: 'overview',
       title: 'Calculus',
+      titleAf: 'Differensiaalrekene',
       blocks: [
         {
           type: 'theory',
           title: 'What this topic covers',
+          titleAf: 'Wat hierdie onderwerp dek',
           body: `• **Limits and Continuity** - Understanding the foundation of calculus
 • **Differentiation from First Principles** - The definition of the derivative
 • **Rules of Differentiation** - Power rule, product rule, quotient rule, chain rule
@@ -34,6 +34,7 @@ export const calculusGr12: TopicContent = {
     {
       id: 'the-definition-of-a-limit',
       title: 'The definition of a limit',
+      titleAf: 'Die definisie van ’n limiet',
       blocks: [
         {
           type: 'video',
@@ -45,6 +46,7 @@ export const calculusGr12: TopicContent = {
     {
       id: 'differentiation-from-first-principles',
       title: 'Differentiation from first principles',
+      titleAf: 'Differensiasie vanuit eerste beginsels',
       blocks: [
         {
           type: 'video',
@@ -57,6 +59,7 @@ export const calculusGr12: TopicContent = {
     {
       id: 'the-rules-of-differentiation',
       title: 'The rules of differentiation',
+      titleAf: 'Die reëls van differensiasie',
       blocks: [
         {
           type: 'video',
@@ -68,6 +71,7 @@ export const calculusGr12: TopicContent = {
     {
       id: 'sketching-cubic-graphs',
       title: 'Sketching cubic graphs',
+      titleAf: 'Skets van derdegraadse grafieke',
       blocks: [
         {
           type: 'video',
@@ -80,6 +84,7 @@ export const calculusGr12: TopicContent = {
     {
       id: 'optimisation-problems',
       title: 'Optimisation problems',
+      titleAf: 'Optimeringsprobleme',
       blocks: [
         {
           type: 'video',
@@ -91,6 +96,7 @@ export const calculusGr12: TopicContent = {
     {
       id: 'rates-of-change',
       title: 'Rates of change',
+      titleAf: 'Tempo van verandering',
       blocks: [
         {
           type: 'video',

@@ -7,21 +7,19 @@ export const financeGr10: TopicContent = {
   grade: 10,
   paper: 1,
   title: 'Finance & Growth',
+  titleAf: 'Finansiële Wiskunde',
   capsWeight: 10,
-  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
-  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
-  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
-  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
-  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
   // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
   sections: [
     {
       id: 'overview',
       title: 'Finance & Growth',
+      titleAf: 'Finansiële Wiskunde',
       blocks: [
         {
           type: 'theory',
           title: 'What this topic covers',
+          titleAf: 'Wat hierdie onderwerp dek',
           body: `• **Simple Interest** - $A = P(1 + in)$
 • **Compound Interest** - $A = P(1 + i)^n$
 • **Comparing Simple and Compound Interest** - When each is better
@@ -35,6 +33,7 @@ export const financeGr10: TopicContent = {
     {
       id: 'simple-interest',
       title: 'Simple interest',
+      titleAf: 'Enkelvoudige rente',
       blocks: [
         {
           type: 'video',
@@ -47,6 +46,7 @@ export const financeGr10: TopicContent = {
     {
       id: 'compound-interest',
       title: 'Compound interest',
+      titleAf: 'Saamgestelde rente',
       blocks: [
         {
           type: 'video',
@@ -59,6 +59,7 @@ export const financeGr10: TopicContent = {
     {
       id: 'simple-and-compound-depreciation',
       title: 'Simple and compound depreciation',
+      titleAf: 'Enkelvoudige en saamgestelde waardevermindering',
       blocks: [
         // Labelled for an adjacent grade; CAPS covers this sub-topic in both.
         {
@@ -72,6 +73,7 @@ export const financeGr10: TopicContent = {
     {
       id: 'hire-purchase',
       title: 'Hire-purchase',
+      titleAf: 'Huurkoop',
       blocks: [
         {
           type: 'video',
@@ -83,6 +85,7 @@ export const financeGr10: TopicContent = {
     {
       id: 'exchange-rates',
       title: 'Exchange rates',
+      titleAf: 'Wisselkoerse',
       blocks: [
         {
           type: 'video',

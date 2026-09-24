@@ -10,19 +10,19 @@ export const financeGr11: TopicContent = {
   grade: 11,
   paper: 1,
   title: 'Finance & Growth',
+  titleAf: 'Finansiële Wiskunde',
   capsWeight: 0,
-  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
-  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
-  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
   // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
   sections: [
     {
       id: 'overview',
       title: 'Finance & Growth',
+      titleAf: 'Finansiële Wiskunde',
       blocks: [
         {
           type: 'theory',
           title: 'What this topic covers',
+          titleAf: 'Wat hierdie onderwerp dek',
           body: `• Sinking funds
 • Future value annuities
 • Present value annuities
@@ -33,6 +33,7 @@ export const financeGr11: TopicContent = {
     {
       id: 'sinking-funds',
       title: 'Sinking funds',
+      titleAf: 'Delgingsfondse',
       blocks: [
         {
           type: 'tip',
@@ -44,6 +45,7 @@ export const financeGr11: TopicContent = {
     {
       id: 'future-value-annuities',
       title: 'Future value annuities',
+      titleAf: 'Toekomstigewaarde-annuïteite',
       blocks: [
         // Labelled for an adjacent grade; CAPS covers this sub-topic in both.
         {
@@ -56,6 +58,7 @@ export const financeGr11: TopicContent = {
     {
       id: 'present-value-annuities',
       title: 'Present value annuities',
+      titleAf: 'Huidigewaarde-annuïteite',
       blocks: [
         {
           type: 'tip',
@@ -67,6 +70,7 @@ export const financeGr11: TopicContent = {
     {
       id: 'nominal-versus-effective-interest-rates',
       title: 'Nominal versus effective interest rates',
+      titleAf: 'Nominale teenoor effektiewe rentekoerse',
       blocks: [
         {
           type: 'video',

@@ -10,19 +10,19 @@ export const functionsGr11: TopicContent = {
   grade: 11,
   paper: 1,
   title: 'Functions & Graphs',
+  titleAf: 'Funksies en Grafieke',
   capsWeight: 0,
-  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
-  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
-  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
   // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
   sections: [
     {
       id: 'overview',
       title: 'Functions & Graphs',
+      titleAf: 'Funksies en Grafieke',
       blocks: [
         {
           type: 'theory',
           title: 'What this topic covers',
+          titleAf: 'Wat hierdie onderwerp dek',
           body: `• The parabola y = a(x - p)² + q
 • The hyperbola y = a/(x - p) + q
 • The exponential graph y = ab^(x - p) + q
@@ -33,6 +33,7 @@ export const functionsGr11: TopicContent = {
     {
       id: 'the-parabola-y-a-x-p-q',
       title: 'The parabola y = a(x - p)² + q',
+      titleAf: 'Die parabool y = a(x - p)² + q',
       blocks: [
         {
           type: 'video',
@@ -45,6 +46,7 @@ export const functionsGr11: TopicContent = {
     {
       id: 'the-hyperbola-y-a-x-p-q',
       title: 'The hyperbola y = a/(x - p) + q',
+      titleAf: 'Die hiperbool y = a/(x - p) + q',
       blocks: [
         {
           type: 'video',
@@ -57,6 +59,7 @@ export const functionsGr11: TopicContent = {
     {
       id: 'the-exponential-graph-y-ab-x-p-q',
       title: 'The exponential graph y = ab^(x - p) + q',
+      titleAf: 'Die eksponensiële grafiek y = ab^(x - p) + q',
       blocks: [
         {
           type: 'video',
@@ -69,6 +72,7 @@ export const functionsGr11: TopicContent = {
     {
       id: 'introduction-to-inverse-functions',
       title: 'Introduction to inverse functions',
+      titleAf: 'Inleiding tot inverse funksies',
       blocks: [
         {
           type: 'video',

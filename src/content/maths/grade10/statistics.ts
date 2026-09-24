@@ -7,21 +7,19 @@ export const statisticsGr10: TopicContent = {
   grade: 10,
   paper: 2,
   title: 'Statistics',
+  titleAf: 'Statistiek',
   capsWeight: 15,
-  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
-  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
-  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
-  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
-  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
   // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
   sections: [
     {
       id: 'overview',
       title: 'Statistics',
+      titleAf: 'Statistiek',
       blocks: [
         {
           type: 'theory',
           title: 'What this topic covers',
+          titleAf: 'Wat hierdie onderwerp dek',
           body: `• **Measures of Central Tendency** - Mean, median, mode
 • **Measures of Dispersion** - Range, quartiles, interquartile range
 • **Five Number Summary** - Minimum, Q1, median, Q3, maximum
@@ -35,6 +33,7 @@ export const statisticsGr10: TopicContent = {
     {
       id: 'data-collection-and-organisation',
       title: 'Data collection and organisation',
+      titleAf: 'Dataversameling en -organisasie',
       blocks: [
         {
           type: 'tip',
@@ -46,6 +45,7 @@ export const statisticsGr10: TopicContent = {
     {
       id: 'measures-of-central-tendency-mean-median-mode',
       title: 'Measures of central tendency: mean, median, mode',
+      titleAf: 'Maatstawwe van sentrale neiging: gemiddeld, mediaan, modus',
       blocks: [
         {
           type: 'video',
@@ -58,6 +58,7 @@ export const statisticsGr10: TopicContent = {
     {
       id: 'measures-of-dispersion-range-quartiles-percentil',
       title: 'Measures of dispersion: range, quartiles, percentiles',
+      titleAf: 'Maatstawwe van spreiding: omvang, kwartiele, persentiele',
       blocks: [
         {
           type: 'video',
@@ -70,6 +71,7 @@ export const statisticsGr10: TopicContent = {
     {
       id: 'box-and-whisker-plots',
       title: 'Box and whisker plots',
+      titleAf: 'Mond-en-snordiagramme',
       blocks: [
         {
           type: 'video',

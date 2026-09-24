@@ -10,19 +10,19 @@ export const trigGr12: TopicContent = {
   grade: 12,
   paper: 2,
   title: 'Trigonometry',
+  titleAf: 'Trigonometrie',
   capsWeight: 0,
-  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
-  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
-  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
   // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
   sections: [
     {
       id: 'overview',
       title: 'Trigonometry',
+      titleAf: 'Trigonometrie',
       blocks: [
         {
           type: 'theory',
           title: 'What this topic covers',
+          titleAf: 'Wat hierdie onderwerp dek',
           body: `• Compound angle identities
 • Double angle identities
 • Expansion and simplification of trig expressions
@@ -33,6 +33,7 @@ export const trigGr12: TopicContent = {
     {
       id: 'compound-angle-identities',
       title: 'Compound angle identities',
+      titleAf: 'Saamgestelde hoek-identiteite',
       blocks: [
         {
           type: 'tip',
@@ -44,6 +45,7 @@ export const trigGr12: TopicContent = {
     {
       id: 'double-angle-identities',
       title: 'Double angle identities',
+      titleAf: 'Dubbelhoek-identiteite',
       blocks: [
         {
           type: 'video',
@@ -55,6 +57,7 @@ export const trigGr12: TopicContent = {
     {
       id: 'expansion-and-simplification-of-trig-expressions',
       title: 'Expansion and simplification of trig expressions',
+      titleAf: 'Uitbreiding en vereenvoudiging van triguitdrukkings',
       blocks: [
         {
           type: 'video',
@@ -66,6 +69,7 @@ export const trigGr12: TopicContent = {
     {
       id: 'trigonometry-in-three-dimensional-problems',
       title: 'Trigonometry in three-dimensional problems',
+      titleAf: 'Trigonometrie in driedimensionele probleme',
       blocks: [
         {
           type: 'video',

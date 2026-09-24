@@ -7,15 +7,14 @@ export const trigonometryGr11: TopicContent = {
   grade: 11,
   paper: 2,
   title: 'Trigonometry',
+  titleAf: 'Trigonometrie',
   capsWeight: 40,
-  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
-  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
-  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
   // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
   sections: [
     {
       id: 'reduction-formulae-in-the-four-quadrants',
       title: 'Reduction formulae in the four quadrants',
+      titleAf: 'Herleidingsformules in die vier kwadrante',
       blocks: [
         {
           type: 'video',
@@ -28,6 +27,7 @@ export const trigonometryGr11: TopicContent = {
     {
       id: 'co-functions',
       title: 'Co-functions',
+      titleAf: 'Kofunksies',
       blocks: [
         {
           type: 'tip',
@@ -39,6 +39,7 @@ export const trigonometryGr11: TopicContent = {
     {
       id: 'trigonometric-identities-tan-sin-cos-and-sin-cos',
       title: 'Trigonometric identities: tan = sin/cos and sin² + cos² = 1',
+      titleAf: 'Trigonometriese identiteite: tan = sin/kos en sin² + kos² = 1',
       blocks: [
         {
           type: 'video',
@@ -51,6 +52,7 @@ export const trigonometryGr11: TopicContent = {
     {
       id: 'general-solutions-of-trig-equations',
       title: 'General solutions of trig equations',
+      titleAf: 'Algemene oplossings van trigvergelykings',
       blocks: [
         {
           type: 'video',
@@ -63,6 +65,7 @@ export const trigonometryGr11: TopicContent = {
     {
       id: 'the-sine-rule',
       title: 'The sine rule',
+      titleAf: 'Die sinusreël',
       blocks: [
         {
           type: 'video',
@@ -74,6 +77,7 @@ export const trigonometryGr11: TopicContent = {
     {
       id: 'the-cosine-rule',
       title: 'The cosine rule',
+      titleAf: 'Die kosinusreël',
       blocks: [
         {
           type: 'video',
@@ -86,6 +90,7 @@ export const trigonometryGr11: TopicContent = {
     {
       id: 'the-area-rule',
       title: 'The area rule',
+      titleAf: 'Die oppervlaktereël',
       blocks: [
         {
           type: 'video',

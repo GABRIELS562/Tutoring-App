@@ -7,21 +7,19 @@ export const trigonometryGr10: TopicContent = {
   grade: 10,
   paper: 2,
   title: 'Trigonometry',
+  titleAf: 'Trigonometrie',
   capsWeight: 20,
-  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
-  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
-  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
-  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
-  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
   // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
   sections: [
     {
       id: 'overview',
       title: 'Trigonometry',
+      titleAf: 'Trigonometrie',
       blocks: [
         {
           type: 'theory',
           title: 'What this topic covers',
+          titleAf: 'Wat hierdie onderwerp dek',
           body: `• **Right-Angled Triangles** - Identifying sides (opposite, adjacent, hypotenuse)
 • **Trigonometric Ratios** - sin, cos, tan definitions (SOH CAH TOA)
 • **Calculating Ratios** - Finding trig ratios from given triangles
@@ -35,6 +33,7 @@ export const trigonometryGr10: TopicContent = {
     {
       id: 'trig-ratios-in-right-angled-triangles',
       title: 'Trig ratios in right-angled triangles',
+      titleAf: 'Trigverhoudings in reghoekige driehoeke',
       blocks: [
         {
           type: 'video',
@@ -47,6 +46,7 @@ export const trigonometryGr10: TopicContent = {
     {
       id: 'trig-ratios-on-the-cartesian-plane-0-to-360',
       title: 'Trig ratios on the Cartesian plane (0° to 360°)',
+      titleAf: 'Trigverhoudings op die Cartesiese vlak (0° tot 360°)',
       blocks: [
         {
           type: 'video',
@@ -58,6 +58,7 @@ export const trigonometryGr10: TopicContent = {
     {
       id: 'two-dimensional-problems-elevation-and-depressio',
       title: 'Two-dimensional problems (elevation and depression)',
+      titleAf: 'Tweedimensionele probleme (elevasie en depressie)',
       blocks: [
         {
           type: 'video',
@@ -69,6 +70,7 @@ export const trigonometryGr10: TopicContent = {
     {
       id: 'basic-trig-graphs-sin-cos-tan',
       title: 'Basic trig graphs: sin, cos, tan',
+      titleAf: 'Basiese triggrafieke: sin, kos, tan',
       blocks: [
         {
           type: 'video',

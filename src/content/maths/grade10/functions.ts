@@ -7,21 +7,19 @@ export const functionsGr10: TopicContent = {
   grade: 10,
   paper: 1,
   title: 'Functions & Graphs',
+  titleAf: 'Funksies en Grafieke',
   capsWeight: 25,
-  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
-  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
-  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
-  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
-  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
   // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
   sections: [
     {
       id: 'overview',
       title: 'Functions & Graphs',
+      titleAf: 'Funksies en Grafieke',
       blocks: [
         {
           type: 'theory',
           title: 'What this topic covers',
+          titleAf: 'Wat hierdie onderwerp dek',
           body: `• **Function Notation** - Understanding $f(x)$ notation
 • **Linear Functions** - $y = mx + c$, gradient and y-intercept
 • **Quadratic Functions** - $y = ax^2 + q$, parabolas, turning points
@@ -35,6 +33,7 @@ export const functionsGr10: TopicContent = {
     {
       id: 'the-linear-function-y-mx-c',
       title: 'The linear function y = mx + c',
+      titleAf: 'Die lineêre funksie y = mx + c',
       blocks: [
         {
           type: 'video',
@@ -47,6 +46,7 @@ export const functionsGr10: TopicContent = {
     {
       id: 'the-quadratic-function-y-ax',
       title: 'The quadratic function y = ax²',
+      titleAf: 'Die kwadratiese funksie y = ax²',
       blocks: [
         {
           type: 'video',
@@ -58,6 +58,7 @@ export const functionsGr10: TopicContent = {
     {
       id: 'the-hyperbolic-function-y-a-x',
       title: 'The hyperbolic function y = a/x',
+      titleAf: 'Die hiperboliese funksie y = a/x',
       blocks: [
         {
           type: 'video',
@@ -70,6 +71,7 @@ export const functionsGr10: TopicContent = {
     {
       id: 'the-exponential-function-y-ab-x',
       title: 'The exponential function y = ab^x',
+      titleAf: 'Die eksponensiële funksie y = ab^x',
       blocks: [
         {
           type: 'video',

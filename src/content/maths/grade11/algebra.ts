@@ -10,19 +10,19 @@ export const algebraGr11: TopicContent = {
   grade: 11,
   paper: 1,
   title: 'Algebra & Equations',
+  titleAf: 'Algebra en Vergelykings',
   capsWeight: 0,
-  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
-  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
-  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
   // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
   sections: [
     {
       id: 'overview',
       title: 'Algebra & Equations',
+      titleAf: 'Algebra en Vergelykings',
       blocks: [
         {
           type: 'theory',
           title: 'What this topic covers',
+          titleAf: 'Wat hierdie onderwerp dek',
           body: `• Surds and fractional exponents
 • Completing the square
 • The quadratic formula
@@ -35,6 +35,7 @@ export const algebraGr11: TopicContent = {
     {
       id: 'surds-and-fractional-exponents',
       title: 'Surds and fractional exponents',
+      titleAf: 'Wortelvorme en breukeksponente',
       blocks: [
         {
           type: 'video',
@@ -47,6 +48,7 @@ export const algebraGr11: TopicContent = {
     {
       id: 'completing-the-square',
       title: 'Completing the square',
+      titleAf: 'Voltooiing van die vierkant',
       blocks: [
         {
           type: 'video',
@@ -58,6 +60,7 @@ export const algebraGr11: TopicContent = {
     {
       id: 'the-quadratic-formula',
       title: 'The quadratic formula',
+      titleAf: 'Die kwadratiese formule',
       blocks: [
         {
           type: 'video',
@@ -70,6 +73,7 @@ export const algebraGr11: TopicContent = {
     {
       id: 'nature-of-roots-the-discriminant',
       title: 'Nature of roots (the discriminant)',
+      titleAf: 'Aard van wortels (die diskriminant)',
       blocks: [
         {
           type: 'video',
@@ -81,6 +85,7 @@ export const algebraGr11: TopicContent = {
     {
       id: 'quadratic-inequalities',
       title: 'Quadratic inequalities',
+      titleAf: 'Kwadratiese ongelykhede',
       blocks: [
         {
           type: 'video',
@@ -93,6 +98,7 @@ export const algebraGr11: TopicContent = {
     {
       id: 'simultaneous-equations-linear-and-quadratic',
       title: 'Simultaneous equations: linear and quadratic',
+      titleAf: 'Gelyktydige vergelykings: lineêr en kwadraties',
       blocks: [
         {
           type: 'video',

@@ -7,19 +7,19 @@ export const probabilityGr12: TopicContent = {
   grade: 12,
   paper: 1,
   title: 'Probability',
+  titleAf: 'Waarskynlikheid',
   capsWeight: 15,
-  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
-  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
-  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
   // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
   sections: [
     {
       id: 'overview',
       title: 'Probability',
+      titleAf: 'Waarskynlikheid',
       blocks: [
         {
           type: 'theory',
           title: 'What this topic covers',
+          titleAf: 'Wat hierdie onderwerp dek',
           body: `• **Fundamental Counting Principle** - Multiplication and addition rules
 • **Factorials** - Understanding $n!$ and its applications
 • **Permutations** - Arrangements where order matters
@@ -36,6 +36,7 @@ export const probabilityGr12: TopicContent = {
     {
       id: 'the-fundamental-counting-principle',
       title: 'The fundamental counting principle',
+      titleAf: 'Die fundamentele telbeginsel',
       blocks: [
         {
           type: 'video',
@@ -47,6 +48,7 @@ export const probabilityGr12: TopicContent = {
     {
       id: 'permutations-and-factorial-notation',
       title: 'Permutations and factorial notation',
+      titleAf: 'Permutasies en faktoriaalnotasie',
       blocks: [
         {
           type: 'tip',
@@ -58,6 +60,7 @@ export const probabilityGr12: TopicContent = {
     {
       id: 'applying-counting-principles-to-probability',
       title: 'Applying counting principles to probability',
+      titleAf: 'Toepassing van telbeginsels op waarskynlikheid',
       blocks: [
         {
           type: 'video',

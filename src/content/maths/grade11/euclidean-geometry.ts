@@ -7,19 +7,19 @@ export const euclideanGeometryGr11: TopicContent = {
   grade: 11,
   paper: 2,
   title: 'Euclidean Geometry',
+  titleAf: 'Euklidiese Meetkunde',
   capsWeight: 25,
-  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
-  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
-  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
   // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
   sections: [
     {
       id: 'overview',
       title: 'Euclidean Geometry',
+      titleAf: 'Euklidiese Meetkunde',
       blocks: [
         {
           type: 'theory',
           title: 'What this topic covers',
+          titleAf: 'Wat hierdie onderwerp dek',
           body: `• **Circle Terminology** - Radius, diameter, chord, arc, sector, segment
 • **Theorem 1** - Line from centre perpendicular to chord bisects the chord
 • **Theorem 2** - Angle at centre is twice angle at circumference
@@ -37,6 +37,7 @@ export const euclideanGeometryGr11: TopicContent = {
     {
       id: 'circle-geometry-chords',
       title: 'Circle geometry: chords',
+      titleAf: 'Sirkelmeetkunde: koorde',
       blocks: [
         {
           type: 'video',
@@ -48,6 +49,7 @@ export const euclideanGeometryGr11: TopicContent = {
     {
       id: 'angles-at-the-centre-and-at-the-circumference',
       title: 'Angles at the centre and at the circumference',
+      titleAf: 'Hoeke by die middelpunt en by die omtrek',
       blocks: [
         {
           type: 'video',
@@ -59,6 +61,7 @@ export const euclideanGeometryGr11: TopicContent = {
     {
       id: 'cyclic-quadrilaterals',
       title: 'Cyclic quadrilaterals',
+      titleAf: 'Koordevierhoeke',
       blocks: [
         {
           type: 'video',
@@ -71,6 +74,7 @@ export const euclideanGeometryGr11: TopicContent = {
     {
       id: 'tangents-to-circles',
       title: 'Tangents to circles',
+      titleAf: 'Raaklyne aan sirkels',
       blocks: [
         {
           type: 'video',

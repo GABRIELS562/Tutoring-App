@@ -10,19 +10,19 @@ export const financeGr12: TopicContent = {
   grade: 12,
   paper: 1,
   title: 'Finance & Growth',
+  titleAf: 'Finansiële Wiskunde',
   capsWeight: 0,
-  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
-  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
-  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
   // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
   sections: [
     {
       id: 'overview',
       title: 'Finance & Growth',
+      titleAf: 'Finansiële Wiskunde',
       blocks: [
         {
           type: 'theory',
           title: 'What this topic covers',
+          titleAf: 'Wat hierdie onderwerp dek',
           body: `• Future value annuity formula
 • Present value annuity formula
 • Loan repayments and outstanding balances`
@@ -32,6 +32,7 @@ export const financeGr12: TopicContent = {
     {
       id: 'future-value-annuity-formula',
       title: 'Future value annuity formula',
+      titleAf: 'Toekomstigewaarde-annuïteitsformule',
       blocks: [
         {
           type: 'video',
@@ -43,6 +44,7 @@ export const financeGr12: TopicContent = {
     {
       id: 'present-value-annuity-formula',
       title: 'Present value annuity formula',
+      titleAf: 'Huidigewaarde-annuïteitsformule',
       blocks: [
         {
           type: 'video',
@@ -54,6 +56,7 @@ export const financeGr12: TopicContent = {
     {
       id: 'loan-repayments-and-outstanding-balances',
       title: 'Loan repayments and outstanding balances',
+      titleAf: 'Leningterugbetalings en uitstaande balanse',
       blocks: [
         {
           type: 'video',

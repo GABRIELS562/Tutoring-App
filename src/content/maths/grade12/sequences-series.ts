@@ -7,19 +7,19 @@ export const sequencesSeriesGr12: TopicContent = {
   grade: 12,
   paper: 1,
   title: 'Patterns & Series',
+  titleAf: 'Rye en Reekse',
   capsWeight: 25,
-  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
-  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
-  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
   // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
   sections: [
     {
       id: 'overview',
       title: 'Patterns & Series',
+      titleAf: 'Rye en Reekse',
       blocks: [
         {
           type: 'theory',
           title: 'What this topic covers',
+          titleAf: 'Wat hierdie onderwerp dek',
           body: `• **Arithmetic Sequences** - Finding terms and the common difference
 • **Arithmetic Series** - Sum of arithmetic sequences
 • **Geometric Sequences** - Finding terms and the common ratio
@@ -34,6 +34,7 @@ export const sequencesSeriesGr12: TopicContent = {
     {
       id: 'arithmetic-sequences-and-series',
       title: 'Arithmetic sequences and series',
+      titleAf: 'Rekenkundige rye en reekse',
       blocks: [
         {
           type: 'video',
@@ -46,6 +47,7 @@ export const sequencesSeriesGr12: TopicContent = {
     {
       id: 'geometric-sequences-and-series',
       title: 'Geometric sequences and series',
+      titleAf: 'Meetkundige rye en reekse',
       blocks: [
         {
           type: 'video',
@@ -58,6 +60,7 @@ export const sequencesSeriesGr12: TopicContent = {
     {
       id: 'sigma-notation',
       title: 'Sigma notation',
+      titleAf: 'Sigma-notasie',
       blocks: [
         {
           type: 'video',
@@ -70,6 +73,7 @@ export const sequencesSeriesGr12: TopicContent = {
     {
       id: 'sum-to-infinity-of-a-convergent-geometric-series',
       title: 'Sum to infinity of a convergent geometric series',
+      titleAf: 'Som tot oneindig van ’n konvergente meetkundige reeks',
       blocks: [
         {
           type: 'tip',

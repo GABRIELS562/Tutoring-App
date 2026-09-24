@@ -21,6 +21,7 @@
  */
 import { readFileSync, writeFileSync, existsSync } from 'node:fs'
 import { capsCurriculum } from '../src/content/caps-curriculum'
+import { capsSubTopicsAf, capsTopicTitlesAf } from '../src/content/caps-curriculum-af'
 
 interface Pick {
   id: string
@@ -66,18 +67,25 @@ function quote(text: string): string {
   return `'${text.replace(/\\/g, '\\\\').replace(/'/g, "\\'")}'`
 }
 
-function overviewSection(source: string, topicTitle: string): string | null {
+function overviewSection(source: string, topicTitle: string, slug: string): string | null {
+  // titleAf is optional because this has to match output this script itself
+  // produced: once a titleAf was emitted between title and body, a stricter
+  // pattern stopped matching and a second run silently dropped every
+  // overview section.
   const match = source.match(
-    /\{\s*type: 'theory',\s*title: 'What this topic covers',\s*body: `([\s\S]*?)`\s*\}/
+    /\{\s*type: 'theory',\s*title: 'What this topic covers',\s*(?:titleAf: '(?:[^'\\]|\\.)*',\s*)?body: `([\s\S]*?)`\s*\}/
   )
   if (!match) return null
   return `    {
       id: 'overview',
-      title: ${quote(topicTitle)},
+      title: ${quote(topicTitle)},${
+    capsTopicTitlesAf[slug] ? `\n      titleAf: ${quote(capsTopicTitlesAf[slug])},` : ''
+  }
       blocks: [
         {
           type: 'theory',
           title: 'What this topic covers',
+          titleAf: 'Wat hierdie onderwerp dek',
           body: \`${match[1]}\`
         }
       ]
@@ -95,6 +103,12 @@ function afrikaansPickFor(entry: Curated, afrikaans: Curated[]): Pick | null {
   return match?.pick ?? null
 }
 
+/** The Afrikaans heading for a sub-topic, or nothing when we have none. */
+function titleAfLine(subTopic: string): string {
+  const af = capsSubTopicsAf[subTopic]
+  return af ? `\n      titleAf: ${quote(af)},` : ''
+}
+
 function sectionFor(entry: Curated, afrikaans: Curated[]): string {
   const id = sectionId(entry.subTopic)
   const afOnly = afrikaansPickFor(entry, afrikaans)
@@ -106,7 +120,7 @@ function sectionFor(entry: Curated, afrikaans: Curated[]): string {
   if (!entry.pick && afOnly) {
     return `    {
       id: ${quote(id)},
-      title: ${quote(entry.subTopic)},
+      title: ${quote(entry.subTopic)},${titleAfLine(entry.subTopic)}
       blocks: [
         {
           type: 'video',
@@ -120,7 +134,7 @@ function sectionFor(entry: Curated, afrikaans: Curated[]): string {
   if (!entry.pick) {
     return `    {
       id: ${quote(id)},
-      title: ${quote(entry.subTopic)},
+      title: ${quote(entry.subTopic)},${titleAfLine(entry.subTopic)}
       blocks: [
         {
           type: 'tip',
@@ -137,7 +151,7 @@ function sectionFor(entry: Curated, afrikaans: Curated[]): string {
     : ''
   return `    {
       id: ${quote(id)},
-      title: ${quote(entry.subTopic)},
+      title: ${quote(entry.subTopic)},${titleAfLine(entry.subTopic)}
       blocks: [${note}
         {
           type: 'video',
@@ -148,18 +162,39 @@ function sectionFor(entry: Curated, afrikaans: Curated[]): string {
     }`
 }
 
+/**
+ * Give the topic itself an Afrikaans name, inserted right after `title` so the
+ * content files stay readable. Idempotent: an existing titleAf is replaced.
+ */
+function withTopicTitleAf(source: string, slug: string): string {
+  const af = capsTopicTitlesAf[slug]
+  if (!af) return source
+  const withoutOld = source.replace(/\n  titleAf: '(?:[^'\\]|\\.)*',/, '')
+  return withoutOld.replace(
+    /(\n  title: '(?:[^'\\]|\\.)*',)/,
+    `$1\n  titleAf: ${quote(af)},`
+  )
+}
+
 function rewrite(
   source: string,
   topicTitle: string,
+  slug: string,
   entries: Curated[],
   afrikaans: Curated[]
 ): string {
   const sections = [
-    overviewSection(source, topicTitle),
+    overviewSection(source, topicTitle, slug),
     ...entries.map((entry) => sectionFor(entry, afrikaans)),
   ].filter(
     Boolean
   ) as string[]
+
+  // Applying twice must not stack the marker comment; strip any previous one.
+  source = source.replace(
+    /(?:[ \t]*\/\/ Curated per CAPS sub-topic[^\n]*\n)+/g,
+    ''
+  )
 
   const start = source.indexOf('  sections: [')
   if (start === -1) throw new Error('no sections array found')
@@ -208,7 +243,7 @@ function main() {
     if (entries.length === 0) continue
 
     const source = readFileSync(file, 'utf8')
-    const next = rewrite(source, topic.title, entries, afrikaans)
+    const next = withTopicTitleAf(rewrite(source, topic.title, topic.slug, entries, afrikaans), topic.slug)
     const videos = entries.filter((e) => e.pick).length
     const afVideos = entries.filter((e) => e.pick && afrikaansPickFor(e, afrikaans)).length
     console.log(

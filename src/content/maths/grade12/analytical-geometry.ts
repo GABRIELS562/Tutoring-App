@@ -7,19 +7,19 @@ export const analyticalGeometryGr12: TopicContent = {
   grade: 12,
   paper: 2,
   title: 'Analytical Geometry',
+  titleAf: 'Analitiese Meetkunde',
   capsWeight: 20,
-  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
-  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
-  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
   // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
   sections: [
     {
       id: 'overview',
       title: 'Analytical Geometry',
+      titleAf: 'Analitiese Meetkunde',
       blocks: [
         {
           type: 'theory',
           title: 'What this topic covers',
+          titleAf: 'Wat hierdie onderwerp dek',
           body: `• **Equation of a Circle** - Standard form and general form
 • **Finding the Centre and Radius** - From different circle equations
 • **Tangent to a Circle** - Finding equations of tangents at a point
@@ -33,6 +33,7 @@ export const analyticalGeometryGr12: TopicContent = {
     {
       id: 'the-equation-of-a-circle-centred-at-the-origin',
       title: 'The equation of a circle centred at the origin',
+      titleAf: 'Die vergelyking van ’n sirkel met die oorsprong as middelpunt',
       blocks: [
         {
           type: 'video',
@@ -45,6 +46,7 @@ export const analyticalGeometryGr12: TopicContent = {
     {
       id: 'the-equation-of-a-circle-centred-at-any-point',
       title: 'The equation of a circle centred at any point',
+      titleAf: 'Die vergelyking van ’n sirkel met enige punt as middelpunt',
       blocks: [
         {
           type: 'video',
@@ -56,6 +58,7 @@ export const analyticalGeometryGr12: TopicContent = {
     {
       id: 'tangents-to-circles-analytically',
       title: 'Tangents to circles analytically',
+      titleAf: 'Raaklyne aan sirkels analities',
       blocks: [
         {
           type: 'video',
@@ -67,6 +70,7 @@ export const analyticalGeometryGr12: TopicContent = {
     {
       id: 'intersecting-circles',
       title: 'Intersecting circles',
+      titleAf: 'Snydende sirkels',
       blocks: [
         {
           type: 'video',

@@ -4,6 +4,7 @@ import NoteBlock from '../NoteBlock'
 import type { NoteBlock as NoteBlockType } from '@/types'
 
 vi.mock('next-intl', () => ({
+  useLocale: () => 'en',
   useTranslations: () => (key: string) => {
     const messages: Record<string, string> = {
       noVideoAvailable: 'No video available in your language',

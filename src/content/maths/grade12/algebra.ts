@@ -10,19 +10,19 @@ export const algebraGr12: TopicContent = {
   grade: 12,
   paper: 1,
   title: 'Algebra & Equations',
+  titleAf: 'Algebra en Vergelykings',
   capsWeight: 0,
-  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
-  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
-  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
   // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
   sections: [
     {
       id: 'overview',
       title: 'Algebra & Equations',
+      titleAf: 'Algebra en Vergelykings',
       blocks: [
         {
           type: 'theory',
           title: 'What this topic covers',
+          titleAf: 'Wat hierdie onderwerp dek',
           body: `• Revision of quadratic equations and inequalities
 • Advanced simultaneous equations
 • Logarithms applied to exponential equations`
@@ -32,6 +32,7 @@ export const algebraGr12: TopicContent = {
     {
       id: 'revision-of-quadratic-equations-and-inequalities',
       title: 'Revision of quadratic equations and inequalities',
+      titleAf: 'Hersiening van kwadratiese vergelykings en ongelykhede',
       blocks: [
         {
           type: 'video',
@@ -43,6 +44,7 @@ export const algebraGr12: TopicContent = {
     {
       id: 'advanced-simultaneous-equations',
       title: 'Advanced simultaneous equations',
+      titleAf: 'Gevorderde gelyktydige vergelykings',
       blocks: [
         {
           type: 'video',
@@ -55,6 +57,7 @@ export const algebraGr12: TopicContent = {
     {
       id: 'logarithms-applied-to-exponential-equations',
       title: 'Logarithms applied to exponential equations',
+      titleAf: 'Logaritmes toegepas op eksponensiële vergelykings',
       blocks: [
         {
           type: 'tip',

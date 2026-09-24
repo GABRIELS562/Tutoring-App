@@ -7,19 +7,19 @@ export const euclideanGeometryGr12: TopicContent = {
   grade: 12,
   paper: 2,
   title: 'Euclidean Geometry',
+  titleAf: 'Euklidiese Meetkunde',
   capsWeight: 25,
-  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
-  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
-  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
   // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
   sections: [
     {
       id: 'overview',
       title: 'Euclidean Geometry',
+      titleAf: 'Euklidiese Meetkunde',
       blocks: [
         {
           type: 'theory',
           title: 'What this topic covers',
+          titleAf: 'Wat hierdie onderwerp dek',
           body: `• **Revision of Grade 11 Circle Geometry** - All theorems and converses
 • **Proportionality Theorems** - Lines parallel to one side of a triangle
 • **Similar Triangles** - Proving and using similarity
@@ -32,6 +32,7 @@ export const euclideanGeometryGr12: TopicContent = {
     {
       id: 'proportionality-in-triangles',
       title: 'Proportionality in triangles',
+      titleAf: 'Eweredigheid in driehoeke',
       blocks: [
         {
           type: 'video',
@@ -44,6 +45,7 @@ export const euclideanGeometryGr12: TopicContent = {
     {
       id: 'similarity-of-triangles',
       title: 'Similarity of triangles',
+      titleAf: 'Gelykvormigheid van driehoeke',
       blocks: [
         {
           type: 'video',
@@ -56,6 +58,7 @@ export const euclideanGeometryGr12: TopicContent = {
     {
       id: 'the-theorem-of-pythagoras-proved-via-similarity',
       title: 'The Theorem of Pythagoras proved via similarity',
+      titleAf: 'Die Stelling van Pythagoras bewys deur gelykvormigheid',
       blocks: [
         {
           type: 'video',

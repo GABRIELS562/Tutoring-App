@@ -41,6 +41,7 @@ export type NoteBlock = {
 export type TopicSection = {
   id: string
   title: string
+  titleAf?: string // Afrikaans section heading
   blocks: NoteBlock[]
 }
 
@@ -51,6 +52,7 @@ export type TopicContent = {
   grade: Grade
   paper: 1 | 2 | null
   title: string
+  titleAf?: string // Afrikaans topic name
   capsWeight: number
   sections: TopicSection[]
 }

@@ -7,21 +7,19 @@ export const analyticalGeometryGr10: TopicContent = {
   grade: 10,
   paper: 2,
   title: 'Analytical Geometry',
+  titleAf: 'Analitiese Meetkunde',
   capsWeight: 15,
-  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
-  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
-  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
-  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
-  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
   // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
   sections: [
     {
       id: 'overview',
       title: 'Analytical Geometry',
+      titleAf: 'Analitiese Meetkunde',
       blocks: [
         {
           type: 'theory',
           title: 'What this topic covers',
+          titleAf: 'Wat hierdie onderwerp dek',
           body: `• **Distance Formula** - $d = \\sqrt{(x_2-x_1)^2 + (y_2-y_1)^2}$
 • **Midpoint Formula** - $M = \\left(\\frac{x_1+x_2}{2}, \\frac{y_1+y_2}{2}\\right)$
 • **Gradient of a Line** - $m = \\frac{y_2-y_1}{x_2-x_1}$
@@ -34,6 +32,7 @@ export const analyticalGeometryGr10: TopicContent = {
     {
       id: 'the-distance-formula',
       title: 'The distance formula',
+      titleAf: 'Die afstandsformule',
       blocks: [
         {
           type: 'video',
@@ -46,6 +45,7 @@ export const analyticalGeometryGr10: TopicContent = {
     {
       id: 'the-midpoint-formula',
       title: 'The midpoint formula',
+      titleAf: 'Die middelpuntformule',
       blocks: [
         {
           type: 'video',
@@ -58,6 +58,7 @@ export const analyticalGeometryGr10: TopicContent = {
     {
       id: 'gradient-of-a-line-segment',
       title: 'Gradient of a line segment',
+      titleAf: 'Gradiënt van ’n lynsegment',
       blocks: [
         {
           type: 'video',

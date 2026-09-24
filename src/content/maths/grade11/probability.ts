@@ -10,19 +10,19 @@ export const probabilityGr11: TopicContent = {
   grade: 11,
   paper: 1,
   title: 'Probability',
+  titleAf: 'Waarskynlikheid',
   capsWeight: 0,
-  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
-  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
-  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
   // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
   sections: [
     {
       id: 'overview',
       title: 'Probability',
+      titleAf: 'Waarskynlikheid',
       blocks: [
         {
           type: 'theory',
           title: 'What this topic covers',
+          titleAf: 'Wat hierdie onderwerp dek',
           body: `• Dependent and independent events
 • The product rule for independent events
 • Tree diagrams
@@ -33,6 +33,7 @@ export const probabilityGr11: TopicContent = {
     {
       id: 'dependent-and-independent-events',
       title: 'Dependent and independent events',
+      titleAf: 'Afhanklike en onafhanklike gebeurtenisse',
       blocks: [
         {
           type: 'video',
@@ -45,6 +46,7 @@ export const probabilityGr11: TopicContent = {
     {
       id: 'the-product-rule-for-independent-events',
       title: 'The product rule for independent events',
+      titleAf: 'Die produkreël vir onafhanklike gebeurtenisse',
       blocks: [
         {
           type: 'tip',
@@ -56,6 +58,7 @@ export const probabilityGr11: TopicContent = {
     {
       id: 'tree-diagrams',
       title: 'Tree diagrams',
+      titleAf: 'Boomdiagramme',
       blocks: [
         {
           type: 'video',
@@ -68,6 +71,7 @@ export const probabilityGr11: TopicContent = {
     {
       id: 'contingency-two-way-tables',
       title: 'Contingency (two-way) tables',
+      titleAf: 'Gebeurlikheidstabelle (tweerigtingtabelle)',
       blocks: [
         {
           type: 'video',

@@ -7,21 +7,19 @@ export const euclideanGeometryGr10: TopicContent = {
   grade: 10,
   paper: 2,
   title: 'Euclidean Geometry',
+  titleAf: 'Euklidiese Meetkunde',
   capsWeight: 20,
-  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
-  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
-  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
-  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
-  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
   // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
   sections: [
     {
       id: 'overview',
       title: 'Euclidean Geometry',
+      titleAf: 'Euklidiese Meetkunde',
       blocks: [
         {
           type: 'theory',
           title: 'What this topic covers',
+          titleAf: 'Wat hierdie onderwerp dek',
           body: `• **Lines and Angles** - Vertically opposite, corresponding, alternate, co-interior
 • **Triangles** - Properties, types, angle sum, exterior angles
 • **Congruence** - SSS, SAS, AAS, RHS
@@ -35,6 +33,7 @@ export const euclideanGeometryGr10: TopicContent = {
     {
       id: 'lines-angles-and-triangles',
       title: 'Lines, angles and triangles',
+      titleAf: 'Lyne, hoeke en driehoeke',
       blocks: [
         {
           type: 'video',
@@ -47,6 +46,7 @@ export const euclideanGeometryGr10: TopicContent = {
     {
       id: 'properties-of-quadrilaterals-parallelograms-rect',
       title: 'Properties of quadrilaterals: parallelograms, rectangles, rhombi, kites',
+      titleAf: 'Eienskappe van vierhoeke: parallelogramme, reghoeke, ruite, vlieërs',
       blocks: [
         {
           type: 'video',
@@ -59,6 +59,7 @@ export const euclideanGeometryGr10: TopicContent = {
     {
       id: 'the-midpoint-theorem',
       title: 'The Midpoint Theorem',
+      titleAf: 'Die Middelpuntstelling',
       blocks: [
         {
           type: 'video',

@@ -10,19 +10,19 @@ export const functionsGr12: TopicContent = {
   grade: 12,
   paper: 1,
   title: 'Functions & Graphs',
+  titleAf: 'Funksies en Grafieke',
   capsWeight: 0,
-  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
-  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
-  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
   // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
   sections: [
     {
       id: 'overview',
       title: 'Functions & Graphs',
+      titleAf: 'Funksies en Grafieke',
       blocks: [
         {
           type: 'theory',
           title: 'What this topic covers',
+          titleAf: 'Wat hierdie onderwerp dek',
           body: `• Domain and range
 • The formal definition of an inverse function
 • Restricting the domain of a quadratic to invert it (y = √x)`
@@ -32,6 +32,7 @@ export const functionsGr12: TopicContent = {
     {
       id: 'domain-and-range',
       title: 'Domain and range',
+      titleAf: 'Definisieversameling en waardeversameling',
       blocks: [
         {
           type: 'video',
@@ -44,6 +45,7 @@ export const functionsGr12: TopicContent = {
     {
       id: 'the-formal-definition-of-an-inverse-function',
       title: 'The formal definition of an inverse function',
+      titleAf: 'Die formele definisie van ’n inverse funksie',
       blocks: [
         {
           type: 'video',
@@ -56,6 +58,7 @@ export const functionsGr12: TopicContent = {
     {
       id: 'restricting-the-domain-of-a-quadratic-to-invert-',
       title: 'Restricting the domain of a quadratic to invert it (y = √x)',
+      titleAf: 'Beperking van die definisieversameling van ’n kwadratiese funksie om dit om te keer (y = √x)',
       blocks: [
         {
           type: 'video',

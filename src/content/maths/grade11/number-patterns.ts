@@ -10,19 +10,19 @@ export const numberPatternsGr11: TopicContent = {
   grade: 11,
   paper: 1,
   title: 'Number Patterns',
+  titleAf: 'Getalpatrone',
   capsWeight: 0,
-  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
-  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
-  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
   // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
   sections: [
     {
       id: 'overview',
       title: 'Number Patterns',
+      titleAf: 'Getalpatrone',
       blocks: [
         {
           type: 'theory',
           title: 'What this topic covers',
+          titleAf: 'Wat hierdie onderwerp dek',
           body: `• Quadratic number patterns and the second constant difference
 • The general term Tn = an² + bn + c`
         }
@@ -31,6 +31,7 @@ export const numberPatternsGr11: TopicContent = {
     {
       id: 'quadratic-number-patterns-and-the-second-constan',
       title: 'Quadratic number patterns and the second constant difference',
+      titleAf: 'Kwadratiese getalpatrone en die tweede konstante verskil',
       blocks: [
         {
           type: 'video',
@@ -42,6 +43,7 @@ export const numberPatternsGr11: TopicContent = {
     {
       id: 'the-general-term-tn-an-bn-c',
       title: 'The general term Tn = an² + bn + c',
+      titleAf: 'Die algemene term Tn = an² + bn + c',
       blocks: [
         {
           type: 'tip',

@@ -10,19 +10,19 @@ export const statisticsGr12: TopicContent = {
   grade: 12,
   paper: 2,
   title: 'Statistics',
+  titleAf: 'Statistiek',
   capsWeight: 0,
-  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
-  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
-  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
   // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
   sections: [
     {
       id: 'overview',
       title: 'Statistics',
+      titleAf: 'Statistiek',
       blocks: [
         {
           type: 'theory',
           title: 'What this topic covers',
+          titleAf: 'Wat hierdie onderwerp dek',
           body: `• Bivariate data
 • Scatter plots and lines of best fit
 • The least-squares regression line y = A + Bx
@@ -33,6 +33,7 @@ export const statisticsGr12: TopicContent = {
     {
       id: 'bivariate-data',
       title: 'Bivariate data',
+      titleAf: 'Tweeveranderlike data',
       blocks: [
         {
           type: 'video',
@@ -44,6 +45,7 @@ export const statisticsGr12: TopicContent = {
     {
       id: 'scatter-plots-and-lines-of-best-fit',
       title: 'Scatter plots and lines of best fit',
+      titleAf: 'Spreidiagramme en lyne van beste passing',
       blocks: [
         {
           type: 'video',
@@ -55,6 +57,7 @@ export const statisticsGr12: TopicContent = {
     {
       id: 'the-least-squares-regression-line-y-a-bx',
       title: 'The least-squares regression line y = A + Bx',
+      titleAf: 'Die kleinstekwadrate-regressielyn y = A + Bx',
       blocks: [
         {
           type: 'video',
@@ -66,6 +69,7 @@ export const statisticsGr12: TopicContent = {
     {
       id: 'the-correlation-coefficient-r',
       title: 'The correlation coefficient r',
+      titleAf: 'Die korrelasiekoëffisiënt r',
       blocks: [
         {
           type: 'video',

@@ -7,19 +7,19 @@ export const analyticalGeometryGr11: TopicContent = {
   grade: 11,
   paper: 2,
   title: 'Analytical Geometry',
+  titleAf: 'Analitiese Meetkunde',
   capsWeight: 15,
-  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
-  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
-  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
   // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
   sections: [
     {
       id: 'overview',
       title: 'Analytical Geometry',
+      titleAf: 'Analitiese Meetkunde',
       blocks: [
         {
           type: 'theory',
           title: 'What this topic covers',
+          titleAf: 'Wat hierdie onderwerp dek',
           body: `• **Distance Formula** - Finding the distance between two points
 • **Midpoint Formula** - Finding the midpoint of a line segment
 • **Gradient of a Line** - Calculating slope and understanding its meaning
@@ -34,6 +34,7 @@ export const analyticalGeometryGr11: TopicContent = {
     {
       id: 'inclination-of-a-line',
       title: 'Inclination of a line',
+      titleAf: 'Hellingshoek van ’n lyn',
       blocks: [
         {
           type: 'video',
@@ -45,6 +46,7 @@ export const analyticalGeometryGr11: TopicContent = {
     {
       id: 'parallel-and-perpendicular-lines',
       title: 'Parallel and perpendicular lines',
+      titleAf: 'Ewewydige en loodregte lyne',
       blocks: [
         {
           type: 'video',
@@ -56,6 +58,7 @@ export const analyticalGeometryGr11: TopicContent = {
     {
       id: 'solving-geometric-shapes-analytically',
       title: 'Solving geometric shapes analytically',
+      titleAf: 'Analitiese oplossing van meetkundige figure',
       blocks: [
         {
           type: 'tip',

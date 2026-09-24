@@ -7,21 +7,19 @@ export const algebraGr10: TopicContent = {
   grade: 10,
   paper: 1,
   title: 'Algebra & Equations',
+  titleAf: 'Algebra en Vergelykings',
   capsWeight: 20,
-  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
-  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
-  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
-  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
-  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
   // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
   sections: [
     {
       id: 'overview',
       title: 'Algebra & Equations',
+      titleAf: 'Algebra en Vergelykings',
       blocks: [
         {
           type: 'theory',
           title: 'What this topic covers',
+          titleAf: 'Wat hierdie onderwerp dek',
           body: `• **Number Systems** - Rational, irrational, real numbers
 • **Exponent Laws** - Multiplying, dividing, power of a power
 • **Simplifying Expressions** - Like terms, distribution
@@ -34,6 +32,7 @@ export const algebraGr10: TopicContent = {
     {
       id: 'exponents-and-the-exponent-laws',
       title: 'Exponents and the exponent laws',
+      titleAf: 'Eksponente en die eksponentwette',
       blocks: [
         {
           type: 'video',
@@ -46,6 +45,7 @@ export const algebraGr10: TopicContent = {
     {
       id: 'factorisation-trinomials',
       title: 'Factorisation: trinomials',
+      titleAf: 'Faktorisering: drieterme',
       blocks: [
         {
           type: 'video',
@@ -58,6 +58,7 @@ export const algebraGr10: TopicContent = {
     {
       id: 'factorisation-sum-and-difference-of-cubes',
       title: 'Factorisation: sum and difference of cubes',
+      titleAf: 'Faktorisering: som en verskil van derdemagte',
       blocks: [
         {
           type: 'video',
@@ -70,6 +71,7 @@ export const algebraGr10: TopicContent = {
     {
       id: 'solving-linear-equations',
       title: 'Solving linear equations',
+      titleAf: 'Oplos van lineêre vergelykings',
       blocks: [
         {
           type: 'video',
@@ -82,6 +84,7 @@ export const algebraGr10: TopicContent = {
     {
       id: 'solving-quadratic-equations',
       title: 'Solving quadratic equations',
+      titleAf: 'Oplos van kwadratiese vergelykings',
       blocks: [
         {
           type: 'video',
@@ -94,6 +97,7 @@ export const algebraGr10: TopicContent = {
     {
       id: 'solving-simultaneous-equations',
       title: 'Solving simultaneous equations',
+      titleAf: 'Oplos van gelyktydige vergelykings',
       blocks: [
         {
           type: 'video',
@@ -106,6 +110,7 @@ export const algebraGr10: TopicContent = {
     {
       id: 'linear-inequalities',
       title: 'Linear inequalities',
+      titleAf: 'Lineêre ongelykhede',
       blocks: [
         {
           type: 'video',

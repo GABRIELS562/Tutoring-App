@@ -7,21 +7,19 @@ export const probabilityGr10: TopicContent = {
   grade: 10,
   paper: 1,
   title: 'Probability',
+  titleAf: 'Waarskynlikheid',
   capsWeight: 10,
-  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
-  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
-  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
-  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
-  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
   // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
   sections: [
     {
       id: 'overview',
       title: 'Probability',
+      titleAf: 'Waarskynlikheid',
       blocks: [
         {
           type: 'theory',
           title: 'What this topic covers',
+          titleAf: 'Wat hierdie onderwerp dek',
           body: `• **Theoretical Probability** - $P(A) = \\frac{\\text{favourable outcomes}}{\\text{total outcomes}}$
 • **Relative Frequency** - Experimental probability
 • **Venn Diagrams** - Representing events visually
@@ -34,6 +32,7 @@ export const probabilityGr10: TopicContent = {
     {
       id: 'venn-diagrams',
       title: 'Venn diagrams',
+      titleAf: 'Venn-diagramme',
       blocks: [
         {
           type: 'video',
@@ -46,6 +45,7 @@ export const probabilityGr10: TopicContent = {
     {
       id: 'theoretical-and-relative-frequency-probability',
       title: 'Theoretical and relative frequency probability',
+      titleAf: 'Teoretiese en relatiewe frekwensiewaarskynlikheid',
       blocks: [
         {
           type: 'tip',
@@ -57,6 +57,7 @@ export const probabilityGr10: TopicContent = {
     {
       id: 'the-addition-rule-identity-rule',
       title: 'The addition rule (identity rule)',
+      titleAf: 'Die optelreël (identiteitsreël)',
       blocks: [
         {
           type: 'tip',

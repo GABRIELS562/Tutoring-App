@@ -4,13 +4,12 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Topbar from '@/components/layout/Topbar'
 import NoteBlock from '@/components/notes/NoteBlock'
-import { useTranslations } from 'next-intl'
+import { useTranslations, useLocale } from 'next-intl'
 import { ChevronDown, BookOpen, FileText, Star, ArrowRight, Download, Check, Loader2, WifiOff, AlertCircle, Swords } from 'lucide-react'
 import type { TopicContent } from '@/types'
 import { useUser } from '@/context/UserContext'
 import { isTopicDownloaded, getDownloadedTopicCount, storeTopic } from '@/lib/offlineStorage'
 import { useOnlineStatus } from '@/hooks/useOnlineStatus'
-import { useLocaleCookie } from '@/hooks/useLocaleCookie'
 import { getBossForTopic } from '@/content/bosses'
 import { ACCENT_TEXT_LIGHT, ACCENT_TEXT_DARK } from '@/lib/color/contrast'
 
@@ -32,9 +31,17 @@ export default function TopicPageClient({ slug, content }: TopicPageClientProps)
   const isOnline = useOnlineStatus()
   const { user } = useUser()
   const isPremium = user?.isPremium ?? false
-  const locale = useLocaleCookie()
+  const locale = useLocale()
   const boss = getBossForTopic(slug)
   const bossName = locale === 'af' ? boss.nameAf : boss.name
+
+  // CAPS headings are authored in English and translated in
+  // caps-curriculum-af.ts. Falling back to the English is deliberate: an
+  // untranslated heading beats a wrong one in a subject where the
+  // terminology itself is examined.
+  const localised = (english: string, afrikaans?: string) =>
+    locale === 'af' && afrikaans ? afrikaans : english
+  const topicTitle = localised(content.title, content.titleAf)
 
   // Check if topic is already cached (IndexedDB + Cache API)
   useEffect(() => {
@@ -100,7 +107,7 @@ export default function TopicPageClient({ slug, content }: TopicPageClientProps)
 
       await storeTopic({
         slug,
-        title: content.title,
+        title: topicTitle,
         downloadedAt: new Date().toISOString(),
         questionCount: 0,
         audioCount: 0,
@@ -117,7 +124,7 @@ export default function TopicPageClient({ slug, content }: TopicPageClientProps)
   return (
     <div>
       <Topbar
-        title={content.title}
+        title={topicTitle}
         subtitle={`${tTopics('grade')} ${content.grade} • ${content.subject === 'maths' ? tSubjects('mathematics') : tSubjects('physicalScience')}${content.paper ? ` ${t('paperWord')} ${content.paper}` : ''}`}
       />
 
@@ -146,7 +153,7 @@ export default function TopicPageClient({ slug, content }: TopicPageClientProps)
                   background: activeSection === section.id ? 'rgba(230, 57, 70, 0.1)' : 'transparent',
                 }}
               >
-                {section.title}
+                {localised(section.title, section.titleAf)}
               </button>
             ))}
           </nav>
@@ -253,7 +260,7 @@ export default function TopicPageClient({ slug, content }: TopicPageClientProps)
                   className="w-full text-left px-4 py-2 text-sm transition-all hover:bg-white/5"
                   style={{ color: 'var(--text)' }}
                 >
-                  {section.title}
+                  {localised(section.title, section.titleAf)}
                 </button>
               ))}
             </div>
@@ -271,7 +278,7 @@ export default function TopicPageClient({ slug, content }: TopicPageClientProps)
                     className="text-2xl md:text-3xl font-bold mb-2"
                     style={{ color: 'var(--text)' }}
                   >
-                    {content.title}
+                    {topicTitle}
                   </h2>
                   <p style={{ color: 'var(--muted-custom)' }}>
                     {tTopics('grade')} {content.grade} {content.subject === 'maths' ? tSubjects('mathematics') : tSubjects('physicalScience')}
@@ -314,7 +321,7 @@ export default function TopicPageClient({ slug, content }: TopicPageClientProps)
                   className="text-xl font-bold mb-4 pb-2"
                   style={{ color: 'var(--text)', borderBottom: '1px solid var(--border-custom)' }}
                 >
-                  {section.title}
+                  {localised(section.title, section.titleAf)}
                 </h3>
                 {section.blocks.map((block, blockIndex) => (
                   <NoteBlock
