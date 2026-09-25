@@ -25,10 +25,21 @@ type Phase = 'gate' | 'scaffold' | 'attempt' | 'marking' | 'result'
 export default function ExamItemCard({
   item,
   onDone,
+  showStem = true,
+  groupContext,
 }: {
   item: ExamItem
   onDone?: (marks: number, available: number) => void
+  /** False when the question group above already shows the stem and diagram. */
+  showStem?: boolean
+  /** The stem shown above the group, so a local one can be told apart. */
+  groupContext?: string
 }) {
+  // A sub-part may carry its own context that is not the question's stem -
+  // 6.4 adds "the graph f is shifted 30° to the left" on top of question 6's
+  // diagram - and that must still be shown even when the stem is not.
+  const localContext =
+    item.context && item.context !== groupContext ? item.context : undefined
   const [phase, setPhase] = useState<Phase>('gate')
   const [familiarity, setFamiliarity] = useState<Familiarity | null>(null)
   const [satisfied, setSatisfied] = useState<string[]>([])
@@ -62,13 +73,19 @@ export default function ExamItemCard({
         </span>
       </div>
 
-      {item.context && (
+      {showStem && item.context && (
         <div className="text-sm mb-3" style={{ color: 'var(--text)', opacity: 0.85 }}>
           <MathRenderer content={item.context} />
         </div>
       )}
 
-      {item.diagram && (
+      {!showStem && localContext && (
+        <div className="text-sm mb-3" style={{ color: 'var(--text)', opacity: 0.85 }}>
+          <MathRenderer content={localContext} />
+        </div>
+      )}
+
+      {showStem && item.diagram && (
         <div className="my-3 rounded-lg overflow-hidden" style={{ background: '#fff' }}>
           <Image
             src={item.diagram}
