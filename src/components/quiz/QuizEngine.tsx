@@ -234,8 +234,11 @@ export default function QuizEngine({
 
     return (
       <motion.div
-        initial={{ opacity: 0, scale: 0.95 }}
-        animate={{ opacity: 1, scale: 1 }}
+        // Scale only, never fade - see the note in QuestionCard. The results
+        // screen carries the score and the XP the student just earned; it
+        // must not be invisible if the animation stalls.
+        initial={{ scale: 0.95 }}
+        animate={{ scale: 1 }}
         className="max-w-md mx-auto text-center py-8"
       >
         {/* Trophy Icon */}
@@ -264,8 +267,8 @@ export default function QuizEngine({
 
         {/* XP Earned */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
+          initial={{ y: 20 }}
+          animate={{ y: 0 }}
           transition={{ delay: 0.4 }}
           className="mb-6"
         >

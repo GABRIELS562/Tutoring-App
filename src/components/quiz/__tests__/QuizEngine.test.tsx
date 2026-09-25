@@ -328,3 +328,66 @@ describe('QuizEngine hearts', () => {
     expect(screen.getByText('Second question')).toBeInTheDocument()
   })
 })
+
+/**
+ * The practice page once rendered no question at all. The cause was not a
+ * data problem: the question card faded in from `opacity: 0`, so the server
+ * shipped it invisible and the card only became readable once Framer Motion
+ * ran the entry animation client-side. Anything that stalled that animation
+ * - a backgrounded tab throttling requestAnimationFrame, a slow device, a
+ * hydration hiccup, JS that never arrived - left a student staring at an
+ * empty page with the question sitting right there in the DOM at zero
+ * opacity. The Next button was worse: it fades in on a 0.5s delay, so a
+ * stalled animation stranded the student with no visible way forward.
+ *
+ * Content may slide or scale on entry. It may not fade, because a fade that
+ * never runs is indistinguishable from a page that never loaded.
+ */
+describe('question visibility does not depend on an animation', () => {
+  beforeEach(() => {
+    vi.clearAllMocks()
+  })
+
+  const zeroOpacity = (container: HTMLElement) =>
+    [...container.querySelectorAll<HTMLElement>('[style]')].filter(
+      (el) => el.style.opacity === '0'
+    )
+
+  it('renders the question at full opacity before any animation runs', () => {
+    const { container } = render(
+      <QuizEngine
+        topicSlug="trig-gr11"
+        grade={11}
+        userId="user-1"
+        initialQuestions={[makeQuestion()]}
+        isDemo={false}
+      />
+    )
+
+    expect(screen.getByText('What is 2 plus 2?')).toBeInTheDocument()
+    expect(
+      zeroOpacity(container).map((el) => el.className),
+      'content was rendered invisible and depends on an animation to be seen'
+    ).toEqual([])
+  })
+
+  it('keeps the answer feedback and the next button visible once answered', async () => {
+    const user = userEvent.setup()
+    const { container } = render(
+      <QuizEngine
+        topicSlug="trig-gr11"
+        grade={11}
+        userId="user-1"
+        initialQuestions={[makeQuestion()]}
+        isDemo={false}
+      />
+    )
+
+    await user.click(screen.getByText('Four'))
+
+    expect(
+      zeroOpacity(container).map((el) => el.className),
+      'post-answer content is invisible until an animation runs'
+    ).toEqual([])
+  })
+})

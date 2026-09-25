@@ -92,8 +92,8 @@ function StepRow({
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 10 }}
-      animate={{ opacity: 1, y: 0 }}
+      initial={{ y: 10 }}
+      animate={{ y: 0 }}
       transition={{ duration: 0.3, delay: index * 0.1 }}
       className="flex gap-3"
     >
@@ -144,9 +144,9 @@ function StepRow({
         <AnimatePresence>
           {showHint && step.hint && (
             <motion.p
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: 'auto' }}
-              exit={{ opacity: 0, height: 0 }}
+              initial={{ height: 0 }}
+              animate={{ height: 'auto' }}
+              exit={{ height: 0 }}
               className="text-sm italic mb-2 pl-3"
               style={{
                 color: 'var(--muted-custom)',
@@ -204,8 +204,8 @@ function StepRow({
         {/* Angelo's Response */}
         {angeloResponse && (
           <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
+            initial={{ y: 10 }}
+            animate={{ y: 0 }}
             className="mt-3 p-3 rounded-lg"
             style={{
               background: 'rgba(42, 157, 143, 0.1)',
@@ -247,8 +247,8 @@ export default function StepSolution({ steps, questionText }: StepSolutionProps)
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
+      initial={{ y: 20 }}
+      animate={{ y: 0 }}
       transition={{ duration: 0.4 }}
       className="mt-4 p-4 rounded-lg"
       style={{

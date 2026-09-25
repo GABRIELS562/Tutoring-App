@@ -141,8 +141,15 @@ export default function QuestionCard({
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
+      // Slide only - never fade. The question is this page's primary content,
+      // so its visibility must not depend on an animation running. Fading in
+      // from opacity 0 meant the server shipped the card invisible
+      // (opacity:0 in the SSR HTML) and anything that stalled the entry
+      // animation - a backgrounded tab throttling rAF, a slow device, a
+      // hydration hiccup, JS that never arrives - left the student sitting on
+      // an empty practice page. A slide that never runs is merely 20px low.
+      initial={{ y: 20 }}
+      animate={{ y: 0 }}
       transition={{ duration: 0.3 }}
       className="rounded-xl p-5 md:p-6"
       style={{ background: 'var(--surface)', border: '1px solid var(--border-custom)' }}
@@ -213,8 +220,8 @@ export default function QuestionCard({
       {/* Ask Angelo Button (shown after incorrect answer) */}
       {wasIncorrect && !angeloResponse && (
         <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
+          initial={{ y: 10 }}
+          animate={{ y: 0 }}
           transition={{ duration: 0.3, delay: 0.3 }}
           className="mt-4"
         >
@@ -251,8 +258,8 @@ export default function QuestionCard({
       {/* Angelo's Response */}
       {angeloResponse && (
         <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
+          initial={{ y: 10 }}
+          animate={{ y: 0 }}
           className="mt-4 p-4 rounded-lg"
           style={{
             background: 'rgba(42, 157, 143, 0.1)',
@@ -281,8 +288,8 @@ export default function QuestionCard({
       {/* Next Button (shown after answer) */}
       {answered && (
         <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
+          initial={{ y: 10 }}
+          animate={{ y: 0 }}
           transition={{ duration: 0.3, delay: 0.5 }}
           className="mt-6 flex justify-end"
         >

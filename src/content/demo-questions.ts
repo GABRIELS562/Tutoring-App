@@ -29,8 +29,8 @@ export const demoQuestions: QuestionWithDetails[] = [
     ],
     steps: [
       { id: 's1', stepNumber: 1, instruction: 'Identify the quadrant: 210° is in Quadrant III (180° < 210° < 270°)', hint: 'CAST diagram: only Tangent is positive in Q3', correctAnswer: '210° = 180° + 30°', explanation: 'We express 210° as 180° + 30° to use reduction formulae' },
-      { id: 's2', stepNumber: 2, instruction: 'Apply the reduction formula for sin(180° + θ)', hint: 'In Q3, sine is negative', correctAnswer: '\\sin(180° + 30°) = -\\sin 30°', explanation: null },
-      { id: 's3', stepNumber: 3, instruction: 'Evaluate sin 30° using special angles', hint: 'Remember the special angles table', correctAnswer: '-\\sin 30° = -\\frac{1}{2}', explanation: 'sin 30° = 1/2 from the special angles table' },
+      { id: 's2', stepNumber: 2, instruction: 'Apply the reduction formula for sin(180° + θ)', hint: 'In Q3, sine is negative', correctAnswer: '$\\sin(180° + 30°) = -\\sin 30°$', explanation: null },
+      { id: 's3', stepNumber: 3, instruction: 'Evaluate sin 30° using special angles', hint: 'Remember the special angles table', correctAnswer: '$-\\sin 30° = -\\frac{1}{2}$', explanation: 'sin 30° = 1/2 from the special angles table' },
     ],
   },
   {
@@ -54,9 +54,9 @@ export const demoQuestions: QuestionWithDetails[] = [
       { id: 'b4', optionLetter: 'D', optionText: '$-\\frac{3}{5}$', isCorrect: false },
     ],
     steps: [
-      { id: 's1', stepNumber: 1, instruction: 'Use the identity sin²θ + cos²θ = 1', hint: 'This is the fundamental Pythagorean identity', correctAnswer: '\\cos^2\\theta = 1 - \\sin^2\\theta', explanation: null },
-      { id: 's2', stepNumber: 2, instruction: 'Substitute sin θ = 3/5', hint: null, correctAnswer: '\\cos^2\\theta = 1 - \\left(\\frac{3}{5}\\right)^2 = 1 - \\frac{9}{25} = \\frac{16}{25}', explanation: null },
-      { id: 's3', stepNumber: 3, instruction: 'Take the square root and determine the sign', hint: 'θ is in Q2, so cosine is negative', correctAnswer: '\\cos\\theta = -\\frac{4}{5}', explanation: 'Since θ ∈ [90°, 180°] (Quadrant II), cos θ is negative' },
+      { id: 's1', stepNumber: 1, instruction: 'Use the identity sin²θ + cos²θ = 1', hint: 'This is the fundamental Pythagorean identity', correctAnswer: '$\\cos^2\\theta = 1 - \\sin^2\\theta$', explanation: null },
+      { id: 's2', stepNumber: 2, instruction: 'Substitute sin θ = 3/5', hint: null, correctAnswer: '$\\cos^2\\theta = 1 - \\left(\\frac{3}{5}\\right)^2 = 1 - \\frac{9}{25} = \\frac{16}{25}$', explanation: null },
+      { id: 's3', stepNumber: 3, instruction: 'Take the square root and determine the sign', hint: 'θ is in Q2, so cosine is negative', correctAnswer: '$\\cos\\theta = -\\frac{4}{5}$', explanation: 'Since θ ∈ [90°, 180°] (Quadrant II), cos θ is negative' },
     ],
   },
   {
@@ -80,9 +80,9 @@ export const demoQuestions: QuestionWithDetails[] = [
       { id: 'c4', optionLetter: 'D', optionText: '$x = 150°$ only', isCorrect: false },
     ],
     steps: [
-      { id: 's1', stepNumber: 1, instruction: 'Isolate sin x', hint: null, correctAnswer: '2\\sin x = 1 \\implies \\sin x = \\frac{1}{2}', explanation: null },
-      { id: 's2', stepNumber: 2, instruction: 'Find the reference angle', hint: 'What angle has sin = 1/2?', correctAnswer: '\\alpha = 30°', explanation: 'sin 30° = 1/2 from special angles' },
-      { id: 's3', stepNumber: 3, instruction: 'Since sin x > 0, x is in Q1 or Q2', hint: 'Use CAST diagram', correctAnswer: 'x = 30° \\text{ (Q1)} \\quad \\text{or} \\quad x = 180° - 30° = 150° \\text{ (Q2)}', explanation: null },
+      { id: 's1', stepNumber: 1, instruction: 'Isolate sin x', hint: null, correctAnswer: '$2\\sin x = 1 \\implies \\sin x = \\frac{1}{2}$', explanation: null },
+      { id: 's2', stepNumber: 2, instruction: 'Find the reference angle', hint: 'What angle has sin = 1/2?', correctAnswer: '$\\alpha = 30°$', explanation: 'sin 30° = 1/2 from special angles' },
+      { id: 's3', stepNumber: 3, instruction: 'Since sin x > 0, x is in Q1 or Q2', hint: 'Use CAST diagram', correctAnswer: '$x = 30° \\text{ (Q1)} \\quad \\text{or} \\quad x = 180° - 30° = 150° \\text{ (Q2)}$', explanation: null },
     ],
   },
   {
@@ -106,9 +106,9 @@ export const demoQuestions: QuestionWithDetails[] = [
       { id: 'd4', optionLetter: 'D', optionText: '$48$ cm²', isCorrect: false },
     ],
     steps: [
-      { id: 's1', stepNumber: 1, instruction: 'Identify this as a SAS problem - use the Area Rule', hint: 'Two sides and the included angle', correctAnswer: '\\text{Area} = \\frac{1}{2}ab\\sin C', explanation: null },
-      { id: 's2', stepNumber: 2, instruction: 'Substitute the values', hint: null, correctAnswer: '\\text{Area} = \\frac{1}{2} \\times 8 \\times 6 \\times \\sin 60°', explanation: null },
-      { id: 's3', stepNumber: 3, instruction: 'Calculate using sin 60° = √3/2', hint: 'Special angle value', correctAnswer: '\\text{Area} = \\frac{1}{2} \\times 8 \\times 6 \\times \\frac{\\sqrt{3}}{2} = 12\\sqrt{3} \\text{ cm}^2', explanation: '≈ 20.78 cm²' },
+      { id: 's1', stepNumber: 1, instruction: 'Identify this as a SAS problem - use the Area Rule', hint: 'Two sides and the included angle', correctAnswer: '$\\text{Area} = \\frac{1}{2}ab\\sin C$', explanation: null },
+      { id: 's2', stepNumber: 2, instruction: 'Substitute the values', hint: null, correctAnswer: '$\\text{Area} = \\frac{1}{2} \\times 8 \\times 6 \\times \\sin 60°$', explanation: null },
+      { id: 's3', stepNumber: 3, instruction: 'Calculate using sin 60° = √3/2', hint: 'Special angle value', correctAnswer: '$\\text{Area} = \\frac{1}{2} \\times 8 \\times 6 \\times \\frac{\\sqrt{3}}{2} = 12\\sqrt{3} \\text{ cm}^2$', explanation: '≈ 20.78 cm²' },
     ],
   },
   {
@@ -132,9 +132,9 @@ export const demoQuestions: QuestionWithDetails[] = [
       { id: 'e4', optionLetter: 'D', optionText: '$\\tan^2\\theta = \\sin^2\\theta - \\cos^2\\theta$', isCorrect: false },
     ],
     steps: [
-      { id: 's1', stepNumber: 1, instruction: 'Recall the definitions of sin and cos', hint: 'SOH CAH TOA', correctAnswer: '\\sin\\theta = \\frac{\\text{opp}}{\\text{hyp}}, \\quad \\cos\\theta = \\frac{\\text{adj}}{\\text{hyp}}', explanation: null },
-      { id: 's2', stepNumber: 2, instruction: 'Divide sin θ by cos θ', hint: 'When dividing fractions, multiply by the reciprocal', correctAnswer: '\\frac{\\sin\\theta}{\\cos\\theta} = \\frac{\\text{opp}/\\text{hyp}}{\\text{adj}/\\text{hyp}} = \\frac{\\text{opp}}{\\text{adj}}', explanation: 'The hypotenuse cancels out' },
-      { id: 's3', stepNumber: 3, instruction: 'Recognize this as tan θ', hint: 'TOA = Tan Opposite Adjacent', correctAnswer: '\\tan\\theta = \\frac{\\text{opp}}{\\text{adj}}', explanation: 'This confirms the quotient identity' },
+      { id: 's1', stepNumber: 1, instruction: 'Recall the definitions of sin and cos', hint: 'SOH CAH TOA', correctAnswer: '$\\sin\\theta = \\frac{\\text{opp}}{\\text{hyp}}, \\quad \\cos\\theta = \\frac{\\text{adj}}{\\text{hyp}}$', explanation: null },
+      { id: 's2', stepNumber: 2, instruction: 'Divide sin θ by cos θ', hint: 'When dividing fractions, multiply by the reciprocal', correctAnswer: '$\\frac{\\sin\\theta}{\\cos\\theta} = \\frac{\\text{opp}/\\text{hyp}}{\\text{adj}/\\text{hyp}} = \\frac{\\text{opp}}{\\text{adj}}$', explanation: 'The hypotenuse cancels out' },
+      { id: 's3', stepNumber: 3, instruction: 'Recognize this as tan θ', hint: 'TOA = Tan Opposite Adjacent', correctAnswer: '$\\tan\\theta = \\frac{\\text{opp}}{\\text{adj}}$', explanation: 'This confirms the quotient identity' },
     ],
   },
 ]
