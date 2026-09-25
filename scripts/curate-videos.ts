@@ -43,7 +43,12 @@ const IS_SCIENCE = SUBJECT === 'science'
  * video exists" or "a filter is too strict", and those need telling apart.
  */
 const EXPLAIN = process.argv.includes('--explain')
-import { AFRIKAANS_CHANNELS, AFRIKAANS_TERMS, afrikaansQueries } from './lib/afrikaans'
+import {
+  AFRIKAANS_CHANNELS,
+  AFRIKAANS_TERMS,
+  AFRIKAANS_SCIENCE_TERMS,
+  afrikaansQueries,
+} from './lib/afrikaans'
 
 /**
  * `--lang af` curates the Afrikaans track into videoIdAf. It changes three
@@ -499,12 +504,19 @@ const ENGLISH_SYNONYMS: Record<string, string[]> = {
  * Afrikaans title ("Faktorisering van drieterme"). Everything downstream -
  * the relevance gate, the required terms, the guards - then works unchanged.
  */
+// An Afrikaans run must match on both languages: sub-topics are written in
+// English, titles are Afrikaans, and plenty of titles mix the two
+// ("GR11 Intermolekulere Kragte"). The vocabulary follows the subject -
+// pairing science sub-topics with the maths map is how the science run
+// produced no queries at all.
+const AFRIKAANS_VOCABULARY = IS_SCIENCE ? AFRIKAANS_SCIENCE_TERMS : AFRIKAANS_TERMS
+
 const SYNONYMS: Record<string, string[]> = IS_AFRIKAANS
   ? Object.fromEntries(
-      [...new Set([...Object.keys(ENGLISH_SYNONYMS), ...Object.keys(AFRIKAANS_TERMS)])].map(
+      [...new Set([...Object.keys(ENGLISH_SYNONYMS), ...Object.keys(AFRIKAANS_VOCABULARY)])].map(
         (word) => [
           word,
-          [...(ENGLISH_SYNONYMS[word] ?? []), ...(AFRIKAANS_TERMS[word] ?? [])],
+          [...(ENGLISH_SYNONYMS[word] ?? []), ...(AFRIKAANS_VOCABULARY[word] ?? [])],
         ]
       )
     )
@@ -525,6 +537,25 @@ function isEnumeratedList(subTopic: string): boolean {
   return /:[^:]*,/.test(subTopic)
 }
 
+/**
+ * Folds Afrikaans diacritics to plain ASCII: lineêre -> lineere,
+ * stoïgiometriese -> stoigiometriese, intermolekulêre -> intermolekulere.
+ *
+ * Two things depended on this and neither worked before. The word matcher
+ * tokenises on [a-z0-9], so "Intermolekulêre Kragte" split into
+ * "intermolekul" and "re" and matched no listed term at all - proper
+ * Afrikaans orthography was being skipped wholesale, which is most titles.
+ * Listing both spellings in the vocabulary did not help, because the title
+ * side was being mangled too.
+ *
+ * Folding also collapses the spellings channels genuinely disagree on -
+ * Stoigiometriese / Stoïgiometriese, Foto-elektriese / Fotoëlektriese -
+ * into one form, so the vocabulary needs one entry instead of three.
+ */
+export function fold(text: string): string {
+  return text.normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+}
+
 function stem(word: string): string {
   return word.endsWith('ies') ? word.slice(0, -3) + 'y' : word.replace(/s$/, '')
 }
@@ -540,7 +571,9 @@ function stem(word: string): string {
  * Multi-word and hyphenated forms keep the substring test: they are specific
  * enough not to collide, and tokenising would split them apart.
  */
-function containsTerm(haystack: string, word: string): boolean {
+function containsTerm(rawHaystack: string, rawWord: string): boolean {
+  const haystack = fold(rawHaystack)
+  const word = fold(rawWord)
   if (/[\s-]/.test(word)) return haystack.includes(word)
   const target = stem(word)
   const words = haystack.match(/[a-z0-9²³]+/g) ?? []
@@ -548,7 +581,7 @@ function containsTerm(haystack: string, word: string): boolean {
 }
 
 function tokenise(text: string): string[] {
-  const lower = text.toLowerCase().replace(/[^a-z0-9²√\s-]/g, ' ')
+  const lower = fold(text.toLowerCase()).replace(/[^a-z0-9²√\s-]/g, ' ')
   const words = lower
     .split(/[\s-]+/)
     .filter((word) => word.length > 2 && !STOPWORDS.has(word))
@@ -658,7 +691,7 @@ export function hasRequiredTermsFor(
   subTopic: string,
   title: string
 ): boolean {
-  const haystack = ` ${title.toLowerCase()} `
+  const haystack = ` ${fold(title.toLowerCase())} `
   const required = requiredTerms(subTopic, subject)
   if (required.length === 0) return true
 
@@ -688,7 +721,7 @@ export function hasRequiredTerms(subTopic: string, title: string): boolean {
 export function relevance(subTopic: string, title: string): number {
   const wanted = tokenise(subTopic)
   if (wanted.length === 0) return 0
-  const haystack = ` ${title.toLowerCase()} `
+  const haystack = ` ${fold(title.toLowerCase())} `
 
   const matched = wanted.filter((word) => {
     const forms = [word, ...(SYNONYMS[word] ?? [])]
@@ -810,7 +843,7 @@ function byTier(subTopic: string) {
 }
 
 function queriesFor(topic: CapsTopic, subTopic: string): string[] {
-  if (IS_AFRIKAANS) return afrikaansQueries(subTopic, topic.grade)
+  if (IS_AFRIKAANS) return afrikaansQueries(subTopic, topic.grade, SUBJECT)
   const g = `grade ${topic.grade}`
   if (IS_SCIENCE) {
     // SA science channels title by subject name far more than maths ones do
