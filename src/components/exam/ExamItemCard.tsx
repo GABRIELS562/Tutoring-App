@@ -27,6 +27,7 @@ export default function ExamItemCard({
   onDone,
   showStem = true,
   groupContext,
+  groupDiagram,
 }: {
   item: ExamItem
   onDone?: (marks: number, available: number) => void
@@ -34,6 +35,8 @@ export default function ExamItemCard({
   showStem?: boolean
   /** The stem shown above the group, so a local one can be told apart. */
   groupContext?: string
+  /** The diagram shown above the group, if the whole group shares one. */
+  groupDiagram?: string
 }) {
   // A sub-part may carry its own context that is not the question's stem -
   // 6.4 adds "the graph f is shifted 30° to the left" on top of question 6's
@@ -85,7 +88,7 @@ export default function ExamItemCard({
         </div>
       )}
 
-      {showStem && item.diagram && (
+      {(showStem || !groupDiagram) && item.diagram && (
         <div className="my-3 rounded-lg overflow-hidden" style={{ background: '#fff' }}>
           <Image
             src={item.diagram}

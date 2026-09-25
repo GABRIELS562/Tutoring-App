@@ -13,28 +13,40 @@ function questionRoot(question: string): string {
   return question.split('.')[0]
 }
 
-interface Group {
-  root: string
-  context?: string
+/**
+ * A stem or diagram belongs to a RUN of consecutive sub-parts, not to the
+ * whole question. Question 6 shows its graph for 6.1 to 6.3 but not for 6.4,
+ * and question 7 is three different scenarios under one number - a general
+ * proof, a triangle PQR, and a figure. Hoisting to the question repeated the
+ * graph three times in one case and paired the wrong stem with the wrong
+ * diagram in the other.
+ */
+interface Run {
   diagram?: string
   items: ExamItem[]
 }
 
+interface Group {
+  root: string
+  runs: Run[]
+}
+
 function groupByQuestion(items: ExamItem[]): Group[] {
-  const groups: Group[] = []
+  const byRoot = new Map<string, Group>()
   for (const item of items) {
     const root = questionRoot(item.question)
-    let group = groups.find((g) => g.root === root)
-    if (!group) {
-      group = { root, items: [] }
-      groups.push(group)
-    }
-    // The first sub-part carrying each is taken to own it for the group.
-    group.context ??= item.context
-    group.diagram ??= item.diagram
-    group.items.push(item)
+    const group = byRoot.get(root) ?? { root, runs: [] }
+    byRoot.set(root, group)
+
+    // Runs break on the DIAGRAM only. Sub-parts of one question often carry
+    // slightly different stems - "From QUESTION 4.1, ..." - while sharing the
+    // same figure, and breaking on the stem repeated question 4's diagram
+    // five times.
+    const current = group.runs.at(-1)
+    if (current && current.diagram === item.diagram) current.items.push(item)
+    else group.runs.push({ diagram: item.diagram, items: [item] })
   }
-  return groups
+  return [...byRoot.values()]
 }
 
 export default function ExamPageClient({ items }: { items: ExamItem[] }) {
@@ -74,38 +86,36 @@ export default function ExamPageClient({ items }: { items: ExamItem[] }) {
               Question {group.root}
             </h2>
 
-            {(group.context || group.diagram) && (
-              <div
-                className="rounded-xl p-4 mb-3"
-                style={{ background: 'var(--surface)', border: '1px solid var(--border-custom)' }}
-              >
-                {group.context && (
-                  <div className="text-sm" style={{ color: 'var(--text)', opacity: 0.9 }}>
-                    <MathRenderer content={group.context} />
+            {group.runs.map((run, index) => (
+              <div key={index}>
+                {run.diagram && (
+                  <div
+                    className="rounded-xl p-4 mb-3"
+                    style={{ background: 'var(--surface)', border: '1px solid var(--border-custom)' }}
+                  >
+                    <div className="rounded-lg overflow-hidden" style={{ background: '#fff' }}>
+                      <Image
+                        src={run.diagram}
+                        alt={`Diagram for question ${run.items[0].question}`}
+                        width={1000}
+                        height={620}
+                        className="w-full h-auto"
+                      />
+                    </div>
                   </div>
                 )}
-                {group.diagram && (
-                  <div className="mt-3 rounded-lg overflow-hidden" style={{ background: '#fff' }}>
-                    <Image
-                      src={group.diagram}
-                      alt={`Diagram for question ${group.root}`}
-                      width={1000}
-                      height={620}
-                      className="w-full h-auto"
-                    />
-                  </div>
-                )}
-              </div>
-            )}
 
-            {group.items.map((item) => (
-              <ExamItemCard
-                key={item.id}
-                item={item}
-                showStem={false}
-                groupContext={group.context}
-                onDone={(marks) => setScores((s) => ({ ...s, [item.id]: marks }))}
-              />
+                {run.items.map((item, i) => (
+                  <ExamItemCard
+                    key={item.id}
+                    item={item}
+                    showStem={false}
+                    groupContext={i > 0 ? run.items[i - 1].context : undefined}
+                    groupDiagram={run.diagram}
+                    onDone={(marks) => setScores((s) => ({ ...s, [item.id]: marks }))}
+                  />
+                ))}
+              </div>
             ))}
           </section>
         ))}
