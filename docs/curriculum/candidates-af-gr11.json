@@ -99,18 +99,6 @@
         "score": 52.2
       },
       {
-        "id": "s8AkM-QJJ0U",
-        "title": "02 Kwadratiese vergelykings",
-        "channel": "Wiskunde_Mathematics_SUM",
-        "views": 3439,
-        "viewsText": "3,439 views",
-        "duration": "6:08",
-        "durationSeconds": 368,
-        "saChannel": true,
-        "embeddable": true,
-        "score": 50.9
-      },
-      {
         "id": "-ZtVzM6GyvI",
         "title": "W10 Kwadratiese vergelykings",
         "channel": "Stefan Buys",
@@ -145,6 +133,18 @@
         "saChannel": true,
         "embeddable": true,
         "score": 41.3
+      },
+      {
+        "id": "-9A7IKpl2Sc",
+        "title": "Eienskappe en Vorm van die Kwadratiese Funksies - Graad 11",
+        "channel": "SlimDink",
+        "views": 230,
+        "viewsText": "230 views",
+        "duration": "7:46",
+        "durationSeconds": 466,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 39.1
       }
     ],
     "pick": {
@@ -172,10 +172,33 @@
       "wortels diskriminant graad 11",
       "wiskunde wortels diskriminant afrikaans"
     ],
-    "candidates": [],
-    "pick": null,
-    "usedAdjacentGrade": false,
-    "note": "No embeddable, on-topic CAPS candidate found - left blank for manual search"
+    "candidates": [
+      {
+        "id": "HPB52ouJ7M8",
+        "title": "Graad 11 Vergelykings #6: Aard van Wortels (Discriminant)",
+        "channel": "WiskundeMetMargie",
+        "views": 245,
+        "viewsText": "245 views",
+        "duration": "20:26",
+        "durationSeconds": 1226,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 36.9
+      }
+    ],
+    "pick": {
+      "id": "HPB52ouJ7M8",
+      "title": "Graad 11 Vergelykings #6: Aard van Wortels (Discriminant)",
+      "channel": "WiskundeMetMargie",
+      "views": 245,
+      "viewsText": "245 views",
+      "duration": "20:26",
+      "durationSeconds": 1226,
+      "saChannel": true,
+      "embeddable": true,
+      "score": 36.9
+    },
+    "usedAdjacentGrade": false
   },
   {
     "slug": "algebra-gr11",
@@ -214,6 +237,18 @@
         "score": 49.7
       },
       {
+        "id": "P3AbC4kIesI",
+        "title": "Konsep van Kwadratiese Ongelykhede aan die hand van 'n Voorbeeld - Graad 11",
+        "channel": "SlimDink",
+        "views": 284,
+        "viewsText": "284 views",
+        "duration": "9:45",
+        "durationSeconds": 585,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 47.5
+      },
+      {
         "id": "PdsC5swiPYY",
         "title": "Graad 11 Vergelykings #7 : Kwadratiese Ongelykhede",
         "channel": "WiskundeMetMargie",
@@ -224,6 +259,18 @@
         "saChannel": true,
         "embeddable": true,
         "score": 43.6
+      },
+      {
+        "id": "IamEdYzejoQ",
+        "title": "Kwadratiese Ongelykhede || Wiskunde Graad 11 en 12",
+        "channel": "CollieMath Studio",
+        "views": 162,
+        "viewsText": "162 views",
+        "duration": "24:26",
+        "durationSeconds": 1466,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 40.1
       }
     ],
     "pick": {
@@ -247,22 +294,34 @@
     "paper": 1,
     "subTopic": "Simultaneous equations: linear and quadratic",
     "queries": [
-      "graad 11 wiskunde gelyktydige vergelykings lineêre",
-      "gelyktydige vergelykings lineêre graad 11",
-      "wiskunde gelyktydige vergelykings lineêre afrikaans"
+      "graad 11 wiskunde gelyktydige vergelykings lineere",
+      "gelyktydige vergelykings lineere graad 11",
+      "wiskunde gelyktydige vergelykings lineere afrikaans"
     ],
     "candidates": [
       {
         "id": "OtM4u_uQMSA",
         "title": "Gelyktydige Kwadratiese Vergelykings || Wiskunde Graad 11 en 12",
         "channel": "CollieMath Studio",
-        "views": 1015,
-        "viewsText": "1,015 views",
+        "views": 1016,
+        "viewsText": "1,016 views",
         "duration": "11:49",
         "durationSeconds": 709,
         "saChannel": true,
         "embeddable": true,
         "score": 49.3
+      },
+      {
+        "id": "ICX1fevGMUk",
+        "title": "06 Gelyktydige vergelykings   substitusie",
+        "channel": "Wiskunde_Mathematics_SUM",
+        "views": 2234,
+        "viewsText": "2,234 views",
+        "duration": "6:05",
+        "durationSeconds": 365,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 49
       },
       {
         "id": "dhwW1nivSDk",
@@ -299,26 +358,14 @@
         "saChannel": true,
         "embeddable": true,
         "score": 47
-      },
-      {
-        "id": "IiI21_q67Ig",
-        "title": "Kwadratiese Vergelykings Graad11: L11 Gelyktydige Vergelykings Eksamen Vraag",
-        "channel": "Online Maths by Miss Pythagoras",
-        "views": 315,
-        "viewsText": "315 views",
-        "duration": "3:54",
-        "durationSeconds": 234,
-        "saChannel": true,
-        "embeddable": true,
-        "score": 44.2
       }
     ],
     "pick": {
       "id": "OtM4u_uQMSA",
       "title": "Gelyktydige Kwadratiese Vergelykings || Wiskunde Graad 11 en 12",
       "channel": "CollieMath Studio",
-      "views": 1015,
-      "viewsText": "1,015 views",
+      "views": 1016,
+      "viewsText": "1,016 views",
       "duration": "11:49",
       "durationSeconds": 709,
       "saChannel": true,
@@ -495,16 +542,28 @@
         "score": 49.9
       },
       {
-        "id": "G6_vtt4z-QQ",
-        "title": "Funksies en Grafieke - HIPERBOOL TEORIE || Wiskunde Graad 11 en 12",
-        "channel": "CollieMath Studio",
-        "views": 331,
-        "viewsText": "331 views",
-        "duration": "32:42",
-        "durationSeconds": 1962,
+        "id": "-A6A54aCfWI",
+        "title": "Eienskappe van 'n Hiperbool - Graad 11",
+        "channel": "SlimDink",
+        "views": 295,
+        "viewsText": "295 views",
+        "duration": "6:18",
+        "durationSeconds": 378,
         "saChannel": true,
         "embeddable": true,
-        "score": 43.2
+        "score": 47.7
+      },
+      {
+        "id": "d6qalSohTlY",
+        "title": "Gr11 Funksies - Les 3 Hiperbool",
+        "channel": "Lekker Wiskunde",
+        "views": 186,
+        "viewsText": "186 views",
+        "duration": "17:18",
+        "durationSeconds": 1038,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 45.7
       }
     ],
     "pick": {
@@ -528,11 +587,47 @@
     "paper": 1,
     "subTopic": "The exponential graph y = ab^(x - p) + q",
     "queries": [
-      "graad 11 wiskunde eksponensiële",
-      "eksponensiële graad 11",
-      "wiskunde eksponensiële afrikaans"
+      "graad 11 wiskunde eksponensiele grafiek",
+      "eksponensiele grafiek graad 11",
+      "wiskunde eksponensiele grafiek afrikaans"
     ],
     "candidates": [
+      {
+        "id": "yOMd92ZA3z0",
+        "title": "W11.7 Eksponensiele grafieke basies",
+        "channel": "Stefan Buys",
+        "views": 385,
+        "viewsText": "385 views",
+        "duration": "3:51",
+        "durationSeconds": 231,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 48.9
+      },
+      {
+        "id": "STVEEiy_M74",
+        "title": "W11.8 Eksponensiele Grafiek Teken",
+        "channel": "Stefan Buys",
+        "views": 266,
+        "viewsText": "266 views",
+        "duration": "4:10",
+        "durationSeconds": 250,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 47.2
+      },
+      {
+        "id": "Tewwg2HcPJc",
+        "title": "Funksies en Grafieke - EKSPONENSIELE GRAFIEK TEORIE || Wiskunde Graad 11 en 12",
+        "channel": "CollieMath Studio",
+        "views": 256,
+        "viewsText": "256 views",
+        "duration": "10:35",
+        "durationSeconds": 635,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 47.1
+      },
       {
         "id": "jFQ48rc8r-c",
         "title": "Eienskappe van 'n Eksponensiele Funksie - Graad 11",
@@ -544,19 +639,31 @@
         "saChannel": true,
         "embeddable": true,
         "score": 42
+      },
+      {
+        "id": "pMonKrsuOWE",
+        "title": "Eksponensiele Funksie",
+        "channel": "TheWhiteboardSA",
+        "views": 355,
+        "viewsText": "355 views",
+        "duration": "7:52",
+        "durationSeconds": 472,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 41
       }
     ],
     "pick": {
-      "id": "jFQ48rc8r-c",
-      "title": "Eienskappe van 'n Eksponensiele Funksie - Graad 11",
-      "channel": "SlimDink",
-      "views": 450,
-      "viewsText": "450 views",
-      "duration": "5:00",
-      "durationSeconds": 300,
+      "id": "yOMd92ZA3z0",
+      "title": "W11.7 Eksponensiele grafieke basies",
+      "channel": "Stefan Buys",
+      "views": 385,
+      "viewsText": "385 views",
+      "duration": "3:51",
+      "durationSeconds": 231,
       "saChannel": true,
       "embeddable": true,
-      "score": 42
+      "score": 48.9
     },
     "usedAdjacentGrade": false
   },
@@ -597,16 +704,40 @@
         "score": 57.4
       },
       {
-        "id": "DeHnxefZS5U",
-        "title": "GR12 Inverse funksies 1",
-        "channel": "WSILAB",
-        "views": 326,
-        "viewsText": "326 views",
-        "duration": "1:02:16",
-        "durationSeconds": 3736,
+        "id": "KS9PfngbbSA",
+        "title": "I1 Gr 12 Funksies en inverse",
+        "channel": "Wiskunde Graad 12 Juffrou Koorsen",
+        "views": 213,
+        "viewsText": "213 views",
+        "duration": "10:38",
+        "durationSeconds": 638,
         "saChannel": true,
         "embeddable": true,
-        "score": 38.1
+        "score": 46.3
+      },
+      {
+        "id": "aOjKFls9-Aw",
+        "title": "2 Gr 12 Inverse Funksies voorbeeld deel 1",
+        "channel": "Wiskunde Graad 12 Juffrou Koorsen",
+        "views": 200,
+        "viewsText": "200 views",
+        "duration": "7:44",
+        "durationSeconds": 464,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 46
+      },
+      {
+        "id": "3lROMmyDbso",
+        "title": "Gr12 Funksies - Les 2 Inverse  en logs",
+        "channel": "Lekker Wiskunde",
+        "views": 186,
+        "viewsText": "186 views",
+        "duration": "12:28",
+        "durationSeconds": 748,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 45.7
       }
     ],
     "pick": {
@@ -646,14 +777,49 @@
     "paper": 1,
     "subTopic": "Future value annuities",
     "queries": [
-      "graad 11 wiskunde annuïteite",
-      "annuïteite graad 11",
-      "wiskunde annuïteite afrikaans"
+      "graad 11 wiskunde annuiteite",
+      "annuiteite graad 11",
+      "wiskunde annuiteite afrikaans"
     ],
-    "candidates": [],
-    "pick": null,
-    "usedAdjacentGrade": false,
-    "note": "No embeddable, on-topic CAPS candidate found - left blank for manual search"
+    "candidates": [
+      {
+        "id": "xmgSEimN_G0",
+        "title": "02 Toekomstige waarde annuiteite",
+        "channel": "Wiskunde_Mathematics_SUM",
+        "views": 12397,
+        "viewsText": "12,397 views",
+        "duration": "10:21",
+        "durationSeconds": 621,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 56.4
+      },
+      {
+        "id": "xgMk-9CT0dI",
+        "title": "03 Huidige waarde annuïteite",
+        "channel": "Wiskunde_Mathematics_SUM",
+        "views": 9696,
+        "viewsText": "9,696 views",
+        "duration": "7:23",
+        "durationSeconds": 443,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 55.4
+      }
+    ],
+    "pick": {
+      "id": "xmgSEimN_G0",
+      "title": "02 Toekomstige waarde annuiteite",
+      "channel": "Wiskunde_Mathematics_SUM",
+      "views": 12397,
+      "viewsText": "12,397 views",
+      "duration": "10:21",
+      "durationSeconds": 621,
+      "saChannel": true,
+      "embeddable": true,
+      "score": 56.4
+    },
+    "usedAdjacentGrade": false
   },
   {
     "slug": "finance-gr11",
@@ -662,14 +828,37 @@
     "paper": 1,
     "subTopic": "Present value annuities",
     "queries": [
-      "graad 11 wiskunde annuïteite",
-      "annuïteite graad 11",
-      "wiskunde annuïteite afrikaans"
+      "graad 11 wiskunde annuiteite",
+      "annuiteite graad 11",
+      "wiskunde annuiteite afrikaans"
     ],
-    "candidates": [],
-    "pick": null,
-    "usedAdjacentGrade": false,
-    "note": "No embeddable, on-topic CAPS candidate found - left blank for manual search"
+    "candidates": [
+      {
+        "id": "xgMk-9CT0dI",
+        "title": "03 Huidige waarde annuïteite",
+        "channel": "Wiskunde_Mathematics_SUM",
+        "views": 9696,
+        "viewsText": "9,696 views",
+        "duration": "7:23",
+        "durationSeconds": 443,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 55.4
+      }
+    ],
+    "pick": {
+      "id": "xgMk-9CT0dI",
+      "title": "03 Huidige waarde annuïteite",
+      "channel": "Wiskunde_Mathematics_SUM",
+      "views": 9696,
+      "viewsText": "9,696 views",
+      "duration": "7:23",
+      "durationSeconds": 443,
+      "saChannel": true,
+      "embeddable": true,
+      "score": 55.4
+    },
+    "usedAdjacentGrade": false
   },
   {
     "slug": "finance-gr11",
@@ -757,6 +946,30 @@
         "saChannel": true,
         "embeddable": true,
         "score": 49
+      },
+      {
+        "id": "afPw7vbYvaU",
+        "title": "W11.3 Onafhanklik en Nie onafhanklike gebeurtenisse",
+        "channel": "Stefan Buys",
+        "views": 295,
+        "viewsText": "295 views",
+        "duration": "11:05",
+        "durationSeconds": 665,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 42.7
+      },
+      {
+        "id": "g-BOh5BwCDI",
+        "title": "Konsep van onafhanklike gebeurtenisse met voorbeelde - Graad 11",
+        "channel": "SlimDink",
+        "views": 181,
+        "viewsText": "181 views",
+        "duration": "6:20",
+        "durationSeconds": 380,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 40.6
       }
     ],
     "pick": {
@@ -780,14 +993,37 @@
     "paper": 1,
     "subTopic": "The product rule for independent events",
     "queries": [
-      "graad 11 wiskunde reël onafhanklike gebeurtenisse",
-      "reël onafhanklike gebeurtenisse graad 11",
-      "wiskunde reël onafhanklike gebeurtenisse afrikaans"
+      "graad 11 wiskunde reel onafhanklike gebeurtenisse",
+      "reel onafhanklike gebeurtenisse graad 11",
+      "wiskunde reel onafhanklike gebeurtenisse afrikaans"
     ],
-    "candidates": [],
-    "pick": null,
-    "usedAdjacentGrade": false,
-    "note": "No embeddable, on-topic CAPS candidate found - left blank for manual search"
+    "candidates": [
+      {
+        "id": "3FKNRkhf8Eo",
+        "title": "Hersiening van waarskynlikheid se reëls - Graad 11",
+        "channel": "SlimDink",
+        "views": 1213,
+        "viewsText": "1,213 views",
+        "duration": "7:48",
+        "durationSeconds": 468,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 46.3
+      }
+    ],
+    "pick": {
+      "id": "3FKNRkhf8Eo",
+      "title": "Hersiening van waarskynlikheid se reëls - Graad 11",
+      "channel": "SlimDink",
+      "views": 1213,
+      "viewsText": "1,213 views",
+      "duration": "7:48",
+      "durationSeconds": 468,
+      "saChannel": true,
+      "embeddable": true,
+      "score": 46.3
+    },
+    "usedAdjacentGrade": false
   },
   {
     "slug": "probability-gr11",
@@ -1064,14 +1300,85 @@
     "paper": 2,
     "subTopic": "The sine rule",
     "queries": [
-      "graad 11 wiskunde sinus reël",
-      "sinus reël graad 11",
-      "wiskunde sinus reël afrikaans"
+      "graad 11 wiskunde sinus reel",
+      "sinus reel graad 11",
+      "wiskunde sinus reel afrikaans"
     ],
-    "candidates": [],
-    "pick": null,
-    "usedAdjacentGrade": false,
-    "note": "No embeddable, on-topic CAPS candidate found - left blank for manual search"
+    "candidates": [
+      {
+        "id": "7FcHJrIFQgg",
+        "title": "Sinus reël formule  oplos van driehoeke (wiskdou)",
+        "channel": "Dou Kleefstra",
+        "views": 1683,
+        "viewsText": "1,683 views",
+        "duration": "7:13",
+        "durationSeconds": 433,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 55.3
+      },
+      {
+        "id": "_dd0t6Cbp9c",
+        "title": "Graad 11 Sinus, Kosinus en Oppervlakte reël BEWYSE",
+        "channel": "Dalene Coetzee",
+        "views": 1280,
+        "viewsText": "1,280 views",
+        "duration": "15:14",
+        "durationSeconds": 914,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 54.1
+      },
+      {
+        "id": "K9sqNz4dLBo",
+        "title": "Trigonometrie 2D Graad11: Sin of sinus Reël in Wiskunde ( inleiding ) L3",
+        "channel": "Online Maths by Miss Pythagoras",
+        "views": 1024,
+        "viewsText": "1,024 views",
+        "duration": "13:46",
+        "durationSeconds": 826,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 53.1
+      },
+      {
+        "id": "0YKcDqUp9DI",
+        "title": "Trig Sinus-reël waar dubbelsinnig is (wiskdou)",
+        "channel": "Dou Kleefstra",
+        "views": 607,
+        "viewsText": "607 views",
+        "duration": "3:49",
+        "durationSeconds": 229,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 50.8
+      },
+      {
+        "id": "R7gVJ2mQODU",
+        "title": "Trigonometrie Poster Sinus reel",
+        "channel": "Wolkskool",
+        "views": 374,
+        "viewsText": "374 views",
+        "duration": "6:41",
+        "durationSeconds": 401,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 48.7
+      }
+    ],
+    "pick": {
+      "id": "7FcHJrIFQgg",
+      "title": "Sinus reël formule  oplos van driehoeke (wiskdou)",
+      "channel": "Dou Kleefstra",
+      "views": 1683,
+      "viewsText": "1,683 views",
+      "duration": "7:13",
+      "durationSeconds": 433,
+      "saChannel": true,
+      "embeddable": true,
+      "score": 55.3
+    },
+    "usedAdjacentGrade": false
   },
   {
     "slug": "trig-gr11",
@@ -1080,11 +1387,35 @@
     "paper": 2,
     "subTopic": "The cosine rule",
     "queries": [
-      "graad 11 wiskunde cosinus reël",
-      "cosinus reël graad 11",
-      "wiskunde cosinus reël afrikaans"
+      "graad 11 wiskunde cosinus reel",
+      "cosinus reel graad 11",
+      "wiskunde cosinus reel afrikaans"
     ],
     "candidates": [
+      {
+        "id": "_dd0t6Cbp9c",
+        "title": "Graad 11 Sinus, Kosinus en Oppervlakte reël BEWYSE",
+        "channel": "Dalene Coetzee",
+        "views": 1280,
+        "viewsText": "1,280 views",
+        "duration": "15:14",
+        "durationSeconds": 914,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 54.1
+      },
+      {
+        "id": "25NTsHBsATA",
+        "title": "Trigonometrie 2D Graad11: Cos of cosinus Reël oefen voorbeeld in Wiskunde L6",
+        "channel": "Online Maths by Miss Pythagoras",
+        "views": 398,
+        "viewsText": "398 views",
+        "duration": "3:57",
+        "durationSeconds": 237,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 49
+      },
       {
         "id": "ZgUt5Cmxx28",
         "title": "Die Kosinus Reel",
@@ -1096,19 +1427,31 @@
         "saChannel": true,
         "embeddable": true,
         "score": 48.9
+      },
+      {
+        "id": "ZjvHbjiRpE8",
+        "title": "Trigonometrie Kosinus reel",
+        "channel": "Wolkskool",
+        "views": 301,
+        "viewsText": "301 views",
+        "duration": "16:37",
+        "durationSeconds": 997,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 47.8
       }
     ],
     "pick": {
-      "id": "ZgUt5Cmxx28",
-      "title": "Die Kosinus Reel",
-      "channel": "TheWhiteboardSA",
-      "views": 389,
-      "viewsText": "389 views",
-      "duration": "5:08",
-      "durationSeconds": 308,
+      "id": "_dd0t6Cbp9c",
+      "title": "Graad 11 Sinus, Kosinus en Oppervlakte reël BEWYSE",
+      "channel": "Dalene Coetzee",
+      "views": 1280,
+      "viewsText": "1,280 views",
+      "duration": "15:14",
+      "durationSeconds": 914,
       "saChannel": true,
       "embeddable": true,
-      "score": 48.9
+      "score": 54.1
     },
     "usedAdjacentGrade": false
   },
@@ -1119,14 +1462,61 @@
     "paper": 2,
     "subTopic": "The area rule",
     "queries": [
-      "graad 11 wiskunde oppervlakte reël",
-      "oppervlakte reël graad 11",
-      "wiskunde oppervlakte reël afrikaans"
+      "graad 11 wiskunde oppervlakte reel",
+      "oppervlakte reel graad 11",
+      "wiskunde oppervlakte reel afrikaans"
     ],
-    "candidates": [],
-    "pick": null,
-    "usedAdjacentGrade": false,
-    "note": "No embeddable, on-topic CAPS candidate found - left blank for manual search"
+    "candidates": [
+      {
+        "id": "AmszLOiamRI",
+        "title": "Oppervlakte Reël Formule by driehoeke in trig (wiskdou)",
+        "channel": "Dou Kleefstra",
+        "views": 1751,
+        "viewsText": "1,751 views",
+        "duration": "6:35",
+        "durationSeconds": 395,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 55.4
+      },
+      {
+        "id": "PLgXIxvKnl0",
+        "title": "W11.21 Die oppervlakte reël",
+        "channel": "Stefan Buys",
+        "views": 504,
+        "viewsText": "504 views",
+        "duration": "7:01",
+        "durationSeconds": 421,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 50
+      },
+      {
+        "id": "aRZ2aqCkxGg",
+        "title": "Die Oppervlakte reël",
+        "channel": "TheWhiteboardSA",
+        "views": 340,
+        "viewsText": "340 views",
+        "duration": "5:17",
+        "durationSeconds": 317,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 48.3
+      }
+    ],
+    "pick": {
+      "id": "AmszLOiamRI",
+      "title": "Oppervlakte Reël Formule by driehoeke in trig (wiskdou)",
+      "channel": "Dou Kleefstra",
+      "views": 1751,
+      "viewsText": "1,751 views",
+      "duration": "6:35",
+      "durationSeconds": 395,
+      "saChannel": true,
+      "embeddable": true,
+      "score": 55.4
+    },
+    "usedAdjacentGrade": false
   },
   {
     "slug": "euclidean-geometry-gr11",
@@ -1258,33 +1648,10 @@
       "raaklyne sirkels graad 11",
       "wiskunde raaklyne sirkels afrikaans"
     ],
-    "candidates": [
-      {
-        "id": "w5nJdK5AdFQ",
-        "title": "04  Raaklyne aan sirkels",
-        "channel": "Wiskunde_Mathematics_SUM",
-        "views": 4248,
-        "viewsText": "4,248 views",
-        "duration": "9:07",
-        "durationSeconds": 547,
-        "saChannel": true,
-        "embeddable": true,
-        "score": 59.3
-      }
-    ],
-    "pick": {
-      "id": "w5nJdK5AdFQ",
-      "title": "04  Raaklyne aan sirkels",
-      "channel": "Wiskunde_Mathematics_SUM",
-      "views": 4248,
-      "viewsText": "4,248 views",
-      "duration": "9:07",
-      "durationSeconds": 547,
-      "saChannel": true,
-      "embeddable": true,
-      "score": 59.3
-    },
-    "usedAdjacentGrade": false
+    "candidates": [],
+    "pick": null,
+    "usedAdjacentGrade": false,
+    "note": "No embeddable, on-topic CAPS candidate found - left blank for manual search"
   },
   {
     "slug": "analytical-geometry-gr11",
@@ -1386,6 +1753,18 @@
     ],
     "candidates": [
       {
+        "id": "gv0EoWtjvq0",
+        "title": "Ogief",
+        "channel": "Wolkskool",
+        "views": 926,
+        "viewsText": "926 views",
+        "duration": "6:59",
+        "durationSeconds": 419,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 45.2
+      },
+      {
         "id": "ucyLKgz8O_k",
         "title": "Ogief (Kumulatiewe Frekwensiegrafiek)",
         "channel": "SlimDink",
@@ -1411,16 +1790,16 @@
       }
     ],
     "pick": {
-      "id": "ucyLKgz8O_k",
-      "title": "Ogief (Kumulatiewe Frekwensiegrafiek)",
-      "channel": "SlimDink",
-      "views": 848,
-      "viewsText": "848 views",
-      "duration": "6:10",
-      "durationSeconds": 370,
+      "id": "gv0EoWtjvq0",
+      "title": "Ogief",
+      "channel": "Wolkskool",
+      "views": 926,
+      "viewsText": "926 views",
+      "duration": "6:59",
+      "durationSeconds": 419,
       "saChannel": true,
       "embeddable": true,
-      "score": 44.8
+      "score": 45.2
     },
     "usedAdjacentGrade": false
   },
@@ -1447,9 +1826,9 @@
     "paper": 2,
     "subTopic": "Symmetric and skewed data",
     "queries": [
-      "graad 11 wiskunde data",
-      "data graad 11",
-      "wiskunde data afrikaans"
+      "graad 11 wiskunde skeef data",
+      "skeef data graad 11",
+      "wiskunde skeef data afrikaans"
     ],
     "candidates": [],
     "pick": null,

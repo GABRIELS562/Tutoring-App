@@ -120,33 +120,10 @@
       "elastiese onelastiese botsings graad 12",
       "fisiese wetenskappe elastiese onelastiese botsings graad 12"
     ],
-    "candidates": [
-      {
-        "id": "3C2-f51Fkdg",
-        "title": "Gr. 12 Chemie: Reaksietempo en die botsingsteorie EENVOUDIG gemaak",
-        "channel": "Danike Aucamp_Wiskunde en Wetenskap ",
-        "views": 4420,
-        "viewsText": "4,420 views",
-        "duration": "26:55",
-        "durationSeconds": 1615,
-        "saChannel": true,
-        "embeddable": true,
-        "score": 47
-      }
-    ],
-    "pick": {
-      "id": "3C2-f51Fkdg",
-      "title": "Gr. 12 Chemie: Reaksietempo en die botsingsteorie EENVOUDIG gemaak",
-      "channel": "Danike Aucamp_Wiskunde en Wetenskap ",
-      "views": 4420,
-      "viewsText": "4,420 views",
-      "duration": "26:55",
-      "durationSeconds": 1615,
-      "saChannel": true,
-      "embeddable": true,
-      "score": 47
-    },
-    "usedAdjacentGrade": false
+    "candidates": [],
+    "pick": null,
+    "usedAdjacentGrade": false,
+    "note": "No embeddable, on-topic CAPS candidate found - left blank for manual search"
   },
   {
     "slug": "mechanics-gr12",
@@ -1204,69 +1181,10 @@
       "wgk drywing stroombane graad 12",
       "fisiese wetenskappe wgk drywing stroombane graad 12"
     ],
-    "candidates": [
-      {
-        "id": "ZZaYa08STtw",
-        "title": "Konserwatiewe en nie-konserwatiewe kragte en Drywing Gr. 12 Fisika",
-        "channel": "Danike Aucamp_Wiskunde en Wetenskap ",
-        "views": 1312,
-        "viewsText": "1,312 views",
-        "duration": "12:06",
-        "durationSeconds": 726,
-        "saChannel": true,
-        "embeddable": true,
-        "score": 46.7
-      },
-      {
-        "id": "nUNbtTDRV6E",
-        "title": "Fisiese Wetenskap - Drywing",
-        "channel": "Wolkskool",
-        "views": 7567,
-        "viewsText": "7,567 views",
-        "duration": "53:39",
-        "durationSeconds": 3219,
-        "saChannel": true,
-        "embeddable": true,
-        "score": 44.3
-      },
-      {
-        "id": "BYGLTeBE0yM",
-        "title": "Arbeid, energie en drywing: Gr. 12 Fisika",
-        "channel": "Danike Aucamp_Wiskunde en Wetenskap ",
-        "views": 2165,
-        "viewsText": "2,165 views",
-        "duration": "39:35",
-        "durationSeconds": 2375,
-        "saChannel": true,
-        "embeddable": true,
-        "score": 43.9
-      },
-      {
-        "id": "30L4lO_txIk",
-        "title": "Gr 12 Fisika Drywing",
-        "channel": "Hoërskool Alberton",
-        "views": 516,
-        "viewsText": "516 views",
-        "duration": "8:21",
-        "durationSeconds": 501,
-        "saChannel": true,
-        "embeddable": true,
-        "score": 42.6
-      }
-    ],
-    "pick": {
-      "id": "ZZaYa08STtw",
-      "title": "Konserwatiewe en nie-konserwatiewe kragte en Drywing Gr. 12 Fisika",
-      "channel": "Danike Aucamp_Wiskunde en Wetenskap ",
-      "views": 1312,
-      "viewsText": "1,312 views",
-      "duration": "12:06",
-      "durationSeconds": 726,
-      "saChannel": true,
-      "embeddable": true,
-      "score": 46.7
-    },
-    "usedAdjacentGrade": false
+    "candidates": [],
+    "pick": null,
+    "usedAdjacentGrade": false,
+    "note": "No embeddable, on-topic CAPS candidate found - left blank for manual search"
   },
   {
     "slug": "optical-phenomena-gr12",
@@ -1497,18 +1415,6 @@
         "saChannel": true,
         "embeddable": true,
         "score": 39.5
-      },
-      {
-        "id": "uIxi7GAj4ik",
-        "title": "Spektrums: Verduideliking Graad 12 Fisika",
-        "channel": "Ekstra Wetenskap Klasse",
-        "views": 193,
-        "viewsText": "193 views",
-        "duration": "3:33",
-        "durationSeconds": 213,
-        "saChannel": true,
-        "embeddable": true,
-        "score": 38.4
       }
     ],
     "pick": {
@@ -1573,18 +1479,6 @@
         "saChannel": true,
         "embeddable": true,
         "score": 39.5
-      },
-      {
-        "id": "uIxi7GAj4ik",
-        "title": "Spektrums: Verduideliking Graad 12 Fisika",
-        "channel": "Ekstra Wetenskap Klasse",
-        "views": 193,
-        "viewsText": "193 views",
-        "duration": "3:33",
-        "durationSeconds": 213,
-        "saChannel": true,
-        "embeddable": true,
-        "score": 38.4
       }
     ],
     "pick": {
@@ -1899,10 +1793,33 @@
       "botsingsteorie teorie aktiverings graad 12",
       "fisiese wetenskappe botsingsteorie teorie aktiverings graad 12"
     ],
-    "candidates": [],
-    "pick": null,
-    "usedAdjacentGrade": false,
-    "note": "No embeddable, on-topic CAPS candidate found - left blank for manual search"
+    "candidates": [
+      {
+        "id": "3C2-f51Fkdg",
+        "title": "Gr. 12 Chemie: Reaksietempo en die botsingsteorie EENVOUDIG gemaak",
+        "channel": "Danike Aucamp_Wiskunde en Wetenskap ",
+        "views": 4420,
+        "viewsText": "4,420 views",
+        "duration": "26:55",
+        "durationSeconds": 1615,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 47
+      }
+    ],
+    "pick": {
+      "id": "3C2-f51Fkdg",
+      "title": "Gr. 12 Chemie: Reaksietempo en die botsingsteorie EENVOUDIG gemaak",
+      "channel": "Danike Aucamp_Wiskunde en Wetenskap ",
+      "views": 4420,
+      "viewsText": "4,420 views",
+      "duration": "26:55",
+      "durationSeconds": 1615,
+      "saChannel": true,
+      "embeddable": true,
+      "score": 47
+    },
+    "usedAdjacentGrade": false
   },
   {
     "slug": "chemical-change-gr12",

@@ -55,10 +55,10 @@ same maths to a different syllabus is worse than an honest gap.
 **Finance & Growth** (Paper 1)
 
 - [ ] Sinking funds
-- [ ] Present value annuities
+- [ ] Present value annuities _(Afrikaans video exists)_
 **Probability** (Paper 1)
 
-- [ ] The product rule for independent events
+- [ ] The product rule for independent events _(Afrikaans video exists)_
 **Trigonometry** (Paper 2)
 
 - [ ] Co-functions
@@ -147,7 +147,7 @@ same maths to a different syllabus is worse than an honest gap.
 **Electricity & Magnetism** (Paper 1)
 
 - [ ] Series and parallel resistor networks _(Afrikaans video exists)_
-- [ ] rms values and average power in AC circuits _(Afrikaans video exists)_
+- [ ] rms values and average power in AC circuits
 **Organic Chemistry** (Paper 2)
 
 - [ ] Combustion of alkanes and the preparation of esters
@@ -176,28 +176,24 @@ which cannot be overridden from our side.
 
 | Subject | Grade | With English video | Also Afrikaans | Afrikaans outstanding |
 |---|---:|---:|---:|---:|
-| Mathematics | 10 | 31 | 24 | **7** |
-| Mathematics | 11 | 28 | 18 | **10** |
-| Mathematics | 12 | 31 | 14 | **17** |
-| Physical Sciences | 10 | 37 | 20 | **17** |
+| Mathematics | 10 | 31 | 26 | **5** |
+| Mathematics | 11 | 28 | 21 | **7** |
+| Mathematics | 12 | 31 | 18 | **13** |
+| Physical Sciences | 10 | 37 | 22 | **15** |
 | Physical Sciences | 11 | 38 | 17 | **21** |
 | Physical Sciences | 12 | 45 | 32 | **13** |
 
 ### Mathematics — Afrikaans outstanding
 
-**Grade 10** — 7 sub-topics
+**Grade 10** — 5 sub-topics
 
 _Number Patterns_
 
 - [ ] Finding the general formula (n-th term) of a linear sequence
 _Functions & Graphs_
 
+- [ ] The linear function y = mx + c
 - [ ] The quadratic function y = ax²
-- [ ] The exponential function y = ab^x
-_Finance & Growth_
-
-- [ ] Hire-purchase
-- [ ] Exchange rates
 _Trigonometry_
 
 - [ ] Two-dimensional problems (elevation and depression)
@@ -205,34 +201,27 @@ _Statistics_
 
 - [ ] Box and whisker plots
 
-**Grade 11** — 10 sub-topics
+**Grade 11** — 7 sub-topics
 
 _Algebra & Equations_
 
 - [ ] Completing the square
-- [ ] Nature of roots (the discriminant)
 _Number Patterns_
 
 - [ ] Quadratic number patterns and the second constant difference
-_Finance & Growth_
-
-- [ ] Future value annuities
 _Probability_
 
 - [ ] Contingency (two-way) tables
-_Trigonometry_
-
-- [ ] The sine rule
-- [ ] The area rule
 _Euclidean Geometry_
 
 - [ ] Circle geometry: chords
 - [ ] Angles at the centre and at the circumference
+- [ ] Tangents to circles
 _Analytical Geometry_
 
 - [ ] Inclination of a line
 
-**Grade 12** — 17 sub-topics
+**Grade 12** — 13 sub-topics
 
 _Algebra & Equations_
 
@@ -240,7 +229,6 @@ _Algebra & Equations_
 _Calculus_
 
 - [ ] The definition of a limit
-- [ ] Optimisation problems
 _Finance & Growth_
 
 - [ ] Future value annuity formula
@@ -259,29 +247,24 @@ _Euclidean Geometry_
 - [ ] The Theorem of Pythagoras proved via similarity
 _Analytical Geometry_
 
-- [ ] The equation of a circle centred at any point
-- [ ] Tangents to circles analytically
 - [ ] Intersecting circles
 _Statistics_
 
 - [ ] Bivariate data
 - [ ] Scatter plots and lines of best fit
-- [ ] The least-squares regression line y = A + Bx
 
 ### Physical Sciences — Afrikaans outstanding
 
-**Grade 10** — 17 sub-topics
+**Grade 10** — 15 sub-topics
 
 _Mechanics_
 
 - [ ] Frame of reference, position, distance and displacement
-- [ ] Acceleration
 - [ ] The equations of motion for uniformly accelerated motion
 _Waves, Sound & Light_
 
 - [ ] Superposition of pulses: constructive and destructive interference
 - [ ] Sound waves and the speed of sound in different media
-- [ ] Electromagnetic radiation and the electromagnetic spectrum
 - [ ] The energy of a photon
 _Electricity & Magnetism_
 
@@ -343,6 +326,7 @@ _Chemical Systems_
 _Mechanics_
 
 - [ ] Momentum and its vector nature
+- [ ] Elastic and inelastic collisions
 - [ ] Conservation of energy with non-conservative forces present
 _Electricity & Magnetism_
 
@@ -358,7 +342,6 @@ _Organic Chemistry_
 _Chemical Change_
 
 - [ ] Reaction rate and the factors that affect it
-- [ ] Collision theory, activation energy and catalysts
 - [ ] Acid-base reactions, models and conjugate acid-base pairs
 - [ ] Electrolytic cells and industrial applications of electrolysis
 _Chemical Systems_

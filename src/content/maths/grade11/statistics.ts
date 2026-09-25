@@ -51,7 +51,7 @@ export const statisticsGr11: TopicContent = {
           type: 'video',
           title: 'Watch: Statistics Grade 11: Ogive curve — Kevinmathscience',
           videoId: 'CTj0OE6lkkg',
-          videoIdAf: 'ucyLKgz8O_k'
+          videoIdAf: 'gv0EoWtjvq0'
         }
       ]
     },

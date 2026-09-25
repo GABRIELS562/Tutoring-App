@@ -76,7 +76,8 @@ export const mechanicsGr10: TopicContent = {
         {
           type: 'video',
           title: 'Watch: Acceleration Grade 10 Science — Kevinmathscience',
-          videoId: 'TgHFTg_zeTE'
+          videoId: 'TgHFTg_zeTE',
+          videoIdAf: 'ZJNMYpaQ9y0'
         }
       ]
     },
@@ -101,7 +102,7 @@ export const mechanicsGr10: TopicContent = {
           type: 'video',
           title: 'Watch: Velocity Time Graph Grade 10 Science — Kevinmathscience',
           videoId: 'e86SXh5G7Hs',
-          videoIdAf: 'FVUrrg9lUm0'
+          videoIdAf: 'NWxg8nrYQW4'
         }
       ]
     },

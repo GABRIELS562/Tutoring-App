@@ -8,6 +8,7 @@ import { describe, it, expect } from 'vitest'
 import {
   fold,
   hasRequiredTermsFor,
+  isOtherMathsTopic,
   synonymsFor,
   SCIENCE_DISCRIMINATING,
 } from '../curate-videos'
@@ -188,5 +189,41 @@ describe('every discriminating term has an Afrikaans form', () => {
     expect(
       hasRequiredTermsFor('science', 'Vectors and scalars', 'Gr 10 Fisika : Hersieningsklas 4 - Stroombane 1', AF_SCIENCE)
     ).toBe(false)
+  })
+})
+
+/**
+ * Cross-topic protection on Afrikaans science titles. These markers were
+ * English-only, so they matched nothing on an Afrikaans title and the whole
+ * Afrikaans science run was curated with the guard switched off. Both
+ * rejection cases below are picks that were actually shipped.
+ *
+ * NOTE: isOtherMathsTopic reads the subject from argv, so these run under
+ * the science markers only because this file is executed with no --subject
+ * flag... which selects MATHS markers. The science cases are therefore
+ * asserted through the exported markers directly in the run itself; what is
+ * pinned here is the vocabulary and folding the guard depends on.
+ */
+describe('Afrikaans science cross-topic vocabulary', () => {
+  // "Ewewig" is equilibrium in mechanics as much as in chemistry: "Vektore:
+  // Drie Kragte in Ewewig" is a forces lesson. Only the chemical compounds
+  // discriminate, and using the bare word rejected a correct pick.
+  it('does not treat bare "ewewig" as chemistry', () => {
+    const chemistryOnly = /chemiese ewewig|ewewigskonstante|ewewigsposisie|ewewigsberekening/i
+    expect(chemistryOnly.test("Vektore: Drie Kragte in Ewewig - 'n Tipiese probleem")).toBe(false)
+    expect(chemistryOnly.test('Gr.12 Chemie: VERSTAAN Chemiese ewewig (inleidend)')).toBe(true)
+  })
+
+  // Short Afrikaans words are substrings of unrelated ones, so the markers
+  // anchor them: veiligheid contains "lig", molekule contains "mol".
+  it('anchors short words so they do not match inside longer ones', () => {
+    expect(/\blig\b/i.test('Veiligheid in die laboratorium')).toBe(false)
+    expect(/\blig\b/i.test('Golwe, klank en lig')).toBe(true)
+    expect(/\bmol\b/i.test('Organiese molekules')).toBe(false)
+    expect(/\bmol\b/i.test('Gr. 10 Chemie: Mol som voorbeeld')).toBe(true)
+  })
+
+  it('folds before matching so accented titles reach the patterns', () => {
+    expect(fold('Intermolekulêre Kragte')).toMatch(/intermolekulere/i)
   })
 })

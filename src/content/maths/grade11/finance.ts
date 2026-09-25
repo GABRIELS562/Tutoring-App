@@ -51,7 +51,8 @@ export const financeGr11: TopicContent = {
         {
           type: 'video',
           title: 'Watch: Grade 12 Financial Maths Lesson 5 | Present-Value & Future-Value Annuities |  Mlungisi Nkosi — Mlungisi Nkosi Maths & Science',
-          videoId: '16Hw202Et5o'
+          videoId: '16Hw202Et5o',
+          videoIdAf: 'xmgSEimN_G0'
         }
       ]
     },
@@ -61,9 +62,9 @@ export const financeGr11: TopicContent = {
       titleAf: 'Huidige waarde-annuïteite',
       blocks: [
         {
-          type: 'content_gap',
-          body: `No CAPS video has been sourced for this sub-topic yet. Ask Angelo if you're stuck on it in the meantime.`,
-          bodyAf: `Daar is nog nie 'n KABV-video vir hierdie onderafdeling nie. Vra solank vir Angelo as jy vashaak.`
+          type: 'video',
+          title: 'Kyk: 03 Huidige waarde annuïteite — Wiskunde_Mathematics_SUM',
+          videoIdAf: 'xgMk-9CT0dI'
         }
       ]
     },

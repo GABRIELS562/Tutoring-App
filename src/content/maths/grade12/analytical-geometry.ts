@@ -51,7 +51,8 @@ export const analyticalGeometryGr12: TopicContent = {
         {
           type: 'video',
           title: 'Watch: Lesson 2: How To Find the Equation of a Circle & Tangent to a Circle | Analytical Geometry — Mlungisi Nkosi Maths & Science',
-          videoId: '4I9OcKET5Ys'
+          videoId: '4I9OcKET5Ys',
+          videoIdAf: 'oVrIJWWtdKE'
         }
       ]
     },
@@ -63,7 +64,8 @@ export const analyticalGeometryGr12: TopicContent = {
         {
           type: 'video',
           title: 'Watch: Analytical Geometry Grade 12: L4 Equation of a Tangent to Circle — Online Maths by Miss Pythagoras',
-          videoId: 'sQNItmXLyuI'
+          videoId: 'sQNItmXLyuI',
+          videoIdAf: '5_jYRFMXMZE'
         }
       ]
     },

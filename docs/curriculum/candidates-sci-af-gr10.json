@@ -132,10 +132,57 @@
       "versnelling graad 10",
       "fisiese wetenskappe versnelling graad 10"
     ],
-    "candidates": [],
-    "pick": null,
-    "usedAdjacentGrade": false,
-    "note": "No embeddable, on-topic CAPS candidate found - left blank for manual search"
+    "candidates": [
+      {
+        "id": "ZJNMYpaQ9y0",
+        "title": "Gr.10 Bewegingsgrafieke. Konstante positiewe versnelling.",
+        "channel": "Douwliena Fourie",
+        "views": 354,
+        "viewsText": "354 views",
+        "duration": "5:42",
+        "durationSeconds": 342,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 48.5
+      },
+      {
+        "id": "NDKa6LmnCBU",
+        "title": "Gr.10 Bewegingsgrafieke. Konstante negatiewe versnelling.",
+        "channel": "Douwliena Fourie",
+        "views": 343,
+        "viewsText": "343 views",
+        "duration": "5:07",
+        "durationSeconds": 307,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 48.4
+      },
+      {
+        "id": "h5WgP3wTOZ8",
+        "title": "GR10 Versnelling",
+        "channel": "WSILAB",
+        "views": 1498,
+        "viewsText": "1,498 views",
+        "duration": "48:58",
+        "durationSeconds": 2938,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 44.8
+      }
+    ],
+    "pick": {
+      "id": "ZJNMYpaQ9y0",
+      "title": "Gr.10 Bewegingsgrafieke. Konstante positiewe versnelling.",
+      "channel": "Douwliena Fourie",
+      "views": 354,
+      "viewsText": "354 views",
+      "duration": "5:42",
+      "durationSeconds": 342,
+      "saChannel": true,
+      "embeddable": true,
+      "score": 48.5
+    },
+    "usedAdjacentGrade": false
   },
   {
     "slug": "mechanics-gr10",
@@ -168,6 +215,18 @@
     ],
     "candidates": [
       {
+        "id": "NWxg8nrYQW4",
+        "title": "Gr.10 Formuleblad. Versnelling en tydtikker.",
+        "channel": "Douwliena Fourie",
+        "views": 1062,
+        "viewsText": "1,062 views",
+        "duration": "4:37",
+        "durationSeconds": 277,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 45.8
+      },
+      {
         "id": "FVUrrg9lUm0",
         "title": "Gr.10 Bewegingsgrafieke. Konstante positiewe snelheid.",
         "channel": "Douwliena Fourie",
@@ -178,19 +237,43 @@
         "saChannel": true,
         "embeddable": true,
         "score": 43.1
+      },
+      {
+        "id": "NDKa6LmnCBU",
+        "title": "Gr.10 Bewegingsgrafieke. Konstante negatiewe versnelling.",
+        "channel": "Douwliena Fourie",
+        "views": 343,
+        "viewsText": "343 views",
+        "duration": "5:07",
+        "durationSeconds": 307,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 40.9
+      },
+      {
+        "id": "h5WgP3wTOZ8",
+        "title": "GR10 Versnelling",
+        "channel": "WSILAB",
+        "views": 1498,
+        "viewsText": "1,498 views",
+        "duration": "48:58",
+        "durationSeconds": 2938,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 37.3
       }
     ],
     "pick": {
-      "id": "FVUrrg9lUm0",
-      "title": "Gr.10 Bewegingsgrafieke. Konstante positiewe snelheid.",
+      "id": "NWxg8nrYQW4",
+      "title": "Gr.10 Formuleblad. Versnelling en tydtikker.",
       "channel": "Douwliena Fourie",
-      "views": 571,
-      "viewsText": "571 views",
-      "duration": "3:03",
-      "durationSeconds": 183,
+      "views": 1062,
+      "viewsText": "1,062 views",
+      "duration": "4:37",
+      "durationSeconds": 277,
       "saChannel": true,
       "embeddable": true,
-      "score": 43.1
+      "score": 45.8
     },
     "usedAdjacentGrade": false
   },
@@ -646,10 +729,33 @@
       "elektromagnetiese straling spektrum graad 10",
       "fisiese wetenskappe elektromagnetiese straling spektrum graad 10"
     ],
-    "candidates": [],
-    "pick": null,
-    "usedAdjacentGrade": false,
-    "note": "No embeddable, on-topic CAPS candidate found - left blank for manual search"
+    "candidates": [
+      {
+        "id": "yVipv9v9JVo",
+        "title": "Elektromagnetiese golwe en spektrum Graad 10 Fisika",
+        "channel": "Ekstra Wetenskap Klasse",
+        "views": 2180,
+        "viewsText": "2,180 views",
+        "duration": "9:55",
+        "durationSeconds": 595,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 51.4
+      }
+    ],
+    "pick": {
+      "id": "yVipv9v9JVo",
+      "title": "Elektromagnetiese golwe en spektrum Graad 10 Fisika",
+      "channel": "Ekstra Wetenskap Klasse",
+      "views": 2180,
+      "viewsText": "2,180 views",
+      "duration": "9:55",
+      "durationSeconds": 595,
+      "saChannel": true,
+      "embeddable": true,
+      "score": 51.4
+    },
+    "usedAdjacentGrade": false
   },
   {
     "slug": "waves-sound-light-gr10",

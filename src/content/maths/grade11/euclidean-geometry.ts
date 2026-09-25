@@ -79,8 +79,7 @@ export const euclideanGeometryGr11: TopicContent = {
         {
           type: 'video',
           title: 'Watch: Circle Geometry Grade 11 : Common Tangent — Kevinmathscience',
-          videoId: '5rbzBMXkX54',
-          videoIdAf: 'w5nJdK5AdFQ'
+          videoId: '5rbzBMXkX54'
         }
       ]
     }

@@ -62,7 +62,8 @@ export const statisticsGr12: TopicContent = {
         {
           type: 'video',
           title: 'Watch: Statistics Grade 12 Mathematics September 2021 Trial | Scatter Plot, Least Squares Regression Line.. — Khoza Explains',
-          videoId: 'vEDMk4xVa8k'
+          videoId: 'vEDMk4xVa8k',
+          videoIdAf: 'r4Fzj_4gpC4'
         }
       ]
     },

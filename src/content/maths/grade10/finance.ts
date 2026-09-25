@@ -78,7 +78,8 @@ export const financeGr10: TopicContent = {
         {
           type: 'video',
           title: 'Watch: Financial Maths Grade 10 | Hire Purchase | Introduction — Kevinmathscience',
-          videoId: 't3ENY1s1zaw'
+          videoId: 't3ENY1s1zaw',
+          videoIdAf: 'LXRlc1LRrDQ'
         }
       ]
     },
@@ -90,7 +91,8 @@ export const financeGr10: TopicContent = {
         {
           type: 'video',
           title: 'Watch: 08 Exchange rate — Wiskunde_Mathematics_SUM',
-          videoId: 'Rr9b0jNVLiE'
+          videoId: 'Rr9b0jNVLiE',
+          videoIdAf: 'FDq8ifmRCGE'
         }
       ]
     }

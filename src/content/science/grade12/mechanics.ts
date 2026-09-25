@@ -83,8 +83,7 @@ export const mechanicsGr12: TopicContent = {
         {
           type: 'video',
           title: 'Watch: 5)Elastic Inelastic Collisions | Intro part 1 — Kevinmathscience',
-          videoId: '9mfzOT04eHM',
-          videoIdAf: '3C2-f51Fkdg'
+          videoId: '9mfzOT04eHM'
         }
       ]
     },

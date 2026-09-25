@@ -86,7 +86,7 @@ export const AFRIKAANS_TERMS: Record<string, string[]> = {
   difference: ['verskil'],
   sum: ['som'],
   equations: ['vergelykings', 'vergelyking'],
-  linear: ['lineêre', 'lineere'],
+  linear: ['lineere'],
   quadratic: ['kwadratiese', 'kwadraties'],
   simultaneous: ['gelyktydige', 'gelyktydig'],
   inequalities: ['ongelykhede', 'ongelykheid'],
@@ -107,10 +107,12 @@ export const AFRIKAANS_TERMS: Record<string, string[]> = {
   // Functions
   functions: ['funksies', 'funksie'],
   graphs: ['grafieke', 'grafiek'],
+  graph: ['grafiek', 'grafieke'],
+  tangent: ['raaklyn', 'raaklyne'],
   parabola: ['parabool'],
   hyperbola: ['hiperbool'],
   hyperbolic: ['hiperbool'],
-  exponential: ['eksponensiële', 'eksponensiele'],
+  exponential: ['eksponensiele'],
   inverse: ['inverse', 'omgekeerde'],
   domain: ['definisieversameling', 'definisie'],
   range: ['waardeversameling', 'waarde'],
@@ -119,7 +121,7 @@ export const AFRIKAANS_TERMS: Record<string, string[]> = {
   simple: ['enkelvoudige', 'enkelvoudig'],
   compound: ['saamgestelde', 'saamgestel'],
   depreciation: ['waardevermindering'],
-  annuities: ['annuïteite', 'annuiteite', 'annuïteit'],
+  annuities: ['annuiteite', 'annuiteit'],
   nominal: ['nominale'],
   effective: ['effektiewe'],
   sinking: ['delging', 'delgingsfonds'],
@@ -142,7 +144,7 @@ export const AFRIKAANS_TERMS: Record<string, string[]> = {
   triangles: ['driehoeke', 'driehoek'],
   sine: ['sinus'],
   cosine: ['cosinus', 'kosinus'],
-  rule: ['reël', 'reel'],
+  rule: ['reel'],
   area: ['oppervlakte'],
   identities: ['identiteite', 'identiteit'],
   reduction: ['herleiding', 'herleidings'],
@@ -171,7 +173,7 @@ export const AFRIKAANS_TERMS: Record<string, string[]> = {
   // Analytical geometry
   analytical: ['analitiese', 'analities'],
   distance: ['afstand'],
-  gradient: ['gradiënt', 'gradient', 'helling'],
+  gradient: ['gradient', 'helling'],
   inclination: ['hellingshoek'],
   parallel: ['ewewydig', 'parallel'],
   perpendicular: ['loodreg'],
@@ -203,6 +205,19 @@ export const AFRIKAANS_TERMS: Record<string, string[]> = {
   optimisation: ['optimering'],
   rates: ['tempo'],
   change: ['verandering'],
+
+  // Discriminating terms that had no Afrikaans form, so any sub-topic
+  // naming them could never be picked. "wisselkoerse" is taken from a real
+  // title (Wiskundige Geletterdheid Gr 11 - Wisselkoerse); "huurkoop" and
+  // "skeefheid" are the standard CAPS terms but do not appear in the
+  // harvested titles, so they are unverified against real usage.
+  //
+  // "wisselkoers" is kept as the whole compound on purpose: bare "wissel"
+  // also matches Wisselstroom (alternating current) and Verwisselend
+  // (alternate angles), which are different lessons entirely.
+  exchange: ['wisselkoers', 'wisselkoerse'],
+  hire: ['huurkoop'],
+  skewed: ['skeef', 'skeefheid', 'skeefgetrekte'],
 }
 
 /**

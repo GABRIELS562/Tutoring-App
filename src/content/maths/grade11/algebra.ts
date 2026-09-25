@@ -78,7 +78,8 @@ export const algebraGr11: TopicContent = {
         {
           type: 'video',
           title: 'Watch: Grade 11 - Nature of Roots | Part 1 | Mlungisi Nkosi — Mlungisi Nkosi Maths & Science',
-          videoId: 'Auc6fj338nA'
+          videoId: 'Auc6fj338nA',
+          videoIdAf: 'HPB52ouJ7M8'
         }
       ]
     },

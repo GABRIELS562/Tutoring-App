@@ -65,7 +65,7 @@ export const functionsGr11: TopicContent = {
           type: 'video',
           title: 'Watch: Exponential Equation Given Graph | Grade 11 Functions — Kevinmathscience',
           videoId: 'mlk0Df2z9No',
-          videoIdAf: 'jFQ48rc8r-c'
+          videoIdAf: 'yOMd92ZA3z0'
         }
       ]
     },

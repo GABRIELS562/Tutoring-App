@@ -63,8 +63,8 @@ export const calculusGr12: TopicContent = {
       blocks: [
         {
           type: 'video',
-          title: 'Kyk: 4 Differensiasie reels deel 1 — Wiskunde Graad 12 Juffrou Koorsen',
-          videoIdAf: 'iymP84P3njM'
+          title: 'Kyk: Differensiasie Graad12: L2 Reëls van Differensiasie — Online Maths by Miss Pythagoras',
+          videoIdAf: 'y-CzYdhCBAU'
         }
       ]
     },
@@ -77,7 +77,7 @@ export const calculusGr12: TopicContent = {
           type: 'video',
           title: 'Watch: Draw Cubic Graph Grade 12 — Kevinmathscience',
           videoId: '6rUoChk1awg',
-          videoIdAf: 'hzr8uS7hisE'
+          videoIdAf: 'wlsrqsvyimY'
         }
       ]
     },
@@ -89,7 +89,8 @@ export const calculusGr12: TopicContent = {
         {
           type: 'video',
           title: 'Watch: Optimisation Gr 12 — Kevinmathscience',
-          videoId: 'xcEeslakFCY'
+          videoId: 'xcEeslakFCY',
+          videoIdAf: 'xpUxJfXgDmA'
         }
       ]
     },

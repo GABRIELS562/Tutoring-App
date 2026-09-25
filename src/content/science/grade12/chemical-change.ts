@@ -58,7 +58,8 @@ export const chemicalChangeGr12: TopicContent = {
         {
           type: 'video',
           title: 'Watch: Collision Theory grade 12: Part 1 — Kevinmathscience',
-          videoId: '-vwGmXKrveU'
+          videoId: '-vwGmXKrveU',
+          videoIdAf: '3C2-f51Fkdg'
         }
       ]
     },

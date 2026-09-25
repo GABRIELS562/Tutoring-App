@@ -131,7 +131,8 @@ export const wavesSoundLightGr10: TopicContent = {
         {
           type: 'video',
           title: 'Watch: Grade 10 Physics - Electromagnetic Spectrum — Kevin\'s Classroom',
-          videoId: 'OtaVlik8nuo'
+          videoId: 'OtaVlik8nuo',
+          videoIdAf: 'yVipv9v9JVo'
         }
       ]
     },

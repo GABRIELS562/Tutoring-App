@@ -207,71 +207,83 @@
     "paper": 1,
     "subTopic": "Solving linear equations",
     "queries": [
-      "graad 10 wiskunde lineêre vergelykings",
-      "lineêre vergelykings graad 10",
-      "wiskunde lineêre vergelykings afrikaans"
+      "graad 10 wiskunde lineere vergelykings",
+      "lineere vergelykings graad 10",
+      "wiskunde lineere vergelykings afrikaans"
     ],
     "candidates": [
       {
         "id": "LZQnMy9ztfk",
         "title": "01 Lineêre vergelykings",
         "channel": "Wiskunde_Mathematics_SUM",
-        "views": 6337,
-        "viewsText": "6,337 views",
+        "views": 6338,
+        "viewsText": "6,338 views",
         "duration": "4:11",
         "durationSeconds": 251,
         "saChannel": true,
         "embeddable": true,
-        "score": 53.5
+        "score": 56
       },
       {
-        "id": "hij5vBWLXKI",
-        "title": "W10 Lineêre vergelykings",
-        "channel": "Stefan Buys",
-        "views": 772,
-        "viewsText": "772 views",
-        "duration": "10:10",
-        "durationSeconds": 610,
+        "id": "4aYqwSaf2IA",
+        "title": "01 Vergelykings deur inspeksie",
+        "channel": "Wiskunde_Mathematics_SUM",
+        "views": 5851,
+        "viewsText": "5,851 views",
+        "duration": "4:49",
+        "durationSeconds": 289,
         "saChannel": true,
         "embeddable": true,
-        "score": 44.4
+        "score": 53.2
       },
       {
-        "id": "UQb7sQECNP0",
-        "title": "W10 Vergelykings met breuke",
-        "channel": "Stefan Buys",
-        "views": 522,
-        "viewsText": "522 views",
-        "duration": "5:16",
-        "durationSeconds": 316,
+        "id": "BardSRBldsQ",
+        "title": "Graad 10 lineere vergelykings 2020 04 15 155447",
+        "channel": "Rochelle Van der Merwe",
+        "views": 627,
+        "viewsText": "627 views",
+        "duration": "4:25",
+        "durationSeconds": 265,
         "saChannel": true,
         "embeddable": true,
-        "score": 42.7
+        "score": 46
       },
       {
         "id": "cKSsMvDeDd4",
         "title": "Vergelykings Graad10:  L1 Lineêre Vergelykings",
         "channel": "Online Maths by Miss Pythagoras",
-        "views": 404,
-        "viewsText": "404 views",
+        "views": 407,
+        "viewsText": "407 views",
         "duration": "13:36",
         "durationSeconds": 816,
         "saChannel": true,
         "embeddable": true,
-        "score": 41.6
+        "score": 44.1
+      },
+      {
+        "id": "XZ793CnQa2g",
+        "title": "Graad 10 Hoofstuk 4 Les 1 Lineêre vergelykings",
+        "channel": "Rochelle Van der Merwe",
+        "views": 267,
+        "viewsText": "267 views",
+        "duration": "3:48",
+        "durationSeconds": 228,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 42.3
       }
     ],
     "pick": {
       "id": "LZQnMy9ztfk",
       "title": "01 Lineêre vergelykings",
       "channel": "Wiskunde_Mathematics_SUM",
-      "views": 6337,
-      "viewsText": "6,337 views",
+      "views": 6338,
+      "viewsText": "6,338 views",
       "duration": "4:11",
       "durationSeconds": 251,
       "saChannel": true,
       "embeddable": true,
-      "score": 53.5
+      "score": 56
     },
     "usedAdjacentGrade": false
   },
@@ -300,18 +312,6 @@
         "score": 53.8
       },
       {
-        "id": "s8AkM-QJJ0U",
-        "title": "02 Kwadratiese vergelykings",
-        "channel": "Wiskunde_Mathematics_SUM",
-        "views": 3439,
-        "viewsText": "3,439 views",
-        "duration": "6:08",
-        "durationSeconds": 368,
-        "saChannel": true,
-        "embeddable": true,
-        "score": 53.4
-      },
-      {
         "id": "-ZtVzM6GyvI",
         "title": "W10 Kwadratiese vergelykings",
         "channel": "Stefan Buys",
@@ -322,6 +322,42 @@
         "saChannel": true,
         "embeddable": true,
         "score": 45.2
+      },
+      {
+        "id": "2w1ttas_LQk",
+        "title": "Graad 10 Hoofstuk 4 Les 4 Kwadratiese vergelykings",
+        "channel": "Rochelle Van der Merwe",
+        "views": 292,
+        "viewsText": "292 views",
+        "duration": "5:50",
+        "durationSeconds": 350,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 42.7
+      },
+      {
+        "id": "HqxE2F6Qo3k",
+        "title": "Vergelykings  Graad10: L2 Kwadratiese Vergelykings",
+        "channel": "Online Maths by Miss Pythagoras",
+        "views": 227,
+        "viewsText": "227 views",
+        "duration": "14:01",
+        "durationSeconds": 841,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 41.6
+      },
+      {
+        "id": "faabqiCeqqE",
+        "title": "GRaad 10 Kwadratiese vergelykings 2020 04 21 170021",
+        "channel": "Rochelle Van der Merwe",
+        "views": 218,
+        "viewsText": "218 views",
+        "duration": "8:49",
+        "durationSeconds": 529,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 41.4
       }
     ],
     "pick": {
@@ -432,9 +468,9 @@
     "paper": 1,
     "subTopic": "Linear inequalities",
     "queries": [
-      "graad 10 wiskunde lineêre ongelykhede",
-      "lineêre ongelykhede graad 10",
-      "wiskunde lineêre ongelykhede afrikaans"
+      "graad 10 wiskunde lineere ongelykhede",
+      "lineere ongelykhede graad 10",
+      "wiskunde lineere ongelykhede afrikaans"
     ],
     "candidates": [
       {
@@ -447,7 +483,7 @@
         "durationSeconds": 518,
         "saChannel": true,
         "embeddable": true,
-        "score": 49.9
+        "score": 57.4
       },
       {
         "id": "_nPBhpBuxiI",
@@ -459,19 +495,43 @@
         "durationSeconds": 385,
         "saChannel": true,
         "embeddable": true,
-        "score": 48.2
+        "score": 55.7
       },
       {
         "id": "nWBs37b_vtw",
         "title": "Graad 10  Hoofstuk 4 Les 6 Lineêre ongelykhede",
         "channel": "Rochelle Van der Merwe",
-        "views": 330,
-        "viewsText": "330 views",
+        "views": 331,
+        "viewsText": "331 views",
         "duration": "2:26",
         "durationSeconds": 146,
         "saChannel": true,
         "embeddable": true,
-        "score": 40.7
+        "score": 48.2
+      },
+      {
+        "id": "KU-sKaZyI_s",
+        "title": "GRaad 10 Lineere ongelykhede 2020 04 24 160734",
+        "channel": "Rochelle Van der Merwe",
+        "views": 263,
+        "viewsText": "263 views",
+        "duration": "4:02",
+        "durationSeconds": 242,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 47.2
+      },
+      {
+        "id": "qDI_D42ncdo",
+        "title": "Ongelykhede Gr. 10 Wiskunde",
+        "channel": "Danike Aucamp_Wiskunde en Wetenskap ",
+        "views": 277,
+        "viewsText": "277 views",
+        "duration": "13:17",
+        "durationSeconds": 797,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 39.9
       }
     ],
     "pick": {
@@ -484,7 +544,7 @@
       "durationSeconds": 518,
       "saChannel": true,
       "embeddable": true,
-      "score": 49.9
+      "score": 57.4
     },
     "usedAdjacentGrade": false
   },
@@ -495,9 +555,9 @@
     "paper": 1,
     "subTopic": "Investigating and extending linear (arithmetic) sequences",
     "queries": [
-      "graad 10 wiskunde lineêre rekenkundige rye",
-      "lineêre rekenkundige rye graad 10",
-      "wiskunde lineêre rekenkundige rye afrikaans"
+      "graad 10 wiskunde lineere rekenkundige rye",
+      "lineere rekenkundige rye graad 10",
+      "wiskunde lineere rekenkundige rye afrikaans"
     ],
     "candidates": [
       {
@@ -534,9 +594,9 @@
     "paper": 1,
     "subTopic": "Finding the general formula (n-th term) of a linear sequence",
     "queries": [
-      "graad 10 wiskunde term lineêre",
-      "term lineêre graad 10",
-      "wiskunde term lineêre afrikaans"
+      "graad 10 wiskunde term lineere",
+      "term lineere graad 10",
+      "wiskunde term lineere afrikaans"
     ],
     "candidates": [],
     "pick": null,
@@ -550,37 +610,14 @@
     "paper": 1,
     "subTopic": "The linear function y = mx + c",
     "queries": [
-      "graad 10 wiskunde lineêre",
-      "lineêre graad 10",
-      "wiskunde lineêre afrikaans"
+      "graad 10 wiskunde lineere",
+      "lineere graad 10",
+      "wiskunde lineere afrikaans"
     ],
-    "candidates": [
-      {
-        "id": "szNc_lCDmDQ",
-        "title": "Funksies Reguitlyn Graad10: L1 Skets Tabel Metode",
-        "channel": "Online Maths by Miss Pythagoras",
-        "views": 394,
-        "viewsText": "394 views",
-        "duration": "13:47",
-        "durationSeconds": 827,
-        "saChannel": true,
-        "embeddable": true,
-        "score": 41.5
-      }
-    ],
-    "pick": {
-      "id": "szNc_lCDmDQ",
-      "title": "Funksies Reguitlyn Graad10: L1 Skets Tabel Metode",
-      "channel": "Online Maths by Miss Pythagoras",
-      "views": 394,
-      "viewsText": "394 views",
-      "duration": "13:47",
-      "durationSeconds": 827,
-      "saChannel": true,
-      "embeddable": true,
-      "score": 41.5
-    },
-    "usedAdjacentGrade": false
+    "candidates": [],
+    "pick": null,
+    "usedAdjacentGrade": false,
+    "note": "No embeddable, on-topic CAPS candidate found - left blank for manual search"
   },
   {
     "slug": "functions-gr10",
@@ -621,6 +658,18 @@
         "saChannel": true,
         "embeddable": true,
         "score": 42
+      },
+      {
+        "id": "_skJGfv_h78",
+        "title": "Funksies Hiperbool Graad10: L5 Eksamen Vraag oor Hiperbool",
+        "channel": "Online Maths by Miss Pythagoras",
+        "views": 174,
+        "viewsText": "174 views",
+        "duration": "8:21",
+        "durationSeconds": 501,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 37.9
       }
     ],
     "pick": {
@@ -644,14 +693,73 @@
     "paper": 1,
     "subTopic": "The exponential function y = ab^x",
     "queries": [
-      "graad 10 wiskunde eksponensiële",
-      "eksponensiële graad 10",
-      "wiskunde eksponensiële afrikaans"
+      "graad 10 wiskunde eksponensiele",
+      "eksponensiele graad 10",
+      "wiskunde eksponensiele afrikaans"
     ],
-    "candidates": [],
-    "pick": null,
-    "usedAdjacentGrade": false,
-    "note": "No embeddable, on-topic CAPS candidate found - left blank for manual search"
+    "candidates": [
+      {
+        "id": "gkopUPLDZFc",
+        "title": "09 Eksponensiële funksie skets",
+        "channel": "Wiskunde_Mathematics_SUM",
+        "views": 3463,
+        "viewsText": "3,463 views",
+        "duration": "6:21",
+        "durationSeconds": 381,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 50.9
+      },
+      {
+        "id": "yZIc_3DHhxk",
+        "title": "Funksies Eksponensiële Graad10: L1 Hoe om 'n Eksponensiële funksie te skets",
+        "channel": "Online Maths by Miss Pythagoras",
+        "views": 525,
+        "viewsText": "525 views",
+        "duration": "9:02",
+        "durationSeconds": 542,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 42.7
+      },
+      {
+        "id": "pMonKrsuOWE",
+        "title": "Eksponensiele Funksie",
+        "channel": "TheWhiteboardSA",
+        "views": 355,
+        "viewsText": "355 views",
+        "duration": "7:52",
+        "durationSeconds": 472,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 41
+      },
+      {
+        "id": "0kmOeEWvpA0",
+        "title": "Funksies Eksponensiële Graad10: L2 Effek van 'a' en 'q' op die Eksponensiële funksie",
+        "channel": "Online Maths by Miss Pythagoras",
+        "views": 171,
+        "viewsText": "171 views",
+        "duration": "14:25",
+        "durationSeconds": 865,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 37.8
+      }
+    ],
+    "pick": {
+      "id": "gkopUPLDZFc",
+      "title": "09 Eksponensiële funksie skets",
+      "channel": "Wiskunde_Mathematics_SUM",
+      "views": 3463,
+      "viewsText": "3,463 views",
+      "duration": "6:21",
+      "durationSeconds": 381,
+      "saChannel": true,
+      "embeddable": true,
+      "score": 50.9
+    },
+    "usedAdjacentGrade": false
   },
   {
     "slug": "finance-gr10",
@@ -872,11 +980,86 @@
     "grade": 10,
     "paper": 1,
     "subTopic": "Hire-purchase",
-    "queries": [],
-    "candidates": [],
-    "pick": null,
-    "usedAdjacentGrade": false,
-    "note": "No embeddable, on-topic CAPS candidate found - left blank for manual search"
+    "queries": [
+      "graad 10 wiskunde huurkoop",
+      "huurkoop graad 10",
+      "wiskunde huurkoop afrikaans"
+    ],
+    "candidates": [
+      {
+        "id": "LXRlc1LRrDQ",
+        "title": "03 Huurkoop",
+        "channel": "Wiskunde_Mathematics_SUM",
+        "views": 4236,
+        "viewsText": "4,236 views",
+        "duration": "6:47",
+        "durationSeconds": 407,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 51.8
+      },
+      {
+        "id": "FyhVKUT7Z6E",
+        "title": "09 Huurkoop",
+        "channel": "Wiskunde_Mathematics_SUM",
+        "views": 2969,
+        "viewsText": "2,969 views",
+        "duration": "4:17",
+        "durationSeconds": 257,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 50.2
+      },
+      {
+        "id": "keA-jPArULQ",
+        "title": "Graad 10 Finansies Huurkoop (Inleiding)",
+        "channel": "Dalene Coetzee",
+        "views": 2216,
+        "viewsText": "2,216 views",
+        "duration": "7:13",
+        "durationSeconds": 433,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 49
+      },
+      {
+        "id": "Xi5ZlaQDH9o",
+        "title": "W10 Huurkoop",
+        "channel": "Stefan Buys",
+        "views": 727,
+        "viewsText": "727 views",
+        "duration": "12:20",
+        "durationSeconds": 740,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 44.1
+      },
+      {
+        "id": "YLBmLcW5_i4",
+        "title": "Graad 10 Finansiele Wiskunde: Huurkoop",
+        "channel": "Dalene Coetzee",
+        "views": 352,
+        "viewsText": "352 views",
+        "duration": "23:18",
+        "durationSeconds": 1398,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 36
+      }
+    ],
+    "pick": {
+      "id": "LXRlc1LRrDQ",
+      "title": "03 Huurkoop",
+      "channel": "Wiskunde_Mathematics_SUM",
+      "views": 4236,
+      "viewsText": "4,236 views",
+      "duration": "6:47",
+      "durationSeconds": 407,
+      "saChannel": true,
+      "embeddable": true,
+      "score": 51.8
+    },
+    "usedAdjacentGrade": false
   },
   {
     "slug": "finance-gr10",
@@ -885,14 +1068,49 @@
     "paper": 1,
     "subTopic": "Exchange rates",
     "queries": [
-      "graad 10 wiskunde tempo",
-      "tempo graad 10",
-      "wiskunde tempo afrikaans"
+      "graad 10 wiskunde wisselkoers tempo",
+      "wisselkoers tempo graad 10",
+      "wiskunde wisselkoers tempo afrikaans"
     ],
-    "candidates": [],
-    "pick": null,
-    "usedAdjacentGrade": false,
-    "note": "No embeddable, on-topic CAPS candidate found - left blank for manual search"
+    "candidates": [
+      {
+        "id": "FDq8ifmRCGE",
+        "title": "Wisselkoers",
+        "channel": "Wiskunde Broers",
+        "views": 6580,
+        "viewsText": "6,580 views",
+        "duration": "4:43",
+        "durationSeconds": 283,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 53.7
+      },
+      {
+        "id": "5260nS6Gcuk",
+        "title": "05 Wisselkoers",
+        "channel": "Wiskunde_Mathematics_SUM",
+        "views": 2797,
+        "viewsText": "2,797 views",
+        "duration": "5:55",
+        "durationSeconds": 355,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 50
+      }
+    ],
+    "pick": {
+      "id": "FDq8ifmRCGE",
+      "title": "Wisselkoers",
+      "channel": "Wiskunde Broers",
+      "views": 6580,
+      "viewsText": "6,580 views",
+      "duration": "4:43",
+      "durationSeconds": 283,
+      "saChannel": true,
+      "embeddable": true,
+      "score": 53.7
+    },
+    "usedAdjacentGrade": false
   },
   {
     "slug": "probability-gr10",
@@ -1004,9 +1222,9 @@
     "paper": 1,
     "subTopic": "The addition rule (identity rule)",
     "queries": [
-      "graad 10 wiskunde reël",
-      "reël graad 10",
-      "wiskunde reël afrikaans"
+      "graad 10 wiskunde reel",
+      "reel graad 10",
+      "wiskunde reel afrikaans"
     ],
     "candidates": [],
     "pick": null,
@@ -1176,6 +1394,18 @@
         "score": 43.4
       },
       {
+        "id": "H4MzFsj2cSE",
+        "title": "Graad 10 Trigonometrie grafieke Cos grafiek",
+        "channel": "Wiskunde",
+        "views": 224,
+        "viewsText": "224 views",
+        "duration": "7:31",
+        "durationSeconds": 451,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 40.5
+      },
+      {
         "id": "_dRzje4yBoY",
         "title": "W10.14 Interpretasie van trig grafieke",
         "channel": "Stefan Buys",
@@ -1186,6 +1416,30 @@
         "saChannel": true,
         "embeddable": true,
         "score": 39.2
+      },
+      {
+        "id": "CHbRww3InK4",
+        "title": "Graad 10 Trigonometrie Grafieke Zoom 6 Augustus",
+        "channel": "Dalene Coetzee",
+        "views": 263,
+        "viewsText": "263 views",
+        "duration": "18:35",
+        "durationSeconds": 1115,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 38.2
+      },
+      {
+        "id": "BmaAcGjWXKQ",
+        "title": "Trigonometrie Grafieke",
+        "channel": "Lekker Wiskunde",
+        "views": 210,
+        "viewsText": "210 views",
+        "duration": "15:58",
+        "durationSeconds": 958,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 37.2
       }
     ],
     "pick": {
@@ -1377,16 +1631,16 @@
         "score": 51.5
       },
       {
-        "id": "jndysNtUg9s",
-        "title": "Analitiese meetkunde Middelpunt Graad 10 en ouer  (wiskvaw)",
-        "channel": "VAW-Vereniging vir Afrikaanse Wiskunde-onderwysers",
-        "views": 2227,
-        "viewsText": "2,227 views",
-        "duration": "2:12",
-        "durationSeconds": 132,
+        "id": "qewJkU6eOso",
+        "title": "Graad 10 euklidiese Meetkunde Middelpunt stelling",
+        "channel": "Wiskunde",
+        "views": 213,
+        "viewsText": "213 views",
+        "duration": "13:38",
+        "durationSeconds": 818,
         "saChannel": true,
         "embeddable": true,
-        "score": 49
+        "score": 46.3
       }
     ],
     "pick": {
@@ -1426,6 +1680,18 @@
         "saChannel": true,
         "embeddable": true,
         "score": 49.5
+      },
+      {
+        "id": "lKb24GpWhCE",
+        "title": "13 Woordprobleme 3 Spoed, afstand, tyd",
+        "channel": "Wiskunde_Mathematics_SUM",
+        "views": 276,
+        "viewsText": "276 views",
+        "duration": "5:48",
+        "durationSeconds": 348,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 39.9
       }
     ],
     "pick": {
@@ -1477,6 +1743,18 @@
         "saChannel": true,
         "embeddable": true,
         "score": 49
+      },
+      {
+        "id": "bp2t-44zcAw",
+        "title": "Middelpunt Twee somme Analities Graad 10 en ouer. (Wiskdou)",
+        "channel": "Dou Kleefstra",
+        "views": 288,
+        "viewsText": "288 views",
+        "duration": "5:04",
+        "durationSeconds": 304,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 40.1
       }
     ],
     "pick": {
@@ -1500,11 +1778,23 @@
     "paper": 2,
     "subTopic": "Gradient of a line segment",
     "queries": [
-      "graad 10 wiskunde gradiënt",
-      "gradiënt graad 10",
-      "wiskunde gradiënt afrikaans"
+      "graad 10 wiskunde gradient",
+      "gradient graad 10",
+      "wiskunde gradient afrikaans"
     ],
     "candidates": [
+      {
+        "id": "HLjh0U2C248",
+        "title": "Gradiënt afsnit metode. Skets reguit lyn grafiek (wiskdou)",
+        "channel": "Dou Kleefstra",
+        "views": 7185,
+        "viewsText": "7,185 views",
+        "duration": "7:16",
+        "durationSeconds": 436,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 54.1
+      },
       {
         "id": "n26GCtmwt0c",
         "title": "12 Gemiddelde gradient",
@@ -1518,6 +1808,18 @@
         "score": 51.8
       },
       {
+        "id": "KEOwge4FBG4",
+        "title": "07 Gradiënt",
+        "channel": "Wiskunde_Mathematics_SUM",
+        "views": 1708,
+        "viewsText": "1,708 views",
+        "duration": "7:02",
+        "durationSeconds": 422,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 47.8
+      },
+      {
         "id": "g1dDrhnSEIA",
         "title": "Graad 10 grafieke: skets met gradient intersep metode",
         "channel": "Wiskunde",
@@ -1528,19 +1830,31 @@
         "saChannel": true,
         "embeddable": true,
         "score": 46.8
+      },
+      {
+        "id": "pfxb9_O-b4g",
+        "title": "Eienskappe van Funksies: Gradient en Asimptote",
+        "channel": "SlimDink",
+        "views": 659,
+        "viewsText": "659 views",
+        "duration": "7:03",
+        "durationSeconds": 423,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 43.7
       }
     ],
     "pick": {
-      "id": "n26GCtmwt0c",
-      "title": "12 Gemiddelde gradient",
-      "channel": "Wiskunde_Mathematics_SUM",
-      "views": 4273,
-      "viewsText": "4,273 views",
-      "duration": "6:26",
-      "durationSeconds": 386,
+      "id": "HLjh0U2C248",
+      "title": "Gradiënt afsnit metode. Skets reguit lyn grafiek (wiskdou)",
+      "channel": "Dou Kleefstra",
+      "views": 7185,
+      "viewsText": "7,185 views",
+      "duration": "7:16",
+      "durationSeconds": 436,
       "saChannel": true,
       "embeddable": true,
-      "score": 51.8
+      "score": 54.1
     },
     "usedAdjacentGrade": false
   },

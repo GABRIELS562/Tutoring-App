@@ -64,7 +64,7 @@ export const analyticalGeometryGr10: TopicContent = {
           type: 'video',
           title: 'Watch: Analytical Geometry Grade 10: Gradient formula — Kevinmathscience',
           videoId: 'Pqafv6sV6Ng',
-          videoIdAf: 'n26GCtmwt0c'
+          videoIdAf: 'HLjh0U2C248'
         }
       ]
     }

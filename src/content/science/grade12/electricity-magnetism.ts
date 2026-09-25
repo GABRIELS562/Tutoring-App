@@ -114,9 +114,9 @@ export const electricityMagnetismGr12: TopicContent = {
       titleAf: 'Wgk-waardes en gemiddelde drywing in wisselstroombane',
       blocks: [
         {
-          type: 'video',
-          title: 'Kyk: Konserwatiewe en nie-konserwatiewe kragte en Drywing Gr. 12 Fisika — Danike Aucamp_Wiskunde en Wetenskap ',
-          videoIdAf: 'ZZaYa08STtw'
+          type: 'content_gap',
+          body: `No CAPS video has been sourced for this sub-topic yet. Ask Angelo if you're stuck on it in the meantime.`,
+          bodyAf: `Daar is nog nie 'n KABV-video vir hierdie onderafdeling nie. Vra solank vir Angelo as jy vashaak.`
         }
       ]
     }

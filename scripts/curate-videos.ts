@@ -299,34 +299,57 @@ async function isEmbeddable(videoId: string): Promise<boolean> {
  * the slug minus its grade suffix, so mechanics-gr10 and mechanics-gr12
  * share an entry.
  */
+/**
+ * Matched against the FOLDED title, so patterns carry no diacritics.
+ *
+ * The Afrikaans alternatives matter for the same reason as the maths ones:
+ * while these were English-only they matched nothing on an Afrikaans title,
+ * so the Afrikaans science picks were made with no cross-topic protection
+ * at all. Short words are anchored (\blig\b, \bmol\b) because "lig" is a
+ * substring of veiligheid and "mol" of molekule.
+ */
 const SCIENCE_TOPIC_MARKERS: Record<string, RegExp> = {
-  mechanics: /mechanic|momentum|impulse|projectile|newton|velocit|accelerat|displacement|friction|work.{0,12}energy|\bwep\b|gravitation/i,
-  'waves-sound-light': /wave|sound|light|doppler|refract|snell|diffract|optic|ultrasound|spectrum|photon|electromagnetic/i,
-  'electricity-magnetism': /electric|magnet|circuit|resistor|resistance|voltage|\bemf\b|ohm|coulomb|faraday|solenoid|generator|motor|alternating/i,
-  'optical-phenomena': /photo-?electric|work function|emission spectr|absorption spectr|photon/i,
-  'matter-materials': /atom|periodic|bonding|isotope|electron configuration|intermolecular|molecular shape|lewis|vsepr|gas law|kinetic (molecular )?theory/i,
-  'organic-chemistry': /organic|alkane|alkene|alcohol|ester|isomer|polymer|iupac|functional group|cracking/i,
-  'chemical-change': /stoichiometr|\bmole\b|molar|titration|redox|galvanic|electrolytic|equilibrium|catalyst|acid|\bbase|oxidation|precipitat|balancing|endothermic|exothermic/i,
-  'chemical-systems': /hydrosphere|lithosphere|mining|fertilizer|haber|ostwald|eutrophication|water quality|fossil fuel/i,
+  mechanics: /mechanic|momentum|impulse|projectile|newton|velocit|accelerat|displacement|friction|work.{0,12}energy|\bwep\b|gravitation|meganika|impuls|projektiel|snelheid|versnelling|verplasing|wrywing|arbeid|drywing|gravitasie|bewegingswet/i,
+  'waves-sound-light': /wave|sound|light|doppler|refract|snell|diffract|optic|ultrasound|spectrum|photon|electromagnetic|golwe|golf|klank|\blig\b|breking|diffraksie|optika|ultraklank|spektrum|foton|golffront/i,
+  'electricity-magnetism': /electric|magnet|circuit|resistor|resistance|voltage|\bemf\b|ohm|coulomb|faraday|solenoid|generator|motor|alternating|elektries|elektrisiteit|magneet|magnetiese|stroombaan|stroombane|weerstand|\bemk\b|solenoide|wisselstroom|elektrostatika|lading/i,
+  'optical-phenomena': /photo-?electric|work function|emission spectr|absorption spectr|photon|fotoelektriese|foto-elektriese|arbeidsfunksie|emissiespektr|absorpsiespektr/i,
+  'matter-materials': /atom|periodic|bonding|isotope|electron configuration|intermolecular|molecular shape|lewis|vsepr|gas law|kinetic (molecular )?theory|atoom|periodieke|binding|isotoop|elektronkonfigurasie|intermolekulere|molekulere vorm|gaswet|kinetiese molekulere/i,
+  'organic-chemistry': /organic|alkane|alkene|alcohol|ester|isomer|polymer|iupac|functional group|cracking|organiese|alkaan|alkohol|isomeer|polimeer|polimere|funksionele groep|kraking|naamgewing|nomenklatuur/i,
+  'chemical-change': /stoichiometr|\bmole\b|molar|titration|redox|galvanic|electrolytic|equilibrium|catalyst|acid|\bbase|oxidation|precipitat|balancing|endothermic|exothermic|stoigiometr|\bmol\b|molbegrip|molere|titrasie|redoks|galvaniese|elektrolitiese|chemiese ewewig|ewewigskonstante|ewewigsposisie|ewewigsberekening|katalisator|\bsuur|\bsure\b|basisse|oksidasie|neerslag|balansering|endotermiese|eksotermiese|reaksietempo/i,
+  'chemical-systems': /hydrosphere|lithosphere|mining|fertilizer|haber|ostwald|eutrophication|water quality|fossil fuel|hidrosfeer|litosfeer|mynbou|kunsmis|eutrofikasie|watergehalte|fossielbrandstof/i,
 }
 
 const SEQUENCE_RE = /number pattern|getalpatro|sequence|series|\brye\b|reekse/i
 
+/**
+ * Markers are matched against the FOLDED title, so each pattern is written
+ * without diacritics: reel matches reël, gradient matches gradiënt.
+ *
+ * Afrikaans alternatives are not decoration. These patterns are the only
+ * thing stopping a video from one topic being served for another, and while
+ * they were English-only they did nothing at all on an Afrikaans title -
+ * every Afrikaans pick was made with no cross-topic protection. That is how
+ * "Wiskunde - Analitiese Meetkunde: Sirkels en raaklyne" came to be served
+ * for Grade 11 Euclidean Geometry's "Tangents to circles": analytical
+ * geometry is a different topic, and the English `analytical geometry`
+ * pattern does not match "Analitiese Meetkunde".
+ */
 const TOPIC_MARKERS: Record<string, RegExp> = {
   'number-patterns': SEQUENCE_RE,
   'sequences-series': SEQUENCE_RE,
   // The ratio names matter as much as the word "trig": "Sin Triangle Grade
   // 10" is a trigonometry lesson and was picked for Euclidean geometry.
-  // "tangent" is deliberately absent - it belongs to circle geometry too.
+  // "tangent" is deliberately absent - it belongs to circle geometry too,
+  // and so is bare "raaklyn" for the same reason.
   // "Special triangles"/"special angles" is the trig 30-60-90 lesson, not a
   // Euclidean one, despite naming triangles and angles.
-  trig: /\btrig|\b(sin|cos|tan|sine|cosine)\b|rule|reduction formula|identities|special (triangle|angle)/i,
-  'euclidean-geometry': /euclidean|circle geometry|midpoint theorem|parallelogram|cyclic|proportionality|similarity/i,
-  'analytical-geometry': /analytical geometry|distance formula|gradient|inclination/i,
-  statistics: /statistic|ogive|box and whisker|standard deviation|regression|scatter/i,
-  finance: /financial math|interest|annuit|depreciation|hire purchase|exchange rate/i,
-  calculus: /calculus|derivative|differentiat|first principles/i,
-  probability: /probability|venn|tree diagram|contingency/i,
+  trig: /\btrig|\b(sin|cos|tan|sine|cosine)\b|rule|reduction formula|identities|special (triangle|angle)|sinus|kosinus|reduksieformule|identiteite|dubbelhoek|saamgestelde hoek/i,
+  'euclidean-geometry': /euclidean|circle geometry|midpoint theorem|parallelogram|cyclic|proportionality|similarity|euklidies|sirkelmeetkunde|middelpuntstelling|koordevierhoek|eweredigheid|gelykvormig/i,
+  'analytical-geometry': /analytical geometry|distance formula|gradient|inclination|analitiese meetkunde|afstandsformule|inklinasie/i,
+  statistics: /statistic|ogive|box and whisker|standard deviation|regression|scatter|statistiek|ogief|mond-en-snor|standaardafwyking|regressie|spreidiagram|kwartiel/i,
+  finance: /financial math|interest|annuit|depreciation|hire purchase|exchange rate|finansiele wiskunde|rente|annuiteit|waardevermindering|huurkoop|wisselkoers/i,
+  calculus: /calculus|derivative|differentiat|first principles|differensiaalrekene|differensiasie|afgeleide|eerste beginsel/i,
+  probability: /probability|venn|tree diagram|contingency|waarskynlikheid|boomdiagram|kontingensie/i,
 }
 
 /** Which CAPS topic a slug belongs to, ignoring the grade suffix. */
@@ -345,9 +368,10 @@ const DEFINITIVE_MARKERS: Record<string, RegExp> = {
   mechanics: /\bwep\b|work.{0,4}energy.{0,4}(theorem|and power)/i,
 }
 
-export function isOtherMathsTopic(slug: string, title: string): boolean {
+export function isOtherMathsTopic(slug: string, rawTitle: string): boolean {
   const markers = IS_SCIENCE ? SCIENCE_TOPIC_MARKERS : TOPIC_MARKERS
   const key = topicKey(slug)
+  const title = fold(rawTitle)
 
   const claimedBy = Object.entries(DEFINITIVE_MARKERS).find(([, re]) => re.test(title))
   if (claimedBy && claimedBy[0] !== key) return true
@@ -641,7 +665,7 @@ export const SCIENCE_DISCRIMINATING = [
   'permanent', 'conservation', 'speed',
 ]
 
-const MATHS_DISCRIMINATING = [
+export const MATHS_DISCRIMINATING = [
   'cubes', 'squares', 'trinomials', 'laws', 'hyperbolic', 'exponential',
   'logarithms', 'sigma', 'ogives', 'annuities', 'permutations', 'inverse',
   'limit', 'principles', 'compound', 'simple', 'depreciation', 'hire',

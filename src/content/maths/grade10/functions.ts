@@ -38,8 +38,7 @@ export const functionsGr10: TopicContent = {
         {
           type: 'video',
           title: 'Watch: Exam Functions Grade 10 — Kevinmathscience',
-          videoId: '1RnuVXYcVpE',
-          videoIdAf: 'szNc_lCDmDQ'
+          videoId: '1RnuVXYcVpE'
         }
       ]
     },
@@ -76,7 +75,8 @@ export const functionsGr10: TopicContent = {
         {
           type: 'video',
           title: 'Watch: Exponential Function grade 10: #1 — Kevinmathscience',
-          videoId: 'Ijfu6KuR6mQ'
+          videoId: 'Ijfu6KuR6mQ',
+          videoIdAf: 'gkopUPLDZFc'
         }
       ]
     }

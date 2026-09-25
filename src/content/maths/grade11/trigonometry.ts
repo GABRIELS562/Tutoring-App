@@ -70,7 +70,8 @@ export const trigonometryGr11: TopicContent = {
         {
           type: 'video',
           title: 'Watch: Sine Rule grade 11: Introduction — Kevinmathscience',
-          videoId: 's9vYb0b0TIw'
+          videoId: 's9vYb0b0TIw',
+          videoIdAf: '7FcHJrIFQgg'
         }
       ]
     },
@@ -83,7 +84,7 @@ export const trigonometryGr11: TopicContent = {
           type: 'video',
           title: 'Watch: Grade 11 - 2D Trigonometry | Sine rule, Cosine rule, Area rule | Mlungisi Nkosi — Mlungisi Nkosi Maths & Science',
           videoId: 'UP5Pit-zJyY',
-          videoIdAf: 'ZgUt5Cmxx28'
+          videoIdAf: '_dd0t6Cbp9c'
         }
       ]
     },
@@ -95,7 +96,8 @@ export const trigonometryGr11: TopicContent = {
         {
           type: 'video',
           title: 'Watch: Area Rule grade 11: Introduction — Kevinmathscience',
-          videoId: 'jPM-ZD9JRpg'
+          videoId: 'jPM-ZD9JRpg',
+          videoIdAf: 'AmszLOiamRI'
         }
       ]
     }

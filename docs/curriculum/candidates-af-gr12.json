@@ -85,9 +85,9 @@
     "paper": 1,
     "subTopic": "Logarithms applied to exponential equations",
     "queries": [
-      "graad 12 wiskunde logaritmes eksponensiële vergelykings",
-      "logaritmes eksponensiële vergelykings graad 12",
-      "wiskunde logaritmes eksponensiële vergelykings afrikaans"
+      "graad 12 wiskunde logaritmes eksponensiele vergelykings",
+      "logaritmes eksponensiele vergelykings graad 12",
+      "wiskunde logaritmes eksponensiele vergelykings afrikaans"
     ],
     "candidates": [],
     "pick": null,
@@ -153,6 +153,18 @@
         "saChannel": true,
         "embeddable": true,
         "score": 43.3
+      },
+      {
+        "id": "KDR0Pqo5hZc",
+        "title": "Graad 12 Hoofstuk 1 Les 5 Rekenkundige reekse",
+        "channel": "Rochelle Van der Merwe",
+        "views": 170,
+        "viewsText": "170 views",
+        "duration": "17:20",
+        "durationSeconds": 1040,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 40.3
       }
     ],
     "pick": {
@@ -216,6 +228,30 @@
         "saChannel": true,
         "embeddable": true,
         "score": 43.3
+      },
+      {
+        "id": "tdt3adxSyNg",
+        "title": "Graad 12 Hoofstuk 1 Les 3 Meetkundige rye",
+        "channel": "Rochelle Van der Merwe",
+        "views": 297,
+        "viewsText": "297 views",
+        "duration": "9:29",
+        "durationSeconds": 569,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 42.7
+      },
+      {
+        "id": "NMxVmOj26qk",
+        "title": "12 Rekenkundige en Meetkundige Rye en Reekse - Teorie Verduideliking || Wiskunde Graad 12",
+        "channel": "CollieMath Studio",
+        "views": 203,
+        "viewsText": "203 views",
+        "duration": "23:44",
+        "durationSeconds": 1424,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 41.1
       }
     ],
     "pick": {
@@ -291,6 +327,18 @@
         "saChannel": true,
         "embeddable": true,
         "score": 40.7
+      },
+      {
+        "id": "oRucy4rvGVY",
+        "title": "Sigma-notasie vrae by rekenkundige reekse (wiskvaw) (wiskdo)",
+        "channel": "VAW-Vereniging vir Afrikaanse Wiskunde-onderwysers",
+        "views": 248,
+        "viewsText": "248 views",
+        "duration": "3:50",
+        "durationSeconds": 230,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 39.4
       }
     ],
     "pick": {
@@ -435,6 +483,18 @@
         "score": 49.9
       },
       {
+        "id": "9yIoZazXfzo",
+        "title": "Wiskunde - Inverse funksies 02",
+        "channel": "Wolkskool",
+        "views": 14029,
+        "viewsText": "14,029 views",
+        "duration": "49:55",
+        "durationSeconds": 2995,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 47
+      },
+      {
         "id": "Kh4hp_agT8s",
         "title": "W12 Inverse funksies se vergelykings",
         "channel": "Stefan Buys",
@@ -445,6 +505,18 @@
         "saChannel": true,
         "embeddable": true,
         "score": 41.8
+      },
+      {
+        "id": "Wgp-gzDjHz0",
+        "title": "1 Gr 12 Inverse Funksie Les 1",
+        "channel": "Wiskunde Graad 12 Juffrou Koorsen",
+        "views": 247,
+        "viewsText": "247 views",
+        "duration": "5:31",
+        "durationSeconds": 331,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 39.4
       }
     ],
     "pick": {
@@ -575,6 +647,30 @@
         "saChannel": true,
         "embeddable": true,
         "score": 45.7
+      },
+      {
+        "id": "RcrMo9uQmow",
+        "title": "Gr12 Differensiasie - Les 2 Eerste beginsels",
+        "channel": "Lekker Wiskunde",
+        "views": 282,
+        "viewsText": "282 views",
+        "duration": "7:42",
+        "durationSeconds": 462,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 42.5
+      },
+      {
+        "id": "wxoT9dXn_nY",
+        "title": "Differensiasie Via Eerste Beginsels || Wiskunde Graad 12",
+        "channel": "CollieMath Studio",
+        "views": 240,
+        "viewsText": "240 views",
+        "duration": "18:35",
+        "durationSeconds": 1115,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 41.8
       }
     ],
     "pick": {
@@ -604,6 +700,18 @@
     ],
     "candidates": [
       {
+        "id": "y-CzYdhCBAU",
+        "title": "Differensiasie Graad12: L2 Reëls van Differensiasie",
+        "channel": "Online Maths by Miss Pythagoras",
+        "views": 3566,
+        "viewsText": "3,566 views",
+        "duration": "19:50",
+        "durationSeconds": 1190,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 51
+      },
+      {
         "id": "iymP84P3njM",
         "title": "4 Differensiasie reels deel 1",
         "channel": "Wiskunde Graad 12 Juffrou Koorsen",
@@ -617,16 +725,16 @@
       }
     ],
     "pick": {
-      "id": "iymP84P3njM",
-      "title": "4 Differensiasie reels deel 1",
-      "channel": "Wiskunde Graad 12 Juffrou Koorsen",
-      "views": 416,
-      "viewsText": "416 views",
-      "duration": "9:39",
-      "durationSeconds": 579,
+      "id": "y-CzYdhCBAU",
+      "title": "Differensiasie Graad12: L2 Reëls van Differensiasie",
+      "channel": "Online Maths by Miss Pythagoras",
+      "views": 3566,
+      "viewsText": "3,566 views",
+      "duration": "19:50",
+      "durationSeconds": 1190,
       "saChannel": true,
       "embeddable": true,
-      "score": 41.7
+      "score": 51
     },
     "usedAdjacentGrade": false
   },
@@ -643,6 +751,18 @@
     ],
     "candidates": [
       {
+        "id": "wlsrqsvyimY",
+        "title": "W12.11 Teken derdegraadse grafieke met stas buigpunte",
+        "channel": "Stefan Buys",
+        "views": 298,
+        "viewsText": "298 views",
+        "duration": "16:46",
+        "durationSeconds": 1006,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 42.7
+      },
+      {
         "id": "hzr8uS7hisE",
         "title": "Graad 12 Skets van derdegraadse funksie 2020 04 24 110529",
         "channel": "Rochelle Van der Merwe",
@@ -653,19 +773,43 @@
         "saChannel": true,
         "embeddable": true,
         "score": 42.6
+      },
+      {
+        "id": "2gcMqn8ZXAc",
+        "title": "Derdegraadse grafieke",
+        "channel": "Wolkskool",
+        "views": 629,
+        "viewsText": "629 views",
+        "duration": "21:04",
+        "durationSeconds": 1264,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 41
+      },
+      {
+        "id": "RHqqo_uUBSk",
+        "title": "Skets van derdegraadse Funksies",
+        "channel": "Wiskunde Graad 12 Juffrou Koorsen",
+        "views": 187,
+        "viewsText": "187 views",
+        "duration": "7:51",
+        "durationSeconds": 471,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 38.2
       }
     ],
     "pick": {
-      "id": "hzr8uS7hisE",
-      "title": "Graad 12 Skets van derdegraadse funksie 2020 04 24 110529",
-      "channel": "Rochelle Van der Merwe",
-      "views": 512,
-      "viewsText": "512 views",
-      "duration": "13:57",
-      "durationSeconds": 837,
+      "id": "wlsrqsvyimY",
+      "title": "W12.11 Teken derdegraadse grafieke met stas buigpunte",
+      "channel": "Stefan Buys",
+      "views": 298,
+      "viewsText": "298 views",
+      "duration": "16:46",
+      "durationSeconds": 1006,
       "saChannel": true,
       "embeddable": true,
-      "score": 42.6
+      "score": 42.7
     },
     "usedAdjacentGrade": false
   },
@@ -680,10 +824,33 @@
       "optimering graad 12",
       "wiskunde optimering afrikaans"
     ],
-    "candidates": [],
-    "pick": null,
-    "usedAdjacentGrade": false,
-    "note": "No embeddable, on-topic CAPS candidate found - left blank for manual search"
+    "candidates": [
+      {
+        "id": "xpUxJfXgDmA",
+        "title": "Graad 12 Hoofstuk 8 Les 10 Optimering en veranderingstempo",
+        "channel": "Rochelle Van der Merwe",
+        "views": 270,
+        "viewsText": "270 views",
+        "duration": "24:44",
+        "durationSeconds": 1484,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 34.8
+      }
+    ],
+    "pick": {
+      "id": "xpUxJfXgDmA",
+      "title": "Graad 12 Hoofstuk 8 Les 10 Optimering en veranderingstempo",
+      "channel": "Rochelle Van der Merwe",
+      "views": 270,
+      "viewsText": "270 views",
+      "duration": "24:44",
+      "durationSeconds": 1484,
+      "saChannel": true,
+      "embeddable": true,
+      "score": 34.8
+    },
+    "usedAdjacentGrade": false
   },
   {
     "slug": "calculus-gr12",
@@ -708,6 +875,18 @@
         "saChannel": true,
         "embeddable": true,
         "score": 58.3
+      },
+      {
+        "id": "_2O7wEGZYVE",
+        "title": "Wiskunde - Tempo van verandering en beweging",
+        "channel": "Wolkskool",
+        "views": 5213,
+        "viewsText": "5,213 views",
+        "duration": "46:43",
+        "durationSeconds": 2803,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 50.2
       }
     ],
     "pick": {
@@ -1015,16 +1194,40 @@
         "score": 56.8
       },
       {
-        "id": "9uJhAvs0yc4",
-        "title": "Meetkunde en Kongruensie en Gelykvormigheid",
-        "channel": "Danike Aucamp_Wiskunde en Wetenskap ",
-        "views": 412,
-        "viewsText": "412 views",
-        "duration": "48:44",
-        "durationSeconds": 2924,
+        "id": "t08MvnQgang",
+        "title": "Driehoek Gelykvormigheid bewys deur Ewewydig",
+        "channel": "SlimDink",
+        "views": 217,
+        "viewsText": "217 views",
+        "duration": "3:56",
+        "durationSeconds": 236,
         "saChannel": true,
         "embeddable": true,
-        "score": 31.6
+        "score": 46.4
+      },
+      {
+        "id": "b07u3zV8DkQ",
+        "title": "Graad 12 Hoofstuk 10 Les 4 Driehoeke met eweredige sye en gelykvormigheid",
+        "channel": "Rochelle Van der Merwe",
+        "views": 177,
+        "viewsText": "177 views",
+        "duration": "6:52",
+        "durationSeconds": 412,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 45.5
+      },
+      {
+        "id": "bkH1ZLh0-6A",
+        "title": "W12 Gelykvormigheid",
+        "channel": "Stefan Buys",
+        "views": 277,
+        "viewsText": "277 views",
+        "duration": "12:17",
+        "durationSeconds": 737,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 39.9
       }
     ],
     "pick": {
@@ -1080,6 +1283,18 @@
         "saChannel": true,
         "embeddable": true,
         "score": 51.9
+      },
+      {
+        "id": "oVrIJWWtdKE",
+        "title": "Konsep van Sirkel Vergelyking met Voorbeeld",
+        "channel": "SlimDink",
+        "views": 225,
+        "viewsText": "225 views",
+        "duration": "8:03",
+        "durationSeconds": 483,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 39
       }
     ],
     "pick": {
@@ -1107,10 +1322,33 @@
       "sirkel graad 12",
       "wiskunde sirkel afrikaans"
     ],
-    "candidates": [],
-    "pick": null,
-    "usedAdjacentGrade": false,
-    "note": "No embeddable, on-topic CAPS candidate found - left blank for manual search"
+    "candidates": [
+      {
+        "id": "oVrIJWWtdKE",
+        "title": "Konsep van Sirkel Vergelyking met Voorbeeld",
+        "channel": "SlimDink",
+        "views": 225,
+        "viewsText": "225 views",
+        "duration": "8:03",
+        "durationSeconds": 483,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 39
+      }
+    ],
+    "pick": {
+      "id": "oVrIJWWtdKE",
+      "title": "Konsep van Sirkel Vergelyking met Voorbeeld",
+      "channel": "SlimDink",
+      "views": 225,
+      "viewsText": "225 views",
+      "duration": "8:03",
+      "durationSeconds": 483,
+      "saChannel": true,
+      "embeddable": true,
+      "score": 39
+    },
+    "usedAdjacentGrade": false
   },
   {
     "slug": "analytical-geometry-gr12",
@@ -1123,10 +1361,45 @@
       "raaklyne sirkels graad 12",
       "wiskunde raaklyne sirkels afrikaans"
     ],
-    "candidates": [],
-    "pick": null,
-    "usedAdjacentGrade": false,
-    "note": "No embeddable, on-topic CAPS candidate found - left blank for manual search"
+    "candidates": [
+      {
+        "id": "5_jYRFMXMZE",
+        "title": "Wiskunde - Analitiese Meetkunde: Sirkels en raaklyne",
+        "channel": "Wolkskool",
+        "views": 18731,
+        "viewsText": "18,731 views",
+        "duration": "42:37",
+        "durationSeconds": 2557,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 55.7
+      },
+      {
+        "id": "w5nJdK5AdFQ",
+        "title": "04  Raaklyne aan sirkels",
+        "channel": "Wiskunde_Mathematics_SUM",
+        "views": 4248,
+        "viewsText": "4,248 views",
+        "duration": "9:07",
+        "durationSeconds": 547,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 54.3
+      }
+    ],
+    "pick": {
+      "id": "5_jYRFMXMZE",
+      "title": "Wiskunde - Analitiese Meetkunde: Sirkels en raaklyne",
+      "channel": "Wolkskool",
+      "views": 18731,
+      "viewsText": "18,731 views",
+      "duration": "42:37",
+      "durationSeconds": 2557,
+      "saChannel": true,
+      "embeddable": true,
+      "score": 55.7
+    },
+    "usedAdjacentGrade": false
   },
   {
     "slug": "analytical-geometry-gr12",
@@ -1187,10 +1460,33 @@
       "kwadrate regressie graad 12",
       "wiskunde kwadrate regressie afrikaans"
     ],
-    "candidates": [],
-    "pick": null,
-    "usedAdjacentGrade": false,
-    "note": "No embeddable, on-topic CAPS candidate found - left blank for manual search"
+    "candidates": [
+      {
+        "id": "r4Fzj_4gpC4",
+        "title": "Graad 12 Statistiek #5: Linieêre Regressie (Kleinste Kwadrate Metode)",
+        "channel": "WiskundeMetMargie",
+        "views": 254,
+        "viewsText": "254 views",
+        "duration": "23:23",
+        "durationSeconds": 1403,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 34.5
+      }
+    ],
+    "pick": {
+      "id": "r4Fzj_4gpC4",
+      "title": "Graad 12 Statistiek #5: Linieêre Regressie (Kleinste Kwadrate Metode)",
+      "channel": "WiskundeMetMargie",
+      "views": 254,
+      "viewsText": "254 views",
+      "duration": "23:23",
+      "durationSeconds": 1403,
+      "saChannel": true,
+      "embeddable": true,
+      "score": 34.5
+    },
+    "usedAdjacentGrade": false
   },
   {
     "slug": "statistics-gr12",
