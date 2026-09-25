@@ -459,6 +459,7 @@ const STOPWORDS = new Set([
 
 /** Maths synonyms, so a title using different wording still matches. */
 const ENGLISH_SYNONYMS: Record<string, string[]> = {
+  wavefront: ['wave front', 'huygens', "huygen's"],
   // "Does Line Intersect Circle" is the lesson for "Intersecting circles";
   // the stemmer does not reach -ing forms on its own.
   intersecting: ['intersect', 'intersects', 'intersection'],
@@ -760,7 +761,7 @@ const MIN_RELEVANCE = 0.3
  * "most watched" is the brief. Below this we would rather report no pick
  * and search by hand.
  */
-const MIN_VIEWS = IS_AFRIKAANS ? 300 : IS_SCIENCE ? 400 : 2000
+const MIN_VIEWS = IS_AFRIKAANS ? 150 : IS_SCIENCE ? 150 : 2000
 
 /**
  * Relevance is a GATE, not the ranking. Once a video is on-topic, the brief

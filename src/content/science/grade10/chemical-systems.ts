@@ -33,9 +33,9 @@ export const chemicalSystemsGr10: TopicContent = {
       title: 'The hydrosphere: where the Earth\'s water is found',
       blocks: [
         {
-          type: 'content_gap',
-          body: `No CAPS video has been sourced for this sub-topic yet. Ask Angelo if you're stuck on it in the meantime.`,
-          bodyAf: `Daar is nog nie 'n KABV-video vir hierdie onderafdeling nie. Vra solank vir Angelo as jy vashaak.`
+          type: 'video',
+          title: 'Watch: Interaction Between Hydrosphere and Biosphere | Grade 10 Chemistry — Goon School',
+          videoId: 'uJhN2VbOpag'
         }
       ]
     },

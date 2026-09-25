@@ -127,8 +127,8 @@ export const wavesSoundLightGr10: TopicContent = {
       blocks: [
         {
           type: 'video',
-          title: 'Watch: PHYSICAL SCIENCES 10 : EM RADIATION-ENERGY OF A PHOTON — PHAKAMA RESEARCH',
-          videoId: 'Dwwm_V3zmT0'
+          title: 'Watch: Calculate the Energy of a Red Light Photon (Grade 10 Physics) — Goon School',
+          videoId: 'L6x6k-LYJog'
         }
       ]
     }

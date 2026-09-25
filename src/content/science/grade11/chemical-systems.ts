@@ -45,9 +45,9 @@ export const chemicalSystemsGr11: TopicContent = {
       title: 'Mining and mineral processing in South Africa',
       blocks: [
         {
-          type: 'content_gap',
-          body: `No CAPS video has been sourced for this sub-topic yet. Ask Angelo if you're stuck on it in the meantime.`,
-          bodyAf: `Daar is nog nie 'n KABV-video vir hierdie onderafdeling nie. Vra solank vir Angelo as jy vashaak.`
+          type: 'video',
+          title: 'Watch: Mining in South Africa  | Grade 11 Chemistry — Goon School',
+          videoId: 'ybpFqwSYdEc'
         }
       ]
     },

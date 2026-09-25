@@ -27,10 +27,10 @@ same maths to a different syllabus is worse than an honest gap.
 | Mathematics | 10 | 35 | 31 | **4** |
 | Mathematics | 11 | 38 | 28 | **10** |
 | Mathematics | 12 | 37 | 31 | **6** |
-| Physical Sciences | 10 | 50 | 36 | **14** |
-| Physical Sciences | 11 | 45 | 35 | **10** |
+| Physical Sciences | 10 | 50 | 37 | **13** |
+| Physical Sciences | 11 | 45 | 38 | **7** |
 | Physical Sciences | 12 | 55 | 45 | **10** |
-| **Total** | | **260** | **206** | **54** |
+| **Total** | | **260** | **210** | **50** |
 
 ## Mathematics
 
@@ -95,7 +95,7 @@ same maths to a different syllabus is worse than an honest gap.
 
 ## Physical Sciences
 
-### Grade 10 — 14 outstanding
+### Grade 10 — 13 outstanding
 
 **Mechanics** (Paper 1)
 
@@ -119,17 +119,12 @@ same maths to a different syllabus is worse than an honest gap.
 - [ ] Precipitation reactions and testing for anions
 **Chemical Systems** (Paper 2)
 
-- [ ] The hydrosphere: where the Earth's water is found
 - [ ] Interaction of the hydrosphere with the atmosphere, lithosphere and biosphere
 - [ ] Water quality and the purification of water
 - [ ] The impact of dams on people and ecology
 
-### Grade 11 — 10 outstanding
+### Grade 11 — 7 outstanding
 
-**Waves, Sound & Light** (Paper 1)
-
-- [ ] Refraction and refractive index
-- [ ] Wavefronts and Huygens' principle
 **Matter & Materials** (Paper 2)
 
 - [ ] The chemistry of water and its three phases
@@ -140,7 +135,6 @@ same maths to a different syllabus is worse than an honest gap.
 - [ ] Acids and bases: Arrhenius and Brønsted-Lowry definitions
 **Chemical Systems** (Paper 2)
 
-- [ ] Mining and mineral processing in South Africa
 - [ ] The recovery of gold: from ore to metal
 - [ ] Environmental impact of mining and mineral recovery
 - [ ] Burning of fossil fuels and global warming

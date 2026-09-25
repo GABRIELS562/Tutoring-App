@@ -674,6 +674,18 @@
         "saChannel": true,
         "embeddable": true,
         "score": 53.9
+      },
+      {
+        "id": "eDRWlPYvmbY",
+        "title": "Conservation of Mechanical Energy - Practice #grade10",
+        "channel": "Edu-ca-te",
+        "views": 214,
+        "viewsText": "214 views",
+        "duration": "6:30",
+        "durationSeconds": 390,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 46.3
       }
     ],
     "pick": {
@@ -806,6 +818,18 @@
         "saChannel": true,
         "embeddable": true,
         "score": 67.8
+      },
+      {
+        "id": "yj25OI8BLSE",
+        "title": "Wave Superposition",
+        "channel": "Mindset",
+        "views": 398,
+        "viewsText": "398 views",
+        "duration": "11:27",
+        "durationSeconds": 687,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 41.5
       }
     ],
     "pick": {
@@ -1163,6 +1187,18 @@
     ],
     "candidates": [
       {
+        "id": "L6x6k-LYJog",
+        "title": "Calculate the Energy of a Red Light Photon (Grade 10 Physics)",
+        "channel": "Goon School",
+        "views": 336,
+        "viewsText": "336 views",
+        "duration": "3:36",
+        "durationSeconds": 216,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 48.3
+      },
+      {
         "id": "Dwwm_V3zmT0",
         "title": "PHYSICAL SCIENCES 10 : EM RADIATION-ENERGY OF A PHOTON",
         "channel": "PHAKAMA RESEARCH",
@@ -1176,16 +1212,16 @@
       }
     ],
     "pick": {
-      "id": "Dwwm_V3zmT0",
-      "title": "PHYSICAL SCIENCES 10 : EM RADIATION-ENERGY OF A PHOTON",
-      "channel": "PHAKAMA RESEARCH",
-      "views": 692,
-      "viewsText": "692 views",
-      "duration": "1:43:11",
-      "durationSeconds": 6191,
+      "id": "L6x6k-LYJog",
+      "title": "Calculate the Energy of a Red Light Photon (Grade 10 Physics)",
+      "channel": "Goon School",
+      "views": 336,
+      "viewsText": "336 views",
+      "duration": "3:36",
+      "durationSeconds": 216,
       "saChannel": true,
       "embeddable": true,
-      "score": 41.4
+      "score": 48.3
     },
     "usedAdjacentGrade": false
   },
@@ -2687,10 +2723,33 @@
       "Chemical Systems grade 10 hydrosphere where earth",
       "The hydrosphere: where the Earth's water is found grade 10"
     ],
-    "candidates": [],
-    "pick": null,
-    "usedAdjacentGrade": false,
-    "note": "No embeddable, on-topic CAPS candidate found - left blank for manual search"
+    "candidates": [
+      {
+        "id": "uJhN2VbOpag",
+        "title": "Interaction Between Hydrosphere and Biosphere | Grade 10 Chemistry",
+        "channel": "Goon School",
+        "views": 300,
+        "viewsText": "300 views",
+        "duration": "1:47",
+        "durationSeconds": 107,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 40.3
+      }
+    ],
+    "pick": {
+      "id": "uJhN2VbOpag",
+      "title": "Interaction Between Hydrosphere and Biosphere | Grade 10 Chemistry",
+      "channel": "Goon School",
+      "views": 300,
+      "viewsText": "300 views",
+      "duration": "1:47",
+      "durationSeconds": 107,
+      "saChannel": true,
+      "embeddable": true,
+      "score": 40.3
+    },
+    "usedAdjacentGrade": false
   },
   {
     "slug": "chemical-systems-gr10",

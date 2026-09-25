@@ -715,10 +715,33 @@
       "Waves, Sound & Light grade 11 refraction refractive index",
       "Refraction and refractive index grade 11"
     ],
-    "candidates": [],
-    "pick": null,
-    "usedAdjacentGrade": false,
-    "note": "No embeddable, on-topic CAPS candidate found - left blank for manual search"
+    "candidates": [
+      {
+        "id": "inQOyag5zI8",
+        "title": "Refraction Snells Law Refractive Index Grade 11 Physical Science Past Paper",
+        "channel": "Khoza Explains",
+        "views": 394,
+        "viewsText": "394 views",
+        "duration": "10:33",
+        "durationSeconds": 633,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 37
+      }
+    ],
+    "pick": {
+      "id": "inQOyag5zI8",
+      "title": "Refraction Snells Law Refractive Index Grade 11 Physical Science Past Paper",
+      "channel": "Khoza Explains",
+      "views": 394,
+      "viewsText": "394 views",
+      "duration": "10:33",
+      "durationSeconds": 633,
+      "saChannel": true,
+      "embeddable": true,
+      "score": 37
+    },
+    "usedAdjacentGrade": false
   },
   {
     "slug": "waves-sound-light-gr11",
@@ -854,10 +877,57 @@
       "Waves, Sound & Light grade 11 wavefronts huygens principle",
       "Wavefronts and Huygens' principle grade 11"
     ],
-    "candidates": [],
-    "pick": null,
-    "usedAdjacentGrade": false,
-    "note": "No embeddable, on-topic CAPS candidate found - left blank for manual search"
+    "candidates": [
+      {
+        "id": "vqa4L0DuWbM",
+        "title": "Huygens' Principle and Diffraction of Waves - Science Grade 11 and 12",
+        "channel": "Mindset",
+        "views": 152426,
+        "viewsText": "152,426 views",
+        "duration": "8:23",
+        "durationSeconds": 503,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 69.8
+      },
+      {
+        "id": "zGpoi-Y65JM",
+        "title": "Huygens' Principle - Grade 11 & 12 Waves",
+        "channel": "Mindset",
+        "views": 71680,
+        "viewsText": "71,680 views",
+        "duration": "14:42",
+        "durationSeconds": 882,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 66.6
+      },
+      {
+        "id": "KXRnmQGweJE",
+        "title": "Grade 11 - Diffraction | Huygen’s Principle & Wavefronts | November 2017 | Mlungisi Nkosi",
+        "channel": "Mlungisi Nkosi Maths & Science",
+        "views": 333,
+        "viewsText": "333 views",
+        "duration": "4:52",
+        "durationSeconds": 292,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 48.2
+      }
+    ],
+    "pick": {
+      "id": "vqa4L0DuWbM",
+      "title": "Huygens' Principle and Diffraction of Waves - Science Grade 11 and 12",
+      "channel": "Mindset",
+      "views": 152426,
+      "viewsText": "152,426 views",
+      "duration": "8:23",
+      "durationSeconds": 503,
+      "saChannel": true,
+      "embeddable": true,
+      "score": 69.8
+    },
+    "usedAdjacentGrade": false
   },
   {
     "slug": "waves-sound-light-gr11",
@@ -899,6 +969,18 @@
         "score": 45.6
       },
       {
+        "id": "KXRnmQGweJE",
+        "title": "Grade 11 - Diffraction | Huygen’s Principle & Wavefronts | November 2017 | Mlungisi Nkosi",
+        "channel": "Mlungisi Nkosi Maths & Science",
+        "views": 333,
+        "viewsText": "333 views",
+        "duration": "4:52",
+        "durationSeconds": 292,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 40.7
+      },
+      {
         "id": "lf689C99Sxw",
         "title": "Diffraction",
         "channel": "Mindset",
@@ -909,6 +991,18 @@
         "saChannel": true,
         "embeddable": true,
         "score": 39.2
+      },
+      {
+        "id": "4sDRK_4pEuA",
+        "title": "Diffraction, Slit Width, Wavelength Grade 11 Physical Sciences Past Exam Question 2018",
+        "channel": "Khoza Explains",
+        "views": 278,
+        "viewsText": "278 views",
+        "duration": "5:02",
+        "durationSeconds": 302,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 27.9
       }
     ],
     "pick": {
@@ -1365,6 +1459,18 @@
         "saChannel": true,
         "embeddable": true,
         "score": 52.9
+      },
+      {
+        "id": "S37dgmJ4D8I",
+        "title": "Grade 11 -  Physical Science | 22 July 2020 | Applying Ohms law",
+        "channel": "Africa Teen Geeks",
+        "views": 239,
+        "viewsText": "239 views",
+        "duration": "34:24",
+        "durationSeconds": 2064,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 34.3
       }
     ],
     "pick": {
@@ -1779,6 +1885,18 @@
         "saChannel": true,
         "embeddable": true,
         "score": 54.2
+      },
+      {
+        "id": "HPEeCtcdmfI",
+        "title": "Calculate the Electronegativity Difference for a CH Bond | Grade 11 Chemistry",
+        "channel": "Goon School",
+        "views": 317,
+        "viewsText": "317 views",
+        "duration": "3:53",
+        "durationSeconds": 233,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 43
       }
     ],
     "pick": {
@@ -2484,6 +2602,18 @@
         "saChannel": true,
         "embeddable": true,
         "score": 45.2
+      },
+      {
+        "id": "ZvYyPvNRumM",
+        "title": "Grade 11 Physical Science 28 May 2020 Endothermic and exothermic reactions",
+        "channel": "Africa Teen Geeks",
+        "views": 391,
+        "viewsText": "391 views",
+        "duration": "45:31",
+        "durationSeconds": 2731,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 32.9
       }
     ],
     "pick": {
@@ -2562,6 +2692,18 @@
         "saChannel": true,
         "embeddable": true,
         "score": 43.5
+      },
+      {
+        "id": "lJoOuhHkNuI",
+        "title": "Grade 11 Physical Science 29 May 2020 Activation energy",
+        "channel": "Africa Teen Geeks",
+        "views": 252,
+        "viewsText": "252 views",
+        "duration": "45:50",
+        "durationSeconds": 2750,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 29.5
       }
     ],
     "pick": {
@@ -2809,10 +2951,33 @@
       "Chemical Systems grade 11 mining mineral processing",
       "Mining and mineral processing in South Africa grade 11"
     ],
-    "candidates": [],
-    "pick": null,
-    "usedAdjacentGrade": false,
-    "note": "No embeddable, on-topic CAPS candidate found - left blank for manual search"
+    "candidates": [
+      {
+        "id": "ybpFqwSYdEc",
+        "title": "Mining in South Africa  | Grade 11 Chemistry",
+        "channel": "Goon School",
+        "views": 351,
+        "viewsText": "351 views",
+        "duration": "2:20",
+        "durationSeconds": 140,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 42.5
+      }
+    ],
+    "pick": {
+      "id": "ybpFqwSYdEc",
+      "title": "Mining in South Africa  | Grade 11 Chemistry",
+      "channel": "Goon School",
+      "views": 351,
+      "viewsText": "351 views",
+      "duration": "2:20",
+      "durationSeconds": 140,
+      "saChannel": true,
+      "embeddable": true,
+      "score": 42.5
+    },
+    "usedAdjacentGrade": false
   },
   {
     "slug": "chemical-systems-gr11",
