@@ -10,12 +10,14 @@ export const organicChemistryGr12: TopicContent = {
   grade: 12,
   paper: 2,
   title: 'Organic Chemistry',
+  titleAf: 'Organiese Chemie',
   capsWeight: 11.5,
   // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
   sections: [
     {
       id: 'overview',
       title: 'Organic Chemistry',
+      titleAf: 'Organiese Chemie',
       blocks: [
         {
           type: 'theory',
@@ -36,6 +38,7 @@ export const organicChemistryGr12: TopicContent = {
     {
       id: 'organic-molecules-functional-groups-saturated-an',
       title: 'Organic molecules: functional groups, saturated and unsaturated structures',
+      titleAf: 'Organiese molekules: funksionele groepe, versadigde en onversadigde strukture',
       blocks: [
         {
           type: 'video',
@@ -47,17 +50,20 @@ export const organicChemistryGr12: TopicContent = {
     {
       id: 'structural-isomers-chain-positional-and-function',
       title: 'Structural isomers: chain, positional and functional',
+      titleAf: 'Struktuurisomere: ketting-, posisionele en funksionele isomere',
       blocks: [
         {
           type: 'video',
           title: 'Watch: Isomers Organic Chemistry Grade 12 — Kevinmathscience',
-          videoId: 'Kis0W4iOZr8'
+          videoId: 'Kis0W4iOZr8',
+          videoIdAf: '9xARo0x3oPw'
         }
       ]
     },
     {
       id: 'iupac-naming-and-formulae-of-organic-compounds',
       title: 'IUPAC naming and formulae of organic compounds',
+      titleAf: 'IUPAC-naamgewing en formules van organiese verbindings',
       blocks: [
         {
           type: 'video',
@@ -69,17 +75,20 @@ export const organicChemistryGr12: TopicContent = {
     {
       id: 'physical-properties-and-intermolecular-forces-of',
       title: 'Physical properties and intermolecular forces of organic compounds',
+      titleAf: 'Fisiese eienskappe en intermolekulêre kragte van organiese verbindings',
       blocks: [
         {
           type: 'video',
           title: 'Watch: Chemistry | Intermolecular forces | Physical properties of organic compound — Mlungisi Nkosi Maths & Science',
-          videoId: 'ameAElR0Pac'
+          videoId: 'ameAElR0Pac',
+          videoIdAf: 'N8_SVec-lEQ'
         }
       ]
     },
     {
       id: 'combustion-of-alkanes-and-the-preparation-of-est',
       title: 'Combustion of alkanes and the preparation of esters',
+      titleAf: 'Verbranding van alkane en die bereiding van esters',
       blocks: [
         {
           type: 'content_gap',
@@ -91,6 +100,7 @@ export const organicChemistryGr12: TopicContent = {
     {
       id: 'addition-reactions-of-alkenes',
       title: 'Addition reactions of alkenes',
+      titleAf: 'Addisiereaksies van alkene',
       blocks: [
         {
           type: 'content_gap',
@@ -102,28 +112,33 @@ export const organicChemistryGr12: TopicContent = {
     {
       id: 'elimination-reactions-and-cracking',
       title: 'Elimination reactions and cracking',
+      titleAf: 'Eliminasiereaksies en kraking',
       blocks: [
         {
           type: 'video',
           title: 'Watch: 7  Gr12 Physical Science - Reactions in Organic Chemistry - Cracking Elimination Reaction — JuniorTukkie at the University of Pretoria',
-          videoId: '0df8ZNhpfyc'
+          videoId: '0df8ZNhpfyc',
+          videoIdAf: 'K8RH5JdyPbE'
         }
       ]
     },
     {
       id: 'substitution-reactions-of-alkanes-alcohols-and-h',
       title: 'Substitution reactions of alkanes, alcohols and haloalkanes',
+      titleAf: 'Substitusiereaksies van alkane, alkohole en haloalkane',
       blocks: [
         {
           type: 'video',
           title: 'Watch: Reactions Organic Chemistry Grade 12 | Alkane to Haloalkane — Kevinmathscience',
-          videoId: 'CPlam-5DuEk'
+          videoId: 'CPlam-5DuEk',
+          videoIdAf: 'bAZvehqOdbU'
         }
       ]
     },
     {
       id: 'addition-and-condensation-polymerisation-plastic',
       title: 'Addition and condensation polymerisation: plastics and polymers',
+      titleAf: 'Addisie- en kondensasiepolimerisasie: plastiek en polimere',
       blocks: [
         {
           type: 'content_gap',

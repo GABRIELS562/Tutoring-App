@@ -22,6 +22,9 @@ interface Gap {
   hasAfrikaans: boolean
 }
 
+/** Sub-topics with an English video but no Afrikaans one. */
+const afrikaansGaps: Gap[] = []
+
 function collect(): Gap[] {
   const gaps: Gap[] = []
   const all = [
@@ -34,7 +37,23 @@ function collect(): Gap[] {
     for (const section of content.sections) {
       if (section.id === 'overview') continue
       const video = section.blocks.find((b) => b.type === 'video')
-      if (video?.videoId) continue
+      if (video?.videoId) {
+        // Has an English video. If it has no Afrikaans one, an Afrikaans
+        // student still sees this sub-topic - they just get the English
+        // video. That is a softer gap than a blank page, but it is still a
+        // gap, and it is invisible unless it is counted.
+        if (!video.videoIdAf) {
+          afrikaansGaps.push({
+            subject: topic.subject,
+            grade: topic.grade,
+            paper: topic.paper,
+            topic: topic.title,
+            subTopic: section.title,
+            hasAfrikaans: false,
+          })
+        }
+        continue
+      }
       gaps.push({
         subject: topic.subject,
         grade: topic.grade,
@@ -122,8 +141,63 @@ function main() {
     }
   }
 
+  // --- the Afrikaans track
+  lines.push(
+    '## Afrikaans track',
+    '',
+    'These sub-topics have an English video but no Afrikaans one, so an',
+    'Afrikaans student sees the English video. The page still works and the',
+    'heading is in Afrikaans - only the video is not.',
+    '',
+    'The Afrikaans ecosystem is roughly a hundredth the size of the English',
+    'one, so these will not all close. Where a gap remains it is because no',
+    'video from a verified Afrikaans CAPS channel covers the sub-topic, or',
+    'because the one that does has in-app playback disabled by its owner,',
+    'which cannot be overridden from our side.',
+    '',
+    '| Subject | Grade | With English video | Also Afrikaans | Afrikaans outstanding |',
+    '|---|---:|---:|---:|---:|',
+  )
+  for (const subject of ['Mathematics', 'Physical Sciences']) {
+    for (const grade of [10, 11, 12]) {
+      const total = totals
+        .filter((t) => t.subject === subject && t.grade === grade)
+        .reduce((n, t) => n + t.subTopics.length, 0)
+      const englishGaps = gaps.filter((g) => g.subject === subject && g.grade === grade).length
+      const withEnglish = total - englishGaps
+      const missing = afrikaansGaps.filter((g) => g.subject === subject && g.grade === grade).length
+      lines.push(
+        `| ${subject} | ${grade} | ${withEnglish} | ${withEnglish - missing} | **${missing}** |`
+      )
+    }
+  }
+  lines.push('')
+
+  for (const subject of ['Mathematics', 'Physical Sciences']) {
+    const forSubject = afrikaansGaps.filter((g) => g.subject === subject)
+    if (forSubject.length === 0) continue
+    lines.push(`### ${subject} — Afrikaans outstanding`, '')
+    for (const grade of [10, 11, 12]) {
+      const forGrade = forSubject.filter((g) => g.grade === grade)
+      if (forGrade.length === 0) continue
+      lines.push(`**Grade ${grade}** — ${forGrade.length} sub-topics`, '')
+      let currentTopic = ''
+      for (const gap of forGrade) {
+        if (gap.topic !== currentTopic) {
+          currentTopic = gap.topic
+          lines.push(`_${gap.topic}_`, '')
+        }
+        lines.push(`- [ ] ${gap.subTopic}`)
+      }
+      lines.push('')
+    }
+  }
+
   writeFileSync('docs/curriculum/CONTENT-GAPS.md', lines.join('\n'))
-  console.log(`Wrote docs/curriculum/CONTENT-GAPS.md — ${gaps.length} gaps of ${grandTotal} sub-topics`)
+  console.log(
+    `Wrote docs/curriculum/CONTENT-GAPS.md — ${gaps.length} English gaps and ` +
+      `${afrikaansGaps.length} Afrikaans gaps, of ${grandTotal} sub-topics`
+  )
 }
 
 main()

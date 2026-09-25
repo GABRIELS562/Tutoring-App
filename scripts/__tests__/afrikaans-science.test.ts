@@ -5,7 +5,14 @@
  * dictionary.
  */
 import { describe, it, expect } from 'vitest'
-import { fold, hasRequiredTermsFor } from '../curate-videos'
+import {
+  fold,
+  hasRequiredTermsFor,
+  synonymsFor,
+  SCIENCE_DISCRIMINATING,
+} from '../curate-videos'
+
+const AF_SCIENCE = synonymsFor('science', 'af')
 import {
   AFRIKAANS_CHANNELS,
   AFRIKAANS_SCIENCE_TERMS,
@@ -145,5 +152,41 @@ describe('science vocabulary', () => {
 describe('hasRequiredTermsFor still rejects off-topic Afrikaans titles', () => {
   it('does not accept a maths video for a science sub-topic', () => {
     expect(hasRequiredTermsFor('science', 'Momentum and impulse', 'GR12 Trig Algemene Oplossings 1A')).toBe(false)
+  })
+})
+
+/**
+ * The scorer treats these terms as naming the lesson: if a sub-topic
+ * contains one, a candidate title must contain it too, or it is rejected
+ * outright. So a discriminating term with no Afrikaans form silently blocks
+ * every Afrikaans candidate for every sub-topic that names it - which is
+ * what kept "Vectors and scalars" empty while a 8,089-view
+ * "Skalare en vektore" lesson sat in the results. 23 terms were missing.
+ */
+describe('every discriminating term has an Afrikaans form', () => {
+  it('leaves no science sub-topic unpickable in Afrikaans', () => {
+    const missing = [...new Set(SCIENCE_DISCRIMINATING)].filter(
+      (term) => !AFRIKAANS_SCIENCE_TERMS[term]
+    )
+
+    expect(
+      missing,
+      `these block every Afrikaans candidate for any sub-topic naming them:\n${missing.join(', ')}`
+    ).toEqual([])
+  })
+
+  it('accepts a real Afrikaans title for a discriminating sub-topic', () => {
+    expect(
+      hasRequiredTermsFor('science', 'Vectors and scalars', "Gr. 10 Fisika: Meganika (Skalare en vektore) in 'n NEUTEDOP", AF_SCIENCE)
+    ).toBe(true)
+    expect(
+      hasRequiredTermsFor('science', 'Isotopes and relative atomic mass', 'FW GR10 atoom en isotope', AF_SCIENCE)
+    ).toBe(true)
+  })
+
+  it('still rejects a title that does not name the concept', () => {
+    expect(
+      hasRequiredTermsFor('science', 'Vectors and scalars', 'Gr 10 Fisika : Hersieningsklas 4 - Stroombane 1', AF_SCIENCE)
+    ).toBe(false)
   })
 })

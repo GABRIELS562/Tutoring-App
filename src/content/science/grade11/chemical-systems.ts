@@ -10,12 +10,14 @@ export const chemicalSystemsGr11: TopicContent = {
   grade: 11,
   paper: 2,
   title: 'Chemical Systems',
+  titleAf: 'Chemiese Stelsels',
   capsWeight: 5,
   // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
   sections: [
     {
       id: 'overview',
       title: 'Chemical Systems',
+      titleAf: 'Chemiese Stelsels',
       blocks: [
         {
           type: 'theory',
@@ -32,6 +34,7 @@ export const chemicalSystemsGr11: TopicContent = {
     {
       id: 'the-lithosphere-as-a-source-of-materials-abundan',
       title: 'The lithosphere as a source of materials: abundance, distribution and ores',
+      titleAf: 'Die litosfeer as bron van materiale: volopheid, verspreiding en ertse',
       blocks: [
         {
           type: 'video',
@@ -43,6 +46,7 @@ export const chemicalSystemsGr11: TopicContent = {
     {
       id: 'mining-and-mineral-processing-in-south-africa',
       title: 'Mining and mineral processing in South Africa',
+      titleAf: 'Mynbou en mineraalverwerking in Suid-Afrika',
       blocks: [
         {
           type: 'video',
@@ -54,6 +58,7 @@ export const chemicalSystemsGr11: TopicContent = {
     {
       id: 'the-recovery-of-gold-from-ore-to-metal',
       title: 'The recovery of gold: from ore to metal',
+      titleAf: 'Die herwinning van goud: van erts tot metaal',
       blocks: [
         {
           type: 'content_gap',
@@ -65,6 +70,7 @@ export const chemicalSystemsGr11: TopicContent = {
     {
       id: 'environmental-impact-of-mining-and-mineral-recov',
       title: 'Environmental impact of mining and mineral recovery',
+      titleAf: 'Omgewingsimpak van mynbou en mineraalherwinning',
       blocks: [
         {
           type: 'content_gap',
@@ -76,6 +82,7 @@ export const chemicalSystemsGr11: TopicContent = {
     {
       id: 'burning-of-fossil-fuels-and-global-warming',
       title: 'Burning of fossil fuels and global warming',
+      titleAf: 'Verbranding van fossielbrandstowwe en globale verhitting',
       blocks: [
         {
           type: 'content_gap',

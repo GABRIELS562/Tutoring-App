@@ -10,12 +10,14 @@ export const wavesSoundLightGr10: TopicContent = {
   grade: 10,
   paper: 1,
   title: 'Waves, Sound & Light',
+  titleAf: 'Golwe, Klank en Lig',
   capsWeight: 10,
   // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
   sections: [
     {
       id: 'overview',
       title: 'Waves, Sound & Light',
+      titleAf: 'Golwe, Klank en Lig',
       blocks: [
         {
           type: 'theory',
@@ -36,17 +38,20 @@ export const wavesSoundLightGr10: TopicContent = {
     {
       id: 'transverse-pulses-on-a-string-or-spring',
       title: 'Transverse pulses on a string or spring',
+      titleAf: 'Transversale pulse op \'n tou of veer',
       blocks: [
         {
           type: 'video',
           title: 'Watch: Grade 10 Transverse Pulses and the Principle of superposition — Miss Martins Maths and Science',
-          videoId: 'C3n4cqNpHto'
+          videoId: 'C3n4cqNpHto',
+          videoIdAf: 'fhCoYWh97Nc'
         }
       ]
     },
     {
       id: 'superposition-of-pulses-constructive-and-destruc',
       title: 'Superposition of pulses: constructive and destructive interference',
+      titleAf: 'Superposisie van pulse: konstruktiewe en destruktiewe interferensie',
       blocks: [
         {
           type: 'video',
@@ -58,28 +63,33 @@ export const wavesSoundLightGr10: TopicContent = {
     {
       id: 'transverse-waves-wavelength-frequency-period-and',
       title: 'Transverse waves: wavelength, frequency, period and wave speed',
+      titleAf: 'Transversale golwe: golflengte, frekwensie, periode en golfspoed',
       blocks: [
         {
           type: 'video',
           title: 'Watch: Grade 10 Physics Transverse waves Period and Frequency — Miss Martins Maths and Science',
-          videoId: '4vDk3W66s5I'
+          videoId: '4vDk3W66s5I',
+          videoIdAf: '4967Pyl1qvU'
         }
       ]
     },
     {
       id: 'longitudinal-waves-compressions-and-rarefactions',
       title: 'Longitudinal waves: compressions and rarefactions',
+      titleAf: 'Longitudinale golwe: saampersings en verdunnings',
       blocks: [
         {
           type: 'video',
           title: 'Watch: 4) Longitudinal  Waves Grade 10 — Kevinmathscience',
-          videoId: '9sP74zJKcIQ'
+          videoId: '9sP74zJKcIQ',
+          videoIdAf: 'maVbWUb9COM'
         }
       ]
     },
     {
       id: 'sound-waves-and-the-speed-of-sound-in-different-',
       title: 'Sound waves and the speed of sound in different media',
+      titleAf: 'Klankgolwe en die spoed van klank in verskillende media',
       blocks: [
         {
           type: 'video',
@@ -91,17 +101,20 @@ export const wavesSoundLightGr10: TopicContent = {
     {
       id: 'pitch-loudness-and-quality-of-sound',
       title: 'Pitch, loudness and quality of sound',
+      titleAf: 'Toonhoogte, luidheid en klankkwaliteit',
       blocks: [
         {
           type: 'video',
           title: 'Watch: Loudness and Pitch: Grade 10 Waves and Light — Mindset',
-          videoId: 'h5kPzCQYhyY'
+          videoId: 'h5kPzCQYhyY',
+          videoIdAf: 'cA3ui7pfMC0'
         }
       ]
     },
     {
       id: 'ultrasound-and-its-medical-uses',
       title: 'Ultrasound and its medical uses',
+      titleAf: 'Ultraklank en die mediese gebruike daarvan',
       blocks: [
         {
           type: 'content_gap',
@@ -113,6 +126,7 @@ export const wavesSoundLightGr10: TopicContent = {
     {
       id: 'electromagnetic-radiation-and-the-electromagneti',
       title: 'Electromagnetic radiation and the electromagnetic spectrum',
+      titleAf: 'Elektromagnetiese straling en die elektromagnetiese spektrum',
       blocks: [
         {
           type: 'video',
@@ -124,6 +138,7 @@ export const wavesSoundLightGr10: TopicContent = {
     {
       id: 'the-energy-of-a-photon',
       title: 'The energy of a photon',
+      titleAf: 'Die energie van \'n foton',
       blocks: [
         {
           type: 'video',

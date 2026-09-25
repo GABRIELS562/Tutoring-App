@@ -509,18 +509,27 @@ const ENGLISH_SYNONYMS: Record<string, string[]> = {
 // ("GR11 Intermolekulere Kragte"). The vocabulary follows the subject -
 // pairing science sub-topics with the maths map is how the science run
 // produced no queries at all.
-const AFRIKAANS_VOCABULARY = IS_SCIENCE ? AFRIKAANS_SCIENCE_TERMS : AFRIKAANS_TERMS
+/**
+ * The synonym table for a subject and language, as a pure function so the
+ * Afrikaans rules can be tested. The module-level SYNONYMS below is this
+ * applied to argv; passing the table in explicitly is what lets a test
+ * exercise an Afrikaans title without re-launching the process.
+ */
+export function synonymsFor(
+  subject: 'maths' | 'science',
+  language: 'en' | 'af'
+): Record<string, string[]> {
+  if (language === 'en') return ENGLISH_SYNONYMS
+  const vocabulary = subject === 'science' ? AFRIKAANS_SCIENCE_TERMS : AFRIKAANS_TERMS
+  return Object.fromEntries(
+    [...new Set([...Object.keys(ENGLISH_SYNONYMS), ...Object.keys(vocabulary)])].map((word) => [
+      word,
+      [...(ENGLISH_SYNONYMS[word] ?? []), ...(vocabulary[word] ?? [])],
+    ])
+  )
+}
 
-const SYNONYMS: Record<string, string[]> = IS_AFRIKAANS
-  ? Object.fromEntries(
-      [...new Set([...Object.keys(ENGLISH_SYNONYMS), ...Object.keys(AFRIKAANS_VOCABULARY)])].map(
-        (word) => [
-          word,
-          [...(ENGLISH_SYNONYMS[word] ?? []), ...(AFRIKAANS_VOCABULARY[word] ?? [])],
-        ]
-      )
-    )
-  : ENGLISH_SYNONYMS
+const SYNONYMS: Record<string, string[]> = synonymsFor(SUBJECT, IS_AFRIKAANS ? 'af' : 'en')
 
 
 /** Crude singular/plural fold - "parallelograms" should match "Parallelogram". */
@@ -599,7 +608,7 @@ function tokenise(text: string): string[] {
  * two squares" video (squares are not cubes), and "the exponent laws"
  * matched "exponential equation" - both plausible-looking, both wrong.
  */
-const SCIENCE_DISCRIMINATING = [
+export const SCIENCE_DISCRIMINATING = [
   // Physics concepts that name the lesson
   'momentum', 'impulse', 'projectile', 'doppler', 'photoelectric', 'refraction',
   'diffraction', 'snell', 'wavefront', 'coulomb', 'faraday', 'ohm', 'generator',
@@ -689,14 +698,15 @@ function requiredTerms(subTopic: string, subject: 'maths' | 'science' = SUBJECT)
 export function hasRequiredTermsFor(
   subject: 'maths' | 'science',
   subTopic: string,
-  title: string
+  title: string,
+  synonyms: Record<string, string[]> = SYNONYMS
 ): boolean {
   const haystack = ` ${fold(title.toLowerCase())} `
   const required = requiredTerms(subTopic, subject)
   if (required.length === 0) return true
 
   const matches = (term: string) =>
-    [term, ...(SYNONYMS[term] ?? [])].some((form) => containsTerm(haystack, form))
+    [term, ...(synonyms[term] ?? [])].some((form) => containsTerm(haystack, form))
 
   // A comma means CAPS is listing alternatives - "Chemical bonding: covalent,
   // ionic and metallic" is three bond types, and no single video names all

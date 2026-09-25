@@ -10,12 +10,14 @@ export const electricityMagnetismGr10: TopicContent = {
   grade: 10,
   paper: 1,
   title: 'Electricity & Magnetism',
+  titleAf: 'Elektrisiteit en Magnetisme',
   capsWeight: 8.75,
   // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
   sections: [
     {
       id: 'overview',
       title: 'Electricity & Magnetism',
+      titleAf: 'Elektrisiteit en Magnetisme',
       blocks: [
         {
           type: 'theory',
@@ -36,6 +38,7 @@ export const electricityMagnetismGr10: TopicContent = {
     {
       id: 'magnetic-fields-and-magnetic-field-lines-of-perm',
       title: 'Magnetic fields and magnetic field lines of permanent magnets',
+      titleAf: 'Magneetvelde en magneetveldlyne van permanente magnete',
       blocks: [
         {
           type: 'content_gap',
@@ -47,6 +50,7 @@ export const electricityMagnetismGr10: TopicContent = {
     {
       id: 'the-earth-s-magnetic-field-and-the-compass',
       title: 'The Earth\'s magnetic field and the compass',
+      titleAf: 'Die aarde se magneetveld en die kompas',
       blocks: [
         {
           type: 'content_gap',
@@ -58,6 +62,7 @@ export const electricityMagnetismGr10: TopicContent = {
     {
       id: 'two-kinds-of-charge-charging-by-contact-and-pola',
       title: 'Two kinds of charge, charging by contact and polarisation',
+      titleAf: 'Twee soorte lading, laai deur kontak en polarisasie',
       blocks: [
         {
           type: 'video',
@@ -69,6 +74,7 @@ export const electricityMagnetismGr10: TopicContent = {
     {
       id: 'conservation-and-quantisation-of-charge',
       title: 'Conservation and quantisation of charge',
+      titleAf: 'Behoud en kwantisering van lading',
       blocks: [
         {
           type: 'video',
@@ -80,6 +86,7 @@ export const electricityMagnetismGr10: TopicContent = {
     {
       id: 'potential-difference-emf-and-terminal-potential-',
       title: 'Potential difference, emf and terminal potential difference',
+      titleAf: 'Potensiaalverskil, emk en klempotensiaalverskil',
       blocks: [
         {
           type: 'content_gap',
@@ -91,6 +98,7 @@ export const electricityMagnetismGr10: TopicContent = {
     {
       id: 'current-and-measuring-current-and-voltage-in-a-c',
       title: 'Current, and measuring current and voltage in a circuit',
+      titleAf: 'Stroom, en die meting van stroom en spanning in \'n stroombaan',
       blocks: [
         {
           type: 'content_gap',
@@ -102,28 +110,33 @@ export const electricityMagnetismGr10: TopicContent = {
     {
       id: 'resistance-and-the-factors-that-affect-it',
       title: 'Resistance and the factors that affect it',
+      titleAf: 'Weerstand en die faktore wat dit beïnvloed',
       blocks: [
         {
           type: 'video',
           title: 'Watch: Resistance Grade 10 — Kevinmathscience',
-          videoId: 'JZJlJ18ggc0'
+          videoId: 'JZJlJ18ggc0',
+          videoIdAf: 'IpwMwZfQdUM'
         }
       ]
     },
     {
       id: 'resistors-in-series',
       title: 'Resistors in series',
+      titleAf: 'Weerstande in serie',
       blocks: [
         {
           type: 'video',
           title: 'Watch: Physics | Electricity Circuits Part 1 | Resistors in series — Mlungisi Nkosi Maths & Science',
-          videoId: 'LIgyQkUsmWo'
+          videoId: 'LIgyQkUsmWo',
+          videoIdAf: 'XVVj0ABjs4o'
         }
       ]
     },
     {
       id: 'resistors-in-parallel',
       title: 'Resistors in parallel',
+      titleAf: 'Weerstande in parallel',
       blocks: [
         {
           type: 'video',

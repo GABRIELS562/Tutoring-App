@@ -10,12 +10,14 @@ export const chemicalSystemsGr12: TopicContent = {
   grade: 12,
   paper: 2,
   title: 'Chemical Systems',
+  titleAf: 'Chemiese Stelsels',
   capsWeight: 3.5,
   // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
   sections: [
     {
       id: 'overview',
       title: 'Chemical Systems',
+      titleAf: 'Chemiese Stelsels',
       blocks: [
         {
           type: 'theory',
@@ -34,17 +36,20 @@ export const chemicalSystemsGr12: TopicContent = {
     {
       id: 'plant-nutrients-and-why-fertilizers-are-needed',
       title: 'Plant nutrients and why fertilizers are needed',
+      titleAf: 'Plantvoedingstowwe en waarom kunsmis nodig is',
       blocks: [
         {
           type: 'video',
           title: 'Watch: Fertilizer Theory — Simple Science',
-          videoId: 'YtyMCjBN1so'
+          videoId: 'YtyMCjBN1so',
+          videoIdAf: 'NVDaANbIHqA'
         }
       ]
     },
     {
       id: 'the-function-of-nitrogen-phosphorus-and-potassiu',
       title: 'The function of nitrogen, phosphorus and potassium in plants',
+      titleAf: 'Die funksie van stikstof, fosfor en kalium in plante',
       blocks: [
         {
           type: 'content_gap',
@@ -56,28 +61,33 @@ export const chemicalSystemsGr12: TopicContent = {
     {
       id: 'the-haber-process-manufacturing-ammonia',
       title: 'The Haber process: manufacturing ammonia',
+      titleAf: 'Die Haber-proses: vervaardiging van ammoniak',
       blocks: [
         {
           type: 'video',
           title: 'Watch: The Haber Process — Simple Science',
-          videoId: 'Vr8N5P-X4qI'
+          videoId: 'Vr8N5P-X4qI',
+          videoIdAf: 'Vr8N5P-X4qI'
         }
       ]
     },
     {
       id: 'the-ostwald-process-manufacturing-nitric-acid',
       title: 'The Ostwald process: manufacturing nitric acid',
+      titleAf: 'Die Ostwald-proses: vervaardiging van salpetersuur',
       blocks: [
         {
           type: 'video',
           title: 'Watch: The Ostwald Process — Simple Science',
-          videoId: 'Mx12D7AOV50'
+          videoId: 'Mx12D7AOV50',
+          videoIdAf: 'Mx12D7AOV50'
         }
       ]
     },
     {
       id: 'the-contact-process-manufacturing-sulfuric-acid',
       title: 'The contact process: manufacturing sulfuric acid',
+      titleAf: 'Die kontakproses: vervaardiging van swaelsuur',
       blocks: [
         {
           type: 'video',
@@ -89,6 +99,7 @@ export const chemicalSystemsGr12: TopicContent = {
     {
       id: 'manufacturing-fertilizers-ammonium-nitrate-ammon',
       title: 'Manufacturing fertilizers: ammonium nitrate, ammonium sulfate and superphosphates',
+      titleAf: 'Vervaardiging van kunsmis: ammoniumnitraat, ammoniumsulfaat en superfosfate',
       blocks: [
         {
           type: 'video',
@@ -100,6 +111,7 @@ export const chemicalSystemsGr12: TopicContent = {
     {
       id: 'eutrophication-and-evaluating-the-use-of-inorgan',
       title: 'Eutrophication and evaluating the use of inorganic fertilizers',
+      titleAf: 'Eutrofikasie en die evaluering van die gebruik van anorganiese kunsmis',
       blocks: [
         {
           type: 'content_gap',

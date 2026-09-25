@@ -27,6 +27,16 @@ import { capsScienceCurriculum } from '../src/content/caps-science-curriculum'
 const IS_SCIENCE =
   process.argv[process.argv.indexOf('--subject') + 1] === 'science'
 import { capsSubTopicsAf, capsTopicTitlesAf } from '../src/content/caps-curriculum-af'
+import {
+  capsScienceSubTopicsAf,
+  capsScienceTopicTitlesAf,
+} from '../src/content/caps-science-curriculum-af'
+
+// Afrikaans headings follow the subject. Science sub-topics are not in the
+// maths map, so without this a Grade 10 Afrikaans student got Afrikaans
+// videos under English headings.
+const subTopicsAf = IS_SCIENCE ? capsScienceSubTopicsAf : capsSubTopicsAf
+const topicTitlesAf = IS_SCIENCE ? capsScienceTopicTitlesAf : capsTopicTitlesAf
 
 interface Pick {
   id: string
@@ -85,7 +95,7 @@ function overviewSection(source: string, topicTitle: string, slug: string): stri
   return `    {
       id: 'overview',
       title: ${quote(topicTitle)},${
-    capsTopicTitlesAf[slug] ? `\n      titleAf: ${quote(capsTopicTitlesAf[slug])},` : ''
+    topicTitlesAf[slug] ? `\n      titleAf: ${quote(topicTitlesAf[slug])},` : ''
   }
       blocks: [
         {
@@ -111,7 +121,7 @@ function afrikaansPickFor(entry: Curated, afrikaans: Curated[]): Pick | null {
 
 /** The Afrikaans heading for a sub-topic, or nothing when we have none. */
 function titleAfLine(subTopic: string): string {
-  const af = capsSubTopicsAf[subTopic]
+  const af = subTopicsAf[subTopic]
   return af ? `\n      titleAf: ${quote(af)},` : ''
 }
 
@@ -173,7 +183,7 @@ function sectionFor(entry: Curated, afrikaans: Curated[]): string {
  * content files stay readable. Idempotent: an existing titleAf is replaced.
  */
 function withTopicTitleAf(source: string, slug: string): string {
-  const af = capsTopicTitlesAf[slug]
+  const af = topicTitlesAf[slug]
   if (!af) return source
   const withoutOld = source.replace(/\n  titleAf: '(?:[^'\\]|\\.)*',/, '')
   return withoutOld.replace(

@@ -10,12 +10,14 @@ export const wavesSoundLightGr12: TopicContent = {
   grade: 12,
   paper: 1,
   title: 'Waves, Sound & Light',
+  titleAf: 'Golwe, Klank en Lig',
   capsWeight: 3.75,
   // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
   sections: [
     {
       id: 'overview',
       title: 'Waves, Sound & Light',
+      titleAf: 'Golwe, Klank en Lig',
       blocks: [
         {
           type: 'theory',
@@ -31,28 +33,33 @@ export const wavesSoundLightGr12: TopicContent = {
     {
       id: 'the-doppler-effect-for-sound',
       title: 'The Doppler effect for sound',
+      titleAf: 'Die Doppler-effek vir klank',
       blocks: [
         {
           type: 'video',
           title: 'Watch: Doppler Effect grade 12: Introduction — Kevinmathscience',
-          videoId: 'DdS_wVxrPuI'
+          videoId: 'DdS_wVxrPuI',
+          videoIdAf: '_oqI8mOrg84'
         }
       ]
     },
     {
       id: 'doppler-effect-calculations-for-a-moving-source-',
       title: 'Doppler effect calculations for a moving source or moving listener',
+      titleAf: 'Doppler-effek-berekeninge vir \'n bewegende bron of bewegende luisteraar',
       blocks: [
         {
           type: 'video',
           title: 'Watch: Doppler Effect grade 12: Red and Blue Shift — Kevinmathscience',
-          videoId: 'g4OYz75zZ8w'
+          videoId: 'g4OYz75zZ8w',
+          videoIdAf: 'wJn76p15F9s'
         }
       ]
     },
     {
       id: 'applications-of-the-doppler-effect-with-ultrasou',
       title: 'Applications of the Doppler effect with ultrasound in medicine',
+      titleAf: 'Toepassings van die Doppler-effek met ultraklank in die medisyne',
       blocks: [
         {
           type: 'content_gap',
@@ -64,11 +71,13 @@ export const wavesSoundLightGr12: TopicContent = {
     {
       id: 'the-doppler-effect-with-light-red-shifts-and-the',
       title: 'The Doppler effect with light: red shifts and the expanding universe',
+      titleAf: 'Die Doppler-effek met lig: rooiverskuiwings en die uitdyende heelal',
       blocks: [
         {
           type: 'video',
           title: 'Watch: Doppler Effect grade 12: Simultaneous — Kevinmathscience',
-          videoId: 'h9Po4ug3MZ8'
+          videoId: 'h9Po4ug3MZ8',
+          videoIdAf: 'VcuIqqDvanY'
         }
       ]
     }

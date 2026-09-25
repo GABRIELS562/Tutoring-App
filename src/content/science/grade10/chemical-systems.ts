@@ -10,12 +10,14 @@ export const chemicalSystemsGr10: TopicContent = {
   grade: 10,
   paper: 2,
   title: 'Chemical Systems',
+  titleAf: 'Chemiese Stelsels',
   capsWeight: 5,
   // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
   sections: [
     {
       id: 'overview',
       title: 'Chemical Systems',
+      titleAf: 'Chemiese Stelsels',
       blocks: [
         {
           type: 'theory',
@@ -31,6 +33,7 @@ export const chemicalSystemsGr10: TopicContent = {
     {
       id: 'the-hydrosphere-where-the-earth-s-water-is-found',
       title: 'The hydrosphere: where the Earth\'s water is found',
+      titleAf: 'Die hidrosfeer: waar die aarde se water voorkom',
       blocks: [
         {
           type: 'video',
@@ -42,6 +45,7 @@ export const chemicalSystemsGr10: TopicContent = {
     {
       id: 'interaction-of-the-hydrosphere-with-the-atmosphe',
       title: 'Interaction of the hydrosphere with the atmosphere, lithosphere and biosphere',
+      titleAf: 'Wisselwerking van die hidrosfeer met die atmosfeer, litosfeer en biosfeer',
       blocks: [
         {
           type: 'content_gap',
@@ -53,6 +57,7 @@ export const chemicalSystemsGr10: TopicContent = {
     {
       id: 'water-quality-and-the-purification-of-water',
       title: 'Water quality and the purification of water',
+      titleAf: 'Watergehalte en die suiwering van water',
       blocks: [
         {
           type: 'content_gap',
@@ -64,6 +69,7 @@ export const chemicalSystemsGr10: TopicContent = {
     {
       id: 'the-impact-of-dams-on-people-and-ecology',
       title: 'The impact of dams on people and ecology',
+      titleAf: 'Die impak van damme op mense en ekologie',
       blocks: [
         {
           type: 'content_gap',

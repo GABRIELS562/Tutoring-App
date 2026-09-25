@@ -7,12 +7,14 @@ export const mechanicsGr10: TopicContent = {
   grade: 10,
   paper: 1,
   title: 'Mechanics',
+  titleAf: 'Meganika',
   capsWeight: 20,
   // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
   sections: [
     {
       id: 'overview',
       title: 'Mechanics',
+      titleAf: 'Meganika',
       blocks: [
         {
           type: 'theory',
@@ -31,17 +33,20 @@ export const mechanicsGr10: TopicContent = {
     {
       id: 'vectors-and-scalars',
       title: 'Vectors and scalars',
+      titleAf: 'Vektore en skalare',
       blocks: [
         {
           type: 'video',
           title: 'Watch: Vectors and Scalars Physics — Miss Martins Maths and Science',
-          videoId: 'CT8sMcfCBVw'
+          videoId: 'CT8sMcfCBVw',
+          videoIdAf: 'lvvxak5Ag6o'
         }
       ]
     },
     {
       id: 'frame-of-reference-position-distance-and-displac',
       title: 'Frame of reference, position, distance and displacement',
+      titleAf: 'Verwysingsraamwerk, posisie, afstand en verplasing',
       blocks: [
         {
           type: 'video',
@@ -53,17 +58,20 @@ export const mechanicsGr10: TopicContent = {
     {
       id: 'average-speed-and-average-velocity',
       title: 'Average speed and average velocity',
+      titleAf: 'Gemiddelde spoed en gemiddelde snelheid',
       blocks: [
         {
           type: 'video',
           title: 'Watch: Velocity and speed: Motion in One Dimension — Miss Martins Maths and Science',
-          videoId: 'JCehwmZ9BWM'
+          videoId: 'JCehwmZ9BWM',
+          videoIdAf: 'h5bDavRKhN4'
         }
       ]
     },
     {
       id: 'acceleration',
       title: 'Acceleration',
+      titleAf: 'Versnelling',
       blocks: [
         {
           type: 'video',
@@ -75,6 +83,7 @@ export const mechanicsGr10: TopicContent = {
     {
       id: 'instantaneous-velocity-and-instantaneous-speed',
       title: 'Instantaneous velocity and instantaneous speed',
+      titleAf: 'Oombliklike snelheid en oombliklike spoed',
       blocks: [
         {
           type: 'content_gap',
@@ -86,17 +95,20 @@ export const mechanicsGr10: TopicContent = {
     {
       id: 'position-velocity-and-acceleration-graphs',
       title: 'Position, velocity and acceleration graphs',
+      titleAf: 'Posisie-, snelheid- en versnellingsgrafieke',
       blocks: [
         {
           type: 'video',
           title: 'Watch: Velocity Time Graph Grade 10 Science — Kevinmathscience',
-          videoId: 'e86SXh5G7Hs'
+          videoId: 'e86SXh5G7Hs',
+          videoIdAf: 'FVUrrg9lUm0'
         }
       ]
     },
     {
       id: 'the-equations-of-motion-for-uniformly-accelerate',
       title: 'The equations of motion for uniformly accelerated motion',
+      titleAf: 'Bewegingsvergelykings vir eenparig versnelde beweging',
       blocks: [
         {
           type: 'video',
@@ -108,22 +120,26 @@ export const mechanicsGr10: TopicContent = {
     {
       id: 'gravitational-potential-energy-and-kinetic-energ',
       title: 'Gravitational potential energy and kinetic energy',
+      titleAf: 'Gravitasionele potensiële energie en kinetiese energie',
       blocks: [
         {
           type: 'video',
           title: 'Watch: Mechanical Energy: Kinetic energy and Gravitational Potential energy Introduction — Miss Martins Maths and Science',
-          videoId: 'W-fVjZHgObc'
+          videoId: 'W-fVjZHgObc',
+          videoIdAf: 'ygP2m4OamwQ'
         }
       ]
     },
     {
       id: 'conservation-of-mechanical-energy',
       title: 'Conservation of mechanical energy',
+      titleAf: 'Behoud van meganiese energie',
       blocks: [
         {
           type: 'video',
           title: 'Watch: Conservation Of Mass Grade 10 — Kevinmathscience',
-          videoId: 'urUIlpg_xQ0'
+          videoId: 'urUIlpg_xQ0',
+          videoIdAf: 'sorIF9b4k_A'
         }
       ]
     }

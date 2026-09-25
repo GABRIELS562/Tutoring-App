@@ -10,12 +10,14 @@ export const wavesSoundLightGr11: TopicContent = {
   grade: 11,
   paper: 1,
   title: 'Waves, Sound & Light',
+  titleAf: 'Golwe, Klank en Lig',
   capsWeight: 8.13,
   // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
   sections: [
     {
       id: 'overview',
       title: 'Waves, Sound & Light',
+      titleAf: 'Golwe, Klank en Lig',
       blocks: [
         {
           type: 'theory',
@@ -32,6 +34,7 @@ export const wavesSoundLightGr11: TopicContent = {
     {
       id: 'refraction-and-refractive-index',
       title: 'Refraction and refractive index',
+      titleAf: 'Breking en brekingsindeks',
       blocks: [
         {
           type: 'video',
@@ -43,17 +46,20 @@ export const wavesSoundLightGr11: TopicContent = {
     {
       id: 'snell-s-law',
       title: 'Snell\'s Law',
+      titleAf: 'Snell se wet',
       blocks: [
         {
           type: 'video',
           title: 'Watch: Grade 11 - Waves, Sound, and Light | Geometric Optics (Snell’s Law) | November 2017 | Mlungisi Nkosi — Mlungisi Nkosi Maths & Science',
-          videoId: 'TnZTq6EFaAk'
+          videoId: 'TnZTq6EFaAk',
+          videoIdAf: '_908GaSQJ_k'
         }
       ]
     },
     {
       id: 'critical-angle-and-total-internal-reflection',
       title: 'Critical angle and total internal reflection',
+      titleAf: 'Kritieke hoek en totale interne weerkaatsing',
       blocks: [
         {
           type: 'video',
@@ -65,22 +71,26 @@ export const wavesSoundLightGr11: TopicContent = {
     {
       id: 'wavefronts-and-huygens-principle',
       title: 'Wavefronts and Huygens\' principle',
+      titleAf: 'Golffronte en Huygens se beginsel',
       blocks: [
         {
           type: 'video',
           title: 'Watch: Huygens\' Principle and Diffraction of Waves - Science Grade 11 and 12 — Mindset',
-          videoId: 'vqa4L0DuWbM'
+          videoId: 'vqa4L0DuWbM',
+          videoIdAf: 'rppEep6c1Gs'
         }
       ]
     },
     {
       id: 'diffraction-through-a-single-slit',
       title: 'Diffraction through a single slit',
+      titleAf: 'Diffraksie deur \'n enkelspleet',
       blocks: [
         {
           type: 'video',
           title: 'Watch: Diffraction — Mindset',
-          videoId: 'FahppoRvRDc'
+          videoId: 'FahppoRvRDc',
+          videoIdAf: 'lt2DNu9KSDQ'
         }
       ]
     }

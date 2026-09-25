@@ -111,7 +111,7 @@ same maths to a different syllabus is worse than an honest gap.
 - [ ] Current, and measuring current and voltage in a circuit
 **Matter & Materials** (Paper 2)
 
-- [ ] Names and formulae of compounds
+- [ ] Names and formulae of compounds _(Afrikaans video exists)_
 - [ ] Models of the atom and the structure of the atom
 - [ ] Electron configuration of atoms
 **Chemical Change** (Paper 2)
@@ -146,8 +146,8 @@ same maths to a different syllabus is worse than an honest gap.
 - [ ] Applications of the Doppler effect with ultrasound in medicine
 **Electricity & Magnetism** (Paper 1)
 
-- [ ] Series and parallel resistor networks
-- [ ] rms values and average power in AC circuits
+- [ ] Series and parallel resistor networks _(Afrikaans video exists)_
+- [ ] rms values and average power in AC circuits _(Afrikaans video exists)_
 **Organic Chemistry** (Paper 2)
 
 - [ ] Combustion of alkanes and the preparation of esters
@@ -161,3 +161,207 @@ same maths to a different syllabus is worse than an honest gap.
 
 - [ ] The function of nitrogen, phosphorus and potassium in plants
 - [ ] Eutrophication and evaluating the use of inorganic fertilizers
+
+## Afrikaans track
+
+These sub-topics have an English video but no Afrikaans one, so an
+Afrikaans student sees the English video. The page still works and the
+heading is in Afrikaans - only the video is not.
+
+The Afrikaans ecosystem is roughly a hundredth the size of the English
+one, so these will not all close. Where a gap remains it is because no
+video from a verified Afrikaans CAPS channel covers the sub-topic, or
+because the one that does has in-app playback disabled by its owner,
+which cannot be overridden from our side.
+
+| Subject | Grade | With English video | Also Afrikaans | Afrikaans outstanding |
+|---|---:|---:|---:|---:|
+| Mathematics | 10 | 31 | 24 | **7** |
+| Mathematics | 11 | 28 | 18 | **10** |
+| Mathematics | 12 | 31 | 14 | **17** |
+| Physical Sciences | 10 | 37 | 20 | **17** |
+| Physical Sciences | 11 | 38 | 17 | **21** |
+| Physical Sciences | 12 | 45 | 32 | **13** |
+
+### Mathematics — Afrikaans outstanding
+
+**Grade 10** — 7 sub-topics
+
+_Number Patterns_
+
+- [ ] Finding the general formula (n-th term) of a linear sequence
+_Functions & Graphs_
+
+- [ ] The quadratic function y = ax²
+- [ ] The exponential function y = ab^x
+_Finance & Growth_
+
+- [ ] Hire-purchase
+- [ ] Exchange rates
+_Trigonometry_
+
+- [ ] Two-dimensional problems (elevation and depression)
+_Statistics_
+
+- [ ] Box and whisker plots
+
+**Grade 11** — 10 sub-topics
+
+_Algebra & Equations_
+
+- [ ] Completing the square
+- [ ] Nature of roots (the discriminant)
+_Number Patterns_
+
+- [ ] Quadratic number patterns and the second constant difference
+_Finance & Growth_
+
+- [ ] Future value annuities
+_Probability_
+
+- [ ] Contingency (two-way) tables
+_Trigonometry_
+
+- [ ] The sine rule
+- [ ] The area rule
+_Euclidean Geometry_
+
+- [ ] Circle geometry: chords
+- [ ] Angles at the centre and at the circumference
+_Analytical Geometry_
+
+- [ ] Inclination of a line
+
+**Grade 12** — 17 sub-topics
+
+_Algebra & Equations_
+
+- [ ] Revision of quadratic equations and inequalities
+_Calculus_
+
+- [ ] The definition of a limit
+- [ ] Optimisation problems
+_Finance & Growth_
+
+- [ ] Future value annuity formula
+- [ ] Present value annuity formula
+- [ ] Loan repayments and outstanding balances
+_Probability_
+
+- [ ] The fundamental counting principle
+_Trigonometry_
+
+- [ ] Double angle identities
+- [ ] Expansion and simplification of trig expressions
+- [ ] Trigonometry in three-dimensional problems
+_Euclidean Geometry_
+
+- [ ] The Theorem of Pythagoras proved via similarity
+_Analytical Geometry_
+
+- [ ] The equation of a circle centred at any point
+- [ ] Tangents to circles analytically
+- [ ] Intersecting circles
+_Statistics_
+
+- [ ] Bivariate data
+- [ ] Scatter plots and lines of best fit
+- [ ] The least-squares regression line y = A + Bx
+
+### Physical Sciences — Afrikaans outstanding
+
+**Grade 10** — 17 sub-topics
+
+_Mechanics_
+
+- [ ] Frame of reference, position, distance and displacement
+- [ ] Acceleration
+- [ ] The equations of motion for uniformly accelerated motion
+_Waves, Sound & Light_
+
+- [ ] Superposition of pulses: constructive and destructive interference
+- [ ] Sound waves and the speed of sound in different media
+- [ ] Electromagnetic radiation and the electromagnetic spectrum
+- [ ] The energy of a photon
+_Electricity & Magnetism_
+
+- [ ] Two kinds of charge, charging by contact and polarisation
+- [ ] Conservation and quantisation of charge
+- [ ] Resistors in parallel
+_Matter & Materials_
+
+- [ ] Isotopes and relative atomic mass
+- [ ] Chemical bonding: covalent, ionic and metallic
+- [ ] Particles substances are made of: molecular, ionic and metallic structures
+_Chemical Change_
+
+- [ ] Physical and chemical change
+- [ ] Ions in aqueous solution: dissolving, hydration and conductivity
+- [ ] Concentration of solutions and the molar volume of gases
+_Chemical Systems_
+
+- [ ] The hydrosphere: where the Earth's water is found
+
+**Grade 11** — 21 sub-topics
+
+_Mechanics_
+
+- [ ] Different kinds of forces: weight, normal force, tension and applied force
+- [ ] Force diagrams and free body diagrams
+- [ ] Newton's third law and action-reaction pairs
+- [ ] Applying Newton's laws: inclined planes, lifts and two-body systems
+_Waves, Sound & Light_
+
+- [ ] Refraction and refractive index
+- [ ] Critical angle and total internal reflection
+_Electricity & Magnetism_
+
+- [ ] Calculating the electric field at a point
+- [ ] Magnetic field associated with current-carrying wires, loops and solenoids
+- [ ] Faraday's Law of electromagnetic induction
+- [ ] Power in electric circuits
+- [ ] Electrical energy and the cost of electricity
+_Matter & Materials_
+
+- [ ] Molecular shape and VSEPR theory
+- [ ] Electronegativity and bond polarity
+- [ ] Bond energy and bond length
+- [ ] Kinetic theory of gases: temperature, pressure and ideal gas behaviour
+- [ ] The gas laws and the ideal gas equation
+_Chemical Change_
+
+- [ ] Activation energy and the activated complex
+- [ ] Acid-base reactions and the formation of salts
+- [ ] Oxidation numbers and redox reactions
+_Chemical Systems_
+
+- [ ] The lithosphere as a source of materials: abundance, distribution and ores
+- [ ] Mining and mineral processing in South Africa
+
+**Grade 12** — 13 sub-topics
+
+_Mechanics_
+
+- [ ] Momentum and its vector nature
+- [ ] Conservation of energy with non-conservative forces present
+_Electricity & Magnetism_
+
+- [ ] Internal resistance and emf of a battery
+- [ ] Alternating current: current and voltage graphs
+_Optical Phenomena and Properties of Materials_
+
+- [ ] Intensity, frequency and the number of electrons ejected
+_Organic Chemistry_
+
+- [ ] Organic molecules: functional groups, saturated and unsaturated structures
+- [ ] IUPAC naming and formulae of organic compounds
+_Chemical Change_
+
+- [ ] Reaction rate and the factors that affect it
+- [ ] Collision theory, activation energy and catalysts
+- [ ] Acid-base reactions, models and conjugate acid-base pairs
+- [ ] Electrolytic cells and industrial applications of electrolysis
+_Chemical Systems_
+
+- [ ] The contact process: manufacturing sulfuric acid
+- [ ] Manufacturing fertilizers: ammonium nitrate, ammonium sulfate and superphosphates

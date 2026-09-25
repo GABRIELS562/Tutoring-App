@@ -1,0 +1,1635 @@
+[
+  {
+    "slug": "mechanics-gr10",
+    "topicTitle": "Mechanics",
+    "grade": 10,
+    "paper": 1,
+    "subTopic": "Vectors and scalars",
+    "queries": [
+      "graad 10 fisika vektore skalare",
+      "graad 10 chemie vektore skalare",
+      "vektore skalare graad 10",
+      "fisiese wetenskappe vektore skalare graad 10"
+    ],
+    "candidates": [
+      {
+        "id": "lvvxak5Ag6o",
+        "title": "Gr. 10 Fisika: Meganika (Skalare en vektore) in 'n NEUTEDOP",
+        "channel": "Danike Aucamp_Wiskunde en Wetenskap ",
+        "views": 8089,
+        "viewsText": "8,089 views",
+        "duration": "14:24",
+        "durationSeconds": 864,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 62.1
+      },
+      {
+        "id": "pFTL4UIKa_g",
+        "title": "Gr.10 Skalare en vektore 1.",
+        "channel": "Douwliena Fourie",
+        "views": 2892,
+        "viewsText": "2,892 views",
+        "duration": "7:43",
+        "durationSeconds": 463,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 57.6
+      },
+      {
+        "id": "RAy9H4bRXtw",
+        "title": "Gr. 10 Skalare en vektore 2",
+        "channel": "Douwliena Fourie",
+        "views": 1103,
+        "viewsText": "1,103 views",
+        "duration": "6:48",
+        "durationSeconds": 408,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 53.4
+      }
+    ],
+    "pick": {
+      "id": "lvvxak5Ag6o",
+      "title": "Gr. 10 Fisika: Meganika (Skalare en vektore) in 'n NEUTEDOP",
+      "channel": "Danike Aucamp_Wiskunde en Wetenskap ",
+      "views": 8089,
+      "viewsText": "8,089 views",
+      "duration": "14:24",
+      "durationSeconds": 864,
+      "saChannel": true,
+      "embeddable": true,
+      "score": 62.1
+    },
+    "usedAdjacentGrade": false
+  },
+  {
+    "slug": "mechanics-gr10",
+    "topicTitle": "Mechanics",
+    "grade": 10,
+    "paper": 1,
+    "subTopic": "Frame of reference, position, distance and displacement",
+    "queries": [
+      "graad 10 fisika posisie afstand verplasing",
+      "graad 10 chemie posisie afstand verplasing",
+      "posisie afstand verplasing graad 10",
+      "fisiese wetenskappe posisie afstand verplasing graad 10"
+    ],
+    "candidates": [],
+    "pick": null,
+    "usedAdjacentGrade": false,
+    "note": "No embeddable, on-topic CAPS candidate found - left blank for manual search"
+  },
+  {
+    "slug": "mechanics-gr10",
+    "topicTitle": "Mechanics",
+    "grade": 10,
+    "paper": 1,
+    "subTopic": "Average speed and average velocity",
+    "queries": [
+      "graad 10 fisika spoed snelheid",
+      "graad 10 chemie spoed snelheid",
+      "spoed snelheid graad 10",
+      "fisiese wetenskappe spoed snelheid graad 10"
+    ],
+    "candidates": [
+      {
+        "id": "h5bDavRKhN4",
+        "title": "Gr.10 Spoed en snelheid.",
+        "channel": "Douwliena Fourie",
+        "views": 2578,
+        "viewsText": "2,578 views",
+        "duration": "3:09",
+        "durationSeconds": 189,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 52.1
+      }
+    ],
+    "pick": {
+      "id": "h5bDavRKhN4",
+      "title": "Gr.10 Spoed en snelheid.",
+      "channel": "Douwliena Fourie",
+      "views": 2578,
+      "viewsText": "2,578 views",
+      "duration": "3:09",
+      "durationSeconds": 189,
+      "saChannel": true,
+      "embeddable": true,
+      "score": 52.1
+    },
+    "usedAdjacentGrade": false
+  },
+  {
+    "slug": "mechanics-gr10",
+    "topicTitle": "Mechanics",
+    "grade": 10,
+    "paper": 1,
+    "subTopic": "Acceleration",
+    "queries": [
+      "graad 10 fisika versnelling",
+      "graad 10 chemie versnelling",
+      "versnelling graad 10",
+      "fisiese wetenskappe versnelling graad 10"
+    ],
+    "candidates": [],
+    "pick": null,
+    "usedAdjacentGrade": false,
+    "note": "No embeddable, on-topic CAPS candidate found - left blank for manual search"
+  },
+  {
+    "slug": "mechanics-gr10",
+    "topicTitle": "Mechanics",
+    "grade": 10,
+    "paper": 1,
+    "subTopic": "Instantaneous velocity and instantaneous speed",
+    "queries": [
+      "graad 10 fisika oombliklike snelheid spoed",
+      "graad 10 chemie oombliklike snelheid spoed",
+      "oombliklike snelheid spoed graad 10",
+      "fisiese wetenskappe oombliklike snelheid spoed graad 10"
+    ],
+    "candidates": [],
+    "pick": null,
+    "usedAdjacentGrade": false,
+    "note": "No embeddable, on-topic CAPS candidate found - left blank for manual search"
+  },
+  {
+    "slug": "mechanics-gr10",
+    "topicTitle": "Mechanics",
+    "grade": 10,
+    "paper": 1,
+    "subTopic": "Position, velocity and acceleration graphs",
+    "queries": [
+      "graad 10 fisika posisie snelheid versnelling",
+      "graad 10 chemie posisie snelheid versnelling",
+      "posisie snelheid versnelling graad 10",
+      "fisiese wetenskappe posisie snelheid versnelling graad 10"
+    ],
+    "candidates": [
+      {
+        "id": "FVUrrg9lUm0",
+        "title": "Gr.10 Bewegingsgrafieke. Konstante positiewe snelheid.",
+        "channel": "Douwliena Fourie",
+        "views": 571,
+        "viewsText": "571 views",
+        "duration": "3:03",
+        "durationSeconds": 183,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 43.1
+      }
+    ],
+    "pick": {
+      "id": "FVUrrg9lUm0",
+      "title": "Gr.10 Bewegingsgrafieke. Konstante positiewe snelheid.",
+      "channel": "Douwliena Fourie",
+      "views": 571,
+      "viewsText": "571 views",
+      "duration": "3:03",
+      "durationSeconds": 183,
+      "saChannel": true,
+      "embeddable": true,
+      "score": 43.1
+    },
+    "usedAdjacentGrade": false
+  },
+  {
+    "slug": "mechanics-gr10",
+    "topicTitle": "Mechanics",
+    "grade": 10,
+    "paper": 1,
+    "subTopic": "The equations of motion for uniformly accelerated motion",
+    "queries": [
+      "graad 10 fisika vergelykings beweging",
+      "graad 10 chemie vergelykings beweging",
+      "vergelykings beweging graad 10",
+      "fisiese wetenskappe vergelykings beweging graad 10"
+    ],
+    "candidates": [],
+    "pick": null,
+    "usedAdjacentGrade": false,
+    "note": "No embeddable, on-topic CAPS candidate found - left blank for manual search"
+  },
+  {
+    "slug": "mechanics-gr10",
+    "topicTitle": "Mechanics",
+    "grade": 10,
+    "paper": 1,
+    "subTopic": "Gravitational potential energy and kinetic energy",
+    "queries": [
+      "graad 10 fisika gravitasie potensiele energie",
+      "graad 10 chemie gravitasie potensiele energie",
+      "gravitasie potensiele energie graad 10",
+      "fisiese wetenskappe gravitasie potensiele energie graad 10"
+    ],
+    "candidates": [
+      {
+        "id": "ygP2m4OamwQ",
+        "title": "Gr. 10 Fisika: Energie EENVOUDIG verduidelik (Meganiese, potensiële en kinetiese energie)",
+        "channel": "Danike Aucamp_Wiskunde en Wetenskap ",
+        "views": 4282,
+        "viewsText": "4,282 views",
+        "duration": "15:05",
+        "durationSeconds": 905,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 55.6
+      }
+    ],
+    "pick": {
+      "id": "ygP2m4OamwQ",
+      "title": "Gr. 10 Fisika: Energie EENVOUDIG verduidelik (Meganiese, potensiële en kinetiese energie)",
+      "channel": "Danike Aucamp_Wiskunde en Wetenskap ",
+      "views": 4282,
+      "viewsText": "4,282 views",
+      "duration": "15:05",
+      "durationSeconds": 905,
+      "saChannel": true,
+      "embeddable": true,
+      "score": 55.6
+    },
+    "usedAdjacentGrade": false
+  },
+  {
+    "slug": "mechanics-gr10",
+    "topicTitle": "Mechanics",
+    "grade": 10,
+    "paper": 1,
+    "subTopic": "Conservation of mechanical energy",
+    "queries": [
+      "graad 10 fisika behoud meganiese energie",
+      "graad 10 chemie behoud meganiese energie",
+      "behoud meganiese energie graad 10",
+      "fisiese wetenskappe behoud meganiese energie graad 10"
+    ],
+    "candidates": [
+      {
+        "id": "sorIF9b4k_A",
+        "title": "Gr.10 Wet van behoud van Meganiese energie. Bl.329",
+        "channel": "Douwliena Fourie",
+        "views": 854,
+        "viewsText": "854 views",
+        "duration": "7:00",
+        "durationSeconds": 420,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 52.3
+      }
+    ],
+    "pick": {
+      "id": "sorIF9b4k_A",
+      "title": "Gr.10 Wet van behoud van Meganiese energie. Bl.329",
+      "channel": "Douwliena Fourie",
+      "views": 854,
+      "viewsText": "854 views",
+      "duration": "7:00",
+      "durationSeconds": 420,
+      "saChannel": true,
+      "embeddable": true,
+      "score": 52.3
+    },
+    "usedAdjacentGrade": false
+  },
+  {
+    "slug": "waves-sound-light-gr10",
+    "topicTitle": "Waves, Sound & Light",
+    "grade": 10,
+    "paper": 1,
+    "subTopic": "Transverse pulses on a string or spring",
+    "queries": [
+      "graad 10 fisika transversale pulse",
+      "graad 10 chemie transversale pulse",
+      "transversale pulse graad 10",
+      "fisiese wetenskappe transversale pulse graad 10"
+    ],
+    "candidates": [
+      {
+        "id": "fhCoYWh97Nc",
+        "title": "Transversale golwe: Graad 10 Fisika",
+        "channel": "Ekstra Wetenskap Klasse",
+        "views": 3418,
+        "viewsText": "3,418 views",
+        "duration": "6:46",
+        "durationSeconds": 406,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 50.8
+      },
+      {
+        "id": "3-kp7hLa-og",
+        "title": "Transverse pulses: Graad 10 Fisika",
+        "channel": "Ekstra Wetenskap Klasse",
+        "views": 996,
+        "viewsText": "996 views",
+        "duration": "6:24",
+        "durationSeconds": 384,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 45.5
+      },
+      {
+        "id": "MN-x2jzHFgo",
+        "title": "Gr.10 Transversale puls",
+        "channel": "Douwliena Fourie",
+        "views": 862,
+        "viewsText": "862 views",
+        "duration": "2:20",
+        "durationSeconds": 140,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 44.9
+      },
+      {
+        "id": "hLCXA2QGPPM",
+        "title": "Gr 10 Fisiese Wetenskappe  Transversale Pulse en Superponering - Janiena Daubert",
+        "channel": "Hoërskool Noordheuwel",
+        "views": 2509,
+        "viewsText": "2,509 views",
+        "duration": "30:04",
+        "durationSeconds": 1804,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 44.5
+      },
+      {
+        "id": "IoqhxiZgT5U",
+        "title": "Gr 10 Fisiese Wetenskappe Transversale Golwe - Janiena Daubert",
+        "channel": "Hoërskool Noordheuwel",
+        "views": 2859,
+        "viewsText": "2,859 views",
+        "duration": "54:19",
+        "durationSeconds": 3259,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 40.1
+      }
+    ],
+    "pick": {
+      "id": "fhCoYWh97Nc",
+      "title": "Transversale golwe: Graad 10 Fisika",
+      "channel": "Ekstra Wetenskap Klasse",
+      "views": 3418,
+      "viewsText": "3,418 views",
+      "duration": "6:46",
+      "durationSeconds": 406,
+      "saChannel": true,
+      "embeddable": true,
+      "score": 50.8
+    },
+    "usedAdjacentGrade": false
+  },
+  {
+    "slug": "waves-sound-light-gr10",
+    "topicTitle": "Waves, Sound & Light",
+    "grade": 10,
+    "paper": 1,
+    "subTopic": "Superposition of pulses: constructive and destructive interference",
+    "queries": [
+      "graad 10 fisika superposisie pulse konstruktiewe",
+      "graad 10 chemie superposisie pulse konstruktiewe",
+      "superposisie pulse konstruktiewe graad 10",
+      "fisiese wetenskappe superposisie pulse konstruktiewe graad 10"
+    ],
+    "candidates": [],
+    "pick": null,
+    "usedAdjacentGrade": false,
+    "note": "No embeddable, on-topic CAPS candidate found - left blank for manual search"
+  },
+  {
+    "slug": "waves-sound-light-gr10",
+    "topicTitle": "Waves, Sound & Light",
+    "grade": 10,
+    "paper": 1,
+    "subTopic": "Transverse waves: wavelength, frequency, period and wave speed",
+    "queries": [
+      "graad 10 fisika transversale golwe golflengte",
+      "graad 10 chemie transversale golwe golflengte",
+      "transversale golwe golflengte graad 10",
+      "fisiese wetenskappe transversale golwe golflengte graad 10"
+    ],
+    "candidates": [
+      {
+        "id": "4967Pyl1qvU",
+        "title": "Gr.10 Transversale golwe",
+        "channel": "Douwliena Fourie",
+        "views": 1321,
+        "viewsText": "1,321 views",
+        "duration": "9:07",
+        "durationSeconds": 547,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 46.7
+      },
+      {
+        "id": "MN-x2jzHFgo",
+        "title": "Gr.10 Transversale puls",
+        "channel": "Douwliena Fourie",
+        "views": 862,
+        "viewsText": "862 views",
+        "duration": "2:20",
+        "durationSeconds": 140,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 44.9
+      },
+      {
+        "id": "9oD75pi1HqE",
+        "title": "Graad 10 - Nasionaal - November 2023 - Transversale golwe",
+        "channel": "Skeinat met Schabort",
+        "views": 672,
+        "viewsText": "672 views",
+        "duration": "4:05",
+        "durationSeconds": 245,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 43.8
+      },
+      {
+        "id": "3jtGsrQW9Wc",
+        "title": "Gr.10 Interferensie. Transversale golwe",
+        "channel": "Douwliena Fourie",
+        "views": 455,
+        "viewsText": "455 views",
+        "duration": "3:57",
+        "durationSeconds": 237,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 42.1
+      },
+      {
+        "id": "IoqhxiZgT5U",
+        "title": "Gr 10 Fisiese Wetenskappe Transversale Golwe - Janiena Daubert",
+        "channel": "Hoërskool Noordheuwel",
+        "views": 2859,
+        "viewsText": "2,859 views",
+        "duration": "54:19",
+        "durationSeconds": 3259,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 40.1
+      }
+    ],
+    "pick": {
+      "id": "4967Pyl1qvU",
+      "title": "Gr.10 Transversale golwe",
+      "channel": "Douwliena Fourie",
+      "views": 1321,
+      "viewsText": "1,321 views",
+      "duration": "9:07",
+      "durationSeconds": 547,
+      "saChannel": true,
+      "embeddable": true,
+      "score": 46.7
+    },
+    "usedAdjacentGrade": false
+  },
+  {
+    "slug": "waves-sound-light-gr10",
+    "topicTitle": "Waves, Sound & Light",
+    "grade": 10,
+    "paper": 1,
+    "subTopic": "Longitudinal waves: compressions and rarefactions",
+    "queries": [
+      "graad 10 fisika longitudinale golwe saampersings",
+      "graad 10 chemie longitudinale golwe saampersings",
+      "longitudinale golwe saampersings graad 10",
+      "fisiese wetenskappe longitudinale golwe saampersings graad 10"
+    ],
+    "candidates": [
+      {
+        "id": "maVbWUb9COM",
+        "title": "Longitudinale golwe Graad 10 Fisika",
+        "channel": "Ekstra Wetenskap Klasse",
+        "views": 1805,
+        "viewsText": "1,805 views",
+        "duration": "5:55",
+        "durationSeconds": 355,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 48.1
+      },
+      {
+        "id": "zTFr72ZBHes",
+        "title": "Longitudinal golwe: KLANKGOLWE Gr 10 Fisika",
+        "channel": "Ekstra Wetenskap Klasse",
+        "views": 890,
+        "viewsText": "890 views",
+        "duration": "4:40",
+        "durationSeconds": 280,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 45
+      },
+      {
+        "id": "9NSTY53rU0o",
+        "title": "Gr.10 Longitudinale golwe",
+        "channel": "Douwliena Fourie",
+        "views": 742,
+        "viewsText": "742 views",
+        "duration": "3:31",
+        "durationSeconds": 211,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 44.2
+      },
+      {
+        "id": "Ye7QmYuHeBE",
+        "title": "Gr 10 Fisiese Wetenskappe Longitudinale Golwe - Janiena Daubert",
+        "channel": "Hoërskool Noordheuwel",
+        "views": 1878,
+        "viewsText": "1,878 views",
+        "duration": "23:13",
+        "durationSeconds": 1393,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 43.2
+      }
+    ],
+    "pick": {
+      "id": "maVbWUb9COM",
+      "title": "Longitudinale golwe Graad 10 Fisika",
+      "channel": "Ekstra Wetenskap Klasse",
+      "views": 1805,
+      "viewsText": "1,805 views",
+      "duration": "5:55",
+      "durationSeconds": 355,
+      "saChannel": true,
+      "embeddable": true,
+      "score": 48.1
+    },
+    "usedAdjacentGrade": false
+  },
+  {
+    "slug": "waves-sound-light-gr10",
+    "topicTitle": "Waves, Sound & Light",
+    "grade": 10,
+    "paper": 1,
+    "subTopic": "Sound waves and the speed of sound in different media",
+    "queries": [
+      "graad 10 fisika klank golwe spoed",
+      "graad 10 chemie klank golwe spoed",
+      "klank golwe spoed graad 10",
+      "fisiese wetenskappe klank golwe spoed graad 10"
+    ],
+    "candidates": [],
+    "pick": null,
+    "usedAdjacentGrade": false,
+    "note": "No embeddable, on-topic CAPS candidate found - left blank for manual search"
+  },
+  {
+    "slug": "waves-sound-light-gr10",
+    "topicTitle": "Waves, Sound & Light",
+    "grade": 10,
+    "paper": 1,
+    "subTopic": "Pitch, loudness and quality of sound",
+    "queries": [
+      "graad 10 fisika toonhoogte luidheid klank",
+      "graad 10 chemie toonhoogte luidheid klank",
+      "toonhoogte luidheid klank graad 10",
+      "fisiese wetenskappe toonhoogte luidheid klank graad 10"
+    ],
+    "candidates": [
+      {
+        "id": "cA3ui7pfMC0",
+        "title": "Klankgolwe eienskappe: weerkaatsing toonhoogte volume gr 10 Fisika",
+        "channel": "Ekstra Wetenskap Klasse",
+        "views": 528,
+        "viewsText": "528 views",
+        "duration": "7:23",
+        "durationSeconds": 443,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 42.7
+      }
+    ],
+    "pick": {
+      "id": "cA3ui7pfMC0",
+      "title": "Klankgolwe eienskappe: weerkaatsing toonhoogte volume gr 10 Fisika",
+      "channel": "Ekstra Wetenskap Klasse",
+      "views": 528,
+      "viewsText": "528 views",
+      "duration": "7:23",
+      "durationSeconds": 443,
+      "saChannel": true,
+      "embeddable": true,
+      "score": 42.7
+    },
+    "usedAdjacentGrade": false
+  },
+  {
+    "slug": "waves-sound-light-gr10",
+    "topicTitle": "Waves, Sound & Light",
+    "grade": 10,
+    "paper": 1,
+    "subTopic": "Ultrasound and its medical uses",
+    "queries": [
+      "graad 10 fisika ultraklank",
+      "graad 10 chemie ultraklank",
+      "ultraklank graad 10",
+      "fisiese wetenskappe ultraklank graad 10"
+    ],
+    "candidates": [],
+    "pick": null,
+    "usedAdjacentGrade": false,
+    "note": "No embeddable, on-topic CAPS candidate found - left blank for manual search"
+  },
+  {
+    "slug": "waves-sound-light-gr10",
+    "topicTitle": "Waves, Sound & Light",
+    "grade": 10,
+    "paper": 1,
+    "subTopic": "Electromagnetic radiation and the electromagnetic spectrum",
+    "queries": [
+      "graad 10 fisika elektromagnetiese straling spektrum",
+      "graad 10 chemie elektromagnetiese straling spektrum",
+      "elektromagnetiese straling spektrum graad 10",
+      "fisiese wetenskappe elektromagnetiese straling spektrum graad 10"
+    ],
+    "candidates": [],
+    "pick": null,
+    "usedAdjacentGrade": false,
+    "note": "No embeddable, on-topic CAPS candidate found - left blank for manual search"
+  },
+  {
+    "slug": "waves-sound-light-gr10",
+    "topicTitle": "Waves, Sound & Light",
+    "grade": 10,
+    "paper": 1,
+    "subTopic": "The energy of a photon",
+    "queries": [
+      "graad 10 fisika energie foton",
+      "graad 10 chemie energie foton",
+      "energie foton graad 10",
+      "fisiese wetenskappe energie foton graad 10"
+    ],
+    "candidates": [],
+    "pick": null,
+    "usedAdjacentGrade": false,
+    "note": "No embeddable, on-topic CAPS candidate found - left blank for manual search"
+  },
+  {
+    "slug": "electricity-magnetism-gr10",
+    "topicTitle": "Electricity & Magnetism",
+    "grade": 10,
+    "paper": 1,
+    "subTopic": "Magnetic fields and magnetic field lines of permanent magnets",
+    "queries": [
+      "graad 10 fisika magnetiese velde veld",
+      "graad 10 chemie magnetiese velde veld",
+      "magnetiese velde veld graad 10",
+      "fisiese wetenskappe magnetiese velde veld graad 10"
+    ],
+    "candidates": [],
+    "pick": null,
+    "usedAdjacentGrade": false,
+    "note": "No embeddable, on-topic CAPS candidate found - left blank for manual search"
+  },
+  {
+    "slug": "electricity-magnetism-gr10",
+    "topicTitle": "Electricity & Magnetism",
+    "grade": 10,
+    "paper": 1,
+    "subTopic": "The Earth's magnetic field and the compass",
+    "queries": [
+      "graad 10 fisika aarde magnetiese veld",
+      "graad 10 chemie aarde magnetiese veld",
+      "aarde magnetiese veld graad 10",
+      "fisiese wetenskappe aarde magnetiese veld graad 10"
+    ],
+    "candidates": [],
+    "pick": null,
+    "usedAdjacentGrade": false,
+    "note": "No embeddable, on-topic CAPS candidate found - left blank for manual search"
+  },
+  {
+    "slug": "electricity-magnetism-gr10",
+    "topicTitle": "Electricity & Magnetism",
+    "grade": 10,
+    "paper": 1,
+    "subTopic": "Two kinds of charge, charging by contact and polarisation",
+    "queries": [
+      "graad 10 fisika lading laai polarisasie",
+      "graad 10 chemie lading laai polarisasie",
+      "lading laai polarisasie graad 10",
+      "fisiese wetenskappe lading laai polarisasie graad 10"
+    ],
+    "candidates": [],
+    "pick": null,
+    "usedAdjacentGrade": false,
+    "note": "No embeddable, on-topic CAPS candidate found - left blank for manual search"
+  },
+  {
+    "slug": "electricity-magnetism-gr10",
+    "topicTitle": "Electricity & Magnetism",
+    "grade": 10,
+    "paper": 1,
+    "subTopic": "Conservation and quantisation of charge",
+    "queries": [
+      "graad 10 fisika behoud lading",
+      "graad 10 chemie behoud lading",
+      "behoud lading graad 10",
+      "fisiese wetenskappe behoud lading graad 10"
+    ],
+    "candidates": [],
+    "pick": null,
+    "usedAdjacentGrade": false,
+    "note": "No embeddable, on-topic CAPS candidate found - left blank for manual search"
+  },
+  {
+    "slug": "electricity-magnetism-gr10",
+    "topicTitle": "Electricity & Magnetism",
+    "grade": 10,
+    "paper": 1,
+    "subTopic": "Potential difference, emf and terminal potential difference",
+    "queries": [
+      "graad 10 fisika potensiele potensiaalverskil emk",
+      "graad 10 chemie potensiele potensiaalverskil emk",
+      "potensiele potensiaalverskil emk graad 10",
+      "fisiese wetenskappe potensiele potensiaalverskil emk graad 10"
+    ],
+    "candidates": [],
+    "pick": null,
+    "usedAdjacentGrade": false,
+    "note": "No embeddable, on-topic CAPS candidate found - left blank for manual search"
+  },
+  {
+    "slug": "electricity-magnetism-gr10",
+    "topicTitle": "Electricity & Magnetism",
+    "grade": 10,
+    "paper": 1,
+    "subTopic": "Current, and measuring current and voltage in a circuit",
+    "queries": [
+      "graad 10 fisika stroomsterkte spanning stroombaan",
+      "graad 10 chemie stroomsterkte spanning stroombaan",
+      "stroomsterkte spanning stroombaan graad 10",
+      "fisiese wetenskappe stroomsterkte spanning stroombaan graad 10"
+    ],
+    "candidates": [],
+    "pick": null,
+    "usedAdjacentGrade": false,
+    "note": "No embeddable, on-topic CAPS candidate found - left blank for manual search"
+  },
+  {
+    "slug": "electricity-magnetism-gr10",
+    "topicTitle": "Electricity & Magnetism",
+    "grade": 10,
+    "paper": 1,
+    "subTopic": "Resistance and the factors that affect it",
+    "queries": [
+      "graad 10 fisika weerstand",
+      "graad 10 chemie weerstand",
+      "weerstand graad 10",
+      "fisiese wetenskappe weerstand graad 10"
+    ],
+    "candidates": [
+      {
+        "id": "IpwMwZfQdUM",
+        "title": "Stroombane: Weerstand Graad 10 Fisika",
+        "channel": "Ekstra Wetenskap Klasse",
+        "views": 1041,
+        "viewsText": "1,041 views",
+        "duration": "8:40",
+        "durationSeconds": 520,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 45.7
+      },
+      {
+        "id": "XVVj0ABjs4o",
+        "title": "Gr. 10 en 11 Elektrisiteit (sonder interne weerstand moeiliker voorbeeld)",
+        "channel": "Danike Aucamp_Wiskunde en Wetenskap ",
+        "views": 362,
+        "viewsText": "362 views",
+        "duration": "12:24",
+        "durationSeconds": 744,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 41.1
+      },
+      {
+        "id": "9v3k8kGo-Dw",
+        "title": "Gr.10 Weerstand",
+        "channel": "Douwliena Fourie",
+        "views": 206,
+        "viewsText": "206 views",
+        "duration": "2:32",
+        "durationSeconds": 152,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 38.6
+      }
+    ],
+    "pick": {
+      "id": "IpwMwZfQdUM",
+      "title": "Stroombane: Weerstand Graad 10 Fisika",
+      "channel": "Ekstra Wetenskap Klasse",
+      "views": 1041,
+      "viewsText": "1,041 views",
+      "duration": "8:40",
+      "durationSeconds": 520,
+      "saChannel": true,
+      "embeddable": true,
+      "score": 45.7
+    },
+    "usedAdjacentGrade": false
+  },
+  {
+    "slug": "electricity-magnetism-gr10",
+    "topicTitle": "Electricity & Magnetism",
+    "grade": 10,
+    "paper": 1,
+    "subTopic": "Resistors in series",
+    "queries": [
+      "graad 10 fisika weerstande serie",
+      "graad 10 chemie weerstande serie",
+      "weerstande serie graad 10",
+      "fisiese wetenskappe weerstande serie graad 10"
+    ],
+    "candidates": [
+      {
+        "id": "XVVj0ABjs4o",
+        "title": "Gr. 10 en 11 Elektrisiteit (sonder interne weerstand moeiliker voorbeeld)",
+        "channel": "Danike Aucamp_Wiskunde en Wetenskap ",
+        "views": 362,
+        "viewsText": "362 views",
+        "duration": "12:24",
+        "durationSeconds": 744,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 41.1
+      }
+    ],
+    "pick": {
+      "id": "XVVj0ABjs4o",
+      "title": "Gr. 10 en 11 Elektrisiteit (sonder interne weerstand moeiliker voorbeeld)",
+      "channel": "Danike Aucamp_Wiskunde en Wetenskap ",
+      "views": 362,
+      "viewsText": "362 views",
+      "duration": "12:24",
+      "durationSeconds": 744,
+      "saChannel": true,
+      "embeddable": true,
+      "score": 41.1
+    },
+    "usedAdjacentGrade": false
+  },
+  {
+    "slug": "electricity-magnetism-gr10",
+    "topicTitle": "Electricity & Magnetism",
+    "grade": 10,
+    "paper": 1,
+    "subTopic": "Resistors in parallel",
+    "queries": [
+      "graad 10 fisika weerstande parallelle",
+      "graad 10 chemie weerstande parallelle",
+      "weerstande parallelle graad 10",
+      "fisiese wetenskappe weerstande parallelle graad 10"
+    ],
+    "candidates": [],
+    "pick": null,
+    "usedAdjacentGrade": false,
+    "note": "No embeddable, on-topic CAPS candidate found - left blank for manual search"
+  },
+  {
+    "slug": "matter-materials-gr10",
+    "topicTitle": "Matter & Materials",
+    "grade": 10,
+    "paper": 2,
+    "subTopic": "Classification of matter: mixtures, pure substances, metals and non-metals",
+    "queries": [
+      "graad 10 fisika klassifikasie materie mengsels",
+      "graad 10 chemie klassifikasie materie mengsels",
+      "klassifikasie materie mengsels graad 10",
+      "fisiese wetenskappe klassifikasie materie mengsels graad 10"
+    ],
+    "candidates": [
+      {
+        "id": "XsqSSWDBaj8",
+        "title": "Gr.10 Materie en materiale. Suiwer stowwe en mengsels.",
+        "channel": "Douwliena Fourie",
+        "views": 1521,
+        "viewsText": "1,521 views",
+        "duration": "7:25",
+        "durationSeconds": 445,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 47.3
+      }
+    ],
+    "pick": {
+      "id": "XsqSSWDBaj8",
+      "title": "Gr.10 Materie en materiale. Suiwer stowwe en mengsels.",
+      "channel": "Douwliena Fourie",
+      "views": 1521,
+      "viewsText": "1,521 views",
+      "duration": "7:25",
+      "durationSeconds": 445,
+      "saChannel": true,
+      "embeddable": true,
+      "score": 47.3
+    },
+    "usedAdjacentGrade": false
+  },
+  {
+    "slug": "matter-materials-gr10",
+    "topicTitle": "Matter & Materials",
+    "grade": 10,
+    "paper": 2,
+    "subTopic": "Names and formulae of compounds",
+    "queries": [
+      "graad 10 fisika name formules verbindings",
+      "graad 10 chemie name formules verbindings",
+      "name formules verbindings graad 10",
+      "fisiese wetenskappe name formules verbindings graad 10"
+    ],
+    "candidates": [
+      {
+        "id": "44SNuly1CdU",
+        "title": "Name en formules van chemiese verbindings Gr. 10 Chemie",
+        "channel": "Danike Aucamp_Wiskunde en Wetenskap ",
+        "views": 1669,
+        "viewsText": "1,669 views",
+        "duration": "28:05",
+        "durationSeconds": 1685,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 50.2
+      }
+    ],
+    "pick": {
+      "id": "44SNuly1CdU",
+      "title": "Name en formules van chemiese verbindings Gr. 10 Chemie",
+      "channel": "Danike Aucamp_Wiskunde en Wetenskap ",
+      "views": 1669,
+      "viewsText": "1,669 views",
+      "duration": "28:05",
+      "durationSeconds": 1685,
+      "saChannel": true,
+      "embeddable": true,
+      "score": 50.2
+    },
+    "usedAdjacentGrade": false
+  },
+  {
+    "slug": "matter-materials-gr10",
+    "topicTitle": "Matter & Materials",
+    "grade": 10,
+    "paper": 2,
+    "subTopic": "States of matter and the kinetic molecular theory",
+    "queries": [
+      "graad 10 fisika fasetoestande materie kinetiese",
+      "graad 10 chemie fasetoestande materie kinetiese",
+      "fasetoestande materie kinetiese graad 10",
+      "fisiese wetenskappe fasetoestande materie kinetiese graad 10"
+    ],
+    "candidates": [
+      {
+        "id": "tw1A9JlRxnk",
+        "title": "Graad 10 chemie: Kinetiese Molekulere Teorie (KMT)",
+        "channel": "Danike Aucamp_Wiskunde en Wetenskap ",
+        "views": 366,
+        "viewsText": "366 views",
+        "duration": "14:28",
+        "durationSeconds": 868,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 42.6
+      }
+    ],
+    "pick": {
+      "id": "tw1A9JlRxnk",
+      "title": "Graad 10 chemie: Kinetiese Molekulere Teorie (KMT)",
+      "channel": "Danike Aucamp_Wiskunde en Wetenskap ",
+      "views": 366,
+      "viewsText": "366 views",
+      "duration": "14:28",
+      "durationSeconds": 868,
+      "saChannel": true,
+      "embeddable": true,
+      "score": 42.6
+    },
+    "usedAdjacentGrade": false
+  },
+  {
+    "slug": "matter-materials-gr10",
+    "topicTitle": "Matter & Materials",
+    "grade": 10,
+    "paper": 2,
+    "subTopic": "Models of the atom and the structure of the atom",
+    "queries": [
+      "graad 10 fisika modelle atoom struktuur",
+      "graad 10 chemie modelle atoom struktuur",
+      "modelle atoom struktuur graad 10",
+      "fisiese wetenskappe modelle atoom struktuur graad 10"
+    ],
+    "candidates": [],
+    "pick": null,
+    "usedAdjacentGrade": false,
+    "note": "No embeddable, on-topic CAPS candidate found - left blank for manual search"
+  },
+  {
+    "slug": "matter-materials-gr10",
+    "topicTitle": "Matter & Materials",
+    "grade": 10,
+    "paper": 2,
+    "subTopic": "Isotopes and relative atomic mass",
+    "queries": [
+      "graad 10 fisika isotope relatiewe atoom",
+      "graad 10 chemie isotope relatiewe atoom",
+      "isotope relatiewe atoom graad 10",
+      "fisiese wetenskappe isotope relatiewe atoom graad 10"
+    ],
+    "candidates": [],
+    "pick": null,
+    "usedAdjacentGrade": false,
+    "note": "No embeddable, on-topic CAPS candidate found - left blank for manual search"
+  },
+  {
+    "slug": "matter-materials-gr10",
+    "topicTitle": "Matter & Materials",
+    "grade": 10,
+    "paper": 2,
+    "subTopic": "Electron configuration of atoms",
+    "queries": [
+      "graad 10 fisika elektron elektronkonfigurasie atome",
+      "graad 10 chemie elektron elektronkonfigurasie atome",
+      "elektron elektronkonfigurasie atome graad 10",
+      "fisiese wetenskappe elektron elektronkonfigurasie atome graad 10"
+    ],
+    "candidates": [],
+    "pick": null,
+    "usedAdjacentGrade": false,
+    "note": "No embeddable, on-topic CAPS candidate found - left blank for manual search"
+  },
+  {
+    "slug": "matter-materials-gr10",
+    "topicTitle": "Matter & Materials",
+    "grade": 10,
+    "paper": 2,
+    "subTopic": "The periodic table: groups, periods and periodic trends",
+    "queries": [
+      "graad 10 fisika periodieke tabel groepe",
+      "graad 10 chemie periodieke tabel groepe",
+      "periodieke tabel groepe graad 10",
+      "fisiese wetenskappe periodieke tabel groepe graad 10"
+    ],
+    "candidates": [
+      {
+        "id": "_Sb93EoNknU",
+        "title": "Tendense van die Periodieke Tabel: Gr. 10 Chemie",
+        "channel": "Danike Aucamp_Wiskunde en Wetenskap ",
+        "views": 1400,
+        "viewsText": "1,400 views",
+        "duration": "19:56",
+        "durationSeconds": 1196,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 48.5
+      },
+      {
+        "id": "I1kFHY27Ru0",
+        "title": "Gr.10 Die Periodieke tabel.",
+        "channel": "Douwliena Fourie",
+        "views": 1231,
+        "viewsText": "1,231 views",
+        "duration": "3:19",
+        "durationSeconds": 199,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 46.4
+      },
+      {
+        "id": "pCLMUXUg4Js",
+        "title": "Gr.10 Die Periodieke tabel. Periodisiteit 1.",
+        "channel": "Douwliena Fourie",
+        "views": 846,
+        "viewsText": "846 views",
+        "duration": "5:17",
+        "durationSeconds": 317,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 46.3
+      }
+    ],
+    "pick": {
+      "id": "_Sb93EoNknU",
+      "title": "Tendense van die Periodieke Tabel: Gr. 10 Chemie",
+      "channel": "Danike Aucamp_Wiskunde en Wetenskap ",
+      "views": 1400,
+      "viewsText": "1,400 views",
+      "duration": "19:56",
+      "durationSeconds": 1196,
+      "saChannel": true,
+      "embeddable": true,
+      "score": 48.5
+    },
+    "usedAdjacentGrade": false
+  },
+  {
+    "slug": "matter-materials-gr10",
+    "topicTitle": "Matter & Materials",
+    "grade": 10,
+    "paper": 2,
+    "subTopic": "Chemical bonding: covalent, ionic and metallic",
+    "queries": [
+      "graad 10 fisika chemiese binding kovalente",
+      "graad 10 chemie chemiese binding kovalente",
+      "chemiese binding kovalente graad 10",
+      "fisiese wetenskappe chemiese binding kovalente graad 10"
+    ],
+    "candidates": [],
+    "pick": null,
+    "usedAdjacentGrade": false,
+    "note": "No embeddable, on-topic CAPS candidate found - left blank for manual search"
+  },
+  {
+    "slug": "matter-materials-gr10",
+    "topicTitle": "Matter & Materials",
+    "grade": 10,
+    "paper": 2,
+    "subTopic": "Particles substances are made of: molecular, ionic and metallic structures",
+    "queries": [
+      "graad 10 fisika deeltjies stowwe molekulere",
+      "graad 10 chemie deeltjies stowwe molekulere",
+      "deeltjies stowwe molekulere graad 10",
+      "fisiese wetenskappe deeltjies stowwe molekulere graad 10"
+    ],
+    "candidates": [],
+    "pick": null,
+    "usedAdjacentGrade": false,
+    "note": "No embeddable, on-topic CAPS candidate found - left blank for manual search"
+  },
+  {
+    "slug": "chemical-change-gr10",
+    "topicTitle": "Chemical Change",
+    "grade": 10,
+    "paper": 2,
+    "subTopic": "Physical and chemical change",
+    "queries": [
+      "graad 10 fisika fisiese chemiese",
+      "graad 10 chemie fisiese chemiese",
+      "fisiese chemiese graad 10",
+      "fisiese wetenskappe fisiese chemiese graad 10"
+    ],
+    "candidates": [],
+    "pick": null,
+    "usedAdjacentGrade": false,
+    "note": "No embeddable, on-topic CAPS candidate found - left blank for manual search"
+  },
+  {
+    "slug": "chemical-change-gr10",
+    "topicTitle": "Chemical Change",
+    "grade": 10,
+    "paper": 2,
+    "subTopic": "Balancing chemical equations",
+    "queries": [
+      "graad 10 fisika balansering chemiese vergelykings",
+      "graad 10 chemie balansering chemiese vergelykings",
+      "balansering chemiese vergelykings graad 10",
+      "fisiese wetenskappe balansering chemiese vergelykings graad 10"
+    ],
+    "candidates": [
+      {
+        "id": "PuXvpX0iLmw",
+        "title": "Gr. 10 Chemie: Leer die balanseer van chemiese vergelykings in 10 min",
+        "channel": "Danike Aucamp_Wiskunde en Wetenskap ",
+        "views": 6241,
+        "viewsText": "6,241 views",
+        "duration": "10:49",
+        "durationSeconds": 649,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 61
+      }
+    ],
+    "pick": {
+      "id": "PuXvpX0iLmw",
+      "title": "Gr. 10 Chemie: Leer die balanseer van chemiese vergelykings in 10 min",
+      "channel": "Danike Aucamp_Wiskunde en Wetenskap ",
+      "views": 6241,
+      "viewsText": "6,241 views",
+      "duration": "10:49",
+      "durationSeconds": 649,
+      "saChannel": true,
+      "embeddable": true,
+      "score": 61
+    },
+    "usedAdjacentGrade": false
+  },
+  {
+    "slug": "chemical-change-gr10",
+    "topicTitle": "Chemical Change",
+    "grade": 10,
+    "paper": 2,
+    "subTopic": "Ions in aqueous solution: dissolving, hydration and conductivity",
+    "queries": [
+      "graad 10 fisika ione waterige oplossing",
+      "graad 10 chemie ione waterige oplossing",
+      "ione waterige oplossing graad 10",
+      "fisiese wetenskappe ione waterige oplossing graad 10"
+    ],
+    "candidates": [],
+    "pick": null,
+    "usedAdjacentGrade": false,
+    "note": "No embeddable, on-topic CAPS candidate found - left blank for manual search"
+  },
+  {
+    "slug": "chemical-change-gr10",
+    "topicTitle": "Chemical Change",
+    "grade": 10,
+    "paper": 2,
+    "subTopic": "Precipitation reactions and testing for anions",
+    "queries": [
+      "graad 10 fisika neerslag reaksies anione",
+      "graad 10 chemie neerslag reaksies anione",
+      "neerslag reaksies anione graad 10",
+      "fisiese wetenskappe neerslag reaksies anione graad 10"
+    ],
+    "candidates": [],
+    "pick": null,
+    "usedAdjacentGrade": false,
+    "note": "No embeddable, on-topic CAPS candidate found - left blank for manual search"
+  },
+  {
+    "slug": "chemical-change-gr10",
+    "topicTitle": "Chemical Change",
+    "grade": 10,
+    "paper": 2,
+    "subTopic": "Reaction types: ion exchange, gas forming, acid-base and redox",
+    "queries": [
+      "graad 10 fisika reaksie ioon uitruil",
+      "graad 10 chemie reaksie ioon uitruil",
+      "reaksie ioon uitruil graad 10",
+      "fisiese wetenskappe reaksie ioon uitruil graad 10"
+    ],
+    "candidates": [
+      {
+        "id": "A-XXCYbij5Q",
+        "title": "Gr. 10 Chemie: Reaksies in waterige oplossings (Redoksreaksies)",
+        "channel": "Danike Aucamp_Wiskunde en Wetenskap ",
+        "views": 732,
+        "viewsText": "732 views",
+        "duration": "21:30",
+        "durationSeconds": 1290,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 39.1
+      }
+    ],
+    "pick": {
+      "id": "A-XXCYbij5Q",
+      "title": "Gr. 10 Chemie: Reaksies in waterige oplossings (Redoksreaksies)",
+      "channel": "Danike Aucamp_Wiskunde en Wetenskap ",
+      "views": 732,
+      "viewsText": "732 views",
+      "duration": "21:30",
+      "durationSeconds": 1290,
+      "saChannel": true,
+      "embeddable": true,
+      "score": 39.1
+    },
+    "usedAdjacentGrade": false
+  },
+  {
+    "slug": "chemical-change-gr10",
+    "topicTitle": "Chemical Change",
+    "grade": 10,
+    "paper": 2,
+    "subTopic": "The mole concept and Avogadro's number",
+    "queries": [
+      "graad 10 fisika molbegrip avogadro",
+      "graad 10 chemie molbegrip avogadro",
+      "molbegrip avogadro graad 10",
+      "fisiese wetenskappe molbegrip avogadro graad 10"
+    ],
+    "candidates": [
+      {
+        "id": "ncwZUv2DtW0",
+        "title": "Gr.10 Die Molbegrip. 1",
+        "channel": "Douwliena Fourie",
+        "views": 2299,
+        "viewsText": "2,299 views",
+        "duration": "11:19",
+        "durationSeconds": 679,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 49.1
+      },
+      {
+        "id": "ubX0WNvslY8",
+        "title": "Gr. 10 Chemie: Kwantitatiewe aspekte van chemiese verandering (mol-somme) EENVOUDIG gemaak",
+        "channel": "Danike Aucamp_Wiskunde en Wetenskap ",
+        "views": 4867,
+        "viewsText": "4,867 views",
+        "duration": "22:53",
+        "durationSeconds": 1373,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 47.4
+      },
+      {
+        "id": "nrotNq97A-0",
+        "title": "Gr.10 Formule blad. Molbegrip",
+        "channel": "Douwliena Fourie",
+        "views": 386,
+        "viewsText": "386 views",
+        "duration": "6:02",
+        "durationSeconds": 362,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 41.4
+      },
+      {
+        "id": "hAGQWbE8JfM",
+        "title": "Gr.  10 Chemie: Mol som voorbeeld",
+        "channel": "Danike Aucamp_Wiskunde en Wetenskap ",
+        "views": 280,
+        "viewsText": "280 views",
+        "duration": "9:00",
+        "durationSeconds": 540,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 40
+      }
+    ],
+    "pick": {
+      "id": "ncwZUv2DtW0",
+      "title": "Gr.10 Die Molbegrip. 1",
+      "channel": "Douwliena Fourie",
+      "views": 2299,
+      "viewsText": "2,299 views",
+      "duration": "11:19",
+      "durationSeconds": 679,
+      "saChannel": true,
+      "embeddable": true,
+      "score": 49.1
+    },
+    "usedAdjacentGrade": false
+  },
+  {
+    "slug": "chemical-change-gr10",
+    "topicTitle": "Chemical Change",
+    "grade": 10,
+    "paper": 2,
+    "subTopic": "Molar mass and percentage composition",
+    "queries": [
+      "graad 10 fisika molere massa persentasie",
+      "graad 10 chemie molere massa persentasie",
+      "molere massa persentasie graad 10",
+      "fisiese wetenskappe molere massa persentasie graad 10"
+    ],
+    "candidates": [
+      {
+        "id": "OJ7xjOnDHhM",
+        "title": "Gr.10 Molere gasvolume.",
+        "channel": "Douwliena Fourie",
+        "views": 503,
+        "viewsText": "503 views",
+        "duration": "5:43",
+        "durationSeconds": 343,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 42.5
+      }
+    ],
+    "pick": {
+      "id": "OJ7xjOnDHhM",
+      "title": "Gr.10 Molere gasvolume.",
+      "channel": "Douwliena Fourie",
+      "views": 503,
+      "viewsText": "503 views",
+      "duration": "5:43",
+      "durationSeconds": 343,
+      "saChannel": true,
+      "embeddable": true,
+      "score": 42.5
+    },
+    "usedAdjacentGrade": false
+  },
+  {
+    "slug": "chemical-change-gr10",
+    "topicTitle": "Chemical Change",
+    "grade": 10,
+    "paper": 2,
+    "subTopic": "Empirical formula",
+    "queries": [
+      "graad 10 fisika empiriese formule",
+      "graad 10 chemie empiriese formule",
+      "empiriese formule graad 10",
+      "fisiese wetenskappe empiriese formule graad 10"
+    ],
+    "candidates": [
+      {
+        "id": "K6OFw8xL9KU",
+        "title": "Gr. 10 Chemie: Persentasie samestelling, Persentasie opbrengs en Empiriese formule",
+        "channel": "Danike Aucamp_Wiskunde en Wetenskap ",
+        "views": 3298,
+        "viewsText": "3,298 views",
+        "duration": "17:20",
+        "durationSeconds": 1040,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 58.2
+      },
+      {
+        "id": "oHjHFIXZd1o",
+        "title": "Gr.10 Empiriese formule.",
+        "channel": "Douwliena Fourie",
+        "views": 2071,
+        "viewsText": "2,071 views",
+        "duration": "4:15",
+        "durationSeconds": 255,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 56.2
+      },
+      {
+        "id": "E2bBxg-naeI",
+        "title": "Gr.10 MOLEKULERE EN EMPIRIESE FORMULES",
+        "channel": "Douwliena Fourie",
+        "views": 998,
+        "viewsText": "998 views",
+        "duration": "2:19",
+        "durationSeconds": 139,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 53
+      }
+    ],
+    "pick": {
+      "id": "K6OFw8xL9KU",
+      "title": "Gr. 10 Chemie: Persentasie samestelling, Persentasie opbrengs en Empiriese formule",
+      "channel": "Danike Aucamp_Wiskunde en Wetenskap ",
+      "views": 3298,
+      "viewsText": "3,298 views",
+      "duration": "17:20",
+      "durationSeconds": 1040,
+      "saChannel": true,
+      "embeddable": true,
+      "score": 58.2
+    },
+    "usedAdjacentGrade": false
+  },
+  {
+    "slug": "chemical-change-gr10",
+    "topicTitle": "Chemical Change",
+    "grade": 10,
+    "paper": 2,
+    "subTopic": "Concentration of solutions and the molar volume of gases",
+    "queries": [
+      "graad 10 fisika konsentrasie oplossings molere",
+      "graad 10 chemie konsentrasie oplossings molere",
+      "konsentrasie oplossings molere graad 10",
+      "fisiese wetenskappe konsentrasie oplossings molere graad 10"
+    ],
+    "candidates": [],
+    "pick": null,
+    "usedAdjacentGrade": false,
+    "note": "No embeddable, on-topic CAPS candidate found - left blank for manual search"
+  },
+  {
+    "slug": "chemical-change-gr10",
+    "topicTitle": "Chemical Change",
+    "grade": 10,
+    "paper": 2,
+    "subTopic": "Basic stoichiometric calculations",
+    "queries": [
+      "graad 10 fisika stoigiometriese berekeninge",
+      "graad 10 chemie stoigiometriese berekeninge",
+      "stoigiometriese berekeninge graad 10",
+      "fisiese wetenskappe stoigiometriese berekeninge graad 10"
+    ],
+    "candidates": [
+      {
+        "id": "zcyM9UQYeWc",
+        "title": "Gr.10 Stoigiometriese berekeninge.",
+        "channel": "Douwliena Fourie",
+        "views": 3156,
+        "viewsText": "3,156 views",
+        "duration": "7:42",
+        "durationSeconds": 462,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 58
+      },
+      {
+        "id": "h4EgFnXp360",
+        "title": "Stoïgiometriese Berekeninge Gr. 10 en 11 Chemie",
+        "channel": "Danike Aucamp_Wiskunde en Wetenskap ",
+        "views": 2762,
+        "viewsText": "2,762 views",
+        "duration": "16:40",
+        "durationSeconds": 1000,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 57.4
+      },
+      {
+        "id": "ythUBcnyZSI",
+        "title": "Gr. 10 stoigiometriese berekeninge bl.292",
+        "channel": "Douwliena Fourie",
+        "views": 466,
+        "viewsText": "466 views",
+        "duration": "7:14",
+        "durationSeconds": 434,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 49.7
+      },
+      {
+        "id": "1vhgVZZkzF8",
+        "title": "Gr. 10 & Gr. 11 Fisiese Wetenskap | Stoïgiometriese Berekeninge | % Suiwerheid | Eksamenhersiening",
+        "channel": "Danike Aucamp_Wiskunde en Wetenskap ",
+        "views": 377,
+        "viewsText": "377 views",
+        "duration": "21:45",
+        "durationSeconds": 1305,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 43.8
+      }
+    ],
+    "pick": {
+      "id": "zcyM9UQYeWc",
+      "title": "Gr.10 Stoigiometriese berekeninge.",
+      "channel": "Douwliena Fourie",
+      "views": 3156,
+      "viewsText": "3,156 views",
+      "duration": "7:42",
+      "durationSeconds": 462,
+      "saChannel": true,
+      "embeddable": true,
+      "score": 58
+    },
+    "usedAdjacentGrade": false
+  },
+  {
+    "slug": "chemical-systems-gr10",
+    "topicTitle": "Chemical Systems",
+    "grade": 10,
+    "paper": 2,
+    "subTopic": "The hydrosphere: where the Earth's water is found",
+    "queries": [
+      "graad 10 fisika hidrosfeer aarde water",
+      "graad 10 chemie hidrosfeer aarde water",
+      "hidrosfeer aarde water graad 10",
+      "fisiese wetenskappe hidrosfeer aarde water graad 10"
+    ],
+    "candidates": [],
+    "pick": null,
+    "usedAdjacentGrade": false,
+    "note": "No embeddable, on-topic CAPS candidate found - left blank for manual search"
+  },
+  {
+    "slug": "chemical-systems-gr10",
+    "topicTitle": "Chemical Systems",
+    "grade": 10,
+    "paper": 2,
+    "subTopic": "Interaction of the hydrosphere with the atmosphere, lithosphere and biosphere",
+    "queries": [
+      "graad 10 fisika hidrosfeer atmosfeer litosfeer",
+      "graad 10 chemie hidrosfeer atmosfeer litosfeer",
+      "hidrosfeer atmosfeer litosfeer graad 10",
+      "fisiese wetenskappe hidrosfeer atmosfeer litosfeer graad 10"
+    ],
+    "candidates": [],
+    "pick": null,
+    "usedAdjacentGrade": false,
+    "note": "No embeddable, on-topic CAPS candidate found - left blank for manual search"
+  },
+  {
+    "slug": "chemical-systems-gr10",
+    "topicTitle": "Chemical Systems",
+    "grade": 10,
+    "paper": 2,
+    "subTopic": "Water quality and the purification of water",
+    "queries": [
+      "graad 10 fisika water",
+      "graad 10 chemie water",
+      "water graad 10",
+      "fisiese wetenskappe water graad 10"
+    ],
+    "candidates": [],
+    "pick": null,
+    "usedAdjacentGrade": false,
+    "note": "No embeddable, on-topic CAPS candidate found - left blank for manual search"
+  },
+  {
+    "slug": "chemical-systems-gr10",
+    "topicTitle": "Chemical Systems",
+    "grade": 10,
+    "paper": 2,
+    "subTopic": "The impact of dams on people and ecology",
+    "queries": [
+      "graad 10 fisika impak damme mense",
+      "graad 10 chemie impak damme mense",
+      "impak damme mense graad 10",
+      "fisiese wetenskappe impak damme mense graad 10"
+    ],
+    "candidates": [],
+    "pick": null,
+    "usedAdjacentGrade": false,
+    "note": "No embeddable, on-topic CAPS candidate found - left blank for manual search"
+  }
+]

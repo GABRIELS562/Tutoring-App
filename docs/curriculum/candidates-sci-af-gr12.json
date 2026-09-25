@@ -1,0 +1,2559 @@
+[
+  {
+    "slug": "mechanics-gr12",
+    "topicTitle": "Mechanics",
+    "grade": 12,
+    "paper": 1,
+    "subTopic": "Momentum and its vector nature",
+    "queries": [
+      "graad 12 fisika momentum vektor",
+      "graad 12 chemie momentum vektor",
+      "momentum vektor graad 12",
+      "fisiese wetenskappe momentum vektor graad 12"
+    ],
+    "candidates": [],
+    "pick": null,
+    "usedAdjacentGrade": false,
+    "note": "No embeddable, on-topic CAPS candidate found - left blank for manual search"
+  },
+  {
+    "slug": "mechanics-gr12",
+    "topicTitle": "Mechanics",
+    "grade": 12,
+    "paper": 1,
+    "subTopic": "Newton's second law in terms of momentum",
+    "queries": [
+      "graad 12 fisika newton wet momentum",
+      "graad 12 chemie newton wet momentum",
+      "newton wet momentum graad 12",
+      "fisiese wetenskappe newton wet momentum graad 12"
+    ],
+    "candidates": [
+      {
+        "id": "iXF_7-EjS9w",
+        "title": "Momentum, Impuls en Wet van Behoud van Momentum: Gr. 12 Fisika",
+        "channel": "Danike Aucamp_Wiskunde en Wetenskap ",
+        "views": 1568,
+        "viewsText": "1,568 views",
+        "duration": "36:20",
+        "durationSeconds": 2180,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 42.5
+      },
+      {
+        "id": "2YERVz7HUMI",
+        "title": "Momentum en Impuls - Afrikaans Potgooi / Fisika / Fisiese Wetenskappe / Graad 12 NSS",
+        "channel": "Simple Science",
+        "views": 228,
+        "viewsText": "228 views",
+        "duration": "8:20",
+        "durationSeconds": 500,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 39.1
+      }
+    ],
+    "pick": {
+      "id": "iXF_7-EjS9w",
+      "title": "Momentum, Impuls en Wet van Behoud van Momentum: Gr. 12 Fisika",
+      "channel": "Danike Aucamp_Wiskunde en Wetenskap ",
+      "views": 1568,
+      "viewsText": "1,568 views",
+      "duration": "36:20",
+      "durationSeconds": 2180,
+      "saChannel": true,
+      "embeddable": true,
+      "score": 42.5
+    },
+    "usedAdjacentGrade": false
+  },
+  {
+    "slug": "mechanics-gr12",
+    "topicTitle": "Mechanics",
+    "grade": 12,
+    "paper": 1,
+    "subTopic": "Conservation of momentum",
+    "queries": [
+      "graad 12 fisika behoud momentum",
+      "graad 12 chemie behoud momentum",
+      "behoud momentum graad 12",
+      "fisiese wetenskappe behoud momentum graad 12"
+    ],
+    "candidates": [
+      {
+        "id": "XrGaqWTueOQ",
+        "title": "Wet van behoud van momentum",
+        "channel": "WSILAB",
+        "views": 641,
+        "viewsText": "641 views",
+        "duration": "29:33",
+        "durationSeconds": 1773,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 46.1
+      }
+    ],
+    "pick": {
+      "id": "XrGaqWTueOQ",
+      "title": "Wet van behoud van momentum",
+      "channel": "WSILAB",
+      "views": 641,
+      "viewsText": "641 views",
+      "duration": "29:33",
+      "durationSeconds": 1773,
+      "saChannel": true,
+      "embeddable": true,
+      "score": 46.1
+    },
+    "usedAdjacentGrade": false
+  },
+  {
+    "slug": "mechanics-gr12",
+    "topicTitle": "Mechanics",
+    "grade": 12,
+    "paper": 1,
+    "subTopic": "Elastic and inelastic collisions",
+    "queries": [
+      "graad 12 fisika elastiese onelastiese botsings",
+      "graad 12 chemie elastiese onelastiese botsings",
+      "elastiese onelastiese botsings graad 12",
+      "fisiese wetenskappe elastiese onelastiese botsings graad 12"
+    ],
+    "candidates": [
+      {
+        "id": "3C2-f51Fkdg",
+        "title": "Gr. 12 Chemie: Reaksietempo en die botsingsteorie EENVOUDIG gemaak",
+        "channel": "Danike Aucamp_Wiskunde en Wetenskap ",
+        "views": 4420,
+        "viewsText": "4,420 views",
+        "duration": "26:55",
+        "durationSeconds": 1615,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 47
+      }
+    ],
+    "pick": {
+      "id": "3C2-f51Fkdg",
+      "title": "Gr. 12 Chemie: Reaksietempo en die botsingsteorie EENVOUDIG gemaak",
+      "channel": "Danike Aucamp_Wiskunde en Wetenskap ",
+      "views": 4420,
+      "viewsText": "4,420 views",
+      "duration": "26:55",
+      "durationSeconds": 1615,
+      "saChannel": true,
+      "embeddable": true,
+      "score": 47
+    },
+    "usedAdjacentGrade": false
+  },
+  {
+    "slug": "mechanics-gr12",
+    "topicTitle": "Mechanics",
+    "grade": 12,
+    "paper": 1,
+    "subTopic": "Impulse and the impulse-momentum theorem",
+    "queries": [
+      "graad 12 fisika impuls momentum stelling",
+      "graad 12 chemie impuls momentum stelling",
+      "impuls momentum stelling graad 12",
+      "fisiese wetenskappe impuls momentum stelling graad 12"
+    ],
+    "candidates": [
+      {
+        "id": "szBVJIBS4HE",
+        "title": "Momentum & Impulse Revision Lesson",
+        "channel": "Simple Science",
+        "views": 2952,
+        "viewsText": "2,952 views",
+        "duration": "32:32",
+        "durationSeconds": 1952,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 45.2
+      },
+      {
+        "id": "KTgezeZIlZk",
+        "title": "Fisika - Impuls en Momentum Eksamenvraag 1",
+        "channel": "Shap Science SA - Juffrou R",
+        "views": 610,
+        "viewsText": "610 views",
+        "duration": "4:11",
+        "durationSeconds": 251,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 43.4
+      },
+      {
+        "id": "40RiM3L2Cxk",
+        "title": "Fisika - Momentum en Impuls Eksamenvraag 3",
+        "channel": "Shap Science SA - Juffrou R",
+        "views": 527,
+        "viewsText": "527 views",
+        "duration": "7:08",
+        "durationSeconds": 428,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 42.7
+      },
+      {
+        "id": "BvlFNUYQhko",
+        "title": "Fisika - Momentum en Impuls Eksamenvraag 2",
+        "channel": "Shap Science SA - Juffrou R",
+        "views": 447,
+        "viewsText": "447 views",
+        "duration": "4:42",
+        "durationSeconds": 282,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 42
+      },
+      {
+        "id": "2YERVz7HUMI",
+        "title": "Momentum en Impuls - Afrikaans Potgooi / Fisika / Fisiese Wetenskappe / Graad 12 NSS",
+        "channel": "Simple Science",
+        "views": 228,
+        "viewsText": "228 views",
+        "duration": "8:20",
+        "durationSeconds": 500,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 39.1
+      }
+    ],
+    "pick": {
+      "id": "szBVJIBS4HE",
+      "title": "Momentum & Impulse Revision Lesson",
+      "channel": "Simple Science",
+      "views": 2952,
+      "viewsText": "2,952 views",
+      "duration": "32:32",
+      "durationSeconds": 1952,
+      "saChannel": true,
+      "embeddable": true,
+      "score": 45.2
+    },
+    "usedAdjacentGrade": false
+  },
+  {
+    "slug": "mechanics-gr12",
+    "topicTitle": "Mechanics",
+    "grade": 12,
+    "paper": 1,
+    "subTopic": "Vertical projectile motion: equations of motion",
+    "queries": [
+      "graad 12 fisika vertikale projektielbeweging beweging",
+      "graad 12 chemie vertikale projektielbeweging beweging",
+      "vertikale projektielbeweging beweging graad 12",
+      "fisiese wetenskappe vertikale projektielbeweging beweging graad 12"
+    ],
+    "candidates": [
+      {
+        "id": "G02o72zDL0c",
+        "title": "Fisika - Vertikale Projektielbeweging Eksamenvraag 5",
+        "channel": "Shap Science SA - Juffrou R",
+        "views": 1285,
+        "viewsText": "1,285 views",
+        "duration": "4:33",
+        "durationSeconds": 273,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 46.6
+      },
+      {
+        "id": "VrJelMGpuR4",
+        "title": "Vertikale Projektiel Beweging - Afrikaans Potgooi / Fisika / Fisiese Wetenskappe / Graad 12 NSS",
+        "channel": "Simple Science",
+        "views": 499,
+        "viewsText": "499 views",
+        "duration": "6:33",
+        "durationSeconds": 393,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 46.2
+      },
+      {
+        "id": "KZtGnXvpJz0",
+        "title": "Gr. 12 Fisika: Projektielbeweging",
+        "channel": "Danike Aucamp_Wiskunde en Wetenskap ",
+        "views": 3670,
+        "viewsText": "3,670 views",
+        "duration": "44:25",
+        "durationSeconds": 2665,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 46.1
+      },
+      {
+        "id": "XDAOdQQOWG4",
+        "title": "Fisika - Vertikale Projektielbeweging Eksamenvraag 3",
+        "channel": "Shap Science SA - Juffrou R",
+        "views": 611,
+        "viewsText": "611 views",
+        "duration": "8:51",
+        "durationSeconds": 531,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 43.4
+      },
+      {
+        "id": "wv32_OTNoQQ",
+        "title": "Fisika - Vertikale Projektielbeweging Eksamenvraag 4",
+        "channel": "Shap Science SA - Juffrou R",
+        "views": 540,
+        "viewsText": "540 views",
+        "duration": "8:00",
+        "durationSeconds": 480,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 42.8
+      }
+    ],
+    "pick": {
+      "id": "G02o72zDL0c",
+      "title": "Fisika - Vertikale Projektielbeweging Eksamenvraag 5",
+      "channel": "Shap Science SA - Juffrou R",
+      "views": 1285,
+      "viewsText": "1,285 views",
+      "duration": "4:33",
+      "durationSeconds": 273,
+      "saChannel": true,
+      "embeddable": true,
+      "score": 46.6
+    },
+    "usedAdjacentGrade": false
+  },
+  {
+    "slug": "mechanics-gr12",
+    "topicTitle": "Mechanics",
+    "grade": 12,
+    "paper": 1,
+    "subTopic": "Graphs of vertical projectile motion (x-t, v-t and a-t)",
+    "queries": [
+      "graad 12 fisika grafieke vertikale projektielbeweging",
+      "graad 12 chemie grafieke vertikale projektielbeweging",
+      "grafieke vertikale projektielbeweging graad 12",
+      "fisiese wetenskappe grafieke vertikale projektielbeweging graad 12"
+    ],
+    "candidates": [
+      {
+        "id": "KZtGnXvpJz0",
+        "title": "Gr. 12 Fisika: Projektielbeweging",
+        "channel": "Danike Aucamp_Wiskunde en Wetenskap ",
+        "views": 3670,
+        "viewsText": "3,670 views",
+        "duration": "44:25",
+        "durationSeconds": 2665,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 46.1
+      },
+      {
+        "id": "eYcFaby9-34",
+        "title": "Fisika - Vertikale Projektielbeweging Eksamenvraag 2",
+        "channel": "Shap Science SA - Juffrou R",
+        "views": 644,
+        "viewsText": "644 views",
+        "duration": "8:09",
+        "durationSeconds": 489,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 43.6
+      },
+      {
+        "id": "XDAOdQQOWG4",
+        "title": "Fisika - Vertikale Projektielbeweging Eksamenvraag 3",
+        "channel": "Shap Science SA - Juffrou R",
+        "views": 611,
+        "viewsText": "611 views",
+        "duration": "8:51",
+        "durationSeconds": 531,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 43.4
+      },
+      {
+        "id": "wv32_OTNoQQ",
+        "title": "Fisika - Vertikale Projektielbeweging Eksamenvraag 4",
+        "channel": "Shap Science SA - Juffrou R",
+        "views": 540,
+        "viewsText": "540 views",
+        "duration": "8:00",
+        "durationSeconds": 480,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 42.8
+      },
+      {
+        "id": "VrJelMGpuR4",
+        "title": "Vertikale Projektiel Beweging - Afrikaans Potgooi / Fisika / Fisiese Wetenskappe / Graad 12 NSS",
+        "channel": "Simple Science",
+        "views": 499,
+        "viewsText": "499 views",
+        "duration": "6:33",
+        "durationSeconds": 393,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 42.5
+      }
+    ],
+    "pick": {
+      "id": "KZtGnXvpJz0",
+      "title": "Gr. 12 Fisika: Projektielbeweging",
+      "channel": "Danike Aucamp_Wiskunde en Wetenskap ",
+      "views": 3670,
+      "viewsText": "3,670 views",
+      "duration": "44:25",
+      "durationSeconds": 2665,
+      "saChannel": true,
+      "embeddable": true,
+      "score": 46.1
+    },
+    "usedAdjacentGrade": false
+  },
+  {
+    "slug": "mechanics-gr12",
+    "topicTitle": "Mechanics",
+    "grade": 12,
+    "paper": 1,
+    "subTopic": "Work done by a force",
+    "queries": [
+      "graad 12 fisika arbeid krag",
+      "graad 12 chemie arbeid krag",
+      "arbeid krag graad 12",
+      "fisiese wetenskappe arbeid krag graad 12"
+    ],
+    "candidates": [
+      {
+        "id": "D_uuoHCa30c",
+        "title": "Gr. 12 Fisika: Arbeid, energie en drywing",
+        "channel": "Danike Aucamp_Wiskunde en Wetenskap ",
+        "views": 2630,
+        "viewsText": "2,630 views",
+        "duration": "7:29",
+        "durationSeconds": 449,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 49.7
+      },
+      {
+        "id": "f6myS1DF78I",
+        "title": "Fisiese Wetenskap - Arbeid-energiestelling",
+        "channel": "Wolkskool",
+        "views": 14799,
+        "viewsText": "14,799 views",
+        "duration": "46:48",
+        "durationSeconds": 2808,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 47.2
+      },
+      {
+        "id": "dmw6A4kkzwQ",
+        "title": "Gr. 12 Fisika: Arbeid, energie en drywing (arbeid-energie-stelling)",
+        "channel": "Danike Aucamp_Wiskunde en Wetenskap ",
+        "views": 1214,
+        "viewsText": "1,214 views",
+        "duration": "4:02",
+        "durationSeconds": 242,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 46.3
+      },
+      {
+        "id": "RNQmaj__ri8",
+        "title": "Gr. 12 Fisika: Arbeid, energie en drywing - op 'n skuinsvlak",
+        "channel": "Danike Aucamp_Wiskunde en Wetenskap ",
+        "views": 1003,
+        "viewsText": "1,003 views",
+        "duration": "5:49",
+        "durationSeconds": 349,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 45.5
+      },
+      {
+        "id": "BYGLTeBE0yM",
+        "title": "Arbeid, energie en drywing: Gr. 12 Fisika",
+        "channel": "Danike Aucamp_Wiskunde en Wetenskap ",
+        "views": 2165,
+        "viewsText": "2,165 views",
+        "duration": "39:35",
+        "durationSeconds": 2375,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 43.9
+      }
+    ],
+    "pick": {
+      "id": "D_uuoHCa30c",
+      "title": "Gr. 12 Fisika: Arbeid, energie en drywing",
+      "channel": "Danike Aucamp_Wiskunde en Wetenskap ",
+      "views": 2630,
+      "viewsText": "2,630 views",
+      "duration": "7:29",
+      "durationSeconds": 449,
+      "saChannel": true,
+      "embeddable": true,
+      "score": 49.7
+    },
+    "usedAdjacentGrade": false
+  },
+  {
+    "slug": "mechanics-gr12",
+    "topicTitle": "Mechanics",
+    "grade": 12,
+    "paper": 1,
+    "subTopic": "The work-energy theorem",
+    "queries": [
+      "graad 12 fisika arbeid energie stelling",
+      "graad 12 chemie arbeid energie stelling",
+      "arbeid energie stelling graad 12",
+      "fisiese wetenskappe arbeid energie stelling graad 12"
+    ],
+    "candidates": [
+      {
+        "id": "dmw6A4kkzwQ",
+        "title": "Gr. 12 Fisika: Arbeid, energie en drywing (arbeid-energie-stelling)",
+        "channel": "Danike Aucamp_Wiskunde en Wetenskap ",
+        "views": 1214,
+        "viewsText": "1,214 views",
+        "duration": "4:02",
+        "durationSeconds": 242,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 50.1
+      },
+      {
+        "id": "f6myS1DF78I",
+        "title": "Fisiese Wetenskap - Arbeid-energiestelling",
+        "channel": "Wolkskool",
+        "views": 14799,
+        "viewsText": "14,799 views",
+        "duration": "46:48",
+        "durationSeconds": 2808,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 47.2
+      },
+      {
+        "id": "TU3c_wjJDvY",
+        "title": "Fisika: Arbeid Energie en Drywing Eksamenvraag 1",
+        "channel": "Shap Science SA - Juffrou R",
+        "views": 1074,
+        "viewsText": "1,074 views",
+        "duration": "7:56",
+        "durationSeconds": 476,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 45.8
+      },
+      {
+        "id": "BYGLTeBE0yM",
+        "title": "Arbeid, energie en drywing: Gr. 12 Fisika",
+        "channel": "Danike Aucamp_Wiskunde en Wetenskap ",
+        "views": 2165,
+        "viewsText": "2,165 views",
+        "duration": "39:35",
+        "durationSeconds": 2375,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 43.9
+      },
+      {
+        "id": "iZOhp5s0YAM",
+        "title": "Arbeid, Energie en Drywing Eksamenvraag 2",
+        "channel": "Shap Science SA - Juffrou R",
+        "views": 683,
+        "viewsText": "683 views",
+        "duration": "6:38",
+        "durationSeconds": 398,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 43.8
+      }
+    ],
+    "pick": {
+      "id": "dmw6A4kkzwQ",
+      "title": "Gr. 12 Fisika: Arbeid, energie en drywing (arbeid-energie-stelling)",
+      "channel": "Danike Aucamp_Wiskunde en Wetenskap ",
+      "views": 1214,
+      "viewsText": "1,214 views",
+      "duration": "4:02",
+      "durationSeconds": 242,
+      "saChannel": true,
+      "embeddable": true,
+      "score": 50.1
+    },
+    "usedAdjacentGrade": false
+  },
+  {
+    "slug": "mechanics-gr12",
+    "topicTitle": "Mechanics",
+    "grade": 12,
+    "paper": 1,
+    "subTopic": "Conservation of energy with non-conservative forces present",
+    "queries": [
+      "graad 12 fisika behoud energie kragte",
+      "graad 12 chemie behoud energie kragte",
+      "behoud energie kragte graad 12",
+      "fisiese wetenskappe behoud energie kragte graad 12"
+    ],
+    "candidates": [],
+    "pick": null,
+    "usedAdjacentGrade": false,
+    "note": "No embeddable, on-topic CAPS candidate found - left blank for manual search"
+  },
+  {
+    "slug": "mechanics-gr12",
+    "topicTitle": "Mechanics",
+    "grade": 12,
+    "paper": 1,
+    "subTopic": "Power",
+    "queries": [
+      "graad 12 fisika drywing",
+      "graad 12 chemie drywing",
+      "drywing graad 12",
+      "fisiese wetenskappe drywing graad 12"
+    ],
+    "candidates": [
+      {
+        "id": "RNQmaj__ri8",
+        "title": "Gr. 12 Fisika: Arbeid, energie en drywing - op 'n skuinsvlak",
+        "channel": "Danike Aucamp_Wiskunde en Wetenskap ",
+        "views": 1003,
+        "viewsText": "1,003 views",
+        "duration": "5:49",
+        "durationSeconds": 349,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 53
+      },
+      {
+        "id": "nUNbtTDRV6E",
+        "title": "Fisiese Wetenskap - Drywing",
+        "channel": "Wolkskool",
+        "views": 7567,
+        "viewsText": "7,567 views",
+        "duration": "53:39",
+        "durationSeconds": 3219,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 51.8
+      },
+      {
+        "id": "BYGLTeBE0yM",
+        "title": "Arbeid, energie en drywing: Gr. 12 Fisika",
+        "channel": "Danike Aucamp_Wiskunde en Wetenskap ",
+        "views": 2165,
+        "viewsText": "2,165 views",
+        "duration": "39:35",
+        "durationSeconds": 2375,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 51.4
+      },
+      {
+        "id": "n3Am-d5zHfA",
+        "title": "Graad 12 Fisika Drywing",
+        "channel": "Hoërskool Alberton",
+        "views": 552,
+        "viewsText": "552 views",
+        "duration": "8:21",
+        "durationSeconds": 501,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 50.4
+      }
+    ],
+    "pick": {
+      "id": "RNQmaj__ri8",
+      "title": "Gr. 12 Fisika: Arbeid, energie en drywing - op 'n skuinsvlak",
+      "channel": "Danike Aucamp_Wiskunde en Wetenskap ",
+      "views": 1003,
+      "viewsText": "1,003 views",
+      "duration": "5:49",
+      "durationSeconds": 349,
+      "saChannel": true,
+      "embeddable": true,
+      "score": 53
+    },
+    "usedAdjacentGrade": false
+  },
+  {
+    "slug": "waves-sound-light-gr12",
+    "topicTitle": "Waves, Sound & Light",
+    "grade": 12,
+    "paper": 1,
+    "subTopic": "The Doppler effect for sound",
+    "queries": [
+      "graad 12 fisika doppler effek klank",
+      "graad 12 chemie doppler effek klank",
+      "doppler effek klank graad 12",
+      "fisiese wetenskappe doppler effek klank graad 12"
+    ],
+    "candidates": [
+      {
+        "id": "_oqI8mOrg84",
+        "title": "Doppler effek: Graad 12 Fisika",
+        "channel": "Ekstra Wetenskap Klasse",
+        "views": 1767,
+        "viewsText": "1,767 views",
+        "duration": "11:44",
+        "durationSeconds": 704,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 50.5
+      },
+      {
+        "id": "VcuIqqDvanY",
+        "title": "Fisiese Wetenskap - Doppler-effek 01",
+        "channel": "Wolkskool",
+        "views": 11677,
+        "viewsText": "11,677 views",
+        "duration": "49:16",
+        "durationSeconds": 2956,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 48.7
+      },
+      {
+        "id": "drVbSrE0vdQ",
+        "title": "Gr. 12 Fisika: Doppler-effek (met gelyktydige vergelykings)",
+        "channel": "Danike Aucamp_Wiskunde en Wetenskap ",
+        "views": 673,
+        "viewsText": "673 views",
+        "duration": "22:48",
+        "durationSeconds": 1368,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 41.3
+      },
+      {
+        "id": "fR3WLpLD4uM",
+        "title": "GR 12 DIE DOPPLER EFFEK – Toepassing #3",
+        "channel": "The Answer Series",
+        "views": 216,
+        "viewsText": "216 views",
+        "duration": "9:06",
+        "durationSeconds": 546,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 41.3
+      },
+      {
+        "id": "zeCMf-DFFUw",
+        "title": "Graad 12 - Nasionaal - November 2025 - Doppler (Eindeksamen)",
+        "channel": "Skeinat met Schabort",
+        "views": 238,
+        "viewsText": "238 views",
+        "duration": "9:30",
+        "durationSeconds": 570,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 39.3
+      }
+    ],
+    "pick": {
+      "id": "_oqI8mOrg84",
+      "title": "Doppler effek: Graad 12 Fisika",
+      "channel": "Ekstra Wetenskap Klasse",
+      "views": 1767,
+      "viewsText": "1,767 views",
+      "duration": "11:44",
+      "durationSeconds": 704,
+      "saChannel": true,
+      "embeddable": true,
+      "score": 50.5
+    },
+    "usedAdjacentGrade": false
+  },
+  {
+    "slug": "waves-sound-light-gr12",
+    "topicTitle": "Waves, Sound & Light",
+    "grade": 12,
+    "paper": 1,
+    "subTopic": "Doppler effect calculations for a moving source or moving listener",
+    "queries": [
+      "graad 12 fisika doppler effek berekeninge",
+      "graad 12 chemie doppler effek berekeninge",
+      "doppler effek berekeninge graad 12",
+      "fisiese wetenskappe doppler effek berekeninge graad 12"
+    ],
+    "candidates": [
+      {
+        "id": "wJn76p15F9s",
+        "title": "Fisiese Wetenskap - Doppler-effek 02",
+        "channel": "Wolkskool",
+        "views": 6644,
+        "viewsText": "6,644 views",
+        "duration": "42:11",
+        "durationSeconds": 2531,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 48.7
+      },
+      {
+        "id": "VcuIqqDvanY",
+        "title": "Fisiese Wetenskap - Doppler-effek 01",
+        "channel": "Wolkskool",
+        "views": 11677,
+        "viewsText": "11,677 views",
+        "duration": "49:16",
+        "durationSeconds": 2956,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 46.2
+      },
+      {
+        "id": "zeCMf-DFFUw",
+        "title": "Graad 12 - Nasionaal - November 2025 - Doppler (Eindeksamen)",
+        "channel": "Skeinat met Schabort",
+        "views": 238,
+        "viewsText": "238 views",
+        "duration": "9:30",
+        "durationSeconds": 570,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 39.3
+      },
+      {
+        "id": "drVbSrE0vdQ",
+        "title": "Gr. 12 Fisika: Doppler-effek (met gelyktydige vergelykings)",
+        "channel": "Danike Aucamp_Wiskunde en Wetenskap ",
+        "views": 673,
+        "viewsText": "673 views",
+        "duration": "22:48",
+        "durationSeconds": 1368,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 38.8
+      },
+      {
+        "id": "fR3WLpLD4uM",
+        "title": "GR 12 DIE DOPPLER EFFEK – Toepassing #3",
+        "channel": "The Answer Series",
+        "views": 216,
+        "viewsText": "216 views",
+        "duration": "9:06",
+        "durationSeconds": 546,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 38.8
+      }
+    ],
+    "pick": {
+      "id": "wJn76p15F9s",
+      "title": "Fisiese Wetenskap - Doppler-effek 02",
+      "channel": "Wolkskool",
+      "views": 6644,
+      "viewsText": "6,644 views",
+      "duration": "42:11",
+      "durationSeconds": 2531,
+      "saChannel": true,
+      "embeddable": true,
+      "score": 48.7
+    },
+    "usedAdjacentGrade": false
+  },
+  {
+    "slug": "waves-sound-light-gr12",
+    "topicTitle": "Waves, Sound & Light",
+    "grade": 12,
+    "paper": 1,
+    "subTopic": "Applications of the Doppler effect with ultrasound in medicine",
+    "queries": [
+      "graad 12 fisika doppler effek ultraklank",
+      "graad 12 chemie doppler effek ultraklank",
+      "doppler effek ultraklank graad 12",
+      "fisiese wetenskappe doppler effek ultraklank graad 12"
+    ],
+    "candidates": [],
+    "pick": null,
+    "usedAdjacentGrade": false,
+    "note": "No embeddable, on-topic CAPS candidate found - left blank for manual search"
+  },
+  {
+    "slug": "waves-sound-light-gr12",
+    "topicTitle": "Waves, Sound & Light",
+    "grade": 12,
+    "paper": 1,
+    "subTopic": "The Doppler effect with light: red shifts and the expanding universe",
+    "queries": [
+      "graad 12 fisika doppler effek lig",
+      "graad 12 chemie doppler effek lig",
+      "doppler effek lig graad 12",
+      "fisiese wetenskappe doppler effek lig graad 12"
+    ],
+    "candidates": [
+      {
+        "id": "VcuIqqDvanY",
+        "title": "Fisiese Wetenskap - Doppler-effek 01",
+        "channel": "Wolkskool",
+        "views": 11677,
+        "viewsText": "11,677 views",
+        "duration": "49:16",
+        "durationSeconds": 2956,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 46.2
+      },
+      {
+        "id": "zeCMf-DFFUw",
+        "title": "Graad 12 - Nasionaal - November 2025 - Doppler (Eindeksamen)",
+        "channel": "Skeinat met Schabort",
+        "views": 238,
+        "viewsText": "238 views",
+        "duration": "9:30",
+        "durationSeconds": 570,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 39.3
+      },
+      {
+        "id": "drVbSrE0vdQ",
+        "title": "Gr. 12 Fisika: Doppler-effek (met gelyktydige vergelykings)",
+        "channel": "Danike Aucamp_Wiskunde en Wetenskap ",
+        "views": 673,
+        "viewsText": "673 views",
+        "duration": "22:48",
+        "durationSeconds": 1368,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 38.8
+      },
+      {
+        "id": "fR3WLpLD4uM",
+        "title": "GR 12 DIE DOPPLER EFFEK – Toepassing #3",
+        "channel": "The Answer Series",
+        "views": 216,
+        "viewsText": "216 views",
+        "duration": "9:06",
+        "durationSeconds": 546,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 38.8
+      }
+    ],
+    "pick": {
+      "id": "VcuIqqDvanY",
+      "title": "Fisiese Wetenskap - Doppler-effek 01",
+      "channel": "Wolkskool",
+      "views": 11677,
+      "viewsText": "11,677 views",
+      "duration": "49:16",
+      "durationSeconds": 2956,
+      "saChannel": true,
+      "embeddable": true,
+      "score": 46.2
+    },
+    "usedAdjacentGrade": false
+  },
+  {
+    "slug": "electricity-magnetism-gr12",
+    "topicTitle": "Electricity & Magnetism",
+    "grade": 12,
+    "paper": 1,
+    "subTopic": "Series and parallel resistor networks",
+    "queries": [
+      "graad 12 fisika serie parallelle weerstand",
+      "graad 12 chemie serie parallelle weerstand",
+      "serie parallelle weerstand graad 12",
+      "fisiese wetenskappe serie parallelle weerstand graad 12"
+    ],
+    "candidates": [
+      {
+        "id": "1lpHeTHZI6E",
+        "title": "Gr. 12 Fisika: Elektrisiteit (interne weerstand) | die ENIGSTE video wat jy nodig het!",
+        "channel": "Danike Aucamp_Wiskunde en Wetenskap ",
+        "views": 4564,
+        "viewsText": "4,564 views",
+        "duration": "46:45",
+        "durationSeconds": 2805,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 42.1
+      }
+    ],
+    "pick": {
+      "id": "1lpHeTHZI6E",
+      "title": "Gr. 12 Fisika: Elektrisiteit (interne weerstand) | die ENIGSTE video wat jy nodig het!",
+      "channel": "Danike Aucamp_Wiskunde en Wetenskap ",
+      "views": 4564,
+      "viewsText": "4,564 views",
+      "duration": "46:45",
+      "durationSeconds": 2805,
+      "saChannel": true,
+      "embeddable": true,
+      "score": 42.1
+    },
+    "usedAdjacentGrade": false
+  },
+  {
+    "slug": "electricity-magnetism-gr12",
+    "topicTitle": "Electricity & Magnetism",
+    "grade": 12,
+    "paper": 1,
+    "subTopic": "Internal resistance and emf of a battery",
+    "queries": [
+      "graad 12 fisika interne weerstand emk",
+      "graad 12 chemie interne weerstand emk",
+      "interne weerstand emk graad 12",
+      "fisiese wetenskappe interne weerstand emk graad 12"
+    ],
+    "candidates": [],
+    "pick": null,
+    "usedAdjacentGrade": false,
+    "note": "No embeddable, on-topic CAPS candidate found - left blank for manual search"
+  },
+  {
+    "slug": "electricity-magnetism-gr12",
+    "topicTitle": "Electricity & Magnetism",
+    "grade": 12,
+    "paper": 1,
+    "subTopic": "Circuit calculations with internal resistance and series-parallel networks",
+    "queries": [
+      "graad 12 fisika stroombaan berekeninge interne",
+      "graad 12 chemie stroombaan berekeninge interne",
+      "stroombaan berekeninge interne graad 12",
+      "fisiese wetenskappe stroombaan berekeninge interne graad 12"
+    ],
+    "candidates": [
+      {
+        "id": "iMeyrFFJy60",
+        "title": "Stroombane 2 (sonder interne weerstand)",
+        "channel": "WSILAB",
+        "views": 321,
+        "viewsText": "321 views",
+        "duration": "4:11",
+        "durationSeconds": 251,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 40.6
+      }
+    ],
+    "pick": {
+      "id": "iMeyrFFJy60",
+      "title": "Stroombane 2 (sonder interne weerstand)",
+      "channel": "WSILAB",
+      "views": 321,
+      "viewsText": "321 views",
+      "duration": "4:11",
+      "durationSeconds": 251,
+      "saChannel": true,
+      "embeddable": true,
+      "score": 40.6
+    },
+    "usedAdjacentGrade": false
+  },
+  {
+    "slug": "electricity-magnetism-gr12",
+    "topicTitle": "Electricity & Magnetism",
+    "grade": 12,
+    "paper": 1,
+    "subTopic": "AC and DC generators",
+    "queries": [
+      "graad 12 fisika generators",
+      "graad 12 chemie generators",
+      "generators graad 12",
+      "fisiese wetenskappe generators graad 12"
+    ],
+    "candidates": [
+      {
+        "id": "gPb7fO3NLwA",
+        "title": "Gr. 12 Fisika: Elektrodinamika Generators in 'n NEUTEDOP",
+        "channel": "Danike Aucamp_Wiskunde en Wetenskap ",
+        "views": 3534,
+        "viewsText": "3,534 views",
+        "duration": "19:41",
+        "durationSeconds": 1181,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 58.5
+      },
+      {
+        "id": "f1q2og4mgGA",
+        "title": "Fisiese Wetenskap - Generators",
+        "channel": "Wolkskool",
+        "views": 11133,
+        "viewsText": "11,133 views",
+        "duration": "47:05",
+        "durationSeconds": 2825,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 53.5
+      },
+      {
+        "id": "98DmrCjYgDY",
+        "title": "Generators: Wisselstroom- en Gelykstroomgenerator Graad 12 Fisika",
+        "channel": "Ekstra Wetenskap Klasse",
+        "views": 774,
+        "viewsText": "774 views",
+        "duration": "9:05",
+        "durationSeconds": 545,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 51.9
+      }
+    ],
+    "pick": {
+      "id": "gPb7fO3NLwA",
+      "title": "Gr. 12 Fisika: Elektrodinamika Generators in 'n NEUTEDOP",
+      "channel": "Danike Aucamp_Wiskunde en Wetenskap ",
+      "views": 3534,
+      "viewsText": "3,534 views",
+      "duration": "19:41",
+      "durationSeconds": 1181,
+      "saChannel": true,
+      "embeddable": true,
+      "score": 58.5
+    },
+    "usedAdjacentGrade": false
+  },
+  {
+    "slug": "electricity-magnetism-gr12",
+    "topicTitle": "Electricity & Magnetism",
+    "grade": 12,
+    "paper": 1,
+    "subTopic": "Electric motors",
+    "queries": [
+      "graad 12 fisika elektriese motors",
+      "graad 12 chemie elektriese motors",
+      "elektriese motors graad 12",
+      "fisiese wetenskappe elektriese motors graad 12"
+    ],
+    "candidates": [
+      {
+        "id": "u7X759MljIs",
+        "title": "Elektriese motors: Wisselstroom- en Gelykstroommotors Graad 12 Fisika",
+        "channel": "Ekstra Wetenskap Klasse",
+        "views": 2421,
+        "viewsText": "2,421 views",
+        "duration": "8:15",
+        "durationSeconds": 495,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 56.8
+      },
+      {
+        "id": "V7sieQPtClk",
+        "title": "Gr. 12 Fisika: Elektrodinamika: VERSTAAN elektriese motors BETER",
+        "channel": "Danike Aucamp_Wiskunde en Wetenskap ",
+        "views": 1928,
+        "viewsText": "1,928 views",
+        "duration": "15:38",
+        "durationSeconds": 938,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 55.9
+      },
+      {
+        "id": "JU5AcgMflRc",
+        "title": "Fisiese Wetenskap - Motors",
+        "channel": "Wolkskool",
+        "views": 6969,
+        "viewsText": "6,969 views",
+        "duration": "41:27",
+        "durationSeconds": 2487,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 48.9
+      }
+    ],
+    "pick": {
+      "id": "u7X759MljIs",
+      "title": "Elektriese motors: Wisselstroom- en Gelykstroommotors Graad 12 Fisika",
+      "channel": "Ekstra Wetenskap Klasse",
+      "views": 2421,
+      "viewsText": "2,421 views",
+      "duration": "8:15",
+      "durationSeconds": 495,
+      "saChannel": true,
+      "embeddable": true,
+      "score": 56.8
+    },
+    "usedAdjacentGrade": false
+  },
+  {
+    "slug": "electricity-magnetism-gr12",
+    "topicTitle": "Electricity & Magnetism",
+    "grade": 12,
+    "paper": 1,
+    "subTopic": "Alternating current: current and voltage graphs",
+    "queries": [
+      "graad 12 fisika wisselstroom stroomsterkte spanning",
+      "graad 12 chemie wisselstroom stroomsterkte spanning",
+      "wisselstroom stroomsterkte spanning graad 12",
+      "fisiese wetenskappe wisselstroom stroomsterkte spanning graad 12"
+    ],
+    "candidates": [],
+    "pick": null,
+    "usedAdjacentGrade": false,
+    "note": "No embeddable, on-topic CAPS candidate found - left blank for manual search"
+  },
+  {
+    "slug": "electricity-magnetism-gr12",
+    "topicTitle": "Electricity & Magnetism",
+    "grade": 12,
+    "paper": 1,
+    "subTopic": "rms values and average power in AC circuits",
+    "queries": [
+      "graad 12 fisika wgk drywing stroombane",
+      "graad 12 chemie wgk drywing stroombane",
+      "wgk drywing stroombane graad 12",
+      "fisiese wetenskappe wgk drywing stroombane graad 12"
+    ],
+    "candidates": [
+      {
+        "id": "ZZaYa08STtw",
+        "title": "Konserwatiewe en nie-konserwatiewe kragte en Drywing Gr. 12 Fisika",
+        "channel": "Danike Aucamp_Wiskunde en Wetenskap ",
+        "views": 1312,
+        "viewsText": "1,312 views",
+        "duration": "12:06",
+        "durationSeconds": 726,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 46.7
+      },
+      {
+        "id": "nUNbtTDRV6E",
+        "title": "Fisiese Wetenskap - Drywing",
+        "channel": "Wolkskool",
+        "views": 7567,
+        "viewsText": "7,567 views",
+        "duration": "53:39",
+        "durationSeconds": 3219,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 44.3
+      },
+      {
+        "id": "BYGLTeBE0yM",
+        "title": "Arbeid, energie en drywing: Gr. 12 Fisika",
+        "channel": "Danike Aucamp_Wiskunde en Wetenskap ",
+        "views": 2165,
+        "viewsText": "2,165 views",
+        "duration": "39:35",
+        "durationSeconds": 2375,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 43.9
+      },
+      {
+        "id": "30L4lO_txIk",
+        "title": "Gr 12 Fisika Drywing",
+        "channel": "Hoërskool Alberton",
+        "views": 516,
+        "viewsText": "516 views",
+        "duration": "8:21",
+        "durationSeconds": 501,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 42.6
+      }
+    ],
+    "pick": {
+      "id": "ZZaYa08STtw",
+      "title": "Konserwatiewe en nie-konserwatiewe kragte en Drywing Gr. 12 Fisika",
+      "channel": "Danike Aucamp_Wiskunde en Wetenskap ",
+      "views": 1312,
+      "viewsText": "1,312 views",
+      "duration": "12:06",
+      "durationSeconds": 726,
+      "saChannel": true,
+      "embeddable": true,
+      "score": 46.7
+    },
+    "usedAdjacentGrade": false
+  },
+  {
+    "slug": "optical-phenomena-gr12",
+    "topicTitle": "Optical Phenomena and Properties of Materials",
+    "grade": 12,
+    "paper": 1,
+    "subTopic": "The photo-electric effect",
+    "queries": [
+      "graad 12 fisika foto elektriese effek",
+      "graad 12 chemie foto elektriese effek",
+      "foto elektriese effek graad 12",
+      "fisiese wetenskappe foto elektriese effek graad 12"
+    ],
+    "candidates": [
+      {
+        "id": "ozqyFow1KM0",
+        "title": "Gr. 12: Fotoëlektriese effek",
+        "channel": "Danike Aucamp_Wiskunde en Wetenskap ",
+        "views": 3071,
+        "viewsText": "3,071 views",
+        "duration": "16:24",
+        "durationSeconds": 984,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 54.1
+      },
+      {
+        "id": "sCbHl-B0zDI",
+        "title": "Graad 12 foto-elektriese effek  deel 1",
+        "channel": "Hoërskool Alberton",
+        "views": 1124,
+        "viewsText": "1,124 views",
+        "duration": "14:21",
+        "durationSeconds": 861,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 53.5
+      },
+      {
+        "id": "1TxXlTXen4E",
+        "title": "Fisiese Wetenskap - Foto-elektriese effek 01",
+        "channel": "Wolkskool",
+        "views": 10823,
+        "viewsText": "10,823 views",
+        "duration": "51:41",
+        "durationSeconds": 3101,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 53.3
+      },
+      {
+        "id": "BQzFvpTQPS8",
+        "title": "Fisiese Wetenskap - Foto-elektriese effek 02",
+        "channel": "Wolkskool",
+        "views": 5825,
+        "viewsText": "5,825 views",
+        "duration": "47:59",
+        "durationSeconds": 2879,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 50.7
+      },
+      {
+        "id": "uRF227J8SLo",
+        "title": "Graad 12 foto-elektriese effek deel 2",
+        "channel": "Hoërskool Alberton",
+        "views": 553,
+        "viewsText": "553 views",
+        "duration": "13:35",
+        "durationSeconds": 815,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 50.4
+      }
+    ],
+    "pick": {
+      "id": "ozqyFow1KM0",
+      "title": "Gr. 12: Fotoëlektriese effek",
+      "channel": "Danike Aucamp_Wiskunde en Wetenskap ",
+      "views": 3071,
+      "viewsText": "3,071 views",
+      "duration": "16:24",
+      "durationSeconds": 984,
+      "saChannel": true,
+      "embeddable": true,
+      "score": 54.1
+    },
+    "usedAdjacentGrade": false
+  },
+  {
+    "slug": "optical-phenomena-gr12",
+    "topicTitle": "Optical Phenomena and Properties of Materials",
+    "grade": 12,
+    "paper": 1,
+    "subTopic": "Work function, cut-off frequency and the photo-electric equation",
+    "queries": [
+      "graad 12 fisika arbeid frekwensie foto",
+      "graad 12 chemie arbeid frekwensie foto",
+      "arbeid frekwensie foto graad 12",
+      "fisiese wetenskappe arbeid frekwensie foto graad 12"
+    ],
+    "candidates": [
+      {
+        "id": "Yp-Wgn8Wt6k",
+        "title": "Photoelectric Effect Graphs",
+        "channel": "Simple Science",
+        "views": 23980,
+        "viewsText": "23,980 views",
+        "duration": "5:36",
+        "durationSeconds": 336,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 59.3
+      },
+      {
+        "id": "1TxXlTXen4E",
+        "title": "Fisiese Wetenskap - Foto-elektriese effek 01",
+        "channel": "Wolkskool",
+        "views": 10823,
+        "viewsText": "10,823 views",
+        "duration": "51:41",
+        "durationSeconds": 3101,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 45.8
+      },
+      {
+        "id": "uRF227J8SLo",
+        "title": "Graad 12 foto-elektriese effek deel 2",
+        "channel": "Hoërskool Alberton",
+        "views": 553,
+        "viewsText": "553 views",
+        "duration": "13:35",
+        "durationSeconds": 815,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 42.9
+      },
+      {
+        "id": "xY_XAH-vHOg",
+        "title": "Foto-elektriese Effek - Afrikaans Potgooi / Fisika / Fisiese Wetenskappe / Graad 12 NSS",
+        "channel": "Simple Science",
+        "views": 233,
+        "viewsText": "233 views",
+        "duration": "9:27",
+        "durationSeconds": 567,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 39.2
+      }
+    ],
+    "pick": {
+      "id": "Yp-Wgn8Wt6k",
+      "title": "Photoelectric Effect Graphs",
+      "channel": "Simple Science",
+      "views": 23980,
+      "viewsText": "23,980 views",
+      "duration": "5:36",
+      "durationSeconds": 336,
+      "saChannel": true,
+      "embeddable": true,
+      "score": 59.3
+    },
+    "usedAdjacentGrade": false
+  },
+  {
+    "slug": "optical-phenomena-gr12",
+    "topicTitle": "Optical Phenomena and Properties of Materials",
+    "grade": 12,
+    "paper": 1,
+    "subTopic": "Intensity, frequency and the number of electrons ejected",
+    "queries": [
+      "graad 12 fisika intensiteit frekwensie elektrone",
+      "graad 12 chemie intensiteit frekwensie elektrone",
+      "intensiteit frekwensie elektrone graad 12",
+      "fisiese wetenskappe intensiteit frekwensie elektrone graad 12"
+    ],
+    "candidates": [],
+    "pick": null,
+    "usedAdjacentGrade": false,
+    "note": "No embeddable, on-topic CAPS candidate found - left blank for manual search"
+  },
+  {
+    "slug": "optical-phenomena-gr12",
+    "topicTitle": "Optical Phenomena and Properties of Materials",
+    "grade": 12,
+    "paper": 1,
+    "subTopic": "Atomic emission spectra and electron transitions",
+    "queries": [
+      "graad 12 fisika atoom emissie spektrums",
+      "graad 12 chemie atoom emissie spektrums",
+      "atoom emissie spektrums graad 12",
+      "fisiese wetenskappe atoom emissie spektrums graad 12"
+    ],
+    "candidates": [
+      {
+        "id": "hA27-yKJuNM",
+        "title": "Absorption Spectra",
+        "channel": "Simple Science",
+        "views": 23771,
+        "viewsText": "23,771 views",
+        "duration": "5:12",
+        "durationSeconds": 312,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 59.3
+      },
+      {
+        "id": "iBZUQqwjBPs",
+        "title": "Emission & Absorption Spectra Explained | Grade 12 Physical Sciences",
+        "channel": "Danike Aucamp_Wiskunde en Wetenskap ",
+        "views": 3624,
+        "viewsText": "3,624 views",
+        "duration": "7:40",
+        "durationSeconds": 460,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 51.1
+      },
+      {
+        "id": "cL9qS3YosqI",
+        "title": "Spektrums: Emissie- en absorpsiespektrums Graad 12 Fisika",
+        "channel": "Ekstra Wetenskap Klasse",
+        "views": 251,
+        "viewsText": "251 views",
+        "duration": "5:55",
+        "durationSeconds": 355,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 39.5
+      },
+      {
+        "id": "uIxi7GAj4ik",
+        "title": "Spektrums: Verduideliking Graad 12 Fisika",
+        "channel": "Ekstra Wetenskap Klasse",
+        "views": 193,
+        "viewsText": "193 views",
+        "duration": "3:33",
+        "durationSeconds": 213,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 38.4
+      }
+    ],
+    "pick": {
+      "id": "hA27-yKJuNM",
+      "title": "Absorption Spectra",
+      "channel": "Simple Science",
+      "views": 23771,
+      "viewsText": "23,771 views",
+      "duration": "5:12",
+      "durationSeconds": 312,
+      "saChannel": true,
+      "embeddable": true,
+      "score": 59.3
+    },
+    "usedAdjacentGrade": false
+  },
+  {
+    "slug": "optical-phenomena-gr12",
+    "topicTitle": "Optical Phenomena and Properties of Materials",
+    "grade": 12,
+    "paper": 1,
+    "subTopic": "Emission versus absorption spectra",
+    "queries": [
+      "graad 12 fisika emissie absorpsie spektrums",
+      "graad 12 chemie emissie absorpsie spektrums",
+      "emissie absorpsie spektrums graad 12",
+      "fisiese wetenskappe emissie absorpsie spektrums graad 12"
+    ],
+    "candidates": [
+      {
+        "id": "57vcGZzJ1Ug",
+        "title": "Emission Spectra",
+        "channel": "Simple Science",
+        "views": 19019,
+        "viewsText": "19,019 views",
+        "duration": "3:20",
+        "durationSeconds": 200,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 58.3
+      },
+      {
+        "id": "iBZUQqwjBPs",
+        "title": "Emission & Absorption Spectra Explained | Grade 12 Physical Sciences",
+        "channel": "Danike Aucamp_Wiskunde en Wetenskap ",
+        "views": 3624,
+        "viewsText": "3,624 views",
+        "duration": "7:40",
+        "durationSeconds": 460,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 54.8
+      },
+      {
+        "id": "cL9qS3YosqI",
+        "title": "Spektrums: Emissie- en absorpsiespektrums Graad 12 Fisika",
+        "channel": "Ekstra Wetenskap Klasse",
+        "views": 251,
+        "viewsText": "251 views",
+        "duration": "5:55",
+        "durationSeconds": 355,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 39.5
+      },
+      {
+        "id": "uIxi7GAj4ik",
+        "title": "Spektrums: Verduideliking Graad 12 Fisika",
+        "channel": "Ekstra Wetenskap Klasse",
+        "views": 193,
+        "viewsText": "193 views",
+        "duration": "3:33",
+        "durationSeconds": 213,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 38.4
+      }
+    ],
+    "pick": {
+      "id": "57vcGZzJ1Ug",
+      "title": "Emission Spectra",
+      "channel": "Simple Science",
+      "views": 19019,
+      "viewsText": "19,019 views",
+      "duration": "3:20",
+      "durationSeconds": 200,
+      "saChannel": true,
+      "embeddable": true,
+      "score": 58.3
+    },
+    "usedAdjacentGrade": false
+  },
+  {
+    "slug": "organic-chemistry-gr12",
+    "topicTitle": "Organic Chemistry",
+    "grade": 12,
+    "paper": 2,
+    "subTopic": "Organic molecules: functional groups, saturated and unsaturated structures",
+    "queries": [
+      "graad 12 fisika organiese molekules funksionele",
+      "graad 12 chemie organiese molekules funksionele",
+      "organiese molekules funksionele graad 12",
+      "fisiese wetenskappe organiese molekules funksionele graad 12"
+    ],
+    "candidates": [],
+    "pick": null,
+    "usedAdjacentGrade": false,
+    "note": "No embeddable, on-topic CAPS candidate found - left blank for manual search"
+  },
+  {
+    "slug": "organic-chemistry-gr12",
+    "topicTitle": "Organic Chemistry",
+    "grade": 12,
+    "paper": 2,
+    "subTopic": "Structural isomers: chain, positional and functional",
+    "queries": [
+      "graad 12 fisika struktuur isomere ketting",
+      "graad 12 chemie struktuur isomere ketting",
+      "struktuur isomere ketting graad 12",
+      "fisiese wetenskappe struktuur isomere ketting graad 12"
+    ],
+    "candidates": [
+      {
+        "id": "9xARo0x3oPw",
+        "title": "Isomers",
+        "channel": "Simple Science",
+        "views": 5225,
+        "viewsText": "5,225 views",
+        "duration": "2:38",
+        "durationSeconds": 158,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 52.7
+      },
+      {
+        "id": "Fih8cZ_vQe8",
+        "title": "Isomere: Organiese chemie Graad 12 Chemie",
+        "channel": "Ekstra Wetenskap Klasse",
+        "views": 1268,
+        "viewsText": "1,268 views",
+        "duration": "2:20",
+        "durationSeconds": 140,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 46.5
+      }
+    ],
+    "pick": {
+      "id": "9xARo0x3oPw",
+      "title": "Isomers",
+      "channel": "Simple Science",
+      "views": 5225,
+      "viewsText": "5,225 views",
+      "duration": "2:38",
+      "durationSeconds": 158,
+      "saChannel": true,
+      "embeddable": true,
+      "score": 52.7
+    },
+    "usedAdjacentGrade": false
+  },
+  {
+    "slug": "organic-chemistry-gr12",
+    "topicTitle": "Organic Chemistry",
+    "grade": 12,
+    "paper": 2,
+    "subTopic": "IUPAC naming and formulae of organic compounds",
+    "queries": [
+      "graad 12 fisika iupac naamgewing formules",
+      "graad 12 chemie iupac naamgewing formules",
+      "iupac naamgewing formules graad 12",
+      "fisiese wetenskappe iupac naamgewing formules graad 12"
+    ],
+    "candidates": [],
+    "pick": null,
+    "usedAdjacentGrade": false,
+    "note": "No embeddable, on-topic CAPS candidate found - left blank for manual search"
+  },
+  {
+    "slug": "organic-chemistry-gr12",
+    "topicTitle": "Organic Chemistry",
+    "grade": 12,
+    "paper": 2,
+    "subTopic": "Physical properties and intermolecular forces of organic compounds",
+    "queries": [
+      "graad 12 fisika fisiese eienskappe intermolekulere",
+      "graad 12 chemie fisiese eienskappe intermolekulere",
+      "fisiese eienskappe intermolekulere graad 12",
+      "fisiese wetenskappe fisiese eienskappe intermolekulere graad 12"
+    ],
+    "candidates": [
+      {
+        "id": "N8_SVec-lEQ",
+        "title": "Gr. 12 Organiese chemie: Intermolekulêre kragte",
+        "channel": "Danike Aucamp_Wiskunde en Wetenskap ",
+        "views": 2792,
+        "viewsText": "2,792 views",
+        "duration": "28:18",
+        "durationSeconds": 1698,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 45
+      }
+    ],
+    "pick": {
+      "id": "N8_SVec-lEQ",
+      "title": "Gr. 12 Organiese chemie: Intermolekulêre kragte",
+      "channel": "Danike Aucamp_Wiskunde en Wetenskap ",
+      "views": 2792,
+      "viewsText": "2,792 views",
+      "duration": "28:18",
+      "durationSeconds": 1698,
+      "saChannel": true,
+      "embeddable": true,
+      "score": 45
+    },
+    "usedAdjacentGrade": false
+  },
+  {
+    "slug": "organic-chemistry-gr12",
+    "topicTitle": "Organic Chemistry",
+    "grade": 12,
+    "paper": 2,
+    "subTopic": "Combustion of alkanes and the preparation of esters",
+    "queries": [
+      "graad 12 fisika verbranding alkane esters",
+      "graad 12 chemie verbranding alkane esters",
+      "verbranding alkane esters graad 12",
+      "fisiese wetenskappe verbranding alkane esters graad 12"
+    ],
+    "candidates": [],
+    "pick": null,
+    "usedAdjacentGrade": false,
+    "note": "No embeddable, on-topic CAPS candidate found - left blank for manual search"
+  },
+  {
+    "slug": "organic-chemistry-gr12",
+    "topicTitle": "Organic Chemistry",
+    "grade": 12,
+    "paper": 2,
+    "subTopic": "Addition reactions of alkenes",
+    "queries": [
+      "graad 12 fisika addisie reaksies alkene",
+      "graad 12 chemie addisie reaksies alkene",
+      "addisie reaksies alkene graad 12",
+      "fisiese wetenskappe addisie reaksies alkene graad 12"
+    ],
+    "candidates": [],
+    "pick": null,
+    "usedAdjacentGrade": false,
+    "note": "No embeddable, on-topic CAPS candidate found - left blank for manual search"
+  },
+  {
+    "slug": "organic-chemistry-gr12",
+    "topicTitle": "Organic Chemistry",
+    "grade": 12,
+    "paper": 2,
+    "subTopic": "Elimination reactions and cracking",
+    "queries": [
+      "graad 12 fisika eliminasie reaksies kraking",
+      "graad 12 chemie eliminasie reaksies kraking",
+      "eliminasie reaksies kraking graad 12",
+      "fisiese wetenskappe eliminasie reaksies kraking graad 12"
+    ],
+    "candidates": [
+      {
+        "id": "K8RH5JdyPbE",
+        "title": "Cracking through Elimination",
+        "channel": "Simple Science",
+        "views": 13946,
+        "viewsText": "13,946 views",
+        "duration": "2:43",
+        "durationSeconds": 163,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 59.4
+      }
+    ],
+    "pick": {
+      "id": "K8RH5JdyPbE",
+      "title": "Cracking through Elimination",
+      "channel": "Simple Science",
+      "views": 13946,
+      "viewsText": "13,946 views",
+      "duration": "2:43",
+      "durationSeconds": 163,
+      "saChannel": true,
+      "embeddable": true,
+      "score": 59.4
+    },
+    "usedAdjacentGrade": false
+  },
+  {
+    "slug": "organic-chemistry-gr12",
+    "topicTitle": "Organic Chemistry",
+    "grade": 12,
+    "paper": 2,
+    "subTopic": "Substitution reactions of alkanes, alcohols and haloalkanes",
+    "queries": [
+      "graad 12 fisika substitusie reaksies alkane",
+      "graad 12 chemie substitusie reaksies alkane",
+      "substitusie reaksies alkane graad 12",
+      "fisiese wetenskappe substitusie reaksies alkane graad 12"
+    ],
+    "candidates": [
+      {
+        "id": "bAZvehqOdbU",
+        "title": "Organiese chemiese reaksies: Substitusie, hoofprodukte van addisie en eliminasie",
+        "channel": "HenBot Wetenskap",
+        "views": 1729,
+        "viewsText": "1,729 views",
+        "duration": "16:15",
+        "durationSeconds": 975,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 47.9
+      },
+      {
+        "id": "BgVdh-BdFgo",
+        "title": "Nomenklatuur van alkane en sikloalkane-Graad 12- Chemie",
+        "channel": "Ekstra Wetenskap Klasse",
+        "views": 188,
+        "viewsText": "188 views",
+        "duration": "11:02",
+        "durationSeconds": 662,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 38.2
+      }
+    ],
+    "pick": {
+      "id": "bAZvehqOdbU",
+      "title": "Organiese chemiese reaksies: Substitusie, hoofprodukte van addisie en eliminasie",
+      "channel": "HenBot Wetenskap",
+      "views": 1729,
+      "viewsText": "1,729 views",
+      "duration": "16:15",
+      "durationSeconds": 975,
+      "saChannel": true,
+      "embeddable": true,
+      "score": 47.9
+    },
+    "usedAdjacentGrade": false
+  },
+  {
+    "slug": "organic-chemistry-gr12",
+    "topicTitle": "Organic Chemistry",
+    "grade": 12,
+    "paper": 2,
+    "subTopic": "Addition and condensation polymerisation: plastics and polymers",
+    "queries": [
+      "graad 12 fisika addisie kondensasie polimerisasie",
+      "graad 12 chemie addisie kondensasie polimerisasie",
+      "addisie kondensasie polimerisasie graad 12",
+      "fisiese wetenskappe addisie kondensasie polimerisasie graad 12"
+    ],
+    "candidates": [],
+    "pick": null,
+    "usedAdjacentGrade": false,
+    "note": "No embeddable, on-topic CAPS candidate found - left blank for manual search"
+  },
+  {
+    "slug": "chemical-change-gr12",
+    "topicTitle": "Chemical Change",
+    "grade": 12,
+    "paper": 2,
+    "subTopic": "Reaction rate and the factors that affect it",
+    "queries": [
+      "graad 12 fisika reaksie reaksietempo",
+      "graad 12 chemie reaksie reaksietempo",
+      "reaksie reaksietempo graad 12",
+      "fisiese wetenskappe reaksie reaksietempo graad 12"
+    ],
+    "candidates": [],
+    "pick": null,
+    "usedAdjacentGrade": false,
+    "note": "No embeddable, on-topic CAPS candidate found - left blank for manual search"
+  },
+  {
+    "slug": "chemical-change-gr12",
+    "topicTitle": "Chemical Change",
+    "grade": 12,
+    "paper": 2,
+    "subTopic": "Collision theory, activation energy and catalysts",
+    "queries": [
+      "graad 12 fisika botsingsteorie teorie aktiverings",
+      "graad 12 chemie botsingsteorie teorie aktiverings",
+      "botsingsteorie teorie aktiverings graad 12",
+      "fisiese wetenskappe botsingsteorie teorie aktiverings graad 12"
+    ],
+    "candidates": [],
+    "pick": null,
+    "usedAdjacentGrade": false,
+    "note": "No embeddable, on-topic CAPS candidate found - left blank for manual search"
+  },
+  {
+    "slug": "chemical-change-gr12",
+    "topicTitle": "Chemical Change",
+    "grade": 12,
+    "paper": 2,
+    "subTopic": "Chemical equilibrium and reversible reactions",
+    "queries": [
+      "graad 12 fisika chemiese ewewig omkeerbare",
+      "graad 12 chemie chemiese ewewig omkeerbare",
+      "chemiese ewewig omkeerbare graad 12",
+      "fisiese wetenskappe chemiese ewewig omkeerbare graad 12"
+    ],
+    "candidates": [],
+    "pick": null,
+    "usedAdjacentGrade": false,
+    "note": "No embeddable, on-topic CAPS candidate found - left blank for manual search"
+  },
+  {
+    "slug": "chemical-change-gr12",
+    "topicTitle": "Chemical Change",
+    "grade": 12,
+    "paper": 2,
+    "subTopic": "The equilibrium constant Kc and equilibrium calculations",
+    "queries": [
+      "graad 12 fisika ewewig ewewigskonstante berekeninge",
+      "graad 12 chemie ewewig ewewigskonstante berekeninge",
+      "ewewig ewewigskonstante berekeninge graad 12",
+      "fisiese wetenskappe ewewig ewewigskonstante berekeninge graad 12"
+    ],
+    "candidates": [
+      {
+        "id": "EcSUTQgUa6U",
+        "title": "Gr.12 Chemie: VERSTAAN Chemiese ewewig (inleidend) ",
+        "channel": "Danike Aucamp_Wiskunde en Wetenskap ",
+        "views": 3464,
+        "viewsText": "3,464 views",
+        "duration": "9:53",
+        "durationSeconds": 593,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 50.9
+      },
+      {
+        "id": "Atr7YqSouTc",
+        "title": "Fisiese Wetenskap - Ewewig 01",
+        "channel": "Wolkskool",
+        "views": 18623,
+        "viewsText": "18,623 views",
+        "duration": "50:42",
+        "durationSeconds": 3042,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 48.2
+      },
+      {
+        "id": "eKyuo7EXD0I",
+        "title": "Gr. 12 Chemie: Chemiese ewewig (voorbeeld vrae)",
+        "channel": "Danike Aucamp_Wiskunde en Wetenskap ",
+        "views": 1437,
+        "viewsText": "1,437 views",
+        "duration": "15:14",
+        "durationSeconds": 914,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 47.1
+      },
+      {
+        "id": "sPSEGYEQOtM",
+        "title": "Voorbeeld van ewewig (konsentrasie-tyd) grafiek Graad 12 Chemie",
+        "channel": "Ekstra Wetenskap Klasse",
+        "views": 650,
+        "viewsText": "650 views",
+        "duration": "10:30",
+        "durationSeconds": 630,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 43.6
+      },
+      {
+        "id": "UuwqWD1LiqY",
+        "title": "Graad 12 - Nasionaal - Junie 2025 - Chemiese ewewig (Eindeksamen)",
+        "channel": "Skeinat met Schabort",
+        "views": 545,
+        "viewsText": "545 views",
+        "duration": "14:26",
+        "durationSeconds": 866,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 42.9
+      }
+    ],
+    "pick": {
+      "id": "EcSUTQgUa6U",
+      "title": "Gr.12 Chemie: VERSTAAN Chemiese ewewig (inleidend) ",
+      "channel": "Danike Aucamp_Wiskunde en Wetenskap ",
+      "views": 3464,
+      "viewsText": "3,464 views",
+      "duration": "9:53",
+      "durationSeconds": 593,
+      "saChannel": true,
+      "embeddable": true,
+      "score": 50.9
+    },
+    "usedAdjacentGrade": false
+  },
+  {
+    "slug": "chemical-change-gr12",
+    "topicTitle": "Chemical Change",
+    "grade": 12,
+    "paper": 2,
+    "subTopic": "Le Chatelier's principle",
+    "queries": [
+      "graad 12 fisika chatelier beginsel",
+      "graad 12 chemie chatelier beginsel",
+      "chatelier beginsel graad 12",
+      "fisiese wetenskappe chatelier beginsel graad 12"
+    ],
+    "candidates": [
+      {
+        "id": "oYjuix7oI9E",
+        "title": "Le Chatelier's Principle - Colour Change",
+        "channel": "Simple Science",
+        "views": 16751,
+        "viewsText": "16,751 views",
+        "duration": "4:12",
+        "durationSeconds": 252,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 65.2
+      },
+      {
+        "id": "edsssZoM-bs",
+        "title": "Le Chatelier se beginsel: Ewewig Graad 12 Chemie",
+        "channel": "Ekstra Wetenskap Klasse",
+        "views": 2541,
+        "viewsText": "2,541 views",
+        "duration": "16:57",
+        "durationSeconds": 1017,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 57.1
+      }
+    ],
+    "pick": {
+      "id": "oYjuix7oI9E",
+      "title": "Le Chatelier's Principle - Colour Change",
+      "channel": "Simple Science",
+      "views": 16751,
+      "viewsText": "16,751 views",
+      "duration": "4:12",
+      "durationSeconds": 252,
+      "saChannel": true,
+      "embeddable": true,
+      "score": 65.2
+    },
+    "usedAdjacentGrade": false
+  },
+  {
+    "slug": "chemical-change-gr12",
+    "topicTitle": "Chemical Change",
+    "grade": 12,
+    "paper": 2,
+    "subTopic": "Acid-base reactions, models and conjugate acid-base pairs",
+    "queries": [
+      "graad 12 fisika suur basis reaksies",
+      "graad 12 chemie suur basis reaksies",
+      "suur basis reaksies graad 12",
+      "fisiese wetenskappe suur basis reaksies graad 12"
+    ],
+    "candidates": [],
+    "pick": null,
+    "usedAdjacentGrade": false,
+    "note": "No embeddable, on-topic CAPS candidate found - left blank for manual search"
+  },
+  {
+    "slug": "chemical-change-gr12",
+    "topicTitle": "Chemical Change",
+    "grade": 12,
+    "paper": 2,
+    "subTopic": "Strong and weak, concentrated and dilute acids and bases",
+    "queries": [
+      "graad 12 fisika sterk swak gekonsentreerde",
+      "graad 12 chemie sterk swak gekonsentreerde",
+      "sterk swak gekonsentreerde graad 12",
+      "fisiese wetenskappe sterk swak gekonsentreerde graad 12"
+    ],
+    "candidates": [
+      {
+        "id": "fdvTByWaUxo",
+        "title": "Gr. 12 Chemie: Sure en basisse Hidrolise",
+        "channel": "Danike Aucamp_Wiskunde en Wetenskap ",
+        "views": 1722,
+        "viewsText": "1,722 views",
+        "duration": "9:55",
+        "durationSeconds": 595,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 45.4
+      },
+      {
+        "id": "1GOZCqbdnYg",
+        "title": "Gr. 12 Chemie: Sure en basisse pH berekeninge | stap-vir-stap verduidelik ",
+        "channel": "Danike Aucamp_Wiskunde en Wetenskap ",
+        "views": 4274,
+        "viewsText": "4,274 views",
+        "duration": "34:02",
+        "durationSeconds": 2042,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 44.3
+      },
+      {
+        "id": "9VvJSBeWiaI",
+        "title": "Sure en Basisse - Afrikaans Potgooi / Chemie / Fisiese Wetenskappe / Graad 12 NSS",
+        "channel": "Simple Science",
+        "views": 271,
+        "viewsText": "271 views",
+        "duration": "9:02",
+        "durationSeconds": 542,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 37.3
+      }
+    ],
+    "pick": {
+      "id": "fdvTByWaUxo",
+      "title": "Gr. 12 Chemie: Sure en basisse Hidrolise",
+      "channel": "Danike Aucamp_Wiskunde en Wetenskap ",
+      "views": 1722,
+      "viewsText": "1,722 views",
+      "duration": "9:55",
+      "durationSeconds": 595,
+      "saChannel": true,
+      "embeddable": true,
+      "score": 45.4
+    },
+    "usedAdjacentGrade": false
+  },
+  {
+    "slug": "chemical-change-gr12",
+    "topicTitle": "Chemical Change",
+    "grade": 12,
+    "paper": 2,
+    "subTopic": "The pH scale, Kw and salt hydrolysis",
+    "queries": [
+      "graad 12 fisika sout hidrolise",
+      "graad 12 chemie sout hidrolise",
+      "sout hidrolise graad 12",
+      "fisiese wetenskappe sout hidrolise graad 12"
+    ],
+    "candidates": [
+      {
+        "id": "aWUBMgcBxSg",
+        "title": "Hydrolysis of Salts",
+        "channel": "Simple Science",
+        "views": 34783,
+        "viewsText": "34,783 views",
+        "duration": "5:32",
+        "durationSeconds": 332,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 63.4
+      },
+      {
+        "id": "Is0D3DzNLL0",
+        "title": "Hidrolise: Sure en basisse Graad 12 Chemie",
+        "channel": "Ekstra Wetenskap Klasse",
+        "views": 1387,
+        "viewsText": "1,387 views",
+        "duration": "6:50",
+        "durationSeconds": 410,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 46.9
+      },
+      {
+        "id": "dharZRAXjXo",
+        "title": "Hydrolysis of Salts Explained (Grade 12 Chemistry)",
+        "channel": "Danike Aucamp_Wiskunde en Wetenskap ",
+        "views": 300,
+        "viewsText": "300 views",
+        "duration": "6:06",
+        "durationSeconds": 366,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 42.8
+      }
+    ],
+    "pick": {
+      "id": "aWUBMgcBxSg",
+      "title": "Hydrolysis of Salts",
+      "channel": "Simple Science",
+      "views": 34783,
+      "viewsText": "34,783 views",
+      "duration": "5:32",
+      "durationSeconds": 332,
+      "saChannel": true,
+      "embeddable": true,
+      "score": 63.4
+    },
+    "usedAdjacentGrade": false
+  },
+  {
+    "slug": "chemical-change-gr12",
+    "topicTitle": "Chemical Change",
+    "grade": 12,
+    "paper": 2,
+    "subTopic": "Acid-base titrations, indicators and titration calculations",
+    "queries": [
+      "graad 12 fisika suur basis titrasies",
+      "graad 12 chemie suur basis titrasies",
+      "suur basis titrasies graad 12",
+      "fisiese wetenskappe suur basis titrasies graad 12"
+    ],
+    "candidates": [
+      {
+        "id": "q2dWH64Emrg",
+        "title": "Titrasies 1",
+        "channel": "WSILAB",
+        "views": 210,
+        "viewsText": "210 views",
+        "duration": "57:48",
+        "durationSeconds": 3468,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 28.7
+      }
+    ],
+    "pick": {
+      "id": "q2dWH64Emrg",
+      "title": "Titrasies 1",
+      "channel": "WSILAB",
+      "views": 210,
+      "viewsText": "210 views",
+      "duration": "57:48",
+      "durationSeconds": 3468,
+      "saChannel": true,
+      "embeddable": true,
+      "score": 28.7
+    },
+    "usedAdjacentGrade": false
+  },
+  {
+    "slug": "chemical-change-gr12",
+    "topicTitle": "Chemical Change",
+    "grade": 12,
+    "paper": 2,
+    "subTopic": "Oxidation numbers and redox half-reactions",
+    "queries": [
+      "graad 12 fisika oksidasie oksidasiegetalle redoksreaksies",
+      "graad 12 chemie oksidasie oksidasiegetalle redoksreaksies",
+      "oksidasie oksidasiegetalle redoksreaksies graad 12",
+      "fisiese wetenskappe oksidasie oksidasiegetalle redoksreaksies graad 12"
+    ],
+    "candidates": [],
+    "pick": null,
+    "usedAdjacentGrade": false,
+    "note": "No embeddable, on-topic CAPS candidate found - left blank for manual search"
+  },
+  {
+    "slug": "chemical-change-gr12",
+    "topicTitle": "Chemical Change",
+    "grade": 12,
+    "paper": 2,
+    "subTopic": "Galvanic cells and standard electrode potentials",
+    "queries": [
+      "graad 12 fisika galvaniese selle standaard",
+      "graad 12 chemie galvaniese selle standaard",
+      "galvaniese selle standaard graad 12",
+      "fisiese wetenskappe galvaniese selle standaard graad 12"
+    ],
+    "candidates": [
+      {
+        "id": "9KR4nyALN2Q",
+        "title": "Fisiese Wetenskap - Galvaniese selle",
+        "channel": "Wolkskool",
+        "views": 13667,
+        "viewsText": "13,667 views",
+        "duration": "48:04",
+        "durationSeconds": 2884,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 46.9
+      },
+      {
+        "id": "IX8oIT99ff4",
+        "title": "Gr. 12 Elektrochemie: Galvaniese selle | VERSTAAN selle",
+        "channel": "Danike Aucamp_Wiskunde en Wetenskap ",
+        "views": 3916,
+        "viewsText": "3,916 views",
+        "duration": "44:54",
+        "durationSeconds": 2694,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 46.4
+      },
+      {
+        "id": "ZkWMqXWmZQs",
+        "title": "Galvaniese selle",
+        "channel": "WSILAB",
+        "views": 438,
+        "viewsText": "438 views",
+        "duration": "4:53",
+        "durationSeconds": 293,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 41.9
+      },
+      {
+        "id": "cCHCmR6y8tA",
+        "title": "Graad 12 - Nasionaal - November 2024 - Galvaniese selle (Eindeksamen)",
+        "channel": "Skeinat met Schabort",
+        "views": 214,
+        "viewsText": "214 views",
+        "duration": "9:42",
+        "durationSeconds": 582,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 38.8
+      },
+      {
+        "id": "ybdPNRWecro",
+        "title": "Graad 12 - Nasionaal - November 2025 - Galvaniese selle (Eindeksamen)",
+        "channel": "Skeinat met Schabort",
+        "views": 192,
+        "viewsText": "192 views",
+        "duration": "8:12",
+        "durationSeconds": 492,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 38.3
+      }
+    ],
+    "pick": {
+      "id": "9KR4nyALN2Q",
+      "title": "Fisiese Wetenskap - Galvaniese selle",
+      "channel": "Wolkskool",
+      "views": 13667,
+      "viewsText": "13,667 views",
+      "duration": "48:04",
+      "durationSeconds": 2884,
+      "saChannel": true,
+      "embeddable": true,
+      "score": 46.9
+    },
+    "usedAdjacentGrade": false
+  },
+  {
+    "slug": "chemical-change-gr12",
+    "topicTitle": "Chemical Change",
+    "grade": 12,
+    "paper": 2,
+    "subTopic": "Electrolytic cells and industrial applications of electrolysis",
+    "queries": [
+      "graad 12 fisika elektrolitiese selle elektrolise",
+      "graad 12 chemie elektrolitiese selle elektrolise",
+      "elektrolitiese selle elektrolise graad 12",
+      "fisiese wetenskappe elektrolitiese selle elektrolise graad 12"
+    ],
+    "candidates": [],
+    "pick": null,
+    "usedAdjacentGrade": false,
+    "note": "No embeddable, on-topic CAPS candidate found - left blank for manual search"
+  },
+  {
+    "slug": "chemical-systems-gr12",
+    "topicTitle": "Chemical Systems",
+    "grade": 12,
+    "paper": 2,
+    "subTopic": "Plant nutrients and why fertilizers are needed",
+    "queries": [
+      "graad 12 fisika voedingstowwe kunsmis",
+      "graad 12 chemie voedingstowwe kunsmis",
+      "voedingstowwe kunsmis graad 12",
+      "fisiese wetenskappe voedingstowwe kunsmis graad 12"
+    ],
+    "candidates": [
+      {
+        "id": "NVDaANbIHqA",
+        "title": "Fisiese Wetenskap - Kunsmis",
+        "channel": "Wolkskool",
+        "views": 3713,
+        "viewsText": "3,713 views",
+        "duration": "48:43",
+        "durationSeconds": 2923,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 41.2
+      }
+    ],
+    "pick": {
+      "id": "NVDaANbIHqA",
+      "title": "Fisiese Wetenskap - Kunsmis",
+      "channel": "Wolkskool",
+      "views": 3713,
+      "viewsText": "3,713 views",
+      "duration": "48:43",
+      "durationSeconds": 2923,
+      "saChannel": true,
+      "embeddable": true,
+      "score": 41.2
+    },
+    "usedAdjacentGrade": false
+  },
+  {
+    "slug": "chemical-systems-gr12",
+    "topicTitle": "Chemical Systems",
+    "grade": 12,
+    "paper": 2,
+    "subTopic": "The function of nitrogen, phosphorus and potassium in plants",
+    "queries": [
+      "graad 12 fisika stikstof fosfor kalium",
+      "graad 12 chemie stikstof fosfor kalium",
+      "stikstof fosfor kalium graad 12",
+      "fisiese wetenskappe stikstof fosfor kalium graad 12"
+    ],
+    "candidates": [],
+    "pick": null,
+    "usedAdjacentGrade": false,
+    "note": "No embeddable, on-topic CAPS candidate found - left blank for manual search"
+  },
+  {
+    "slug": "chemical-systems-gr12",
+    "topicTitle": "Chemical Systems",
+    "grade": 12,
+    "paper": 2,
+    "subTopic": "The Haber process: manufacturing ammonia",
+    "queries": [
+      "graad 12 fisika haber proses ammoniak",
+      "graad 12 chemie haber proses ammoniak",
+      "haber proses ammoniak graad 12",
+      "fisiese wetenskappe haber proses ammoniak graad 12"
+    ],
+    "candidates": [
+      {
+        "id": "Vr8N5P-X4qI",
+        "title": "The Haber Process",
+        "channel": "Simple Science",
+        "views": 7254,
+        "viewsText": "7,254 views",
+        "duration": "3:55",
+        "durationSeconds": 235,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 54.1
+      }
+    ],
+    "pick": {
+      "id": "Vr8N5P-X4qI",
+      "title": "The Haber Process",
+      "channel": "Simple Science",
+      "views": 7254,
+      "viewsText": "7,254 views",
+      "duration": "3:55",
+      "durationSeconds": 235,
+      "saChannel": true,
+      "embeddable": true,
+      "score": 54.1
+    },
+    "usedAdjacentGrade": false
+  },
+  {
+    "slug": "chemical-systems-gr12",
+    "topicTitle": "Chemical Systems",
+    "grade": 12,
+    "paper": 2,
+    "subTopic": "The Ostwald process: manufacturing nitric acid",
+    "queries": [
+      "graad 12 fisika ostwald proses salpetersuur",
+      "graad 12 chemie ostwald proses salpetersuur",
+      "ostwald proses salpetersuur graad 12",
+      "fisiese wetenskappe ostwald proses salpetersuur graad 12"
+    ],
+    "candidates": [
+      {
+        "id": "Mx12D7AOV50",
+        "title": "The Ostwald Process",
+        "channel": "Simple Science",
+        "views": 15859,
+        "viewsText": "15,859 views",
+        "duration": "1:38",
+        "durationSeconds": 98,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 57.5
+      }
+    ],
+    "pick": {
+      "id": "Mx12D7AOV50",
+      "title": "The Ostwald Process",
+      "channel": "Simple Science",
+      "views": 15859,
+      "viewsText": "15,859 views",
+      "duration": "1:38",
+      "durationSeconds": 98,
+      "saChannel": true,
+      "embeddable": true,
+      "score": 57.5
+    },
+    "usedAdjacentGrade": false
+  },
+  {
+    "slug": "chemical-systems-gr12",
+    "topicTitle": "Chemical Systems",
+    "grade": 12,
+    "paper": 2,
+    "subTopic": "The contact process: manufacturing sulfuric acid",
+    "queries": [
+      "graad 12 fisika proses swaelsuur suur",
+      "graad 12 chemie proses swaelsuur suur",
+      "proses swaelsuur suur graad 12",
+      "fisiese wetenskappe proses swaelsuur suur graad 12"
+    ],
+    "candidates": [],
+    "pick": null,
+    "usedAdjacentGrade": false,
+    "note": "No embeddable, on-topic CAPS candidate found - left blank for manual search"
+  },
+  {
+    "slug": "chemical-systems-gr12",
+    "topicTitle": "Chemical Systems",
+    "grade": 12,
+    "paper": 2,
+    "subTopic": "Manufacturing fertilizers: ammonium nitrate, ammonium sulfate and superphosphates",
+    "queries": [
+      "graad 12 fisika kunsmis nitraat sulfaat",
+      "graad 12 chemie kunsmis nitraat sulfaat",
+      "kunsmis nitraat sulfaat graad 12",
+      "fisiese wetenskappe kunsmis nitraat sulfaat graad 12"
+    ],
+    "candidates": [],
+    "pick": null,
+    "usedAdjacentGrade": false,
+    "note": "No embeddable, on-topic CAPS candidate found - left blank for manual search"
+  },
+  {
+    "slug": "chemical-systems-gr12",
+    "topicTitle": "Chemical Systems",
+    "grade": 12,
+    "paper": 2,
+    "subTopic": "Eutrophication and evaluating the use of inorganic fertilizers",
+    "queries": [
+      "graad 12 fisika eutrofikasie kunsmis",
+      "graad 12 chemie eutrofikasie kunsmis",
+      "eutrofikasie kunsmis graad 12",
+      "fisiese wetenskappe eutrofikasie kunsmis graad 12"
+    ],
+    "candidates": [],
+    "pick": null,
+    "usedAdjacentGrade": false,
+    "note": "No embeddable, on-topic CAPS candidate found - left blank for manual search"
+  }
+]

@@ -10,12 +10,14 @@ export const matterMaterialsGr11: TopicContent = {
   grade: 11,
   paper: 2,
   title: 'Matter & Materials',
+  titleAf: 'Materie en Materiale',
   capsWeight: 15,
   // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
   sections: [
     {
       id: 'overview',
       title: 'Matter & Materials',
+      titleAf: 'Materie en Materiale',
       blocks: [
         {
           type: 'theory',
@@ -36,17 +38,20 @@ export const matterMaterialsGr11: TopicContent = {
     {
       id: 'the-chemical-bond-and-lewis-diagrams',
       title: 'The chemical bond and Lewis diagrams',
+      titleAf: 'Die chemiese binding en Lewis-diagramme',
       blocks: [
         {
           type: 'video',
           title: 'Watch: Atomic Combinations grade 11 :Lewis diagram # 1 — Kevinmathscience',
-          videoId: 'sCkasELDYls'
+          videoId: 'sCkasELDYls',
+          videoIdAf: 'qox7TP5hNT4'
         }
       ]
     },
     {
       id: 'molecular-shape-and-vsepr-theory',
       title: 'Molecular shape and VSEPR theory',
+      titleAf: 'Molekulêre vorm en VSEPR-teorie',
       blocks: [
         {
           type: 'video',
@@ -58,6 +63,7 @@ export const matterMaterialsGr11: TopicContent = {
     {
       id: 'electronegativity-and-bond-polarity',
       title: 'Electronegativity and bond polarity',
+      titleAf: 'Elektronegatiwiteit en bindingspolariteit',
       blocks: [
         {
           type: 'video',
@@ -69,6 +75,7 @@ export const matterMaterialsGr11: TopicContent = {
     {
       id: 'bond-energy-and-bond-length',
       title: 'Bond energy and bond length',
+      titleAf: 'Bindingsenergie en bindingslengte',
       blocks: [
         {
           type: 'video',
@@ -80,28 +87,33 @@ export const matterMaterialsGr11: TopicContent = {
     {
       id: 'types-of-intermolecular-forces',
       title: 'Types of intermolecular forces',
+      titleAf: 'Tipes intermolekulêre kragte',
       blocks: [
         {
           type: 'video',
           title: 'Watch: Intermolecular Forces grade 11: Different types — Kevinmathscience',
-          videoId: 'esJ-go0-t84'
+          videoId: 'esJ-go0-t84',
+          videoIdAf: 'cMW-o3Ai7SU'
         }
       ]
     },
     {
       id: 'intermolecular-forces-physical-state-density-mel',
       title: 'Intermolecular forces, physical state, density, melting and boiling points',
+      titleAf: 'Intermolekulêre kragte, fisiese toestand, digtheid, smelt- en kookpunte',
       blocks: [
         {
           type: 'video',
           title: 'Watch: Intermolecular Forces grade 11: Introduction # 1 — Kevinmathscience',
-          videoId: 'aJTAj_8pyWI'
+          videoId: 'aJTAj_8pyWI',
+          videoIdAf: 'HkWjBev_3hc'
         }
       ]
     },
     {
       id: 'the-chemistry-of-water-and-its-three-phases',
       title: 'The chemistry of water and its three phases',
+      titleAf: 'Die chemie van water en sy drie fases',
       blocks: [
         {
           type: 'content_gap',
@@ -113,6 +125,7 @@ export const matterMaterialsGr11: TopicContent = {
     {
       id: 'kinetic-theory-of-gases-temperature-pressure-and',
       title: 'Kinetic theory of gases: temperature, pressure and ideal gas behaviour',
+      titleAf: 'Kinetiese teorie van gasse: temperatuur, druk en ideale gasgedrag',
       blocks: [
         {
           type: 'video',
@@ -124,6 +137,7 @@ export const matterMaterialsGr11: TopicContent = {
     {
       id: 'the-gas-laws-and-the-ideal-gas-equation',
       title: 'The gas laws and the ideal gas equation',
+      titleAf: 'Die gaswette en die ideale gasvergelyking',
       blocks: [
         {
           type: 'video',

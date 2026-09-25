@@ -10,12 +10,14 @@ export const electricityMagnetismGr11: TopicContent = {
   grade: 11,
   paper: 1,
   title: 'Electricity & Magnetism',
+  titleAf: 'Elektrisiteit en Magnetisme',
   capsWeight: 12.5,
   // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
   sections: [
     {
       id: 'overview',
       title: 'Electricity & Magnetism',
+      titleAf: 'Elektrisiteit en Magnetisme',
       blocks: [
         {
           type: 'theory',
@@ -35,28 +37,33 @@ export const electricityMagnetismGr11: TopicContent = {
     {
       id: 'coulomb-s-law',
       title: 'Coulomb\'s Law',
+      titleAf: 'Coulomb se wet',
       blocks: [
         {
           type: 'video',
           title: 'Watch: Coulomb\'s Law Electrostatics grade 11 and 12 — Miss Martins Maths and Science',
-          videoId: 'ngfkLMOQDms'
+          videoId: 'ngfkLMOQDms',
+          videoIdAf: 'It7YMCQugpg'
         }
       ]
     },
     {
       id: 'electric-fields-and-electric-field-lines',
       title: 'Electric fields and electric field lines',
+      titleAf: 'Elektriese velde en elektriese veldlyne',
       blocks: [
         {
           type: 'video',
           title: 'Watch: Physics | Electrostatics | Electric fields Intesity — Mlungisi Nkosi Maths & Science',
-          videoId: 'lNMLhV5KdoE'
+          videoId: 'lNMLhV5KdoE',
+          videoIdAf: 'ax-hC_X6cNY'
         }
       ]
     },
     {
       id: 'calculating-the-electric-field-at-a-point',
       title: 'Calculating the electric field at a point',
+      titleAf: 'Berekening van die elektriese veld by \'n punt',
       blocks: [
         {
           type: 'video',
@@ -68,6 +75,7 @@ export const electricityMagnetismGr11: TopicContent = {
     {
       id: 'magnetic-field-associated-with-current-carrying-',
       title: 'Magnetic field associated with current-carrying wires, loops and solenoids',
+      titleAf: 'Magneetveld geassosieer met stroomdraende drade, lusse en solenoïdes',
       blocks: [
         {
           type: 'video',
@@ -79,6 +87,7 @@ export const electricityMagnetismGr11: TopicContent = {
     {
       id: 'faraday-s-law-of-electromagnetic-induction',
       title: 'Faraday\'s Law of electromagnetic induction',
+      titleAf: 'Faraday se wet van elektromagnetiese induksie',
       blocks: [
         {
           type: 'video',
@@ -90,17 +99,20 @@ export const electricityMagnetismGr11: TopicContent = {
     {
       id: 'ohm-s-law-and-ohmic-versus-non-ohmic-conductors',
       title: 'Ohm\'s Law and ohmic versus non-ohmic conductors',
+      titleAf: 'Ohm se wet en ohmiese teenoor nie-ohmiese geleiers',
       blocks: [
         {
           type: 'video',
           title: 'Watch: Ohm\'s Law Grade 11 Electric Circuits (Electricity grade 11 & 12) — Miss Martins Maths and Science',
-          videoId: 'Wrx8j7839VI'
+          videoId: 'Wrx8j7839VI',
+          videoIdAf: 'mfGXo-jY_jg'
         }
       ]
     },
     {
       id: 'power-in-electric-circuits',
       title: 'Power in electric circuits',
+      titleAf: 'Drywing in elektriese stroombane',
       blocks: [
         {
           type: 'video',
@@ -112,6 +124,7 @@ export const electricityMagnetismGr11: TopicContent = {
     {
       id: 'electrical-energy-and-the-cost-of-electricity',
       title: 'Electrical energy and the cost of electricity',
+      titleAf: 'Elektriese energie en die koste van elektrisiteit',
       blocks: [
         {
           type: 'video',

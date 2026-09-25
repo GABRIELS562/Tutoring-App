@@ -10,12 +10,14 @@ export const electricityMagnetismGr12: TopicContent = {
   grade: 12,
   paper: 1,
   title: 'Electricity & Magnetism',
+  titleAf: 'Elektrisiteit en Magnetisme',
   capsWeight: 7.5,
   // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
   sections: [
     {
       id: 'overview',
       title: 'Electricity & Magnetism',
+      titleAf: 'Elektrisiteit en Magnetisme',
       blocks: [
         {
           type: 'theory',
@@ -34,17 +36,19 @@ export const electricityMagnetismGr12: TopicContent = {
     {
       id: 'series-and-parallel-resistor-networks',
       title: 'Series and parallel resistor networks',
+      titleAf: 'Serie- en parallelweerstandsnetwerke',
       blocks: [
         {
-          type: 'content_gap',
-          body: `No CAPS video has been sourced for this sub-topic yet. Ask Angelo if you're stuck on it in the meantime.`,
-          bodyAf: `Daar is nog nie 'n KABV-video vir hierdie onderafdeling nie. Vra solank vir Angelo as jy vashaak.`
+          type: 'video',
+          title: 'Kyk: Gr. 12 Fisika: Elektrisiteit (interne weerstand) | die ENIGSTE video wat jy nodig het! — Danike Aucamp_Wiskunde en Wetenskap ',
+          videoIdAf: '1lpHeTHZI6E'
         }
       ]
     },
     {
       id: 'internal-resistance-and-emf-of-a-battery',
       title: 'Internal resistance and emf of a battery',
+      titleAf: 'Interne weerstand en emk van \'n battery',
       blocks: [
         {
           type: 'video',
@@ -56,39 +60,46 @@ export const electricityMagnetismGr12: TopicContent = {
     {
       id: 'circuit-calculations-with-internal-resistance-an',
       title: 'Circuit calculations with internal resistance and series-parallel networks',
+      titleAf: 'Stroombaanberekeninge met interne weerstand en serie-parallelnetwerke',
       blocks: [
         {
           type: 'video',
           title: 'Watch: Physics | Electric circuits | EMF and Internal resistance (Made simple) — Mlungisi Nkosi Maths & Science',
-          videoId: 'Z6ZyHYLY1N8'
+          videoId: 'Z6ZyHYLY1N8',
+          videoIdAf: 'iMeyrFFJy60'
         }
       ]
     },
     {
       id: 'ac-and-dc-generators',
       title: 'AC and DC generators',
+      titleAf: 'WS- en GS-generators',
       blocks: [
         {
           type: 'video',
           title: 'Watch: Electrodynamics: Motors and generators Physics — Miss Martins Maths and Science',
-          videoId: 'RlP97BAez74'
+          videoId: 'RlP97BAez74',
+          videoIdAf: 'gPb7fO3NLwA'
         }
       ]
     },
     {
       id: 'electric-motors',
       title: 'Electric motors',
+      titleAf: 'Elektriese motors',
       blocks: [
         {
           type: 'video',
           title: 'Watch: Electrodynamics Motors SUMMARY Grade 12 Physics — Miss Martins Maths and Science',
-          videoId: 'g-9GARYLfKQ'
+          videoId: 'g-9GARYLfKQ',
+          videoIdAf: 'u7X759MljIs'
         }
       ]
     },
     {
       id: 'alternating-current-current-and-voltage-graphs',
       title: 'Alternating current: current and voltage graphs',
+      titleAf: 'Wisselstroom: stroom- en spanningsgrafieke',
       blocks: [
         {
           type: 'video',
@@ -100,11 +111,12 @@ export const electricityMagnetismGr12: TopicContent = {
     {
       id: 'rms-values-and-average-power-in-ac-circuits',
       title: 'rms values and average power in AC circuits',
+      titleAf: 'Wgk-waardes en gemiddelde drywing in wisselstroombane',
       blocks: [
         {
-          type: 'content_gap',
-          body: `No CAPS video has been sourced for this sub-topic yet. Ask Angelo if you're stuck on it in the meantime.`,
-          bodyAf: `Daar is nog nie 'n KABV-video vir hierdie onderafdeling nie. Vra solank vir Angelo as jy vashaak.`
+          type: 'video',
+          title: 'Kyk: Konserwatiewe en nie-konserwatiewe kragte en Drywing Gr. 12 Fisika — Danike Aucamp_Wiskunde en Wetenskap ',
+          videoIdAf: 'ZZaYa08STtw'
         }
       ]
     }
