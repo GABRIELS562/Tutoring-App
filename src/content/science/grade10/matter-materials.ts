@@ -45,9 +45,9 @@ export const matterMaterialsGr10: TopicContent = {
       title: 'Names and formulae of compounds',
       blocks: [
         {
-          type: 'tip',
-          body: `We haven't found a CAPS video for this sub-topic yet. Ask Angelo if you're stuck on it.`,
-          bodyAf: `Ons het nog nie 'n KABV-video vir hierdie onderafdeling gekry nie. Vra vir Angelo as jy vashaak.`
+          type: 'content_gap',
+          body: `No CAPS video has been sourced for this sub-topic yet. Ask Angelo if you're stuck on it in the meantime.`,
+          bodyAf: `Daar is nog nie 'n KABV-video vir hierdie onderafdeling nie. Vra solank vir Angelo as jy vashaak.`
         }
       ]
     },
@@ -67,9 +67,9 @@ export const matterMaterialsGr10: TopicContent = {
       title: 'Models of the atom and the structure of the atom',
       blocks: [
         {
-          type: 'tip',
-          body: `We haven't found a CAPS video for this sub-topic yet. Ask Angelo if you're stuck on it.`,
-          bodyAf: `Ons het nog nie 'n KABV-video vir hierdie onderafdeling gekry nie. Vra vir Angelo as jy vashaak.`
+          type: 'content_gap',
+          body: `No CAPS video has been sourced for this sub-topic yet. Ask Angelo if you're stuck on it in the meantime.`,
+          bodyAf: `Daar is nog nie 'n KABV-video vir hierdie onderafdeling nie. Vra solank vir Angelo as jy vashaak.`
         }
       ]
     },
@@ -89,9 +89,9 @@ export const matterMaterialsGr10: TopicContent = {
       title: 'Electron configuration of atoms',
       blocks: [
         {
-          type: 'tip',
-          body: `We haven't found a CAPS video for this sub-topic yet. Ask Angelo if you're stuck on it.`,
-          bodyAf: `Ons het nog nie 'n KABV-video vir hierdie onderafdeling gekry nie. Vra vir Angelo as jy vashaak.`
+          type: 'content_gap',
+          body: `No CAPS video has been sourced for this sub-topic yet. Ask Angelo if you're stuck on it in the meantime.`,
+          bodyAf: `Daar is nog nie 'n KABV-video vir hierdie onderafdeling nie. Vra solank vir Angelo as jy vashaak.`
         }
       ]
     },

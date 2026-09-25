@@ -95,6 +95,16 @@ const SA_CHANNELS = new Set([
   'Simple Science',
   'Learnida',
   'Nambane Academy',
+  // Found by re-searching the blank sub-topics: small SA channels that carry
+  // exactly the topics the big ones skip - Grade 11 optics, chemical systems.
+  'Mindset Teach',
+  'Impaq Education',
+  'Goon School',
+  'Africa Teen Geeks',
+  'Edu-ca-te',
+  'Siyavula Education',
+  'FunEasyScience',
+  'Physical Sciences Made Easy',
 ])
 
 const MAX_DURATION_SECONDS = 2 * 60 * 60
@@ -660,7 +670,7 @@ export function hasRequiredTermsFor(
   // Kevinmathscience had a perfectly good ionic bonding lesson. One of the
   // listed concepts is enough; a sub-topic naming a single concept still has
   // to match it.
-  return isEnumeratedList(subTopic) ? required.some(matches) : required.every(matches)
+  return subTopic.includes(',') ? required.some(matches) : required.every(matches)
 }
 
 export function hasRequiredTerms(subTopic: string, title: string): boolean {
@@ -750,7 +760,7 @@ const MIN_RELEVANCE = 0.3
  * "most watched" is the brief. Below this we would rather report no pick
  * and search by hand.
  */
-const MIN_VIEWS = IS_AFRIKAANS ? 300 : 2000
+const MIN_VIEWS = IS_AFRIKAANS ? 300 : IS_SCIENCE ? 400 : 2000
 
 /**
  * Relevance is a GATE, not the ranking. Once a video is on-topic, the brief

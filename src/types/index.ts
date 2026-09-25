@@ -4,7 +4,16 @@ export type Grade = 10 | 11 | 12
 
 export type Difficulty = 1 | 2 | 3
 
-export type NoteContentType = 'theory' | 'formula' | 'example' | 'tip' | 'worked_example' | 'video' | 'ai_practical'
+export type NoteContentType =
+  | 'theory'
+  | 'formula'
+  | 'example'
+  | 'tip'
+  | 'worked_example'
+  | 'video'
+  | 'ai_practical'
+  /** A CAPS sub-topic with no curated video yet - see docs/curriculum/CONTENT-GAPS.md */
+  | 'content_gap'
 
 export type WorkedStep = {
   stepNumber: number

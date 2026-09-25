@@ -70,9 +70,9 @@ export const electricityMagnetismGr11: TopicContent = {
       title: 'Magnetic field associated with current-carrying wires, loops and solenoids',
       blocks: [
         {
-          type: 'tip',
-          body: `We haven't found a CAPS video for this sub-topic yet. Ask Angelo if you're stuck on it.`,
-          bodyAf: `Ons het nog nie 'n KABV-video vir hierdie onderafdeling gekry nie. Vra vir Angelo as jy vashaak.`
+          type: 'video',
+          title: 'Watch: Electromagnetism grade 11 Lesson 2: Magnetic Flux — Kevinmathscience',
+          videoId: 'faxTUQButK0'
         }
       ]
     },

@@ -77,9 +77,9 @@ export const mechanicsGr10: TopicContent = {
       title: 'Instantaneous velocity and instantaneous speed',
       blocks: [
         {
-          type: 'tip',
-          body: `We haven't found a CAPS video for this sub-topic yet. Ask Angelo if you're stuck on it.`,
-          bodyAf: `Ons het nog nie 'n KABV-video vir hierdie onderafdeling gekry nie. Vra vir Angelo as jy vashaak.`
+          type: 'content_gap',
+          body: `No CAPS video has been sourced for this sub-topic yet. Ask Angelo if you're stuck on it in the meantime.`,
+          bodyAf: `Daar is nog nie 'n KABV-video vir hierdie onderafdeling nie. Vra solank vir Angelo as jy vashaak.`
         }
       ]
     },
@@ -89,8 +89,8 @@ export const mechanicsGr10: TopicContent = {
       blocks: [
         {
           type: 'video',
-          title: 'Watch: Grade 10 - Distance, Displacement, Speed, Velocity and Acceleration | Motion in 1-dimension | — Mlungisi Nkosi Maths & Science',
-          videoId: 'z6TreL4nj4w'
+          title: 'Watch: Velocity Time Graph Grade 10 Science — Kevinmathscience',
+          videoId: 'e86SXh5G7Hs'
         }
       ]
     },

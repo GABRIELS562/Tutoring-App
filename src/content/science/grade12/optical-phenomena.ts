@@ -46,8 +46,8 @@ export const opticalPhenomenaGr12: TopicContent = {
       blocks: [
         {
           type: 'video',
-          title: 'Watch: Threshold Frequency and Work Function Grade 12 Photoelectric Effect — Miss Martins Maths and Science',
-          videoId: 'IHo22w2SG9A'
+          title: 'Watch: Photoelectric effect Grade 12 | Part 2 — Kevinmathscience',
+          videoId: 'OucuEAWiMJo'
         }
       ]
     },

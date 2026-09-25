@@ -493,6 +493,30 @@
         "saChannel": true,
         "embeddable": true,
         "score": 65.4
+      },
+      {
+        "id": "Rkps2hD3Va8",
+        "title": "Gr 11 PS Newton's Laws 5: Newton's  Third Law (Junior Tukkie Summer School)",
+        "channel": "JuniorTukkie at the University of Pretoria",
+        "views": 1695,
+        "viewsText": "1,695 views",
+        "duration": "9:03",
+        "durationSeconds": 543,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 46.7
+      },
+      {
+        "id": "8iMCVRJAn8c",
+        "title": "Gr 11 - Physical Science - Newton's Law - Newton's Third Law",
+        "channel": "JuniorTukkie at the University of Pretoria",
+        "views": 940,
+        "viewsText": "940 views",
+        "duration": "8:57",
+        "durationSeconds": 537,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 44.2
       }
     ],
     "pick": {
@@ -712,6 +736,30 @@
     ],
     "candidates": [
       {
+        "id": "TnZTq6EFaAk",
+        "title": "Grade 11 - Waves, Sound, and Light | Geometric Optics (Snell’s Law) | November 2017 | Mlungisi Nkosi",
+        "channel": "Mlungisi Nkosi Maths & Science",
+        "views": 1048,
+        "viewsText": "1,048 views",
+        "duration": "11:49",
+        "durationSeconds": 709,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 53.2
+      },
+      {
+        "id": "7b-OOiW7VwY",
+        "title": "Gr 11 - Physical Sciences - Experiment Labs - Snell's Law",
+        "channel": "JuniorTukkie at the University of Pretoria",
+        "views": 837,
+        "viewsText": "837 views",
+        "duration": "1:28",
+        "durationSeconds": 88,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 52.2
+      },
+      {
         "id": "X-sTSkNzGVk",
         "title": "Refraction Calculations: Snells Law",
         "channel": "Mindset",
@@ -725,16 +773,16 @@
       }
     ],
     "pick": {
-      "id": "X-sTSkNzGVk",
-      "title": "Refraction Calculations: Snells Law",
-      "channel": "Mindset",
-      "views": 6959,
-      "viewsText": "6,959 views",
-      "duration": "51:05",
-      "durationSeconds": 3065,
+      "id": "TnZTq6EFaAk",
+      "title": "Grade 11 - Waves, Sound, and Light | Geometric Optics (Snell’s Law) | November 2017 | Mlungisi Nkosi",
+      "channel": "Mlungisi Nkosi Maths & Science",
+      "views": 1048,
+      "viewsText": "1,048 views",
+      "duration": "11:49",
+      "durationSeconds": 709,
       "saChannel": true,
       "embeddable": true,
-      "score": 51.4
+      "score": 53.2
     },
     "usedAdjacentGrade": false
   },
@@ -1125,10 +1173,81 @@
       "Electricity & Magnetism grade 11 magnetic field associated",
       "Magnetic field associated with current-carrying wires, loops and solenoids grade 11"
     ],
-    "candidates": [],
-    "pick": null,
-    "usedAdjacentGrade": false,
-    "note": "No embeddable, on-topic CAPS candidate found - left blank for manual search"
+    "candidates": [
+      {
+        "id": "faxTUQButK0",
+        "title": "Electromagnetism grade 11 Lesson 2: Magnetic Flux",
+        "channel": "Kevinmathscience",
+        "views": 312488,
+        "viewsText": "312,488 views",
+        "duration": "15:58",
+        "durationSeconds": 958,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 70.4
+      },
+      {
+        "id": "DdE4BTh0mqU",
+        "title": "Electromagnetism grade 11 Lesson 3: Magnetic Flux Calculation",
+        "channel": "Kevinmathscience",
+        "views": 201981,
+        "viewsText": "201,981 views",
+        "duration": "12:51",
+        "durationSeconds": 771,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 68.6
+      },
+      {
+        "id": "orjGHSZ1LvM",
+        "title": "Magnetic Flux Grade 11 Electromagnetism",
+        "channel": "Miss Martins Maths and Science",
+        "views": 117573,
+        "viewsText": "117,573 views",
+        "duration": "12:16",
+        "durationSeconds": 736,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 66.2
+      },
+      {
+        "id": "_hcCsHTi3YY",
+        "title": "Grade 11 Electromagnetism calculations: Calculating magnetic flux and induced emf",
+        "channel": "Miss Martins Maths and Science",
+        "views": 138119,
+        "viewsText": "138,119 views",
+        "duration": "21:39",
+        "durationSeconds": 1299,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 61.9
+      },
+      {
+        "id": "wOBvHIzvVec",
+        "title": "Grade 11 Electromagnetism Lenz's Law: Direction of induced current and magnetic field",
+        "channel": "Miss Martins Maths and Science",
+        "views": 86957,
+        "viewsText": "86,957 views",
+        "duration": "22:34",
+        "durationSeconds": 1354,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 59.9
+      }
+    ],
+    "pick": {
+      "id": "faxTUQButK0",
+      "title": "Electromagnetism grade 11 Lesson 2: Magnetic Flux",
+      "channel": "Kevinmathscience",
+      "views": 312488,
+      "viewsText": "312,488 views",
+      "duration": "15:58",
+      "durationSeconds": 958,
+      "saChannel": true,
+      "embeddable": true,
+      "score": 70.4
+    },
+    "usedAdjacentGrade": false
   },
   {
     "slug": "electricity-magnetism-gr11",
@@ -1300,6 +1419,18 @@
         "saChannel": true,
         "embeddable": true,
         "score": 60.3
+      },
+      {
+        "id": "NoU26IlGHPw",
+        "title": "Electric Power - Grade 11 & 12 Physical sciences ",
+        "channel": "Edu-ca-te",
+        "views": 3077,
+        "viewsText": "3,077 views",
+        "duration": "4:24",
+        "durationSeconds": 264,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 52.9
       }
     ],
     "pick": {
@@ -1546,6 +1677,30 @@
         "saChannel": true,
         "embeddable": true,
         "score": 66.1
+      },
+      {
+        "id": "m2qtm-dvvZQ",
+        "title": "VSEPR Theory, Molecular Shapes & Bond Angles / Chemistry / Physical Sciences",
+        "channel": "Simple Science",
+        "views": 1066,
+        "viewsText": "1,066 views",
+        "duration": "7:11",
+        "durationSeconds": 431,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 53.3
+      },
+      {
+        "id": "OsI1sDfV_vk",
+        "title": "Grade 11 Chemistry - Molecular Shapes and VSEPR",
+        "channel": "Kevin's Classroom",
+        "views": 568,
+        "viewsText": "568 views",
+        "duration": "27:56",
+        "durationSeconds": 1676,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 41.8
       }
     ],
     "pick": {
@@ -1612,6 +1767,18 @@
         "saChannel": true,
         "embeddable": true,
         "score": 68.6
+      },
+      {
+        "id": "iereqf2__XQ",
+        "title": "06 Electronegativity Difference and Bond Polarity",
+        "channel": "Mindset",
+        "views": 1317,
+        "viewsText": "1,317 views",
+        "duration": "15:21",
+        "durationSeconds": 921,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 54.2
       }
     ],
     "pick": {
@@ -2293,6 +2460,30 @@
         "saChannel": true,
         "embeddable": true,
         "score": 62.4
+      },
+      {
+        "id": "ZjXJ2So5JCY",
+        "title": "Gr 11 - Physical Sciences - Experiment Labs - Endothermic and Exothermic Reactions",
+        "channel": "JuniorTukkie at the University of Pretoria",
+        "views": 1816,
+        "viewsText": "1,816 views",
+        "duration": "6:33",
+        "durationSeconds": 393,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 49.6
+      },
+      {
+        "id": "dUgMlJmujrU",
+        "title": "Physical Sciences 2020:  The Difference between Exothermic and Endothermic Reactions",
+        "channel": "Mindset",
+        "views": 667,
+        "viewsText": "667 views",
+        "duration": "19:58",
+        "durationSeconds": 1198,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 45.2
       }
     ],
     "pick": {
@@ -2359,6 +2550,18 @@
         "saChannel": true,
         "embeddable": true,
         "score": 53
+      },
+      {
+        "id": "YYfrXkIals0",
+        "title": "04 Activation Energy",
+        "channel": "Mindset",
+        "views": 626,
+        "viewsText": "626 views",
+        "duration": "15:48",
+        "durationSeconds": 948,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 43.5
       }
     ],
     "pick": {
@@ -2510,6 +2713,18 @@
         "saChannel": true,
         "embeddable": true,
         "score": 68.1
+      },
+      {
+        "id": "leAa2MMjshY",
+        "title": "Grade 11 Physical Sciences Term 4 - Redox Reactions - Oxidation Number @mathszoneafricanmotives",
+        "channel": "Maths Zone African Motives",
+        "views": 1570,
+        "viewsText": "1,570 views",
+        "duration": "29:19",
+        "durationSeconds": 1759,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 50
       }
     ],
     "pick": {
@@ -2552,6 +2767,18 @@
         "saChannel": true,
         "embeddable": true,
         "score": 49.8
+      },
+      {
+        "id": "GJMbLQtmiy4",
+        "title": "Show 22: Exploring The Lithosphere - Whole Show (English)",
+        "channel": "Mindset",
+        "views": 826,
+        "viewsText": "826 views",
+        "duration": "48:28",
+        "durationSeconds": 2908,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 34.7
       }
     ],
     "pick": {

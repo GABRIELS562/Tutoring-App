@@ -47,9 +47,9 @@ export const chemicalSystemsGr12: TopicContent = {
       title: 'The function of nitrogen, phosphorus and potassium in plants',
       blocks: [
         {
-          type: 'tip',
-          body: `We haven't found a CAPS video for this sub-topic yet. Ask Angelo if you're stuck on it.`,
-          bodyAf: `Ons het nog nie 'n KABV-video vir hierdie onderafdeling gekry nie. Vra vir Angelo as jy vashaak.`
+          type: 'content_gap',
+          body: `No CAPS video has been sourced for this sub-topic yet. Ask Angelo if you're stuck on it in the meantime.`,
+          bodyAf: `Daar is nog nie 'n KABV-video vir hierdie onderafdeling nie. Vra solank vir Angelo as jy vashaak.`
         }
       ]
     },
@@ -91,9 +91,9 @@ export const chemicalSystemsGr12: TopicContent = {
       title: 'Manufacturing fertilizers: ammonium nitrate, ammonium sulfate and superphosphates',
       blocks: [
         {
-          type: 'tip',
-          body: `We haven't found a CAPS video for this sub-topic yet. Ask Angelo if you're stuck on it.`,
-          bodyAf: `Ons het nog nie 'n KABV-video vir hierdie onderafdeling gekry nie. Vra vir Angelo as jy vashaak.`
+          type: 'video',
+          title: 'Watch: Prelim 2020 NPK, Fertilizers, Chemical Industry Grade 12 Physical Sciences — Khoza Explains',
+          videoId: 'J-TxSnptZ30'
         }
       ]
     },
@@ -102,9 +102,9 @@ export const chemicalSystemsGr12: TopicContent = {
       title: 'Eutrophication and evaluating the use of inorganic fertilizers',
       blocks: [
         {
-          type: 'tip',
-          body: `We haven't found a CAPS video for this sub-topic yet. Ask Angelo if you're stuck on it.`,
-          bodyAf: `Ons het nog nie 'n KABV-video vir hierdie onderafdeling gekry nie. Vra vir Angelo as jy vashaak.`
+          type: 'content_gap',
+          body: `No CAPS video has been sourced for this sub-topic yet. Ask Angelo if you're stuck on it in the meantime.`,
+          bodyAf: `Daar is nog nie 'n KABV-video vir hierdie onderafdeling nie. Vra solank vir Angelo as jy vashaak.`
         }
       ]
     }

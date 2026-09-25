@@ -82,9 +82,9 @@ export const organicChemistryGr12: TopicContent = {
       title: 'Combustion of alkanes and the preparation of esters',
       blocks: [
         {
-          type: 'tip',
-          body: `We haven't found a CAPS video for this sub-topic yet. Ask Angelo if you're stuck on it.`,
-          bodyAf: `Ons het nog nie 'n KABV-video vir hierdie onderafdeling gekry nie. Vra vir Angelo as jy vashaak.`
+          type: 'content_gap',
+          body: `No CAPS video has been sourced for this sub-topic yet. Ask Angelo if you're stuck on it in the meantime.`,
+          bodyAf: `Daar is nog nie 'n KABV-video vir hierdie onderafdeling nie. Vra solank vir Angelo as jy vashaak.`
         }
       ]
     },
@@ -93,9 +93,9 @@ export const organicChemistryGr12: TopicContent = {
       title: 'Addition reactions of alkenes',
       blocks: [
         {
-          type: 'tip',
-          body: `We haven't found a CAPS video for this sub-topic yet. Ask Angelo if you're stuck on it.`,
-          bodyAf: `Ons het nog nie 'n KABV-video vir hierdie onderafdeling gekry nie. Vra vir Angelo as jy vashaak.`
+          type: 'content_gap',
+          body: `No CAPS video has been sourced for this sub-topic yet. Ask Angelo if you're stuck on it in the meantime.`,
+          bodyAf: `Daar is nog nie 'n KABV-video vir hierdie onderafdeling nie. Vra solank vir Angelo as jy vashaak.`
         }
       ]
     },
@@ -116,8 +116,8 @@ export const organicChemistryGr12: TopicContent = {
       blocks: [
         {
           type: 'video',
-          title: 'Watch: 8  Gr12 Physical Science - Reactions in Organic Chemistry - Halogenation Substitution (Alkane) — JuniorTukkie at the University of Pretoria',
-          videoId: 'Akk42dzCxeU'
+          title: 'Watch: Reactions Organic Chemistry Grade 12 | Alkane to Haloalkane — Kevinmathscience',
+          videoId: 'CPlam-5DuEk'
         }
       ]
     },
@@ -126,9 +126,9 @@ export const organicChemistryGr12: TopicContent = {
       title: 'Addition and condensation polymerisation: plastics and polymers',
       blocks: [
         {
-          type: 'tip',
-          body: `We haven't found a CAPS video for this sub-topic yet. Ask Angelo if you're stuck on it.`,
-          bodyAf: `Ons het nog nie 'n KABV-video vir hierdie onderafdeling gekry nie. Vra vir Angelo as jy vashaak.`
+          type: 'content_gap',
+          body: `No CAPS video has been sourced for this sub-topic yet. Ask Angelo if you're stuck on it in the meantime.`,
+          bodyAf: `Daar is nog nie 'n KABV-video vir hierdie onderafdeling nie. Vra solank vir Angelo as jy vashaak.`
         }
       ]
     }

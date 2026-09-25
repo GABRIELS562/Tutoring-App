@@ -205,7 +205,8 @@
   },
   "video": {
     "watch": "Kyk Video",
-    "noVideoAvailable": "Geen video beskikbaar in jou taal nie"
+    "noVideoAvailable": "Geen video beskikbaar in jou taal nie",
+    "videoOutstanding": "Video uitstaande"
   },
   "language": {
     "title": "Taal",

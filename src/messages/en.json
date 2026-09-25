@@ -205,7 +205,8 @@
   },
   "video": {
     "watch": "Watch Video",
-    "noVideoAvailable": "No video available in your language"
+    "noVideoAvailable": "No video available in your language",
+    "videoOutstanding": "Video outstanding"
   },
   "language": {
     "title": "Language",

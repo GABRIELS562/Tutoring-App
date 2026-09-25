@@ -1680,29 +1680,77 @@
     ],
     "candidates": [
       {
-        "id": "IHo22w2SG9A",
-        "title": "Threshold Frequency and Work Function Grade 12 Photoelectric Effect",
-        "channel": "Miss Martins Maths and Science",
-        "views": 40624,
-        "viewsText": "40,624 views",
-        "duration": "8:26",
-        "durationSeconds": 506,
+        "id": "OucuEAWiMJo",
+        "title": "Photoelectric effect Grade 12 | Part 2",
+        "channel": "Kevinmathscience",
+        "views": 276303,
+        "viewsText": "276,303 views",
+        "duration": "7:09",
+        "durationSeconds": 429,
         "saChannel": true,
         "embeddable": true,
-        "score": 61.6
+        "score": 69.9
+      },
+      {
+        "id": "odZRtR4isUU",
+        "title": "Photoelectric effect Grade 12 | Part 3",
+        "channel": "Kevinmathscience",
+        "views": 253821,
+        "viewsText": "253,821 views",
+        "duration": "9:42",
+        "durationSeconds": 582,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 69.5
+      },
+      {
+        "id": "k7151B6i6rI",
+        "title": "Photoelectric effect Grade 12 | Part 4",
+        "channel": "Kevinmathscience",
+        "views": 237620,
+        "viewsText": "237,620 views",
+        "duration": "6:16",
+        "durationSeconds": 376,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 69.3
+      },
+      {
+        "id": "PQwl3B0iYZw",
+        "title": "Exam Photoelectric effect Grade 12",
+        "channel": "Kevinmathscience",
+        "views": 192776,
+        "viewsText": "192,776 views",
+        "duration": "6:59",
+        "durationSeconds": 419,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 68.4
+      },
+      {
+        "id": "TcSG4IfIaqw",
+        "title": "Practice Photoelectric effect Grade 12",
+        "channel": "Kevinmathscience",
+        "views": 189901,
+        "viewsText": "189,901 views",
+        "duration": "3:04",
+        "durationSeconds": 184,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 68.3
       }
     ],
     "pick": {
-      "id": "IHo22w2SG9A",
-      "title": "Threshold Frequency and Work Function Grade 12 Photoelectric Effect",
-      "channel": "Miss Martins Maths and Science",
-      "views": 40624,
-      "viewsText": "40,624 views",
-      "duration": "8:26",
-      "durationSeconds": 506,
+      "id": "OucuEAWiMJo",
+      "title": "Photoelectric effect Grade 12 | Part 2",
+      "channel": "Kevinmathscience",
+      "views": 276303,
+      "viewsText": "276,303 views",
+      "duration": "7:09",
+      "durationSeconds": 429,
       "saChannel": true,
       "embeddable": true,
-      "score": 61.6
+      "score": 69.9
     },
     "usedAdjacentGrade": false
   },
@@ -1732,6 +1780,18 @@
         "saChannel": true,
         "embeddable": true,
         "score": 62
+      },
+      {
+        "id": "IHo22w2SG9A",
+        "title": "Threshold Frequency and Work Function Grade 12 Photoelectric Effect",
+        "channel": "Miss Martins Maths and Science",
+        "views": 40624,
+        "viewsText": "40,624 views",
+        "duration": "8:26",
+        "durationSeconds": 506,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 61.6
       }
     ],
     "pick": {
@@ -2324,29 +2384,77 @@
     ],
     "candidates": [
       {
-        "id": "Akk42dzCxeU",
-        "title": "8  Gr12 Physical Science - Reactions in Organic Chemistry - Halogenation Substitution (Alkane)",
-        "channel": "JuniorTukkie at the University of Pretoria",
-        "views": 7677,
-        "viewsText": "7,677 views",
-        "duration": "5:03",
-        "durationSeconds": 303,
+        "id": "CPlam-5DuEk",
+        "title": "Reactions Organic Chemistry Grade 12 | Alkane to Haloalkane",
+        "channel": "Kevinmathscience",
+        "views": 412491,
+        "viewsText": "412,491 views",
+        "duration": "3:34",
+        "durationSeconds": 214,
         "saChannel": true,
         "embeddable": true,
-        "score": 55.9
+        "score": 73.2
+      },
+      {
+        "id": "8KphNfxQex4",
+        "title": "General Formula Organic Chemistry Gr 12 | Alkanes, Alkenes, Alkynes",
+        "channel": "Kevinmathscience",
+        "views": 533283,
+        "viewsText": "533,283 views",
+        "duration": "12:31",
+        "durationSeconds": 751,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 72.8
+      },
+      {
+        "id": "IKnjWy6aFZg",
+        "title": "Naming Alkanes Organic Chemistry Grade 12",
+        "channel": "Kevinmathscience",
+        "views": 362076,
+        "viewsText": "362,076 views",
+        "duration": "4:55",
+        "durationSeconds": 295,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 71.1
+      },
+      {
+        "id": "AEGuSwdRNjA",
+        "title": "Naming Organic Molecules Grade 12 | Alkanes, alkenes, alkynes, haloalkanes",
+        "channel": "Kevinmathscience",
+        "views": 274080,
+        "viewsText": "274,080 views",
+        "duration": "4:07",
+        "durationSeconds": 247,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 69.9
+      },
+      {
+        "id": "r7sPx39YnUI",
+        "title": "Reactions Organic Chemistry Grade 12 | Alkene - Alkane",
+        "channel": "Kevinmathscience",
+        "views": 216607,
+        "viewsText": "216,607 views",
+        "duration": "9:27",
+        "durationSeconds": 567,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 68.9
       }
     ],
     "pick": {
-      "id": "Akk42dzCxeU",
-      "title": "8  Gr12 Physical Science - Reactions in Organic Chemistry - Halogenation Substitution (Alkane)",
-      "channel": "JuniorTukkie at the University of Pretoria",
-      "views": 7677,
-      "viewsText": "7,677 views",
-      "duration": "5:03",
-      "durationSeconds": 303,
+      "id": "CPlam-5DuEk",
+      "title": "Reactions Organic Chemistry Grade 12 | Alkane to Haloalkane",
+      "channel": "Kevinmathscience",
+      "views": 412491,
+      "viewsText": "412,491 views",
+      "duration": "3:34",
+      "durationSeconds": 214,
       "saChannel": true,
       "embeddable": true,
-      "score": 55.9
+      "score": 73.2
     },
     "usedAdjacentGrade": false
   },
@@ -2473,10 +2581,81 @@
       "Chemical Change grade 12 collision theory activation",
       "Collision theory, activation energy and catalysts grade 12"
     ],
-    "candidates": [],
-    "pick": null,
-    "usedAdjacentGrade": false,
-    "note": "No embeddable, on-topic CAPS candidate found - left blank for manual search"
+    "candidates": [
+      {
+        "id": "-vwGmXKrveU",
+        "title": "Collision Theory grade 12: Part 1",
+        "channel": "Kevinmathscience",
+        "views": 420935,
+        "viewsText": "420,935 views",
+        "duration": "2:05",
+        "durationSeconds": 125,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 71.7
+      },
+      {
+        "id": "FJhQUoyhj0o",
+        "title": "Collision Theory grade 12: Part 2",
+        "channel": "Kevinmathscience",
+        "views": 371006,
+        "viewsText": "371,006 views",
+        "duration": "11:52",
+        "durationSeconds": 712,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 71.2
+      },
+      {
+        "id": "n7h5lLjc_ow",
+        "title": "Collision Theory Grade 12 Rate and extent of reaction Gr 12 Chemistry",
+        "channel": "Miss Martins Maths and Science",
+        "views": 142405,
+        "viewsText": "142,405 views",
+        "duration": "12:27",
+        "durationSeconds": 747,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 67
+      },
+      {
+        "id": "Wn2oCP1RVqk",
+        "title": "The collision theory Explained - Grade 12 Physical sciences",
+        "channel": "Edu-ca-te",
+        "views": 1544,
+        "viewsText": "1,544 views",
+        "duration": "20:12",
+        "durationSeconds": 1212,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 42.4
+      },
+      {
+        "id": "iKz_cCUojZw",
+        "title": "Grade 12 - Physical Science | Mechanism of Reaction : Activation energy and catalyst",
+        "channel": "Africa Teen Geeks",
+        "views": 658,
+        "viewsText": "658 views",
+        "duration": "39:32",
+        "durationSeconds": 2372,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 40.2
+      }
+    ],
+    "pick": {
+      "id": "-vwGmXKrveU",
+      "title": "Collision Theory grade 12: Part 1",
+      "channel": "Kevinmathscience",
+      "views": 420935,
+      "viewsText": "420,935 views",
+      "duration": "2:05",
+      "durationSeconds": 125,
+      "saChannel": true,
+      "embeddable": true,
+      "score": 71.7
+    },
+    "usedAdjacentGrade": false
   },
   {
     "slug": "chemical-change-gr12",
@@ -2693,43 +2872,31 @@
     ],
     "candidates": [
       {
-        "id": "IQLHQtdx7Hs",
-        "title": "Conjugate acid base pairs: Grade 11 and 12 Acids and Bases",
-        "channel": "Miss Martins Maths and Science",
-        "views": 97959,
-        "viewsText": "97,959 views",
-        "duration": "8:37",
-        "durationSeconds": 517,
+        "id": "hQLWYmAFo3E",
+        "title": "Acid-base Theories and Conjugate Acid-base Pairs",
+        "channel": "Mindset",
+        "views": 852,
+        "viewsText": "852 views",
+        "duration": "12:17",
+        "durationSeconds": 737,
         "saChannel": true,
         "embeddable": true,
-        "score": 66.5
-      },
-      {
-        "id": "EXwXVK7CXx8",
-        "title": "Conjugate acid base pairs PRACTICE: Grade 11 and 12 Acids and Bases",
-        "channel": "Miss Martins Maths and Science",
-        "views": 80586,
-        "viewsText": "80,586 views",
-        "duration": "4:58",
-        "durationSeconds": 298,
-        "saChannel": true,
-        "embeddable": true,
-        "score": 65.6
+        "score": 45.9
       }
     ],
     "pick": {
-      "id": "IQLHQtdx7Hs",
-      "title": "Conjugate acid base pairs: Grade 11 and 12 Acids and Bases",
-      "channel": "Miss Martins Maths and Science",
-      "views": 97959,
-      "viewsText": "97,959 views",
-      "duration": "8:37",
-      "durationSeconds": 517,
+      "id": "hQLWYmAFo3E",
+      "title": "Acid-base Theories and Conjugate Acid-base Pairs",
+      "channel": "Mindset",
+      "views": 852,
+      "viewsText": "852 views",
+      "duration": "12:17",
+      "durationSeconds": 737,
       "saChannel": true,
       "embeddable": true,
-      "score": 66.5
+      "score": 45.9
     },
-    "usedAdjacentGrade": true
+    "usedAdjacentGrade": false
   },
   {
     "slug": "chemical-change-gr12",
@@ -2925,10 +3092,81 @@
       "Chemical Change grade 12 acid base titrations",
       "Acid-base titrations, indicators and titration calculations grade 12"
     ],
-    "candidates": [],
-    "pick": null,
-    "usedAdjacentGrade": false,
-    "note": "No embeddable, on-topic CAPS candidate found - left blank for manual search"
+    "candidates": [
+      {
+        "id": "e_VLUSFB4MU",
+        "title": "NECT Physical Sciences - Gr 12 Acid Base Titration",
+        "channel": "Class Act Education",
+        "views": 102427,
+        "viewsText": "102,427 views",
+        "duration": "16:48",
+        "durationSeconds": 1008,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 66.7
+      },
+      {
+        "id": "_rLRnLt5FIQ",
+        "title": "Titration Demonstration / Acids & Bases / Chemistry / Physical Sciences / Grade 12 NSC",
+        "channel": "Simple Science",
+        "views": 56336,
+        "viewsText": "56,336 views",
+        "duration": "6:17",
+        "durationSeconds": 377,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 64.1
+      },
+      {
+        "id": "z4mgB3hePns",
+        "title": "Chemistry | Acids and Bases | Titration",
+        "channel": "Mlungisi Nkosi Maths & Science",
+        "views": 474255,
+        "viewsText": "474,255 views",
+        "duration": "45:32",
+        "durationSeconds": 2732,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 63.3
+      },
+      {
+        "id": "b04Yp1CKEjE",
+        "title": "Chemistry | Acids and Bases | 8-mark questions (Back titration)",
+        "channel": "Mlungisi Nkosi Maths & Science",
+        "views": 112117,
+        "viewsText": "112,117 views",
+        "duration": "22:21",
+        "durationSeconds": 1341,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 62.1
+      },
+      {
+        "id": "5FZ_rojJQKY",
+        "title": "Acids and Bases Titrations and pH calculation Past Paper Question",
+        "channel": "Miss Martins Maths and Science",
+        "views": 109329,
+        "viewsText": "109,329 views",
+        "duration": "20:19",
+        "durationSeconds": 1219,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 52.1
+      }
+    ],
+    "pick": {
+      "id": "e_VLUSFB4MU",
+      "title": "NECT Physical Sciences - Gr 12 Acid Base Titration",
+      "channel": "Class Act Education",
+      "views": 102427,
+      "viewsText": "102,427 views",
+      "duration": "16:48",
+      "durationSeconds": 1008,
+      "saChannel": true,
+      "embeddable": true,
+      "score": 66.7
+    },
+    "usedAdjacentGrade": false
   },
   {
     "slug": "chemical-change-gr12",
@@ -3131,6 +3369,30 @@
         "saChannel": true,
         "embeddable": true,
         "score": 52.6
+      },
+      {
+        "id": "1QaBRYYWUJ8",
+        "title": "Fertilizers Revision (NSC Physical Sciences 2020 Paper 2 Question 10)",
+        "channel": "Simple Science",
+        "views": 680,
+        "viewsText": "680 views",
+        "duration": "7:32",
+        "durationSeconds": 452,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 43.8
+      },
+      {
+        "id": "J-TxSnptZ30",
+        "title": "Prelim 2020 NPK, Fertilizers, Chemical Industry Grade 12 Physical Sciences",
+        "channel": "Khoza Explains",
+        "views": 642,
+        "viewsText": "642 views",
+        "duration": "9:14",
+        "durationSeconds": 554,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 43.6
       }
     ],
     "pick": {
@@ -3306,10 +3568,33 @@
       "Chemical Systems grade 12 manufacturing fertilizers ammonium",
       "Manufacturing fertilizers: ammonium nitrate, ammonium sulfate and superphosphates grade 12"
     ],
-    "candidates": [],
-    "pick": null,
-    "usedAdjacentGrade": false,
-    "note": "No embeddable, on-topic CAPS candidate found - left blank for manual search"
+    "candidates": [
+      {
+        "id": "J-TxSnptZ30",
+        "title": "Prelim 2020 NPK, Fertilizers, Chemical Industry Grade 12 Physical Sciences",
+        "channel": "Khoza Explains",
+        "views": 642,
+        "viewsText": "642 views",
+        "duration": "9:14",
+        "durationSeconds": 554,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 43.6
+      }
+    ],
+    "pick": {
+      "id": "J-TxSnptZ30",
+      "title": "Prelim 2020 NPK, Fertilizers, Chemical Industry Grade 12 Physical Sciences",
+      "channel": "Khoza Explains",
+      "views": 642,
+      "viewsText": "642 views",
+      "duration": "9:14",
+      "durationSeconds": 554,
+      "saChannel": true,
+      "embeddable": true,
+      "score": 43.6
+    },
+    "usedAdjacentGrade": false
   },
   {
     "slug": "chemical-systems-gr12",

@@ -71,9 +71,9 @@ export const chemicalChangeGr10: TopicContent = {
       title: 'Precipitation reactions and testing for anions',
       blocks: [
         {
-          type: 'tip',
-          body: `We haven't found a CAPS video for this sub-topic yet. Ask Angelo if you're stuck on it.`,
-          bodyAf: `Ons het nog nie 'n KABV-video vir hierdie onderafdeling gekry nie. Vra vir Angelo as jy vashaak.`
+          type: 'content_gap',
+          body: `No CAPS video has been sourced for this sub-topic yet. Ask Angelo if you're stuck on it in the meantime.`,
+          bodyAf: `Daar is nog nie 'n KABV-video vir hierdie onderafdeling nie. Vra solank vir Angelo as jy vashaak.`
         }
       ]
     },
@@ -127,9 +127,9 @@ export const chemicalChangeGr10: TopicContent = {
       title: 'Concentration of solutions and the molar volume of gases',
       blocks: [
         {
-          type: 'tip',
-          body: `We haven't found a CAPS video for this sub-topic yet. Ask Angelo if you're stuck on it.`,
-          bodyAf: `Ons het nog nie 'n KABV-video vir hierdie onderafdeling gekry nie. Vra vir Angelo as jy vashaak.`
+          type: 'video',
+          title: 'Watch: Grade 10 - Physical Science | 09 July 2020 | molar concentration — Africa Teen Geeks',
+          videoId: 'Yx4h2hEK_Is'
         }
       ]
     },

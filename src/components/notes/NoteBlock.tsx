@@ -6,7 +6,7 @@ import FormulaBox from './FormulaBox'
 import WorkedExample from './WorkedExample'
 import VoicePlayer from '@/components/ui/VoicePlayer'
 import type { NoteBlock as NoteBlockType } from '@/types'
-import { Lightbulb } from 'lucide-react'
+import { Lightbulb, Clock } from 'lucide-react'
 
 type NoteBlockProps = {
   block: NoteBlockType
@@ -63,6 +63,33 @@ export default function NoteBlock({ block, topicSlug = 'topic', sectionId = 'sec
           title={block.title || 'Key Formulas'}
           formulas={block.formulas || []}
         />
+      )
+
+    // Deliberately unlike the teal 'tip' box. A gap is outstanding work, not
+    // advice, and it has to read as such both to a student and to Angelo
+    // when he is going through the app deciding what still needs recording.
+    case 'content_gap':
+      return (
+        <div
+          className="rounded-lg p-4 my-4 flex gap-3"
+          style={{
+            background: 'rgba(233, 196, 106, 0.1)',
+            border: '1px dashed var(--accent-amber, #e9c46a)',
+          }}
+        >
+          <Clock className="w-5 h-5 flex-shrink-0 mt-0.5" style={{ color: '#e9c46a' }} />
+          <div className="flex-1">
+            <p
+              className="text-xs font-semibold uppercase tracking-wide mb-1"
+              style={{ color: '#e9c46a' }}
+            >
+              {t('videoOutstanding')}
+            </p>
+            <p className="text-sm" style={{ color: 'var(--text)' }}>
+              {getLocalizedContent(block.body, block.bodyAf)}
+            </p>
+          </div>
+        </div>
       )
 
     case 'tip':

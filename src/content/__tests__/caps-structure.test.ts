@@ -52,12 +52,27 @@ describe('the maths curriculum follows the CAPS handbook', () => {
     }
   })
 
-  it('shows a video or an honest note in every sub-topic section', () => {
-    for (const topic of capsCurriculum) {
+  it('shows a video or a marked content gap in every sub-topic section', () => {
+    // A sub-topic with no curated video gets a content_gap block rather than
+    // nothing, so the gap is visible in the app and not only in the report.
+    for (const topic of [...capsCurriculum, ...capsScienceCurriculum]) {
       for (const section of contentRegistry[topic.slug].sections) {
         if (section.id === 'overview') continue
         const kinds = section.blocks.map((block) => block.type)
-        expect(kinds.some((kind) => kind === 'video' || kind === 'tip')).toBe(true)
+        expect(kinds.some((kind) => kind === 'video' || kind === 'content_gap')).toBe(true)
+      }
+    }
+  })
+
+  it('never leaves a gap section silently empty', () => {
+    for (const topic of [...capsCurriculum, ...capsScienceCurriculum]) {
+      for (const section of contentRegistry[topic.slug].sections) {
+        if (section.id === 'overview') continue
+        const gap = section.blocks.find((block) => block.type === 'content_gap')
+        if (gap) {
+          expect(gap.body).toBeTruthy()
+          expect(gap.bodyAf).toBeTruthy()
+        }
       }
     }
   })

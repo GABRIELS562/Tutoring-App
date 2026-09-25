@@ -52,9 +52,9 @@ export const chemicalChangeGr12: TopicContent = {
       title: 'Collision theory, activation energy and catalysts',
       blocks: [
         {
-          type: 'tip',
-          body: `We haven't found a CAPS video for this sub-topic yet. Ask Angelo if you're stuck on it.`,
-          bodyAf: `Ons het nog nie 'n KABV-video vir hierdie onderafdeling gekry nie. Vra vir Angelo as jy vashaak.`
+          type: 'video',
+          title: 'Watch: Collision Theory grade 12: Part 1 — Kevinmathscience',
+          videoId: '-vwGmXKrveU'
         }
       ]
     },
@@ -63,9 +63,9 @@ export const chemicalChangeGr12: TopicContent = {
       title: 'Chemical equilibrium and reversible reactions',
       blocks: [
         {
-          type: 'tip',
-          body: `We haven't found a CAPS video for this sub-topic yet. Ask Angelo if you're stuck on it.`,
-          bodyAf: `Ons het nog nie 'n KABV-video vir hierdie onderafdeling gekry nie. Vra vir Angelo as jy vashaak.`
+          type: 'content_gap',
+          body: `No CAPS video has been sourced for this sub-topic yet. Ask Angelo if you're stuck on it in the meantime.`,
+          bodyAf: `Daar is nog nie 'n KABV-video vir hierdie onderafdeling nie. Vra solank vir Angelo as jy vashaak.`
         }
       ]
     },
@@ -95,11 +95,10 @@ export const chemicalChangeGr12: TopicContent = {
       id: 'acid-base-reactions-models-and-conjugate-acid-ba',
       title: 'Acid-base reactions, models and conjugate acid-base pairs',
       blocks: [
-        // Labelled for an adjacent grade; CAPS covers this sub-topic in both.
         {
           type: 'video',
-          title: 'Watch: Conjugate acid base pairs: Grade 11 and 12 Acids and Bases — Miss Martins Maths and Science',
-          videoId: 'IQLHQtdx7Hs'
+          title: 'Watch: Acid-base Theories and Conjugate Acid-base Pairs — Mindset',
+          videoId: 'hQLWYmAFo3E'
         }
       ]
     },
@@ -130,9 +129,9 @@ export const chemicalChangeGr12: TopicContent = {
       title: 'Acid-base titrations, indicators and titration calculations',
       blocks: [
         {
-          type: 'tip',
-          body: `We haven't found a CAPS video for this sub-topic yet. Ask Angelo if you're stuck on it.`,
-          bodyAf: `Ons het nog nie 'n KABV-video vir hierdie onderafdeling gekry nie. Vra vir Angelo as jy vashaak.`
+          type: 'video',
+          title: 'Watch: NECT Physical Sciences - Gr 12 Acid Base Titration — Class Act Education',
+          videoId: 'e_VLUSFB4MU'
         }
       ]
     },
@@ -141,9 +140,9 @@ export const chemicalChangeGr12: TopicContent = {
       title: 'Oxidation numbers and redox half-reactions',
       blocks: [
         {
-          type: 'tip',
-          body: `We haven't found a CAPS video for this sub-topic yet. Ask Angelo if you're stuck on it.`,
-          bodyAf: `Ons het nog nie 'n KABV-video vir hierdie onderafdeling gekry nie. Vra vir Angelo as jy vashaak.`
+          type: 'content_gap',
+          body: `No CAPS video has been sourced for this sub-topic yet. Ask Angelo if you're stuck on it in the meantime.`,
+          bodyAf: `Daar is nog nie 'n KABV-video vir hierdie onderafdeling nie. Vra solank vir Angelo as jy vashaak.`
         }
       ]
     },

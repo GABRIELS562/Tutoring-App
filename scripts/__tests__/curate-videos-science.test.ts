@@ -129,17 +129,18 @@ describe('CAPS enumerations list alternatives, not requirements', () => {
   })
 })
 
-describe('only a list after a colon is an enumeration', () => {
-  it('does not relax a comma that joins two different concepts', () => {
-    // No colon: this sub-topic covers both halves, and relaxing it let a
-    // stoichiometry video stand in for physical and chemical change.
-    expect(
-      hasRequiredTermsFor(
-        'science',
-        'Molar mass, percentage composition and empirical formula',
-        'Quantitative Aspects of Chemical Change: Molar Volume'
-      )
-    ).toBe(false)
+describe('a comma-listed sub-topic is protected by its wording, not by the comma', () => {
+  it('no longer carries the wording that made a comma dangerous', async () => {
+    // "Molar mass, percentage composition and empirical formula" once matched
+    // a video about molar VOLUME. The fix was to split it into the two
+    // lessons it actually is, not to make every comma strict - that had
+    // rejected Kevinmathscience's collision theory lesson.
+    const { capsScienceCurriculum } = await import('../../src/content/caps-science-curriculum')
+    const subTopics = capsScienceCurriculum.flatMap((t) => t.subTopics)
+
+    expect(subTopics).toContain('Empirical formula')
+    expect(subTopics).not.toContain('Molar mass, percentage composition and empirical formula')
+    expect(subTopics).not.toContain('Physical and chemical change, conservation of atoms and mass')
   })
 
   it('still relaxes a genuine list after a colon', () => {
@@ -222,5 +223,39 @@ describe('a definitive topic signal outranks a passing mention', () => {
     expect(isOtherMathsTopic('electricity-magnetism-gr12', 'Electric motors Grade 12 Electrodynamics')).toBe(
       false
     )
+  })
+})
+
+describe('a comma lists concepts, but a joined sub-topic still binds', () => {
+  it('accepts a lesson on one of several listed concepts', () => {
+    // Kevinmathscience's 421k-view collision theory lesson was rejected for
+    // not also naming activation energy and catalysts.
+    expect(
+      hasRequiredTermsFor(
+        'science',
+        'Collision theory, activation energy and catalysts',
+        'Collision Theory grade 12: Part 1'
+      )
+    ).toBe(true)
+  })
+
+  it('does not let an unrelated chemistry video in', () => {
+    expect(
+      hasRequiredTermsFor(
+        'science',
+        'Collision theory, activation energy and catalysts',
+        'Titration calculations Grade 12'
+      )
+    ).toBe(false)
+  })
+
+  it('keeps the reworded sub-topics strict', () => {
+    // These two were reworded precisely so a comma could not loosen them.
+    expect(
+      hasRequiredTermsFor('science', 'Physical and chemical change', 'Stoichiometry Grade 10')
+    ).toBe(true) // no discriminating term in either - relevance decides this one
+    expect(
+      hasRequiredTermsFor('science', 'Empirical formula', 'Molar Volume Grade 10')
+    ).toBe(false)
   })
 })
