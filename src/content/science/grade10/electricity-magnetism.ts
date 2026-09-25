@@ -11,6 +11,7 @@ export const electricityMagnetismGr10: TopicContent = {
   paper: 1,
   title: 'Electricity & Magnetism',
   capsWeight: 8.75,
+  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
   sections: [
     {
       id: 'overview',
@@ -19,6 +20,7 @@ export const electricityMagnetismGr10: TopicContent = {
         {
           type: 'theory',
           title: 'What this topic covers',
+          titleAf: 'Wat hierdie onderwerp dek',
           body: `• Magnetic fields and magnetic field lines of permanent magnets
 • The Earth's magnetic field and the compass
 • Two kinds of charge, charging by contact and polarisation
@@ -37,7 +39,8 @@ export const electricityMagnetismGr10: TopicContent = {
       blocks: [
         {
           type: 'tip',
-          body: `A curated video for this sub-topic is on the way. Ask Angelo if you're stuck on it.`
+          body: `We haven't found a CAPS video for this sub-topic yet. Ask Angelo if you're stuck on it.`,
+          bodyAf: `Ons het nog nie 'n KABV-video vir hierdie onderafdeling gekry nie. Vra vir Angelo as jy vashaak.`
         }
       ]
     },
@@ -47,7 +50,8 @@ export const electricityMagnetismGr10: TopicContent = {
       blocks: [
         {
           type: 'tip',
-          body: `A curated video for this sub-topic is on the way. Ask Angelo if you're stuck on it.`
+          body: `We haven't found a CAPS video for this sub-topic yet. Ask Angelo if you're stuck on it.`,
+          bodyAf: `Ons het nog nie 'n KABV-video vir hierdie onderafdeling gekry nie. Vra vir Angelo as jy vashaak.`
         }
       ]
     },
@@ -56,8 +60,9 @@ export const electricityMagnetismGr10: TopicContent = {
       title: 'Two kinds of charge, charging by contact and polarisation',
       blocks: [
         {
-          type: 'tip',
-          body: `A curated video for this sub-topic is on the way. Ask Angelo if you're stuck on it.`
+          type: 'video',
+          title: 'Watch: Polarisation of Charge: Electrostatic Induction — Mindset',
+          videoId: 'kxOPr0r5yc0'
         }
       ]
     },
@@ -66,8 +71,9 @@ export const electricityMagnetismGr10: TopicContent = {
       title: 'Conservation and quantisation of charge',
       blocks: [
         {
-          type: 'tip',
-          body: `A curated video for this sub-topic is on the way. Ask Angelo if you're stuck on it.`
+          type: 'video',
+          title: 'Watch: Grade 10 - Electrostatics | Conservation of Charge | Mlungisi Nkosi — Mlungisi Nkosi Maths & Science',
+          videoId: '68Mw4MEX_z0'
         }
       ]
     },
@@ -77,7 +83,8 @@ export const electricityMagnetismGr10: TopicContent = {
       blocks: [
         {
           type: 'tip',
-          body: `A curated video for this sub-topic is on the way. Ask Angelo if you're stuck on it.`
+          body: `We haven't found a CAPS video for this sub-topic yet. Ask Angelo if you're stuck on it.`,
+          bodyAf: `Ons het nog nie 'n KABV-video vir hierdie onderafdeling gekry nie. Vra vir Angelo as jy vashaak.`
         }
       ]
     },
@@ -87,7 +94,8 @@ export const electricityMagnetismGr10: TopicContent = {
       blocks: [
         {
           type: 'tip',
-          body: `A curated video for this sub-topic is on the way. Ask Angelo if you're stuck on it.`
+          body: `We haven't found a CAPS video for this sub-topic yet. Ask Angelo if you're stuck on it.`,
+          bodyAf: `Ons het nog nie 'n KABV-video vir hierdie onderafdeling gekry nie. Vra vir Angelo as jy vashaak.`
         }
       ]
     },
@@ -96,8 +104,9 @@ export const electricityMagnetismGr10: TopicContent = {
       title: 'Resistance and the factors that affect it',
       blocks: [
         {
-          type: 'tip',
-          body: `A curated video for this sub-topic is on the way. Ask Angelo if you're stuck on it.`
+          type: 'video',
+          title: 'Watch: Resistance Grade 10 — Kevinmathscience',
+          videoId: 'JZJlJ18ggc0'
         }
       ]
     },
@@ -106,8 +115,9 @@ export const electricityMagnetismGr10: TopicContent = {
       title: 'Resistors in series',
       blocks: [
         {
-          type: 'tip',
-          body: `A curated video for this sub-topic is on the way. Ask Angelo if you're stuck on it.`
+          type: 'video',
+          title: 'Watch: Physics | Electricity Circuits Part 1 | Resistors in series — Mlungisi Nkosi Maths & Science',
+          videoId: 'LIgyQkUsmWo'
         }
       ]
     },
@@ -116,8 +126,9 @@ export const electricityMagnetismGr10: TopicContent = {
       title: 'Resistors in parallel',
       blocks: [
         {
-          type: 'tip',
-          body: `A curated video for this sub-topic is on the way. Ask Angelo if you're stuck on it.`
+          type: 'video',
+          title: 'Watch: Physics | Electric circuits | Resistors in parallel — Mlungisi Nkosi Maths & Science',
+          videoId: 'mpQacbiR0BY'
         }
       ]
     }

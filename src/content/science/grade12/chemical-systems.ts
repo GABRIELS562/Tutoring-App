@@ -11,6 +11,7 @@ export const chemicalSystemsGr12: TopicContent = {
   paper: 2,
   title: 'Chemical Systems',
   capsWeight: 3.5,
+  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
   sections: [
     {
       id: 'overview',
@@ -19,6 +20,7 @@ export const chemicalSystemsGr12: TopicContent = {
         {
           type: 'theory',
           title: 'What this topic covers',
+          titleAf: 'Wat hierdie onderwerp dek',
           body: `• Plant nutrients: non-mineral nutrients and the primary nutrients N, P and K
 • The function and sources of N, P and K and the N:P:K ratio
 • The Haber process: manufacturing ammonia
@@ -30,22 +32,24 @@ export const chemicalSystemsGr12: TopicContent = {
       ]
     },
     {
-      id: 'plant-nutrients-non-mineral-nutrients-and-the-pr',
-      title: 'Plant nutrients: non-mineral nutrients and the primary nutrients N, P and K',
+      id: 'plant-nutrients-and-why-fertilizers-are-needed',
+      title: 'Plant nutrients and why fertilizers are needed',
       blocks: [
         {
-          type: 'tip',
-          body: `A curated video for this sub-topic is on the way. Ask Angelo if you're stuck on it.`
+          type: 'video',
+          title: 'Watch: Fertilizer Theory — Simple Science',
+          videoId: 'YtyMCjBN1so'
         }
       ]
     },
     {
-      id: 'the-function-and-sources-of-n-p-and-k-and-the-n-',
-      title: 'The function and sources of N, P and K and the N:P:K ratio',
+      id: 'the-function-of-nitrogen-phosphorus-and-potassiu',
+      title: 'The function of nitrogen, phosphorus and potassium in plants',
       blocks: [
         {
           type: 'tip',
-          body: `A curated video for this sub-topic is on the way. Ask Angelo if you're stuck on it.`
+          body: `We haven't found a CAPS video for this sub-topic yet. Ask Angelo if you're stuck on it.`,
+          bodyAf: `Ons het nog nie 'n KABV-video vir hierdie onderafdeling gekry nie. Vra vir Angelo as jy vashaak.`
         }
       ]
     },
@@ -54,8 +58,9 @@ export const chemicalSystemsGr12: TopicContent = {
       title: 'The Haber process: manufacturing ammonia',
       blocks: [
         {
-          type: 'tip',
-          body: `A curated video for this sub-topic is on the way. Ask Angelo if you're stuck on it.`
+          type: 'video',
+          title: 'Watch: The Haber Process — Simple Science',
+          videoId: 'Vr8N5P-X4qI'
         }
       ]
     },
@@ -64,8 +69,9 @@ export const chemicalSystemsGr12: TopicContent = {
       title: 'The Ostwald process: manufacturing nitric acid',
       blocks: [
         {
-          type: 'tip',
-          body: `A curated video for this sub-topic is on the way. Ask Angelo if you're stuck on it.`
+          type: 'video',
+          title: 'Watch: The Ostwald Process — Simple Science',
+          videoId: 'Mx12D7AOV50'
         }
       ]
     },
@@ -74,8 +80,9 @@ export const chemicalSystemsGr12: TopicContent = {
       title: 'The contact process: manufacturing sulfuric acid',
       blocks: [
         {
-          type: 'tip',
-          body: `A curated video for this sub-topic is on the way. Ask Angelo if you're stuck on it.`
+          type: 'video',
+          title: 'Watch: The Contact Process — Simple Science',
+          videoId: 'sWZFGtywF_c'
         }
       ]
     },
@@ -85,7 +92,8 @@ export const chemicalSystemsGr12: TopicContent = {
       blocks: [
         {
           type: 'tip',
-          body: `A curated video for this sub-topic is on the way. Ask Angelo if you're stuck on it.`
+          body: `We haven't found a CAPS video for this sub-topic yet. Ask Angelo if you're stuck on it.`,
+          bodyAf: `Ons het nog nie 'n KABV-video vir hierdie onderafdeling gekry nie. Vra vir Angelo as jy vashaak.`
         }
       ]
     },
@@ -95,7 +103,8 @@ export const chemicalSystemsGr12: TopicContent = {
       blocks: [
         {
           type: 'tip',
-          body: `A curated video for this sub-topic is on the way. Ask Angelo if you're stuck on it.`
+          body: `We haven't found a CAPS video for this sub-topic yet. Ask Angelo if you're stuck on it.`,
+          bodyAf: `Ons het nog nie 'n KABV-video vir hierdie onderafdeling gekry nie. Vra vir Angelo as jy vashaak.`
         }
       ]
     }

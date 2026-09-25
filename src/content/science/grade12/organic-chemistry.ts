@@ -11,6 +11,7 @@ export const organicChemistryGr12: TopicContent = {
   paper: 2,
   title: 'Organic Chemistry',
   capsWeight: 11.5,
+  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
   sections: [
     {
       id: 'overview',
@@ -19,6 +20,7 @@ export const organicChemistryGr12: TopicContent = {
         {
           type: 'theory',
           title: 'What this topic covers',
+          titleAf: 'Wat hierdie onderwerp dek',
           body: `• Organic molecules: functional groups, saturated and unsaturated structures
 • Structural isomers: chain, positional and functional
 • IUPAC naming and formulae of organic compounds
@@ -36,8 +38,9 @@ export const organicChemistryGr12: TopicContent = {
       title: 'Organic molecules: functional groups, saturated and unsaturated structures',
       blocks: [
         {
-          type: 'tip',
-          body: `A curated video for this sub-topic is on the way. Ask Angelo if you're stuck on it.`
+          type: 'video',
+          title: 'Watch: Grade 12 Organic Chemistry Physical Properties and Structure PART 2: IMF & Type of Functional Group — Miss Martins Maths and Science',
+          videoId: 'bN3MteumaTQ'
         }
       ]
     },
@@ -46,8 +49,9 @@ export const organicChemistryGr12: TopicContent = {
       title: 'Structural isomers: chain, positional and functional',
       blocks: [
         {
-          type: 'tip',
-          body: `A curated video for this sub-topic is on the way. Ask Angelo if you're stuck on it.`
+          type: 'video',
+          title: 'Watch: Isomers Organic Chemistry Grade 12 — Kevinmathscience',
+          videoId: 'Kis0W4iOZr8'
         }
       ]
     },
@@ -56,8 +60,9 @@ export const organicChemistryGr12: TopicContent = {
       title: 'IUPAC naming and formulae of organic compounds',
       blocks: [
         {
-          type: 'tip',
-          body: `A curated video for this sub-topic is on the way. Ask Angelo if you're stuck on it.`
+          type: 'video',
+          title: 'Watch: Grade 12 Organic chemistry: Naming alkanes- Branched alkanes (IUPAC naming) — Miss Martins Maths and Science',
+          videoId: 'GELIVV8JO3A'
         }
       ]
     },
@@ -66,8 +71,9 @@ export const organicChemistryGr12: TopicContent = {
       title: 'Physical properties and intermolecular forces of organic compounds',
       blocks: [
         {
-          type: 'tip',
-          body: `A curated video for this sub-topic is on the way. Ask Angelo if you're stuck on it.`
+          type: 'video',
+          title: 'Watch: Chemistry | Intermolecular forces | Physical properties of organic compound — Mlungisi Nkosi Maths & Science',
+          videoId: 'ameAElR0Pac'
         }
       ]
     },
@@ -77,7 +83,8 @@ export const organicChemistryGr12: TopicContent = {
       blocks: [
         {
           type: 'tip',
-          body: `A curated video for this sub-topic is on the way. Ask Angelo if you're stuck on it.`
+          body: `We haven't found a CAPS video for this sub-topic yet. Ask Angelo if you're stuck on it.`,
+          bodyAf: `Ons het nog nie 'n KABV-video vir hierdie onderafdeling gekry nie. Vra vir Angelo as jy vashaak.`
         }
       ]
     },
@@ -87,7 +94,8 @@ export const organicChemistryGr12: TopicContent = {
       blocks: [
         {
           type: 'tip',
-          body: `A curated video for this sub-topic is on the way. Ask Angelo if you're stuck on it.`
+          body: `We haven't found a CAPS video for this sub-topic yet. Ask Angelo if you're stuck on it.`,
+          bodyAf: `Ons het nog nie 'n KABV-video vir hierdie onderafdeling gekry nie. Vra vir Angelo as jy vashaak.`
         }
       ]
     },
@@ -96,8 +104,9 @@ export const organicChemistryGr12: TopicContent = {
       title: 'Elimination reactions and cracking',
       blocks: [
         {
-          type: 'tip',
-          body: `A curated video for this sub-topic is on the way. Ask Angelo if you're stuck on it.`
+          type: 'video',
+          title: 'Watch: 7  Gr12 Physical Science - Reactions in Organic Chemistry - Cracking Elimination Reaction — JuniorTukkie at the University of Pretoria',
+          videoId: '0df8ZNhpfyc'
         }
       ]
     },
@@ -106,8 +115,9 @@ export const organicChemistryGr12: TopicContent = {
       title: 'Substitution reactions of alkanes, alcohols and haloalkanes',
       blocks: [
         {
-          type: 'tip',
-          body: `A curated video for this sub-topic is on the way. Ask Angelo if you're stuck on it.`
+          type: 'video',
+          title: 'Watch: 8  Gr12 Physical Science - Reactions in Organic Chemistry - Halogenation Substitution (Alkane) — JuniorTukkie at the University of Pretoria',
+          videoId: 'Akk42dzCxeU'
         }
       ]
     },
@@ -117,7 +127,8 @@ export const organicChemistryGr12: TopicContent = {
       blocks: [
         {
           type: 'tip',
-          body: `A curated video for this sub-topic is on the way. Ask Angelo if you're stuck on it.`
+          body: `We haven't found a CAPS video for this sub-topic yet. Ask Angelo if you're stuck on it.`,
+          bodyAf: `Ons het nog nie 'n KABV-video vir hierdie onderafdeling gekry nie. Vra vir Angelo as jy vashaak.`
         }
       ]
     }

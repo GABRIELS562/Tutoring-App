@@ -11,6 +11,7 @@ export const electricityMagnetismGr12: TopicContent = {
   paper: 1,
   title: 'Electricity & Magnetism',
   capsWeight: 7.5,
+  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
   sections: [
     {
       id: 'overview',
@@ -19,6 +20,7 @@ export const electricityMagnetismGr12: TopicContent = {
         {
           type: 'theory',
           title: 'What this topic covers',
+          titleAf: 'Wat hierdie onderwerp dek',
           body: `• Series and parallel resistor networks
 • Internal resistance and emf of a battery
 • Circuit calculations with internal resistance and series-parallel networks
@@ -35,7 +37,8 @@ export const electricityMagnetismGr12: TopicContent = {
       blocks: [
         {
           type: 'tip',
-          body: `A curated video for this sub-topic is on the way. Ask Angelo if you're stuck on it.`
+          body: `We haven't found a CAPS video for this sub-topic yet. Ask Angelo if you're stuck on it.`,
+          bodyAf: `Ons het nog nie 'n KABV-video vir hierdie onderafdeling gekry nie. Vra vir Angelo as jy vashaak.`
         }
       ]
     },
@@ -44,8 +47,9 @@ export const electricityMagnetismGr12: TopicContent = {
       title: 'Internal resistance and emf of a battery',
       blocks: [
         {
-          type: 'tip',
-          body: `A curated video for this sub-topic is on the way. Ask Angelo if you're stuck on it.`
+          type: 'video',
+          title: 'Watch: Physics Revision | Internal Resistance & EMF Explained | Mlungisi Nkosi — Mlungisi Nkosi Maths & Science',
+          videoId: 'WiIeeqC5XDQ'
         }
       ]
     },
@@ -54,8 +58,9 @@ export const electricityMagnetismGr12: TopicContent = {
       title: 'Circuit calculations with internal resistance and series-parallel networks',
       blocks: [
         {
-          type: 'tip',
-          body: `A curated video for this sub-topic is on the way. Ask Angelo if you're stuck on it.`
+          type: 'video',
+          title: 'Watch: Physics | Electric circuits | EMF and Internal resistance (Made simple) — Mlungisi Nkosi Maths & Science',
+          videoId: 'Z6ZyHYLY1N8'
         }
       ]
     },
@@ -64,8 +69,9 @@ export const electricityMagnetismGr12: TopicContent = {
       title: 'AC and DC generators',
       blocks: [
         {
-          type: 'tip',
-          body: `A curated video for this sub-topic is on the way. Ask Angelo if you're stuck on it.`
+          type: 'video',
+          title: 'Watch: Electrodynamics: Motors and generators Physics — Miss Martins Maths and Science',
+          videoId: 'RlP97BAez74'
         }
       ]
     },
@@ -74,8 +80,9 @@ export const electricityMagnetismGr12: TopicContent = {
       title: 'Electric motors',
       blocks: [
         {
-          type: 'tip',
-          body: `A curated video for this sub-topic is on the way. Ask Angelo if you're stuck on it.`
+          type: 'video',
+          title: 'Watch: Electrodynamics Motors SUMMARY Grade 12 Physics — Miss Martins Maths and Science',
+          videoId: 'g-9GARYLfKQ'
         }
       ]
     },
@@ -84,8 +91,9 @@ export const electricityMagnetismGr12: TopicContent = {
       title: 'Alternating current: current and voltage graphs',
       blocks: [
         {
-          type: 'tip',
-          body: `A curated video for this sub-topic is on the way. Ask Angelo if you're stuck on it.`
+          type: 'video',
+          title: 'Watch: Physics | Electric Circuits | Voltage vs Current graphs — Mlungisi Nkosi Maths & Science',
+          videoId: 'Vg8Tu668af8'
         }
       ]
     },
@@ -95,7 +103,8 @@ export const electricityMagnetismGr12: TopicContent = {
       blocks: [
         {
           type: 'tip',
-          body: `A curated video for this sub-topic is on the way. Ask Angelo if you're stuck on it.`
+          body: `We haven't found a CAPS video for this sub-topic yet. Ask Angelo if you're stuck on it.`,
+          bodyAf: `Ons het nog nie 'n KABV-video vir hierdie onderafdeling gekry nie. Vra vir Angelo as jy vashaak.`
         }
       ]
     }

@@ -11,6 +11,7 @@ export const mechanicsGr12: TopicContent = {
   paper: 1,
   title: 'Mechanics',
   capsWeight: 17.5,
+  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
   sections: [
     {
       id: 'overview',
@@ -19,6 +20,7 @@ export const mechanicsGr12: TopicContent = {
         {
           type: 'theory',
           title: 'What this topic covers',
+          titleAf: 'Wat hierdie onderwerp dek',
           body: `• Momentum and its vector nature
 • Newton's second law in terms of momentum
 • Conservation of momentum
@@ -38,8 +40,9 @@ export const mechanicsGr12: TopicContent = {
       title: 'Momentum and its vector nature',
       blocks: [
         {
-          type: 'tip',
-          body: `A curated video for this sub-topic is on the way. Ask Angelo if you're stuck on it.`
+          type: 'video',
+          title: 'Watch: Vector nature of Momentum: Momentum Vector Diagrams — Miss Martins Maths and Science',
+          videoId: 'T-Rkyifd_54'
         }
       ]
     },
@@ -48,8 +51,9 @@ export const mechanicsGr12: TopicContent = {
       title: 'Newton\'s second law in terms of momentum',
       blocks: [
         {
-          type: 'tip',
-          body: `A curated video for this sub-topic is on the way. Ask Angelo if you're stuck on it.`
+          type: 'video',
+          title: 'Watch: Grade 12 momentum Newtons second law in terms of momentum — Miss Martins Maths and Science',
+          videoId: 'yDoQnWeNU4k'
         }
       ]
     },
@@ -58,8 +62,9 @@ export const mechanicsGr12: TopicContent = {
       title: 'Conservation of momentum',
       blocks: [
         {
-          type: 'tip',
-          body: `A curated video for this sub-topic is on the way. Ask Angelo if you're stuck on it.`
+          type: 'video',
+          title: 'Watch: 4) Linear Momentum Conservation | Intro — Kevinmathscience',
+          videoId: 'BLOcAfK2xq8'
         }
       ]
     },
@@ -68,8 +73,9 @@ export const mechanicsGr12: TopicContent = {
       title: 'Elastic and inelastic collisions',
       blocks: [
         {
-          type: 'tip',
-          body: `A curated video for this sub-topic is on the way. Ask Angelo if you're stuck on it.`
+          type: 'video',
+          title: 'Watch: 5)Elastic Inelastic Collisions | Intro part 1 — Kevinmathscience',
+          videoId: '9mfzOT04eHM'
         }
       ]
     },
@@ -78,8 +84,9 @@ export const mechanicsGr12: TopicContent = {
       title: 'Impulse and the impulse-momentum theorem',
       blocks: [
         {
-          type: 'tip',
-          body: `A curated video for this sub-topic is on the way. Ask Angelo if you're stuck on it.`
+          type: 'video',
+          title: 'Watch: Grade 12 Impulse and impulse momentum theorem — Miss Martins Maths and Science',
+          videoId: 'SSUo3FSQCD8'
         }
       ]
     },
@@ -88,8 +95,9 @@ export const mechanicsGr12: TopicContent = {
       title: 'Vertical projectile motion: equations of motion',
       blocks: [
         {
-          type: 'tip',
-          body: `A curated video for this sub-topic is on the way. Ask Angelo if you're stuck on it.`
+          type: 'video',
+          title: 'Watch: 1) Vertical projectile motion introduction — Kevinmathscience',
+          videoId: 'gSdX5US3mm0'
         }
       ]
     },
@@ -98,8 +106,9 @@ export const mechanicsGr12: TopicContent = {
       title: 'Graphs of vertical projectile motion (x-t, v-t and a-t)',
       blocks: [
         {
-          type: 'tip',
-          body: `A curated video for this sub-topic is on the way. Ask Angelo if you're stuck on it.`
+          type: 'video',
+          title: 'Watch: 2) Vertical projectile motion calculations — Kevinmathscience',
+          videoId: 'FSt53TnJ6xM'
         }
       ]
     },
@@ -108,8 +117,9 @@ export const mechanicsGr12: TopicContent = {
       title: 'Work done by a force',
       blocks: [
         {
-          type: 'tip',
-          body: `A curated video for this sub-topic is on the way. Ask Angelo if you're stuck on it.`
+          type: 'video',
+          title: 'Watch: Grade 12 work energy and power : What is work? — Kevinmathscience',
+          videoId: 'HT34ge6EZgE'
         }
       ]
     },
@@ -118,8 +128,9 @@ export const mechanicsGr12: TopicContent = {
       title: 'The work-energy theorem',
       blocks: [
         {
-          type: 'tip',
-          body: `A curated video for this sub-topic is on the way. Ask Angelo if you're stuck on it.`
+          type: 'video',
+          title: 'Watch: Grade 12 work energy and power : Work energy theorem — Kevinmathscience',
+          videoId: 'RAghwed1-ss'
         }
       ]
     },
@@ -128,8 +139,9 @@ export const mechanicsGr12: TopicContent = {
       title: 'Conservation of energy with non-conservative forces present',
       blocks: [
         {
-          type: 'tip',
-          body: `A curated video for this sub-topic is on the way. Ask Angelo if you're stuck on it.`
+          type: 'video',
+          title: 'Watch: Physics | Momentum | Conservation of linear momentum (Made easy) — Mlungisi Nkosi Maths & Science',
+          videoId: 'QAURZq43508'
         }
       ]
     },
@@ -138,8 +150,9 @@ export const mechanicsGr12: TopicContent = {
       title: 'Power',
       blocks: [
         {
-          type: 'tip',
-          body: `A curated video for this sub-topic is on the way. Ask Angelo if you're stuck on it.`
+          type: 'video',
+          title: 'Watch: Grade 12 work energy and power : Work practice questions — Kevinmathscience',
+          videoId: 'GJ_-5Fxt-ok'
         }
       ]
     }

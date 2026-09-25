@@ -8,14 +8,16 @@ export const matterMaterialsGr10: TopicContent = {
   paper: 2,
   title: 'Matter & Materials',
   capsWeight: 20,
+  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
   sections: [
     {
-      id: 'coming-soon',
+      id: 'overview',
       title: 'Matter & Materials',
       blocks: [
         {
           type: 'theory',
           title: 'What this topic covers',
+          titleAf: 'Wat hierdie onderwerp dek',
           body: `• **Atomic Structure** - Protons, neutrons, electrons
 • **Isotopes** - Same element, different mass numbers
 • **The Periodic Table** - Groups, periods, trends
@@ -24,21 +26,106 @@ export const matterMaterialsGr10: TopicContent = {
 • **Lewis Dot Diagrams** - Representing valence electrons
 • **Molecular Structure** - Shapes of simple molecules
 • **Physical and Chemical Changes** - Distinguishing between them`
-        },
-        // PROVISIONAL video picks — auto-filled 2026-09-18 from docs/client-updates/video-candidates; client to confirm.
-        {
-          type: 'video',
-          title: 'Watch: Grade 10 Classification of Matter: Properties of materials — Miss Martins Maths and Science',
-          videoId: '5M4hJjp3-lQ',
-          videoIdAf: '_Ad0WdFmEsY',
-          titleAf: 'Watch: Gr 10 Chemie fisiese en chemiese verandering — Danike Aucamp'
-        },
-        {
-          type: 'video',
-          title: 'Watch: Water of Crystallization | Chemistry Grade 10-12 — Miss Martins Maths and Science',
-          videoId: 'oADmMF84wbA'
         }
-        // TODO(curator): add { type: 'formula', formulas: [...] } block
+      ]
+    },
+    {
+      id: 'classification-of-matter-mixtures-pure-substance',
+      title: 'Classification of matter: mixtures, pure substances, metals and non-metals',
+      blocks: [
+        {
+          type: 'video',
+          title: 'Watch: 2) Mixture vs pure substance gr 10 — Kevinmathscience',
+          videoId: 'TxpKUZpF_BI'
+        }
+      ]
+    },
+    {
+      id: 'names-and-formulae-of-compounds',
+      title: 'Names and formulae of compounds',
+      blocks: [
+        {
+          type: 'tip',
+          body: `We haven't found a CAPS video for this sub-topic yet. Ask Angelo if you're stuck on it.`,
+          bodyAf: `Ons het nog nie 'n KABV-video vir hierdie onderafdeling gekry nie. Vra vir Angelo as jy vashaak.`
+        }
+      ]
+    },
+    {
+      id: 'states-of-matter-and-the-kinetic-molecular-theor',
+      title: 'States of matter and the kinetic molecular theory',
+      blocks: [
+        {
+          type: 'video',
+          title: 'Watch: Kinetic Molecular Theory grade 10 Introduction — Miss Martins Maths and Science',
+          videoId: 'QuVBXvLJjD8'
+        }
+      ]
+    },
+    {
+      id: 'models-of-the-atom-and-the-structure-of-the-atom',
+      title: 'Models of the atom and the structure of the atom',
+      blocks: [
+        {
+          type: 'tip',
+          body: `We haven't found a CAPS video for this sub-topic yet. Ask Angelo if you're stuck on it.`,
+          bodyAf: `Ons het nog nie 'n KABV-video vir hierdie onderafdeling gekry nie. Vra vir Angelo as jy vashaak.`
+        }
+      ]
+    },
+    {
+      id: 'isotopes-and-relative-atomic-mass',
+      title: 'Isotopes and relative atomic mass',
+      blocks: [
+        {
+          type: 'video',
+          title: 'Watch: Grade 10 Isotopes and Relative Atomic Mass Chemistry PART 1 — Miss Martins Maths and Science',
+          videoId: '0ZGRD9q6WGE'
+        }
+      ]
+    },
+    {
+      id: 'electron-configuration-of-atoms',
+      title: 'Electron configuration of atoms',
+      blocks: [
+        {
+          type: 'tip',
+          body: `We haven't found a CAPS video for this sub-topic yet. Ask Angelo if you're stuck on it.`,
+          bodyAf: `Ons het nog nie 'n KABV-video vir hierdie onderafdeling gekry nie. Vra vir Angelo as jy vashaak.`
+        }
+      ]
+    },
+    {
+      id: 'the-periodic-table-groups-periods-and-periodic-t',
+      title: 'The periodic table: groups, periods and periodic trends',
+      blocks: [
+        {
+          type: 'video',
+          title: 'Watch: 18) Periodic table gr 10 — Kevinmathscience',
+          videoId: 'WRNsXTyeZI0'
+        }
+      ]
+    },
+    {
+      id: 'chemical-bonding-covalent-ionic-and-metallic',
+      title: 'Chemical bonding: covalent, ionic and metallic',
+      blocks: [
+        {
+          type: 'video',
+          title: 'Watch: 24) Ionic Bonding Grade 10 — Kevinmathscience',
+          videoId: '59CwQ-hjp00'
+        }
+      ]
+    },
+    {
+      id: 'particles-substances-are-made-of-molecular-ionic',
+      title: 'Particles substances are made of: molecular, ionic and metallic structures',
+      blocks: [
+        {
+          type: 'video',
+          title: 'Watch: Chemical Bonding: Ionic Bonding Lewis Dot Diagrams — Miss Martins Maths and Science',
+          videoId: '1EK711NkEds'
+        }
       ]
     }
   ]

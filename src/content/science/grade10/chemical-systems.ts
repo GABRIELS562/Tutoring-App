@@ -11,6 +11,7 @@ export const chemicalSystemsGr10: TopicContent = {
   paper: 2,
   title: 'Chemical Systems',
   capsWeight: 5,
+  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
   sections: [
     {
       id: 'overview',
@@ -19,6 +20,7 @@ export const chemicalSystemsGr10: TopicContent = {
         {
           type: 'theory',
           title: 'What this topic covers',
+          titleAf: 'Wat hierdie onderwerp dek',
           body: `• The hydrosphere: where the Earth's water is found
 • Interaction of the hydrosphere with the atmosphere, lithosphere and biosphere
 • Water quality and the purification of water
@@ -32,7 +34,8 @@ export const chemicalSystemsGr10: TopicContent = {
       blocks: [
         {
           type: 'tip',
-          body: `A curated video for this sub-topic is on the way. Ask Angelo if you're stuck on it.`
+          body: `We haven't found a CAPS video for this sub-topic yet. Ask Angelo if you're stuck on it.`,
+          bodyAf: `Ons het nog nie 'n KABV-video vir hierdie onderafdeling gekry nie. Vra vir Angelo as jy vashaak.`
         }
       ]
     },
@@ -42,7 +45,8 @@ export const chemicalSystemsGr10: TopicContent = {
       blocks: [
         {
           type: 'tip',
-          body: `A curated video for this sub-topic is on the way. Ask Angelo if you're stuck on it.`
+          body: `We haven't found a CAPS video for this sub-topic yet. Ask Angelo if you're stuck on it.`,
+          bodyAf: `Ons het nog nie 'n KABV-video vir hierdie onderafdeling gekry nie. Vra vir Angelo as jy vashaak.`
         }
       ]
     },
@@ -52,7 +56,8 @@ export const chemicalSystemsGr10: TopicContent = {
       blocks: [
         {
           type: 'tip',
-          body: `A curated video for this sub-topic is on the way. Ask Angelo if you're stuck on it.`
+          body: `We haven't found a CAPS video for this sub-topic yet. Ask Angelo if you're stuck on it.`,
+          bodyAf: `Ons het nog nie 'n KABV-video vir hierdie onderafdeling gekry nie. Vra vir Angelo as jy vashaak.`
         }
       ]
     },
@@ -62,7 +67,8 @@ export const chemicalSystemsGr10: TopicContent = {
       blocks: [
         {
           type: 'tip',
-          body: `A curated video for this sub-topic is on the way. Ask Angelo if you're stuck on it.`
+          body: `We haven't found a CAPS video for this sub-topic yet. Ask Angelo if you're stuck on it.`,
+          bodyAf: `Ons het nog nie 'n KABV-video vir hierdie onderafdeling gekry nie. Vra vir Angelo as jy vashaak.`
         }
       ]
     }

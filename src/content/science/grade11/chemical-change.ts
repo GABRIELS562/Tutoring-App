@@ -11,6 +11,7 @@ export const chemicalChangeGr11: TopicContent = {
   paper: 2,
   title: 'Chemical Change',
   capsWeight: 17.5,
+  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
   sections: [
     {
       id: 'overview',
@@ -19,6 +20,7 @@ export const chemicalChangeGr11: TopicContent = {
         {
           type: 'theory',
           title: 'What this topic covers',
+          titleAf: 'Wat hierdie onderwerp dek',
           body: `• Molar volume of gases and concentration of solutions
 • Stoichiometric calculations: limiting reagents and percentage yield
 • Empirical formula, molecular formula and percentage purity
@@ -37,7 +39,8 @@ export const chemicalChangeGr11: TopicContent = {
       blocks: [
         {
           type: 'tip',
-          body: `A curated video for this sub-topic is on the way. Ask Angelo if you're stuck on it.`
+          body: `We haven't found a CAPS video for this sub-topic yet. Ask Angelo if you're stuck on it.`,
+          bodyAf: `Ons het nog nie 'n KABV-video vir hierdie onderafdeling gekry nie. Vra vir Angelo as jy vashaak.`
         }
       ]
     },
@@ -46,8 +49,9 @@ export const chemicalChangeGr11: TopicContent = {
       title: 'Stoichiometric calculations: limiting reagents and percentage yield',
       blocks: [
         {
-          type: 'tip',
-          body: `A curated video for this sub-topic is on the way. Ask Angelo if you're stuck on it.`
+          type: 'video',
+          title: 'Watch: Quantitative Aspects of Chemical Change: Percentage Yield — Kevinmathscience',
+          videoId: 'c7qwFPkNm6A'
         }
       ]
     },
@@ -56,8 +60,9 @@ export const chemicalChangeGr11: TopicContent = {
       title: 'Empirical formula, molecular formula and percentage purity',
       blocks: [
         {
-          type: 'tip',
-          body: `A curated video for this sub-topic is on the way. Ask Angelo if you're stuck on it.`
+          type: 'video',
+          title: 'Watch: Empirical and molecular formula grade 11 — Kevinmathscience',
+          videoId: 'NfLgmW146Es'
         }
       ]
     },
@@ -67,7 +72,8 @@ export const chemicalChangeGr11: TopicContent = {
       blocks: [
         {
           type: 'tip',
-          body: `A curated video for this sub-topic is on the way. Ask Angelo if you're stuck on it.`
+          body: `We haven't found a CAPS video for this sub-topic yet. Ask Angelo if you're stuck on it.`,
+          bodyAf: `Ons het nog nie 'n KABV-video vir hierdie onderafdeling gekry nie. Vra vir Angelo as jy vashaak.`
         }
       ]
     },
@@ -76,8 +82,9 @@ export const chemicalChangeGr11: TopicContent = {
       title: 'Exothermic and endothermic reactions and bond energy',
       blocks: [
         {
-          type: 'tip',
-          body: `A curated video for this sub-topic is on the way. Ask Angelo if you're stuck on it.`
+          type: 'video',
+          title: 'Watch: Endothermic vs Exothermic Reactions | Energy and Chemical Change | Grade 11 — Mlungisi Nkosi Maths & Science',
+          videoId: '4i3shBpWINI'
         }
       ]
     },
@@ -86,8 +93,9 @@ export const chemicalChangeGr11: TopicContent = {
       title: 'Activation energy and the activated complex',
       blocks: [
         {
-          type: 'tip',
-          body: `A curated video for this sub-topic is on the way. Ask Angelo if you're stuck on it.`
+          type: 'video',
+          title: 'Watch: Energy and Chemical Change grade 11: Activation energy, heat of reaction, catalyst and MORE! — Miss Martins Maths and Science',
+          videoId: 'G6Fb1fXqTzo'
         }
       ]
     },
@@ -97,7 +105,8 @@ export const chemicalChangeGr11: TopicContent = {
       blocks: [
         {
           type: 'tip',
-          body: `A curated video for this sub-topic is on the way. Ask Angelo if you're stuck on it.`
+          body: `We haven't found a CAPS video for this sub-topic yet. Ask Angelo if you're stuck on it.`,
+          bodyAf: `Ons het nog nie 'n KABV-video vir hierdie onderafdeling gekry nie. Vra vir Angelo as jy vashaak.`
         }
       ]
     },
@@ -106,8 +115,9 @@ export const chemicalChangeGr11: TopicContent = {
       title: 'Acid-base reactions and the formation of salts',
       blocks: [
         {
-          type: 'tip',
-          body: `A curated video for this sub-topic is on the way. Ask Angelo if you're stuck on it.`
+          type: 'video',
+          title: 'Watch: Common Acid Base Reactions Grade 11 — Kevinmathscience',
+          videoId: 'CnbLbgNeMNY'
         }
       ]
     },
@@ -116,8 +126,9 @@ export const chemicalChangeGr11: TopicContent = {
       title: 'Oxidation numbers and redox reactions',
       blocks: [
         {
-          type: 'tip',
-          body: `A curated video for this sub-topic is on the way. Ask Angelo if you're stuck on it.`
+          type: 'video',
+          title: 'Watch: Redox reactions: Assigning oxidation numbers Grade 11 Chemistry — Miss Martins Maths and Science',
+          videoId: 'Nbf01rRtTCU'
         }
       ]
     }

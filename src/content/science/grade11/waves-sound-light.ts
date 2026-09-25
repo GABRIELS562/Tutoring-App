@@ -11,6 +11,7 @@ export const wavesSoundLightGr11: TopicContent = {
   paper: 1,
   title: 'Waves, Sound & Light',
   capsWeight: 8.13,
+  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
   sections: [
     {
       id: 'overview',
@@ -19,6 +20,7 @@ export const wavesSoundLightGr11: TopicContent = {
         {
           type: 'theory',
           title: 'What this topic covers',
+          titleAf: 'Wat hierdie onderwerp dek',
           body: `• Refraction and refractive index
 • Snell's Law
 • Critical angle and total internal reflection
@@ -33,7 +35,8 @@ export const wavesSoundLightGr11: TopicContent = {
       blocks: [
         {
           type: 'tip',
-          body: `A curated video for this sub-topic is on the way. Ask Angelo if you're stuck on it.`
+          body: `We haven't found a CAPS video for this sub-topic yet. Ask Angelo if you're stuck on it.`,
+          bodyAf: `Ons het nog nie 'n KABV-video vir hierdie onderafdeling gekry nie. Vra vir Angelo as jy vashaak.`
         }
       ]
     },
@@ -42,8 +45,9 @@ export const wavesSoundLightGr11: TopicContent = {
       title: 'Snell\'s Law',
       blocks: [
         {
-          type: 'tip',
-          body: `A curated video for this sub-topic is on the way. Ask Angelo if you're stuck on it.`
+          type: 'video',
+          title: 'Watch: Refraction Calculations: Snells Law — Mindset',
+          videoId: 'X-sTSkNzGVk'
         }
       ]
     },
@@ -52,8 +56,9 @@ export const wavesSoundLightGr11: TopicContent = {
       title: 'Critical angle and total internal reflection',
       blocks: [
         {
-          type: 'tip',
-          body: `A curated video for this sub-topic is on the way. Ask Angelo if you're stuck on it.`
+          type: 'video',
+          title: 'Watch: 07 Applications of Total Internal Reflection — Mindset',
+          videoId: 'LQMIxwTx3qI'
         }
       ]
     },
@@ -63,7 +68,8 @@ export const wavesSoundLightGr11: TopicContent = {
       blocks: [
         {
           type: 'tip',
-          body: `A curated video for this sub-topic is on the way. Ask Angelo if you're stuck on it.`
+          body: `We haven't found a CAPS video for this sub-topic yet. Ask Angelo if you're stuck on it.`,
+          bodyAf: `Ons het nog nie 'n KABV-video vir hierdie onderafdeling gekry nie. Vra vir Angelo as jy vashaak.`
         }
       ]
     },
@@ -72,8 +78,9 @@ export const wavesSoundLightGr11: TopicContent = {
       title: 'Diffraction through a single slit',
       blocks: [
         {
-          type: 'tip',
-          body: `A curated video for this sub-topic is on the way. Ask Angelo if you're stuck on it.`
+          type: 'video',
+          title: 'Watch: Diffraction — Mindset',
+          videoId: 'FahppoRvRDc'
         }
       ]
     }

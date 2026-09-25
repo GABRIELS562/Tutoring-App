@@ -11,6 +11,7 @@ export const electricityMagnetismGr11: TopicContent = {
   paper: 1,
   title: 'Electricity & Magnetism',
   capsWeight: 12.5,
+  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
   sections: [
     {
       id: 'overview',
@@ -19,6 +20,7 @@ export const electricityMagnetismGr11: TopicContent = {
         {
           type: 'theory',
           title: 'What this topic covers',
+          titleAf: 'Wat hierdie onderwerp dek',
           body: `• Coulomb's Law
 • Electric fields and electric field lines
 • Calculating the electric field at a point
@@ -35,8 +37,9 @@ export const electricityMagnetismGr11: TopicContent = {
       title: 'Coulomb\'s Law',
       blocks: [
         {
-          type: 'tip',
-          body: `A curated video for this sub-topic is on the way. Ask Angelo if you're stuck on it.`
+          type: 'video',
+          title: 'Watch: Coulomb\'s Law Electrostatics grade 11 and 12 — Miss Martins Maths and Science',
+          videoId: 'ngfkLMOQDms'
         }
       ]
     },
@@ -45,8 +48,9 @@ export const electricityMagnetismGr11: TopicContent = {
       title: 'Electric fields and electric field lines',
       blocks: [
         {
-          type: 'tip',
-          body: `A curated video for this sub-topic is on the way. Ask Angelo if you're stuck on it.`
+          type: 'video',
+          title: 'Watch: Physics | Electrostatics | Electric fields Intesity — Mlungisi Nkosi Maths & Science',
+          videoId: 'lNMLhV5KdoE'
         }
       ]
     },
@@ -55,8 +59,9 @@ export const electricityMagnetismGr11: TopicContent = {
       title: 'Calculating the electric field at a point',
       blocks: [
         {
-          type: 'tip',
-          body: `A curated video for this sub-topic is on the way. Ask Angelo if you're stuck on it.`
+          type: 'video',
+          title: 'Watch: Electric Fields Electrostatics grade 11 and 12 summary — Miss Martins Maths and Science',
+          videoId: 'ozWaTaCZh_I'
         }
       ]
     },
@@ -66,7 +71,8 @@ export const electricityMagnetismGr11: TopicContent = {
       blocks: [
         {
           type: 'tip',
-          body: `A curated video for this sub-topic is on the way. Ask Angelo if you're stuck on it.`
+          body: `We haven't found a CAPS video for this sub-topic yet. Ask Angelo if you're stuck on it.`,
+          bodyAf: `Ons het nog nie 'n KABV-video vir hierdie onderafdeling gekry nie. Vra vir Angelo as jy vashaak.`
         }
       ]
     },
@@ -75,8 +81,9 @@ export const electricityMagnetismGr11: TopicContent = {
       title: 'Faraday\'s Law of electromagnetic induction',
       blocks: [
         {
-          type: 'tip',
-          body: `A curated video for this sub-topic is on the way. Ask Angelo if you're stuck on it.`
+          type: 'video',
+          title: 'Watch: Grade 11 Electromagnetism Faraday\'s Law of Electromagnetic Induction — Miss Martins Maths and Science',
+          videoId: 'mBVBE-5Ei2c'
         }
       ]
     },
@@ -85,8 +92,9 @@ export const electricityMagnetismGr11: TopicContent = {
       title: 'Ohm\'s Law and ohmic versus non-ohmic conductors',
       blocks: [
         {
-          type: 'tip',
-          body: `A curated video for this sub-topic is on the way. Ask Angelo if you're stuck on it.`
+          type: 'video',
+          title: 'Watch: Ohm\'s Law Grade 11 Electric Circuits (Electricity grade 11 & 12) — Miss Martins Maths and Science',
+          videoId: 'Wrx8j7839VI'
         }
       ]
     },
@@ -95,8 +103,9 @@ export const electricityMagnetismGr11: TopicContent = {
       title: 'Power in electric circuits',
       blocks: [
         {
-          type: 'tip',
-          body: `A curated video for this sub-topic is on the way. Ask Angelo if you're stuck on it.`
+          type: 'video',
+          title: 'Watch: Physics | Electric circuits | Energy and Power — Mlungisi Nkosi Maths & Science',
+          videoId: 'L_lmMdycVyk'
         }
       ]
     },
@@ -105,8 +114,9 @@ export const electricityMagnetismGr11: TopicContent = {
       title: 'Electrical energy and the cost of electricity',
       blocks: [
         {
-          type: 'tip',
-          body: `A curated video for this sub-topic is on the way. Ask Angelo if you're stuck on it.`
+          type: 'video',
+          title: 'Watch: Grade 11 Electricity: Electrical Energy and Cost of Electricity — Miss Martins Maths and Science',
+          videoId: 'GMhNNETXmNs'
         }
       ]
     }

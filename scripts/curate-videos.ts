@@ -319,9 +319,24 @@ function topicKey(slug: string): string {
   return slug.replace(/-gr1[012]$/, '')
 }
 
+/**
+ * Signals strong enough to name the topic outright, even when the title also
+ * mentions another one. "Power of an electric motor: Power part 3: WEP gr12"
+ * is a Work, Energy & Power lesson that happens to use a motor as its
+ * example - it matched the Electricity & Magnetism sub-topic on the word
+ * motor and served it instead of an electrodynamics lesson.
+ */
+const DEFINITIVE_MARKERS: Record<string, RegExp> = {
+  mechanics: /\bwep\b|work.{0,4}energy.{0,4}(theorem|and power)/i,
+}
+
 export function isOtherMathsTopic(slug: string, title: string): boolean {
   const markers = IS_SCIENCE ? SCIENCE_TOPIC_MARKERS : TOPIC_MARKERS
   const key = topicKey(slug)
+
+  const claimedBy = Object.entries(DEFINITIVE_MARKERS).find(([, re]) => re.test(title))
+  if (claimedBy && claimedBy[0] !== key) return true
+
   const own = markers[key]
   if (own?.test(title)) return false
   return Object.entries(markers).some(
@@ -566,6 +581,11 @@ const SCIENCE_DISCRIMINATING = [
   'chatelier', 'addition', 'reversible', 'combustion', 'polymerisation',
   'collision', 'nitrogen', 'phosphorus', 'potassium', 'eutrophication',
   'threshold', 'conjugate', 'indicator', 'hydrolysis', 'phase', 'refractive',
+  // Grade 10 review: 'permanent' keeps a Grade 11 electromagnetic-flux lesson
+  // out of permanent magnets, 'conservation' keeps stoichiometry out of the
+  // conservation sub-topics, and 'speed' keeps a generic waves introduction
+  // out of the speed of sound.
+  'permanent', 'conservation', 'speed',
 ]
 
 const MATHS_DISCRIMINATING = [

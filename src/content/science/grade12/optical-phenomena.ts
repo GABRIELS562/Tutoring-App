@@ -11,6 +11,7 @@ export const opticalPhenomenaGr12: TopicContent = {
   paper: 1,
   title: 'Optical Phenomena and Properties of Materials',
   capsWeight: 3.75,
+  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
   sections: [
     {
       id: 'overview',
@@ -19,6 +20,7 @@ export const opticalPhenomenaGr12: TopicContent = {
         {
           type: 'theory',
           title: 'What this topic covers',
+          titleAf: 'Wat hierdie onderwerp dek',
           body: `• The photo-electric effect
 • Work function, cut-off frequency and the photo-electric equation
 • Intensity, frequency and the number of electrons ejected
@@ -32,8 +34,9 @@ export const opticalPhenomenaGr12: TopicContent = {
       title: 'The photo-electric effect',
       blocks: [
         {
-          type: 'tip',
-          body: `A curated video for this sub-topic is on the way. Ask Angelo if you're stuck on it.`
+          type: 'video',
+          title: 'Watch: Photoelectric effect Grade 12 | Part 1 — Kevinmathscience',
+          videoId: '_hKMDg2Wuq0'
         }
       ]
     },
@@ -42,8 +45,9 @@ export const opticalPhenomenaGr12: TopicContent = {
       title: 'Work function, cut-off frequency and the photo-electric equation',
       blocks: [
         {
-          type: 'tip',
-          body: `A curated video for this sub-topic is on the way. Ask Angelo if you're stuck on it.`
+          type: 'video',
+          title: 'Watch: Threshold Frequency and Work Function Grade 12 Photoelectric Effect — Miss Martins Maths and Science',
+          videoId: 'IHo22w2SG9A'
         }
       ]
     },
@@ -52,8 +56,9 @@ export const opticalPhenomenaGr12: TopicContent = {
       title: 'Intensity, frequency and the number of electrons ejected',
       blocks: [
         {
-          type: 'tip',
-          body: `A curated video for this sub-topic is on the way. Ask Angelo if you're stuck on it.`
+          type: 'video',
+          title: 'Watch: Photoelectric Effect Grade 12 Physics: Photon energy and frequency — Miss Martins Maths and Science',
+          videoId: 'SyYsY2yDynM'
         }
       ]
     },
@@ -62,8 +67,9 @@ export const opticalPhenomenaGr12: TopicContent = {
       title: 'Atomic emission spectra and electron transitions',
       blocks: [
         {
-          type: 'tip',
-          body: `A curated video for this sub-topic is on the way. Ask Angelo if you're stuck on it.`
+          type: 'video',
+          title: 'Watch: Energy Level Transitions (for Emission and Absorption Spectra) — Simple Science',
+          videoId: '5ahrdgZqQbg'
         }
       ]
     },
@@ -72,8 +78,9 @@ export const opticalPhenomenaGr12: TopicContent = {
       title: 'Emission versus absorption spectra',
       blocks: [
         {
-          type: 'tip',
-          body: `A curated video for this sub-topic is on the way. Ask Angelo if you're stuck on it.`
+          type: 'video',
+          title: 'Watch: Absorption Spectra — Simple Science',
+          videoId: 'hA27-yKJuNM'
         }
       ]
     }

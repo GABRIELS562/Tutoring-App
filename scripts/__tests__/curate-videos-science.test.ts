@@ -21,6 +21,7 @@ import {
   isOtherSubjectFor,
   hasRequiredTermsFor,
   isExamWalkthrough,
+  isOtherMathsTopic,
 } from '../curate-videos'
 
 describe('the physics/chemistry paper guard', () => {
@@ -201,5 +202,25 @@ describe('lessons outrank exam walkthroughs', () => {
       'Questions about acids and bases',
     ]
     for (const title of lessons) expect(isExamWalkthrough(title)).toBe(false)
+  })
+})
+
+describe('a definitive topic signal outranks a passing mention', () => {
+  it('keeps a Work Energy & Power lesson out of electric motors', () => {
+    // It matched on the word "motor" while being a mechanics lesson that
+    // merely uses a motor as its worked example.
+    expect(
+      isOtherMathsTopic('electricity-magnetism-gr12', 'Power of an electric motor: Power part 3: WEP gr12')
+    ).toBe(true)
+  })
+
+  it('still allows that lesson for Mechanics itself', () => {
+    expect(isOtherMathsTopic('mechanics-gr12', 'Power part 3: WEP gr12')).toBe(false)
+  })
+
+  it('leaves an ordinary electrodynamics title alone', () => {
+    expect(isOtherMathsTopic('electricity-magnetism-gr12', 'Electric motors Grade 12 Electrodynamics')).toBe(
+      false
+    )
   })
 })

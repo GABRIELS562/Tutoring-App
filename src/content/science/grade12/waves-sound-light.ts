@@ -11,6 +11,7 @@ export const wavesSoundLightGr12: TopicContent = {
   paper: 1,
   title: 'Waves, Sound & Light',
   capsWeight: 3.75,
+  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
   sections: [
     {
       id: 'overview',
@@ -19,6 +20,7 @@ export const wavesSoundLightGr12: TopicContent = {
         {
           type: 'theory',
           title: 'What this topic covers',
+          titleAf: 'Wat hierdie onderwerp dek',
           body: `• The Doppler effect for sound
 • Doppler effect calculations for a moving source or moving listener
 • Applications of the Doppler effect with ultrasound in medicine
@@ -31,8 +33,9 @@ export const wavesSoundLightGr12: TopicContent = {
       title: 'The Doppler effect for sound',
       blocks: [
         {
-          type: 'tip',
-          body: `A curated video for this sub-topic is on the way. Ask Angelo if you're stuck on it.`
+          type: 'video',
+          title: 'Watch: Doppler Effect grade 12: Introduction — Kevinmathscience',
+          videoId: 'DdS_wVxrPuI'
         }
       ]
     },
@@ -41,8 +44,9 @@ export const wavesSoundLightGr12: TopicContent = {
       title: 'Doppler effect calculations for a moving source or moving listener',
       blocks: [
         {
-          type: 'tip',
-          body: `A curated video for this sub-topic is on the way. Ask Angelo if you're stuck on it.`
+          type: 'video',
+          title: 'Watch: Doppler Effect grade 12: Red and Blue Shift — Kevinmathscience',
+          videoId: 'g4OYz75zZ8w'
         }
       ]
     },
@@ -52,7 +56,8 @@ export const wavesSoundLightGr12: TopicContent = {
       blocks: [
         {
           type: 'tip',
-          body: `A curated video for this sub-topic is on the way. Ask Angelo if you're stuck on it.`
+          body: `We haven't found a CAPS video for this sub-topic yet. Ask Angelo if you're stuck on it.`,
+          bodyAf: `Ons het nog nie 'n KABV-video vir hierdie onderafdeling gekry nie. Vra vir Angelo as jy vashaak.`
         }
       ]
     },
@@ -61,8 +66,9 @@ export const wavesSoundLightGr12: TopicContent = {
       title: 'The Doppler effect with light: red shifts and the expanding universe',
       blocks: [
         {
-          type: 'tip',
-          body: `A curated video for this sub-topic is on the way. Ask Angelo if you're stuck on it.`
+          type: 'video',
+          title: 'Watch: Doppler Effect grade 12: Simultaneous — Kevinmathscience',
+          videoId: 'h9Po4ug3MZ8'
         }
       ]
     }

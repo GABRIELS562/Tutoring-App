@@ -11,6 +11,7 @@ export const matterMaterialsGr11: TopicContent = {
   paper: 2,
   title: 'Matter & Materials',
   capsWeight: 15,
+  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
   sections: [
     {
       id: 'overview',
@@ -19,6 +20,7 @@ export const matterMaterialsGr11: TopicContent = {
         {
           type: 'theory',
           title: 'What this topic covers',
+          titleAf: 'Wat hierdie onderwerp dek',
           body: `• The chemical bond and Lewis diagrams
 • Molecular shape and VSEPR theory
 • Electronegativity and bond polarity
@@ -36,8 +38,9 @@ export const matterMaterialsGr11: TopicContent = {
       title: 'The chemical bond and Lewis diagrams',
       blocks: [
         {
-          type: 'tip',
-          body: `A curated video for this sub-topic is on the way. Ask Angelo if you're stuck on it.`
+          type: 'video',
+          title: 'Watch: Atomic Combinations grade 11 :Lewis diagram # 1 — Kevinmathscience',
+          videoId: 'sCkasELDYls'
         }
       ]
     },
@@ -46,8 +49,9 @@ export const matterMaterialsGr11: TopicContent = {
       title: 'Molecular shape and VSEPR theory',
       blocks: [
         {
-          type: 'tip',
-          body: `A curated video for this sub-topic is on the way. Ask Angelo if you're stuck on it.`
+          type: 'video',
+          title: 'Watch: Molecular shapes VSEPR Theory Grade 11 Chemistry — Miss Martins Maths and Science',
+          videoId: 'VBfq02D9Pv0'
         }
       ]
     },
@@ -56,8 +60,9 @@ export const matterMaterialsGr11: TopicContent = {
       title: 'Electronegativity and bond polarity',
       blocks: [
         {
-          type: 'tip',
-          body: `A curated video for this sub-topic is on the way. Ask Angelo if you're stuck on it.`
+          type: 'video',
+          title: 'Watch: Electronegativity Grade 11 Chemistry Polarity of Bonds — Miss Martins Maths and Science',
+          videoId: 'JFeN3nWano0'
         }
       ]
     },
@@ -66,8 +71,9 @@ export const matterMaterialsGr11: TopicContent = {
       title: 'Bond energy and bond length',
       blocks: [
         {
-          type: 'tip',
-          body: `A curated video for this sub-topic is on the way. Ask Angelo if you're stuck on it.`
+          type: 'video',
+          title: 'Watch: Grade 11 Chemistry: Bond energy and length: Potential Energy Graph — Miss Martins Maths and Science',
+          videoId: '1LKSo15MFKk'
         }
       ]
     },
@@ -76,8 +82,9 @@ export const matterMaterialsGr11: TopicContent = {
       title: 'Types of intermolecular forces',
       blocks: [
         {
-          type: 'tip',
-          body: `A curated video for this sub-topic is on the way. Ask Angelo if you're stuck on it.`
+          type: 'video',
+          title: 'Watch: Intermolecular Forces grade 11: Different types — Kevinmathscience',
+          videoId: 'esJ-go0-t84'
         }
       ]
     },
@@ -86,8 +93,9 @@ export const matterMaterialsGr11: TopicContent = {
       title: 'Intermolecular forces, physical state, density, melting and boiling points',
       blocks: [
         {
-          type: 'tip',
-          body: `A curated video for this sub-topic is on the way. Ask Angelo if you're stuck on it.`
+          type: 'video',
+          title: 'Watch: Intermolecular Forces grade 11: Introduction # 1 — Kevinmathscience',
+          videoId: 'aJTAj_8pyWI'
         }
       ]
     },
@@ -97,7 +105,8 @@ export const matterMaterialsGr11: TopicContent = {
       blocks: [
         {
           type: 'tip',
-          body: `A curated video for this sub-topic is on the way. Ask Angelo if you're stuck on it.`
+          body: `We haven't found a CAPS video for this sub-topic yet. Ask Angelo if you're stuck on it.`,
+          bodyAf: `Ons het nog nie 'n KABV-video vir hierdie onderafdeling gekry nie. Vra vir Angelo as jy vashaak.`
         }
       ]
     },
@@ -106,8 +115,9 @@ export const matterMaterialsGr11: TopicContent = {
       title: 'Kinetic theory of gases: temperature, pressure and ideal gas behaviour',
       blocks: [
         {
-          type: 'tip',
-          body: `A curated video for this sub-topic is on the way. Ask Angelo if you're stuck on it.`
+          type: 'video',
+          title: 'Watch: Gas Laws Grade 11: Motion of particles and kinetic theory of gases — Miss Martins Maths and Science',
+          videoId: 'NPVQs8BVIL0'
         }
       ]
     },
@@ -116,8 +126,9 @@ export const matterMaterialsGr11: TopicContent = {
       title: 'The gas laws and the ideal gas equation',
       blocks: [
         {
-          type: 'tip',
-          body: `A curated video for this sub-topic is on the way. Ask Angelo if you're stuck on it.`
+          type: 'video',
+          title: 'Watch: Ideal Gas vs Real Gas: Grade 11 Gas Laws Chemistry — Miss Martins Maths and Science',
+          videoId: 's2WWpBzaG28'
         }
       ]
     }

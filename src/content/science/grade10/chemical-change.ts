@@ -11,6 +11,7 @@ export const chemicalChangeGr10: TopicContent = {
   paper: 2,
   title: 'Chemical Change',
   capsWeight: 15,
+  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
   sections: [
     {
       id: 'overview',
@@ -19,6 +20,7 @@ export const chemicalChangeGr10: TopicContent = {
         {
           type: 'theory',
           title: 'What this topic covers',
+          titleAf: 'Wat hierdie onderwerp dek',
           body: `• Physical and chemical change, conservation of atoms and mass
 • Balancing chemical equations
 • Ions in aqueous solution: dissolving, hydration and conductivity
@@ -32,12 +34,13 @@ export const chemicalChangeGr10: TopicContent = {
       ]
     },
     {
-      id: 'physical-and-chemical-change-conservation-of-ato',
-      title: 'Physical and chemical change, conservation of atoms and mass',
+      id: 'physical-and-chemical-change',
+      title: 'Physical and chemical change',
       blocks: [
         {
-          type: 'tip',
-          body: `A curated video for this sub-topic is on the way. Ask Angelo if you're stuck on it.`
+          type: 'video',
+          title: 'Watch: Grade 10 Chemistry Physical and Chemical change — Miss Martins Maths and Science',
+          videoId: 'pCojzn5sauU'
         }
       ]
     },
@@ -46,8 +49,9 @@ export const chemicalChangeGr10: TopicContent = {
       title: 'Balancing chemical equations',
       blocks: [
         {
-          type: 'tip',
-          body: `A curated video for this sub-topic is on the way. Ask Angelo if you're stuck on it.`
+          type: 'video',
+          title: 'Watch: Balancing Chemical Equations Chemistry — Miss Martins Maths and Science',
+          videoId: 'WNaib8LP0_w'
         }
       ]
     },
@@ -56,8 +60,9 @@ export const chemicalChangeGr10: TopicContent = {
       title: 'Ions in aqueous solution: dissolving, hydration and conductivity',
       blocks: [
         {
-          type: 'tip',
-          body: `A curated video for this sub-topic is on the way. Ask Angelo if you're stuck on it.`
+          type: 'video',
+          title: 'Watch: Dissolving and Hydration Grade 10 — Kevinmathscience',
+          videoId: 'kuVpsyKvIeg'
         }
       ]
     },
@@ -67,7 +72,8 @@ export const chemicalChangeGr10: TopicContent = {
       blocks: [
         {
           type: 'tip',
-          body: `A curated video for this sub-topic is on the way. Ask Angelo if you're stuck on it.`
+          body: `We haven't found a CAPS video for this sub-topic yet. Ask Angelo if you're stuck on it.`,
+          bodyAf: `Ons het nog nie 'n KABV-video vir hierdie onderafdeling gekry nie. Vra vir Angelo as jy vashaak.`
         }
       ]
     },
@@ -75,9 +81,11 @@ export const chemicalChangeGr10: TopicContent = {
       id: 'reaction-types-ion-exchange-gas-forming-acid-bas',
       title: 'Reaction types: ion exchange, gas forming, acid-base and redox',
       blocks: [
+        // Labelled for an adjacent grade; CAPS covers this sub-topic in both.
         {
-          type: 'tip',
-          body: `A curated video for this sub-topic is on the way. Ask Angelo if you're stuck on it.`
+          type: 'video',
+          title: 'Watch: Redox reactions grade 11 Chemistry: Introduction and Overview — Miss Martins Maths and Science',
+          videoId: 'Ol2vv4WM7FA'
         }
       ]
     },
@@ -86,18 +94,31 @@ export const chemicalChangeGr10: TopicContent = {
       title: 'The mole concept and Avogadro\'s number',
       blocks: [
         {
-          type: 'tip',
-          body: `A curated video for this sub-topic is on the way. Ask Angelo if you're stuck on it.`
+          type: 'video',
+          title: 'Watch: Calculating Mole Grade 10 | Part 1 — Kevinmathscience',
+          videoId: 'nAlbPOUili0'
         }
       ]
     },
     {
-      id: 'molar-mass-percentage-composition-and-empirical-',
-      title: 'Molar mass, percentage composition and empirical formula',
+      id: 'molar-mass-and-percentage-composition',
+      title: 'Molar mass and percentage composition',
       blocks: [
         {
-          type: 'tip',
-          body: `A curated video for this sub-topic is on the way. Ask Angelo if you're stuck on it.`
+          type: 'video',
+          title: 'Watch: Quantitative Aspects of Chemical Change: Molar Volume — Kevinmathscience',
+          videoId: 'rEVNjscIpic'
+        }
+      ]
+    },
+    {
+      id: 'empirical-formula',
+      title: 'Empirical formula',
+      blocks: [
+        {
+          type: 'video',
+          title: 'Watch: Empirical Formula: How to calculate | Stoichiometry | Chemistry — Miss Martins Maths and Science',
+          videoId: '1u6B4LePBKo'
         }
       ]
     },
@@ -107,7 +128,8 @@ export const chemicalChangeGr10: TopicContent = {
       blocks: [
         {
           type: 'tip',
-          body: `A curated video for this sub-topic is on the way. Ask Angelo if you're stuck on it.`
+          body: `We haven't found a CAPS video for this sub-topic yet. Ask Angelo if you're stuck on it.`,
+          bodyAf: `Ons het nog nie 'n KABV-video vir hierdie onderafdeling gekry nie. Vra vir Angelo as jy vashaak.`
         }
       ]
     },
@@ -116,8 +138,9 @@ export const chemicalChangeGr10: TopicContent = {
       title: 'Basic stoichiometric calculations',
       blocks: [
         {
-          type: 'tip',
-          body: `A curated video for this sub-topic is on the way. Ask Angelo if you're stuck on it.`
+          type: 'video',
+          title: 'Watch: PHYSICAL SCIENCES GRADE 10: STOICHIOMETRIC CALCULATIONS. — PHAKAMA RESEARCH',
+          videoId: 'JXk770w902g'
         }
       ]
     }

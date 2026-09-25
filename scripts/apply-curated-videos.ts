@@ -21,6 +21,11 @@
  */
 import { readFileSync, writeFileSync, existsSync } from 'node:fs'
 import { capsCurriculum } from '../src/content/caps-curriculum'
+import { capsScienceCurriculum } from '../src/content/caps-science-curriculum'
+
+/** `--subject science` applies the Physical Sciences picks instead. */
+const IS_SCIENCE =
+  process.argv[process.argv.indexOf('--subject') + 1] === 'science'
 import { capsSubTopicsAf, capsTopicTitlesAf } from '../src/content/caps-curriculum-af'
 
 interface Pick {
@@ -51,7 +56,8 @@ const FILENAME_OVERRIDES: Record<string, string> = {
 /** `algebra-gr11` -> `src/content/maths/grade11/algebra.ts` */
 function fileForSlug(slug: string, grade: number): string {
   const name = FILENAME_OVERRIDES[slug] ?? slug.replace(/-gr1[012]$/, '')
-  return `src/content/maths/grade${grade}/${name}.ts`
+  const subject = IS_SCIENCE ? 'science' : 'maths'
+  return `src/content/${subject}/grade${grade}/${name}.ts`
 }
 
 /** Stable, readable section id from a sub-topic name. */
@@ -216,18 +222,19 @@ function main() {
   const args = process.argv.slice(2)
   const grade = parseInt(args[args.indexOf('--grade') + 1], 10)
   const dry = args.includes('--dry')
-  const path = `docs/curriculum/candidates-gr${grade}.json`
+  const path = `docs/curriculum/candidates-${IS_SCIENCE ? 'sci-' : ''}gr${grade}.json`
   if (!existsSync(path)) {
     console.error(`No curation file at ${path} — run scripts/curate-videos.ts first.`)
     process.exit(1)
   }
   const curated: Curated[] = JSON.parse(readFileSync(path, 'utf8'))
-  const afPath = `docs/curriculum/candidates-af-gr${grade}.json`
+  const afPath = `docs/curriculum/candidates-${IS_SCIENCE ? 'sci-' : ''}af-gr${grade}.json`
   const afrikaans: Curated[] = existsSync(afPath)
     ? (JSON.parse(readFileSync(afPath, 'utf8')) as Curated[])
     : []
   if (afrikaans.length === 0) console.log(`  (no Afrikaans candidates at ${afPath})`)
-  const topics = capsCurriculum.filter((t) => t.grade === grade)
+  const curriculum = IS_SCIENCE ? capsScienceCurriculum : capsCurriculum
+  const topics = curriculum.filter((t) => t.grade === grade)
 
   let changed = 0
   for (const topic of topics) {

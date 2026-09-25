@@ -11,6 +11,7 @@ export const chemicalChangeGr12: TopicContent = {
   paper: 2,
   title: 'Chemical Change',
   capsWeight: 17.5,
+  // Curated per CAPS sub-topic — see docs/curriculum/ and scripts/curate-videos.ts
   sections: [
     {
       id: 'overview',
@@ -19,6 +20,7 @@ export const chemicalChangeGr12: TopicContent = {
         {
           type: 'theory',
           title: 'What this topic covers',
+          titleAf: 'Wat hierdie onderwerp dek',
           body: `• Reaction rate and the factors that affect it
 • Collision theory, activation energy and catalysts
 • Chemical equilibrium and reversible reactions
@@ -39,8 +41,9 @@ export const chemicalChangeGr12: TopicContent = {
       title: 'Reaction rate and the factors that affect it',
       blocks: [
         {
-          type: 'tip',
-          body: `A curated video for this sub-topic is on the way. Ask Angelo if you're stuck on it.`
+          type: 'video',
+          title: 'Watch: Reaction Rate grade 12 — Kevinmathscience',
+          videoId: '3AjLqTKdH_E'
         }
       ]
     },
@@ -50,7 +53,8 @@ export const chemicalChangeGr12: TopicContent = {
       blocks: [
         {
           type: 'tip',
-          body: `A curated video for this sub-topic is on the way. Ask Angelo if you're stuck on it.`
+          body: `We haven't found a CAPS video for this sub-topic yet. Ask Angelo if you're stuck on it.`,
+          bodyAf: `Ons het nog nie 'n KABV-video vir hierdie onderafdeling gekry nie. Vra vir Angelo as jy vashaak.`
         }
       ]
     },
@@ -60,7 +64,8 @@ export const chemicalChangeGr12: TopicContent = {
       blocks: [
         {
           type: 'tip',
-          body: `A curated video for this sub-topic is on the way. Ask Angelo if you're stuck on it.`
+          body: `We haven't found a CAPS video for this sub-topic yet. Ask Angelo if you're stuck on it.`,
+          bodyAf: `Ons het nog nie 'n KABV-video vir hierdie onderafdeling gekry nie. Vra vir Angelo as jy vashaak.`
         }
       ]
     },
@@ -69,18 +74,20 @@ export const chemicalChangeGr12: TopicContent = {
       title: 'The equilibrium constant Kc and equilibrium calculations',
       blocks: [
         {
-          type: 'tip',
-          body: `A curated video for this sub-topic is on the way. Ask Angelo if you're stuck on it.`
+          type: 'video',
+          title: 'Watch: Equilibrium Constant calculation TABLE METHOD - Easy example (Kc) Grade 12 Chemical Equilibrium — Miss Martins Maths and Science',
+          videoId: 'pVPOSnhkiMs'
         }
       ]
     },
     {
-      id: 'le-chatelier-s-principle-and-applications-of-equ',
-      title: 'Le Chatelier\'s principle and applications of equilibrium',
+      id: 'le-chatelier-s-principle',
+      title: 'Le Chatelier\'s principle',
       blocks: [
         {
-          type: 'tip',
-          body: `A curated video for this sub-topic is on the way. Ask Angelo if you're stuck on it.`
+          type: 'video',
+          title: 'Watch: Le Chatelier\'s Principle grade 12: Introduction — Kevinmathscience',
+          videoId: 'NmDdSKuUp2A'
         }
       ]
     },
@@ -88,9 +95,11 @@ export const chemicalChangeGr12: TopicContent = {
       id: 'acid-base-reactions-models-and-conjugate-acid-ba',
       title: 'Acid-base reactions, models and conjugate acid-base pairs',
       blocks: [
+        // Labelled for an adjacent grade; CAPS covers this sub-topic in both.
         {
-          type: 'tip',
-          body: `A curated video for this sub-topic is on the way. Ask Angelo if you're stuck on it.`
+          type: 'video',
+          title: 'Watch: Conjugate acid base pairs: Grade 11 and 12 Acids and Bases — Miss Martins Maths and Science',
+          videoId: 'IQLHQtdx7Hs'
         }
       ]
     },
@@ -99,8 +108,9 @@ export const chemicalChangeGr12: TopicContent = {
       title: 'Strong and weak, concentrated and dilute acids and bases',
       blocks: [
         {
-          type: 'tip',
-          body: `A curated video for this sub-topic is on the way. Ask Angelo if you're stuck on it.`
+          type: 'video',
+          title: 'Watch: Grade 12 Acids and Bases Grade 11 Revision PART 2: Strong/Weak vs Concentrated/dilute — Miss Martins Maths and Science',
+          videoId: 'yayLppldjlA'
         }
       ]
     },
@@ -109,8 +119,9 @@ export const chemicalChangeGr12: TopicContent = {
       title: 'The pH scale, Kw and salt hydrolysis',
       blocks: [
         {
-          type: 'tip',
-          body: `A curated video for this sub-topic is on the way. Ask Angelo if you're stuck on it.`
+          type: 'video',
+          title: 'Watch: Acids and Bases Grade 12: Hydrolysis — Kevinmathscience',
+          videoId: 'mlBoKpcMlrc'
         }
       ]
     },
@@ -120,7 +131,8 @@ export const chemicalChangeGr12: TopicContent = {
       blocks: [
         {
           type: 'tip',
-          body: `A curated video for this sub-topic is on the way. Ask Angelo if you're stuck on it.`
+          body: `We haven't found a CAPS video for this sub-topic yet. Ask Angelo if you're stuck on it.`,
+          bodyAf: `Ons het nog nie 'n KABV-video vir hierdie onderafdeling gekry nie. Vra vir Angelo as jy vashaak.`
         }
       ]
     },
@@ -130,7 +142,8 @@ export const chemicalChangeGr12: TopicContent = {
       blocks: [
         {
           type: 'tip',
-          body: `A curated video for this sub-topic is on the way. Ask Angelo if you're stuck on it.`
+          body: `We haven't found a CAPS video for this sub-topic yet. Ask Angelo if you're stuck on it.`,
+          bodyAf: `Ons het nog nie 'n KABV-video vir hierdie onderafdeling gekry nie. Vra vir Angelo as jy vashaak.`
         }
       ]
     },
@@ -139,8 +152,9 @@ export const chemicalChangeGr12: TopicContent = {
       title: 'Galvanic cells and standard electrode potentials',
       blocks: [
         {
-          type: 'tip',
-          body: `A curated video for this sub-topic is on the way. Ask Angelo if you're stuck on it.`
+          type: 'video',
+          title: 'Watch: Electrochemistry Gr 12 : Galvanic cell (using the table) — Kevinmathscience',
+          videoId: '5dPFZZwLhDk'
         }
       ]
     },
@@ -149,8 +163,9 @@ export const chemicalChangeGr12: TopicContent = {
       title: 'Electrolytic cells and industrial applications of electrolysis',
       blocks: [
         {
-          type: 'tip',
-          body: `A curated video for this sub-topic is on the way. Ask Angelo if you're stuck on it.`
+          type: 'video',
+          title: 'Watch: Electrolytic Cell Electrochemistry: How electrolysis works | Grade 12 Chemistry — Miss Martins Maths and Science',
+          videoId: 'DxAVuyxHKsk'
         }
       ]
     }
