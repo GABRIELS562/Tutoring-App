@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { useTranslations } from 'next-intl'
 import Image from 'next/image'
 import Topbar from '@/components/layout/Topbar'
 import MathRenderer from '@/components/math/MathRenderer'
@@ -50,6 +51,7 @@ function groupByQuestion(items: ExamItem[]): Group[] {
 }
 
 export default function ExamPageClient({ items }: { items: ExamItem[] }) {
+  const t = useTranslations('exam')
   const [scores, setScores] = useState<Record<string, number>>({})
 
   const available = totalMarks(items)
@@ -67,10 +69,10 @@ export default function ExamPageClient({ items }: { items: ExamItem[] }) {
           style={{ background: 'var(--surface)', border: '1px solid var(--border-custom)' }}
         >
           <p className="text-sm" style={{ color: 'var(--text)' }}>
-            These are real NSC questions, marked the way the examiner marks them.
+            {t('realQuestions')}
           </p>
           <p className="text-xs mt-1" style={{ color: 'var(--muted-custom)' }}>
-            {done} of {items.length} attempted · {earned} of {available} marks
+            {t('progress', { done, total: items.length, earned, available })}
             {done === items.length && available > 0 && (
               <strong style={{ color: 'var(--accent-red)' }}>
                 {' '}
@@ -83,7 +85,7 @@ export default function ExamPageClient({ items }: { items: ExamItem[] }) {
         {groups.map((group) => (
           <section key={group.root} className="mb-8">
             <h2 className="text-lg font-bold mb-2" style={{ color: 'var(--text)' }}>
-              Question {group.root}
+              {t('question')} {group.root}
             </h2>
 
             {group.runs.map((run, index) => (

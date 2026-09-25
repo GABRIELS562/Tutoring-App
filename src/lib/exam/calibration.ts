@@ -76,49 +76,42 @@ export function xpFor(calibration: Calibration, earned: number): number {
   }
 }
 
+/**
+ * How a calibration result is presented. The words themselves live in
+ * src/messages/{en,af}.json under `exam` - an Afrikaans learner sits an
+ * Afrikaans paper and must be marked in Afrikaans - so this table carries
+ * only the message key and the tone that drives the colour.
+ */
 export interface CalibrationCopy {
-  label: string
-  detail: string
+  /** Key into the `exam` message namespace; `${key}Detail` is the body. */
+  key: 'mastered' | 'slipped' | 'blindSpot' | 'underconfident' | 'honestGap'
   tone: 'good' | 'warn' | 'info'
 }
 
 export const CALIBRATION_COPY: Record<Calibration, CalibrationCopy> = {
-  mastered: {
-    label: 'Mastered',
-    detail: 'You said you had this, and you did. Nothing more to do here.',
-    tone: 'good',
-  },
-  slipped: {
-    label: 'Marks left behind',
-    detail:
-      'You knew this one - you just did not get all of it down. Losing part marks on a question you can do is the cheapest kind of mark to win back.',
-    tone: 'warn',
-  },
-  'blind-spot': {
-    label: 'Blind spot',
-    detail:
-      'You were sure about this one and it did not come out. That is the kind of mark that goes missing in the real exam, because there is no reason to go back and check it. Worth drilling.',
-    tone: 'warn',
-  },
-  underconfident: {
-    label: 'You knew more than you thought',
-    detail:
-      'You said this was new to you and then got it. Back yourself next time - claiming it is worth more.',
-    tone: 'info',
-  },
-  'honest-gap': {
-    label: 'Honest gap',
-    detail: 'You said you were not sure, and you were right. This is what practice is for.',
-    tone: 'info',
-  },
+  mastered: { key: 'mastered', tone: 'good' },
+  slipped: { key: 'slipped', tone: 'warn' },
+  'blind-spot': { key: 'blindSpot', tone: 'warn' },
+  underconfident: { key: 'underconfident', tone: 'info' },
+  'honest-gap': { key: 'honestGap', tone: 'info' },
 }
 
-/** Marks earned, given which descriptors the student satisfied. */
+/**
+ * Marks earned, given which mark points the student satisfied, identified by
+ * their POSITION in the scheme.
+ *
+ * Position, not descriptor: a memo routinely awards two marks with the same
+ * wording - question 1.1.1 gives 'answers' twice, once for each root of
+ * (2x-1)(x+5)=0 - and 9 of the 105 items across the two papers do this, 37
+ * marks in all. Matching on the descriptor string made those indivisible:
+ * ticking one root ticked both, ticking the second unticked both, and a
+ * student who got the question right scored zero.
+ */
 export function marksEarned(
-  scheme: { descriptor: string; value: number }[],
-  satisfied: string[]
+  scheme: { value: number }[],
+  satisfied: readonly number[]
 ): number {
   return scheme
-    .filter((point) => satisfied.includes(point.descriptor))
+    .filter((_, index) => satisfied.includes(index))
     .reduce((sum, point) => sum + point.value, 0)
 }

@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { useTranslations } from 'next-intl'
 import Image from 'next/image'
 import { Check, X, Clock, ArrowRight } from 'lucide-react'
 import MathRenderer from '@/components/math/MathRenderer'
@@ -14,10 +15,11 @@ import {
   type Familiarity,
 } from '@/lib/exam/calibration'
 
-const OPTIONS: { value: Familiarity; label: string; hint: string; dot: string }[] = [
-  { value: 'new', label: 'New to me', hint: "I haven't covered this", dot: '#4a9dd4' },
-  { value: 'shaky', label: 'Seen it, shaky', hint: "I've covered it but I'm not confident", dot: '#e9c46a' },
-  { value: 'confident', label: "I've got this", hint: 'I can do this', dot: '#2a9d8f' },
+/** The words are in the `exam` message namespace; only the dot colour is data. */
+const OPTIONS: { value: Familiarity; dot: string }[] = [
+  { value: 'new', dot: '#4a9dd4' },
+  { value: 'shaky', dot: '#e9c46a' },
+  { value: 'confident', dot: '#2a9d8f' },
 ]
 
 type Phase = 'gate' | 'scaffold' | 'attempt' | 'marking' | 'result'
@@ -41,11 +43,14 @@ export default function ExamItemCard({
   // A sub-part may carry its own context that is not the question's stem -
   // 6.4 adds "the graph f is shifted 30° to the left" on top of question 6's
   // diagram - and that must still be shown even when the stem is not.
+  const t = useTranslations('exam')
   const localContext =
     item.context && item.context !== groupContext ? item.context : undefined
   const [phase, setPhase] = useState<Phase>('gate')
   const [familiarity, setFamiliarity] = useState<Familiarity | null>(null)
-  const [satisfied, setSatisfied] = useState<string[]>([])
+  // Positions in item.markScheme, not descriptors - a memo can award two
+  // marks with identical wording (both roots of a quadratic are 'answers').
+  const [satisfied, setSatisfied] = useState<number[]>([])
 
   const available = item.marks
   const earned = marksEarned(item.markScheme, satisfied)
@@ -57,10 +62,8 @@ export default function ExamItemCard({
     setPhase(SCAFFOLD[value] === 'none' ? 'attempt' : 'scaffold')
   }
 
-  const toggle = (descriptor: string) =>
-    setSatisfied((s) =>
-      s.includes(descriptor) ? s.filter((d) => d !== descriptor) : [...s, descriptor]
-    )
+  const toggle = (index: number) =>
+    setSatisfied((s) => (s.includes(index) ? s.filter((i) => i !== index) : [...s, index]))
 
   return (
     <div
@@ -69,10 +72,10 @@ export default function ExamItemCard({
     >
       <div className="flex items-baseline justify-between mb-3">
         <span className="text-sm font-semibold" style={{ color: 'var(--accent-red)' }}>
-          Question {item.question}
+          {t('question')} {item.question}
         </span>
         <span className="text-xs" style={{ color: 'var(--muted-custom)' }}>
-          {item.source} · {item.marks} {item.marks === 1 ? 'mark' : 'marks'}
+          {item.source} · {item.marks} {item.marks === 1 ? t('mark') : t('marks')}
         </span>
       </div>
 
@@ -108,7 +111,7 @@ export default function ExamItemCard({
       {phase === 'gate' && (
         <div>
           <p className="text-sm font-semibold mb-3" style={{ color: 'var(--text)' }}>
-            How familiar are you with this?
+            {t('familiarity')}
           </p>
           <div className="grid gap-2 sm:grid-cols-3">
             {OPTIONS.map((option) => (
@@ -120,10 +123,10 @@ export default function ExamItemCard({
               >
                 <span className="flex items-center gap-2 text-sm font-semibold" style={{ color: 'var(--text)' }}>
                   <span className="w-2.5 h-2.5 rounded-full" style={{ background: option.dot }} />
-                  {option.label}
+                  {t(option.value)}
                 </span>
                 <span className="block text-xs mt-1" style={{ color: 'var(--muted-custom)' }}>
-                  {option.hint}
+                  {t(`${option.value}Hint`)}
                 </span>
               </button>
             ))}
@@ -138,7 +141,7 @@ export default function ExamItemCard({
           style={{ background: 'rgba(74, 157, 212, 0.08)', border: '1px solid #4a9dd4' }}
         >
           <p className="text-xs font-semibold uppercase tracking-wide mb-2" style={{ color: '#4a9dd4' }}>
-            {familiarity === 'new' ? 'Before you try' : 'A nudge'}
+            {familiarity === 'new' ? t('beforeYouTry') : t('aNudge')}
           </p>
           {familiarity === 'new' ? (
             <ol className="text-sm space-y-1 list-decimal ml-4" style={{ color: 'var(--text)' }}>
@@ -158,7 +161,7 @@ export default function ExamItemCard({
             className="mt-3 inline-flex items-center gap-1 text-sm font-semibold"
             style={{ color: 'var(--accent-red)' }}
           >
-            Now try it <ArrowRight className="w-4 h-4" />
+            {t('nowTryIt')} <ArrowRight className="w-4 h-4" />
           </button>
         </div>
       )}
@@ -170,7 +173,7 @@ export default function ExamItemCard({
           className="px-4 py-2 rounded-lg text-sm font-semibold"
           style={{ background: 'var(--accent-red)', color: 'white' }}
         >
-          I&apos;ve worked it out — mark me
+          {t('markMe')}
         </button>
       )}
 
@@ -178,18 +181,18 @@ export default function ExamItemCard({
       {phase === 'marking' && (
         <div>
           <p className="text-sm mb-1 font-semibold" style={{ color: 'var(--text)' }}>
-            Tick what your working actually shows
+            {t('tickWhatShows')}
           </p>
           <p className="text-xs mb-3" style={{ color: 'var(--muted-custom)' }}>
-            These are the examiner&apos;s marks, in the memo&apos;s own words.
+            {t('examinersMarks')}
           </p>
           <div className="space-y-2">
-            {item.markScheme.map((point) => {
-              const on = satisfied.includes(point.descriptor)
+            {item.markScheme.map((point, index) => {
+              const on = satisfied.includes(index)
               return (
                 <button
-                  key={point.descriptor}
-                  onClick={() => toggle(point.descriptor)}
+                  key={index}
+                  onClick={() => toggle(index)}
                   className="w-full flex items-center gap-3 rounded-lg p-3 text-left"
                   style={{
                     background: on ? 'rgba(42, 157, 143, 0.12)' : 'var(--surface2)',
@@ -212,7 +215,7 @@ export default function ExamItemCard({
                       color: point.kind === 'method' ? '#e9c46a' : 'var(--muted-custom)',
                     }}
                   >
-                    {point.kind}
+                    {t(point.kind)}
                   </span>
                 </button>
               )
@@ -226,7 +229,7 @@ export default function ExamItemCard({
             className="mt-3 px-4 py-2 rounded-lg text-sm font-semibold"
             style={{ background: 'var(--accent-red)', color: 'white' }}
           >
-            See how I did
+            {t('seeHowIDid')}
           </button>
         </div>
       )}
@@ -254,32 +257,30 @@ export default function ExamItemCard({
                 style={{ color: copy.tone === 'warn' ? '#e9c46a' : copy.tone === 'good' ? 'var(--teal)' : 'var(--muted-custom)' }}
               >
                 {copy.tone === 'warn' && <Clock className="w-3.5 h-3.5 inline mr-1" />}
-                {copy.label}
+                {t(copy.key)}
               </span>
               <span className="text-sm font-bold" style={{ color: 'var(--text)' }}>
                 {earned} / {available}
               </span>
             </div>
             <p className="text-sm" style={{ color: 'var(--text)' }}>
-              {copy.detail}
+              {t(`${copy.key}Detail`)}
             </p>
             <p className="text-xs mt-2" style={{ color: 'var(--muted-custom)' }}>
               +{xpFor(calibration!, earned)} XP
             </p>
           </div>
 
-          {item.markScheme.some((p) => p.kind === 'method' && satisfied.includes(p.descriptor)) &&
+          {item.markScheme.some((p, i) => p.kind === 'method' && satisfied.includes(i)) &&
             earned < available && (
               <p className="text-sm" style={{ color: 'var(--teal)' }}>
-                In the real exam you would still get the method mark here, even though the
-                final answer is wrong. That is a mark most students throw away by writing
-                nothing down.
+                {t('methodMarkNote')}
               </p>
             )}
 
           <div>
             <p className="text-xs font-semibold uppercase tracking-wide mb-2" style={{ color: 'var(--muted-custom)' }}>
-              The memo
+              {t('theMemo')}
             </p>
             <ol className="text-sm space-y-1 list-decimal ml-4" style={{ color: 'var(--text)' }}>
               {item.solution.map((line, i) => (
@@ -293,7 +294,7 @@ export default function ExamItemCard({
           {calibration === 'blind-spot' && item.commonError && (
             <div className="rounded-lg p-3" style={{ background: 'var(--surface2)' }}>
               <p className="text-xs font-semibold uppercase tracking-wide mb-1" style={{ color: '#e9c46a' }}>
-                What usually goes wrong here
+                {t('whatGoesWrong')}
               </p>
               <p className="text-sm" style={{ color: 'var(--text)' }}>
                 <MathRenderer content={item.commonError} />
@@ -302,9 +303,9 @@ export default function ExamItemCard({
           )}
 
           <div className="flex gap-3 text-xs" style={{ color: 'var(--muted-custom)' }}>
-            {item.markScheme.map((p) => (
-              <span key={p.descriptor} className="inline-flex items-center gap-1">
-                {satisfied.includes(p.descriptor) ? (
+            {item.markScheme.map((p, i) => (
+              <span key={i} className="inline-flex items-center gap-1">
+                {satisfied.includes(i) ? (
                   <Check className="w-3 h-3" style={{ color: 'var(--teal)' }} />
                 ) : (
                   <X className="w-3 h-3" style={{ color: 'var(--accent-red)' }} />
