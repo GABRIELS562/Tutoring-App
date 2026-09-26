@@ -1,12 +1,57 @@
 import Link from 'next/link'
 import { cookies } from 'next/headers'
 import { createServerClient } from '@supabase/ssr'
-import { Brain, Lock, CheckCircle, ArrowRight, Trophy, Sparkles } from 'lucide-react'
+import {
+  Brain,
+  Lock,
+  CheckCircle,
+  ArrowRight,
+  Trophy,
+  Sparkles,
+  Compass,
+  MessageSquare,
+  Shield,
+  Briefcase,
+  Award,
+  GraduationCap,
+  Zap,
+  type LucideIcon,
+} from 'lucide-react'
 import { aiModules, moduleOrder, badges, AI_MODULE_XP } from '@/content/ai-skills'
+
+/** The `icon` name each badge declares, resolved to its component. */
+const BADGE_ICONS: Record<string, LucideIcon> = {
+  Compass,
+  MessageSquare,
+  Brain,
+  Shield,
+  Briefcase,
+  Award,
+  GraduationCap,
+  Zap,
+}
 
 export const metadata = {
   title: 'AI Skills | Angelo Tutoring',
   description: 'Learn to use AI effectively with our AI Literacy Curriculum. Master prompt engineering, study smarter, and prepare for an AI-powered workplace.',
+}
+
+/**
+ * What a visitor with no account sees.
+ *
+ * A coherent part-way profile rather than an empty one: two modules done,
+ * one prompt challenge, and the two badges those actually unlock. It has to
+ * stay internally consistent - claiming badges a student has not earned
+ * anywhere else on the page would be the same mistake the dashboard used to
+ * make, showing someone a stranger's progress as their own.
+ *
+ * This is for SIGNED-OUT visitors only. A signed-in student always sees
+ * their real state, however empty.
+ */
+const PREVIEW_PROGRESS = {
+  completedModules: ['ai-what-is', 'ai-prompts'] as string[],
+  promptChallengesCompleted: 1,
+  earnedBadges: ['ai-explorer', 'prompt-pro'] as string[],
 }
 
 async function getUserProgress() {
@@ -14,11 +59,7 @@ async function getUserProgress() {
   const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
 
   if (!supabaseUrl || !supabaseKey) {
-    return {
-      completedModules: [] as string[],
-      promptChallengesCompleted: 0,
-      earnedBadges: [] as string[],
-    }
+    return PREVIEW_PROGRESS
   }
 
   const cookieStore = await cookies()
@@ -42,11 +83,7 @@ async function getUserProgress() {
   const { data: { user } } = await supabase.auth.getUser()
 
   if (!user) {
-    return {
-      completedModules: [] as string[],
-      promptChallengesCompleted: 0,
-      earnedBadges: [] as string[],
-    }
+    return PREVIEW_PROGRESS
   }
 
   const { data: userData } = await supabase
@@ -65,6 +102,7 @@ async function getUserProgress() {
 export default async function AISkillsPage() {
   const { completedModules, promptChallengesCompleted, earnedBadges } = await getUserProgress()
 
+  const allBadges = Object.values(badges)
   const allModulesCompleted = moduleOrder.every((id) => completedModules.includes(id))
   const totalXP = completedModules.length * AI_MODULE_XP
 
@@ -216,29 +254,71 @@ export default async function AISkillsPage() {
         </div>
       </Link>
 
-      {/* Badges Section */}
-      {earnedBadges.length > 0 && (
-        <div className="space-y-4">
+      {/* Badges. The whole set is always shown, earned and unearned.
+          Previously the section was hidden entirely until a student had
+          earned one, which is backwards: a badge only motivates if you can
+          see it before you have it, and it meant the feature was invisible
+          to every new student. The modules list above already works this
+          way, showing locked modules with what unlocks them. */}
+      <div className="space-y-4">
+        <div className="flex items-baseline justify-between">
           <h2 className="font-semibold" style={{ color: 'var(--text)' }}>
-            Your Badges
+            Badges
           </h2>
-          <div className="flex flex-wrap gap-3">
-            {earnedBadges.map((badgeId: string) => {
-              const badge = badges[badgeId as keyof typeof badges]
-              if (!badge) return null
-              return (
-                <div
-                  key={badgeId}
-                  className="px-3 py-2 rounded-lg flex items-center gap-2"
-                  style={{ background: 'var(--surface)', border: '1px solid var(--border-custom)' }}
-                >
-                  <span className="text-ai-purple text-sm">{badge.name}</span>
-                </div>
-              )
-            })}
-          </div>
+          <span className="text-sm" style={{ color: 'var(--muted-custom)' }}>
+            {earnedBadges.length} of {allBadges.length} earned
+          </span>
         </div>
-      )}
+
+        <div className="grid gap-3 sm:grid-cols-2">
+          {allBadges.map((badge) => {
+            const earned = earnedBadges.includes(badge.id)
+            const Icon = BADGE_ICONS[badge.icon] ?? Award
+
+            return (
+              <div
+                key={badge.id}
+                className="rounded-xl p-4 flex items-start gap-3"
+                style={{
+                  background: 'var(--surface)',
+                  border: `1px solid ${earned ? 'var(--ai-purple, #8b7cf6)' : 'var(--border-custom)'}`,
+                  opacity: earned ? 1 : 0.62,
+                }}
+              >
+                <div
+                  className="p-2 rounded-lg shrink-0"
+                  style={{ background: earned ? 'rgba(139, 124, 246, 0.16)' : 'var(--surface2)' }}
+                >
+                  {earned ? (
+                    <Icon className="w-5 h-5 text-ai-purple" aria-hidden="true" />
+                  ) : (
+                    <Lock
+                      className="w-5 h-5"
+                      style={{ color: 'var(--muted-custom)' }}
+                      aria-hidden="true"
+                    />
+                  )}
+                </div>
+
+                <div className="min-w-0">
+                  <p className="text-sm font-semibold" style={{ color: 'var(--text)' }}>
+                    {badge.name}
+                    {earned && (
+                      <span className="ml-2 text-xs font-normal text-ai-purple">Earned</span>
+                    )}
+                  </p>
+                  <p className="text-xs mt-0.5" style={{ color: 'var(--muted-custom)' }}>
+                    {badge.description}
+                  </p>
+                  <p className="text-xs mt-1" style={{ color: 'var(--gold)' }}>
+                    +{badge.xpReward} XP
+                  </p>
+                </div>
+              </div>
+            )
+          })}
+        </div>
+      </div>
     </div>
   )
 }
