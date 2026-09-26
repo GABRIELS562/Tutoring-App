@@ -14,7 +14,7 @@ This project uses **Next.js 16** which has breaking changes from earlier version
 ## Commands
 
 ```bash
-npm run dev              # next dev --webpack (port 3000). Webpack, NOT Turbopack — required by next-pwa + react-pdf alias
+npm run dev              # next dev --webpack (port 3000). Webpack, NOT Turbopack — required by next-pwa
 npm run build            # next build --webpack
 npm run start
 npm run lint             # eslint (flat config); ignores scripts/, public/sw.js, public/workbox-*.js
@@ -114,7 +114,7 @@ Practice reframed as a fight: same question bank, cosmetic boss framing. Route i
 
 ### UI
 
-Shadcn (`components.json`, base-nova style) in `src/components/ui/`; Tailwind v4 via `@tailwindcss/postcss`; Lucide icons; Framer Motion; KaTeX through `react-katex` (`src/components/math/MathRenderer.tsx`); `react-pdf` for past papers (needs the `canvas`/`encoding` webpack aliases in `next.config.ts`). Feature components: `quiz/`, `ai/`, `gamification/`, `dashboard/`, `notes/`, `layout/`, `boss/`.
+Shadcn (`components.json`, base-nova style) in `src/components/ui/`; Tailwind v4 via `@tailwindcss/postcss`; Lucide icons; Framer Motion; KaTeX through `react-katex` (`src/components/math/MathRenderer.tsx`). Past papers open in a new tab at education.gov.za rather than in-app — `react-pdf` and its `canvas`/`encoding` webpack aliases were removed once it turned out the in-app `PaperViewer` was never referenced. Feature components: `quiz/`, `ai/`, `gamification/`, `dashboard/`, `notes/`, `layout/`, `boss/`.
 
 ## Environment variables
 

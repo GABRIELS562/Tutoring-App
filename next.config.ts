@@ -66,12 +66,6 @@ const withPWA = withPWAInit({
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
-  webpack: (config) => {
-    // Fix for react-pdf canvas dependency
-    config.resolve.alias.canvas = false;
-    config.resolve.alias.encoding = false;
-    return config;
-  },
 };
 
 const withNextIntl = createNextIntlPlugin('./src/i18n/request.ts');

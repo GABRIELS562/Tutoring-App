@@ -5,7 +5,7 @@ Vercel (app) + Supabase (auth/DB) + Cloudflare (DNS). No Docker, no GitLab — n
 ## Vercel
 
 - Framework preset: Next.js. Install command: `npm ci`.
-- **Build command:** `npm run build` (runs `next build --webpack`) — keep `--webpack`; `next-pwa` and the `react-pdf` alias in `next.config.ts` require it, not Turbopack.
+- **Build command:** `npm run build` (runs `next build --webpack`) — keep `--webpack`; `next-pwa` requires it, not Turbopack.
 - Set all env vars below for Production + Preview.
 
 ## Supabase
