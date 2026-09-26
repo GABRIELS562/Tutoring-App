@@ -8,6 +8,7 @@
 import { describe, it, expect } from 'vitest'
 import { gr11P2Exemplar2013 as items } from '../gr11-p2-2013'
 import { totalMarks, methodMarks } from '../types'
+import { readFileSync } from 'node:fs'
 
 /** Totals printed in square brackets on the paper itself. */
 const PRINTED: Record<string, number> = {
@@ -81,5 +82,33 @@ describe('method marks are carried, since that is the point of the feature', () 
   it('marks the sine rule proof as entirely method', () => {
     const proof = items.find((item) => item.question === '7.1')!
     expect(methodMarks(proof)).toBe(proof.marks)
+  })
+})
+
+/**
+ * Mark descriptors are the memo's own words, and the memo writes maths:
+ * "$\frac{408}{19}$". Anywhere a descriptor is displayed it has to go
+ * through MathRenderer - the result summary printed the raw source, so a
+ * student who had just scored full marks saw "✓ $\frac{408}{19}$".
+ */
+describe('mark descriptors that contain maths', () => {
+  it('has descriptors carrying LaTeX, so every render site must handle it', () => {
+    const withMaths = items.flatMap((item) =>
+      item.markScheme.filter((point) => point.descriptor.includes('$'))
+    )
+
+    expect(withMaths.length).toBeGreaterThan(0)
+  })
+
+  it('renders every descriptor through MathRenderer in ExamItemCard', () => {
+    const source = readFileSync('src/components/exam/ExamItemCard.tsx', 'utf8')
+
+    // A bare {p.descriptor} / {point.descriptor} in JSX prints the source.
+    const bare = [...source.matchAll(/^\s*\{(?:p|point)\.descriptor\}\s*$/gm)]
+
+    expect(
+      bare.map((m) => m[0].trim()),
+      'a descriptor is rendered without MathRenderer, so its LaTeX will show raw'
+    ).toEqual([])
   })
 })

@@ -61,7 +61,7 @@ export default function ExamPageClient({ items }: { items: ExamItem[] }) {
 
   return (
     <div className="min-h-screen" style={{ background: 'var(--bg)' }}>
-      <Topbar title="Exam practice" subtitle={items[0]?.source} />
+      <Topbar title={t('title')} subtitle={items[0]?.source} />
 
       <div className="max-w-3xl mx-auto px-4 py-6">
         <div

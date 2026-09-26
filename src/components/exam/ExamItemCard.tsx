@@ -310,7 +310,11 @@ export default function ExamItemCard({
                 ) : (
                   <X className="w-3 h-3" style={{ color: 'var(--accent-red)' }} />
                 )}
-                {p.descriptor}
+                {/* Descriptors carry LaTeX - the memo writes marks like
+                    $\frac{408}{19}$ - so this summary must render them the
+                    same way the marking list above does, not print the
+                    source. */}
+                <MathRenderer content={p.descriptor} />
               </span>
             ))}
           </div>
