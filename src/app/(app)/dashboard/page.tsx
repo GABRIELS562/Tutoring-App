@@ -23,6 +23,7 @@ import WeaknessCard from '@/components/dashboard/WeaknessCard'
 import { analyzeWeaknesses, getMockWeaknesses, type Weakness } from '@/lib/weaknessDetector'
 import { getTopicsForSubjectGrade } from '@/content/registry'
 import { getBossForTopic } from '@/content/bosses'
+import { papersForLanguage, papers as allPapers } from '@/content/exam'
 import { ACCENT_TEXT_LIGHT, ACCENT_TEXT_DARK } from '@/lib/color/contrast'
 import type { Grade } from '@/types'
 
@@ -103,6 +104,7 @@ export default async function DashboardPage() {
   const t = await getTranslations('home')
   const tNav = await getTranslations('nav')
   const tBoss = await getTranslations('boss')
+  const tExam = await getTranslations('exam')
   const locale = await getLocale()
   let userId = 'demo-user'
   let data = mockDashboardData
@@ -170,6 +172,12 @@ export default async function DashboardPage() {
   // generic fallback for any topic without a named boss yet, see
   // src/content/bosses.ts).
   const bossTopics = getTopicsForSubjectGrade('maths', toGrade(user?.grade)).slice(0, 3)
+
+  // The exam game is the headline feature, so it gets its own card above the
+  // boss battles rather than a slot in Quick Actions. An Afrikaans student
+  // sits the Afrikaans paper; if their language has none transcribed yet we
+  // fall back to the first paper rather than hiding the feature.
+  const examPaper = papersForLanguage(locale === 'af' ? 'af' : 'en')[0] ?? allPapers[0]
 
   return (
     <div className="min-h-screen" style={{ background: 'var(--bg)' }}>
@@ -462,6 +470,37 @@ export default async function DashboardPage() {
             )}
           </div>
         </div>
+
+        {/* Section 3.4: the exam game */}
+        {examPaper && (
+          <Link
+            href="/exam"
+            className="block rounded-xl p-5 transition-all hover:scale-[1.01]"
+            style={{ background: 'var(--surface)', border: '1px solid var(--accent-red)' }}
+          >
+            <div className="flex items-center justify-between gap-4">
+              <div className="min-w-0">
+                <h2 className="font-semibold flex items-center gap-2" style={{ color: 'var(--text)' }}>
+                  <Swords className="w-4 h-4" style={{ color: 'var(--accent-red)' }} aria-hidden="true" />
+                  {tExam('title')}
+                </h2>
+                <p className="text-sm mt-1" style={{ color: 'var(--muted-custom)' }}>
+                  {tExam('tagline')}
+                </p>
+                <p className="text-xs mt-2 truncate" style={{ color: 'var(--muted-custom)' }}>
+                  {examPaper.source} · {examPaper.items.length} {tExam('questionsWord')} ·{' '}
+                  {examPaper.totalMarks} {tExam('marks')}
+                </p>
+              </div>
+              <span
+                className="shrink-0 px-4 py-2 rounded-lg text-sm font-semibold"
+                style={{ background: 'var(--accent-red)', color: 'white' }}
+              >
+                {tExam('start')}
+              </span>
+            </div>
+          </Link>
+        )}
 
         {/* Section 3.5: Boss Battles */}
         {bossTopics.length > 0 && (

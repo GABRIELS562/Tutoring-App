@@ -21,7 +21,8 @@
     "aiSkills": "KI-Vaardighede",
     "profile": "Profiel",
     "settings": "Instellings",
-    "signOut": "Teken uit"
+    "signOut": "Teken uit",
+    "examGame": "Eksamenspel"
   },
   "home": {
     "welcome": "Welkom terug",
@@ -508,6 +509,10 @@
     "honestGapDetail": "Jy het gesê jy is nie seker nie, en jy was reg. Dít is waarvoor oefening bedoel is.",
     "method": "metode",
     "answer": "antwoord",
-    "reason": "rede"
+    "reason": "rede",
+    "tagline": "Regte NSS-vrae, gemerk soos die eksaminator",
+    "title": "Eksamenspel",
+    "questionsWord": "vrae",
+    "start": "Begin"
   }
 }

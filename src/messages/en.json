@@ -21,7 +21,8 @@
     "aiSkills": "AI Skills",
     "profile": "Profile",
     "settings": "Settings",
-    "signOut": "Sign out"
+    "signOut": "Sign out",
+    "examGame": "Exam game"
   },
   "home": {
     "welcome": "Welcome back",
@@ -508,6 +509,10 @@
     "honestGapDetail": "You said you were not sure, and you were right. This is what practice is for.",
     "method": "method",
     "answer": "answer",
-    "reason": "reason"
+    "reason": "reason",
+    "tagline": "Real NSC questions, marked like the examiner",
+    "title": "Exam game",
+    "questionsWord": "questions",
+    "start": "Start"
   }
 }

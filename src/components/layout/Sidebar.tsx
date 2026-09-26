@@ -12,6 +12,7 @@ import {
   BarChart3,
   LogOut,
   Brain,
+  Swords,
 } from 'lucide-react'
 
 const NAV_ICONS = {
@@ -21,6 +22,7 @@ const NAV_ICONS = {
   practice: PenTool,
   papers: FileText,
   progress: BarChart3,
+  examGame: Swords,
 } as const
 
 export default function Sidebar() {
@@ -37,6 +39,7 @@ export default function Sidebar() {
     { key: 'subjects', icon: NAV_ICONS.subjects, label: tSubjects('title'), href: '/subjects' },
     { key: 'aiSkills', icon: NAV_ICONS.aiSkills, label: tNav('aiSkills'), href: '/ai-skills', isAI: true },
     { key: 'practice', icon: NAV_ICONS.practice, label: tPractice('title'), href: '/topics/trig-gr11/practice' },
+    { key: 'examGame', icon: NAV_ICONS.examGame, label: tNav('examGame'), href: '/exam' },
     { key: 'papers', icon: NAV_ICONS.papers, label: tNav('papers'), href: '/papers' },
     { key: 'progress', icon: NAV_ICONS.progress, label: tProgress('title'), href: '/progress' },
   ]
