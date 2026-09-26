@@ -5,36 +5,34 @@ import { eq } from 'drizzle-orm'
 async function seedQuestions() {
   console.log('Starting question seed...')
 
-  // First, ensure the topic exists
+  // seed-topics.ts owns the topic definitions. This script used to create
+  // its own 'trig-gr11' row if one was missing, with capsWeightPercent 15
+  // against the canonical 40 - and because topics.slug is unique, whichever
+  // seed ran first won permanently. Running db:seed-questions before
+  // db:seed-topics (contrary to the documented order, which nothing
+  // enforced) left the topic stuck on the wrong CAPS weight forever, with
+  // no error to show for it.
+  //
+  // So: require it, do not define it.
   const existingTopics = await db
     .select()
     .from(topics)
     .where(eq(topics.slug, 'trig-gr11'))
 
-  let topicId: string
+  const topic = existingTopics[0]
 
-  if (existingTopics.length === 0) {
-    console.log('Creating Trigonometry Grade 11 topic...')
-    const newTopic = await db
-      .insert(topics)
-      .values({
-        name: 'Trigonometry',
-        subject: 'maths',
-        grade: 11,
-        paper: 2,
-        slug: 'trig-gr11',
-        term: 1,
-        capsWeightPercent: 15,
-        sortOrder: 1,
-      })
-      .returning({ id: topics.id })
-
-    topicId = newTopic[0].id
-    console.log('Created topic:', topicId)
-  } else {
-    topicId = existingTopics[0].id
-    console.log('Topic already exists:', topicId)
+  if (!topic) {
+    console.error(
+      "Topic 'trig-gr11' does not exist. Run `npm run db:seed-topics` first - " +
+        'it is the single source of truth for topic definitions, and seeding ' +
+        'questions against a topic it has not created would invent a second, ' +
+        'conflicting one.'
+    )
+    process.exit(1)
   }
+
+  const topicId = topic.id
+  console.log('Seeding questions against topic:', topicId)
 
   // Define the questions
   const questionsData = [

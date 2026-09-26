@@ -47,25 +47,51 @@ export function isSupabaseConfigured(): boolean {
 }
 
 /**
- * Execute a database operation with demo mode fallback
- * @param operation - The Supabase operation to execute
- * @param demoFallback - Value to return in demo mode
+ * The outcome of a Supabase operation, with "there is no database" and
+ * "the database said no" kept apart.
+ *
+ * `withSupabase` used to collapse both into `{ data: fallback, isDemo: true }`,
+ * so a caller could not tell an unconfigured environment from an RLS denial,
+ * a dropped connection or a malformed query. Anything branching on `isDemo`
+ * to show a "you are viewing a demo" banner would have shown it to a real
+ * user whose write had just failed.
+ *
+ * `data` is present on every branch so a caller can still render something;
+ * `status` is what it must branch on before claiming anything to the user.
+ */
+export type SupabaseOutcome<T> =
+  | { status: 'ok'; data: T }
+  /** Supabase is not configured. Demo mode - nothing was attempted. */
+  | { status: 'not-configured'; data: T }
+  /** Configured, attempted, and it failed. `data` is the fallback. */
+  | { status: 'failed'; data: T; error: unknown }
+
+/**
+ * Run a Supabase operation, returning a fallback rather than throwing.
+ *
+ * Callers that persist anything a student can see MUST check `status`:
+ * treating 'failed' as 'not-configured' is how a lost write turns into a
+ * silent success.
  */
 export async function withSupabase<T>(
   operation: (client: SupabaseClient) => Promise<T>,
   demoFallback: T
-): Promise<{ data: T; isDemo: boolean }> {
+): Promise<SupabaseOutcome<T>> {
   const client = getApiSupabase()
 
   if (!client) {
-    return { data: demoFallback, isDemo: true }
+    return { status: 'not-configured', data: demoFallback }
   }
 
   try {
-    const data = await operation(client)
-    return { data, isDemo: false }
+    return { status: 'ok', data: await operation(client) }
   } catch (error) {
     console.error('Supabase operation failed:', error)
-    return { data: demoFallback, isDemo: true }
+    return { status: 'failed', data: demoFallback, error }
   }
+}
+
+/** True when the operation ran and the data is real. */
+export function isRealResult<T>(outcome: SupabaseOutcome<T>): boolean {
+  return outcome.status === 'ok'
 }
