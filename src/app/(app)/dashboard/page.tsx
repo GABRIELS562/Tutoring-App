@@ -21,11 +21,13 @@ import ExamCountdown from '@/components/dashboard/ExamCountdown'
 import StudyPlanBanner from '@/components/dashboard/StudyPlanBanner'
 import WeaknessCard from '@/components/dashboard/WeaknessCard'
 import { analyzeWeaknesses, getMockWeaknesses, type Weakness } from '@/lib/weaknessDetector'
-import { getTopicsForSubjectGrade } from '@/content/registry'
+import { getTopicsForSubjectGrade, contentRegistry } from '@/content/registry'
 import { getBossForTopic } from '@/content/bosses'
 import { papersForLanguage, papers as allPapers } from '@/content/exam'
 import { ACCENT_TEXT_LIGHT, ACCENT_TEXT_DARK } from '@/lib/color/contrast'
 import type { Grade } from '@/types'
+import { capsTopicTitlesAf } from '@/content/caps-curriculum-af'
+import { capsScienceTopicTitlesAf } from '@/content/caps-science-curriculum-af'
 
 export const dynamic = 'force-dynamic'
 
@@ -85,18 +87,18 @@ const mockDashboardData: DashboardData = {
   correctAnswers: 38,
   topicsStarted: 4,
   recentActivity: [
-    { id: '1', topicName: 'Trigonometry', questionText: 'Calculate sin 30°', status: 'correct', xpEarned: 10, lastAttemptedAt: new Date(Date.now() - 1000 * 60 * 30) },
-    { id: '2', topicName: 'Trigonometry', questionText: 'Find cos 45°', status: 'correct', xpEarned: 10, lastAttemptedAt: new Date(Date.now() - 1000 * 60 * 60) },
-    { id: '3', topicName: 'Algebra', questionText: 'Solve for x: 2x + 5 = 15', status: 'incorrect', xpEarned: 0, lastAttemptedAt: new Date(Date.now() - 1000 * 60 * 60 * 2) },
-    { id: '4', topicName: 'Functions', questionText: 'Find the domain of f(x)', status: 'correct', xpEarned: 10, lastAttemptedAt: new Date(Date.now() - 1000 * 60 * 60 * 5) },
-    { id: '5', topicName: 'Geometry', questionText: 'Calculate the area', status: 'correct', xpEarned: 10, lastAttemptedAt: new Date(Date.now() - 1000 * 60 * 60 * 24) },
+    { id: '1', topicName: 'Trigonometry', topicSlug: 'trig-gr11', questionText: 'Calculate sin 30°', status: 'correct', xpEarned: 10, lastAttemptedAt: new Date(Date.now() - 1000 * 60 * 30) },
+    { id: '2', topicName: 'Trigonometry', topicSlug: 'trig-gr11', questionText: 'Find cos 45°', status: 'correct', xpEarned: 10, lastAttemptedAt: new Date(Date.now() - 1000 * 60 * 60) },
+    { id: '3', topicName: 'Algebra', topicSlug: 'algebra-gr11', questionText: 'Solve for x: 2x + 5 = 15', status: 'incorrect', xpEarned: 0, lastAttemptedAt: new Date(Date.now() - 1000 * 60 * 60 * 2) },
+    { id: '4', topicName: 'Functions', topicSlug: 'functions-gr11', questionText: 'Find the domain of f(x)', status: 'correct', xpEarned: 10, lastAttemptedAt: new Date(Date.now() - 1000 * 60 * 60 * 5) },
+    { id: '5', topicName: 'Geometry', topicSlug: 'euclidean-geometry-gr11', questionText: 'Calculate the area', status: 'correct', xpEarned: 10, lastAttemptedAt: new Date(Date.now() - 1000 * 60 * 60 * 24) },
   ],
   weeklyXP: [],
   topicsWithProgress: [
-    { topicId: '1', topicName: 'Trigonometry', topicSlug: 'trigonometry', correctCount: 15, totalQuestions: 25, progressPercent: 60 },
-    { topicId: '2', topicName: 'Algebra', topicSlug: 'algebra', correctCount: 8, totalQuestions: 20, progressPercent: 40 },
-    { topicId: '3', topicName: 'Functions', topicSlug: 'functions', correctCount: 10, totalQuestions: 15, progressPercent: 67 },
-    { topicId: '4', topicName: 'Geometry', topicSlug: 'geometry', correctCount: 5, totalQuestions: 18, progressPercent: 28 },
+    { topicId: '1', topicName: 'Trigonometry', topicSlug: 'trig-gr11', correctCount: 15, totalQuestions: 25, progressPercent: 60 },
+    { topicId: '2', topicName: 'Algebra', topicSlug: 'algebra-gr11', correctCount: 8, totalQuestions: 20, progressPercent: 40 },
+    { topicId: '3', topicName: 'Functions', topicSlug: 'functions-gr11', correctCount: 10, totalQuestions: 15, progressPercent: 67 },
+    { topicId: '4', topicName: 'Geometry', topicSlug: 'euclidean-geometry-gr11', correctCount: 5, totalQuestions: 18, progressPercent: 28 },
   ],
 }
 
@@ -192,6 +194,22 @@ export default async function DashboardPage() {
   // sits the Afrikaans paper; if their language has none transcribed yet we
   // fall back to the first paper rather than hiding the feature.
   const examPaper = papersForLanguage(locale === 'af' ? 'af' : 'en')[0] ?? allPapers[0]
+
+  // Topic names are content, not chrome: leaving them in English put
+  // "Algebra & Equations" and "Number Patterns" on an otherwise Afrikaans
+  // dashboard. The registry already carries titleAf; the CAPS maps cover
+  // rows that only know their slug. Falling back to the English name is the
+  // honest failure - an untranslated name beats a wrong one.
+  const localiseTopic = (name: string, slug?: string): string => {
+    if (locale !== 'af') return name
+    if (!slug) return name
+    return (
+      capsTopicTitlesAf[slug] ??
+      capsScienceTopicTitlesAf[slug] ??
+      contentRegistry[slug]?.titleAf ??
+      name
+    )
+  }
 
   // A signed-in student whose data would not load gets told so. The
   // alternative - falling through to mockDashboardData - would show them a
@@ -413,7 +431,7 @@ export default async function DashboardPage() {
                         className="text-sm font-medium group-hover:text-[var(--accent-red)] transition-colors"
                         style={{ color: 'var(--text)' }}
                       >
-                        {topic.topicName}
+                        {localiseTopic(topic.topicName, topic.topicSlug)}
                       </span>
                       <span className="text-xs" style={{ color: 'var(--muted-custom)' }}>
                         {topic.progressPercent}%
@@ -483,7 +501,7 @@ export default async function DashboardPage() {
                         className="text-sm truncate"
                         style={{ color: 'var(--text)' }}
                       >
-                        {activity.topicName}
+                        {localiseTopic(activity.topicName, activity.topicSlug)}
                       </p>
                       <p
                         className="text-xs truncate"
@@ -566,7 +584,7 @@ export default async function DashboardPage() {
                   >
                     <div>
                       <p className="text-sm font-semibold" style={{ color: 'var(--text)' }}>
-                        {topic.title}
+                        {locale === 'af' ? topic.titleAf ?? topic.title : topic.title}
                       </p>
                       <p className="text-xs mt-0.5" style={{ color: 'var(--muted-custom)' }}>
                         {bossName}

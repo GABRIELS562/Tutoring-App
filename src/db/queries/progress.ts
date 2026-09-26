@@ -19,6 +19,8 @@ export type DashboardData = {
   recentActivity: {
     id: string
     topicName: string
+    /** So the feed can be labelled in the reader's language. */
+    topicSlug: string
     questionText: string
     status: string | null
     xpEarned: number | null
@@ -91,6 +93,7 @@ export async function getDashboardData(userId: string): Promise<DashboardData> {
       .select({
         id: studentProgress.id,
         topicName: topics.name,
+        topicSlug: topics.slug,
         questionText: questions.questionText,
         status: studentProgress.status,
         xpEarned: studentProgress.xpEarned,
@@ -181,6 +184,7 @@ export async function getDashboardData(userId: string): Promise<DashboardData> {
       recentActivity: recentRows.map((r) => ({
         id: r.id,
         topicName: r.topicName,
+        topicSlug: r.topicSlug,
         questionText: r.questionText,
         status: r.status,
         xpEarned: r.xpEarned,
