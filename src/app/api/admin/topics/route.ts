@@ -66,16 +66,28 @@ export async function DELETE(request: NextRequest) {
       )
     }
 
-    const success = await deleteTopic(topicId)
+    const result = await deleteTopic(topicId)
 
-    if (success) {
+    if (result.ok) {
       return NextResponse.json({ success: true })
-    } else {
+    }
+
+    // 409, not 500: the request is understood and the database is healthy,
+    // the topic simply still has questions attached.
+    if (result.reason === 'has-questions') {
       return NextResponse.json(
-        { error: 'Failed to delete topic' },
-        { status: 500 }
+        {
+          error:
+            'This topic still has questions. Move or delete them first, then delete the topic.',
+        },
+        { status: 409 }
       )
     }
+
+    return NextResponse.json(
+      { error: 'Failed to delete topic' },
+      { status: 500 }
+    )
   } catch (error) {
     console.error('Delete topic error:', error)
     return NextResponse.json(

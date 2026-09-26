@@ -19,7 +19,13 @@ export const users = pgTable('users', {
   promptChallengesCompleted: integer('prompt_challenges_completed').default(0),
   cvStatement: text('cv_statement'),
   badges: text('badges').array().default([]),
-})
+}, (table) => [
+  // getLeaderboard runs "WHERE grade = ? ORDER BY xp DESC LIMIT 10" on
+  // every dashboard and progress view. Without this it is a full scan and
+  // sort of the whole users table, which is invisible on seed data and
+  // steadily less so as students sign up.
+  index('users_grade_xp_idx').on(table.grade, table.xp),
+])
 
 // Table 2: topics
 export const topics = pgTable('topics', {
@@ -41,7 +47,8 @@ export const topics = pgTable('topics', {
 // Table 3: notes
 export const notes = pgTable('notes', {
   id: uuid('id').primaryKey().defaultRandom(),
-  topicId: uuid('topic_id').references(() => topics.id),
+  // A note has no meaning without its topic.
+  topicId: uuid('topic_id').references(() => topics.id, { onDelete: 'cascade' }),
   contentType: text('content_type'), // 'theory'|'formula'|'example'|'tip'|'worked_example'|'video'
   title: text('title'),
   body: text('body'),
@@ -53,7 +60,10 @@ export const notes = pgTable('notes', {
 // Table 4: questions
 export const questions = pgTable('questions', {
   id: uuid('id').primaryKey().defaultRandom(),
-  topicId: uuid('topic_id').references(() => topics.id),
+  // NOT cascade, on purpose. Deleting a topic must not silently destroy
+  // every question under it and every student's progress against them.
+  // Postgres blocks the delete instead, and deleteTopic() reports why.
+  topicId: uuid('topic_id').references(() => topics.id, { onDelete: 'restrict' }),
   source: text('source'), // 'nsc_dbe'|'kzn'|'wced'|'angelo'
   year: integer('year'),
   examType: text('exam_type'), // 'november'|'june'|'march'|'trial'|'custom'
@@ -74,7 +84,8 @@ export const questions = pgTable('questions', {
 // Table 5: question_options
 export const questionOptions = pgTable('question_options', {
   id: uuid('id').primaryKey().defaultRandom(),
-  questionId: uuid('question_id').references(() => questions.id),
+  // An option is part of its question, not a thing in its own right.
+  questionId: uuid('question_id').references(() => questions.id, { onDelete: 'cascade' }),
   optionLetter: text('option_letter'), // 'A'|'B'|'C'|'D'
   optionText: text('option_text').notNull(),
   isCorrect: boolean('is_correct').default(false),
@@ -85,7 +96,8 @@ export const questionOptions = pgTable('question_options', {
 // Table 6: steps
 export const steps = pgTable('steps', {
   id: uuid('id').primaryKey().defaultRandom(),
-  questionId: uuid('question_id').references(() => questions.id),
+  // Likewise a step.
+  questionId: uuid('question_id').references(() => questions.id, { onDelete: 'cascade' }),
   stepNumber: integer('step_number').notNull(),
   instruction: text('instruction').notNull(),
   hint: text('hint'),
@@ -99,14 +111,23 @@ export const steps = pgTable('steps', {
 // Table 7: student_progress
 export const studentProgress = pgTable('student_progress', {
   id: uuid('id').primaryKey().defaultRandom(),
-  userId: uuid('user_id').references(() => users.id),
-  questionId: uuid('question_id').references(() => questions.id),
+  // Deleting a student removes their progress with them, which is what a
+  // POPIA deletion request needs. Deleting a QUESTION also removes the
+  // progress rows against it: a row saying "answered question X correctly"
+  // is meaningless once X is gone, and without this an admin could never
+  // delete a question any student had ever attempted.
+  userId: uuid('user_id').references(() => users.id, { onDelete: 'cascade' }),
+  questionId: uuid('question_id').references(() => questions.id, { onDelete: 'cascade' }),
   status: text('status').default('unanswered'), // 'unanswered'|'attempted'|'correct'|'incorrect'
   attempts: integer('attempts').default(0),
   lastAttemptedAt: timestamp('last_attempted_at'),
   xpEarned: integer('xp_earned').default(0),
 }, (table) => [
   index('student_progress_user_id_idx').on(table.userId),
+  // getProgressData and getDashboardData both filter
+  // "userId = ? AND lastAttemptedAt >= ?" - equality column first, range
+  // column second, which is the order a btree can actually use.
+  index('student_progress_user_last_attempted_idx').on(table.userId, table.lastAttemptedAt),
   index('student_progress_question_id_idx').on(table.questionId),
   // One row per (user, question): saveProgress() in
   // db/queries/questions.ts depends on this to upsert-and-lock the row
@@ -140,7 +161,6 @@ export const aiHintUsage = pgTable('ai_hint_usage', {
   updatedAt: timestamp('updated_at').defaultNow(),
 }, (table) => [
   index('ai_hint_usage_user_id_idx').on(table.userId),
-  index('ai_hint_usage_user_date_idx').on(table.userId, table.usageDate),
   // One usage row per (user, day): backs the atomic
   // increment_hint_usage() Postgres function (see
   // supabase/migrations/0002_functions.sql) that api/ai-hint/route.ts
@@ -154,7 +174,8 @@ export const aiHintUsage = pgTable('ai_hint_usage', {
 // Table 10: ai_certificates
 export const aiCertificates = pgTable('ai_certificates', {
   id: uuid('id').primaryKey().defaultRandom(),
-  userId: uuid('user_id').references(() => users.id),
+  // A certificate belongs to a student; if the student is erased so is it.
+  userId: uuid('user_id').references(() => users.id, { onDelete: 'cascade' }),
   certificateId: text('certificate_id').unique().notNull(), // Short unique ID for QR, e.g. AT-2026-X7K9
   studentName: text('student_name').notNull(),
   issuedAt: timestamp('issued_at').defaultNow(),
@@ -167,7 +188,7 @@ export const aiCertificates = pgTable('ai_certificates', {
 // Table 11: prompt_challenge_attempts
 export const promptChallengeAttempts = pgTable('prompt_challenge_attempts', {
   id: uuid('id').primaryKey().defaultRandom(),
-  userId: uuid('user_id').references(() => users.id),
+  userId: uuid('user_id').references(() => users.id, { onDelete: 'cascade' }),
   challengeId: text('challenge_id').notNull(), // Which challenge scenario
   studentPrompt: text('student_prompt').notNull(),
   aiScore: integer('ai_score'), // 1-5

@@ -94,10 +94,21 @@ export async function POST() {
       return NextResponse.json({ certificate })
     }
 
-    const { data: attempts } = await supabase
+    const { data: attempts, error: attemptsError } = await supabase
       .from('prompt_challenge_attempts')
       .select('ai_score')
       .eq('user_id', user.id)
+
+    // A failed query is not the same as "this student has no attempts".
+    // Treating them alike baked DEFAULT_AVG_SCORE into a certificate that
+    // is then immutable and externally verifiable.
+    if (attemptsError) {
+      console.error('Certificate issuance: could not read prompt attempts', attemptsError)
+      return NextResponse.json(
+        { error: 'Could not issue certificate. Please try again.' },
+        { status: 500 }
+      )
+    }
 
     const avgPromptScore =
       attempts && attempts.length > 0

@@ -56,6 +56,7 @@ const {
   decrementHeartsIfAllowed,
   applyDayRollover,
   saveProgress,
+  recordWrongAnswer,
 } = await import('../questions')
 
 describe('decrementHeartsIfAllowed', () => {
@@ -329,5 +330,78 @@ describe('saveProgress', () => {
 
     expect(first).toEqual({ xpEarned: XP_PER_CORRECT_ANSWER })
     expect(second).toEqual({ xpEarned: 0 })
+  })
+})
+
+/**
+ * A wrong answer spends a heart AND records the attempt, or does neither.
+ *
+ * These were two independent statements in recordAnswer: the heart was
+ * decremented first, so when the progress write failed the action returned a
+ * save error with the heart already gone - and QuizEngine's retry button
+ * called recordAnswer again, spending a SECOND heart for one wrong answer.
+ * The client derives its heart count from its own answer history, so it
+ * never showed the loss; the student simply ran out earlier than the screen
+ * said, or found hearts missing next session.
+ */
+describe('recordWrongAnswer', () => {
+  beforeEach(() => {
+    vi.clearAllMocks()
+  })
+
+  it('spends the heart and saves the attempt in ONE transaction', async () => {
+    txMock.update.mockReturnValue(makeChain([{ hearts: 3 }]))
+    txMock.insert.mockReturnValue(makeChain([]))
+    txMock.select.mockReturnValue(makeChain([{ id: 'p1', status: 'unanswered', attempts: 0 }]))
+
+    const result = await recordWrongAnswer('user-1', 'question-1')
+
+    expect(result).toEqual({ ok: true, xpEarned: 0, hearts: 3 })
+    // One transaction, not a decrement followed by a separate save.
+    expect(dbMock.transaction).toHaveBeenCalledTimes(1)
+    expect(dbMock.update).not.toHaveBeenCalled()
+  })
+
+  it('reports blocked without saving when the gate matches no row', async () => {
+    // No row returned = the WHERE (premium OR hearts > 0) did not match.
+    txMock.update.mockReturnValue(makeChain([]))
+
+    const result = await recordWrongAnswer('user-1', 'question-1')
+
+    expect(result).toEqual({ ok: false, reason: 'blocked' })
+    expect(txMock.insert).not.toHaveBeenCalled()
+  })
+
+  it('still decrements with GREATEST so hearts can never go negative', async () => {
+    const updateChain = makeChain([{ hearts: 0 }])
+    txMock.update.mockReturnValue(updateChain)
+    txMock.insert.mockReturnValue(makeChain([]))
+    txMock.select.mockReturnValue(makeChain([{ id: 'p1', status: 'unanswered', attempts: 0 }]))
+
+    await recordWrongAnswer('user-1', 'question-1')
+
+    // The floor has to live in SQL, not in JavaScript, or two concurrent
+    // decrements can drive hearts negative.
+    const setArg = updateChain.set.mock.calls[0][0]
+    expect(typeof setArg.hearts).not.toBe('number')
+    const rendered = setArg.hearts.queryChunks
+      .map((chunk: unknown) =>
+        chunk && typeof chunk === 'object' && 'value' in chunk
+          ? (chunk as { value: string[] }).value.join('')
+          : ''
+      )
+      .join('<param>')
+    expect(rendered).toContain('GREATEST(')
+    expect(rendered).toContain('- 1, 0)')
+  })
+
+  it('surfaces an error rather than a blocked gate when the transaction throws', async () => {
+    dbMock.transaction.mockImplementationOnce(async () => {
+      throw new Error('connection lost')
+    })
+
+    const result = await recordWrongAnswer('user-1', 'question-1')
+
+    expect(result).toEqual({ ok: false, reason: 'error' })
   })
 })

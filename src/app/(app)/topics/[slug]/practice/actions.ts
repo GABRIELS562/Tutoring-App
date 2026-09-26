@@ -3,7 +3,7 @@
 import { z } from 'zod'
 import { requireUser } from '@/lib/auth/require-user'
 import { isDemoMode } from '@/db'
-import { saveProgress, decrementHeartsIfAllowed, applyDayRollover } from '@/db/queries/questions'
+import { saveProgress, recordWrongAnswer, applyDayRollover } from '@/db/queries/questions'
 import { getUserById } from '@/db/queries/users'
 
 const SAVE_ERROR = 'Could not save your answer'
@@ -37,7 +37,7 @@ export type CompleteQuizResult =
  * heart count says (defends against a stale/tampered client):
  *  - Correct answers never consume a heart, so a plain read is enough.
  *  - Wrong answers gate-and-decrement atomically in one statement
- *    (decrementHeartsIfAllowed) - no progress is saved when it's
+ *    (recordWrongAnswer) - no progress is saved when it's
  *    blocked.
  */
 export async function recordAnswer(questionId: string, correct: boolean): Promise<RecordAnswerResult> {
@@ -77,20 +77,19 @@ export async function recordAnswer(questionId: string, correct: boolean): Promis
     return { ok: true, xpEarned: progressResult.xpEarned }
   }
 
-  const heartsResult = await decrementHeartsIfAllowed(user.id)
-  if (!heartsResult.ok) {
+  // One transaction: spend the heart and record the attempt together, or do
+  // neither. Two separate statements meant a failed save left the heart
+  // already gone, and the retry button then spent another one for the same
+  // wrong answer.
+  const wrongResult = await recordWrongAnswer(user.id, parsedQuestionId.data)
+  if (!wrongResult.ok) {
     return {
       ok: false,
-      error: heartsResult.reason === 'blocked' ? OUT_OF_HEARTS_ERROR : SAVE_ERROR,
+      error: wrongResult.reason === 'blocked' ? OUT_OF_HEARTS_ERROR : SAVE_ERROR,
     }
   }
 
-  const progressResult = await saveProgress(user.id, parsedQuestionId.data, false)
-  if (!progressResult) {
-    return { ok: false, error: SAVE_ERROR }
-  }
-
-  return { ok: true, xpEarned: progressResult.xpEarned }
+  return { ok: true, xpEarned: wrongResult.xpEarned }
 }
 
 /**

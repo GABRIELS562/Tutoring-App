@@ -1,6 +1,6 @@
 import { db } from '@/db'
 import { questions, questionOptions, steps, topics, studentProgress, users } from '@/db/schema'
-import { eq, and, or, gt, sql } from 'drizzle-orm'
+import { eq, and, or, gt, sql, inArray } from 'drizzle-orm'
 import { todaySast, yesterdaySast } from '@/lib/dates'
 import { XP_PER_CORRECT_ANSWER, MAX_HEARTS } from '@/lib/game-rules'
 
@@ -73,40 +73,54 @@ export async function getQuestionsByTopic(
       .limit(10)
 
     // Get options and steps for each question
-    const questionsWithDetails: QuestionWithDetails[] = await Promise.all(
-      questionRows.map(async (q) => {
-        const [optionRows, stepRows] = await Promise.all([
-          db
-            .select()
-            .from(questionOptions)
-            .where(eq(questionOptions.questionId, q.id))
-            .orderBy(questionOptions.optionLetter),
-          db
-            .select()
-            .from(steps)
-            .where(eq(steps.questionId, q.id))
-            .orderBy(steps.stepNumber),
-        ])
+    // Two queries for the whole batch, not two per question. This used to
+    // fan out to 2N round trips - up to 20 for a 10-question quiz - on the
+    // most frequently hit path in the app.
+    const questionIds = questionRows.map((q) => q.id)
+    const [optionRows, stepRows] = await Promise.all([
+      db
+        .select()
+        .from(questionOptions)
+        .where(inArray(questionOptions.questionId, questionIds))
+        .orderBy(questionOptions.optionLetter),
+      db
+        .select()
+        .from(steps)
+        .where(inArray(steps.questionId, questionIds))
+        .orderBy(steps.stepNumber),
+    ])
 
-        return {
-          ...q,
-          options: optionRows.map((o) => ({
-            id: o.id,
-            optionLetter: o.optionLetter,
-            optionText: o.optionText,
-            isCorrect: o.isCorrect,
-          })),
-          steps: stepRows.map((s) => ({
-            id: s.id,
-            stepNumber: s.stepNumber,
-            instruction: s.instruction,
-            hint: s.hint,
-            correctAnswer: s.correctAnswer,
-            explanation: s.explanation,
-          })),
-        }
-      })
-    )
+    const optionsByQuestion = new Map<string, typeof optionRows>()
+    for (const option of optionRows) {
+      const list = optionsByQuestion.get(option.questionId!) ?? []
+      list.push(option)
+      optionsByQuestion.set(option.questionId!, list)
+    }
+
+    const stepsByQuestion = new Map<string, typeof stepRows>()
+    for (const step of stepRows) {
+      const list = stepsByQuestion.get(step.questionId!) ?? []
+      list.push(step)
+      stepsByQuestion.set(step.questionId!, list)
+    }
+
+    const questionsWithDetails: QuestionWithDetails[] = questionRows.map((q) => ({
+      ...q,
+      options: (optionsByQuestion.get(q.id) ?? []).map((o) => ({
+        id: o.id,
+        optionLetter: o.optionLetter,
+        optionText: o.optionText,
+        isCorrect: o.isCorrect,
+      })),
+      steps: (stepsByQuestion.get(q.id) ?? []).map((st) => ({
+        id: st.id,
+        stepNumber: st.stepNumber,
+        instruction: st.instruction,
+        hint: st.hint,
+        correctAnswer: st.correctAnswer,
+        explanation: st.explanation,
+      })),
+    }))
 
     return questionsWithDetails
   } catch (error) {
@@ -138,13 +152,20 @@ export async function getQuestionsByTopic(
  * attempt earns nothing on a repeat correct answer either, by the same
  * status check - so replaying the same question can't farm XP.
  */
-export async function saveProgress(
+/**
+ * The body of saveProgress, taking the transaction rather than opening one,
+ * so a caller that must do more work atomically can join it.
+ */
+type Tx = Parameters<Parameters<typeof db.transaction>[0]>[0]
+
+async function saveProgressWithin(
+  tx: Tx,
   userId: string,
   questionId: string,
   correct: boolean
-): Promise<{ xpEarned: number } | null> {
-  try {
-    return await db.transaction(async (tx) => {
+): Promise<{ xpEarned: number }> {
+  {
+    {
       await tx
         .insert(studentProgress)
         .values({ userId, questionId })
@@ -194,10 +215,66 @@ export async function saveProgress(
       }
 
       return { xpEarned: xpToAward }
-    })
+    }
+  }
+}
+
+export async function saveProgress(
+  userId: string,
+  questionId: string,
+  correct: boolean
+): Promise<{ xpEarned: number } | null> {
+  try {
+    return await db.transaction((tx) => saveProgressWithin(tx, userId, questionId, correct))
   } catch (error) {
     console.error('Error saving progress:', error)
     return null
+  }
+}
+
+/**
+ * A wrong answer: spend a heart AND record the attempt, or do neither.
+ *
+ * These used to be two independent statements in recordAnswer. The heart was
+ * decremented first, so when the progress write then failed the action
+ * returned a save error with the heart already gone - and QuizEngine's
+ * retry button called recordAnswer again, spending a SECOND heart for one
+ * wrong answer. The client's heart count is derived from its own answer
+ * history, so it never showed the loss; the student simply ran out earlier
+ * than the screen said they should, or found hearts missing next session.
+ *
+ * Inside one transaction a failed save rolls the heart back, which makes the
+ * retry safe: it costs exactly one heart however many times it is attempted.
+ */
+export async function recordWrongAnswer(
+  userId: string,
+  questionId: string
+): Promise<
+  | { ok: true; xpEarned: number; hearts: number }
+  | { ok: false; reason: 'blocked' | 'error' }
+> {
+  try {
+    return await db.transaction(async (tx) => {
+      const gate = await tx
+        .update(users)
+        .set({ hearts: sql`GREATEST(${users.hearts} - 1, 0)` })
+        .where(and(eq(users.id, userId), or(eq(users.isPremium, true), gt(users.hearts, 0))))
+        .returning({ hearts: users.hearts })
+
+      const row = gate[0]
+      if (!row) {
+        return { ok: false as const, reason: 'blocked' as const }
+      }
+      if (row.hearts === null) {
+        return { ok: false as const, reason: 'error' as const }
+      }
+
+      const progress = await saveProgressWithin(tx, userId, questionId, false)
+      return { ok: true as const, xpEarned: progress.xpEarned, hearts: row.hearts }
+    })
+  } catch (error) {
+    console.error('Error recording wrong answer:', error)
+    return { ok: false, reason: 'error' }
   }
 }
 

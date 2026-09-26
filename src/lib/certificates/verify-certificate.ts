@@ -60,7 +60,17 @@ export async function lookupCertificate(certificateId: string): Promise<Verified
       .eq('certificate_id', certificateId)
       .single()
 
-    if (error || !certificate) {
+    if (error) {
+      // Still fail closed - a hiccup must never render as "valid" - but say
+      // so. Without this, a broken service key or an RLS misconfiguration
+      // returns "Certificate not found" for every REAL certificate, which
+      // is indistinguishable from a forgery to the person checking and
+      // invisible to us.
+      console.error('Certificate lookup failed:', error)
+      return null
+    }
+
+    if (!certificate) {
       return null
     }
 

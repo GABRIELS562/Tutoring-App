@@ -98,13 +98,34 @@ export async function createTopic(input: CreateTopicInput): Promise<string | nul
 }
 
 // Delete a topic
-export async function deleteTopic(topicId: string): Promise<boolean> {
+/** Postgres foreign-key violation. */
+const FK_VIOLATION = '23503'
+
+export type DeleteTopicResult =
+  | { ok: true }
+  | { ok: false; reason: 'has-questions' | 'failed' }
+
+/**
+ * Deleting a topic is deliberately blocked while questions still reference
+ * it (questions.topic_id is ON DELETE RESTRICT), because cascading would
+ * take every question under the topic and every student's progress against
+ * them with it.
+ *
+ * This used to return a bare `false` for that case, which the route turned
+ * into "Failed to delete topic" - true but useless, since the admin's next
+ * move (move or delete the questions first) was not discoverable from it.
+ */
+export async function deleteTopic(topicId: string): Promise<DeleteTopicResult> {
   try {
     await db.delete(topics).where(eq(topics.id, topicId))
-    return true
+    return { ok: true }
   } catch (error) {
+    const code = (error as { code?: string })?.code
+    if (code === FK_VIOLATION) {
+      return { ok: false, reason: 'has-questions' }
+    }
     console.error('Error deleting topic:', error)
-    return false
+    return { ok: false, reason: 'failed' }
   }
 }
 
@@ -266,82 +287,91 @@ export type SaveQuestionInput = {
   }[]
 }
 
+/**
+ * Editing a question deletes its options and steps and re-inserts them.
+ * Those were separate statements, so a failure partway through left the
+ * question with no options and no steps while the admin was told the save
+ * had failed - destroyed content, reported as a no-op. One transaction now
+ * means it either all lands or none of it does.
+ */
 export async function saveQuestion(input: SaveQuestionInput): Promise<string | null> {
   try {
-    let questionId: string
+    return await db.transaction(async (tx) => {
+      let questionId: string
 
-    if (input.id) {
-      // Update existing question
-      await db
-        .update(questions)
-        .set({
-          topicId: input.topicId,
-          questionText: input.questionText,
-          source: input.source,
-          year: input.year,
-          examType: input.examType,
-          marks: input.marks,
-          difficulty: input.difficulty,
-          isMultipleChoice: input.isMultipleChoice,
-          isApproved: input.isApproved,
-        })
-        .where(eq(questions.id, input.id))
+      if (input.id) {
+        // Update existing question
+        await tx
+          .update(questions)
+          .set({
+            topicId: input.topicId,
+            questionText: input.questionText,
+            source: input.source,
+            year: input.year,
+            examType: input.examType,
+            marks: input.marks,
+            difficulty: input.difficulty,
+            isMultipleChoice: input.isMultipleChoice,
+            isApproved: input.isApproved,
+          })
+          .where(eq(questions.id, input.id))
 
-      questionId = input.id
+        questionId = input.id
 
-      // Delete existing options and steps
-      await Promise.all([
-        db.delete(questionOptions).where(eq(questionOptions.questionId, questionId)),
-        db.delete(steps).where(eq(steps.questionId, questionId)),
-      ])
-    } else {
-      // Create new question
-      const result = await db
-        .insert(questions)
-        .values({
-          topicId: input.topicId,
-          questionText: input.questionText,
-          source: input.source,
-          year: input.year,
-          examType: input.examType,
-          marks: input.marks,
-          difficulty: input.difficulty,
-          isMultipleChoice: input.isMultipleChoice,
-          isApproved: input.isApproved,
-        })
-        .returning({ id: questions.id })
+        // Delete existing options and steps
+        await Promise.all([
+          tx.delete(questionOptions).where(eq(questionOptions.questionId, questionId)),
+          tx.delete(steps).where(eq(steps.questionId, questionId)),
+        ])
+      } else {
+        // Create new question
+        const result = await tx
+          .insert(questions)
+          .values({
+            topicId: input.topicId,
+            questionText: input.questionText,
+            source: input.source,
+            year: input.year,
+            examType: input.examType,
+            marks: input.marks,
+            difficulty: input.difficulty,
+            isMultipleChoice: input.isMultipleChoice,
+            isApproved: input.isApproved,
+          })
+          .returning({ id: questions.id })
 
-      questionId = result[0].id
-    }
+        questionId = result[0].id
+      }
 
-    // Insert options if multiple choice
-    if (input.isMultipleChoice && input.options.length > 0) {
-      await db.insert(questionOptions).values(
-        input.options.map(o => ({
-          questionId,
-          optionLetter: o.optionLetter,
-          optionText: o.optionText,
-          isCorrect: o.isCorrect,
-        }))
-      )
-    }
+      // Insert options if multiple choice
+      if (input.isMultipleChoice && input.options.length > 0) {
+        await tx.insert(questionOptions).values(
+          input.options.map(o => ({
+            questionId,
+            optionLetter: o.optionLetter,
+            optionText: o.optionText,
+            isCorrect: o.isCorrect,
+          }))
+        )
+      }
 
-    // Insert steps
-    if (input.steps.length > 0) {
-      await db.insert(steps).values(
-        input.steps.map(s => ({
-          questionId,
-          stepNumber: s.stepNumber,
-          instruction: s.instruction,
-          hint: s.hint || null,
-          correctAnswer: s.correctAnswer,
-          explanation: s.explanation || null,
-          createdBy: s.createdBy || 'angelo',
-        }))
-      )
-    }
+      // Insert steps
+      if (input.steps.length > 0) {
+        await tx.insert(steps).values(
+          input.steps.map(s => ({
+            questionId,
+            stepNumber: s.stepNumber,
+            instruction: s.instruction,
+            hint: s.hint || null,
+            correctAnswer: s.correctAnswer,
+            explanation: s.explanation || null,
+            createdBy: s.createdBy || 'angelo',
+          }))
+        )
+      }
 
-    return questionId
+      return questionId
+    })
   } catch (error) {
     console.error('Error saving question:', error)
     return null
@@ -349,17 +379,16 @@ export async function saveQuestion(input: SaveQuestionInput): Promise<string | n
 }
 
 // Delete a question
+/**
+ * Options, steps and any student progress now cascade from the question
+ * itself (see the ON DELETE rules in schema.ts), so this is a single
+ * statement. It used to delete the children first as three separate
+ * statements: if the last one failed, the admin was told the delete had
+ * failed while the question's options and steps were already gone.
+ */
 export async function deleteQuestion(questionId: string): Promise<boolean> {
   try {
-    // Delete options and steps first (foreign key constraints)
-    await Promise.all([
-      db.delete(questionOptions).where(eq(questionOptions.questionId, questionId)),
-      db.delete(steps).where(eq(steps.questionId, questionId)),
-    ])
-
-    // Delete question
     await db.delete(questions).where(eq(questions.id, questionId))
-
     return true
   } catch (error) {
     console.error('Error deleting question:', error)

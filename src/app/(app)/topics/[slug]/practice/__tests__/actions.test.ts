@@ -1,11 +1,13 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
-import type { saveProgress, decrementHeartsIfAllowed, applyDayRollover } from '@/db/queries/questions'
+import type { saveProgress, recordWrongAnswer, applyDayRollover } from '@/db/queries/questions'
 import type { getUserById } from '@/db/queries/users'
 import { MAX_HEARTS } from '@/lib/game-rules'
 
 const requireUserMock = vi.fn()
 const saveProgressMock = vi.fn<typeof saveProgress>(async () => ({ xpEarned: 10 }))
-const decrementHeartsIfAllowedMock = vi.fn<typeof decrementHeartsIfAllowed>(async () => ({ ok: true, hearts: 4 }))
+// One call now does both halves of a wrong answer, so a failed save
+// rolls the heart back instead of leaving it spent.
+const recordWrongAnswerMock = vi.fn<typeof recordWrongAnswer>(async () => ({ ok: true, xpEarned: 0, hearts: 4 }))
 const applyDayRolloverMock = vi.fn<typeof applyDayRollover>(async () => ({ newStreak: 1, hearts: MAX_HEARTS }))
 type UserRow = Awaited<ReturnType<typeof getUserById>>
 
@@ -45,7 +47,7 @@ vi.mock('@/lib/auth/require-user', async () => {
 
 vi.mock('@/db/queries/questions', () => ({
   saveProgress: saveProgressMock,
-  decrementHeartsIfAllowed: decrementHeartsIfAllowedMock,
+  recordWrongAnswer: recordWrongAnswerMock,
   applyDayRollover: applyDayRolloverMock,
 }))
 
@@ -72,7 +74,7 @@ describe('recordAnswer', () => {
     requireUserMock.mockResolvedValue({ id: 'user-1', email: 'a@b.com' })
     getUserByIdMock.mockResolvedValue(fakeUser())
     saveProgressMock.mockResolvedValue({ xpEarned: 10 })
-    decrementHeartsIfAllowedMock.mockResolvedValue({ ok: true, hearts: 4 })
+    recordWrongAnswerMock.mockResolvedValue({ ok: true, xpEarned: 0, hearts: 4 })
     applyDayRolloverMock.mockResolvedValue({ newStreak: 1, hearts: MAX_HEARTS })
   })
 
@@ -123,19 +125,19 @@ describe('recordAnswer', () => {
     applyDayRolloverMock.mockResolvedValueOnce({ newStreak: 2, hearts: MAX_HEARTS })
     // ... so the wrong-answer gate-and-decrement now succeeds against
     // the refilled value instead of being permanently blocked.
-    decrementHeartsIfAllowedMock.mockResolvedValueOnce({ ok: true, hearts: MAX_HEARTS - 1 })
+    recordWrongAnswerMock.mockResolvedValueOnce({ ok: true, xpEarned: 0, hearts: MAX_HEARTS - 1 })
 
     const result = await recordAnswer(VALID_QUESTION_ID, false)
 
-    expect(result).toEqual({ ok: true, xpEarned: 10 })
-    expect(decrementHeartsIfAllowedMock).toHaveBeenCalledWith('user-1')
+    expect(result).toEqual({ ok: true, xpEarned: 0 })
+    expect(recordWrongAnswerMock).toHaveBeenCalledWith('user-1', VALID_QUESTION_ID)
   })
 
   it('a student already active today at 0 hearts stays blocked (no refill due)', async () => {
     // applyDayRollover is a no-op - already rolled over today, hearts
     // stayed at 0.
     applyDayRolloverMock.mockResolvedValueOnce({ newStreak: 2, hearts: 0 })
-    decrementHeartsIfAllowedMock.mockResolvedValueOnce({ ok: false, reason: 'blocked' })
+    recordWrongAnswerMock.mockResolvedValueOnce({ ok: false, reason: 'blocked' })
 
     const result = await recordAnswer(VALID_QUESTION_ID, false)
 
@@ -181,16 +183,18 @@ describe('recordAnswer', () => {
     const result = await recordAnswer(VALID_QUESTION_ID, true)
 
     expect(result).toEqual({ ok: true, xpEarned: 10 })
-    expect(decrementHeartsIfAllowedMock).not.toHaveBeenCalled()
+    expect(recordWrongAnswerMock).not.toHaveBeenCalled()
   })
 
   it('a wrong answer never calls getUserById (uses the atomic gate-and-decrement instead)', async () => {
-    saveProgressMock.mockResolvedValueOnce({ xpEarned: 0 })
-
     await recordAnswer(VALID_QUESTION_ID, false)
 
     expect(getUserByIdMock).not.toHaveBeenCalled()
-    expect(decrementHeartsIfAllowedMock).toHaveBeenCalledWith('user-1')
+    expect(recordWrongAnswerMock).toHaveBeenCalledWith('user-1', VALID_QUESTION_ID)
+    // The heart and the progress row are written in one transaction, so the
+    // action must not call saveProgress separately - doing so is what let a
+    // retry spend a second heart for one wrong answer.
+    expect(saveProgressMock).not.toHaveBeenCalled()
   })
 
   it('does not re-award XP for a repeat correct answer (forwards whatever saveProgress reports)', async () => {
@@ -202,7 +206,7 @@ describe('recordAnswer', () => {
   })
 
   it('does not save progress when the wrong-answer hearts gate blocks', async () => {
-    decrementHeartsIfAllowedMock.mockResolvedValueOnce({ ok: false, reason: 'blocked' })
+    recordWrongAnswerMock.mockResolvedValueOnce({ ok: false, reason: 'blocked' })
 
     const result = await recordAnswer(VALID_QUESTION_ID, false)
 
@@ -219,7 +223,7 @@ describe('recordAnswer', () => {
   })
 
   it('surfaces a save failure (not out_of_hearts) when the hearts gate errors for a reason other than blocked', async () => {
-    decrementHeartsIfAllowedMock.mockResolvedValueOnce({ ok: false, reason: 'error' })
+    recordWrongAnswerMock.mockResolvedValueOnce({ ok: false, reason: 'error' })
 
     const result = await recordAnswer(VALID_QUESTION_ID, false)
 
