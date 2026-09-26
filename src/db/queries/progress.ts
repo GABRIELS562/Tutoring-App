@@ -283,6 +283,9 @@ export async function getProgressData(userId: string) {
       .select({
         topicId: topics.id,
         topicName: topics.name,
+        // The slug is what the Afrikaans title maps are keyed on; without it
+        // the chart could only label bars in English.
+        topicSlug: topics.slug,
         correctCount: sql<number>`SUM(CASE WHEN ${studentProgress.status} = 'correct' THEN 1 ELSE 0 END)`,
         totalCount: sql<number>`COUNT(${studentProgress.id})`,
       })
@@ -290,7 +293,7 @@ export async function getProgressData(userId: string) {
       .innerJoin(questions, eq(studentProgress.questionId, questions.id))
       .innerJoin(topics, eq(questions.topicId, topics.id))
       .where(eq(studentProgress.userId, userId))
-      .groupBy(topics.id, topics.name)
+      .groupBy(topics.id, topics.name, topics.slug)
 
     const topicAccuracy = topicAccuracyRows.map((row) => {
       const accuracy = Math.round(
@@ -299,6 +302,7 @@ export async function getProgressData(userId: string) {
       return {
         topicId: row.topicId,
         topicName: row.topicName,
+        topicSlug: row.topicSlug,
         accuracy,
         correctCount: Number(row.correctCount),
         totalCount: Number(row.totalCount),

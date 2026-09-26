@@ -29,11 +29,11 @@ const mockProgressData = {
     { date: '2026-04-05', xp: 25, dayLabel: 'Sat' },
   ],
   topicAccuracy: [
-    { topicId: '1', topicName: 'Trigonometry', accuracy: 76, correctCount: 19, totalCount: 25 },
-    { topicId: '2', topicName: 'Algebra', accuracy: 55, correctCount: 11, totalCount: 20 },
-    { topicId: '3', topicName: 'Functions', accuracy: 80, correctCount: 12, totalCount: 15 },
-    { topicId: '4', topicName: 'Geometry', accuracy: 38, correctCount: 7, totalCount: 18 },
-    { topicId: '5', topicName: 'Statistics', accuracy: 90, correctCount: 9, totalCount: 10 },
+    { topicId: '1', topicName: 'Trigonometry', topicSlug: 'trig-gr11', accuracy: 76, correctCount: 19, totalCount: 25 },
+    { topicId: '2', topicName: 'Algebra', topicSlug: 'algebra-gr10', accuracy: 55, correctCount: 11, totalCount: 20 },
+    { topicId: '3', topicName: 'Functions', topicSlug: 'functions-gr10', accuracy: 80, correctCount: 12, totalCount: 15 },
+    { topicId: '4', topicName: 'Geometry', topicSlug: 'euclidean-geometry-gr11', accuracy: 38, correctCount: 7, totalCount: 18 },
+    { topicId: '5', topicName: 'Statistics', topicSlug: 'statistics-gr11', accuracy: 90, correctCount: 9, totalCount: 10 },
   ],
   activityCalendar: Array.from({ length: 56 }, (_, i) => {
     const date = new Date()

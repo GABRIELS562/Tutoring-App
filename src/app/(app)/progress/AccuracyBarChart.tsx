@@ -1,6 +1,8 @@
 'use client'
 
-import { useTranslations } from 'next-intl'
+import { useTranslations, useLocale } from 'next-intl'
+import { capsTopicTitlesAf } from '@/content/caps-curriculum-af'
+import { capsScienceTopicTitlesAf } from '@/content/caps-science-curriculum-af'
 
 import {
   BarChart,
@@ -15,6 +17,8 @@ import {
 type TopicAccuracy = {
   topicId: string
   topicName: string
+  /** Optional: when present, the bar is labelled in the reader's language. */
+  topicSlug?: string
   accuracy: number
   correctCount: number
   totalCount: number
@@ -32,6 +36,19 @@ function getBarColor(accuracy: number): string {
 
 export default function AccuracyBarChart({ data }: AccuracyBarChartProps) {
   const t = useTranslations('progress')
+  const locale = useLocale()
+
+  // Bars were labelled with the English topic name on an otherwise
+  // Afrikaans page. The slug is what the CAPS title maps are keyed on;
+  // without one we keep the English name, which is the honest fallback.
+  const localiseTopic = (row: TopicAccuracy): string => {
+    if (locale !== 'af' || !row.topicSlug) return row.topicName
+    return (
+      capsTopicTitlesAf[row.topicSlug] ??
+      capsScienceTopicTitlesAf[row.topicSlug] ??
+      row.topicName
+    )
+  }
   if (data.length === 0) {
     return (
       <div className="h-[250px] flex items-center justify-center">
@@ -41,7 +58,9 @@ export default function AccuracyBarChart({ data }: AccuracyBarChartProps) {
   }
 
   // Sort by accuracy descending
-  const sortedData = [...data].sort((a, b) => b.accuracy - a.accuracy)
+  const sortedData = [...data]
+    .sort((a, b) => b.accuracy - a.accuracy)
+    .map((row) => ({ ...row, topicName: localiseTopic(row) }))
 
   return (
     <div className="h-[250px] w-full">
@@ -80,6 +99,13 @@ export default function AccuracyBarChart({ data }: AccuracyBarChartProps) {
             }}
           />
           <Bar
+            // Draw immediately rather than animating in. A half-drawn
+            // chart is indistinguishable from "no data": the axes and
+            // labels are static so they always paint, while the line and
+            // bars animate from zero, so a throttled or interrupted
+            // animation leaves an empty plot that reads as an empty
+            // account. Same rule as the question card in the quiz.
+            isAnimationActive={false}
             dataKey="accuracy"
             radius={[0, 4, 4, 0]}
             barSize={24}
