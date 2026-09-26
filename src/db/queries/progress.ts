@@ -264,8 +264,7 @@ export async function getProgressData(userId: string) {
       .orderBy(sql`DATE(${studentProgress.lastAttemptedAt})`)
 
     // Fill in missing days
-    const weeklyXP: { date: string; xp: number; dayLabel: string }[] = []
-    const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
+    const weeklyXP: { date: string; xp: number }[] = []
     for (let i = 13; i >= 0; i--) {
       const date = new Date()
       date.setDate(date.getDate() - i)
@@ -274,7 +273,6 @@ export async function getProgressData(userId: string) {
       weeklyXP.push({
         date: dateStr,
         xp: Number(existingRow?.xp || 0),
-        dayLabel: dayNames[date.getDay()],
       })
     }
 

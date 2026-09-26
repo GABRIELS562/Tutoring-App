@@ -1,6 +1,6 @@
 'use client'
 
-import { useTranslations } from 'next-intl'
+import { useTranslations, useLocale } from 'next-intl'
 
 type ActivityData = {
   date: string
@@ -20,13 +20,22 @@ function getActivityColor(count: number): string {
 
 export default function ActivityCalendar({ data }: ActivityCalendarProps) {
   const t = useTranslations('progress')
+  const locale = useLocale()
   // Organize data into weeks (8 weeks × 7 days)
   const weeks: ActivityData[][] = []
   for (let i = 0; i < 8; i++) {
     weeks.push(data.slice(i * 7, (i + 1) * 7))
   }
 
-  const dayLabels = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+  // Weekday names from the reader's locale rather than a hardcoded English
+  // array - the same fault the XP chart beside this one had. 2024-01-01 was
+  // a Monday, which is the day this calendar starts on.
+  const dayLabels = Array.from({ length: 7 }, (_, i) =>
+    new Date(Date.UTC(2024, 0, 1 + i)).toLocaleDateString(
+      locale === 'af' ? 'af-ZA' : 'en-ZA',
+      { weekday: 'short', timeZone: 'UTC' }
+    )
+  )
 
   return (
     <div>

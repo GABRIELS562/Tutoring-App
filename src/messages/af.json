@@ -81,7 +81,7 @@
   "papers": {
     "title": "Vorige Vraestelle",
     "subtitle": "Oefen met werklike eksamen vraestelle",
-    "download": "Laai Af",
+    "download": "Laai af",
     "viewMemo": "Bekyk Memo",
     "year": "Jaar",
     "type": "Tipe",
@@ -114,7 +114,13 @@
     "noPapersYet": "Nog geen vorige vraestelle bygevoeg nie.",
     "tryAdjustingFilters": "Probeer om jou filters aan te pas",
     "gradeAndPaper": "Graad {grade} • Vraestel {number}",
-    "showingCount": "{count, plural, one {Wys 1 vraestel} other {Wys # vraestelle}}"
+    "showingCount": "{count, plural, one {Wys 1 vraestel} other {Wys # vraestelle}}",
+    "close": "Maak toe (Esc)",
+    "zoomOut": "Zoem uit",
+    "zoomIn": "Zoem in",
+    "loadingPdf": "PDF laai tans…",
+    "previousPage": "Vorige bladsy",
+    "nextPage": "Volgende bladsy"
   },
   "formulas": {
     "title": "Formuleblad",

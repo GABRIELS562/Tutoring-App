@@ -15,7 +15,6 @@ import {
 type XPData = {
   date: string
   xp: number
-  dayLabel: string
 }
 
 type XPLineChartProps = {

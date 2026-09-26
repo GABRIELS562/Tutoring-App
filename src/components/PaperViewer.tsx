@@ -1,5 +1,6 @@
 'use client'
 
+import { useTranslations } from 'next-intl'
 import { useState, useCallback } from 'react'
 import { Document, Page, pdfjs } from 'react-pdf'
 import 'react-pdf/dist/Page/AnnotationLayer.css'
@@ -25,6 +26,7 @@ type PaperViewerProps = {
 }
 
 export default function PaperViewer({ url, title, onClose }: PaperViewerProps) {
+  const t = useTranslations('papers')
   const [numPages, setNumPages] = useState<number>(0)
   const [pageNumber, setPageNumber] = useState<number>(1)
   const [scale, setScale] = useState<number>(1.0)
@@ -92,7 +94,7 @@ export default function PaperViewer({ url, title, onClose }: PaperViewerProps) {
             onClick={onClose}
             className="p-2 rounded-lg transition-colors hover:bg-white/10"
             style={{ color: 'var(--text)' }}
-            title="Close (Esc)"
+            title={t('close')}
           >
             <X className="w-5 h-5" />
           </button>
@@ -112,7 +114,7 @@ export default function PaperViewer({ url, title, onClose }: PaperViewerProps) {
               disabled={scale <= 0.6}
               className="p-2 rounded-lg transition-colors hover:bg-white/10 disabled:opacity-50 disabled:cursor-not-allowed"
               style={{ color: 'var(--text)' }}
-              title="Zoom out"
+              title={t('zoomOut')}
             >
               <ZoomOut className="w-4 h-4" />
             </button>
@@ -127,7 +129,7 @@ export default function PaperViewer({ url, title, onClose }: PaperViewerProps) {
               disabled={scale >= 2.0}
               className="p-2 rounded-lg transition-colors hover:bg-white/10 disabled:opacity-50 disabled:cursor-not-allowed"
               style={{ color: 'var(--text)' }}
-              title="Zoom in"
+              title={t('zoomIn')}
             >
               <ZoomIn className="w-4 h-4" />
             </button>
@@ -140,7 +142,7 @@ export default function PaperViewer({ url, title, onClose }: PaperViewerProps) {
             style={{ background: 'var(--accent-red)', color: 'white' }}
           >
             <Download className="w-4 h-4" />
-            <span className="hidden sm:inline">Download</span>
+            <span className="hidden sm:inline">{t('download')}</span>
           </button>
         </div>
       </div>
@@ -153,7 +155,7 @@ export default function PaperViewer({ url, title, onClose }: PaperViewerProps) {
               className="w-8 h-8 animate-spin mb-3"
               style={{ color: 'var(--accent-red)' }}
             />
-            <p style={{ color: 'var(--muted-custom)' }}>Loading PDF...</p>
+            <p style={{ color: 'var(--muted-custom)' }}>{t('loadingPdf')}</p>
           </div>
         )}
 
@@ -230,7 +232,7 @@ export default function PaperViewer({ url, title, onClose }: PaperViewerProps) {
             disabled={pageNumber <= 1}
             className="p-2 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             style={{ color: 'var(--text)', background: 'var(--surface2)' }}
-            title="Previous page"
+            title={t('previousPage')}
           >
             <ChevronLeft className="w-5 h-5" />
           </button>
@@ -247,7 +249,7 @@ export default function PaperViewer({ url, title, onClose }: PaperViewerProps) {
             disabled={pageNumber >= numPages}
             className="p-2 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             style={{ color: 'var(--text)', background: 'var(--surface2)' }}
-            title="Next page"
+            title={t('nextPage')}
           >
             <ChevronRight className="w-5 h-5" />
           </button>

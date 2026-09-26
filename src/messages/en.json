@@ -114,7 +114,13 @@
     "noPapersYet": "No past papers have been added yet.",
     "tryAdjustingFilters": "Try adjusting your filters",
     "gradeAndPaper": "Grade {grade} • Paper {number}",
-    "showingCount": "{count, plural, one {Showing 1 paper} other {Showing # papers}}"
+    "showingCount": "{count, plural, one {Showing 1 paper} other {Showing # papers}}",
+    "close": "Close (Esc)",
+    "zoomOut": "Zoom out",
+    "zoomIn": "Zoom in",
+    "loadingPdf": "Loading PDF…",
+    "previousPage": "Previous page",
+    "nextPage": "Next page"
   },
   "formulas": {
     "title": "Formula Sheet",
