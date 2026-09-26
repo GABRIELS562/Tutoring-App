@@ -8,8 +8,8 @@ const weakness: Weakness = {
   topicName: 'Trigonometry',
   accuracy: 0.35, // -> 35%, below the 40% "red" threshold
   totalAttempts: 14,
-  specificIssue: 'Sign errors in reduction formulae',
-  recommendation: 'Practice the CAST diagram questions in Section 2',
+  specificIssueKey: 'signErrors',
+  recommendationKey: 'signErrors',
 }
 
 describe('WeaknessCard attempted-stats message', () => {
@@ -40,5 +40,22 @@ describe('WeaknessCard attempted-stats message', () => {
 
     const percentSpan = screen.getByText('60%')
     expect(percentSpan).toHaveStyle({ color: 'var(--gold)' })
+  })
+})
+
+/**
+ * The issue and the topic name are substance, not chrome. They used to be
+ * English strings interpolated into a translated template, so an Afrikaans
+ * student read "Jy kry Sign errors in reduction formulae in Trigonometry
+ * steeds verkeerd." - a sentence that is translated everywhere except where
+ * it matters.
+ */
+describe('WeaknessCard localises the issue itself', () => {
+  it('renders the issue from the message catalogue, not a raw key', () => {
+    render(<WeaknessCard weakness={weakness} />)
+
+    const sentence = screen.getByText(/wrong in/).textContent ?? ''
+    expect(sentence).toContain('Sign errors in reduction formulae')
+    expect(sentence, 'the raw key leaked into the UI').not.toContain('signErrors')
   })
 })

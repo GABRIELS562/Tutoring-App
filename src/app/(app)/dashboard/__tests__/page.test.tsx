@@ -23,8 +23,8 @@ const mockWeakness = {
   topicName: 'Trigonometry',
   accuracy: 0.35,
   totalAttempts: 14,
-  specificIssue: 'Sign errors in reduction formulae',
-  recommendation: 'Practice the CAST diagram questions in Section 2',
+  specificIssueKey: 'signErrors',
+  recommendationKey: 'signErrors',
 }
 vi.mock('@/lib/weaknessDetector', () => ({
   analyzeWeaknesses: analyzeWeaknessesMock,

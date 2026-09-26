@@ -1,5 +1,7 @@
 'use client'
 
+import { useTranslations } from 'next-intl'
+
 import {
   LineChart,
   Line,
@@ -21,10 +23,11 @@ type XPLineChartProps = {
 }
 
 export default function XPLineChart({ data }: XPLineChartProps) {
+  const t = useTranslations('progress')
   if (data.length === 0) {
     return (
       <div className="h-[250px] flex items-center justify-center">
-        <p style={{ color: 'var(--muted-custom)' }}>No XP data yet. Start practicing!</p>
+        <p style={{ color: 'var(--muted-custom)' }}>{t('noXpData')}</p>
       </div>
     )
   }

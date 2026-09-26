@@ -2,7 +2,9 @@
 
 import Link from 'next/link'
 import { AlertTriangle, ArrowRight } from 'lucide-react'
-import { useTranslations } from 'next-intl'
+import { useTranslations, useLocale } from 'next-intl'
+import { capsTopicTitlesAf } from '@/content/caps-curriculum-af'
+import { capsScienceTopicTitlesAf } from '@/content/caps-science-curriculum-af'
 import type { Weakness } from '@/lib/weaknessDetector'
 
 type WeaknessCardProps = {
@@ -11,6 +13,19 @@ type WeaknessCardProps = {
 
 export default function WeaknessCard({ weakness }: WeaknessCardProps) {
   const t = useTranslations('weaknessCard')
+  const tWeakness = useTranslations('weakness')
+  const locale = useLocale()
+
+  // The issue and the topic name are both substance, not chrome: translating
+  // the sentence around them and leaving them in English produced "Jy kry
+  // Sign errors in reduction formulae in Trigonometry steeds verkeerd."
+  const issue = tWeakness(`issue_${weakness.specificIssueKey}`)
+  const topicName =
+    locale === 'af'
+      ? capsTopicTitlesAf[weakness.topicSlug] ??
+        capsScienceTopicTitlesAf[weakness.topicSlug] ??
+        weakness.topicName
+      : weakness.topicName
   const accuracyPercent = Math.round(weakness.accuracy * 100)
   const correctCount = Math.round(weakness.accuracy * weakness.totalAttempts)
 
@@ -39,7 +54,7 @@ export default function WeaknessCard({ weakness }: WeaknessCardProps) {
 
           {/* Issue Description */}
           <p className="text-sm mb-2" style={{ color: 'var(--text)' }}>
-            {t('issueDescription', { issue: weakness.specificIssue, topic: weakness.topicName })}
+            {t('issueDescription', { issue, topic: topicName })}
           </p>
 
           {/* Stats */}

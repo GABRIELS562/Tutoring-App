@@ -7,36 +7,28 @@ export type Weakness = {
   topicName: string
   accuracy: number
   totalAttempts: number
-  specificIssue: string
-  recommendation: string
+  /** Key into the `weakness` message namespace, prefixed `issue_`. */
+  specificIssueKey: string
+  /** Key into the `weakness` message namespace, prefixed `rec_`. */
+  recommendationKey: string
 }
 
-// Issue patterns based on common mistakes
-const issuePatterns: Record<string, { issue: string; recommendation: string }> = {
-  'trig-gr11': {
-    issue: 'Sign errors in reduction formulae',
-    recommendation: 'Practice the CAST diagram questions in Section 2'
-  },
-  'trigonometry': {
-    issue: 'Sign errors in reduction formulae',
-    recommendation: 'Practice the CAST diagram questions in Section 2'
-  },
-  'analytical-geometry': {
-    issue: 'Distance and midpoint formula confusion',
-    recommendation: 'Focus on the formula derivation examples'
-  },
-  'euclidean-geometry': {
-    issue: 'Circle theorem applications',
-    recommendation: 'Work through the theorem proofs step by step'
-  },
-  'statistics': {
-    issue: 'Standard deviation calculations',
-    recommendation: 'Practice with the calculator method first'
-  },
-  'default': {
-    issue: 'General concept understanding',
-    recommendation: 'Review the theory section before attempting questions'
-  }
+/**
+ * Which issue a topic's mistakes usually come down to.
+ *
+ * These are message KEYS, not prose. They used to be English sentences that
+ * were interpolated into a translated template, so an Afrikaans student was
+ * shown "Jy kry Sign errors in reduction formulae in Trigonometry steeds
+ * verkeerd." - the sentence translated, the substance not. The words live in
+ * src/messages/{en,af}.json under `weakness`.
+ */
+const issuePatterns: Record<string, { issueKey: string; recommendationKey: string }> = {
+  'trig-gr11': { issueKey: 'signErrors', recommendationKey: 'signErrors' },
+  trigonometry: { issueKey: 'signErrors', recommendationKey: 'signErrors' },
+  'analytical-geometry': { issueKey: 'distanceMidpoint', recommendationKey: 'distanceMidpoint' },
+  'euclidean-geometry': { issueKey: 'circleTheorems', recommendationKey: 'circleTheorems' },
+  statistics: { issueKey: 'standardDeviation', recommendationKey: 'standardDeviation' },
+  default: { issueKey: 'general', recommendationKey: 'general' },
 }
 
 export async function analyzeWeaknesses(userId: string, grade: number): Promise<Weakness[]> {
@@ -96,8 +88,8 @@ export async function analyzeWeaknesses(userId: string, grade: number): Promise<
             topicName: stats.topicName,
             accuracy,
             totalAttempts: stats.total,
-            specificIssue: pattern.issue,
-            recommendation: pattern.recommendation,
+            specificIssueKey: pattern.issueKey,
+            recommendationKey: pattern.recommendationKey,
           })
         }
       }
@@ -122,24 +114,24 @@ export function getMockWeaknesses(): Weakness[] {
       topicName: 'Trigonometry',
       accuracy: 0.35,
       totalAttempts: 14,
-      specificIssue: 'Sign errors in reduction formulae',
-      recommendation: 'Practice the CAST diagram questions in Section 2',
+      specificIssueKey: 'signErrors',
+      recommendationKey: 'signErrors',
     },
     {
       topicSlug: 'euclidean-geometry',
       topicName: 'Euclidean Geometry',
       accuracy: 0.42,
       totalAttempts: 12,
-      specificIssue: 'Circle theorem applications',
-      recommendation: 'Work through the theorem proofs step by step',
+      specificIssueKey: 'circleTheorems',
+      recommendationKey: 'circleTheorems',
     },
     {
       topicSlug: 'analytical-geometry',
       topicName: 'Analytical Geometry',
       accuracy: 0.55,
       totalAttempts: 9,
-      specificIssue: 'Distance and midpoint formula confusion',
-      recommendation: 'Focus on the formula derivation examples',
+      specificIssueKey: 'distanceMidpoint',
+      recommendationKey: 'distanceMidpoint',
     },
   ]
 }

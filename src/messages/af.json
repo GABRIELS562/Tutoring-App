@@ -274,7 +274,9 @@
     "sixToTen": "6-10 vrae",
     "tenPlus": "10+ vrae",
     "noLeaderboardData": "Nog geen ranglysdata nie.",
-    "you": "(Jy)"
+    "you": "(Jy)",
+    "noXpData": "Nog geen XP-data nie. Begin oefen!",
+    "noTopicData": "Nog geen onderwerpdata nie. Begin oefen!"
   },
   "subjects": {
     "title": "Vakke",
@@ -313,7 +315,10 @@
     "paperWord": "Vraestel",
     "percentOfPaper": "{percent}% van Vraestel",
     "sectionsCount": "{count, plural, one {1 afdeling} other {# afdelings}}",
-    "contentBlocksCount": "{count, plural, one {1 inhoudblok} other {# inhoudblokke}}"
+    "contentBlocksCount": "{count, plural, one {1 inhoudblok} other {# inhoudblokke}}",
+    "notFoundTitle": "Onderwerp nie gevind nie",
+    "notFoundBody": "Ons kon nie daardie onderwerp kry nie. Gaan die adres na, of gaan terug na die vaklys.",
+    "backToSubjects": "Terug na vakke"
   },
   "practice": {
     "title": "Oefen",
@@ -514,5 +519,17 @@
     "title": "Eksamenspel",
     "questionsWord": "vrae",
     "start": "Begin"
+  },
+  "weakness": {
+    "issue_signErrors": "Tekenfoute in reduksieformules",
+    "issue_distanceMidpoint": "Verwarring tussen die afstand- en middelpuntformule",
+    "issue_circleTheorems": "Toepassing van sirkelstellings",
+    "issue_standardDeviation": "Berekening van standaardafwyking",
+    "issue_general": "Algemene begrip van die konsep",
+    "rec_signErrors": "Oefen die CAST-diagramvrae in Afdeling 2",
+    "rec_distanceMidpoint": "Fokus op die voorbeelde waar die formule afgelei word",
+    "rec_circleTheorems": "Werk stap vir stap deur die bewyse van die stellings",
+    "rec_standardDeviation": "Oefen eers met die sakrekenaarmetode",
+    "rec_general": "Hersien die teorie-afdeling voordat jy vrae aanpak"
   }
 }

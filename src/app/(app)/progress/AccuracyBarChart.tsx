@@ -1,5 +1,7 @@
 'use client'
 
+import { useTranslations } from 'next-intl'
+
 import {
   BarChart,
   Bar,
@@ -29,10 +31,11 @@ function getBarColor(accuracy: number): string {
 }
 
 export default function AccuracyBarChart({ data }: AccuracyBarChartProps) {
+  const t = useTranslations('progress')
   if (data.length === 0) {
     return (
       <div className="h-[250px] flex items-center justify-center">
-        <p style={{ color: 'var(--muted-custom)' }}>No topic data yet. Start practicing!</p>
+        <p style={{ color: 'var(--muted-custom)' }}>{t('noTopicData')}</p>
       </div>
     )
   }

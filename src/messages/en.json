@@ -274,7 +274,9 @@
     "sixToTen": "6-10 questions",
     "tenPlus": "10+ questions",
     "noLeaderboardData": "No leaderboard data yet.",
-    "you": "(You)"
+    "you": "(You)",
+    "noXpData": "No XP data yet. Start practising!",
+    "noTopicData": "No topic data yet. Start practising!"
   },
   "subjects": {
     "title": "Subjects",
@@ -313,7 +315,10 @@
     "paperWord": "Paper",
     "percentOfPaper": "{percent}% of Paper",
     "sectionsCount": "{count, plural, one {1 section} other {# sections}}",
-    "contentBlocksCount": "{count, plural, one {1 content block} other {# content blocks}}"
+    "contentBlocksCount": "{count, plural, one {1 content block} other {# content blocks}}",
+    "notFoundTitle": "Topic not found",
+    "notFoundBody": "We could not find that topic. Check the address, or go back to the subject list.",
+    "backToSubjects": "Back to subjects"
   },
   "practice": {
     "title": "Practice",
@@ -514,5 +519,17 @@
     "title": "Exam game",
     "questionsWord": "questions",
     "start": "Start"
+  },
+  "weakness": {
+    "issue_signErrors": "Sign errors in reduction formulae",
+    "issue_distanceMidpoint": "Distance and midpoint formula confusion",
+    "issue_circleTheorems": "Circle theorem applications",
+    "issue_standardDeviation": "Standard deviation calculations",
+    "issue_general": "General concept understanding",
+    "rec_signErrors": "Practice the CAST diagram questions in Section 2",
+    "rec_distanceMidpoint": "Focus on the formula derivation examples",
+    "rec_circleTheorems": "Work through the theorem proofs step by step",
+    "rec_standardDeviation": "Practice with the calculator method first",
+    "rec_general": "Review the theory section before attempting questions"
   }
 }
