@@ -99,12 +99,41 @@ describe('supabase/migrations/0001_rls.sql', () => {
     expect(sql).toMatch(/GRANT SELECT ON public_certificates TO anon, authenticated/)
   })
 
-  it('adds public SELECT policies for every read-only content table', () => {
-    for (const table of ['topics', 'questions', 'question_options', 'steps', 'past_papers', 'notes']) {
+  // question_options and steps are NOT in this list, and must not be. They
+  // are the answer key - question_options.is_correct, steps.correct_answer -
+  // and this test used to require them to be world-readable.
+  it('adds public SELECT policies for the genuinely public content tables', () => {
+    for (const table of ['topics', 'past_papers', 'notes']) {
       expect(sql).toMatch(
         new RegExp(`CREATE POLICY "${table}_select_public" ON ${table}[\\s\\S]*?USING \\(true\\)`)
       )
     }
+  })
+
+  it('exposes only approved questions publicly', () => {
+    expect(sql).toMatch(
+      /CREATE POLICY "questions_select_public" ON questions[\s\S]*?USING \(is_approved = true\)/
+    )
+  })
+
+  // The anon key ships in the client bundle by design, so a table readable
+  // by anon is readable by the internet. These two carry the answer key, and
+  // nothing legitimate reads them from the client - the app reads them
+  // server-side through Drizzle, which is not subject to RLS.
+  it.each(['question_options', 'steps'])(
+    'revokes %s from anon and authenticated instead of publishing it',
+    (table) => {
+      expect(sql).toMatch(new RegExp(`REVOKE ALL ON ${table} FROM anon, authenticated;`))
+      expect(sql).not.toMatch(new RegExp(`CREATE POLICY "${table}_select_public"`))
+    }
+  )
+
+  // Issuance is server-side and service-role only; verification reads the
+  // public_certificates view. A student with UPDATE on their own row could
+  // raise their own avg_prompt_score before an employer checked it.
+  it('creates no UPDATE policy on ai_certificates', () => {
+    expect(sql).not.toMatch(/CREATE POLICY "ai_certificates_update_own"/)
+    expect(sql).toContain('DROP POLICY IF EXISTS "ai_certificates_update_own" ON ai_certificates;')
   })
 
   it('enables RLS on ai_usage_log with no policies at all (service-role only)', () => {

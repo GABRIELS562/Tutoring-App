@@ -1,3 +1,4 @@
+import { DEMO_CERTIFICATE_ID } from '@/lib/certificate-id'
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 
 const requireUserMock = vi.fn()
@@ -171,6 +172,6 @@ describe('POST /api/ai-skills/issue-certificate', () => {
     const res = await POST()
     expect(res.status).toBe(200)
     const body = await res.json()
-    expect(body.certificate.certificateId).toBe('AT-2026-DEMO')
+    expect(body.certificate.certificateId).toBe(DEMO_CERTIFICATE_ID)
   })
 })

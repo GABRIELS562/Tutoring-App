@@ -62,6 +62,10 @@ export default async function ProgressPage() {
   const t = await getTranslations('progress')
   let userId = 'demo-user'
   let userGrade = 11
+  // These are a preview for a signed-out visitor only. They are invented
+  // data - an XP chart that is not anyone's and a leaderboard of made-up
+  // classmates - so a signed-in student must never see them, however their
+  // own fetch turns out.
   let progressData = mockProgressData
   let leaderboard = mockLeaderboard
 
@@ -88,14 +92,14 @@ export default async function ProgressPage() {
         if (dashboardData.user) {
           userGrade = dashboardData.user.grade || 11
         }
-        const fetchedProgress = await getProgressData(userId)
-        if (fetchedProgress.weeklyXP.length > 0) {
-          progressData = fetchedProgress
-        }
-        const fetchedLeaderboard = await getLeaderboard(userGrade)
-        if (fetchedLeaderboard.length > 0) {
-          leaderboard = fetchedLeaderboard
-        }
+
+        // For a signed-in student we show what they actually have, even
+        // when that is nothing. Falling back on "the result was empty"
+        // meant a real student with no practice yet - or one whose query
+        // failed - was shown an invented XP chart and a leaderboard of
+        // made-up classmates presented as their grade's real ranking.
+        progressData = await getProgressData(userId)
+        leaderboard = await getLeaderboard(userGrade)
       }
     }
   } catch (error) {

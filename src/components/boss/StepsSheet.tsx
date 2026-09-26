@@ -125,9 +125,14 @@ export default function StepsSheet({
 
   return (
     <motion.div
-      initial={variant({ y: '100%' }, { opacity: 0 })}
-      animate={variant({ y: 0 }, { opacity: 1 })}
-      exit={variant({ y: '100%' }, { opacity: 0 })}
+      // A bottom sheet has to travel, so the full-motion branch keeps its
+      // slide. The reduced-motion branch does NOT fade in from zero though -
+      // it simply appears in place. Fading meant a reader who asked for less
+      // motion got a sheet that was invisible until an animation finished,
+      // and this sheet holds every self-mark control and the only way back.
+      initial={variant({ y: '100%' }, { y: 0 })}
+      animate={{ y: 0 }}
+      exit={variant({ y: '100%' }, { y: 0 })}
       transition={transition({ type: 'spring', damping: 28, stiffness: 260 })}
       className={`fixed inset-x-0 bottom-0 z-40 rounded-t-2xl p-4 pb-[calc(1rem+env(safe-area-inset-bottom,0px))] ${
         collapsed ? 'h-14 overflow-hidden' : 'max-h-[85vh] overflow-y-auto'
@@ -308,9 +313,13 @@ export default function StepsSheet({
       <AnimatePresence>
         {confirmAngelo && (
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
+            // A blocking confirm dialog. If it faded in and the animation
+            // stalled it would cover the screen while being invisible, which
+            // is the worst version of this failure - the student cannot see
+            // it and cannot get past it.
+            initial={{ scale: 0.98 }}
+            animate={{ scale: 1 }}
+            exit={{ scale: 0.98 }}
             transition={transition({ duration: 0.2 })}
             className="fixed inset-0 z-50 flex items-center justify-center p-4"
           >

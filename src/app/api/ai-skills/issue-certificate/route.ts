@@ -3,6 +3,7 @@ import { requireUser, authErrorResponse } from '@/lib/auth/require-user'
 import { getApiSupabase } from '@/lib/supabase/api'
 import { moduleOrder } from '@/content/ai-skills'
 import { createCertificateWithRetry } from '@/lib/certificates/create-certificate'
+import { DEMO_CERTIFICATE_ID } from '@/lib/certificate-id'
 
 const DEFAULT_AVG_SCORE = 4.0
 
@@ -39,7 +40,7 @@ export async function POST() {
   if (!supabase) {
     const demoCertificate: IssuedCertificate = {
       studentName: 'Demo Student',
-      certificateId: 'AT-2026-DEMO',
+      certificateId: DEMO_CERTIFICATE_ID,
       avgPromptScore: 4.2,
       modulesCompleted: 5,
       issuedAt: new Date().toISOString(),

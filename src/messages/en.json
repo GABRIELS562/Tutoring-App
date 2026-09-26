@@ -63,7 +63,9 @@
     "examPapersMemos": "NSC exam papers & memos",
     "viewProgress": "View Progress",
     "chartsLeaderboard": "Charts & leaderboard",
-    "recently": "recently"
+    "recently": "recently",
+    "loadFailedTitle": "We could not load your progress",
+    "loadFailedBody": "Something went wrong on our side, so we are not showing you numbers we cannot stand behind. Please refresh in a moment."
   },
   "topics": {
     "title": "Topics",
@@ -483,7 +485,8 @@
     "entryCardCta": "Battle the boss",
     "entryCardSubtitle": "Test everything you've learned against {bossName}.",
     "dashboardSectionTitle": "Boss battles",
-    "fight": "Fight"
+    "fight": "Fight",
+    "saveFailed": "Your progress in this battle is not being saved. Your XP and hearts may not update."
   },
   "exam": {
     "question": "Question",

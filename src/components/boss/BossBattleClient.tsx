@@ -118,6 +118,9 @@ function BossBattleSession({ topicSlug, topicName, questions, isDemo, userId, vi
 
   // --- Elapsed timer (display only - never gates gameplay) ---
   const [elapsedSeconds, setElapsedSeconds] = useState(0)
+  // A save that did not land. QuizEngine already surfaces this; the boss
+  // battle used to carry on silently as though everything had persisted.
+  const [saveFailed, setSaveFailed] = useState(false)
   const battleActive = state.phase === 'mcq' || state.phase === 'feedback' || state.phase === 'steps'
   useEffect(() => {
     if (!battleActive) return
@@ -201,9 +204,24 @@ function BossBattleSession({ topicSlug, topicName, questions, isDemo, userId, vi
     if (!shouldPersist) return
     if (persistedQuestionIds.current.has(questionId)) return
     persistedQuestionIds.current.add(questionId)
-    recordAnswer(questionId, correct).catch((error) => {
-      console.error('Boss battle: failed to record answer', error)
-    })
+    // recordAnswer RESOLVES with { ok: false } for the ordinary failures -
+    // out of hearts, a save that did not land - and only rejects on a thrown
+    // exception. Catching rejections alone therefore missed every failure
+    // that actually happens, and the battle carried on as though the answer
+    // had been saved. Un-mark the question so a later attempt can retry it.
+    recordAnswer(questionId, correct)
+      .then((result) => {
+        if (!result.ok) {
+          console.error('Boss battle: answer not recorded', result.error)
+          persistedQuestionIds.current.delete(questionId)
+          setSaveFailed(true)
+        }
+      })
+      .catch((error) => {
+        console.error('Boss battle: failed to record answer', error)
+        persistedQuestionIds.current.delete(questionId)
+        setSaveFailed(true)
+      })
   }
 
   const handleSelectOption = (letter: string, correct: boolean) => {
@@ -221,6 +239,20 @@ function BossBattleSession({ topicSlug, topicName, questions, isDemo, userId, vi
       <div aria-live="polite" className="sr-only">
         {announcement}
       </div>
+
+      {saveFailed && (
+        <div
+          role="alert"
+          className="mx-4 mt-3 rounded-lg p-3 text-sm"
+          style={{
+            background: 'rgba(233, 196, 106, 0.12)',
+            border: '1px solid var(--gold)',
+            color: 'var(--text)',
+          }}
+        >
+          {t('saveFailed')}
+        </div>
+      )}
 
       {state.phase === 'intro' && (
         <IntroScreen

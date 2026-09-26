@@ -100,8 +100,14 @@ export default function BattleScreen({
       {/* Question Card */}
       <motion.div
         key={question.id}
-        initial={variant({ opacity: 0, y: 12 }, { opacity: 0 })}
-        animate={variant({ opacity: 1, y: 0 }, { opacity: 1 })}
+        // Slide only, never fade - and that applies to the reduced-motion
+        // branch too, which used to be opacity-only. This wraps the question
+        // and every option, it remounts on `key` every single round, and a
+        // stalled animation would leave the student looking at a boss and an
+        // HP bar with nothing to answer. Reduced motion is handled by
+        // collapsing the transition to zero, not by hiding the content.
+        initial={variant({ y: 12 }, { y: 0 })}
+        animate={{ y: 0 }}
         transition={transition({ duration: 0.25 })}
         className="rounded-xl p-4"
         style={{ background: 'var(--surface)', border: '1px solid var(--border-custom)' }}
@@ -163,8 +169,10 @@ export default function BattleScreen({
 
         {isFeedbackPhase && (
           <motion.div
-            initial={variant({ opacity: 0, y: 8 }, { opacity: 0 })}
-            animate={variant({ opacity: 1, y: 0 }, { opacity: 1 })}
+            // Carries the damage line and the only control that advances the
+            // battle, so it must not depend on an animation to be seen.
+            initial={variant({ y: 8 }, { y: 0 })}
+            animate={{ y: 0 }}
             transition={transition({ duration: 0.25 })}
             className="mt-4 flex items-center justify-between gap-3 rounded-lg p-3"
             style={{ background: 'rgba(42, 157, 143, 0.1)', border: '1px solid var(--teal)' }}

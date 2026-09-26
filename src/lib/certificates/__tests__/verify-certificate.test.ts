@@ -1,3 +1,4 @@
+import { DEMO_CERTIFICATE_ID } from '@/lib/certificate-id'
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
 
 const fromMock = vi.fn()
@@ -24,10 +25,10 @@ describe('lookupCertificate', () => {
   })
 
   it('returns the demo certificate for AT-2026-DEMO when Supabase is unconfigured', async () => {
-    const result = await lookupCertificate('AT-2026-DEMO')
+    const result = await lookupCertificate(DEMO_CERTIFICATE_ID)
     expect(result).not.toBeNull()
     expect(result?.studentName).toBe('Demo Student')
-    expect(result?.certificateId).toBe('AT-2026-DEMO')
+    expect(result?.certificateId).toBe(DEMO_CERTIFICATE_ID)
   })
 
   it('returns null for any other id when Supabase is unconfigured', async () => {

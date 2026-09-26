@@ -206,11 +206,13 @@ CREATE POLICY "ai_certificates_select_own" ON ai_certificates
 -- this migration, drop it explicitly (no corresponding CREATE below).
 DROP POLICY IF EXISTS "ai_certificates_insert_own" ON ai_certificates;
 
+-- No UPDATE policy either. Issuance is server-side and service-role only,
+-- and verification reads the public_certificates view, so no client flow
+-- needs to write here. The previous policy granted a student full-row
+-- UPDATE of their own certificate, which let them PATCH their own
+-- avg_prompt_score, modules_completed or student_name before anyone
+-- verified it - the one row in the database they have a motive to edit.
 DROP POLICY IF EXISTS "ai_certificates_update_own" ON ai_certificates;
-CREATE POLICY "ai_certificates_update_own" ON ai_certificates
-  FOR UPDATE
-  USING (user_id = auth.uid())
-  WITH CHECK (user_id = auth.uid());
 
 -- No more blanket public SELECT policy on the base table (previously
 -- "ai_certificates_select_public", USING (true)) - that exposed every
@@ -269,22 +271,38 @@ CREATE POLICY "topics_select_public" ON topics
   USING (true);
 
 ALTER TABLE questions ENABLE ROW LEVEL SECURITY;
+-- Only approved questions are public. getQuestionsByTopic already filters on
+-- is_approved, but the policy did not, so a draft or rejected question was
+-- readable straight off PostgREST with the anon key even though the app
+-- would never serve it.
 DROP POLICY IF EXISTS "questions_select_public" ON questions;
 CREATE POLICY "questions_select_public" ON questions
   FOR SELECT
-  USING (true);
+  USING (is_approved = true);
 
+-- question_options and steps are the ANSWER KEY. question_options.is_correct
+-- says which option is right; steps.correct_answer, .hint and .explanation
+-- are the worked solution.
+--
+-- They previously carried "USING (true)" SELECT policies, the same treatment
+-- as genuinely public content like topics and past_papers. But the anon key
+-- ships in the client bundle by design, so that policy let anyone read the
+-- whole answer key straight off PostgREST -
+--   GET /rest/v1/question_options?select=*
+-- - bypassing the quiz entirely. For a tutoring app the answer key is the
+-- product.
+--
+-- Nothing legitimate needs client-side access: every real read goes through
+-- server-side Drizzle, which connects as the table owner and is not subject
+-- to RLS at all. So RLS stays on with NO policy (deny by default) and the
+-- grants are revoked, the same pattern already used for ai_certificates.
 ALTER TABLE question_options ENABLE ROW LEVEL SECURITY;
 DROP POLICY IF EXISTS "question_options_select_public" ON question_options;
-CREATE POLICY "question_options_select_public" ON question_options
-  FOR SELECT
-  USING (true);
+REVOKE ALL ON question_options FROM anon, authenticated;
 
 ALTER TABLE steps ENABLE ROW LEVEL SECURITY;
 DROP POLICY IF EXISTS "steps_select_public" ON steps;
-CREATE POLICY "steps_select_public" ON steps
-  FOR SELECT
-  USING (true);
+REVOKE ALL ON steps FROM anon, authenticated;
 
 ALTER TABLE past_papers ENABLE ROW LEVEL SECURITY;
 DROP POLICY IF EXISTS "past_papers_select_public" ON past_papers;

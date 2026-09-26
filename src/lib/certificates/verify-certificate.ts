@@ -1,4 +1,5 @@
 import { createClient } from '@supabase/supabase-js'
+import { DEMO_CERTIFICATE_ID } from '@/lib/certificate-id'
 
 export interface VerifiedCertificate {
   studentName: string
@@ -10,7 +11,7 @@ export interface VerifiedCertificate {
   course: string
 }
 
-const DEMO_CERTIFICATE_ID = 'AT-2026-DEMO'
+
 
 function demoCertificate(): VerifiedCertificate {
   return {

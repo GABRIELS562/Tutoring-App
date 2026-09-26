@@ -150,7 +150,9 @@ export default function AchievementCard({ type, data, isOpen, onClose }: Achieve
 
   const handleShare = () => {
     const text = getWhatsAppText()
-    window.open(`https://wa.me/?text=${text}`, '_blank')
+    // noopener,noreferrer: without it the opened tab gets a window.opener
+    // handle back to this one. PapersPageClient already does this.
+    window.open(`https://wa.me/?text=${text}`, '_blank', 'noopener,noreferrer')
   }
 
   const handleDownload = () => {
@@ -166,6 +168,8 @@ export default function AchievementCard({ type, data, isOpen, onClose }: Achieve
     <AnimatePresence>
       {isOpen && (
         <motion.div
+          // The backdrop may fade - it carries no content. The card inside
+          // it may not; see below.
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
@@ -174,9 +178,13 @@ export default function AchievementCard({ type, data, isOpen, onClose }: Achieve
           onClick={onClose}
         >
           <motion.div
-            initial={{ scale: 0.9, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            exit={{ scale: 0.9, opacity: 0 }}
+            // Scale only, never fade. This card holds the badge, the
+            // download and the share buttons; a stalled animation would
+            // leave the student with a dimmed screen and nothing on it.
+            // Same rule as the quiz question card.
+            initial={{ scale: 0.9 }}
+            animate={{ scale: 1 }}
+            exit={{ scale: 0.9 }}
             className="w-full max-w-sm rounded-xl overflow-hidden"
             style={{ background: 'var(--surface)', border: '1px solid var(--border-custom)' }}
             onClick={(e) => e.stopPropagation()}

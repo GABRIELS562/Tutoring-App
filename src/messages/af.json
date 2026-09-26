@@ -63,7 +63,9 @@
     "examPapersMemos": "NSC-eksamenvraestelle en memorandums",
     "viewProgress": "Bekyk Vordering",
     "chartsLeaderboard": "Grafieke en ranglys",
-    "recently": "onlangs"
+    "recently": "onlangs",
+    "loadFailedTitle": "Ons kon nie jou vordering laai nie",
+    "loadFailedBody": "Iets het aan ons kant verkeerd geloop, daarom wys ons nie syfers waarvoor ons nie kan instaan nie. Herlaai asseblief oor 'n oomblik."
   },
   "topics": {
     "title": "Onderwerpe",
@@ -483,7 +485,8 @@
     "entryCardCta": "Baklei die baas",
     "entryCardSubtitle": "Toets alles wat jy geleer het teen {bossName}.",
     "dashboardSectionTitle": "Baasgevegte",
-    "fight": "Baklei"
+    "fight": "Baklei",
+    "saveFailed": "Jou vordering in hierdie geveg word nie gestoor nie. Jou XP en lewens dalk nie opdateer nie."
   },
   "exam": {
     "question": "Vraag",

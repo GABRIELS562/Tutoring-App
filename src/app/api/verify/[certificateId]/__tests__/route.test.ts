@@ -1,17 +1,18 @@
+import { DEMO_CERTIFICATE_ID } from '@/lib/certificate-id'
 import { describe, it, expect, beforeEach } from 'vitest'
 import { NextRequest } from 'next/server'
 
 const { GET } = await import('@/app/api/verify/[certificateId]/route')
 
 function makeRequest(ip: string) {
-  return new NextRequest('http://localhost/api/verify/AT-2026-DEMO', {
+  return new NextRequest('http://localhost/api/verify/${DEMO_CERTIFICATE_ID}', {
     method: 'GET',
     headers: { 'x-forwarded-for': ip },
   })
 }
 
 function callRoute(ip: string) {
-  return GET(makeRequest(ip), { params: Promise.resolve({ certificateId: 'AT-2026-DEMO' }) })
+  return GET(makeRequest(ip), { params: Promise.resolve({ certificateId: DEMO_CERTIFICATE_ID }) })
 }
 
 describe('GET /api/verify/[certificateId] rate limiting', () => {

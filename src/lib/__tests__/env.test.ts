@@ -57,6 +57,7 @@ describe('assertProductionEnv', () => {
       NEXT_PUBLIC_SUPABASE_URL: 'https://example.supabase.co',
       NEXT_PUBLIC_SUPABASE_ANON_KEY: 'anon-key',
       DATABASE_URL: 'postgres://example',
+      SUPABASE_SERVICE_ROLE_KEY: 'service-role-key',
     })
 
     expect(() => assertProductionEnv()).not.toThrow()
@@ -79,5 +80,43 @@ describe('assertProductionEnv', () => {
     })
 
     expect(() => assertProductionEnv()).toThrow(/NEXT_PUBLIC_SUPABASE_URL/)
+  })
+})
+
+/**
+ * SUPABASE_SERVICE_ROLE_KEY is required, not optional.
+ *
+ * getApiSupabase() used to fall back to the anon key when it was missing.
+ * That client carries no user JWT, so auth.uid() is NULL and every policy
+ * in 0001_rls.sql - all of which compare against auth.uid() - denies the
+ * write, while the routes log the failure and still return 200. The app
+ * would look healthy while XP, quota, badges and certificates silently
+ * stopped persisting. Refusing to boot is the better failure.
+ */
+describe('the service role key is a production requirement', () => {
+  it('refuses to start in production without it', () => {
+    setEnv({
+      NODE_ENV: 'production',
+      NEXT_PUBLIC_SUPABASE_URL: 'https://example.supabase.co',
+      NEXT_PUBLIC_SUPABASE_ANON_KEY: 'anon-key',
+      DATABASE_URL: 'postgres://example',
+      SUPABASE_SERVICE_ROLE_KEY: undefined,
+      NEXT_PHASE: undefined,
+    })
+
+    expect(() => assertProductionEnv()).toThrow(/SUPABASE_SERVICE_ROLE_KEY/)
+  })
+
+  it('starts when it is present', () => {
+    setEnv({
+      NODE_ENV: 'production',
+      NEXT_PUBLIC_SUPABASE_URL: 'https://example.supabase.co',
+      NEXT_PUBLIC_SUPABASE_ANON_KEY: 'anon-key',
+      DATABASE_URL: 'postgres://example',
+      SUPABASE_SERVICE_ROLE_KEY: 'service-role-key',
+      NEXT_PHASE: undefined,
+    })
+
+    expect(() => assertProductionEnv()).not.toThrow()
   })
 })

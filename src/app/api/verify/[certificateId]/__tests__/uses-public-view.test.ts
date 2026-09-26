@@ -36,7 +36,7 @@ describe('GET /api/verify/[certificateId] reads the public_certificates view, no
         eq: () => ({
           single: async () => ({
             data: {
-              certificate_id: 'AT-2026-ABCD1234',
+              certificate_id: 'AT-2026-ABCD2345',
               student_name: 'Thabo',
               issued_at: new Date().toISOString(),
               modules_completed: 5,
@@ -48,8 +48,8 @@ describe('GET /api/verify/[certificateId] reads the public_certificates view, no
       }),
     })
 
-    const res = await GET(makeRequest('AT-2026-ABCD1234'), {
-      params: Promise.resolve({ certificateId: 'AT-2026-ABCD1234' }),
+    const res = await GET(makeRequest('AT-2026-ABCD2345'), {
+      params: Promise.resolve({ certificateId: 'AT-2026-ABCD2345' }),
     })
 
     expect(res.status).toBe(200)

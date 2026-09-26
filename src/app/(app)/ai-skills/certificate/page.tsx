@@ -6,6 +6,7 @@ import { ArrowLeft, Lock } from 'lucide-react'
 import { moduleOrder } from '@/content/ai-skills'
 import CertificateGenerator from '@/components/ai/CertificateGenerator'
 import IssueCertificate from '@/components/ai/IssueCertificate'
+import { DEMO_CERTIFICATE_ID } from '@/lib/certificate-id'
 
 export const metadata = {
   title: 'AI Literacy Certificate | Angelo Tutoring',
@@ -43,7 +44,7 @@ async function getCertificateReadState(): Promise<CertificateReadState> {
       isEligible: true,
       certificate: {
         studentName: 'Demo Student',
-        certificateId: 'AT-2026-DEMO',
+        certificateId: DEMO_CERTIFICATE_ID,
         avgPromptScore: 4.2,
         modulesCompleted: 5,
         issuedAt: new Date().toISOString(),

@@ -107,8 +107,15 @@ export default async function DashboardPage() {
   const tExam = await getTranslations('exam')
   const locale = await getLocale()
   let userId = 'demo-user'
+  // mockDashboardData is a fabricated student - 1250 XP, a 7-day streak, an
+  // invented activity feed. It is a stand-in for a visitor with no account,
+  // and it must NEVER be shown to someone who is signed in: telling a real
+  // student they have someone else's progress is worse than telling them
+  // the page is broken.
   let data = mockDashboardData
   let isRealUser = false
+  let signedIn = false
+  let loadFailed = false
 
   // Try to get authenticated user
   try {
@@ -129,10 +136,17 @@ export default async function DashboardPage() {
       const { data: { user: authUser } } = await supabase.auth.getUser()
       if (authUser) {
         userId = authUser.id
+        signedIn = true
         const fetchedData = await getDashboardData(userId)
         if (fetchedData.user) {
           data = fetchedData
           isRealUser = true
+        } else {
+          // Signed in, but the read came back empty. getDashboardData
+          // catches every error and returns this same empty shape, so this
+          // is either a failed query or a missing users row - never a
+          // normal state for an authenticated student.
+          loadFailed = true
         }
       }
     }
@@ -178,6 +192,30 @@ export default async function DashboardPage() {
   // sits the Afrikaans paper; if their language has none transcribed yet we
   // fall back to the first paper rather than hiding the feature.
   const examPaper = papersForLanguage(locale === 'af' ? 'af' : 'en')[0] ?? allPapers[0]
+
+  // A signed-in student whose data would not load gets told so. The
+  // alternative - falling through to mockDashboardData - would show them a
+  // fabricated 1250 XP and a 7-day streak that are not theirs.
+  if (signedIn && loadFailed) {
+    return (
+      <div className="min-h-screen" style={{ background: 'var(--bg)' }}>
+        <Topbar title={t('dashboardTitle')} />
+        <div className="max-w-xl mx-auto px-4 py-10">
+          <div
+            className="rounded-xl p-5"
+            style={{ background: 'var(--surface)', border: '1px solid var(--accent-red)' }}
+          >
+            <h2 className="font-semibold mb-1" style={{ color: 'var(--text)' }}>
+              {t('loadFailedTitle')}
+            </h2>
+            <p className="text-sm" style={{ color: 'var(--muted-custom)' }}>
+              {t('loadFailedBody')}
+            </p>
+          </div>
+        </div>
+      </div>
+    )
+  }
 
   return (
     <div className="min-h-screen" style={{ background: 'var(--bg)' }}>

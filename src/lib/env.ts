@@ -26,6 +26,14 @@ const REQUIRED_PRODUCTION_ENV = [
   'NEXT_PUBLIC_SUPABASE_URL',
   'NEXT_PUBLIC_SUPABASE_ANON_KEY',
   'DATABASE_URL',
+  // Required, not optional. getApiSupabase() used to fall back to the anon
+  // key when this was missing, which creates a client carrying no user JWT
+  // at all - so auth.uid() is NULL and every RLS policy in 0001_rls.sql,
+  // all of which compare against auth.uid(), denies the write. The routes
+  // log the failure and still return 200, so hints get answered while XP,
+  // quota, badges and certificates quietly stop persisting. Failing to boot
+  // is much better than looking healthy and saving nothing.
+  'SUPABASE_SERVICE_ROLE_KEY',
 ] as const
 
 const NEXT_PRODUCTION_BUILD_PHASE = 'phase-production-build'
