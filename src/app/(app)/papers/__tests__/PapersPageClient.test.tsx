@@ -80,3 +80,45 @@ describe('playable papers', () => {
     expect(link).toBeUndefined()
   })
 })
+
+/**
+ * Every Grade 10 paper in the library has no memo — DBE does not publish
+ * the memos for provincial common papers. The card used to render nothing
+ * in that slot, so a student saw a paper they could attempt with no way to
+ * check it and no reason given. Say it instead.
+ */
+describe('papers with no memo', () => {
+  const withoutMemo = {
+    id: 'maths-10-2018-p1',
+    grade: 10,
+    subject: 'maths',
+    year: 2018,
+    examType: 'Common',
+    paperNumber: 1,
+    language: 'English',
+    pdfUrl: 'https://example.gov.za/paper.pdf',
+    memoUrl: null,
+    topicsCovered: ['Algebra'],
+  }
+
+  it('says the memo is not published rather than showing nothing', () => {
+    render(<PapersPageClient papers={[withoutMemo]} playable={[]} />)
+
+    expect(screen.getByText(/memo not published/i)).toBeInTheDocument()
+  })
+
+  it('still offers the paper itself', () => {
+    render(<PapersPageClient papers={[withoutMemo]} playable={[]} />)
+
+    expect(screen.getByRole('button', { name: /paper/i })).toBeInTheDocument()
+  })
+
+  it('shows a working memo button when there is one', () => {
+    render(
+      <PapersPageClient papers={[{ ...withoutMemo, memoUrl: 'https://example.gov.za/memo.pdf' }]} playable={[]} />
+    )
+
+    expect(screen.queryByText(/memo not published/i)).not.toBeInTheDocument()
+    expect(screen.getByRole('button', { name: /memo/i })).toBeInTheDocument()
+  })
+})

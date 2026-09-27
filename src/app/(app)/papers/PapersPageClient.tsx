@@ -317,6 +317,23 @@ export default function PapersPageClient({ papers, playable }: PapersPageClientP
                   {t('paperButton')}
                   <ExternalLink className="w-3 h-3" />
                 </button>
+                {/* A paper with no memo says so. It used to render nothing,
+                    so a student - every Grade 10 student, since DBE does not
+                    publish those memos - saw a paper they could attempt with
+                    no way to check it, and no reason given. */}
+                {!paper.memoUrl && (
+                  <span
+                    className="flex-1 flex items-center justify-center gap-2 px-3 py-2.5 rounded-lg text-sm"
+                    style={{
+                      background: 'var(--surface2)',
+                      color: 'var(--muted-custom)',
+                      border: '1px dashed var(--border-custom)',
+                    }}
+                  >
+                    <BookOpen className="w-4 h-4" aria-hidden="true" />
+                    {t('memoUnavailable')}
+                  </span>
+                )}
                 {paper.memoUrl && (
                   <button
                     onClick={() => openPaper(paper.memoUrl!)}
