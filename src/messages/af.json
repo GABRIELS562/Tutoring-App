@@ -122,7 +122,11 @@
     "zoomIn": "Zoem in",
     "loadingPdf": "PDF laai tans…",
     "previousPage": "Vorige bladsy",
-    "nextPage": "Volgende bladsy"
+    "nextPage": "Volgende bladsy",
+    "playableTitle": "Speel 'n vraestel, vraag vir vraag",
+    "playableBody": "Hierdie vraestelle is met die eksaminator se memo oorgetik, sodat jy elke vraag beantwoord, jou eie werk teen die regte puntetoekenning merk, en sien waar jou punte werklik heen gaan.",
+    "playableCta": "Maak oop",
+    "playableCount": "{count} van hierdie vraestelle is tot dusver speelbaar. Die res maak as PDF's oop."
   },
   "formulas": {
     "title": "Formuleblad",

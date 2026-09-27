@@ -96,7 +96,7 @@ describe('accessibility (axe)', () => {
 
     const { container } = render(
       <UserProvider user={demoUser}>
-        <PapersPageClient papers={papers} />
+        <PapersPageClient papers={papers} playable={[]} />
       </UserProvider>
     )
 

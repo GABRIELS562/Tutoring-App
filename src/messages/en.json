@@ -122,7 +122,11 @@
     "zoomIn": "Zoom in",
     "loadingPdf": "Loading PDF…",
     "previousPage": "Previous page",
-    "nextPage": "Next page"
+    "nextPage": "Next page",
+    "playableTitle": "Play a paper, question by question",
+    "playableBody": "These papers are transcribed with the examiner's memo, so you answer each question, mark your own working against the real mark scheme, and see where your marks actually go.",
+    "playableCta": "Open",
+    "playableCount": "{count} of these papers are playable so far. The rest open as PDFs."
   },
   "formulas": {
     "title": "Formula Sheet",

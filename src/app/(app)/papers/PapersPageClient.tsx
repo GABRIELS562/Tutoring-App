@@ -1,17 +1,30 @@
 'use client'
 
 import { useState } from 'react'
-import { FileText, BookOpen, Filter, X, ChevronDown, ExternalLink, Shield } from 'lucide-react'
+import Link from 'next/link'
+import { FileText, BookOpen, Filter, X, ChevronDown, ExternalLink, Shield, Swords } from 'lucide-react'
 import Topbar from '@/components/layout/Topbar'
 import { useTranslations } from 'next-intl'
 import type { PastPaperRecord } from '@/db/queries/topics'
 
-type PapersPageClientProps = {
-  papers: PastPaperRecord[]
+/** A paper that has been transcribed into the exam game. */
+export type PlayablePaper = {
+  key: string
+  title: string
+  source: string
+  questionCount: number
+  totalMarks: number
 }
 
-export default function PapersPageClient({ papers }: PapersPageClientProps) {
+type PapersPageClientProps = {
+  papers: PastPaperRecord[]
+  /** Papers the student can play question-by-question, in their language. */
+  playable: PlayablePaper[]
+}
+
+export default function PapersPageClient({ papers, playable }: PapersPageClientProps) {
   const t = useTranslations('papers')
+  const tExam = useTranslations('exam')
   const [subjectFilter, setSubjectFilter] = useState('')
   const [gradeFilter, setGradeFilter] = useState('')
   const [yearFilter, setYearFilter] = useState('')
@@ -151,6 +164,67 @@ export default function PapersPageClient({ papers }: PapersPageClientProps) {
             )}
           </div>
         </div>
+
+        {/* Playable papers.
+            The exam game lives at /exam, but a student looking for past
+            papers comes HERE - and until now this page never mentioned it,
+            so the one gamified thing in the app was invisible from the page
+            it belongs to. Papers not yet transcribed still open as PDFs
+            below, and the count says so rather than implying all of them
+            are playable. */}
+        {playable.length > 0 && (
+          <div
+            className="rounded-lg p-4 mb-4"
+            style={{ background: 'var(--surface)', border: '1px solid var(--accent-red)' }}
+          >
+            <div className="flex items-start gap-3">
+              <Swords
+                className="w-5 h-5 mt-0.5 flex-shrink-0"
+                style={{ color: 'var(--accent-red)' }}
+                aria-hidden="true"
+              />
+              <div className="min-w-0 flex-1">
+                <p className="text-sm font-semibold" style={{ color: 'var(--text)' }}>
+                  {t('playableTitle')}
+                </p>
+                <p className="text-xs mt-1" style={{ color: 'var(--muted-custom)' }}>
+                  {t('playableBody')}
+                </p>
+
+                <div className="mt-3 grid gap-2 sm:grid-cols-2">
+                  {playable.map((paper) => (
+                    <Link
+                      key={paper.key}
+                      href="/exam"
+                      className="rounded-lg p-3 flex items-center justify-between gap-3 transition-all hover:scale-[1.01]"
+                      style={{ background: 'var(--surface2)', border: '1px solid var(--border-custom)' }}
+                    >
+                      <span className="min-w-0">
+                        <span className="block text-sm font-medium" style={{ color: 'var(--text)' }}>
+                          {paper.title}
+                        </span>
+                        <span className="block text-xs mt-0.5" style={{ color: 'var(--muted-custom)' }}>
+                          {paper.source} · {paper.questionCount} {tExam('questionsWord')} ·{' '}
+                          {paper.totalMarks} {tExam('marks')}
+                        </span>
+                      </span>
+                      <span
+                        className="shrink-0 px-3 py-1.5 rounded-lg text-xs font-semibold"
+                        style={{ background: 'var(--accent-red)', color: 'white' }}
+                      >
+                        {t('playableCta')}
+                      </span>
+                    </Link>
+                  ))}
+                </div>
+
+                <p className="text-xs mt-3" style={{ color: 'var(--muted-custom)' }}>
+                  {t('playableCount', { count: playable.length })}
+                </p>
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* Official Source Notice */}
         <div
