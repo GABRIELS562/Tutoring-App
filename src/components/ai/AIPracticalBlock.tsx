@@ -51,10 +51,14 @@ export default function AIPracticalBlock({ config, title }: AIPracticalBlockProp
 
       setResponse(data.hint)
 
-      // Save to profile if configured
+      // config.saveToProfile marks a block whose output is MEANT to end up
+      // on the student's profile for their CV. Nothing persists it yet -
+      // there is no write here and no column for it - so the flag only
+      // decides whether to tell the student to keep a copy. It must not
+      // claim the app saved anything: "Saved to your profile for your CV"
+      // was shown on text that vanished on reload.
       if (config.saveToProfile && data.hint) {
         setSavedToProfile(true)
-        // Could save to Supabase here in a real implementation
       }
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Something went wrong')
@@ -163,7 +167,8 @@ export default function AIPracticalBlock({ config, title }: AIPracticalBlockProp
           </p>
           {savedToProfile && (
             <p className="text-xs text-ai-purple">
-              Saved to your profile for your CV.
+              Copy this somewhere safe if you want it for your CV — it is not
+              saved yet.
             </p>
           )}
         </div>
