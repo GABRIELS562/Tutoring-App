@@ -339,7 +339,7 @@ export const gr11P2Exemplar2013: ExamItem[] = [
     question: '3.3',
     context:
       'A$(1\;;\;6)$, B$(3\;;\;0)$, C$(12\;;\;3)$ and D are the vertices of a trapezium with AD $\\parallel$ BC. E is the midpoint of BC. The angle of inclination of the straight line BC is $\\theta$.',
-    prompt: 'Calculate the magnitude of $\theta$.',
+    prompt: 'Calculate the magnitude of $\\theta$.',
     marks: 2,
     topicSlug: 'analytical-geometry-gr11',
     diagram: '/exam/gr11-p2-2013/q3.png',

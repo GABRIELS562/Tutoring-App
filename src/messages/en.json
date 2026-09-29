@@ -542,7 +542,10 @@
     "title": "Exam game",
     "questionsWord": "questions",
     "start": "Start",
-    "notSaved": "Not saved — check your connection. Your marks are shown but did not reach your account."
+    "notSaved": "Not saved — check your connection. Your marks are shown but did not reach your account.",
+    "chooseSubtitle": "Choose a paper",
+    "paperMeta": "{questions} questions · {marks} marks",
+    "paperProgress": "{done} of {total} answered · {earned}/{available} marks"
   },
   "weakness": {
     "issue_signErrors": "Sign errors in reduction formulae",

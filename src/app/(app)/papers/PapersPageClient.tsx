@@ -234,7 +234,7 @@ export default function PapersPageClient({ papers, playable }: PapersPageClientP
                   {playable.map((paper) => (
                     <Link
                       key={paper.key}
-                      href="/exam"
+                      href={`/exam/${paper.key}`}
                       className="rounded-lg p-3 flex items-center justify-between gap-3 transition-all hover:scale-[1.01]"
                       style={{ background: 'var(--surface2)', border: '1px solid var(--border-custom)' }}
                     >

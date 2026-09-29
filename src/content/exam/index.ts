@@ -7,6 +7,8 @@
 import type { ExamItem } from './types'
 import { gr11P2Exemplar2013 } from './gr11-p2-2013'
 import { gr11P1Eksemplaar2013 } from './gr11-p1-2013'
+import { gr11P1Exemplar2013En } from './gr11-p1-2013-en'
+import { gr11P2Eksemplaar2013Af } from './gr11-p2-2013-af'
 
 export interface Paper {
   /** URL segment, e.g. 'gr11-p2-2013'. */
@@ -21,6 +23,13 @@ export interface Paper {
   totalMarks: number
   items: ExamItem[]
 }
+
+/**
+ * Papers are listed newest-first within a language, and every paper now
+ * exists in both. Before this, English had only P2 and Afrikaans only P1,
+ * so half of each language's Grade 11 cohort could not sit the other
+ * paper at all.
+ */
 
 export const papers: Paper[] = [
   {
@@ -44,6 +53,28 @@ export const papers: Paper[] = [
     language: 'af',
     totalMarks: 150,
     items: gr11P1Eksemplaar2013,
+  },
+  {
+    key: 'gr11-p1-2013-en',
+    title: 'Mathematics Paper 1',
+    source: 'DBE Grade 11 Exemplar 2013',
+    paper: 'P1',
+    grade: 11,
+    year: 2013,
+    language: 'en',
+    totalMarks: 150,
+    items: gr11P1Exemplar2013En,
+  },
+  {
+    key: 'gr11-p2-2013-af',
+    title: 'Wiskunde Vraestel 2',
+    source: 'DBE Graad 11 Eksemplaar 2013',
+    paper: 'P2',
+    grade: 11,
+    year: 2013,
+    language: 'af',
+    totalMarks: 150,
+    items: gr11P2Eksemplaar2013Af,
   },
 ]
 

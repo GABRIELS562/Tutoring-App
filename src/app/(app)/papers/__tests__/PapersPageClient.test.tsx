@@ -51,6 +51,13 @@ describe('playable papers', () => {
       questionCount: 53,
       totalMarks: 150,
     },
+    {
+      key: 'gr11-p1-2013-en',
+      title: 'Mathematics Paper 1',
+      source: 'DBE Grade 11 Exemplar 2013',
+      questionCount: 52,
+      totalMarks: 150,
+    },
   ]
 
   it('offers the playable papers with a link into the exam game', () => {
@@ -58,16 +65,33 @@ describe('playable papers', () => {
 
     const link = screen
       .getAllByRole('link')
-      .find((a) => a.getAttribute('href') === '/exam')
+      .find((a) => a.getAttribute('href') === '/exam/gr11-p2-2013')
 
     expect(link, 'the papers page does not link to the exam game').toBeDefined()
     expect(link).toHaveTextContent('Mathematics Paper 2')
   })
 
+  /**
+   * Each card must link to ITS OWN paper. Every language now has both P1
+   * and P2, and the link used to be a hard-coded '/exam' - so every card
+   * opened whichever paper that page happened to pick, and the other was
+   * unreachable.
+   */
+  it('links each paper to itself, not all of them to one place', () => {
+    render(<PapersPageClient papers={[]} playable={playable} />)
+
+    const hrefs = screen
+      .getAllByRole('link')
+      .map((a) => a.getAttribute('href'))
+      .filter((href): href is string => !!href?.startsWith('/exam'))
+
+    expect(hrefs).toEqual(['/exam/gr11-p2-2013', '/exam/gr11-p1-2013-en'])
+  })
+
   it('says how many are playable rather than implying all of them are', () => {
     render(<PapersPageClient papers={[]} playable={playable} />)
 
-    expect(screen.getByText(/1 of these papers are playable/i)).toBeInTheDocument()
+    expect(screen.getByText(/2 of these papers are playable/i)).toBeInTheDocument()
   })
 
   it('shows nothing when no paper has been transcribed yet', () => {
@@ -75,17 +99,21 @@ describe('playable papers', () => {
 
     const link = screen
       .queryAllByRole('link')
-      .find((a) => a.getAttribute('href') === '/exam')
+      .find((a) => a.getAttribute('href')?.startsWith('/exam'))
 
     expect(link).toBeUndefined()
   })
 })
 
 /**
- * Every Grade 10 paper in the library has no memo — DBE does not publish
- * the memos for provincial common papers. The card used to render nothing
- * in that slot, so a student saw a paper they could attempt with no way to
- * check it and no reason given. Say it instead.
+ * A paper without a memo used to render nothing in that slot, so a student
+ * saw a paper they could attempt with no way to check it and no reason
+ * given. Say it instead.
+ *
+ * Every Grade 10 paper in the library was in that state until the DBE
+ * Common Papers (2015-2018) were added, which carry their memos. The case
+ * is still reachable - not every paper DBE publishes has a memo - so this
+ * stays covered.
  */
 describe('papers with no memo', () => {
   const withoutMemo = {
