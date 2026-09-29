@@ -4,10 +4,18 @@ import { useState } from 'react'
 import { useTranslations } from 'next-intl'
 import Image from 'next/image'
 import Topbar from '@/components/layout/Topbar'
-import MathRenderer from '@/components/math/MathRenderer'
-import ExamItemCard from '@/components/exam/ExamItemCard'
+import ExamItemCard, { type ExamAttempt } from '@/components/exam/ExamItemCard'
 import type { ExamItem } from '@/content/exam/types'
 import { totalMarks } from '@/content/exam/types'
+import type { Familiarity } from '@/lib/exam/calibration'
+import { recordExamAttempt } from './actions'
+
+/** An attempt from an earlier sitting, loaded server-side. */
+export interface SavedAttempt {
+  itemId: string
+  familiarity: Familiarity
+  marksEarned: number
+}
 
 /** '6.4.1' -> '6'. Sub-parts of one question share a stem and a diagram. */
 function questionRoot(question: string): string {
@@ -50,9 +58,60 @@ function groupByQuestion(items: ExamItem[]): Group[] {
   return [...byRoot.values()]
 }
 
-export default function ExamPageClient({ items }: { items: ExamItem[] }) {
+export default function ExamPageClient({
+  items,
+  paperKey,
+  savedAttempts = [],
+}: {
+  items: ExamItem[]
+  paperKey: string
+  savedAttempts?: SavedAttempt[]
+}) {
   const t = useTranslations('exam')
-  const [scores, setScores] = useState<Record<string, number>>({})
+  const saved = new Map(savedAttempts.map((a) => [a.itemId, a]))
+  // Seeded from what was already saved, so the running total across the top
+  // counts an earlier sitting instead of restarting at zero.
+  const [scores, setScores] = useState<Record<string, number>>(() =>
+    Object.fromEntries(savedAttempts.map((a) => [a.itemId, a.marksEarned]))
+  )
+  const [failedSaves, setFailedSaves] = useState<ReadonlySet<string>>(new Set())
+
+  /**
+   * Marks are shown immediately and persisted in the background: the
+   * student has already marked themselves against the memo, so making
+   * them wait on a round trip to see their own result would be a
+   * regression on the version that saved nothing. A failure is surfaced on
+   * the card rather than swallowed - "+15 XP" next to an answer that never
+   * reached the server is a lie the student has no way to detect.
+   *
+   * Only the claim and the ticked positions are sent. The marks and the XP
+   * are recomputed server-side from the real mark scheme; see
+   * recordExamAttempt().
+   */
+  const persist = async (item: ExamItem, attempt: ExamAttempt) => {
+    setScores((s) => ({ ...s, [item.id]: attempt.marks }))
+    // Clear any earlier failure for this question before retrying it.
+    setFailedSaves((f) => {
+      if (!f.has(item.id)) return f
+      const next = new Set(f)
+      next.delete(item.id)
+      return next
+    })
+
+    try {
+      const result = await recordExamAttempt({
+        paperKey,
+        itemId: item.id,
+        familiarity: attempt.familiarity,
+        satisfied: attempt.satisfied,
+      })
+      if (!result.ok) {
+        setFailedSaves((f) => new Set(f).add(item.id))
+      }
+    } catch {
+      setFailedSaves((f) => new Set(f).add(item.id))
+    }
+  }
 
   const available = totalMarks(items)
   const earned = Object.values(scores).reduce((a, b) => a + b, 0)
@@ -114,7 +173,9 @@ export default function ExamPageClient({ items }: { items: ExamItem[] }) {
                     showStem={false}
                     groupContext={i > 0 ? run.items[i - 1].context : undefined}
                     groupDiagram={run.diagram}
-                    onDone={(marks) => setScores((s) => ({ ...s, [item.id]: marks }))}
+                    previousAttempt={saved.get(item.id)}
+                    saveFailed={failedSaves.has(item.id)}
+                    onDone={(attempt) => persist(item, attempt)}
                   />
                 ))}
               </div>

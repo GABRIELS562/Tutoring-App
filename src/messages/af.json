@@ -294,7 +294,11 @@
     "noLeaderboardData": "Nog geen ranglysdata nie.",
     "you": "(Jy)",
     "noXpData": "Nog geen XP-data nie. Begin oefen!",
-    "noTopicData": "Nog geen onderwerpdata nie. Begin oefen!"
+    "noTopicData": "Nog geen onderwerpdata nie. Begin oefen!",
+    "examPapers": "Eksamenvraestelle",
+    "examAnswered": "{count} vrae beantwoord",
+    "examMastered": "{count} bemeester",
+    "examBlindSpots": "{count} blindekolle"
   },
   "subjects": {
     "title": "Vakke",
@@ -537,7 +541,8 @@
     "tagline": "Regte NSS-vrae, gemerk soos die eksaminator",
     "title": "Eksamenspel",
     "questionsWord": "vrae",
-    "start": "Begin"
+    "start": "Begin",
+    "notSaved": "Nie gestoor nie — kyk jou verbinding. Jou punte wys hier, maar het nie jou rekening bereik nie."
   },
   "weakness": {
     "issue_signErrors": "Tekenfoute in reduksieformules",

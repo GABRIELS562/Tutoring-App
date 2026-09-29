@@ -24,21 +24,42 @@ const OPTIONS: { value: Familiarity; dot: string }[] = [
 
 type Phase = 'gate' | 'scaffold' | 'attempt' | 'marking' | 'result'
 
+/** What the student did, once they have marked themselves. */
+export interface ExamAttempt {
+  familiarity: Familiarity
+  /** Positions in item.markScheme, never descriptors. */
+  satisfied: number[]
+  marks: number
+  available: number
+}
+
 export default function ExamItemCard({
   item,
   onDone,
   showStem = true,
   groupContext,
   groupDiagram,
+  previousAttempt,
+  saveFailed = false,
 }: {
   item: ExamItem
-  onDone?: (marks: number, available: number) => void
+  onDone?: (attempt: ExamAttempt) => void
   /** False when the question group above already shows the stem and diagram. */
   showStem?: boolean
   /** The stem shown above the group, so a local one can be told apart. */
   groupContext?: string
   /** The diagram shown above the group, if the whole group shares one. */
   groupDiagram?: string
+  /**
+   * A saved attempt from an earlier sitting. The paper is long enough that
+   * nobody finishes it in one go, so coming back to a paper that shows no
+   * sign of the work already done is the difference between a tool and a
+   * demo. Only the claim and the score are restored - which individual mark
+   * points were ticked is not stored, so the card opens on its result.
+   */
+  previousAttempt?: { familiarity: Familiarity; marksEarned: number }
+  /** This answer did not reach the server; say so rather than implying it saved. */
+  saveFailed?: boolean
 }) {
   // A sub-part may carry its own context that is not the question's stem -
   // 6.4 adds "the graph f is shifted 30° to the left" on top of question 6's
@@ -46,14 +67,21 @@ export default function ExamItemCard({
   const t = useTranslations('exam')
   const localContext =
     item.context && item.context !== groupContext ? item.context : undefined
-  const [phase, setPhase] = useState<Phase>('gate')
-  const [familiarity, setFamiliarity] = useState<Familiarity | null>(null)
+  const [phase, setPhase] = useState<Phase>(previousAttempt ? 'result' : 'gate')
+  const [familiarity, setFamiliarity] = useState<Familiarity | null>(
+    previousAttempt?.familiarity ?? null
+  )
   // Positions in item.markScheme, not descriptors - a memo can award two
   // marks with identical wording (both roots of a quadratic are 'answers').
   const [satisfied, setSatisfied] = useState<number[]>([])
 
   const available = item.marks
-  const earned = marksEarned(item.markScheme, satisfied)
+  // A restored attempt has a score but no record of WHICH mark points were
+  // ticked, so the score is taken as given rather than recomputed from an
+  // empty `satisfied` (which would redisplay every finished question as 0).
+  const earned = previousAttempt && phase === 'result' && satisfied.length === 0
+    ? previousAttempt.marksEarned
+    : marksEarned(item.markScheme, satisfied)
   const calibration = familiarity ? calibrationOf(familiarity, earned, available) : null
   const copy = calibration ? CALIBRATION_COPY[calibration] : null
 
@@ -224,7 +252,9 @@ export default function ExamItemCard({
           <button
             onClick={() => {
               setPhase('result')
-              onDone?.(earned, available)
+              if (familiarity) {
+                onDone?.({ familiarity, satisfied, marks: earned, available })
+              }
             }}
             className="mt-3 px-4 py-2 rounded-lg text-sm font-semibold"
             style={{ background: 'var(--accent-red)', color: 'white' }}
@@ -269,6 +299,11 @@ export default function ExamItemCard({
             <p className="text-xs mt-2" style={{ color: 'var(--muted-custom)' }}>
               +{xpFor(calibration!, earned)} XP
             </p>
+            {saveFailed && (
+              <p className="text-xs mt-1" style={{ color: 'var(--accent-red)' }}>
+                {t('notSaved')}
+              </p>
+            )}
           </div>
 
           {item.markScheme.some((p, i) => p.kind === 'method' && satisfied.includes(i)) &&
@@ -302,7 +337,9 @@ export default function ExamItemCard({
             </div>
           )}
 
-          <div className="flex gap-3 text-xs" style={{ color: 'var(--muted-custom)' }}>
+          {/* Only meaningful for an attempt marked in THIS session - a
+              restored one knows the score but not which points earned it. */}
+          <div className="flex gap-3 text-xs" hidden={satisfied.length === 0 && !!previousAttempt} style={{ color: 'var(--muted-custom)' }}>
             {item.markScheme.map((p, i) => (
               <span key={i} className="inline-flex items-center gap-1">
                 {satisfied.includes(i) ? (

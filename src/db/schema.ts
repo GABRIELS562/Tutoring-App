@@ -227,3 +227,45 @@ export const aiUsageLog = pgTable('ai_usage_log', {
   index('ai_usage_log_user_id_idx').on(table.userId),
   index('ai_usage_log_created_at_idx').on(table.createdAt),
 ])
+
+// Table 13: exam_attempts
+//
+// The exam game's answers. Deliberately NOT student_progress: that table's
+// question_id is a FK to questions.id, and exam items are static content
+// (src/content/exam/*.ts) with string ids like 'gr11-p2-2013-6.4.1'. There
+// is no questions row to point at, and creating 105 fake ones so the FK
+// could be satisfied would put transcribed exam content in a table the
+// admin UI edits.
+//
+// Stores what the student CLAIMED (familiarity) next to what they scored,
+// because the gap between those two is the whole point of the exam game -
+// see src/lib/exam/calibration.ts. A 'blind-spot' row is a question the
+// student was sure of and got wrong, which is the most actionable thing
+// this app knows about them.
+export const examAttempts = pgTable('exam_attempts', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  // POPIA: deleting a student takes their exam history with them.
+  userId: uuid('user_id').references(() => users.id, { onDelete: 'cascade' }).notNull(),
+  // e.g. 'gr11-p2-2013'. Redundant with itemId's prefix, but stored so
+  // "how did this student do on paper X" is an index scan, not a LIKE.
+  paperKey: text('paper_key').notNull(),
+  // e.g. 'gr11-p2-2013-6.4.1'. Globally unique across papers.
+  itemId: text('item_id').notNull(),
+  familiarity: text('familiarity').notNull(), // 'new'|'shaky'|'confident'
+  calibration: text('calibration').notNull(), // Calibration in lib/exam/calibration.ts
+  marksEarned: integer('marks_earned').notNull(),
+  marksAvailable: integer('marks_available').notNull(),
+  xpEarned: integer('xp_earned').notNull().default(0),
+  attempts: integer('attempts').notNull().default(1),
+  attemptedAt: timestamp('attempted_at').defaultNow(),
+}, (table) => [
+  index('exam_attempts_user_id_idx').on(table.userId),
+  // "this student's attempts on this paper", which is how the exam page
+  // rehydrates and how the progress page summarises.
+  index('exam_attempts_user_paper_idx').on(table.userId, table.paperKey),
+  // One row per (user, item): recordExamAttempt() upserts-and-locks against
+  // this so two concurrent submissions for the same question cannot both
+  // read "no attempt yet" and both award XP. itemId alone is unique across
+  // papers, so paperKey is not part of the key.
+  uniqueIndex('exam_attempts_user_item_unique').on(table.userId, table.itemId),
+])

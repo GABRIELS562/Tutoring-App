@@ -3,6 +3,8 @@ import { createServerClient } from '@supabase/ssr'
 import { getTranslations } from 'next-intl/server'
 import Topbar from '@/components/layout/Topbar'
 import { getProgressData, getLeaderboard, getDashboardData } from '@/db/queries/progress'
+import { getExamSummary, type ExamPaperSummary } from '@/db/queries/exam'
+import { paperByKey } from '@/content/exam'
 import XPLineChart from './XPLineChart'
 import AccuracyBarChart from './AccuracyBarChart'
 import ActivityCalendar from './ActivityCalendar'
@@ -68,6 +70,11 @@ export default async function ProgressPage() {
   // own fetch turns out.
   let progressData = mockProgressData
   let leaderboard = mockLeaderboard
+  // No mock counterpart on purpose. An invented exam result is worse than
+  // no section: the whole point of the exam game is telling a student what
+  // they actually got wrong, so the section simply does not render until
+  // there is a real attempt behind it.
+  let examSummary: ExamPaperSummary[] = []
 
   // Try to get authenticated user
   try {
@@ -100,6 +107,7 @@ export default async function ProgressPage() {
         // made-up classmates presented as their grade's real ranking.
         progressData = await getProgressData(userId)
         leaderboard = await getLeaderboard(userGrade)
+        examSummary = await getExamSummary(userId)
       }
     }
   } catch (error) {
@@ -135,6 +143,60 @@ export default async function ProgressPage() {
           </h2>
           <AccuracyBarChart data={progressData.topicAccuracy} />
         </div>
+
+        {/* Section 2b: Exam papers.
+            Practice measures accuracy; an exam paper measures MARKS, which
+            is the number a matric student is actually judged on. They are
+            not the same thing and are deliberately not merged into one
+            chart - 80% of questions attempted is not 80%. */}
+        {examSummary.length > 0 && (
+          <div
+            className="rounded-xl p-5"
+            style={{ background: 'var(--surface)', border: '1px solid var(--border-custom)' }}
+          >
+            <h2 className="font-semibold mb-4" style={{ color: 'var(--text)' }}>
+              {t('examPapers')}
+            </h2>
+            <div className="space-y-3">
+              {examSummary.map((paper) => {
+                const meta = paperByKey(paper.paperKey)
+                const percent = paper.marksAvailable > 0
+                  ? Math.round((paper.marksEarned / paper.marksAvailable) * 100)
+                  : 0
+                return (
+                  <div
+                    key={paper.paperKey}
+                    className="rounded-lg p-4"
+                    style={{ background: 'var(--surface2)', border: '1px solid var(--border-custom)' }}
+                  >
+                    <div className="flex items-baseline justify-between gap-3 flex-wrap">
+                      <span className="font-semibold text-sm" style={{ color: 'var(--text)' }}>
+                        {meta?.title ?? paper.paperKey}
+                      </span>
+                      <span className="text-sm font-bold" style={{ color: 'var(--text)' }}>
+                        {paper.marksEarned} / {paper.marksAvailable}
+                        <span className="ml-2" style={{ color: 'var(--accent-red)' }}>{percent}%</span>
+                      </span>
+                    </div>
+                    <p className="text-xs mt-1" style={{ color: 'var(--muted-custom)' }}>
+                      {t('examAnswered', { count: paper.itemsAttempted })}
+                    </p>
+                    <div className="flex gap-4 mt-2 text-xs flex-wrap">
+                      <span style={{ color: 'var(--teal)' }}>
+                        {t('examMastered', { count: paper.mastered })}
+                      </span>
+                      {/* Surfaced on its own because it is the one number
+                          that should change what the student does next. */}
+                      <span style={{ color: paper.blindSpots > 0 ? '#e9c46a' : 'var(--muted-custom)' }}>
+                        {t('examBlindSpots', { count: paper.blindSpots })}
+                      </span>
+                    </div>
+                  </div>
+                )
+              })}
+            </div>
+          </div>
+        )}
 
         {/* Section 3 & 4: Activity Calendar and Leaderboard */}
         <div className="grid md:grid-cols-2 gap-6">

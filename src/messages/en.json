@@ -294,7 +294,11 @@
     "noLeaderboardData": "No leaderboard data yet.",
     "you": "(You)",
     "noXpData": "No XP data yet. Start practising!",
-    "noTopicData": "No topic data yet. Start practising!"
+    "noTopicData": "No topic data yet. Start practising!",
+    "examPapers": "Exam papers",
+    "examAnswered": "{count} questions answered",
+    "examMastered": "{count} mastered",
+    "examBlindSpots": "{count} blind spots"
   },
   "subjects": {
     "title": "Subjects",
@@ -537,7 +541,8 @@
     "tagline": "Real NSC questions, marked like the examiner",
     "title": "Exam game",
     "questionsWord": "questions",
-    "start": "Start"
+    "start": "Start",
+    "notSaved": "Not saved — check your connection. Your marks are shown but did not reach your account."
   },
   "weakness": {
     "issue_signErrors": "Sign errors in reduction formulae",

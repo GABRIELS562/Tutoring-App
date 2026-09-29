@@ -51,6 +51,19 @@ export function paperByKey(key: string): Paper | undefined {
   return papers.find((paper) => paper.key === key)
 }
 
+/**
+ * Finds one question by its id, scoped to the paper it should belong to.
+ *
+ * The paperKey is checked rather than ignored (item ids are globally
+ * unique, so it is not needed to find the row) because this is the lookup
+ * the server action uses to recompute marks from the real mark scheme. A
+ * client that sends a mismatched pair gets nothing back instead of a
+ * silently-accepted attempt filed against the wrong paper.
+ */
+export function itemInPaper(paperKey: string, itemId: string): ExamItem | undefined {
+  return paperByKey(paperKey)?.items.find((item) => item.id === itemId)
+}
+
 /** Papers a student can sit in the language they are working in. */
 export function papersForLanguage(language: 'en' | 'af'): Paper[] {
   return papers.filter((paper) => paper.language === language)

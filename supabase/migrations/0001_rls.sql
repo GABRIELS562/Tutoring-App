@@ -340,3 +340,46 @@ CREATE POLICY "notes_select_public" ON notes
 -- =============================================================================
 
 ALTER TABLE ai_usage_log ENABLE ROW LEVEL SECURITY;
+
+
+-- =============================================================================
+-- 9. exam_attempts — own rows only, by user_id = auth.uid()
+--
+--    The exam game's answers (src/db/queries/exam.ts). Same shape as
+--    student_progress: a student may read and write only their own rows,
+--    and there is no DELETE policy — an attempt is a record of what
+--    happened, and a student deleting their own blind spots would remove
+--    the single most useful signal the app has about them. Rows go when
+--    the user does, via ON DELETE CASCADE in schema.ts (POPIA).
+-- =============================================================================
+
+-- One row per (user, item): saveExamAttempt() in src/db/queries/exam.ts
+-- depends on this to upsert-and-lock (INSERT ... ON CONFLICT DO NOTHING,
+-- then SELECT ... FOR UPDATE within a transaction) instead of two
+-- concurrent first attempts at the same question racing to insert
+-- duplicate rows and each awarding XP. Matches the `uniqueIndex(...)` in
+-- src/db/schema.ts. Postgres has no `ADD CONSTRAINT IF NOT EXISTS`, so
+-- this drops-then-adds to stay safe to re-run.
+ALTER TABLE exam_attempts
+  DROP CONSTRAINT IF EXISTS exam_attempts_user_item_unique;
+ALTER TABLE exam_attempts
+  ADD CONSTRAINT exam_attempts_user_item_unique
+  UNIQUE (user_id, item_id);
+
+ALTER TABLE exam_attempts ENABLE ROW LEVEL SECURITY;
+
+DROP POLICY IF EXISTS "exam_attempts_select_own" ON exam_attempts;
+CREATE POLICY "exam_attempts_select_own" ON exam_attempts
+  FOR SELECT
+  USING (user_id = auth.uid());
+
+DROP POLICY IF EXISTS "exam_attempts_insert_own" ON exam_attempts;
+CREATE POLICY "exam_attempts_insert_own" ON exam_attempts
+  FOR INSERT
+  WITH CHECK (user_id = auth.uid());
+
+DROP POLICY IF EXISTS "exam_attempts_update_own" ON exam_attempts;
+CREATE POLICY "exam_attempts_update_own" ON exam_attempts
+  FOR UPDATE
+  USING (user_id = auth.uid())
+  WITH CHECK (user_id = auth.uid());
