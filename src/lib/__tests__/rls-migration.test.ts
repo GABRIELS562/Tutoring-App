@@ -174,3 +174,132 @@ describe('supabase/migrations/0001_rls.sql', () => {
     }
   })
 })
+
+/**
+ * A row-ownership policy says which ROW may be written. It says nothing
+ * about which COLUMNS or what values.
+ *
+ * `USING (id = auth.uid()) WITH CHECK (id = auth.uid())` on users therefore
+ * let any student, holding only their own session and the public anon key,
+ * go straight to PostgREST and bypass this application entirely:
+ *
+ *   PATCH /rest/v1/users?id=eq.<their own id>
+ *   { "is_admin": true, "is_premium": true, "xp": 999999 }
+ *
+ * is_admin is a plain boolean column and requireAdmin() trusts it, so that
+ * one request is full admin. The same shape on student_progress,
+ * ai_hint_usage, prompt_challenge_attempts and exam_attempts let a student
+ * write their own marks, XP and - the one that costs real money - reset
+ * their daily AI quota.
+ *
+ * The app never writes any of these from the browser: every real write is
+ * Drizzle over DATABASE_URL or the service-role client, both of which
+ * bypass RLS. So the client simply gets no write access.
+ */
+describe('the client cannot write its own standing', () => {
+  const WRITE_LOCKED = [
+    'student_progress',
+    'ai_hint_usage',
+    'prompt_challenge_attempts',
+    'exam_attempts',
+  ]
+
+  it('revokes client INSERT/UPDATE/DELETE on every user-data table', () => {
+    for (const table of WRITE_LOCKED) {
+      expect(sql, table).toMatch(
+        new RegExp(`REVOKE INSERT, UPDATE, DELETE ON ${table} FROM anon, authenticated;`)
+      )
+    }
+  })
+
+  it('leaves no INSERT or UPDATE policy on those tables to grant it back', () => {
+    for (const table of WRITE_LOCKED) {
+      expect(sql, `${table} still has a write policy`).not.toMatch(
+        new RegExp(`CREATE POLICY "${table}_(insert|update)_own"`)
+      )
+    }
+  })
+
+  it('still lets a student read their own rows', () => {
+    for (const table of WRITE_LOCKED) {
+      expect(sql, table).toMatch(new RegExp(`CREATE POLICY "${table}_select_own"`))
+    }
+  })
+
+  it('revokes everything on users, then grants back only SELECT', () => {
+    expect(sql).toMatch(/REVOKE ALL ON users FROM anon, authenticated;/)
+    expect(sql).toMatch(/GRANT SELECT ON users TO authenticated;/)
+  })
+
+  it('gives the client no way to UPDATE its own users row', () => {
+    expect(sql).not.toMatch(/CREATE POLICY "users_update_own"/)
+    expect(sql).not.toMatch(/GRANT UPDATE[^;]*ON users/)
+  })
+
+  /**
+   * Signup inserts the public.users row client-side, so INSERT cannot be
+   * revoked outright - but it is granted COLUMN BY COLUMN, and every
+   * column that confers standing is left out. They all have safe defaults
+   * in schema.ts, so the app loses nothing.
+   */
+  it('grants signup only the identity columns', () => {
+    const grant = sql.match(/GRANT INSERT \(([^)]*)\) ON users TO/)
+    expect(grant, 'no column-level INSERT grant on users').not.toBeNull()
+
+    const columns = grant![1].split(',').map((c) => c.trim())
+    expect(columns.sort()).toEqual(['email', 'grade', 'id', 'name', 'school'])
+
+    for (const forbidden of ['is_admin', 'is_premium', 'xp', 'hearts', 'streak_count', 'badges']) {
+      expect(columns, `${forbidden} must not be client-insertable`).not.toContain(forbidden)
+    }
+  })
+
+  it('never grants a blanket INSERT on users that would bypass the column list', () => {
+    expect(sql).not.toMatch(/GRANT INSERT ON users/)
+    expect(sql).not.toMatch(/GRANT ALL ON users/)
+  })
+})
+
+/**
+ * The column-level grant and the signup insert have to agree. If signup
+ * sends a column the grant leaves out, Postgres rejects the WHOLE insert
+ * on a permission error and every new account is created without its
+ * public.users row - and signup swallows that error by design ("Don't
+ * block signup if user row fails"), so it would fail silently in
+ * production and only show up as students with no profile.
+ */
+describe('signup and the users grant agree', () => {
+  const signup = readFileSync(
+    join(__dirname, '..', '..', 'app', '(auth)', 'signup', 'page.tsx'),
+    'utf-8'
+  )
+
+  function grantedColumns(): string[] {
+    return sql
+      .match(/GRANT INSERT \(([^)]*)\) ON users TO/)![1]
+      .split(',')
+      .map((c) => c.trim())
+  }
+
+  function insertedColumns(): string[] {
+    const block = signup.match(/\.from\('users'\)\s*\.insert\(\{([\s\S]*?)\}\)/)
+    expect(block, 'could not find the signup insert').not.toBeNull()
+    return Array.from(block![1].matchAll(/^\s*([a-z_]+)\s*[:,]/gm)).map((m) => m[1])
+  }
+
+  it('sends only columns the migration grants', () => {
+    const granted = grantedColumns()
+    for (const column of insertedColumns()) {
+      expect(granted, `signup sends "${column}" but the grant omits it`).toContain(column)
+    }
+  })
+
+  it('does not set any column that confers standing', () => {
+    const inserted = insertedColumns()
+    for (const forbidden of ['xp', 'hearts', 'streak_count', 'is_premium', 'is_admin', 'badges']) {
+      expect(inserted, `signup must leave "${forbidden}" to its column default`).not.toContain(
+        forbidden
+      )
+    }
+  })
+})

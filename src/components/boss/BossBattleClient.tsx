@@ -200,7 +200,8 @@ function BossBattleSession({ topicSlug, topicName, questions, isDemo, userId, vi
   // isDemo somehow disagreed - there is nothing real to attach it to.
   const shouldPersist = !isDemo && userId !== 'demo-user'
   const persistedQuestionIds = useRef(new Set<string>())
-  const persistMcqResult = (questionId: string, correct: boolean) => {
+  // Sends WHICH OPTION was chosen; the server reads the answer key.
+  const persistMcqResult = (questionId: string, selectedLetter: string) => {
     if (!shouldPersist) return
     if (persistedQuestionIds.current.has(questionId)) return
     persistedQuestionIds.current.add(questionId)
@@ -209,7 +210,7 @@ function BossBattleSession({ topicSlug, topicName, questions, isDemo, userId, vi
     // exception. Catching rejections alone therefore missed every failure
     // that actually happens, and the battle carried on as though the answer
     // had been saved. Un-mark the question so a later attempt can retry it.
-    recordAnswer(questionId, correct)
+    recordAnswer(questionId, selectedLetter)
       .then((result) => {
         if (!result.ok) {
           console.error('Boss battle: answer not recorded', result.error)
@@ -227,7 +228,7 @@ function BossBattleSession({ topicSlug, topicName, questions, isDemo, userId, vi
   const handleSelectOption = (letter: string, correct: boolean) => {
     const question = getCurrentQuestion(state)
     dispatch({ type: 'SELECT_MCQ_OPTION', letter, correct })
-    if (question) persistMcqResult(question.id, correct)
+    if (question) persistMcqResult(question.id, letter)
   }
 
   const questionCount = state.questions.length

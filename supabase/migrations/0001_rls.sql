@@ -43,24 +43,58 @@
 -- 1. users — each user can see and edit only their own row
 -- =============================================================================
 
+-- A row-ownership policy says WHICH ROW may be written, never WHICH
+-- COLUMNS or what values. `USING (id = auth.uid()) WITH CHECK (id =
+-- auth.uid())` on UPDATE therefore let a student send, with their own
+-- session and the public anon key, straight to PostgREST and bypassing
+-- this application entirely:
+--
+--   PATCH /rest/v1/users?id=eq.<their own id>
+--   { "is_admin": true, "is_premium": true, "xp": 999999, "hearts": 999 }
+--
+-- is_admin is a plain boolean column (schema.ts) and requireAdmin() in
+-- src/lib/auth/require-user.ts trusts it, so that single request is full
+-- admin: create and delete topics and questions, and fire paid Anthropic
+-- calls through /api/admin/generate-steps.
+--
+-- This is the same mistake already caught and fixed for ai_certificates
+-- further down this file ("the one row in the database they have a
+-- motive to edit"). The fix is the same: the client gets no write access
+-- it does not actually need.
+--
+-- Nothing in the app updates users from the browser. Every real write to
+-- xp, hearts, streak_count, is_premium and the AI-skills columns happens
+-- server-side through Drizzle (DATABASE_URL, which is not the
+-- anon/authenticated role) or the service-role Supabase client - both of
+-- which bypass RLS and are unaffected by the REVOKE below.
 ALTER TABLE users ENABLE ROW LEVEL SECURITY;
+
+REVOKE ALL ON users FROM anon, authenticated;
+GRANT SELECT ON users TO authenticated;
 
 DROP POLICY IF EXISTS "users_select_own" ON users;
 CREATE POLICY "users_select_own" ON users
   FOR SELECT
   USING (id = auth.uid());
 
+-- No UPDATE grant and no UPDATE policy: a student cannot edit their own
+-- users row from the client at all.
 DROP POLICY IF EXISTS "users_update_own" ON users;
-CREATE POLICY "users_update_own" ON users
-  FOR UPDATE
-  USING (id = auth.uid())
-  WITH CHECK (id = auth.uid());
 
 -- signup/page.tsx inserts the public.users row itself, client-side, with
 -- the anon key (createBrowserClient + supabase.auth.signUp(), then a plain
--- .from('users').insert(...) using the just-created session) - without this
--- policy that insert is silently blocked once RLS is enabled, breaking
--- signup. id must match the just-authenticated user, same as select/update.
+-- .from('users').insert(...) using the just-created session) - without
+-- this the insert is silently blocked once RLS is enabled, breaking
+-- signup. id must match the just-authenticated user, same as select.
+--
+-- The grant is COLUMN-LEVEL: identity fields only. Everything that
+-- confers standing - xp, streak_count, hearts, is_premium, is_admin -
+-- is left out, so a hand-rolled signup request cannot start an account
+-- with 999999 XP, premium, or the admin bit. Those columns all have safe
+-- defaults in schema.ts (0, 0, 5, false, false), so omitting them from
+-- the grant costs the app nothing.
+GRANT INSERT (id, email, name, grade, school) ON users TO anon, authenticated;
+
 DROP POLICY IF EXISTS "users_insert_own" ON users;
 CREATE POLICY "users_insert_own" ON users
   FOR INSERT
@@ -93,16 +127,19 @@ CREATE POLICY "student_progress_select_own" ON student_progress
   FOR SELECT
   USING (user_id = auth.uid());
 
-DROP POLICY IF EXISTS "student_progress_insert_own" ON student_progress;
-CREATE POLICY "student_progress_insert_own" ON student_progress
-  FOR INSERT
-  WITH CHECK (user_id = auth.uid());
+-- No INSERT/UPDATE grant and no write policies. Row ownership says which
+-- ROW may be written, never which COLUMNS or what values, so
+-- `WITH CHECK (user_id = auth.uid())` was never a constraint on the
+-- numbers. A student could otherwise PATCH status='correct' and xp_earned to anything, for any question id - and question ids are handed to the client on every practice load.
+--
+-- Every legitimate write here is server-side (Drizzle over DATABASE_URL,
+-- or the service-role client), and both bypass RLS, so revoking client
+-- writes costs the app nothing. SELECT stays: a student can still read
+-- their own rows.
+REVOKE INSERT, UPDATE, DELETE ON student_progress FROM anon, authenticated;
 
+DROP POLICY IF EXISTS "student_progress_insert_own" ON student_progress;
 DROP POLICY IF EXISTS "student_progress_update_own" ON student_progress;
-CREATE POLICY "student_progress_update_own" ON student_progress
-  FOR UPDATE
-  USING (user_id = auth.uid())
-  WITH CHECK (user_id = auth.uid());
 
 
 -- =============================================================================
@@ -133,16 +170,22 @@ CREATE POLICY "ai_hint_usage_select_own" ON ai_hint_usage
   FOR SELECT
   USING (user_id = auth.uid()::text);
 
-DROP POLICY IF EXISTS "ai_hint_usage_insert_own" ON ai_hint_usage;
-CREATE POLICY "ai_hint_usage_insert_own" ON ai_hint_usage
-  FOR INSERT
-  WITH CHECK (user_id = auth.uid()::text);
+-- No INSERT/UPDATE grant and no write policies. Row ownership says which
+-- ROW may be written, never which COLUMNS or what values, so
+-- `WITH CHECK (user_id = auth.uid()::text)` was never a constraint on the
+-- counts. A student could otherwise PATCH hint_count=0 and camera_count=0
+-- before every request and take the free AI tier to unlimited - a direct,
+-- uncapped Anthropic bill, and the one finding here that costs real money
+-- rather than just corrupting a score.
+--
+-- The quota is enforced in src/app/api/ai-hint/route.ts and incremented
+-- through the increment_hint_usage RPC (0002_functions.sql), all under the
+-- service role, which bypasses RLS. SELECT stays so a student can still be
+-- shown how many hints they have left.
+REVOKE INSERT, UPDATE, DELETE ON ai_hint_usage FROM anon, authenticated;
 
+DROP POLICY IF EXISTS "ai_hint_usage_insert_own" ON ai_hint_usage;
 DROP POLICY IF EXISTS "ai_hint_usage_update_own" ON ai_hint_usage;
-CREATE POLICY "ai_hint_usage_update_own" ON ai_hint_usage
-  FOR UPDATE
-  USING (user_id = auth.uid()::text)
-  WITH CHECK (user_id = auth.uid()::text);
 
 
 -- =============================================================================
@@ -169,16 +212,19 @@ CREATE POLICY "prompt_challenge_attempts_select_own" ON prompt_challenge_attempt
   FOR SELECT
   USING (user_id = auth.uid());
 
-DROP POLICY IF EXISTS "prompt_challenge_attempts_insert_own" ON prompt_challenge_attempts;
-CREATE POLICY "prompt_challenge_attempts_insert_own" ON prompt_challenge_attempts
-  FOR INSERT
-  WITH CHECK (user_id = auth.uid());
+-- No INSERT/UPDATE grant and no write policies. Row ownership says which
+-- ROW may be written, never which COLUMNS or what values, so
+-- `WITH CHECK (user_id = auth.uid())` was never a constraint on the
+-- numbers. A student could otherwise write their own score straight into the rows the AI-literacy certificate is computed from.
+--
+-- Every legitimate write here is server-side (Drizzle over DATABASE_URL,
+-- or the service-role client), and both bypass RLS, so revoking client
+-- writes costs the app nothing. SELECT stays: a student can still read
+-- their own rows.
+REVOKE INSERT, UPDATE, DELETE ON prompt_challenge_attempts FROM anon, authenticated;
 
+DROP POLICY IF EXISTS "prompt_challenge_attempts_insert_own" ON prompt_challenge_attempts;
 DROP POLICY IF EXISTS "prompt_challenge_attempts_update_own" ON prompt_challenge_attempts;
-CREATE POLICY "prompt_challenge_attempts_update_own" ON prompt_challenge_attempts
-  FOR UPDATE
-  USING (user_id = auth.uid())
-  WITH CHECK (user_id = auth.uid());
 
 
 -- =============================================================================
@@ -373,13 +419,16 @@ CREATE POLICY "exam_attempts_select_own" ON exam_attempts
   FOR SELECT
   USING (user_id = auth.uid());
 
-DROP POLICY IF EXISTS "exam_attempts_insert_own" ON exam_attempts;
-CREATE POLICY "exam_attempts_insert_own" ON exam_attempts
-  FOR INSERT
-  WITH CHECK (user_id = auth.uid());
+-- No INSERT/UPDATE grant and no write policies. Row ownership says which
+-- ROW may be written, never which COLUMNS or what values, so
+-- `WITH CHECK (user_id = auth.uid())` was never a constraint on the
+-- numbers. A student could otherwise write their own marks_earned, xp_earned and calibration - exactly what recordExamAttempt() recomputes server-side so the client cannot choose them.
+--
+-- Every legitimate write here is server-side (Drizzle over DATABASE_URL,
+-- or the service-role client), and both bypass RLS, so revoking client
+-- writes costs the app nothing. SELECT stays: a student can still read
+-- their own rows.
+REVOKE INSERT, UPDATE, DELETE ON exam_attempts FROM anon, authenticated;
 
+DROP POLICY IF EXISTS "exam_attempts_insert_own" ON exam_attempts;
 DROP POLICY IF EXISTS "exam_attempts_update_own" ON exam_attempts;
-CREATE POLICY "exam_attempts_update_own" ON exam_attempts
-  FOR UPDATE
-  USING (user_id = auth.uid())
-  WITH CHECK (user_id = auth.uid());

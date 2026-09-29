@@ -168,10 +168,11 @@ describe('BossBattleClient real-mode persistence', () => {
     await startBattle(user)
 
     // Act/Assert - question 1 ('1', 2 marks): wrong MCQ persists the MCQ
-    // result immediately...
+    // result immediately. What is sent is the LETTER chosen, not whether
+    // it was right - the server reads the answer key.
     await answerMcq(user, WRONG_LETTER)
     expect(recordAnswerMock).toHaveBeenCalledTimes(1)
-    expect(recordAnswerMock).toHaveBeenNthCalledWith(1, '1', false)
+    expect(recordAnswerMock).toHaveBeenNthCalledWith(1, '1', WRONG_LETTER)
 
     // ...and self-marking every step of its recovery review ("I know
     // this" -> "Yes, I had this") must not add further calls - the boss
@@ -183,7 +184,7 @@ describe('BossBattleClient real-mode persistence', () => {
     // Question 2 ('2'): correct MCQ persists its own, second call.
     await answerMcq(user, CORRECT_LETTER)
     expect(recordAnswerMock).toHaveBeenCalledTimes(2)
-    expect(recordAnswerMock).toHaveBeenNthCalledWith(2, '2', true)
+    expect(recordAnswerMock).toHaveBeenNthCalledWith(2, '2', CORRECT_LETTER)
 
     // Clicking through to the next round is a re-render of the same
     // component tree, not a new answer - must not re-persist question 2.
@@ -194,7 +195,7 @@ describe('BossBattleClient real-mode persistence', () => {
     // recordAnswer call per question answered, no more, no fewer.
     await answerMcq(user, CORRECT_LETTER)
     expect(recordAnswerMock).toHaveBeenCalledTimes(3)
-    expect(recordAnswerMock).toHaveBeenNthCalledWith(3, '3', true)
+    expect(recordAnswerMock).toHaveBeenNthCalledWith(3, '3', CORRECT_LETTER)
   })
 
   it('still never persists to the server in demo mode, even when a non-demo userId is passed through', async () => {

@@ -3,13 +3,16 @@
 import { z } from 'zod'
 import { requireUser } from '@/lib/auth/require-user'
 import { isDemoMode } from '@/db'
-import { saveProgress, recordWrongAnswer, applyDayRollover } from '@/db/queries/questions'
+import { saveProgress, recordWrongAnswer, applyDayRollover, isOptionCorrect } from '@/db/queries/questions'
 import { getUserById } from '@/db/queries/users'
 
 const SAVE_ERROR = 'Could not save your answer'
 const OUT_OF_HEARTS_ERROR = 'out_of_hearts'
 
 const questionIdSchema = z.string().uuid()
+/** 'A'|'B'|'C'|'D' as stored in question_options.option_letter. */
+const optionLetterSchema = z.string().min(1).max(4)
+const UNKNOWN_OPTION_ERROR = 'Unknown answer'
 
 export type RecordAnswerResult =
   | { ok: true; demo: true }
@@ -23,8 +26,9 @@ export type CompleteQuizResult =
 
 /**
  * Persists a single answer: session user required (never trusts a
- * client-supplied userId or XP amount - XP is computed and applied
- * server-side, inside saveProgress()). No-ops (after auth) in demo
+ * client-supplied userId, verdict or XP amount). The client sends WHICH
+ * OPTION it chose; whether that option is right is read from
+ * question_options, and the XP follows from that - all server-side. No-ops (after auth) in demo
  * mode - there is no database to write to (db is a throwing Proxy
  * without DATABASE_URL).
  *
@@ -40,16 +44,31 @@ export type CompleteQuizResult =
  *    (recordWrongAnswer) - no progress is saved when it's
  *    blocked.
  */
-export async function recordAnswer(questionId: string, correct: boolean): Promise<RecordAnswerResult> {
+export async function recordAnswer(
+  questionId: string,
+  selectedOptionLetter: string
+): Promise<RecordAnswerResult> {
   const parsedQuestionId = questionIdSchema.safeParse(questionId)
   if (!parsedQuestionId.success) {
     return { ok: false, error: 'Invalid question id' }
+  }
+
+  const parsedLetter = optionLetterSchema.safeParse(selectedOptionLetter)
+  if (!parsedLetter.success) {
+    return { ok: false, error: UNKNOWN_OPTION_ERROR }
   }
 
   const user = await requireUser()
 
   if (isDemoMode) {
     return { ok: true, demo: true }
+  }
+
+  // The verdict is read from the answer key, never taken from the client.
+  // See isOptionCorrect() for what trusting the client used to allow.
+  const correct = await isOptionCorrect(parsedQuestionId.data, parsedLetter.data)
+  if (correct === null) {
+    return { ok: false, error: UNKNOWN_OPTION_ERROR }
   }
 
   const rollover = await applyDayRollover(user.id)

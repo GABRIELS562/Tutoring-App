@@ -119,8 +119,9 @@ describe('QuizEngine answer persistence', () => {
     // Act
     await user.click(screen.getByText('Four'))
 
-    // Assert
-    expect(recordAnswerMock).toHaveBeenCalledWith('real-q1', true)
+    // Assert - the LETTER is sent, not a verdict. Whether 'A' is right is
+    // the server's business; see isOptionCorrect() in db/queries/questions.
+    expect(recordAnswerMock).toHaveBeenCalledWith('real-q1', 'A')
   })
 
   it('does not call recordAnswer in demo mode', async () => {

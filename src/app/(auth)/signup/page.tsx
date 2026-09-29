@@ -82,7 +82,15 @@ export default function SignupPage() {
         return
       }
 
-      // Insert user row into public.users table
+      // Insert user row into public.users table.
+      //
+      // Identity fields only. xp, streak_count, hearts, is_premium and
+      // is_admin are deliberately NOT sent: they have safe defaults in
+      // schema.ts (0, 0, 5, false, false), and the RLS migration grants
+      // the client INSERT on these five columns alone, so that a
+      // hand-rolled signup request cannot open an account already holding
+      // premium, the admin bit, or 999999 XP. Sending them here would now
+      // fail the whole insert on a column permission error.
       if (authData.user) {
         const { error: insertError } = await supabase
           .from('users')
@@ -92,10 +100,6 @@ export default function SignupPage() {
             name,
             grade: grade as number,
             school: school || null,
-            xp: 0,
-            streak_count: 0,
-            hearts: 5,
-            is_premium: false,
           })
 
         if (insertError) {

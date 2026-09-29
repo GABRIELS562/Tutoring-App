@@ -219,6 +219,48 @@ async function saveProgressWithin(
   }
 }
 
+/**
+ * Is this the correct option for this question, according to the database?
+ *
+ * The practice flow used to take a `correct: boolean` straight from the
+ * browser, which QuestionCard computed from option data the client already
+ * held. That made the answer key advisory: replaying the server action with
+ * `correct: true` for every question id - and ids are handed to the client
+ * on every practice load - awarded 10 XP a time, cost no heart (correct
+ * answers never spend one) and marked the whole curriculum mastered without
+ * a single question being read.
+ *
+ * The exam game already refuses to take a score from the client and
+ * recomputes it from the mark scheme; this is the same rule for practice.
+ *
+ * Returns null when the question or the option does not exist, so the
+ * caller can reject rather than guess. A letter that is not an option of
+ * THIS question is not "wrong", it is not an answer at all.
+ */
+export async function isOptionCorrect(
+  questionId: string,
+  optionLetter: string
+): Promise<boolean | null> {
+  try {
+    const rows = await db
+      .select({ isCorrect: questionOptions.isCorrect })
+      .from(questionOptions)
+      .where(
+        and(
+          eq(questionOptions.questionId, questionId),
+          eq(questionOptions.optionLetter, optionLetter)
+        )
+      )
+      .limit(1)
+
+    if (rows.length === 0) return null
+    return rows[0].isCorrect === true
+  } catch (error) {
+    console.error('Error checking answer:', error)
+    return null
+  }
+}
+
 export async function saveProgress(
   userId: string,
   questionId: string,

@@ -84,15 +84,18 @@ export default function QuizEngine({
   // demo mode / for mock questions there is no server award to sum, so
   // we show an optimistic client-only total instead (it's never
   // persisted either way).
-  const persistAnswer = async (questionId: string, correct: boolean) => {
+  // Sends WHICH OPTION was chosen, not whether it was right. The server
+  // reads the answer key; the client's own verdict is used for the
+  // immediate UI only and is never what gets persisted.
+  const persistAnswer = async (questionId: string, selectedLetter: string) => {
     try {
-      const result = await recordAnswer(questionId, correct)
+      const result = await recordAnswer(questionId, selectedLetter)
 
       if (!result.ok) {
         if (result.error === 'out_of_hearts') {
           setBlockedOnHearts(true)
         } else {
-          setSaveError({ retry: () => persistAnswer(questionId, correct) })
+          setSaveError({ retry: () => persistAnswer(questionId, selectedLetter) })
         }
         return
       }
@@ -103,7 +106,7 @@ export default function QuizEngine({
       }
     } catch (error) {
       console.error('Failed to record answer:', error)
-      setSaveError({ retry: () => persistAnswer(questionId, correct) })
+      setSaveError({ retry: () => persistAnswer(questionId, selectedLetter) })
     }
   }
 
@@ -124,7 +127,7 @@ export default function QuizEngine({
       return
     }
 
-    await persistAnswer(questions[currentIndex].id, correct)
+    await persistAnswer(questions[currentIndex].id, selectedLetter)
   }
 
   const persistCompleteQuiz = async () => {
