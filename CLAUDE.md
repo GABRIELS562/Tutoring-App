@@ -104,6 +104,17 @@ Practice reframed as a fight: same question bank, cosmetic boss framing. Route i
 - **Entry points**: a "Battle the boss" card next to the Practice CTA on the topic page (`TopicPageClient.tsx`), and a "Boss battles" section on the dashboard (3 topics for the student's grade via `getTopicsForSubjectGrade`).
 - i18n lives entirely in the `boss` message namespace (`src/messages/{en,af}.json`).
 
+### Exam game (`/exam`, `/exam/[key]`)
+
+Real past-paper questions marked the way the examiner marks them, which is the app's main differentiator from a worksheet.
+
+- **Content** — `src/content/exam/*.ts`, registered in `src/content/exam/index.ts` (`papers`, `paperByKey`, `itemInPaper`, `papersForLanguage`). Each `ExamItem` (`types.ts`) carries the memo's own `markScheme` as `MarkPoint[]` — `method` / `answer` / `reason`, each with a value — so a student gets partial credit and method marks. Maths is stored as LaTeX; PDF text extraction mangles it.
+- **Both languages, one source** — every paper exists in `en` and `af`, and the pair is GENERATED from one set of items, not transcribed twice. `__tests__/language-parity.test.ts` enforces identical questions, marks, mark-point kinds/values/positions and diagrams; only prose may differ. A paper is only listed once it reconciles to the total printed on it (`__tests__/gr11-p*-2013.test.ts`).
+- **Calibration** — `src/lib/exam/calibration.ts`. The student claims `new`/`shaky`/`confident` BEFORE attempting; the claim compared with the outcome gives `mastered`/`slipped`/`blind-spot`/`underconfident`/`honest-gap`, which drives both the XP multiplier (`xpFor`) and the copy. `marksEarned()` keys on the mark point's POSITION, never its descriptor — memos routinely award two marks with identical wording.
+- **Persistence** — `exam_attempts` (one row per user+item) via `src/db/queries/exam.ts`, written by the server action `src/app/(app)/exam/actions.ts`. The client sends only its claim and which mark-point positions it ticked; marks, calibration and XP are all recomputed server-side from the mark scheme. XP is awarded on the first attempt only, through the same upsert-and-lock as `saveProgress()`. Exam XP lands in `users.xp`, and the progress page shows marks and blind spots per paper.
+
+**Writing LaTeX in these files:** they use single-quoted TS strings, where `\t`, `\n`, `\b`, `\f`, `\r` and `\v` are ESCAPES. `'$\theta$'` silently becomes `$<tab>heta$`. Always double the backslash; `language-parity.test.ts` scans every displayed string for control characters.
+
 ### i18n
 
 `next-intl`, locales `en` | `af`, **cookie-based (`NEXT_LOCALE`), `localePrefix: 'never'`** — no `/af/...` URLs. Server side reads the cookie in `src/i18n/request.ts`; client helpers in `src/lib/locale.ts`. Messages in `src/messages/{en,af}.json`.
@@ -122,16 +133,16 @@ Shadcn (`components.json`, base-nova style) in `src/components/ui/`; Tailwind v4
 
 - `DATABASE_URL` — enables Drizzle; absent = throwing mock db
 - `NEXT_PUBLIC_SUPABASE_URL` / `NEXT_PUBLIC_SUPABASE_ANON_KEY` — enables auth + route protection; absent = demo user
-- `SUPABASE_SERVICE_ROLE_KEY` — used by API routes (falls back to anon key)
+- `SUPABASE_SERVICE_ROLE_KEY` — used by API routes; **required in production** (`REQUIRED_PRODUCTION_ENV`). Falls back to the anon key outside production only
 - `ANTHROPIC_API_KEY` — AI hints; absent = demo/mock responses
 - `ANTHROPIC_MODEL` — model id for all AI calls (default `claude-sonnet-5`)
 - `ADMIN_EMAIL` — grants admin to that Supabase user without `is_admin`
 
 ## Known gaps to be aware of
 
-- `SUPABASE_SERVICE_ROLE_KEY` is only referenced in `src/lib/supabase/api.ts` — server routes silently fall back to the anon key when it is unset, so writes become subject to the RLS policies in `0001_rls.sql`.
-- The RLS and functions migrations have never been run against a live Postgres; first real run is a pre-launch step (`DEPLOYMENT.md`).
+- `SUPABASE_SERVICE_ROLE_KEY` is now in `REQUIRED_PRODUCTION_ENV` (`src/lib/env.ts`), so production refuses to boot without it rather than silently falling back to the anon key and having every RLS policy deny the write while the routes still return 200. Outside production `src/lib/supabase/api.ts` still falls back.
 - The free-tier AI quota is check-then-act (bounded by client concurrency) — documented accepted risk in `ai-hint/route.ts`.
 - `next-pwa` is unmaintained (2022).
-- Progress: `docs/BUILD-PLAN.md` — Phases 0–4 merged; Phase 5 (i18n/a11y/password reset, branch `phase-5/i18n-a11y-ux`) done, pending merge to `develop`; Phase 6 (real services) outstanding; Phase 7 (Boss Battle prototype, branch `phase-7/boss-battle`) built, pending merge.
+- `src/db/index.ts` creates a `pg.Pool` with no `max`, which on Vercel serverless against the Supabase pooler can open more connections than the plan allows.
+- Progress: `docs/BUILD-PLAN.md` — Phases 0–5, 7 and 8 are merged into `develop`; their `phase-*` branches are fully merged and can be deleted. **Phase 6 (real services) is the outstanding one**: `db:push` → `db:rls` → `db:functions` have never been run against a live Postgres, so `exam_attempts` and every RLS policy exist only in the repo.
 - Boss Battle HP persistence is `localStorage`-only (see above) — a student's remaining boss HP is per-device, not per-account, until a DB table backs it.
