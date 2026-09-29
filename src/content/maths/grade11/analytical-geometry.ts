@@ -51,7 +51,8 @@ export const analyticalGeometryGr11: TopicContent = {
         {
           type: 'video',
           title: 'Kyk: Graad 11 Hoofstuk 4 Les 5 Vergl van lyn ewewydig of loodreg aan ander lyn. — Rochelle Van der Merwe',
-          videoIdAf: 'wK_TrD-Io5E'
+          videoIdAf: 'wK_TrD-Io5E',
+          titleAf: 'Kyk: Graad 11 Hoofstuk 4 Les 5 Vergl van lyn ewewydig of loodreg aan ander lyn. — Rochelle Van der Merwe'
         }
       ]
     },

@@ -41,7 +41,8 @@ export const algebraGr11: TopicContent = {
           type: 'video',
           title: 'Watch: Surds Grade 11: Exam — Kevinmathscience',
           videoId: 'p9TWK13yUqE',
-          videoIdAf: 'YXYA-f-sLgI'
+          videoIdAf: 'YXYA-f-sLgI',
+          titleAf: 'Kyk: Graad 11 Eksponente #4: Vereenvoudiging van Wortelvorme — WiskundeMetMargie'
         }
       ]
     },
@@ -66,7 +67,8 @@ export const algebraGr11: TopicContent = {
           type: 'video',
           title: 'Watch: 1) Quadratic formula grade 11 | Intro — Kevinmathscience',
           videoId: 'XofwHRrFKNE',
-          videoIdAf: 'leO4m8TsGWs'
+          videoIdAf: 'leO4m8TsGWs',
+          titleAf: 'Kyk: 04 Kwadratiese formule — Wiskunde_Mathematics_SUM'
         }
       ]
     },
@@ -79,7 +81,8 @@ export const algebraGr11: TopicContent = {
           type: 'video',
           title: 'Watch: Grade 11 - Nature of Roots | Part 1 | Mlungisi Nkosi — Mlungisi Nkosi Maths & Science',
           videoId: 'Auc6fj338nA',
-          videoIdAf: 'HPB52ouJ7M8'
+          videoIdAf: 'HPB52ouJ7M8',
+          titleAf: 'Kyk: Graad 11 Vergelykings #6: Aard van Wortels (Discriminant) — WiskundeMetMargie'
         }
       ]
     },
@@ -92,7 +95,8 @@ export const algebraGr11: TopicContent = {
           type: 'video',
           title: 'Watch: 2) Quadratic inequalities grade 11 | Intro — Kevinmathscience',
           videoId: 'wFLTz5SCE8g',
-          videoIdAf: 'a-HkT-f0C08'
+          videoIdAf: 'a-HkT-f0C08',
+          titleAf: 'Kyk: Kwadratiese Vergelykings Graad11: L12 Kwadratiese Ongelykhede — Online Maths by Miss Pythagoras'
         }
       ]
     },
@@ -105,7 +109,8 @@ export const algebraGr11: TopicContent = {
           type: 'video',
           title: 'Watch: 3) Simultaneous equations gr 11 | Intro — Kevinmathscience',
           videoId: 'WJbeyscO6Is',
-          videoIdAf: 'OtM4u_uQMSA'
+          videoIdAf: 'OtM4u_uQMSA',
+          titleAf: 'Kyk: Gelyktydige Kwadratiese Vergelykings || Wiskunde Graad 11 en 12 — CollieMath Studio'
         }
       ]
     }

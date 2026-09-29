@@ -120,6 +120,30 @@ describe('CAPS topic guard', () => {
     expect(isOtherMathsTopic('euclidean-geometry-gr10', 'Special Triangles Grade 10')).toBe(true)
   })
 
+  /**
+   * This one shipped. "Britse na Metrieke stelsel herleidings" -
+   * British-to-metric UNIT CONVERSIONS - was served as the Afrikaans video
+   * for Grade 11 trigonometric reduction formulae, because "herleiding" is
+   * both "reduction" and "conversion" in Afrikaans and it was the only
+   * candidate the Afrikaans queries returned.
+   *
+   * The guard could not catch it: it only ever rejected a title belonging
+   * to a DIFFERENT topic in its table, and unit conversion is not a CAPS
+   * FET topic, so nothing claimed it and nothing rejected it.
+   */
+  it('rejects a video that is not a CAPS topic at all, however the words overlap', () => {
+    expect(isOtherMathsTopic('trig-gr11', 'Britse na Metrieke stelsel herleidings')).toBe(true)
+    expect(isOtherMathsTopic('trig-gr11', 'Metric system conversions')).toBe(true)
+    expect(isOtherMathsTopic('algebra-gr10', 'Unit conversion made easy')).toBe(true)
+  })
+
+  it('still keeps a genuine Afrikaans reduction-formulae video', () => {
+    expect(isOtherMathsTopic('trig-gr11', 'Graad 11 Wiskunde: Herleidingsformules — sinus')).toBe(
+      false
+    )
+    expect(isOtherMathsTopic('trig-gr11', 'Reduksieformules Graad 11')).toBe(false)
+  })
+
   it('keeps a video that names the sub-topic’s own CAPS topic', () => {
     expect(
       isOtherMathsTopic('euclidean-geometry-gr10', 'Euclidean Geometry Grade 10: Midpoint Theorem')

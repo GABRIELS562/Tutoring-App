@@ -42,7 +42,8 @@ export const chemicalSystemsGr12: TopicContent = {
           type: 'video',
           title: 'Watch: Fertilizer Theory — Simple Science',
           videoId: 'YtyMCjBN1so',
-          videoIdAf: 'NVDaANbIHqA'
+          videoIdAf: 'NVDaANbIHqA',
+          titleAf: 'Kyk: Fisiese Wetenskap - Kunsmis — Wolkskool'
         }
       ]
     },
@@ -67,7 +68,8 @@ export const chemicalSystemsGr12: TopicContent = {
           type: 'video',
           title: 'Watch: The Haber Process — Simple Science',
           videoId: 'Vr8N5P-X4qI',
-          videoIdAf: 'Vr8N5P-X4qI'
+          videoIdAf: 'Vr8N5P-X4qI',
+          titleAf: 'Kyk: The Haber Process — Simple Science'
         }
       ]
     },
@@ -80,7 +82,8 @@ export const chemicalSystemsGr12: TopicContent = {
           type: 'video',
           title: 'Watch: The Ostwald Process — Simple Science',
           videoId: 'Mx12D7AOV50',
-          videoIdAf: 'Mx12D7AOV50'
+          videoIdAf: 'Mx12D7AOV50',
+          titleAf: 'Kyk: The Ostwald Process — Simple Science'
         }
       ]
     },

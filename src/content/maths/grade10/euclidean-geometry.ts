@@ -39,7 +39,8 @@ export const euclideanGeometryGr10: TopicContent = {
           type: 'video',
           title: 'Watch: Euclidean Geometry Grade 10: Opposite angles Parallelogram — Kevinmathscience',
           videoId: 'vWpzk0-tXzc',
-          videoIdAf: 'ThYkub-VRLg'
+          videoIdAf: 'ThYkub-VRLg',
+          titleAf: 'Kyk: 01 Hoeke en lyne — Wiskunde_Mathematics_SUM'
         }
       ]
     },
@@ -52,7 +53,8 @@ export const euclideanGeometryGr10: TopicContent = {
           type: 'video',
           title: 'Watch: Euclidean Geometry Grade 10: What is a parallelogram? — Kevinmathscience',
           videoId: 'g5Z0eGEKtSs',
-          videoIdAf: 'I5X9Cx73Vz0'
+          videoIdAf: 'I5X9Cx73Vz0',
+          titleAf: 'Kyk: 06 Bewys \'n parallelogram — Wiskunde_Mathematics_SUM'
         }
       ]
     },
@@ -65,7 +67,8 @@ export const euclideanGeometryGr10: TopicContent = {
           type: 'video',
           title: 'Watch: Euclidean Geometry Grade 10: Midpoint Theorem Introduction — Kevinmathscience',
           videoId: 'tlqb3NSFQ_0',
-          videoIdAf: 'v1-A2561yqk'
+          videoIdAf: 'v1-A2561yqk',
+          titleAf: 'Kyk: Middelpunt Stelling Gr10 Meetkunde — TheWhiteboardSA'
         }
       ]
     }

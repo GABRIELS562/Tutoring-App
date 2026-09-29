@@ -63,7 +63,8 @@ export const functionsGr10: TopicContent = {
           type: 'video',
           title: 'Watch: Hyperbola Grade 10 Functions Introduction — Miss Martins Maths and Science',
           videoId: 'oWDjn_PRndg',
-          videoIdAf: '06baipkT2_k'
+          videoIdAf: '06baipkT2_k',
+          titleAf: 'Kyk: Funksies Hiperbool Graad10: L1 Skets \'n Hiperbool — Online Maths by Miss Pythagoras'
         }
       ]
     },
@@ -76,7 +77,8 @@ export const functionsGr10: TopicContent = {
           type: 'video',
           title: 'Watch: Exponential Function grade 10: #1 — Kevinmathscience',
           videoId: 'Ijfu6KuR6mQ',
-          videoIdAf: 'gkopUPLDZFc'
+          videoIdAf: 'gkopUPLDZFc',
+          titleAf: 'Kyk: 09 Eksponensiële funksie skets — Wiskunde_Mathematics_SUM'
         }
       ]
     }

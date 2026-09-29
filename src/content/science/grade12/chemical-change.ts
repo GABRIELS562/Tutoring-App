@@ -59,7 +59,8 @@ export const chemicalChangeGr12: TopicContent = {
           type: 'video',
           title: 'Watch: Collision Theory grade 12: Part 1 — Kevinmathscience',
           videoId: '-vwGmXKrveU',
-          videoIdAf: '3C2-f51Fkdg'
+          videoIdAf: '3C2-f51Fkdg',
+          titleAf: 'Kyk: Gr. 12 Chemie: Reaksietempo en die botsingsteorie EENVOUDIG gemaak — Danike Aucamp_Wiskunde en Wetenskap '
         }
       ]
     },
@@ -84,7 +85,8 @@ export const chemicalChangeGr12: TopicContent = {
           type: 'video',
           title: 'Watch: Equilibrium Constant calculation TABLE METHOD - Easy example (Kc) Grade 12 Chemical Equilibrium — Miss Martins Maths and Science',
           videoId: 'pVPOSnhkiMs',
-          videoIdAf: 'EcSUTQgUa6U'
+          videoIdAf: 'EcSUTQgUa6U',
+          titleAf: 'Kyk: Gr.12 Chemie: VERSTAAN Chemiese ewewig (inleidend)  — Danike Aucamp_Wiskunde en Wetenskap '
         }
       ]
     },
@@ -97,7 +99,8 @@ export const chemicalChangeGr12: TopicContent = {
           type: 'video',
           title: 'Watch: Le Chatelier\'s Principle grade 12: Introduction — Kevinmathscience',
           videoId: 'NmDdSKuUp2A',
-          videoIdAf: 'oYjuix7oI9E'
+          videoIdAf: 'oYjuix7oI9E',
+          titleAf: 'Kyk: Le Chatelier\'s Principle - Colour Change — Simple Science'
         }
       ]
     },
@@ -122,7 +125,8 @@ export const chemicalChangeGr12: TopicContent = {
           type: 'video',
           title: 'Watch: Grade 12 Acids and Bases Grade 11 Revision PART 2: Strong/Weak vs Concentrated/dilute — Miss Martins Maths and Science',
           videoId: 'yayLppldjlA',
-          videoIdAf: 'fdvTByWaUxo'
+          videoIdAf: 'fdvTByWaUxo',
+          titleAf: 'Kyk: Gr. 12 Chemie: Sure en basisse Hidrolise — Danike Aucamp_Wiskunde en Wetenskap '
         }
       ]
     },
@@ -135,7 +139,8 @@ export const chemicalChangeGr12: TopicContent = {
           type: 'video',
           title: 'Watch: Acids and Bases Grade 12: Hydrolysis — Kevinmathscience',
           videoId: 'mlBoKpcMlrc',
-          videoIdAf: 'aWUBMgcBxSg'
+          videoIdAf: 'aWUBMgcBxSg',
+          titleAf: 'Kyk: Hydrolysis of Salts — Simple Science'
         }
       ]
     },
@@ -148,7 +153,8 @@ export const chemicalChangeGr12: TopicContent = {
           type: 'video',
           title: 'Watch: NECT Physical Sciences - Gr 12 Acid Base Titration — Class Act Education',
           videoId: 'e_VLUSFB4MU',
-          videoIdAf: 'q2dWH64Emrg'
+          videoIdAf: 'q2dWH64Emrg',
+          titleAf: 'Kyk: Titrasies 1 — WSILAB'
         }
       ]
     },
@@ -173,7 +179,8 @@ export const chemicalChangeGr12: TopicContent = {
           type: 'video',
           title: 'Watch: Electrochemistry Gr 12 : Galvanic cell (using the table) — Kevinmathscience',
           videoId: '5dPFZZwLhDk',
-          videoIdAf: '9KR4nyALN2Q'
+          videoIdAf: '9KR4nyALN2Q',
+          titleAf: 'Kyk: Fisiese Wetenskap - Galvaniese selle — Wolkskool'
         }
       ]
     },

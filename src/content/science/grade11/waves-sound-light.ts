@@ -52,7 +52,8 @@ export const wavesSoundLightGr11: TopicContent = {
           type: 'video',
           title: 'Watch: Grade 11 - Waves, Sound, and Light | Geometric Optics (Snell’s Law) | November 2017 | Mlungisi Nkosi — Mlungisi Nkosi Maths & Science',
           videoId: 'TnZTq6EFaAk',
-          videoIdAf: '_908GaSQJ_k'
+          videoIdAf: '_908GaSQJ_k',
+          titleAf: 'Kyk: Fisika - Geometriese Optika en Snell se Wet Eksamenvraag — Shap Science SA - Juffrou R'
         }
       ]
     },
@@ -77,7 +78,8 @@ export const wavesSoundLightGr11: TopicContent = {
           type: 'video',
           title: 'Watch: Huygens\' Principle and Diffraction of Waves - Science Grade 11 and 12 — Mindset',
           videoId: 'vqa4L0DuWbM',
-          videoIdAf: 'rppEep6c1Gs'
+          videoIdAf: 'rppEep6c1Gs',
+          titleAf: 'Kyk: Graad 11 Fisika 2D en 3D golffronte deel 1 — Hoërskool Alberton'
         }
       ]
     },
@@ -90,7 +92,8 @@ export const wavesSoundLightGr11: TopicContent = {
           type: 'video',
           title: 'Watch: Diffraction — Mindset',
           videoId: 'FahppoRvRDc',
-          videoIdAf: 'lt2DNu9KSDQ'
+          videoIdAf: 'lt2DNu9KSDQ',
+          titleAf: 'Kyk: Gr. 11 Fisika: Diffraksie van lig — Danike Aucamp_Wiskunde en Wetenskap '
         }
       ]
     }

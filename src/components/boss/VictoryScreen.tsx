@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
+import { useMounted } from '@/hooks/useMounted'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { useTranslations } from 'next-intl'
@@ -39,6 +40,7 @@ export default function VictoryScreen({
   elapsedSeconds,
   onPlayAgain,
 }: VictoryScreenProps) {
+  const mounted = useMounted()
   const t = useTranslations('boss')
   const { transition, variant } = useMotionSafe()
   const canvasRef = useRef<HTMLCanvasElement>(null)
@@ -184,7 +186,7 @@ export default function VictoryScreen({
           <Download className="w-4 h-4" aria-hidden="true" />
           {t('download')}
         </button>
-        {typeof navigator !== 'undefined' && 'share' in navigator && (
+        {mounted && 'share' in navigator && (
           <button
             type="button"
             onClick={handleShare}

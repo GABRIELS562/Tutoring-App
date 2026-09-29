@@ -38,7 +38,8 @@ export const functionsGr12: TopicContent = {
           type: 'video',
           title: 'Watch: Parabola Domain Range Axis Symmetry Grade | 11 Functions — Kevinmathscience',
           videoId: 'AEebC8oLN2M',
-          videoIdAf: 'XugNFEZzBd4'
+          videoIdAf: 'XugNFEZzBd4',
+          titleAf: 'Kyk: Definisieversameling en Waardeversameling (wiskdou) — Dou Kleefstra'
         }
       ]
     },
@@ -51,7 +52,8 @@ export const functionsGr12: TopicContent = {
           type: 'video',
           title: 'Watch: Grade 12 Algebra Lesson 1.5| Functions : Inverse functions — Mlungisi Nkosi Maths & Science',
           videoId: '0hIPK2-d2oM',
-          videoIdAf: 'Q0vjmaDK8X0'
+          videoIdAf: 'Q0vjmaDK8X0',
+          titleAf: 'Kyk: Funksies Graad12: L2 Inverse van Reguitlyn — Online Maths by Miss Pythagoras'
         }
       ]
     },
@@ -64,7 +66,8 @@ export const functionsGr12: TopicContent = {
           type: 'video',
           title: 'Watch: 3) Inverse of parabola | Part 1 — Kevinmathscience',
           videoId: '1b2BsuPmCfQ',
-          videoIdAf: 's8AkM-QJJ0U'
+          videoIdAf: 's8AkM-QJJ0U',
+          titleAf: 'Kyk: 02 Kwadratiese vergelykings — Wiskunde_Mathematics_SUM'
         }
       ]
     }

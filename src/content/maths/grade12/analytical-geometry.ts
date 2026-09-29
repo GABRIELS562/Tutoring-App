@@ -39,7 +39,8 @@ export const analyticalGeometryGr12: TopicContent = {
           type: 'video',
           title: 'Watch: Equation of Circle Grade 12 — Kevinmathscience',
           videoId: 'cjP4tmQtxEs',
-          videoIdAf: 'MReI_dq_qbI'
+          videoIdAf: 'MReI_dq_qbI',
+          titleAf: 'Kyk: 03 Sirkel vergelykings nie in standaardvorm — Wiskunde_Mathematics_SUM'
         }
       ]
     },
@@ -52,7 +53,8 @@ export const analyticalGeometryGr12: TopicContent = {
           type: 'video',
           title: 'Watch: Lesson 2: How To Find the Equation of a Circle & Tangent to a Circle | Analytical Geometry — Mlungisi Nkosi Maths & Science',
           videoId: '4I9OcKET5Ys',
-          videoIdAf: 'oVrIJWWtdKE'
+          videoIdAf: 'oVrIJWWtdKE',
+          titleAf: 'Kyk: Konsep van Sirkel Vergelyking met Voorbeeld — SlimDink'
         }
       ]
     },
@@ -65,7 +67,8 @@ export const analyticalGeometryGr12: TopicContent = {
           type: 'video',
           title: 'Watch: Analytical Geometry Grade 12: L4 Equation of a Tangent to Circle — Online Maths by Miss Pythagoras',
           videoId: 'sQNItmXLyuI',
-          videoIdAf: '5_jYRFMXMZE'
+          videoIdAf: '5_jYRFMXMZE',
+          titleAf: 'Kyk: Wiskunde - Analitiese Meetkunde: Sirkels en raaklyne — Wolkskool'
         }
       ]
     },

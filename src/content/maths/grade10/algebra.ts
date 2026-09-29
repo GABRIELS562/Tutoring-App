@@ -38,7 +38,8 @@ export const algebraGr10: TopicContent = {
           type: 'video',
           title: 'Watch: Grade 11 Exponents | Grade 10 Exponent law and basic examples REVISION — Miss Martins Maths and Science',
           videoId: 'EL1z_5pWAbk',
-          videoIdAf: '2gasdlPK940'
+          videoIdAf: '2gasdlPK940',
+          titleAf: 'Kyk: Graad 10 Algebra Eksponent Wette — VAW-Vereniging vir Afrikaanse Wiskunde-onderwysers'
         }
       ]
     },
@@ -51,7 +52,8 @@ export const algebraGr10: TopicContent = {
           type: 'video',
           title: 'Watch: 8) Factorising trinomials grade 10 | Part 2 — Kevinmathscience',
           videoId: 'Py1WZEpdcRg',
-          videoIdAf: 'AJf7yfKFDIw'
+          videoIdAf: 'AJf7yfKFDIw',
+          titleAf: 'Kyk: Faktorisering: Kwadratiese Drieterm — Wiskunde Broers'
         }
       ]
     },
@@ -64,7 +66,8 @@ export const algebraGr10: TopicContent = {
           type: 'video',
           title: 'Watch: 10) Difference of Cubes Grade 10 — Kevinmathscience',
           videoId: 'Dqjk_9taDoI',
-          videoIdAf: 'tBSJm_TTXCo'
+          videoIdAf: 'tBSJm_TTXCo',
+          titleAf: 'Kyk: Graad 10 Faktoriseer die som en verskil van twee derdemagte(wiskvaw) (wiskdo) — VAW-Vereniging vir Afrikaanse Wiskunde-onderwysers'
         }
       ]
     },
@@ -77,7 +80,8 @@ export const algebraGr10: TopicContent = {
           type: 'video',
           title: 'Watch: Equations Grade 10: Linear Equation without fraction — Kevinmathscience',
           videoId: 'LHAq_5VmxRU',
-          videoIdAf: 'LZQnMy9ztfk'
+          videoIdAf: 'LZQnMy9ztfk',
+          titleAf: 'Kyk: 01 Lineêre vergelykings — Wiskunde_Mathematics_SUM'
         }
       ]
     },
@@ -90,7 +94,8 @@ export const algebraGr10: TopicContent = {
           type: 'video',
           title: 'Watch: Quadratic Equations Grade 10 — Kevinmathscience',
           videoId: 'z-aP8HQA-dk',
-          videoIdAf: 'b4Z_V04fjVs'
+          videoIdAf: 'b4Z_V04fjVs',
+          titleAf: 'Kyk: 03 Nog kwadratiese vergelykings — Wiskunde_Mathematics_SUM'
         }
       ]
     },
@@ -103,7 +108,8 @@ export const algebraGr10: TopicContent = {
           type: 'video',
           title: 'Watch: Simultaneous Equations grade 10 | Introduction to Elimination and Substitution — Kevinmathscience',
           videoId: 'o5JosuKTUyA',
-          videoIdAf: 'zRS-ZFpvzR8'
+          videoIdAf: 'zRS-ZFpvzR8',
+          titleAf: 'Kyk: 07 Gelyktydige vergelykings — Wiskunde_Mathematics_SUM'
         }
       ]
     },
@@ -116,7 +122,8 @@ export const algebraGr10: TopicContent = {
           type: 'video',
           title: 'Watch: Grade 10 Inequalities — Kevinmathscience',
           videoId: 'OFX7zmbEmro',
-          videoIdAf: 'A3sUu-gFfAw'
+          videoIdAf: 'A3sUu-gFfAw',
+          titleAf: 'Kyk: 08 Lineêre ongelykhede — Wiskunde_Mathematics_SUM'
         }
       ]
     }

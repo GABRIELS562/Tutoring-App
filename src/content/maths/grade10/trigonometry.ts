@@ -39,7 +39,8 @@ export const trigonometryGr10: TopicContent = {
           type: 'video',
           title: 'Watch: Trig Triangles Grade 10 — Kevinmathscience',
           videoId: '0Sr8YWwRX28',
-          videoIdAf: 'rg3_rjEEWZ0'
+          videoIdAf: 'rg3_rjEEWZ0',
+          titleAf: 'Kyk: 02 Trig verhoudings — Wiskunde_Mathematics_SUM'
         }
       ]
     },
@@ -51,7 +52,8 @@ export const trigonometryGr10: TopicContent = {
         {
           type: 'video',
           title: 'Kyk: 09 Trig berekeninge op die kartesiese vlak — Wiskunde_Mathematics_SUM',
-          videoIdAf: 'lbfvJw6Ywc8'
+          videoIdAf: 'lbfvJw6Ywc8',
+          titleAf: 'Kyk: 09 Trig berekeninge op die kartesiese vlak — Wiskunde_Mathematics_SUM'
         }
       ]
     },
@@ -76,7 +78,8 @@ export const trigonometryGr10: TopicContent = {
           type: 'video',
           title: 'Watch: Sin Graph Grade 10 — Kevinmathscience',
           videoId: 'XmN3h5nTGis',
-          videoIdAf: 'XT9ufKe7Khw'
+          videoIdAf: 'XT9ufKe7Khw',
+          titleAf: 'Kyk: W10.10 Trig grafieke teken sin en cos — Stefan Buys'
         }
       ]
     }

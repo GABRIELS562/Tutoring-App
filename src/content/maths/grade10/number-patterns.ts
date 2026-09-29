@@ -38,7 +38,8 @@ export const numberPatternsGr10: TopicContent = {
           type: 'video',
           title: 'Watch: 2) Solve X Arithmetic Sequence | Intro — Kevinmathscience',
           videoId: 'tH6Jsh20gUA',
-          videoIdAf: 'DUj1JgzOLus'
+          videoIdAf: 'DUj1JgzOLus',
+          titleAf: 'Kyk: Rekenkundige Rye — Wiskunde Broers'
         }
       ]
     },

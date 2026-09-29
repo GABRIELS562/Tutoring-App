@@ -38,7 +38,8 @@ export const probabilityGr10: TopicContent = {
           type: 'video',
           title: 'Watch: Probability Grade 10 | Venn Diagram — Kevinmathscience',
           videoId: 'MCsC1N333jo',
-          videoIdAf: 'wRnin4mx_WE'
+          videoIdAf: 'wRnin4mx_WE',
+          titleAf: 'Kyk: 03 Venn diagramme 1 — Wiskunde_Mathematics_SUM'
         }
       ]
     },

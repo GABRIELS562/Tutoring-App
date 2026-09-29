@@ -58,7 +58,8 @@ export const mechanicsGr12: TopicContent = {
           type: 'video',
           title: 'Watch: Grade 12 momentum Newtons second law in terms of momentum — Miss Martins Maths and Science',
           videoId: 'yDoQnWeNU4k',
-          videoIdAf: 'iXF_7-EjS9w'
+          videoIdAf: 'iXF_7-EjS9w',
+          titleAf: 'Kyk: Momentum, Impuls en Wet van Behoud van Momentum: Gr. 12 Fisika — Danike Aucamp_Wiskunde en Wetenskap '
         }
       ]
     },
@@ -71,7 +72,8 @@ export const mechanicsGr12: TopicContent = {
           type: 'video',
           title: 'Watch: 4) Linear Momentum Conservation | Intro — Kevinmathscience',
           videoId: 'BLOcAfK2xq8',
-          videoIdAf: 'XrGaqWTueOQ'
+          videoIdAf: 'XrGaqWTueOQ',
+          titleAf: 'Kyk: Wet van behoud van momentum — WSILAB'
         }
       ]
     },
@@ -96,7 +98,8 @@ export const mechanicsGr12: TopicContent = {
           type: 'video',
           title: 'Watch: Grade 12 Impulse and impulse momentum theorem — Miss Martins Maths and Science',
           videoId: 'SSUo3FSQCD8',
-          videoIdAf: 'szBVJIBS4HE'
+          videoIdAf: 'szBVJIBS4HE',
+          titleAf: 'Kyk: Momentum & Impulse Revision Lesson — Simple Science'
         }
       ]
     },
@@ -109,7 +112,8 @@ export const mechanicsGr12: TopicContent = {
           type: 'video',
           title: 'Watch: 1) Vertical projectile motion introduction — Kevinmathscience',
           videoId: 'gSdX5US3mm0',
-          videoIdAf: 'G02o72zDL0c'
+          videoIdAf: 'G02o72zDL0c',
+          titleAf: 'Kyk: Fisika - Vertikale Projektielbeweging Eksamenvraag 5 — Shap Science SA - Juffrou R'
         }
       ]
     },
@@ -122,7 +126,8 @@ export const mechanicsGr12: TopicContent = {
           type: 'video',
           title: 'Watch: 2) Vertical projectile motion calculations — Kevinmathscience',
           videoId: 'FSt53TnJ6xM',
-          videoIdAf: 'KZtGnXvpJz0'
+          videoIdAf: 'KZtGnXvpJz0',
+          titleAf: 'Kyk: Gr. 12 Fisika: Projektielbeweging — Danike Aucamp_Wiskunde en Wetenskap '
         }
       ]
     },
@@ -135,7 +140,8 @@ export const mechanicsGr12: TopicContent = {
           type: 'video',
           title: 'Watch: Grade 12 work energy and power : What is work? — Kevinmathscience',
           videoId: 'HT34ge6EZgE',
-          videoIdAf: 'D_uuoHCa30c'
+          videoIdAf: 'D_uuoHCa30c',
+          titleAf: 'Kyk: Gr. 12 Fisika: Arbeid, energie en drywing — Danike Aucamp_Wiskunde en Wetenskap '
         }
       ]
     },
@@ -148,7 +154,8 @@ export const mechanicsGr12: TopicContent = {
           type: 'video',
           title: 'Watch: Grade 12 work energy and power : Work energy theorem — Kevinmathscience',
           videoId: 'RAghwed1-ss',
-          videoIdAf: 'dmw6A4kkzwQ'
+          videoIdAf: 'dmw6A4kkzwQ',
+          titleAf: 'Kyk: Gr. 12 Fisika: Arbeid, energie en drywing (arbeid-energie-stelling) — Danike Aucamp_Wiskunde en Wetenskap '
         }
       ]
     },
@@ -173,7 +180,8 @@ export const mechanicsGr12: TopicContent = {
           type: 'video',
           title: 'Watch: Grade 12 work energy and power : Work practice questions — Kevinmathscience',
           videoId: 'GJ_-5Fxt-ok',
-          videoIdAf: 'RNQmaj__ri8'
+          videoIdAf: 'RNQmaj__ri8',
+          titleAf: 'Kyk: Gr. 12 Fisika: Arbeid, energie en drywing - op \'n skuinsvlak — Danike Aucamp_Wiskunde en Wetenskap '
         }
       ]
     }

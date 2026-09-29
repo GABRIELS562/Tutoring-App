@@ -116,7 +116,8 @@ export const electricityMagnetismGr10: TopicContent = {
           type: 'video',
           title: 'Watch: Resistance Grade 10 — Kevinmathscience',
           videoId: 'JZJlJ18ggc0',
-          videoIdAf: 'IpwMwZfQdUM'
+          videoIdAf: 'IpwMwZfQdUM',
+          titleAf: 'Kyk: Stroombane: Weerstand Graad 10 Fisika — Ekstra Wetenskap Klasse'
         }
       ]
     },
@@ -129,7 +130,8 @@ export const electricityMagnetismGr10: TopicContent = {
           type: 'video',
           title: 'Watch: Physics | Electricity Circuits Part 1 | Resistors in series — Mlungisi Nkosi Maths & Science',
           videoId: 'LIgyQkUsmWo',
-          videoIdAf: 'XVVj0ABjs4o'
+          videoIdAf: 'XVVj0ABjs4o',
+          titleAf: 'Kyk: Gr. 10 en 11 Elektrisiteit (sonder interne weerstand moeiliker voorbeeld) — Danike Aucamp_Wiskunde en Wetenskap '
         }
       ]
     },

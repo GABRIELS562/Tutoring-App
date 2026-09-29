@@ -40,7 +40,8 @@ export const opticalPhenomenaGr12: TopicContent = {
           type: 'video',
           title: 'Watch: Photoelectric effect Grade 12 | Part 1 — Kevinmathscience',
           videoId: '_hKMDg2Wuq0',
-          videoIdAf: 'ozqyFow1KM0'
+          videoIdAf: 'ozqyFow1KM0',
+          titleAf: 'Kyk: Gr. 12: Fotoëlektriese effek — Danike Aucamp_Wiskunde en Wetenskap '
         }
       ]
     },
@@ -53,7 +54,8 @@ export const opticalPhenomenaGr12: TopicContent = {
           type: 'video',
           title: 'Watch: Photoelectric effect Grade 12 | Part 2 — Kevinmathscience',
           videoId: 'OucuEAWiMJo',
-          videoIdAf: 'Yp-Wgn8Wt6k'
+          videoIdAf: 'Yp-Wgn8Wt6k',
+          titleAf: 'Kyk: Photoelectric Effect Graphs — Simple Science'
         }
       ]
     },
@@ -78,7 +80,8 @@ export const opticalPhenomenaGr12: TopicContent = {
           type: 'video',
           title: 'Watch: Energy Level Transitions (for Emission and Absorption Spectra) — Simple Science',
           videoId: '5ahrdgZqQbg',
-          videoIdAf: 'hA27-yKJuNM'
+          videoIdAf: 'hA27-yKJuNM',
+          titleAf: 'Kyk: Absorption Spectra — Simple Science'
         }
       ]
     },
@@ -91,7 +94,8 @@ export const opticalPhenomenaGr12: TopicContent = {
           type: 'video',
           title: 'Watch: Absorption Spectra — Simple Science',
           videoId: 'hA27-yKJuNM',
-          videoIdAf: '57vcGZzJ1Ug'
+          videoIdAf: '57vcGZzJ1Ug',
+          titleAf: 'Kyk: Emission Spectra — Simple Science'
         }
       ]
     }

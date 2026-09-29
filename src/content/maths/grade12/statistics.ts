@@ -63,7 +63,8 @@ export const statisticsGr12: TopicContent = {
           type: 'video',
           title: 'Watch: Statistics Grade 12 Mathematics September 2021 Trial | Scatter Plot, Least Squares Regression Line.. — Khoza Explains',
           videoId: 'vEDMk4xVa8k',
-          videoIdAf: 'r4Fzj_4gpC4'
+          videoIdAf: 'r4Fzj_4gpC4',
+          titleAf: 'Kyk: Graad 12 Statistiek #5: Linieêre Regressie (Kleinste Kwadrate Metode) — WiskundeMetMargie'
         }
       ]
     },
@@ -75,7 +76,8 @@ export const statisticsGr12: TopicContent = {
         {
           type: 'video',
           title: 'Kyk: Statistiek Graad12:L3 Korrelasie en korrelasiekoeffisiënt — Online Maths by Miss Pythagoras',
-          videoIdAf: 'Jiml5rfBIlw'
+          videoIdAf: 'Jiml5rfBIlw',
+          titleAf: 'Kyk: Statistiek Graad12:L3 Korrelasie en korrelasiekoeffisiënt — Online Maths by Miss Pythagoras'
         }
       ]
     }

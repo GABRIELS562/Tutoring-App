@@ -38,7 +38,8 @@ export const analyticalGeometryGr10: TopicContent = {
           type: 'video',
           title: 'Watch: Analytical Geometry Grade 10: Distance formula — Kevinmathscience',
           videoId: 'H5hq7wkldj8',
-          videoIdAf: 'Qk9O9PhyqtM'
+          videoIdAf: 'Qk9O9PhyqtM',
+          titleAf: 'Kyk: Analitiese meetkunde Afstand graad 10 en ouer — VAW-Vereniging vir Afrikaanse Wiskunde-onderwysers'
         }
       ]
     },
@@ -51,7 +52,8 @@ export const analyticalGeometryGr10: TopicContent = {
           type: 'video',
           title: 'Watch: Analytical Geometry Grade 10: Midpoint — Kevinmathscience',
           videoId: 'HtNFDWGpE7U',
-          videoIdAf: 'uNtfSc_RUZE'
+          videoIdAf: 'uNtfSc_RUZE',
+          titleAf: 'Kyk: 03 Middelpunt van \'n lynsegment — Wiskunde_Mathematics_SUM'
         }
       ]
     },
@@ -64,7 +66,8 @@ export const analyticalGeometryGr10: TopicContent = {
           type: 'video',
           title: 'Watch: Analytical Geometry Grade 10: Gradient formula — Kevinmathscience',
           videoId: 'Pqafv6sV6Ng',
-          videoIdAf: 'HLjh0U2C248'
+          videoIdAf: 'HLjh0U2C248',
+          titleAf: 'Kyk: Gradiënt afsnit metode. Skets reguit lyn grafiek (wiskdou) — Dou Kleefstra'
         }
       ]
     }

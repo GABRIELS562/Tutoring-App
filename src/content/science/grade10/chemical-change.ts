@@ -56,7 +56,8 @@ export const chemicalChangeGr10: TopicContent = {
           type: 'video',
           title: 'Watch: Balancing Chemical Equations Chemistry — Miss Martins Maths and Science',
           videoId: 'WNaib8LP0_w',
-          videoIdAf: 'PuXvpX0iLmw'
+          videoIdAf: 'PuXvpX0iLmw',
+          titleAf: 'Kyk: Gr. 10 Chemie: Leer die balanseer van chemiese vergelykings in 10 min — Danike Aucamp_Wiskunde en Wetenskap '
         }
       ]
     },
@@ -94,7 +95,8 @@ export const chemicalChangeGr10: TopicContent = {
           type: 'video',
           title: 'Watch: Redox reactions grade 11 Chemistry: Introduction and Overview — Miss Martins Maths and Science',
           videoId: 'Ol2vv4WM7FA',
-          videoIdAf: 'A-XXCYbij5Q'
+          videoIdAf: 'A-XXCYbij5Q',
+          titleAf: 'Kyk: Gr. 10 Chemie: Reaksies in waterige oplossings (Redoksreaksies) — Danike Aucamp_Wiskunde en Wetenskap '
         }
       ]
     },
@@ -107,7 +109,8 @@ export const chemicalChangeGr10: TopicContent = {
           type: 'video',
           title: 'Watch: Calculating Mole Grade 10 | Part 1 — Kevinmathscience',
           videoId: 'nAlbPOUili0',
-          videoIdAf: 'ncwZUv2DtW0'
+          videoIdAf: 'ncwZUv2DtW0',
+          titleAf: 'Kyk: Gr.10 Die Molbegrip. 1 — Douwliena Fourie'
         }
       ]
     },
@@ -120,7 +123,8 @@ export const chemicalChangeGr10: TopicContent = {
           type: 'video',
           title: 'Watch: Quantitative Aspects of Chemical Change: Molar Volume — Kevinmathscience',
           videoId: 'rEVNjscIpic',
-          videoIdAf: 'OJ7xjOnDHhM'
+          videoIdAf: 'OJ7xjOnDHhM',
+          titleAf: 'Kyk: Gr.10 Molere gasvolume. — Douwliena Fourie'
         }
       ]
     },
@@ -133,7 +137,8 @@ export const chemicalChangeGr10: TopicContent = {
           type: 'video',
           title: 'Watch: Empirical Formula: How to calculate | Stoichiometry | Chemistry — Miss Martins Maths and Science',
           videoId: '1u6B4LePBKo',
-          videoIdAf: 'K6OFw8xL9KU'
+          videoIdAf: 'K6OFw8xL9KU',
+          titleAf: 'Kyk: Gr. 10 Chemie: Persentasie samestelling, Persentasie opbrengs en Empiriese formule — Danike Aucamp_Wiskunde en Wetenskap '
         }
       ]
     },
@@ -158,7 +163,8 @@ export const chemicalChangeGr10: TopicContent = {
           type: 'video',
           title: 'Watch: PHYSICAL SCIENCES GRADE 10: STOICHIOMETRIC CALCULATIONS. — PHAKAMA RESEARCH',
           videoId: 'JXk770w902g',
-          videoIdAf: 'zcyM9UQYeWc'
+          videoIdAf: 'zcyM9UQYeWc',
+          titleAf: 'Kyk: Gr.10 Stoigiometriese berekeninge. — Douwliena Fourie'
         }
       ]
     }

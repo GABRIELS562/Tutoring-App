@@ -368,10 +368,30 @@ const DEFINITIVE_MARKERS: Record<string, RegExp> = {
   mechanics: /\bwep\b|work.{0,4}energy.{0,4}(theorem|and power)/i,
 }
 
+/**
+ * Not a CAPS FET topic at all, however much vocabulary it shares.
+ *
+ * isOtherMathsTopic only ever rejected a title that belonged to a
+ * DIFFERENT topic in the table below it. A title belonging to no listed
+ * topic was therefore accepted by default - and "Britse na Metrieke
+ * stelsel herleidings" (British-to-metric UNIT CONVERSIONS) shipped as the
+ * Afrikaans video for Grade 11 trigonometric reduction formulae, because
+ * "herleiding" is both "reduction" and "conversion" in Afrikaans, it was
+ * the only candidate the queries returned, and unit conversion is not a
+ * topic anything here claims.
+ *
+ * Keep this to things that are genuinely outside the FET curriculum and
+ * collide with a real topic's words. It is checked before everything else.
+ */
+const NOT_CAPS_TOPIC =
+  /metric system|imperial|unit conversion|convert units|metrieke stelsel|britse|eenheidsomskakeling|omskakeling van eenhede/i
+
 export function isOtherMathsTopic(slug: string, rawTitle: string): boolean {
   const markers = IS_SCIENCE ? SCIENCE_TOPIC_MARKERS : TOPIC_MARKERS
   const key = topicKey(slug)
   const title = fold(rawTitle)
+
+  if (NOT_CAPS_TOPIC.test(title)) return true
 
   const claimedBy = Object.entries(DEFINITIVE_MARKERS).find(([, re]) => re.test(title))
   if (claimedBy && claimedBy[0] !== key) return true

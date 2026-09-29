@@ -1,6 +1,7 @@
 'use client'
 
 import { useRef, useState, useEffect } from 'react'
+import { useMounted } from '@/hooks/useMounted'
 import { Download, Share2, Loader2, Check } from 'lucide-react'
 
 interface CertificateGeneratorProps {
@@ -18,6 +19,7 @@ export default function CertificateGenerator({
   modulesCompleted,
   issuedAt,
 }: CertificateGeneratorProps) {
+  const mounted = useMounted()
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const [isGenerating, setIsGenerating] = useState(false)
   const [qrDataUrl, setQrDataUrl] = useState<string | null>(null)
@@ -225,7 +227,7 @@ export default function CertificateGenerator({
           Download Certificate
         </button>
 
-        {typeof navigator !== 'undefined' && 'share' in navigator && (
+        {mounted && 'share' in navigator && (
           <button
             onClick={handleShare}
             disabled={isGenerating}
@@ -250,7 +252,7 @@ export default function CertificateGenerator({
           className="text-sm px-3 py-1 rounded inline-block"
           style={{ background: 'var(--surface2)', color: 'var(--ai-purple)' }}
         >
-          {typeof window !== 'undefined' ? `${window.location.origin}/verify/${certificateId}` : ''}
+          {mounted ? `${window.location.origin}/verify/${certificateId}` : ''}
         </code>
         <p className="text-xs" style={{ color: 'var(--muted-custom)' }}>
           Add this link or QR code to your CV for employer verification

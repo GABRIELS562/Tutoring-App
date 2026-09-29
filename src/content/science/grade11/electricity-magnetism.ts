@@ -43,7 +43,8 @@ export const electricityMagnetismGr11: TopicContent = {
           type: 'video',
           title: 'Watch: Coulomb\'s Law Electrostatics grade 11 and 12 — Miss Martins Maths and Science',
           videoId: 'ngfkLMOQDms',
-          videoIdAf: 'It7YMCQugpg'
+          videoIdAf: 'It7YMCQugpg',
+          titleAf: 'Kyk: Graad 11 en 12 Fisika: Elektrostatika Coulomb se Wet — Hoërskool Alberton'
         }
       ]
     },
@@ -56,7 +57,8 @@ export const electricityMagnetismGr11: TopicContent = {
           type: 'video',
           title: 'Watch: Physics | Electrostatics | Electric fields Intesity — Mlungisi Nkosi Maths & Science',
           videoId: 'lNMLhV5KdoE',
-          videoIdAf: 'ax-hC_X6cNY'
+          videoIdAf: 'ax-hC_X6cNY',
+          titleAf: 'Kyk: Elektrostatika (Elektriese veld): Sept 2019 (Vrystaat) se Vraag 7 — HenBot Wetenskap'
         }
       ]
     },
@@ -105,7 +107,8 @@ export const electricityMagnetismGr11: TopicContent = {
           type: 'video',
           title: 'Watch: Ohm\'s Law Grade 11 Electric Circuits (Electricity grade 11 & 12) — Miss Martins Maths and Science',
           videoId: 'Wrx8j7839VI',
-          videoIdAf: 'mfGXo-jY_jg'
+          videoIdAf: 'mfGXo-jY_jg',
+          titleAf: 'Kyk: Gr.10 Ohm se wet — Douwliena Fourie'
         }
       ]
     },

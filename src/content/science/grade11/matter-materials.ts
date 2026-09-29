@@ -44,7 +44,8 @@ export const matterMaterialsGr11: TopicContent = {
           type: 'video',
           title: 'Watch: Atomic Combinations grade 11 :Lewis diagram # 1 — Kevinmathscience',
           videoId: 'sCkasELDYls',
-          videoIdAf: 'qox7TP5hNT4'
+          videoIdAf: 'qox7TP5hNT4',
+          titleAf: 'Kyk: Gr. 11 Chemie: Lewis-diagramme — Danike Aucamp_Wiskunde en Wetenskap '
         }
       ]
     },
@@ -93,7 +94,8 @@ export const matterMaterialsGr11: TopicContent = {
           type: 'video',
           title: 'Watch: Intermolecular Forces grade 11: Different types — Kevinmathscience',
           videoId: 'esJ-go0-t84',
-          videoIdAf: 'cMW-o3Ai7SU'
+          videoIdAf: 'cMW-o3Ai7SU',
+          titleAf: 'Kyk: Gr. 11 Chemie: Intermolekulêre kragte | ALLES wat jy moet weet in 10min — Danike Aucamp_Wiskunde en Wetenskap '
         }
       ]
     },
@@ -106,7 +108,8 @@ export const matterMaterialsGr11: TopicContent = {
           type: 'video',
           title: 'Watch: Intermolecular Forces grade 11: Introduction # 1 — Kevinmathscience',
           videoId: 'aJTAj_8pyWI',
-          videoIdAf: 'HkWjBev_3hc'
+          videoIdAf: 'HkWjBev_3hc',
+          titleAf: 'Kyk: Gr. 11 Chemie: Die effek van intermolekulêre kragte — Danike Aucamp_Wiskunde en Wetenskap '
         }
       ]
     },

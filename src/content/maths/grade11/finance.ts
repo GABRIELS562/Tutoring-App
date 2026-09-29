@@ -52,7 +52,8 @@ export const financeGr11: TopicContent = {
           type: 'video',
           title: 'Watch: Grade 12 Financial Maths Lesson 5 | Present-Value & Future-Value Annuities |  Mlungisi Nkosi — Mlungisi Nkosi Maths & Science',
           videoId: '16Hw202Et5o',
-          videoIdAf: 'xmgSEimN_G0'
+          videoIdAf: 'xmgSEimN_G0',
+          titleAf: 'Kyk: 02 Toekomstige waarde annuiteite — Wiskunde_Mathematics_SUM'
         }
       ]
     },
@@ -64,7 +65,8 @@ export const financeGr11: TopicContent = {
         {
           type: 'video',
           title: 'Kyk: 03 Huidige waarde annuïteite — Wiskunde_Mathematics_SUM',
-          videoIdAf: 'xgMk-9CT0dI'
+          videoIdAf: 'xgMk-9CT0dI',
+          titleAf: 'Kyk: 03 Huidige waarde annuïteite — Wiskunde_Mathematics_SUM'
         }
       ]
     },
@@ -77,7 +79,8 @@ export const financeGr11: TopicContent = {
           type: 'video',
           title: 'Watch: 04 Effective and nominal interest rates — Wiskunde_Mathematics_SUM',
           videoId: 'dml0IOgpPWw',
-          videoIdAf: 'Rbgtx-bR9CI'
+          videoIdAf: 'Rbgtx-bR9CI',
+          titleAf: 'Kyk: Graad 11 Hoofstuk 10 Les 3 Nominale en effektiewe rente — Rochelle Van der Merwe'
         }
       ]
     }

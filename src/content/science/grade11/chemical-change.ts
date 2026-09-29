@@ -56,7 +56,8 @@ export const chemicalChangeGr11: TopicContent = {
           type: 'video',
           title: 'Watch: Quantitative Aspects of Chemical Change: Percentage Yield — Kevinmathscience',
           videoId: 'c7qwFPkNm6A',
-          videoIdAf: '1eAW8lQVOaE'
+          videoIdAf: '1eAW8lQVOaE',
+          titleAf: 'Kyk: Gr. 11 Chemie: Persentasie samestelling, Persentasie opbrengs en Empiriese formules — Danike Aucamp_Wiskunde en Wetenskap '
         }
       ]
     },
@@ -69,7 +70,8 @@ export const chemicalChangeGr11: TopicContent = {
           type: 'video',
           title: 'Watch: Empirical and molecular formula grade 11 — Kevinmathscience',
           videoId: 'NfLgmW146Es',
-          videoIdAf: 'rDR6ZeUbmcI'
+          videoIdAf: 'rDR6ZeUbmcI',
+          titleAf: 'Kyk: HS GR11 Empiriese Formule — WSILAB'
         }
       ]
     },
@@ -94,7 +96,8 @@ export const chemicalChangeGr11: TopicContent = {
           type: 'video',
           title: 'Watch: Endothermic vs Exothermic Reactions | Energy and Chemical Change | Grade 11 — Mlungisi Nkosi Maths & Science',
           videoId: '4i3shBpWINI',
-          videoIdAf: 'n0hj7XjwjZY'
+          videoIdAf: 'n0hj7XjwjZY',
+          titleAf: 'Kyk: Gr. 11 Chemie: Energie en Chemiese verandering (eksotermiese en endotermiese reaksies) | NEUTEDOP — Danike Aucamp_Wiskunde en Wetenskap '
         }
       ]
     },

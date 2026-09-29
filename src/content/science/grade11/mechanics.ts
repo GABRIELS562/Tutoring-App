@@ -44,7 +44,8 @@ export const mechanicsGr11: TopicContent = {
           type: 'video',
           title: 'Watch: Grade 11 vector in two dimensions physics LEVEL EASY — Miss Martins Maths and Science',
           videoId: 'LT_0pICM7Ns',
-          videoIdAf: 'bk2UgDNDz2s'
+          videoIdAf: 'bk2UgDNDz2s',
+          titleAf: 'Kyk: Vektore: Drie Kragte in Ewewig - \'n Tipiese probleem (Graad 11 & 12 Fisika) — Juf. OK se Wetenskap Akademie'
         }
       ]
     },
@@ -57,7 +58,8 @@ export const mechanicsGr11: TopicContent = {
           type: 'video',
           title: 'Watch: Grade 11 Physics Resolving Vectors into Components Finding the x and y components — Miss Martins Maths and Science',
           videoId: '-GRcFVx3iz4',
-          videoIdAf: 'NrVD8m6fNTw'
+          videoIdAf: 'NrVD8m6fNTw',
+          titleAf: 'Kyk: Vektore en Resulterende krag Gr. 11 Fisika — Danike Aucamp_Wiskunde en Wetenskap '
         }
       ]
     },
@@ -82,7 +84,8 @@ export const mechanicsGr11: TopicContent = {
           type: 'video',
           title: 'Watch: Grade 11 and 12 Forces Friction: Static and kinetic friction — Miss Martins Maths and Science',
           videoId: 'kAOWkry0BaM',
-          videoIdAf: 'rPmvMASfdSQ'
+          videoIdAf: 'rPmvMASfdSQ',
+          titleAf: 'Kyk: Statiese en kinetiese wrywing — Danike Aucamp_Wiskunde en Wetenskap '
         }
       ]
     },
@@ -107,7 +110,8 @@ export const mechanicsGr11: TopicContent = {
           type: 'video',
           title: 'Watch: Grade 11 Newton Laws: Newtons 1st — Kevinmathscience',
           videoId: 'LHn9e_efynM',
-          videoIdAf: 'FA5DBBNyS8E'
+          videoIdAf: 'FA5DBBNyS8E',
+          titleAf: 'Kyk: Newton se wette: Trek krag teen \'n hoek — HenBot Wetenskap'
         }
       ]
     },
@@ -144,7 +148,8 @@ export const mechanicsGr11: TopicContent = {
           type: 'video',
           title: 'Watch: Newton\'s Law of Universal Gravitation Grade 11 and 12 Physics — Miss Martins Maths and Science',
           videoId: 'TcgBamEa4W8',
-          videoIdAf: 'ZCQYuzFTNG8'
+          videoIdAf: 'ZCQYuzFTNG8',
+          titleAf: 'Kyk: Fisika - Newton se Universele Gravitasie Wet Eksamenvraag — Shap Science SA - Juffrou R'
         }
       ]
     }

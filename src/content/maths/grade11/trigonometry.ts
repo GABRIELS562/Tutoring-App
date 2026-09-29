@@ -19,8 +19,18 @@ export const trigonometryGr11: TopicContent = {
         {
           type: 'video',
           title: 'Watch: Reduction grade 11: Using Numbers and special angles. — Kevinmathscience',
-          videoId: '8QolMTcm8qE',
-          videoIdAf: '_WEUtNaBVyg'
+          videoId: '8QolMTcm8qE'
+          // No Afrikaans video. The curated pick was
+          // "Britse na Metrieke stelsel herleidings" - British-to-metric
+          // UNIT CONVERSIONS, not trigonometric reduction formulae. It was
+          // the only candidate the Afrikaans queries returned, and
+          // "herleiding" carries both meanings in Afrikaans, so nothing
+          // rejected it (see isOtherMathsTopic in scripts/curate-videos.ts,
+          // now guarded, and its test case).
+          //
+          // Per the project rule - no non-CAPS videos, rather leave it
+          // blank - an Afrikaans reader falls back to the English video,
+          // which is at least about this topic.
         }
       ]
     },
@@ -45,7 +55,8 @@ export const trigonometryGr11: TopicContent = {
           type: 'video',
           title: 'Watch: Identities Grade 11: Practice — Kevinmathscience',
           videoId: 'Cc03mGw1s_4',
-          videoIdAf: 'dOwILHeOK_4'
+          videoIdAf: 'dOwILHeOK_4',
+          titleAf: 'Kyk: 08 Trig identiteite basiese begrippe — Wiskunde_Mathematics_SUM'
         }
       ]
     },
@@ -58,7 +69,8 @@ export const trigonometryGr11: TopicContent = {
           type: 'video',
           title: 'Watch: General Solution | Solving Trig Equations | Mlungisi Nkosi — Mlungisi Nkosi Maths & Science',
           videoId: 'addxuEnZ_K8',
-          videoIdAf: 'KZXGPLKa8qI'
+          videoIdAf: 'KZXGPLKa8qI',
+          titleAf: 'Kyk: 08 Trig vergelykings 1 — Wiskunde_Mathematics_SUM'
         }
       ]
     },
@@ -71,7 +83,8 @@ export const trigonometryGr11: TopicContent = {
           type: 'video',
           title: 'Watch: Sine Rule grade 11: Introduction — Kevinmathscience',
           videoId: 's9vYb0b0TIw',
-          videoIdAf: '7FcHJrIFQgg'
+          videoIdAf: '7FcHJrIFQgg',
+          titleAf: 'Kyk: Sinus reël formule  oplos van driehoeke (wiskdou) — Dou Kleefstra'
         }
       ]
     },
@@ -84,7 +97,8 @@ export const trigonometryGr11: TopicContent = {
           type: 'video',
           title: 'Watch: Grade 11 - 2D Trigonometry | Sine rule, Cosine rule, Area rule | Mlungisi Nkosi — Mlungisi Nkosi Maths & Science',
           videoId: 'UP5Pit-zJyY',
-          videoIdAf: '_dd0t6Cbp9c'
+          videoIdAf: '_dd0t6Cbp9c',
+          titleAf: 'Kyk: Graad 11 Sinus, Kosinus en Oppervlakte reël BEWYSE — Dalene Coetzee'
         }
       ]
     },
@@ -97,7 +111,8 @@ export const trigonometryGr11: TopicContent = {
           type: 'video',
           title: 'Watch: Area Rule grade 11: Introduction — Kevinmathscience',
           videoId: 'jPM-ZD9JRpg',
-          videoIdAf: 'AmszLOiamRI'
+          videoIdAf: 'AmszLOiamRI',
+          titleAf: 'Kyk: Oppervlakte Reël Formule by driehoeke in trig (wiskdou) — Dou Kleefstra'
         }
       ]
     }

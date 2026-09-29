@@ -41,7 +41,8 @@ export const electricityMagnetismGr12: TopicContent = {
         {
           type: 'video',
           title: 'Kyk: Gr. 12 Fisika: Elektrisiteit (interne weerstand) | die ENIGSTE video wat jy nodig het! — Danike Aucamp_Wiskunde en Wetenskap ',
-          videoIdAf: '1lpHeTHZI6E'
+          videoIdAf: '1lpHeTHZI6E',
+          titleAf: 'Kyk: Gr. 12 Fisika: Elektrisiteit (interne weerstand) | die ENIGSTE video wat jy nodig het! — Danike Aucamp_Wiskunde en Wetenskap '
         }
       ]
     },
@@ -66,7 +67,8 @@ export const electricityMagnetismGr12: TopicContent = {
           type: 'video',
           title: 'Watch: Physics | Electric circuits | EMF and Internal resistance (Made simple) — Mlungisi Nkosi Maths & Science',
           videoId: 'Z6ZyHYLY1N8',
-          videoIdAf: 'iMeyrFFJy60'
+          videoIdAf: 'iMeyrFFJy60',
+          titleAf: 'Kyk: Stroombane 2 (sonder interne weerstand) — WSILAB'
         }
       ]
     },
@@ -79,7 +81,8 @@ export const electricityMagnetismGr12: TopicContent = {
           type: 'video',
           title: 'Watch: Electrodynamics: Motors and generators Physics — Miss Martins Maths and Science',
           videoId: 'RlP97BAez74',
-          videoIdAf: 'gPb7fO3NLwA'
+          videoIdAf: 'gPb7fO3NLwA',
+          titleAf: 'Kyk: Gr. 12 Fisika: Elektrodinamika Generators in \'n NEUTEDOP — Danike Aucamp_Wiskunde en Wetenskap '
         }
       ]
     },
@@ -92,7 +95,8 @@ export const electricityMagnetismGr12: TopicContent = {
           type: 'video',
           title: 'Watch: Electrodynamics Motors SUMMARY Grade 12 Physics — Miss Martins Maths and Science',
           videoId: 'g-9GARYLfKQ',
-          videoIdAf: 'u7X759MljIs'
+          videoIdAf: 'u7X759MljIs',
+          titleAf: 'Kyk: Elektriese motors: Wisselstroom- en Gelykstroommotors Graad 12 Fisika — Ekstra Wetenskap Klasse'
         }
       ]
     },

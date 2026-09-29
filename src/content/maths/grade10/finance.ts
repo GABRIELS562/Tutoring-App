@@ -39,7 +39,8 @@ export const financeGr10: TopicContent = {
           type: 'video',
           title: 'Watch: Financial Maths Grade 10 | Simple Interest Introduction — Kevinmathscience',
           videoId: 'AKU4lSQvrnI',
-          videoIdAf: 'u5Hee0AuS0c'
+          videoIdAf: 'u5Hee0AuS0c',
+          titleAf: 'Kyk: Enkelvoudige Rente — Wiskunde Broers'
         }
       ]
     },
@@ -52,7 +53,8 @@ export const financeGr10: TopicContent = {
           type: 'video',
           title: 'Watch: Financial Maths Grade 10 | Compound Interest | Introduction — Kevinmathscience',
           videoId: 'JfxQPa9cvtM',
-          videoIdAf: 'wx1oj6V5yYY'
+          videoIdAf: 'wx1oj6V5yYY',
+          titleAf: 'Kyk: Saamgestelde Rente — Wiskunde Broers'
         }
       ]
     },
@@ -66,7 +68,8 @@ export const financeGr10: TopicContent = {
           type: 'video',
           title: 'Watch: Financial maths grade 11 | Depreciation — Kevinmathscience',
           videoId: 'uXwERKx08C4',
-          videoIdAf: '2S7XoVOFKJ4'
+          videoIdAf: '2S7XoVOFKJ4',
+          titleAf: 'Kyk: Waardevermindering of Depresiasie Gr11&12 — TheWhiteboardSA'
         }
       ]
     },
@@ -79,7 +82,8 @@ export const financeGr10: TopicContent = {
           type: 'video',
           title: 'Watch: Financial Maths Grade 10 | Hire Purchase | Introduction — Kevinmathscience',
           videoId: 't3ENY1s1zaw',
-          videoIdAf: 'LXRlc1LRrDQ'
+          videoIdAf: 'LXRlc1LRrDQ',
+          titleAf: 'Kyk: 03 Huurkoop — Wiskunde_Mathematics_SUM'
         }
       ]
     },
@@ -92,7 +96,8 @@ export const financeGr10: TopicContent = {
           type: 'video',
           title: 'Watch: 08 Exchange rate — Wiskunde_Mathematics_SUM',
           videoId: 'Rr9b0jNVLiE',
-          videoIdAf: 'FDq8ifmRCGE'
+          videoIdAf: 'FDq8ifmRCGE',
+          titleAf: 'Kyk: Wisselkoers — Wiskunde Broers'
         }
       ]
     }

@@ -51,7 +51,8 @@ export const statisticsGr10: TopicContent = {
           type: 'video',
           title: 'Watch: Statistics Grade 10: Mean, mode, median — Kevinmathscience',
           videoId: 'xi8VjMmWdgI',
-          videoIdAf: 'fkKU5F9LR7U'
+          videoIdAf: 'fkKU5F9LR7U',
+          titleAf: 'Kyk: W10 Gemiddeld, Mediaan, Modus — Stefan Buys'
         }
       ]
     },
@@ -64,7 +65,8 @@ export const statisticsGr10: TopicContent = {
           type: 'video',
           title: 'Watch: Statistics Grade 10: Quartiles — Kevinmathscience',
           videoId: 'dxLjUO8tzSA',
-          videoIdAf: 'udHAZsQxn0Q'
+          videoIdAf: 'udHAZsQxn0Q',
+          titleAf: 'Kyk: W10 Kwartiele en persentiele — Stefan Buys'
         }
       ]
     },

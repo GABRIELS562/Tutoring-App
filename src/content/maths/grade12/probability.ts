@@ -66,7 +66,8 @@ export const probabilityGr12: TopicContent = {
           type: 'video',
           title: 'Watch: Mlungisi Nkosi | Fundamental Counting Principle | Part 3 | Application | Passwords and Committees — Mlungisi Nkosi Maths & Science',
           videoId: 'xcln78w1nrE',
-          videoIdAf: 'yvoiVCv8vdA'
+          videoIdAf: 'yvoiVCv8vdA',
+          titleAf: 'Kyk: W12.1 Waarskynlikheid tel beginsel — Stefan Buys'
         }
       ]
     }

@@ -38,7 +38,8 @@ export const euclideanGeometryGr12: TopicContent = {
           type: 'video',
           title: 'Watch: Grade 12 Proportionality: Area of triangle #1 — Kevinmathscience',
           videoId: '2jgK_SKwGL0',
-          videoIdAf: '1dqCThLt2Fk'
+          videoIdAf: '1dqCThLt2Fk',
+          titleAf: 'Kyk: Euklidiese Meetkunde Graad12: L1 Eweredigheid in Driehoeke( Lyn ewewydig een sy van driehoek) — Online Maths by Miss Pythagoras'
         }
       ]
     },
@@ -51,7 +52,8 @@ export const euclideanGeometryGr12: TopicContent = {
           type: 'video',
           title: 'Watch: Grade 12 Similarity vs Proportionality theorem — Kevinmathscience',
           videoId: 'GxJ1iQpps8I',
-          videoIdAf: '73durGFZlAc'
+          videoIdAf: '73durGFZlAc',
+          titleAf: 'Kyk: Euklidiese Meetkunde Graad12: L3 Gelykvormigheid in Driehoeke Deel1 — Online Maths by Miss Pythagoras'
         }
       ]
     },

@@ -67,7 +67,8 @@ export const euclideanGeometryGr11: TopicContent = {
           type: 'video',
           title: 'Watch: Circle Geometry Grade 11 : Cyclic Quadrilateral — Kevinmathscience',
           videoId: 'QzWrAgv77Wc',
-          videoIdAf: 'BDJj5iCEDmc'
+          videoIdAf: 'BDJj5iCEDmc',
+          titleAf: 'Kyk: 11 Bewys \'n koordevierhoek — Wiskunde_Mathematics_SUM'
         }
       ]
     },

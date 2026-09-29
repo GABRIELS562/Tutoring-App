@@ -40,7 +40,8 @@ export const sequencesSeriesGr12: TopicContent = {
           type: 'video',
           title: 'Watch: 1) Gr 12 Arithmetic Sequence | Intro — Kevinmathscience',
           videoId: 'B8dKyX9g7Fk',
-          videoIdAf: 'wVnS9l_uFSQ'
+          videoIdAf: 'wVnS9l_uFSQ',
+          titleAf: 'Kyk: 02 Rekenkundige rye Gr.12 — Wiskunde_Mathematics_SUM'
         }
       ]
     },
@@ -53,7 +54,8 @@ export const sequencesSeriesGr12: TopicContent = {
           type: 'video',
           title: 'Watch: 4)Gr 12 Geometric Sequence | Intro — Kevinmathscience',
           videoId: 'ZSxq7Ay48NQ',
-          videoIdAf: 'dDQnZTK8GIw'
+          videoIdAf: 'dDQnZTK8GIw',
+          titleAf: 'Kyk: Rye en Reekse Graad12: L3 Meetkundige Rye — Online Maths by Miss Pythagoras'
         }
       ]
     },
@@ -66,7 +68,8 @@ export const sequencesSeriesGr12: TopicContent = {
           type: 'video',
           title: 'Watch: 15) Represent sigma notation | Intro — Kevinmathscience',
           videoId: '4Pp6EMaMMXo',
-          videoIdAf: 'SFeAvpRuTh8'
+          videoIdAf: 'SFeAvpRuTh8',
+          titleAf: 'Kyk: 08 Sigma notasie — Wiskunde_Mathematics_SUM'
         }
       ]
     },

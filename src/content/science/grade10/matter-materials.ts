@@ -40,7 +40,8 @@ export const matterMaterialsGr10: TopicContent = {
           type: 'video',
           title: 'Watch: 2) Mixture vs pure substance gr 10 — Kevinmathscience',
           videoId: 'TxpKUZpF_BI',
-          videoIdAf: 'XsqSSWDBaj8'
+          videoIdAf: 'XsqSSWDBaj8',
+          titleAf: 'Kyk: Gr.10 Materie en materiale. Suiwer stowwe en mengsels. — Douwliena Fourie'
         }
       ]
     },
@@ -52,7 +53,8 @@ export const matterMaterialsGr10: TopicContent = {
         {
           type: 'video',
           title: 'Kyk: Name en formules van chemiese verbindings Gr. 10 Chemie — Danike Aucamp_Wiskunde en Wetenskap ',
-          videoIdAf: '44SNuly1CdU'
+          videoIdAf: '44SNuly1CdU',
+          titleAf: 'Kyk: Name en formules van chemiese verbindings Gr. 10 Chemie — Danike Aucamp_Wiskunde en Wetenskap '
         }
       ]
     },
@@ -65,7 +67,8 @@ export const matterMaterialsGr10: TopicContent = {
           type: 'video',
           title: 'Watch: Kinetic Molecular Theory grade 10 Introduction — Miss Martins Maths and Science',
           videoId: 'QuVBXvLJjD8',
-          videoIdAf: 'tw1A9JlRxnk'
+          videoIdAf: 'tw1A9JlRxnk',
+          titleAf: 'Kyk: Graad 10 chemie: Kinetiese Molekulere Teorie (KMT) — Danike Aucamp_Wiskunde en Wetenskap '
         }
       ]
     },
@@ -114,7 +117,8 @@ export const matterMaterialsGr10: TopicContent = {
           type: 'video',
           title: 'Watch: 18) Periodic table gr 10 — Kevinmathscience',
           videoId: 'WRNsXTyeZI0',
-          videoIdAf: '_Sb93EoNknU'
+          videoIdAf: '_Sb93EoNknU',
+          titleAf: 'Kyk: Tendense van die Periodieke Tabel: Gr. 10 Chemie — Danike Aucamp_Wiskunde en Wetenskap '
         }
       ]
     },

@@ -52,7 +52,8 @@ export const calculusGr12: TopicContent = {
           type: 'video',
           title: 'Watch: First Principles Calculus Grade 12 — Kevinmathscience',
           videoId: 'alUkVWVEP10',
-          videoIdAf: 'xW9vijvWp7c'
+          videoIdAf: 'xW9vijvWp7c',
+          titleAf: 'Kyk: Differensiasie Graad12: L1 Bepaal die afgeleide deur middel van Eerste Beginsels — Online Maths by Miss Pythagoras'
         }
       ]
     },
@@ -64,7 +65,8 @@ export const calculusGr12: TopicContent = {
         {
           type: 'video',
           title: 'Kyk: Differensiasie Graad12: L2 Reëls van Differensiasie — Online Maths by Miss Pythagoras',
-          videoIdAf: 'y-CzYdhCBAU'
+          videoIdAf: 'y-CzYdhCBAU',
+          titleAf: 'Kyk: Differensiasie Graad12: L2 Reëls van Differensiasie — Online Maths by Miss Pythagoras'
         }
       ]
     },
@@ -77,7 +79,8 @@ export const calculusGr12: TopicContent = {
           type: 'video',
           title: 'Watch: Draw Cubic Graph Grade 12 — Kevinmathscience',
           videoId: '6rUoChk1awg',
-          videoIdAf: 'wlsrqsvyimY'
+          videoIdAf: 'wlsrqsvyimY',
+          titleAf: 'Kyk: W12.11 Teken derdegraadse grafieke met stas buigpunte — Stefan Buys'
         }
       ]
     },
@@ -90,7 +93,8 @@ export const calculusGr12: TopicContent = {
           type: 'video',
           title: 'Watch: Optimisation Gr 12 — Kevinmathscience',
           videoId: 'xcEeslakFCY',
-          videoIdAf: 'xpUxJfXgDmA'
+          videoIdAf: 'xpUxJfXgDmA',
+          titleAf: 'Kyk: Graad 12 Hoofstuk 8 Les 10 Optimering en veranderingstempo — Rochelle Van der Merwe'
         }
       ]
     },
@@ -103,7 +107,8 @@ export const calculusGr12: TopicContent = {
           type: 'video',
           title: 'Watch: Differential Calculus: Lesson: Rates of Change — Mindset',
           videoId: '7ms2EI0LaxU',
-          videoIdAf: 'h5w28ZLc4dw'
+          videoIdAf: 'h5w28ZLc4dw',
+          titleAf: 'Kyk: 15  Tempo van verandering en beweging — Wiskunde_Mathematics_SUM'
         }
       ]
     }

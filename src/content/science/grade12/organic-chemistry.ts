@@ -56,7 +56,8 @@ export const organicChemistryGr12: TopicContent = {
           type: 'video',
           title: 'Watch: Isomers Organic Chemistry Grade 12 — Kevinmathscience',
           videoId: 'Kis0W4iOZr8',
-          videoIdAf: '9xARo0x3oPw'
+          videoIdAf: '9xARo0x3oPw',
+          titleAf: 'Kyk: Isomers — Simple Science'
         }
       ]
     },
@@ -81,7 +82,8 @@ export const organicChemistryGr12: TopicContent = {
           type: 'video',
           title: 'Watch: Chemistry | Intermolecular forces | Physical properties of organic compound — Mlungisi Nkosi Maths & Science',
           videoId: 'ameAElR0Pac',
-          videoIdAf: 'N8_SVec-lEQ'
+          videoIdAf: 'N8_SVec-lEQ',
+          titleAf: 'Kyk: Gr. 12 Organiese chemie: Intermolekulêre kragte — Danike Aucamp_Wiskunde en Wetenskap '
         }
       ]
     },
@@ -118,7 +120,8 @@ export const organicChemistryGr12: TopicContent = {
           type: 'video',
           title: 'Watch: 7  Gr12 Physical Science - Reactions in Organic Chemistry - Cracking Elimination Reaction — JuniorTukkie at the University of Pretoria',
           videoId: '0df8ZNhpfyc',
-          videoIdAf: 'K8RH5JdyPbE'
+          videoIdAf: 'K8RH5JdyPbE',
+          titleAf: 'Kyk: Cracking through Elimination — Simple Science'
         }
       ]
     },
@@ -131,7 +134,8 @@ export const organicChemistryGr12: TopicContent = {
           type: 'video',
           title: 'Watch: Reactions Organic Chemistry Grade 12 | Alkane to Haloalkane — Kevinmathscience',
           videoId: 'CPlam-5DuEk',
-          videoIdAf: 'bAZvehqOdbU'
+          videoIdAf: 'bAZvehqOdbU',
+          titleAf: 'Kyk: Organiese chemiese reaksies: Substitusie, hoofprodukte van addisie en eliminasie — HenBot Wetenskap'
         }
       ]
     },

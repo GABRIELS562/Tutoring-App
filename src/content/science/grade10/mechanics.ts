@@ -39,7 +39,8 @@ export const mechanicsGr10: TopicContent = {
           type: 'video',
           title: 'Watch: Vectors and Scalars Physics — Miss Martins Maths and Science',
           videoId: 'CT8sMcfCBVw',
-          videoIdAf: 'lvvxak5Ag6o'
+          videoIdAf: 'lvvxak5Ag6o',
+          titleAf: 'Kyk: Gr. 10 Fisika: Meganika (Skalare en vektore) in \'n NEUTEDOP — Danike Aucamp_Wiskunde en Wetenskap '
         }
       ]
     },
@@ -64,7 +65,8 @@ export const mechanicsGr10: TopicContent = {
           type: 'video',
           title: 'Watch: Velocity and speed: Motion in One Dimension — Miss Martins Maths and Science',
           videoId: 'JCehwmZ9BWM',
-          videoIdAf: 'h5bDavRKhN4'
+          videoIdAf: 'h5bDavRKhN4',
+          titleAf: 'Kyk: Gr.10 Spoed en snelheid. — Douwliena Fourie'
         }
       ]
     },
@@ -77,7 +79,8 @@ export const mechanicsGr10: TopicContent = {
           type: 'video',
           title: 'Watch: Acceleration Grade 10 Science — Kevinmathscience',
           videoId: 'TgHFTg_zeTE',
-          videoIdAf: 'ZJNMYpaQ9y0'
+          videoIdAf: 'ZJNMYpaQ9y0',
+          titleAf: 'Kyk: Gr.10 Bewegingsgrafieke. Konstante positiewe versnelling. — Douwliena Fourie'
         }
       ]
     },
@@ -102,7 +105,8 @@ export const mechanicsGr10: TopicContent = {
           type: 'video',
           title: 'Watch: Velocity Time Graph Grade 10 Science — Kevinmathscience',
           videoId: 'e86SXh5G7Hs',
-          videoIdAf: 'NWxg8nrYQW4'
+          videoIdAf: 'NWxg8nrYQW4',
+          titleAf: 'Kyk: Gr.10 Formuleblad. Versnelling en tydtikker. — Douwliena Fourie'
         }
       ]
     },
@@ -127,7 +131,8 @@ export const mechanicsGr10: TopicContent = {
           type: 'video',
           title: 'Watch: Mechanical Energy: Kinetic energy and Gravitational Potential energy Introduction — Miss Martins Maths and Science',
           videoId: 'W-fVjZHgObc',
-          videoIdAf: 'ygP2m4OamwQ'
+          videoIdAf: 'ygP2m4OamwQ',
+          titleAf: 'Kyk: Gr. 10 Fisika: Energie EENVOUDIG verduidelik (Meganiese, potensiële en kinetiese energie) — Danike Aucamp_Wiskunde en Wetenskap '
         }
       ]
     },
@@ -140,7 +145,8 @@ export const mechanicsGr10: TopicContent = {
           type: 'video',
           title: 'Watch: Conservation Of Mass Grade 10 — Kevinmathscience',
           videoId: 'urUIlpg_xQ0',
-          videoIdAf: 'sorIF9b4k_A'
+          videoIdAf: 'sorIF9b4k_A',
+          titleAf: 'Kyk: Gr.10 Wet van behoud van Meganiese energie. Bl.329 — Douwliena Fourie'
         }
       ]
     }

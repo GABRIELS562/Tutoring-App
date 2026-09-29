@@ -44,7 +44,8 @@ export const wavesSoundLightGr10: TopicContent = {
           type: 'video',
           title: 'Watch: Grade 10 Transverse Pulses and the Principle of superposition — Miss Martins Maths and Science',
           videoId: 'C3n4cqNpHto',
-          videoIdAf: 'fhCoYWh97Nc'
+          videoIdAf: 'fhCoYWh97Nc',
+          titleAf: 'Kyk: Transversale golwe: Graad 10 Fisika — Ekstra Wetenskap Klasse'
         }
       ]
     },
@@ -69,7 +70,8 @@ export const wavesSoundLightGr10: TopicContent = {
           type: 'video',
           title: 'Watch: Grade 10 Physics Transverse waves Period and Frequency — Miss Martins Maths and Science',
           videoId: '4vDk3W66s5I',
-          videoIdAf: '4967Pyl1qvU'
+          videoIdAf: '4967Pyl1qvU',
+          titleAf: 'Kyk: Gr.10 Transversale golwe — Douwliena Fourie'
         }
       ]
     },
@@ -82,7 +84,8 @@ export const wavesSoundLightGr10: TopicContent = {
           type: 'video',
           title: 'Watch: 4) Longitudinal  Waves Grade 10 — Kevinmathscience',
           videoId: '9sP74zJKcIQ',
-          videoIdAf: 'maVbWUb9COM'
+          videoIdAf: 'maVbWUb9COM',
+          titleAf: 'Kyk: Longitudinale golwe Graad 10 Fisika — Ekstra Wetenskap Klasse'
         }
       ]
     },
@@ -107,7 +110,8 @@ export const wavesSoundLightGr10: TopicContent = {
           type: 'video',
           title: 'Watch: Loudness and Pitch: Grade 10 Waves and Light — Mindset',
           videoId: 'h5kPzCQYhyY',
-          videoIdAf: 'cA3ui7pfMC0'
+          videoIdAf: 'cA3ui7pfMC0',
+          titleAf: 'Kyk: Klankgolwe eienskappe: weerkaatsing toonhoogte volume gr 10 Fisika — Ekstra Wetenskap Klasse'
         }
       ]
     },
@@ -132,7 +136,8 @@ export const wavesSoundLightGr10: TopicContent = {
           type: 'video',
           title: 'Watch: Grade 10 Physics - Electromagnetic Spectrum — Kevin\'s Classroom',
           videoId: 'OtaVlik8nuo',
-          videoIdAf: 'yVipv9v9JVo'
+          videoIdAf: 'yVipv9v9JVo',
+          titleAf: 'Kyk: Elektromagnetiese golwe en spektrum Graad 10 Fisika — Ekstra Wetenskap Klasse'
         }
       ]
     },

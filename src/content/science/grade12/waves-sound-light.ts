@@ -39,7 +39,8 @@ export const wavesSoundLightGr12: TopicContent = {
           type: 'video',
           title: 'Watch: Doppler Effect grade 12: Introduction — Kevinmathscience',
           videoId: 'DdS_wVxrPuI',
-          videoIdAf: '_oqI8mOrg84'
+          videoIdAf: '_oqI8mOrg84',
+          titleAf: 'Kyk: Doppler effek: Graad 12 Fisika — Ekstra Wetenskap Klasse'
         }
       ]
     },
@@ -52,7 +53,8 @@ export const wavesSoundLightGr12: TopicContent = {
           type: 'video',
           title: 'Watch: Doppler Effect grade 12: Red and Blue Shift — Kevinmathscience',
           videoId: 'g4OYz75zZ8w',
-          videoIdAf: 'wJn76p15F9s'
+          videoIdAf: 'wJn76p15F9s',
+          titleAf: 'Kyk: Fisiese Wetenskap - Doppler-effek 02 — Wolkskool'
         }
       ]
     },
@@ -77,7 +79,8 @@ export const wavesSoundLightGr12: TopicContent = {
           type: 'video',
           title: 'Watch: Doppler Effect grade 12: Simultaneous — Kevinmathscience',
           videoId: 'h9Po4ug3MZ8',
-          videoIdAf: 'VcuIqqDvanY'
+          videoIdAf: 'VcuIqqDvanY',
+          titleAf: 'Kyk: Fisiese Wetenskap - Doppler-effek 01 — Wolkskool'
         }
       ]
     }

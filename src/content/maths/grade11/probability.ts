@@ -39,7 +39,8 @@ export const probabilityGr11: TopicContent = {
           type: 'video',
           title: 'Watch: Gr 11 Probability: Independent events — Kevinmathscience',
           videoId: 'axJSsykVmfE',
-          videoIdAf: 'X4qRoXGtfYo'
+          videoIdAf: 'X4qRoXGtfYo',
+          titleAf: 'Kyk: 02 Onafhanklike gebeurtenisse — Wiskunde_Mathematics_SUM'
         }
       ]
     },
@@ -51,7 +52,8 @@ export const probabilityGr11: TopicContent = {
         {
           type: 'video',
           title: 'Kyk: Hersiening van waarskynlikheid se reëls - Graad 11 — SlimDink',
-          videoIdAf: '3FKNRkhf8Eo'
+          videoIdAf: '3FKNRkhf8Eo',
+          titleAf: 'Kyk: Hersiening van waarskynlikheid se reëls - Graad 11 — SlimDink'
         }
       ]
     },
@@ -64,7 +66,8 @@ export const probabilityGr11: TopicContent = {
           type: 'video',
           title: 'Watch: Gr 11 Probability: Tree diagram — Kevinmathscience',
           videoId: 'twLaGOvMVr8',
-          videoIdAf: 'tl8N0x6fH48'
+          videoIdAf: 'tl8N0x6fH48',
+          titleAf: 'Kyk: Waarskynlikheid Boom Diagram Graad 11 en ouer (wiskdou) — Dou Kleefstra'
         }
       ]
     },

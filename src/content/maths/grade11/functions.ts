@@ -39,7 +39,8 @@ export const functionsGr11: TopicContent = {
           type: 'video',
           title: 'Watch: Draw Parabola Grade 11 | Part 1 | Grade 11 Functions — Kevinmathscience',
           videoId: 'VEFdT971Tzs',
-          videoIdAf: '9xYuxHVvht0'
+          videoIdAf: '9xYuxHVvht0',
+          titleAf: 'Kyk: 02 Parabool in draaipuntvorm — Wiskunde_Mathematics_SUM'
         }
       ]
     },
@@ -52,7 +53,8 @@ export const functionsGr11: TopicContent = {
           type: 'video',
           title: 'Watch: Draw Hyperbola | Grade 11 Functions — Kevinmathscience',
           videoId: 'L1KXB4w1uM8',
-          videoIdAf: 'iSTLoZj_RmY'
+          videoIdAf: 'iSTLoZj_RmY',
+          titleAf: 'Kyk: Hiperbool Simmetrie-asse se vergelykings Graad 11+ (wiskdou) — Dou Kleefstra'
         }
       ]
     },
@@ -65,7 +67,8 @@ export const functionsGr11: TopicContent = {
           type: 'video',
           title: 'Watch: Exponential Equation Given Graph | Grade 11 Functions — Kevinmathscience',
           videoId: 'mlk0Df2z9No',
-          videoIdAf: 'yOMd92ZA3z0'
+          videoIdAf: 'yOMd92ZA3z0',
+          titleAf: 'Kyk: W11.7 Eksponensiele grafieke basies — Stefan Buys'
         }
       ]
     },
@@ -78,7 +81,8 @@ export const functionsGr11: TopicContent = {
           type: 'video',
           title: 'Watch: 9a) Worksheet Functions Inverses — Kevinmathscience',
           videoId: '25ey8Ea0jcM',
-          videoIdAf: '2KeZ2135_Ow'
+          videoIdAf: '2KeZ2135_Ow',
+          titleAf: 'Kyk: Graad 12 Inverse Funksies — VAW-Vereniging vir Afrikaanse Wiskunde-onderwysers'
         }
       ]
     }
