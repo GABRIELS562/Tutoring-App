@@ -127,7 +127,12 @@
     "playableBody": "Hierdie vraestelle is met die eksaminator se memo oorgetik, sodat jy elke vraag beantwoord, jou eie werk teen die regte puntetoekenning merk, en sien waar jou punte werklik heen gaan.",
     "playableCta": "Maak oop",
     "playableCount": "{count} van hierdie vraestelle is tot dusver speelbaar. Die res maak as PDF's oop.",
-    "memoUnavailable": "Memo nie gepubliseer nie"
+    "memoUnavailable": "Memo nie gepubliseer nie",
+    "language": "Taal",
+    "allLanguages": "Alle Tale",
+    "english": "Engels",
+    "afrikaans": "Afrikaans",
+    "common": "Gemeenskaplik"
   },
   "formulas": {
     "title": "Formuleblad",

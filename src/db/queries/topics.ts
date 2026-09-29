@@ -1,6 +1,6 @@
 import { db } from '@/db'
 import { topics, pastPapers } from '@/db/schema'
-import { eq, and, desc, asc } from 'drizzle-orm'
+import { eq, and, desc, asc, sql } from 'drizzle-orm'
 
 export type TopicRecord = {
   id: string
@@ -109,15 +109,33 @@ export type PastPaperNaturalKey = {
   year: number
   paperNumber: number
   examType: string
+  language?: string | null
 }
 
 /**
+ * `past_papers.language` is nullable with a default of 'english', so a row
+ * seeded before the column existed and a row seeded as 'english' are the
+ * same paper. Both sides of the comparison are normalised to that default
+ * so they compare equal.
+ */
+const DEFAULT_PAPER_LANGUAGE = 'english'
+
+/**
  * A paper is considered a duplicate of one already seeded when its
- * subject, grade, year, paper number and exam type all match - the
- * natural key for a past paper (there's no unique constraint on the
- * table, so seed-papers.ts checks this before inserting).
+ * subject, grade, year, paper number, exam type AND language all match.
+ *
+ * Language used to be left out of this key, which made the English and
+ * Afrikaans editions of the same paper look like the same row: seeding
+ * both kept whichever came first and silently dropped the other. On a
+ * bilingual app that meant an Afrikaans student was shown an English
+ * paper, or no paper at all.
+ *
+ * There is no unique constraint on the table, so seed-papers.ts checks
+ * this before inserting.
  */
 export async function pastPaperExists(paper: PastPaperNaturalKey): Promise<boolean> {
+  const language = paper.language ?? DEFAULT_PAPER_LANGUAGE
+
   const existing = await db
     .select({ id: pastPapers.id })
     .from(pastPapers)
@@ -127,7 +145,8 @@ export async function pastPaperExists(paper: PastPaperNaturalKey): Promise<boole
         eq(pastPapers.grade, paper.grade),
         eq(pastPapers.year, paper.year),
         eq(pastPapers.paperNumber, paper.paperNumber),
-        eq(pastPapers.examType, paper.examType)
+        eq(pastPapers.examType, paper.examType),
+        sql`coalesce(${pastPapers.language}, ${DEFAULT_PAPER_LANGUAGE}) = ${language}`
       )
     )
     .limit(1)

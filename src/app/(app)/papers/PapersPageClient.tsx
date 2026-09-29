@@ -4,7 +4,7 @@ import { useState } from 'react'
 import Link from 'next/link'
 import { FileText, BookOpen, Filter, X, ChevronDown, ExternalLink, Shield, Swords } from 'lucide-react'
 import Topbar from '@/components/layout/Topbar'
-import { useTranslations } from 'next-intl'
+import { useTranslations, useLocale } from 'next-intl'
 import type { PastPaperRecord } from '@/db/queries/topics'
 
 /** A paper that has been transcribed into the exam game. */
@@ -25,15 +25,27 @@ type PapersPageClientProps = {
 export default function PapersPageClient({ papers, playable }: PapersPageClientProps) {
   const t = useTranslations('papers')
   const tExam = useTranslations('exam')
+  const locale = useLocale()
   const [subjectFilter, setSubjectFilter] = useState('')
   const [gradeFilter, setGradeFilter] = useState('')
   const [yearFilter, setYearFilter] = useState('')
+  // DBE publishes most Grade 10 and 11 papers in both languages, so the list
+  // is roughly twice as long as the student can use. Start on their own
+  // language rather than making them scroll past the other one - but leave
+  // it switchable, because Grade 12 is English-only here and a bilingual
+  // student may well want both.
+  const [languageFilter, setLanguageFilter] = useState(
+    locale === 'af' ? 'Afrikaans' : 'English'
+  )
   const [showFilters, setShowFilters] = useState(false)
 
   const filteredPapers = papers.filter(paper => {
     if (subjectFilter && paper.subject !== subjectFilter) return false
     if (gradeFilter && paper.grade !== parseInt(gradeFilter)) return false
     if (yearFilter && paper.year !== parseInt(yearFilter)) return false
+    // A paper with no recorded language predates the column; show it rather
+    // than hiding it from everyone.
+    if (languageFilter && paper.language && paper.language !== languageFilter) return false
     return true
   })
 
@@ -48,13 +60,23 @@ export default function PapersPageClient({ papers, playable }: PapersPageClientP
     return subject === 'maths' ? t('mathematics') : t('physicalScience')
   }
 
+  // examType was rendered raw, so an Afrikaans student saw the English
+  // word "Common" on every Grade 10/11 card. Translate the ones we have a
+  // word for and fall back to the raw value for acronyms like NSC, which
+  // are the same in both languages.
+  const formatExamType = (examType: string) => {
+    const key = examType.toLowerCase()
+    return t.has(key) ? t(key) : examType
+  }
+
   const clearFilters = () => {
     setSubjectFilter('')
     setGradeFilter('')
     setYearFilter('')
+    setLanguageFilter('')
   }
 
-  const hasActiveFilters = subjectFilter || gradeFilter || yearFilter
+  const hasActiveFilters = subjectFilter || gradeFilter || yearFilter || languageFilter
 
   // Open PDF in new tab
   const openPaper = (url: string) => {
@@ -148,6 +170,23 @@ export default function PapersPageClient({ papers, playable }: PapersPageClientP
                   {years.map(year => (
                     <option key={year} value={year}>{year}</option>
                   ))}
+                </select>
+              </div>
+
+              <div>
+                <label htmlFor="papers-language-filter" className="block text-xs font-medium mb-1.5" style={{ color: 'var(--muted-custom)' }}>
+                  {t('language')}
+                </label>
+                <select
+                  id="papers-language-filter"
+                  value={languageFilter}
+                  onChange={(e) => setLanguageFilter(e.target.value)}
+                  className="w-full px-3 py-2 rounded-lg text-sm"
+                  style={{ background: 'var(--surface2)', color: 'var(--text)', border: '1px solid var(--border-custom)' }}
+                >
+                  <option value="">{t('allLanguages')}</option>
+                  <option value="English">{t('english')}</option>
+                  <option value="Afrikaans">{t('afrikaans')}</option>
                 </select>
               </div>
             </div>
@@ -280,7 +319,7 @@ export default function PapersPageClient({ papers, playable }: PapersPageClientP
                   className="px-2 py-0.5 rounded text-xs"
                   style={{ background: 'var(--surface2)', color: 'var(--muted-custom)' }}
                 >
-                  {paper.examType}
+                  {formatExamType(paper.examType)}
                 </span>
                 <span
                   className="px-2 py-0.5 rounded text-xs"
