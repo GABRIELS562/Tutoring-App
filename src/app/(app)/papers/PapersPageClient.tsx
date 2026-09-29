@@ -35,7 +35,7 @@ export default function PapersPageClient({ papers, playable }: PapersPageClientP
   // it switchable, because Grade 12 is English-only here and a bilingual
   // student may well want both.
   const [languageFilter, setLanguageFilter] = useState(
-    locale === 'af' ? 'Afrikaans' : 'English'
+    locale === 'af' ? 'afrikaans' : 'english'
   )
   const [showFilters, setShowFilters] = useState(false)
 
@@ -43,9 +43,17 @@ export default function PapersPageClient({ papers, playable }: PapersPageClientP
     if (subjectFilter && paper.subject !== subjectFilter) return false
     if (gradeFilter && paper.grade !== parseInt(gradeFilter)) return false
     if (yearFilter && paper.year !== parseInt(yearFilter)) return false
-    // A paper with no recorded language predates the column; show it rather
-    // than hiding it from everyone.
-    if (languageFilter && paper.language && paper.language !== languageFilter) return false
+    // Compared case-insensitively. The seeded rows and the demo fixture
+    // are both lowercase now, but a row written before that is not, and a
+    // filter that silently hides every paper is much worse than one that
+    // matches a little too loosely.
+    if (
+      languageFilter &&
+      paper.language &&
+      paper.language.toLowerCase() !== languageFilter.toLowerCase()
+    ) {
+      return false
+    }
     return true
   })
 
@@ -67,6 +75,14 @@ export default function PapersPageClient({ papers, playable }: PapersPageClientP
   const formatExamType = (examType: string) => {
     const key = examType.toLowerCase()
     return t.has(key) ? t(key) : examType
+  }
+
+  // Same treatment for the language chip, which rendered the raw column
+  // value - so an Afrikaans student saw the English word "english".
+  const formatLanguage = (language: string | null) => {
+    if (!language) return null
+    const key = language.toLowerCase()
+    return t.has(key) ? t(key) : language
   }
 
   const clearFilters = () => {
@@ -185,8 +201,8 @@ export default function PapersPageClient({ papers, playable }: PapersPageClientP
                   style={{ background: 'var(--surface2)', color: 'var(--text)', border: '1px solid var(--border-custom)' }}
                 >
                   <option value="">{t('allLanguages')}</option>
-                  <option value="English">{t('english')}</option>
-                  <option value="Afrikaans">{t('afrikaans')}</option>
+                  <option value="english">{t('english')}</option>
+                  <option value="afrikaans">{t('afrikaans')}</option>
                 </select>
               </div>
             </div>
@@ -325,7 +341,7 @@ export default function PapersPageClient({ papers, playable }: PapersPageClientP
                   className="px-2 py-0.5 rounded text-xs"
                   style={{ background: 'var(--surface2)', color: 'var(--muted-custom)' }}
                 >
-                  {paper.language}
+                  {formatLanguage(paper.language)}
                 </span>
               </div>
 

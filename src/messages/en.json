@@ -132,7 +132,8 @@
     "allLanguages": "All Languages",
     "english": "English",
     "afrikaans": "Afrikaans",
-    "common": "Common"
+    "common": "Common",
+    "nsc": "NSC"
   },
   "formulas": {
     "title": "Formula Sheet",

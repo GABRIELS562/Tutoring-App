@@ -10,6 +10,7 @@ import {
   PenTool,
   FileText,
   BarChart3,
+  Sigma,
   LogOut,
   Brain,
   Swords,
@@ -23,6 +24,7 @@ const NAV_ICONS = {
   papers: FileText,
   progress: BarChart3,
   examGame: Swords,
+  formulas: Sigma,
 } as const
 
 export default function Sidebar() {
@@ -41,6 +43,9 @@ export default function Sidebar() {
     { key: 'practice', icon: NAV_ICONS.practice, label: tPractice('title'), href: '/topics/trig-gr11/practice' },
     { key: 'examGame', icon: NAV_ICONS.examGame, label: tNav('examGame'), href: '/exam' },
     { key: 'papers', icon: NAV_ICONS.papers, label: tNav('papers'), href: '/papers' },
+    // /formulas existed but nothing in the app linked to it - the whole
+    // formula sheet was reachable only by typing the URL.
+    { key: 'formulas', icon: NAV_ICONS.formulas, label: tNav('formulas'), href: '/formulas' },
     { key: 'progress', icon: NAV_ICONS.progress, label: tProgress('title'), href: '/progress' },
   ]
 
@@ -130,8 +135,17 @@ export default function Sidebar() {
 
       {/* Mobile Bottom Tab Bar */}
       <nav
-        className="fixed bottom-0 left-0 right-0 h-16 md:hidden flex items-center justify-around z-50"
-        style={{ background: 'var(--surface)', borderTop: '1px solid var(--border-custom)' }}
+        // Scrolls rather than squashing: eight destinations do not fit
+        // across a 360px phone, and the Afrikaans labels are longer
+        // ("Eksamenspel", "Paneelbord"). justify-around silently crushed
+        // them into each other instead of letting the row scroll.
+        className="fixed bottom-0 left-0 right-0 h-16 md:hidden flex items-center gap-1 px-2 overflow-x-auto overscroll-x-contain z-50"
+        style={{
+          background: 'var(--surface)',
+          borderTop: '1px solid var(--border-custom)',
+          paddingBottom: 'env(safe-area-inset-bottom, 0px)',
+          scrollbarWidth: 'none',
+        }}
       >
         {navItems.map((item) => {
           const Icon = item.icon
@@ -144,13 +158,17 @@ export default function Sidebar() {
               key={item.href}
               href={item.href}
               aria-current={active ? 'page' : undefined}
-              className="flex flex-col items-center justify-center gap-1 px-3 py-2 rounded-lg transition-all"
+              className="flex shrink-0 flex-col items-center justify-center gap-1 px-3 py-2 rounded-lg transition-all"
               style={{
                 color: active ? activeColor : 'var(--muted-custom)',
               }}
             >
               <Icon className="w-5 h-5" />
-              <span className="text-[10px] font-medium">{item.label.split(' ')[0]}</span>
+              {/* First word only, and capped: "KI-Vaardighede" has no
+                  space to split on and would otherwise set the tab width. */}
+              <span className="text-[10px] font-medium max-w-[4.5rem] truncate">
+                {item.label.split(' ')[0]}
+              </span>
             </Link>
           )
         })}

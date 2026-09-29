@@ -179,7 +179,12 @@ export default async function DashboardPage() {
     ? Math.round((correctAnswers / totalQuestionsAnswered) * 100)
     : 0
 
-  const totalTopicsForGrade = 12 // Approximate total topics per grade
+  // Was hardcoded to 12, so a new Grade 11 student read "0/12" when their
+  // grade actually has 9 maths topics registered. Counted from the
+  // registry instead, for the student's own grade and both subjects.
+  const totalTopicsForGrade =
+    getTopicsForSubjectGrade('maths', toGrade(user?.grade)).length +
+    getTopicsForSubjectGrade('science', toGrade(user?.grade)).length
 
   const daysRemaining = getDaysUntilExam('2026-10-30')
 
@@ -188,6 +193,17 @@ export default async function DashboardPage() {
   // generic fallback for any topic without a named boss yet, see
   // src/content/bosses.ts).
   const bossTopics = getTopicsForSubjectGrade('maths', toGrade(user?.grade)).slice(0, 3)
+
+  // Where the main Practice button goes for a student with no progress
+  // yet - which is every student on their first visit, so this is the
+  // app's most-clicked link. It used to be hardcoded to 'trigonometry',
+  // a registry ALIAS with no row in the topics table; getQuestionsByTopic
+  // joins on topics.slug, so the most prominent CTA on the dashboard
+  // opened "No questions yet" while the same questions sat under
+  // 'trig-gr11'. Taken from the registry now, so it is always a real
+  // topic for the student's grade.
+  const fallbackPracticeSlug =
+    getTopicsForSubjectGrade('maths', toGrade(user?.grade))[0]?.slug ?? 'trig-gr11'
 
   // The exam game is the headline feature, so it gets its own card above the
   // boss battles rather than a slot in Quick Actions. An Afrikaans student
@@ -609,7 +625,7 @@ export default async function DashboardPage() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
           {/* Practice */}
           <Link
-            href={topicsWithProgress[0]?.topicSlug ? `/topics/${topicsWithProgress[0].topicSlug}/practice` : '/topics/trigonometry/practice'}
+            href={`/topics/${topicsWithProgress[0]?.topicSlug ?? fallbackPracticeSlug}/practice`}
             className="rounded-xl p-5 flex items-center justify-between group transition-all hover:scale-[1.02]"
             style={{ background: 'var(--accent-red)' }}
           >

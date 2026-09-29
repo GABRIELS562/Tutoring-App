@@ -4,8 +4,21 @@ import Link from 'next/link'
 import Topbar from '@/components/layout/Topbar'
 import { useUser } from '@/context/UserContext'
 import { useTranslations } from 'next-intl'
-import { Calculator, Atom, ChevronRight, BookOpen, Target } from 'lucide-react'
+import { Calculator, Atom, ChevronRight, BookOpen } from 'lucide-react'
+import { getTopicsForSubjectGrade } from '@/content/registry'
+import type { Grade } from '@/types'
 
+/**
+ * The topic counts used to be hardcoded (12 and 10) and each card also
+ * showed an invented completion percentage - 45% for Maths, 30% for
+ * Science - drawn as a filled progress bar. A student who had never
+ * answered a question was shown someone else's progress as their own.
+ *
+ * The count is now read from the registry for the student's own grade.
+ * The percentage is simply gone: this is a client component with no
+ * progress data, and the honest options were to fetch it or not to claim
+ * it. /subjects/[subject] already shows real per-topic progress.
+ */
 const subjects = [
   {
     id: 'maths',
@@ -13,8 +26,6 @@ const subjects = [
     icon: Calculator,
     descriptionKey: 'mathsDescription',
     color: 'var(--accent-red)',
-    topics: 12,
-    progress: 45,
   },
   {
     id: 'science',
@@ -22,8 +33,6 @@ const subjects = [
     icon: Atom,
     descriptionKey: 'scienceDescription',
     color: 'var(--teal)',
-    topics: 10,
-    progress: 30,
   },
 ] as const
 
@@ -53,6 +62,10 @@ export default function SubjectsPage() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {subjects.map((subject) => {
             const Icon = subject.icon
+            const topicCount = getTopicsForSubjectGrade(
+              subject.id,
+              (user?.grade ?? 11) as Grade
+            ).length
             return (
               <Link
                 key={subject.id}
@@ -86,33 +99,13 @@ export default function SubjectsPage() {
                 </p>
 
                 {/* Stats */}
-                <div className="flex items-center gap-4 mb-4">
+                <div className="flex items-center gap-4">
                   <div className="flex items-center gap-1.5">
                     <BookOpen className="w-4 h-4" style={{ color: 'var(--muted-custom)' }} />
                     <span className="text-sm" style={{ color: 'var(--muted-custom)' }}>
-                      {t('topicCount', { count: subject.topics })}
+                      {t('topicCount', { count: topicCount })}
                     </span>
                   </div>
-                  <div className="flex items-center gap-1.5">
-                    <Target className="w-4 h-4" style={{ color: 'var(--muted-custom)' }} />
-                    <span className="text-sm" style={{ color: 'var(--muted-custom)' }}>
-                      {t('percentComplete', { percent: subject.progress })}
-                    </span>
-                  </div>
-                </div>
-
-                {/* Progress Bar */}
-                <div
-                  className="h-2 rounded-full overflow-hidden"
-                  style={{ background: 'var(--surface2)' }}
-                >
-                  <div
-                    className="h-full rounded-full transition-all"
-                    style={{
-                      width: `${subject.progress}%`,
-                      background: subject.color,
-                    }}
-                  />
                 </div>
               </Link>
             )

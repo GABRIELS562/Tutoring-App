@@ -17,6 +17,13 @@ type StudyPlanBannerProps = {
 
 // Angelo's expert-recommended order (highest impact first). nameKey/reasonKey
 // resolve against the "studyPlan" message namespace at render time.
+//
+// Slugs must be REGISTERED slugs (src/content/registry.ts), which are
+// grade-suffixed. Three of these read 'euclidean-geometry',
+// 'analytical-geometry' and 'statistics', none of which the registry has -
+// so the second, third and fourth cards of the most prominent panel on the
+// dashboard all landed on "Topic not found". Pinned by
+// __tests__/StudyPlanBanner.test.tsx.
 const RECOMMENDED_ORDER = [
   {
     slug: 'trig-gr11',
@@ -25,19 +32,19 @@ const RECOMMENDED_ORDER = [
     priority: 1,
   },
   {
-    slug: 'euclidean-geometry',
+    slug: 'euclidean-geometry-gr11',
     nameKey: 'topicEuclidean',
     reasonKey: 'reasonEuclidean',
     priority: 2,
   },
   {
-    slug: 'analytical-geometry',
+    slug: 'analytical-geometry-gr11',
     nameKey: 'topicAnalytical',
     reasonKey: 'reasonAnalytical',
     priority: 3,
   },
   {
-    slug: 'statistics',
+    slug: 'statistics-gr11',
     nameKey: 'topicStatistics',
     reasonKey: 'reasonStatistics',
     priority: 4,

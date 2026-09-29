@@ -1,4 +1,6 @@
 import { describe, it, expect } from 'vitest'
+import { readFileSync } from 'node:fs'
+import { join } from 'node:path'
 import { demoPapers } from '@/content/demo-papers'
 
 /**
@@ -13,7 +15,10 @@ import { demoPapers } from '@/content/demo-papers'
  * exist to stop that state coming back.
  */
 
-const commonPapers = demoPapers.filter((p) => p.examType === 'Common')
+// Values are lowercase: the database stores them that way, and the two
+// lists drifting on capitalisation is what made the language filter hide
+// every seeded paper. Display text is translated, not the stored value.
+const commonPapers = demoPapers.filter((p) => p.examType === 'common')
 
 describe('Grade 10 and 11 Common Papers', () => {
   it('covers both grades, both subjects, both languages, 2015-2018', () => {
@@ -23,7 +28,7 @@ describe('Grade 10 and 11 Common Papers', () => {
       for (const subject of ['maths', 'science']) {
         for (const year of [2015, 2016, 2017, 2018]) {
           for (const paperNumber of [1, 2]) {
-            for (const language of ['English', 'Afrikaans']) {
+            for (const language of ['english', 'afrikaans']) {
               const match = commonPapers.filter(
                 (p) =>
                   p.grade === grade &&
@@ -105,6 +110,65 @@ describe('Grade 10 and 11 Common Papers', () => {
   it('never labels a Grade 10 entry with a Grade 11 file, or vice versa', () => {
     for (const p of commonPapers) {
       expect(decodeURIComponent(p.pdfUrl), p.id).toContain(`Grade ${p.grade} Nov ${p.year}`)
+    }
+  })
+})
+
+/**
+ * seed-papers.ts used to keep its own hand-maintained copy of this list,
+ * pointing at stanmorephysics.com. All 96 of those URLs are now 404s, so
+ * a seeded database served 50 of its 114 rows with two dead buttons -
+ * Grade 12 was 30 out of 30 - while demo mode read this list and looked
+ * perfect. The same drift wrote 'english' in one file and 'English' in
+ * the other, and the papers page compares the language filter strictly,
+ * so a real deployment showed zero papers.
+ *
+ * The seed is now derived from this list. These keep it that way.
+ */
+describe('there is one past-paper library, not two', () => {
+  it('sources every paper from the government, not a third party', () => {
+    const foreign = demoPapers
+      .flatMap((p) => [p.pdfUrl, p.memoUrl])
+      .filter((url): url is string => !!url)
+      .filter((url) => !url.startsWith('https://www.education.gov.za/'))
+
+    expect(foreign).toEqual([])
+  })
+
+  it('is derived by the seed rather than duplicated in it', () => {
+    const seed = readFileSync(join(__dirname, '..', '..', 'db', 'seed-papers.ts'), 'utf-8')
+
+    expect(seed).toMatch(/import \{ demoPapers \} from/)
+    // Any literal URL here means a second copy has crept back in.
+    expect(seed).not.toMatch(/https:\/\//)
+  })
+
+  it('stores examType and language the way the database does', () => {
+    for (const paper of demoPapers) {
+      expect(paper.examType, paper.id).toBe(paper.examType.toLowerCase())
+      expect(paper.language, paper.id).toBe(paper.language?.toLowerCase())
+    }
+  })
+
+  /**
+   * Every stored value must have a label in both languages, or the card
+   * falls back to printing the raw database value at the student.
+   */
+  it('has a translation for every examType and language it stores', () => {
+    const en = JSON.parse(
+      readFileSync(join(__dirname, '..', '..', 'messages', 'en.json'), 'utf-8')
+    ).papers
+    const af = JSON.parse(
+      readFileSync(join(__dirname, '..', '..', 'messages', 'af.json'), 'utf-8')
+    ).papers
+
+    const values = new Set(
+      demoPapers.flatMap((p) => [p.examType, p.language].filter((v): v is string => !!v))
+    )
+
+    for (const value of values) {
+      expect(en, `en.json has no label for "${value}"`).toHaveProperty(value)
+      expect(af, `af.json has no label for "${value}"`).toHaveProperty(value)
     }
   })
 })

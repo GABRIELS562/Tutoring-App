@@ -216,7 +216,7 @@ export const formulas: Formula[] = [
     name: 'Distance Formula',
     formula: 'd = \\sqrt{(x_2 - x_1)^2 + (y_2 - y_1)^2}',
     notes: 'Distance between two points',
-    topicSlug: 'analytical-geometry',
+    topicSlug: 'analytical-geometry-gr11',
   },
   {
     id: 'midpoint',
@@ -226,7 +226,7 @@ export const formulas: Formula[] = [
     name: 'Midpoint Formula',
     formula: 'M = \\left(\\frac{x_1 + x_2}{2}, \\frac{y_1 + y_2}{2}\\right)',
     notes: 'Midpoint of a line segment',
-    topicSlug: 'analytical-geometry',
+    topicSlug: 'analytical-geometry-gr11',
   },
   {
     id: 'gradient',
@@ -236,7 +236,7 @@ export const formulas: Formula[] = [
     name: 'Gradient Formula',
     formula: 'm = \\frac{y_2 - y_1}{x_2 - x_1}',
     notes: 'Slope of a line through two points',
-    topicSlug: 'analytical-geometry',
+    topicSlug: 'analytical-geometry-gr11',
   },
   {
     id: 'line-equation',
@@ -246,7 +246,7 @@ export const formulas: Formula[] = [
     name: 'Equation of a Line',
     formula: 'y - y_1 = m(x - x_1)',
     notes: 'Point-gradient form of a straight line',
-    topicSlug: 'analytical-geometry',
+    topicSlug: 'analytical-geometry-gr11',
   },
   {
     id: 'parallel-lines',
@@ -256,7 +256,7 @@ export const formulas: Formula[] = [
     name: 'Parallel Lines',
     formula: 'm_1 = m_2',
     notes: 'Parallel lines have equal gradients',
-    topicSlug: 'analytical-geometry',
+    topicSlug: 'analytical-geometry-gr11',
   },
   {
     id: 'perpendicular-lines',
@@ -266,7 +266,7 @@ export const formulas: Formula[] = [
     name: 'Perpendicular Lines',
     formula: 'm_1 \\times m_2 = -1',
     notes: 'Product of gradients is -1',
-    topicSlug: 'analytical-geometry',
+    topicSlug: 'analytical-geometry-gr11',
   },
 
   // ============================================
@@ -280,7 +280,7 @@ export const formulas: Formula[] = [
     name: 'Mean (Average)',
     formula: '\\bar{x} = \\frac{\\sum x}{n}',
     notes: 'Sum of all values divided by count',
-    topicSlug: 'statistics',
+    topicSlug: 'statistics-gr11',
   },
   {
     id: 'variance',
@@ -290,7 +290,7 @@ export const formulas: Formula[] = [
     name: 'Variance',
     formula: '\\sigma^2 = \\frac{\\sum(x - \\bar{x})^2}{n}',
     notes: 'Measure of spread from the mean',
-    topicSlug: 'statistics',
+    topicSlug: 'statistics-gr11',
   },
   {
     id: 'std-dev',
@@ -300,7 +300,7 @@ export const formulas: Formula[] = [
     name: 'Standard Deviation',
     formula: '\\sigma = \\sqrt{\\frac{\\sum(x - \\bar{x})^2}{n}}',
     notes: 'Square root of variance',
-    topicSlug: 'statistics',
+    topicSlug: 'statistics-gr11',
   },
   {
     id: 'regression',
@@ -310,7 +310,7 @@ export const formulas: Formula[] = [
     name: 'Linear Regression',
     formula: '\\hat{y} = a + bx',
     notes: 'Line of best fit equation',
-    topicSlug: 'statistics',
+    topicSlug: 'statistics-gr11',
   },
 
   // ============================================
@@ -324,7 +324,7 @@ export const formulas: Formula[] = [
     name: 'Angle at Centre Theorem',
     formula: '\\angle_{\\text{centre}} = 2 \\times \\angle_{\\text{circumference}}',
     notes: 'Angle at centre is twice angle at circumference',
-    topicSlug: 'euclidean-geometry',
+    topicSlug: 'euclidean-geometry-gr11',
   },
   {
     id: 'angles-same-arc',
@@ -334,7 +334,7 @@ export const formulas: Formula[] = [
     name: 'Angles in Same Segment',
     formula: '\\angle A = \\angle B',
     notes: 'Angles subtended by same arc are equal',
-    topicSlug: 'euclidean-geometry',
+    topicSlug: 'euclidean-geometry-gr11',
   },
   {
     id: 'cyclic-quad',
@@ -344,7 +344,7 @@ export const formulas: Formula[] = [
     name: 'Cyclic Quadrilateral',
     formula: '\\angle A + \\angle C = 180°',
     notes: 'Opposite angles of cyclic quad are supplementary',
-    topicSlug: 'euclidean-geometry',
+    topicSlug: 'euclidean-geometry-gr11',
   },
   {
     id: 'tangent-radius',
@@ -354,7 +354,7 @@ export const formulas: Formula[] = [
     name: 'Tangent-Radius Theorem',
     formula: '\\text{Tangent} \\perp \\text{Radius}',
     notes: 'Tangent is perpendicular to radius at point of contact',
-    topicSlug: 'euclidean-geometry',
+    topicSlug: 'euclidean-geometry-gr11',
   },
 
   // ============================================
@@ -368,7 +368,7 @@ export const formulas: Formula[] = [
     name: "Newton's Second Law",
     formula: 'F_{\\text{net}} = ma',
     notes: 'Net force equals mass times acceleration',
-    topicSlug: 'mechanics',
+    topicSlug: 'mechanics-gr11',
   },
   {
     id: 'weight',
@@ -378,7 +378,7 @@ export const formulas: Formula[] = [
     name: 'Weight',
     formula: 'W = mg',
     notes: 'Weight = mass × gravitational acceleration (9.8 m/s²)',
-    topicSlug: 'mechanics',
+    topicSlug: 'mechanics-gr11',
   },
   {
     id: 'kinematic-1',
@@ -388,7 +388,7 @@ export const formulas: Formula[] = [
     name: 'Velocity-Time Equation',
     formula: 'v_f = v_i + at',
     notes: 'Final velocity from initial velocity and acceleration',
-    topicSlug: 'mechanics',
+    topicSlug: 'mechanics-gr11',
   },
   {
     id: 'kinematic-2',
@@ -398,7 +398,7 @@ export const formulas: Formula[] = [
     name: 'Displacement-Time Equation',
     formula: '\\Delta x = v_i t + \\frac{1}{2}at^2',
     notes: 'Displacement with constant acceleration',
-    topicSlug: 'mechanics',
+    topicSlug: 'mechanics-gr11',
   },
   {
     id: 'kinematic-3',
@@ -408,7 +408,7 @@ export const formulas: Formula[] = [
     name: 'Velocity-Displacement Equation',
     formula: 'v_f^2 = v_i^2 + 2a\\Delta x',
     notes: 'Use when time is not given',
-    topicSlug: 'mechanics',
+    topicSlug: 'mechanics-gr11',
   },
   {
     id: 'momentum',
@@ -418,7 +418,7 @@ export const formulas: Formula[] = [
     name: 'Momentum',
     formula: 'p = mv',
     notes: 'Momentum = mass × velocity',
-    topicSlug: 'mechanics',
+    topicSlug: 'mechanics-gr11',
   },
   {
     id: 'impulse',
@@ -428,7 +428,7 @@ export const formulas: Formula[] = [
     name: 'Impulse-Momentum Theorem',
     formula: 'F\\Delta t = \\Delta p = m\\Delta v',
     notes: 'Impulse equals change in momentum',
-    topicSlug: 'mechanics',
+    topicSlug: 'mechanics-gr11',
   },
 
   // ============================================
@@ -442,7 +442,7 @@ export const formulas: Formula[] = [
     name: "Ohm's Law",
     formula: 'V = IR',
     notes: 'Voltage = Current × Resistance',
-    topicSlug: 'electricity',
+    topicSlug: 'electricity-magnetism-gr11',
   },
   {
     id: 'power-1',
@@ -452,7 +452,7 @@ export const formulas: Formula[] = [
     name: 'Electrical Power',
     formula: 'P = VI = I^2R = \\frac{V^2}{R}',
     notes: 'Power can be calculated three ways',
-    topicSlug: 'electricity',
+    topicSlug: 'electricity-magnetism-gr11',
   },
   {
     id: 'series-resistance',
@@ -462,7 +462,7 @@ export const formulas: Formula[] = [
     name: 'Series Resistance',
     formula: 'R_T = R_1 + R_2 + R_3 + ...',
     notes: 'Resistors in series add directly',
-    topicSlug: 'electricity',
+    topicSlug: 'electricity-magnetism-gr11',
   },
   {
     id: 'parallel-resistance',
@@ -472,7 +472,7 @@ export const formulas: Formula[] = [
     name: 'Parallel Resistance',
     formula: '\\frac{1}{R_T} = \\frac{1}{R_1} + \\frac{1}{R_2} + ...',
     notes: 'Reciprocals add for parallel resistors',
-    topicSlug: 'electricity',
+    topicSlug: 'electricity-magnetism-gr11',
   },
   {
     id: 'energy',
@@ -482,7 +482,7 @@ export const formulas: Formula[] = [
     name: 'Electrical Energy',
     formula: 'E = Pt = VIt',
     notes: 'Energy = Power × time',
-    topicSlug: 'electricity',
+    topicSlug: 'electricity-magnetism-gr11',
   },
 ]
 
