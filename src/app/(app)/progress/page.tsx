@@ -5,8 +5,9 @@ import Topbar from '@/components/layout/Topbar'
 import { getProgressData, getLeaderboard, getDashboardData } from '@/db/queries/progress'
 import { getExamSummary, type ExamPaperSummary } from '@/db/queries/exam'
 import { paperByKey } from '@/content/exam'
-import XPLineChart from './XPLineChart'
-import AccuracyBarChart from './AccuracyBarChart'
+// Recharts is 376KB and lives on this page alone - loaded on demand, not
+// on the critical path. See LazyCharts.tsx.
+import { XPLineChart, AccuracyBarChart } from './LazyCharts'
 import ActivityCalendar from './ActivityCalendar'
 import Leaderboard from './Leaderboard'
 

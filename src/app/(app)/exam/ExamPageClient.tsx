@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useCallback, useMemo, useState } from 'react'
 import { useTranslations } from 'next-intl'
 import Image from 'next/image'
 import Topbar from '@/components/layout/Topbar'
@@ -68,7 +68,10 @@ export default function ExamPageClient({
   savedAttempts?: SavedAttempt[]
 }) {
   const t = useTranslations('exam')
-  const saved = new Map(savedAttempts.map((a) => [a.itemId, a]))
+  const saved = useMemo(
+    () => new Map(savedAttempts.map((a) => [a.itemId, a])),
+    [savedAttempts]
+  )
   // Seeded from what was already saved, so the running total across the top
   // counts an earlier sitting instead of restarting at zero.
   const [scores, setScores] = useState<Record<string, number>>(() =>
@@ -88,7 +91,7 @@ export default function ExamPageClient({
    * are recomputed server-side from the real mark scheme; see
    * recordExamAttempt().
    */
-  const persist = async (item: ExamItem, attempt: ExamAttempt) => {
+  const persist = useCallback(async (item: ExamItem, attempt: ExamAttempt) => {
     setScores((s) => ({ ...s, [item.id]: attempt.marks }))
     // Clear any earlier failure for this question before retrying it.
     setFailedSaves((f) => {
@@ -111,12 +114,12 @@ export default function ExamPageClient({
     } catch {
       setFailedSaves((f) => new Set(f).add(item.id))
     }
-  }
+  }, [paperKey])
 
   const available = totalMarks(items)
   const earned = Object.values(scores).reduce((a, b) => a + b, 0)
   const done = Object.keys(scores).length
-  const groups = groupByQuestion(items)
+  const groups = useMemo(() => groupByQuestion(items), [items])
 
   return (
     <div className="min-h-screen" style={{ background: 'var(--bg)' }}>
@@ -175,7 +178,7 @@ export default function ExamPageClient({
                     groupDiagram={run.diagram}
                     previousAttempt={saved.get(item.id)}
                     saveFailed={failedSaves.has(item.id)}
-                    onDone={(attempt) => persist(item, attempt)}
+                    onDone={persist}
                   />
                 ))}
               </div>

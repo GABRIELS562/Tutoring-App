@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { memo, useState } from 'react'
 import { useTranslations } from 'next-intl'
 import Image from 'next/image'
 import { Check, X, Clock, ArrowRight } from 'lucide-react'
@@ -33,7 +33,7 @@ export interface ExamAttempt {
   available: number
 }
 
-export default function ExamItemCard({
+function ExamItemCard({
   item,
   onDone,
   showStem = true,
@@ -43,7 +43,12 @@ export default function ExamItemCard({
   saveFailed = false,
 }: {
   item: ExamItem
-  onDone?: (attempt: ExamAttempt) => void
+  /**
+   * Takes the item back, so the parent can pass ONE stable callback for
+   * all 53 cards. An inline `(attempt) => persist(item, attempt)` is a new
+   * function every render, which defeats the memo() below entirely.
+   */
+  onDone?: (item: ExamItem, attempt: ExamAttempt) => void
   /** False when the question group above already shows the stem and diagram. */
   showStem?: boolean
   /** The stem shown above the group, so a local one can be told apart. */
@@ -253,7 +258,7 @@ export default function ExamItemCard({
             onClick={() => {
               setPhase('result')
               if (familiarity) {
-                onDone?.({ familiarity, satisfied, marks: earned, available })
+                onDone?.(item, { familiarity, satisfied, marks: earned, available })
               }
             }}
             className="mt-3 px-4 py-2 rounded-lg text-sm font-semibold"
@@ -360,3 +365,16 @@ export default function ExamItemCard({
     </div>
   )
 }
+
+/**
+ * A 150-mark paper is 53 of these on one page, and marking any single
+ * question updates state that lives in ExamPageClient - so without this,
+ * every answer re-rendered all 53 cards and everything inside them,
+ * including the KaTeX in each mark scheme.
+ *
+ * The props that matter are the item (static per page) and the two
+ * per-item flags, so a default shallow compare is exactly right - as long
+ * as the parent does not hand each card a freshly-built onDone on every
+ * render, which is why that callback is memoised there.
+ */
+export default memo(ExamItemCard)
