@@ -52,6 +52,26 @@ npm run db:rls          # applies supabase/migrations/0001_rls.sql
 npm run db:functions    # applies supabase/migrations/0002_functions.sql (depends on 0001's unique constraint)
 ```
 
+### Rehearse it first
+
+`./scripts/deploy-rehearsal.sh` runs that exact chain — plus the seeds and
+a security probe — against a throwaway Postgres in Docker, so the first
+time it runs is not against the live project. It needs Docker and leaves
+nothing behind.
+
+It is not theatre: the first run found a real blocker. `db:push` creates
+the unique indexes declared in `schema.ts`, and `0001_rls.sql` then did
+`DROP CONSTRAINT IF EXISTS` — which does **not** touch an index — before
+`ADD CONSTRAINT`, so the documented order above failed outright with
+`relation "student_progress_user_question_unique" already exists`. Four
+constraints were affected. They now drop the index too.
+
+The probe signs in as `authenticated` with a JWT claim and confirms, on a
+real Postgres rather than by reading the SQL, that a student can insert
+their own signup row and read it, and cannot make themselves an admin,
+grant themselves premium or XP, reset their AI quota, or write their own
+exam marks.
+
 Both run `scripts/apply-sql.ts` against `DATABASE_URL` (use the
 **direct**, port-5432 connection — same as migrations, not the pooled
 one) inside a single transaction: each commits only if its whole file

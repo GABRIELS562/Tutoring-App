@@ -303,3 +303,41 @@ describe('signup and the users grant agree', () => {
     }
   })
 })
+
+/**
+ * db:push creates the unique indexes declared in schema.ts. DROP
+ * CONSTRAINT does not touch an index, so on the documented order -
+ * db:push then db:rls - ADD CONSTRAINT collided with the index name and
+ * the whole RLS migration aborted:
+ *
+ *   relation "student_progress_user_question_unique" already exists
+ *
+ * Found by ./scripts/deploy-rehearsal.sh, which runs the real chain
+ * against a throwaway Postgres. Four constraints were affected.
+ */
+describe('the unique constraints survive db:push having already run', () => {
+  const CONSTRAINTS = [
+    'student_progress_user_question_unique',
+    'ai_hint_usage_user_date_unique',
+    'prompt_challenge_attempts_user_challenge_unique',
+    'exam_attempts_user_item_unique',
+  ]
+
+  it.each(CONSTRAINTS)('drops the INDEX as well as the constraint: %s', (name) => {
+    expect(sql, `${name}: no DROP INDEX`).toMatch(
+      new RegExp(`DROP INDEX IF EXISTS ${name};`)
+    )
+  })
+
+  it('drops the index before adding the constraint, not after', () => {
+    for (const name of CONSTRAINTS) {
+      const dropIndex = sql.indexOf(`DROP INDEX IF EXISTS ${name};`)
+      const addConstraint = sql.indexOf(`ADD CONSTRAINT ${name}`)
+      expect(dropIndex, name).toBeGreaterThan(-1)
+      expect(addConstraint, name).toBeGreaterThan(-1)
+      expect(dropIndex, `${name} drops the index after adding the constraint`).toBeLessThan(
+        addConstraint
+      )
+    }
+  })
+})

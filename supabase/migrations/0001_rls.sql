@@ -116,6 +116,14 @@ CREATE POLICY "users_insert_own" ON users
 -- safe to re-run.
 ALTER TABLE student_progress
   DROP CONSTRAINT IF EXISTS student_progress_user_question_unique;
+-- db:push creates this as a unique INDEX (uniqueIndex in schema.ts),
+-- and DROP CONSTRAINT does not touch an index - so on the documented
+-- order (db:push then db:rls) the ADD below failed with
+-- 'relation "student_progress_user_question_unique" already exists'.
+-- Dropping the index first makes the pair work in either order, and
+-- ADD CONSTRAINT recreates an index of the same name and columns, so
+-- a later db:push sees no drift.
+DROP INDEX IF EXISTS student_progress_user_question_unique;
 ALTER TABLE student_progress
   ADD CONSTRAINT student_progress_user_question_unique
   UNIQUE (user_id, question_id);
@@ -159,6 +167,14 @@ DROP POLICY IF EXISTS "student_progress_update_own" ON student_progress;
 -- ADD CONSTRAINT IF NOT EXISTS).
 ALTER TABLE ai_hint_usage
   DROP CONSTRAINT IF EXISTS ai_hint_usage_user_date_unique;
+-- db:push creates this as a unique INDEX (uniqueIndex in schema.ts),
+-- and DROP CONSTRAINT does not touch an index - so on the documented
+-- order (db:push then db:rls) the ADD below failed with
+-- 'relation "ai_hint_usage_user_date_unique" already exists'.
+-- Dropping the index first makes the pair work in either order, and
+-- ADD CONSTRAINT recreates an index of the same name and columns, so
+-- a later db:push sees no drift.
+DROP INDEX IF EXISTS ai_hint_usage_user_date_unique;
 ALTER TABLE ai_hint_usage
   ADD CONSTRAINT ai_hint_usage_user_date_unique
   UNIQUE (user_id, usage_date);
@@ -201,6 +217,14 @@ DROP POLICY IF EXISTS "ai_hint_usage_update_own" ON ai_hint_usage;
 -- guards below) to stay safe to re-run.
 ALTER TABLE prompt_challenge_attempts
   DROP CONSTRAINT IF EXISTS prompt_challenge_attempts_user_challenge_unique;
+-- db:push creates this as a unique INDEX (uniqueIndex in schema.ts),
+-- and DROP CONSTRAINT does not touch an index - so on the documented
+-- order (db:push then db:rls) the ADD below failed with
+-- 'relation "prompt_challenge_attempts_user_challenge_unique" already exists'.
+-- Dropping the index first makes the pair work in either order, and
+-- ADD CONSTRAINT recreates an index of the same name and columns, so
+-- a later db:push sees no drift.
+DROP INDEX IF EXISTS prompt_challenge_attempts_user_challenge_unique;
 ALTER TABLE prompt_challenge_attempts
   ADD CONSTRAINT prompt_challenge_attempts_user_challenge_unique
   UNIQUE (user_id, challenge_id);
@@ -408,6 +432,14 @@ ALTER TABLE ai_usage_log ENABLE ROW LEVEL SECURITY;
 -- this drops-then-adds to stay safe to re-run.
 ALTER TABLE exam_attempts
   DROP CONSTRAINT IF EXISTS exam_attempts_user_item_unique;
+-- db:push creates this as a unique INDEX (uniqueIndex in schema.ts),
+-- and DROP CONSTRAINT does not touch an index - so on the documented
+-- order (db:push then db:rls) the ADD below failed with
+-- 'relation "exam_attempts_user_item_unique" already exists'.
+-- Dropping the index first makes the pair work in either order, and
+-- ADD CONSTRAINT recreates an index of the same name and columns, so
+-- a later db:push sees no drift.
+DROP INDEX IF EXISTS exam_attempts_user_item_unique;
 ALTER TABLE exam_attempts
   ADD CONSTRAINT exam_attempts_user_item_unique
   UNIQUE (user_id, item_id);
