@@ -143,11 +143,11 @@ export const gr11P1Exemplar2013En: ExamItem[] = [
     marks: 3,
     topicSlug: 'algebra-gr11',
     solution: [
-      '$=\\frac{(x-3)(x-2)}{3(x-3)}$',
-      '$=\\frac{x-2}{3}$',
+      '$=\\frac{(x-3)(x+2)}{3(x-3)}$',
+      '$=\\frac{x+2}{3}$',
     ],
     markScheme: [
-      { descriptor: '$(x-3)(x-2)$', kind: 'method', value: 1 },
+      { descriptor: '$(x-3)(x+2)$', kind: 'method', value: 1 },
       { descriptor: '$3(x-3)$', kind: 'method', value: 1 },
       { descriptor: 'answer', kind: 'answer', value: 1 },
     ],

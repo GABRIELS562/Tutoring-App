@@ -68,8 +68,8 @@ export const gr11P2Exemplar2013: ExamItem[] = [
     marks: 2,
     topicSlug: 'statistics-gr11',
     solution: [
-      'The one standard deviation limits are $(\\bar{x} - \\sigma \;;\; \\bar{x} + \\sigma)$',
-      '$= (21,47 - 7,81 \;;\; 21,47 + 7,81) = (13,66 \;;\; 29,28)$',
+      'The one standard deviation limits are $(\\bar{x} - \\sigma \\,;\\, \\bar{x} + \\sigma)$',
+      '$= (21,47 - 7,81 \\,;\\, 21,47 + 7,81) = (13,66 \\,;\\, 29,28)$',
       '$\\therefore$ 13 people lie within 1 standard deviation of the mean.',
     ],
     markScheme: [
@@ -77,7 +77,7 @@ export const gr11P2Exemplar2013: ExamItem[] = [
       { descriptor: '13 people', kind: 'answer', value: 1 },
     ],
     commonError:
-      'Giving the interval $(13,66 ; 29,28)$ and stopping. The question asks how many data values fall inside it, so you must go back and count - but the interval itself still earns the first mark.',
+      'Giving the interval $(13,66 \\; 29,28)$ and stopping. The question asks how many data values fall inside it, so you must go back and count - but the interval itself still earns the first mark.',
   },
   {
     id: 'gr11-p2-2013-1.4',
@@ -93,7 +93,7 @@ export const gr11P2Exemplar2013: ExamItem[] = [
     marks: 3,
     topicSlug: 'statistics-gr11',
     solution: [
-      'Ordered: $5\;12\;13\;15\;18\;18\;18\;19\;20\;21\;21\;22\;23\;23\;26\;29\;33\;35\;37$',
+      'Ordered: $5\\;12\\;13\\;15\\;18\\;18\\;18\\;19\\;20\\;21\\;21\\;22\\;23\\;23\\;26\\;29\\;33\\;35\\;37$',
       '$Q_1 = 18$ and $Q_3 = 26$',
       'IQR $= 26 - 18 = 8$',
     ],
@@ -195,8 +195,8 @@ export const gr11P2Exemplar2013: ExamItem[] = [
     diagram: '/exam/gr11-p2-2013/q2.png',
     requiresDrawing: true,
     solution: [
-      'Start on the horizontal axis at $(0\;;\;0)$.',
-      'Plot each cumulative frequency at the UPPER limit of its interval: $(2\;;\;7)$, $(4\;;\;22)$, $(6\;;\;48)$, $(8\;;\;77)$, $(10\;;\;113)$, $(12\;;\;144)$, $(14\;;\;158)$, $(16\;;\;160)$.',
+      'Start on the horizontal axis at $(0\\,;\\,0)$.',
+      'Plot each cumulative frequency at the UPPER limit of its interval: $(2\\,;\\,7)$, $(4\\,;\\,22)$, $(6\\,;\\,48)$, $(8\\,;\\,77)$, $(10\\,;\\,113)$, $(12\\,;\\,144)$, $(14\\,;\\,158)$, $(16\\,;\\,160)$.',
       'Join them with a smooth curve.',
     ],
     markScheme: [
@@ -254,7 +254,7 @@ export const gr11P2Exemplar2013: ExamItem[] = [
       { descriptor: 'answer', kind: 'answer', value: 1 },
     ],
     commonError:
-      'Reading $130$ off the ogive and converting that straight to a percentage. The ogive gives "11 or fewer"; the question asks for "more than 11", so subtract from $160$ first.',
+      'Reading $130$ off the ogive and converting that straight to a percentage. The ogive gives "11 or fewer"\\; the question asks for "more than 11", so subtract from $160$ first.',
   },
   {
     id: 'gr11-p2-2013-2.5',
@@ -288,14 +288,14 @@ export const gr11P2Exemplar2013: ExamItem[] = [
     language: 'en',
     question: '3.1',
     context:
-      'A$(1\;;\;6)$, B$(3\;;\;0)$, C$(12\;;\;3)$ and D are the vertices of a trapezium with AD $\\parallel$ BC. E is the midpoint of BC. The angle of inclination of the straight line BC is $\\theta$.',
+      'A$(1\\,;\\,6)$, B$(3\\,;\\,0)$, C$(12\\,;\\,3)$ and D are the vertices of a trapezium with AD $\\parallel$ BC. E is the midpoint of BC. The angle of inclination of the straight line BC is $\\theta$.',
     prompt: 'Calculate the coordinates of E.',
     marks: 2,
     topicSlug: 'analytical-geometry-gr11',
     diagram: '/exam/gr11-p2-2013/q3.png',
     solution: [
-      'E$\\left(\\dfrac{3+12}{2}\;;\;\\dfrac{0+3}{2}\\right)$',
-      '$= (7,5\;;\;1,5)$',
+      'E$\\left(\\dfrac{3+12}{2}\\,;\\,\\dfrac{0+3}{2}\\right)$',
+      '$= (7,5\\,;\\,1,5)$',
     ],
     markScheme: [
       { descriptor: 'substitution into midpoint formula', kind: 'method', value: 1 },
@@ -313,7 +313,7 @@ export const gr11P2Exemplar2013: ExamItem[] = [
     language: 'en',
     question: '3.2',
     context:
-      'A$(1\;;\;6)$, B$(3\;;\;0)$, C$(12\;;\;3)$ and D are the vertices of a trapezium with AD $\\parallel$ BC. E is the midpoint of BC. The angle of inclination of the straight line BC is $\\theta$.',
+      'A$(1\\,;\\,6)$, B$(3\\,;\\,0)$, C$(12\\,;\\,3)$ and D are the vertices of a trapezium with AD $\\parallel$ BC. E is the midpoint of BC. The angle of inclination of the straight line BC is $\\theta$.',
     prompt: 'Determine the gradient of the line BC.',
     marks: 2,
     topicSlug: 'analytical-geometry-gr11',
@@ -327,7 +327,7 @@ export const gr11P2Exemplar2013: ExamItem[] = [
       { descriptor: 'answer', kind: 'answer', value: 1 },
     ],
     commonError:
-      'Inverting the formula and getting $3$ instead of $\\frac{1}{3}$. Keep the $y$-difference on top; an inverted substitution also wrecks 3.3 and 3.4.',
+      'Inverting the formula and getting $3$ instead of $\\frac{1}{3}$. Keep the $y$-difference on top\\; an inverted substitution also wrecks 3.3 and 3.4.',
   },
   {
     id: 'gr11-p2-2013-3.3',
@@ -338,7 +338,7 @@ export const gr11P2Exemplar2013: ExamItem[] = [
     language: 'en',
     question: '3.3',
     context:
-      'A$(1\;;\;6)$, B$(3\;;\;0)$, C$(12\;;\;3)$ and D are the vertices of a trapezium with AD $\\parallel$ BC. E is the midpoint of BC. The angle of inclination of the straight line BC is $\\theta$.',
+      'A$(1\\,;\\,6)$, B$(3\\,;\\,0)$, C$(12\\,;\\,3)$ and D are the vertices of a trapezium with AD $\\parallel$ BC. E is the midpoint of BC. The angle of inclination of the straight line BC is $\\theta$.',
     prompt: 'Calculate the magnitude of $\\theta$.',
     marks: 2,
     topicSlug: 'analytical-geometry-gr11',
@@ -363,7 +363,7 @@ export const gr11P2Exemplar2013: ExamItem[] = [
     language: 'en',
     question: '3.4',
     context:
-      'A$(1\;;\;6)$, B$(3\;;\;0)$, C$(12\;;\;3)$ and D are the vertices of a trapezium with AD $\\parallel$ BC. E is the midpoint of BC. The angle of inclination of the straight line BC is $\\theta$.',
+      'A$(1\\,;\\,6)$, B$(3\\,;\\,0)$, C$(12\\,;\\,3)$ and D are the vertices of a trapezium with AD $\\parallel$ BC. E is the midpoint of BC. The angle of inclination of the straight line BC is $\\theta$.',
     prompt: 'Prove that AD is perpendicular to AB.',
     marks: 3,
     topicSlug: 'analytical-geometry-gr11',
@@ -390,7 +390,7 @@ export const gr11P2Exemplar2013: ExamItem[] = [
     language: 'en',
     question: '3.5',
     context:
-      'A$(1\;;\;6)$, B$(3\;;\;0)$, C$(12\;;\;3)$ and D are the vertices of a trapezium with AD $\\parallel$ BC. E is the midpoint of BC. The angle of inclination of the straight line BC is $\\theta$.',
+      'A$(1\\,;\\,6)$, B$(3\\,;\\,0)$, C$(12\\,;\\,3)$ and D are the vertices of a trapezium with AD $\\parallel$ BC. E is the midpoint of BC. The angle of inclination of the straight line BC is $\\theta$.',
     prompt: 'A straight line through vertex A does not pass through any side of the trapezium and makes an angle of $45°$ with side AD. Determine the equation of this straight line.',
     marks: 5,
     topicSlug: 'analytical-geometry-gr11',
@@ -406,11 +406,11 @@ export const gr11P2Exemplar2013: ExamItem[] = [
       { descriptor: '18,43°', kind: 'method', value: 1 },
       { descriptor: '63,43°', kind: 'method', value: 1 },
       { descriptor: '$m = 2$', kind: 'method', value: 1 },
-      { descriptor: 'subst of (1 ; 6)', kind: 'method', value: 1 },
+      { descriptor: 'subst of (1 \\; 6)', kind: 'method', value: 1 },
       { descriptor: 'equation', kind: 'answer', value: 1 },
     ],
     commonError:
-      'Adding $45°$ to the gradient rather than to the angle of inclination, or subtracting to get $26,57°$ - which produces a line cutting through the trapezium, contradicting the condition. Substituting A$(1 ; 6)$ still earns a mark even with a wrong $m$.',
+      'Adding $45°$ to the gradient rather than to the angle of inclination, or subtracting to get $26,57°$ - which produces a line cutting through the trapezium, contradicting the condition. Substituting A$(1 \\; 6)$ still earns a mark even with a wrong $m$.',
   },
 
   {
@@ -422,7 +422,7 @@ export const gr11P2Exemplar2013: ExamItem[] = [
     language: 'en',
     question: '4.1',
     context:
-      'In the diagram, $P(-3 ; 17)$, Q, O and S are the vertices of a parallelogram. The sides $OS$ and $OQ$ are defined by $y = 6x$ and $y = -x$ respectively. $Q\\hat{O}S = \\alpha$.',
+      'In the diagram, $P(-3 \\; 17)$, Q, O and S are the vertices of a parallelogram. The sides $OS$ and $OQ$ are defined by $y = 6x$ and $y = -x$ respectively. $Q\\hat{O}S = \\alpha$.',
     prompt: 'Determine the equation of $QP$ in the form $y = mx + c$.',
     marks: 3,
     topicSlug: 'analytical-geometry-gr11',
@@ -434,7 +434,7 @@ export const gr11P2Exemplar2013: ExamItem[] = [
     ],
     markScheme: [
       { descriptor: '$m_{QP} = 6$', kind: 'method', value: 1 },
-      { descriptor: 'subst $(-3 ; 17)$ into formula', kind: 'method', value: 1 },
+      { descriptor: 'subst $(-3 \\; 17)$ into formula', kind: 'method', value: 1 },
       { descriptor: 'equation', kind: 'answer', value: 1 },
     ],
     commonError:
@@ -449,7 +449,7 @@ export const gr11P2Exemplar2013: ExamItem[] = [
     language: 'en',
     question: '4.2',
     context:
-      'In the diagram, $P(-3 ; 17)$, Q, O and S are the vertices of a parallelogram. The sides $OS$ and $OQ$ are defined by $y = 6x$ and $y = -x$ respectively. $Q\\hat{O}S = \\alpha$. From QUESTION 4.1, $QP: y = 6x + 35$.',
+      'In the diagram, $P(-3 \\; 17)$, Q, O and S are the vertices of a parallelogram. The sides $OS$ and $OQ$ are defined by $y = 6x$ and $y = -x$ respectively. $Q\\hat{O}S = \\alpha$. From QUESTION 4.1, $QP: y = 6x + 35$.',
     prompt: 'Hence, determine the coordinates of Q.',
     marks: 4,
     topicSlug: 'analytical-geometry-gr11',
@@ -458,7 +458,7 @@ export const gr11P2Exemplar2013: ExamItem[] = [
       '$6x + 35 = -x$',
       '$7x = -35$, so $x = -5$',
       '$y = 5$',
-      '$\\therefore Q(-5 ; 5)$',
+      '$\\therefore Q(-5 \\; 5)$',
     ],
     markScheme: [
       { descriptor: 'setting up equation', kind: 'method', value: 1 },
@@ -478,7 +478,7 @@ export const gr11P2Exemplar2013: ExamItem[] = [
     language: 'en',
     question: '4.3',
     context:
-      'In the diagram, $P(-3 ; 17)$, Q, O and S are the vertices of a parallelogram. The sides $OS$ and $OQ$ are defined by $y = 6x$ and $y = -x$ respectively. $Q\\hat{O}S = \\alpha$. From QUESTION 4.2, $Q(-5 ; 5)$.',
+      'In the diagram, $P(-3 \\; 17)$, Q, O and S are the vertices of a parallelogram. The sides $OS$ and $OQ$ are defined by $y = 6x$ and $y = -x$ respectively. $Q\\hat{O}S = \\alpha$. From QUESTION 4.2, $Q(-5 \\; 5)$.',
     prompt: 'Calculate the length of OQ. Leave your answer in simplified surd form.',
     marks: 2,
     topicSlug: 'analytical-geometry-gr11',
@@ -503,7 +503,7 @@ export const gr11P2Exemplar2013: ExamItem[] = [
     language: 'en',
     question: '4.4',
     context:
-      'In the diagram, $P(-3 ; 17)$, Q, O and S are the vertices of a parallelogram. The sides $OS$ and $OQ$ are defined by $y = 6x$ and $y = -x$ respectively. $Q\\hat{O}S = \\alpha$.',
+      'In the diagram, $P(-3 \\; 17)$, Q, O and S are the vertices of a parallelogram. The sides $OS$ and $OQ$ are defined by $y = 6x$ and $y = -x$ respectively. $Q\\hat{O}S = \\alpha$.',
     prompt: 'Calculate the size of $\\alpha$.',
     marks: 3,
     topicSlug: 'analytical-geometry-gr11',
@@ -530,7 +530,7 @@ export const gr11P2Exemplar2013: ExamItem[] = [
     language: 'en',
     question: '4.5',
     context:
-      'In the diagram, $P(-3 ; 17)$, Q, O and S are the vertices of a parallelogram. The sides $OS$ and $OQ$ are defined by $y = 6x$ and $y = -x$ respectively. $Q\\hat{O}S = \\alpha$. Here $\\alpha = 54,46°$ and $OQ = \\sqrt{50}$ units.',
+      'In the diagram, $P(-3 \\; 17)$, Q, O and S are the vertices of a parallelogram. The sides $OS$ and $OQ$ are defined by $y = 6x$ and $y = -x$ respectively. $Q\\hat{O}S = \\alpha$. Here $\\alpha = 54,46°$ and $OQ = \\sqrt{50}$ units.',
     prompt: 'If $OS = \\sqrt{148}$ units, calculate the length of QS.',
     marks: 3,
     topicSlug: 'analytical-geometry-gr11',
@@ -546,7 +546,7 @@ export const gr11P2Exemplar2013: ExamItem[] = [
       { descriptor: '$9,90$', kind: 'answer', value: 1 },
     ],
     commonError:
-      'Treating triangle QOS as right-angled and using Pythagoras. With $\\alpha = 54,46°$ the cosine rule is required. Quoting $QS^2$ as the length without square-rooting is the other classic; both method marks survive it.',
+      'Treating triangle QOS as right-angled and using Pythagoras. With $\\alpha = 54,46°$ the cosine rule is required. Quoting $QS^2$ as the length without square-rooting is the other classic\\; both method marks survive it.',
   },
   {
     id: 'gr11-p2-2013-5.1.1',
@@ -557,7 +557,7 @@ export const gr11P2Exemplar2013: ExamItem[] = [
     language: 'en',
     question: '5.1.1',
     context:
-      'In the figure, the point $P(-5 ; b)$ is plotted on the Cartesian plane. $OP = 13$ units and $R\\hat{O}P = \\alpha$. Without using a calculator, determine the value of the following.',
+      'In the figure, the point $P(-5 \\; b)$ is plotted on the Cartesian plane. $OP = 13$ units and $R\\hat{O}P = \\alpha$. Without using a calculator, determine the value of the following.',
     prompt: '$\\cos\\alpha$',
     marks: 1,
     topicSlug: 'trig-gr11',
@@ -580,7 +580,7 @@ export const gr11P2Exemplar2013: ExamItem[] = [
     language: 'en',
     question: '5.1.2',
     context:
-      'In the figure, the point $P(-5 ; b)$ is plotted on the Cartesian plane. $OP = 13$ units and $R\\hat{O}P = \\alpha$. Without using a calculator, determine the value of the following.',
+      'In the figure, the point $P(-5 \\; b)$ is plotted on the Cartesian plane. $OP = 13$ units and $R\\hat{O}P = \\alpha$. Without using a calculator, determine the value of the following.',
     prompt: '$\\tan(180° - \\alpha)$',
     marks: 3,
     topicSlug: 'trig-gr11',
@@ -698,7 +698,7 @@ export const gr11P2Exemplar2013: ExamItem[] = [
       { descriptor: 'each value', kind: 'answer', value: 3 },
     ],
     commonError:
-      'Checking only one denominator. All three vanish here. Solving only $1 - \\cos A = 0$ gives $0°$ and $360°$ and loses the $180°$; forgetting the closed interval drops $360°$.',
+      'Checking only one denominator. All three vanish here. Solving only $1 - \\cos A = 0$ gives $0°$ and $360°$ and loses the $180°$\\; forgetting the closed interval drops $360°$.',
   },
   {
     id: 'gr11-p2-2013-5.4',
@@ -1144,14 +1144,14 @@ export const gr11P2Exemplar2013: ExamItem[] = [
     topicSlug: 'euclidean-geometry-gr11',
     diagram: '/exam/gr11-p2-2013/q10-2.png',
     solution: [
-      '$\\hat{T}_2$ $= 38°$ ... ext$\angle$ of cyclic quad KTAB',
+      '$\\hat{T}_2$ $= 38°$ ... ext$\\angle$ of cyclic quad KTAB',
     ],
     markScheme: [
       { descriptor: '38°', kind: 'answer', value: 1 },
       { descriptor: 'reason', kind: 'reason', value: 1 },
     ],
     commonError:
-      'Naming the wrong cyclic quadrilateral. Quoting "opp angles of cyclic quad" contradicts the $38°$, since that reason would give $142°$. The answer mark survives; the reason mark does not.',
+      'Naming the wrong cyclic quadrilateral. Quoting "opp angles of cyclic quad" contradicts the $38°$, since that reason would give $142°$. The answer mark survives\\; the reason mark does not.',
   },
   {
     id: 'gr11-p2-2013-10.2.1(c)',
@@ -1319,7 +1319,7 @@ export const gr11P2Exemplar2013: ExamItem[] = [
     topicSlug: 'euclidean-geometry-gr11',
     diagram: '/exam/gr11-p2-2013/q11.png',
     solution: [
-      '$\\hat{E}_1 = \\hat{C}_3 = y$ ... alternate $\\angle^s$; $BG \\parallel EA$',
+      '$\\hat{E}_1 = \\hat{C}_3 = y$ ... alternate $\\angle^s$\\; $BG \\parallel EA$',
       '$\\hat{F}_1 = \\hat{C}_3 = y$ ... ext$\\angle$ of cyclic quad CDFG',
       '$\\therefore \\hat{E}_1 = \\hat{F}_1$',
       '$\\therefore EA$ is a tangent ... converse tangent-chord theorem',
@@ -1350,7 +1350,7 @@ export const gr11P2Exemplar2013: ExamItem[] = [
     diagram: '/exam/gr11-p2-2013/q11.png',
     solution: [
       '$\\hat{B} = C\\hat{A}E$ ... tangent-chord theorem',
-      '$\\hat{C}_1 = C\\hat{A}E$ ... alternate $\\angle^s$; $BG \\parallel EA$',
+      '$\\hat{C}_1 = C\\hat{A}E$ ... alternate $\\angle^s$\\; $BG \\parallel EA$',
       '$\\therefore \\hat{C}_1 = \\hat{B}$',
       '$\\therefore AB = AC$ ... base $\\angle^s$ equal',
     ],

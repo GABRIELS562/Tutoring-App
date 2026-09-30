@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useState } from 'react'
 import { AlertTriangle, Loader2 } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 import CertificateGenerator from '@/components/ai/CertificateGenerator'
 
 interface CertificateInfo {
@@ -24,6 +25,7 @@ type IssueState =
  * anything into Supabase itself.
  */
 export default function IssueCertificate() {
+  const t = useTranslations('aiSkills')
   const [state, setState] = useState<IssueState>({ status: 'loading' })
 
   // No setState call before the first `await` here: the initial mount
@@ -77,7 +79,7 @@ export default function IssueCertificate() {
         style={{ background: 'var(--surface)', border: '1px solid var(--border-custom)' }}
       >
         <Loader2 className="w-8 h-8 mx-auto animate-spin text-muted-custom" />
-        <p className="text-sm text-muted-custom">Generating your certificate...</p>
+        <p className="text-sm text-muted-custom">{t('generatingCertificate')}</p>
       </div>
     )
   }
@@ -94,9 +96,7 @@ export default function IssueCertificate() {
         >
           <AlertTriangle className="w-8 h-8 text-muted-custom" />
         </div>
-        <h1 className="text-xl font-bold" style={{ color: 'var(--text)' }}>
-          Couldn&apos;t create your certificate
-        </h1>
+        <h1 className="text-xl font-bold" style={{ color: 'var(--text)' }}>{t('certificateFailed')}</h1>
         <p className="text-sm text-muted-custom max-w-md mx-auto">
           {state.message} Please try again - if this keeps happening, let us know.
         </p>
@@ -104,9 +104,7 @@ export default function IssueCertificate() {
           onClick={handleRetry}
           className="inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium"
           style={{ background: 'var(--ai-purple)', color: 'white' }}
-        >
-          Try again
-        </button>
+        >{t('tryAgain')}</button>
       </div>
     )
   }

@@ -1,6 +1,7 @@
 'use client'
 
 import { AlertCircle, RefreshCw } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 
 export default function AISkillsError({
   error,
@@ -9,6 +10,7 @@ export default function AISkillsError({
   error: Error & { digest?: string }
   reset: () => void
 }) {
+  const t = useTranslations('aiSkills')
   return (
     <div className="p-4 md:p-6 max-w-2xl mx-auto">
       <div
@@ -22,9 +24,7 @@ export default function AISkillsError({
           <AlertCircle className="w-8 h-8 text-accent-red" />
         </div>
 
-        <h1 className="text-xl font-bold" style={{ color: 'var(--text)' }}>
-          Something went wrong
-        </h1>
+        <h1 className="text-xl font-bold" style={{ color: 'var(--text)' }}>{t('somethingWentWrong')}</h1>
 
         <p className="text-sm text-muted-custom">
           {error.message || 'Failed to load AI Skills. Please try again.'}
@@ -35,9 +35,7 @@ export default function AISkillsError({
           className="inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all"
           style={{ background: 'var(--ai-purple)', color: 'white' }}
         >
-          <RefreshCw className="w-4 h-4" />
-          Try Again
-        </button>
+          <RefreshCw className="w-4 h-4" />{t('tryAgain')}</button>
       </div>
     </div>
   )

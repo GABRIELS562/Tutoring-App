@@ -3,8 +3,11 @@ import type { AIModule } from '@/types'
 export const aiStudy: AIModule = {
   id: 'ai-study',
   title: "Study smarter: AI techniques that actually work",
+  titleAf: "Leer slimmer: KI-tegnieke wat werklik werk",
   description: "Practical, research-backed ways to use AI for studying that will improve your marks without crossing ethical lines.",
+  descriptionAf: "Praktiese, navorsingsgesteunde maniere om KI vir studie te gebruik wat jou punte sal verbeter sonder om etiese grense te oorskry.",
   timeEstimate: "15 min",
+  timeEstimateAf: "15 min",
   unlockCondition: 'ai-prompts',
   sections: [
     {

@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { Send, Loader2, RefreshCw, Download } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 import type { AIPracticalConfig } from '@/types'
 
 interface AIPracticalBlockProps {
@@ -10,6 +11,7 @@ interface AIPracticalBlockProps {
 }
 
 export default function AIPracticalBlock({ config, title }: AIPracticalBlockProps) {
+  const t = useTranslations('aiSkills')
   const [input, setInput] = useState('')
   const [response, setResponse] = useState<string | null>(null)
   const [isLoading, setIsLoading] = useState(false)
@@ -118,14 +120,10 @@ export default function AIPracticalBlock({ config, title }: AIPracticalBlockProp
           >
             {isLoading ? (
               <>
-                <Loader2 className="w-4 h-4 animate-spin" />
-                Thinking...
-              </>
+                <Loader2 className="w-4 h-4 animate-spin" />{t('thinking')}</>
             ) : (
               <>
-                <Send className="w-4 h-4" />
-                Ask Angelo AI
-              </>
+                <Send className="w-4 h-4" />{t('askAngelo')}</>
             )}
           </button>
 
@@ -151,15 +149,13 @@ export default function AIPracticalBlock({ config, title }: AIPracticalBlockProp
       {response && (
         <div className="p-4 rounded-lg space-y-3 bg-surface border border-custom">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-medium text-ai-purple">Angelo AI</span>
+            <span className="text-xs font-medium text-ai-purple">{t('angeloAi')}</span>
             {config.downloadable && (
               <button
                 onClick={handleDownload}
                 className="text-xs flex items-center gap-1 px-2 py-1 rounded hover:bg-surface2 transition-colors text-muted-custom"
               >
-                <Download className="w-3 h-3" />
-                Save
-              </button>
+                <Download className="w-3 h-3" />{t('save')}</button>
             )}
           </div>
           <p className="text-sm whitespace-pre-wrap text-primary-text">
@@ -167,8 +163,7 @@ export default function AIPracticalBlock({ config, title }: AIPracticalBlockProp
           </p>
           {savedToProfile && (
             <p className="text-xs text-ai-purple">
-              Copy this somewhere safe if you want it for your CV — it is not
-              saved yet.
+              {t('notSavedYet')}
             </p>
           )}
         </div>
@@ -178,11 +173,11 @@ export default function AIPracticalBlock({ config, title }: AIPracticalBlockProp
       {config.showComparison && response && (
         <div className="grid grid-cols-2 gap-4 text-xs">
           <div className="p-3 rounded-lg bg-surface2">
-            <p className="font-medium mb-1 text-muted-custom">Your prompt</p>
+            <p className="font-medium mb-1 text-muted-custom">{t('yourPrompt')}</p>
             <p className="text-primary-text">{input}</p>
           </div>
           <div className="p-3 rounded-lg bg-surface2">
-            <p className="font-medium mb-1 text-ai-purple">Improved version</p>
+            <p className="font-medium mb-1 text-ai-purple">{t('improvedVersion')}</p>
             <p className="text-primary-text">{response}</p>
           </div>
         </div>

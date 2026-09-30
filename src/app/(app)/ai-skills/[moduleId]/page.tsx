@@ -3,6 +3,8 @@ import { cookies } from 'next/headers'
 import { createServerClient } from '@supabase/ssr'
 import Link from 'next/link'
 import { ArrowLeft, ArrowRight } from 'lucide-react'
+import { getTranslations, getLocale } from 'next-intl/server'
+import Topbar from '@/components/layout/Topbar'
 import { aiModules, moduleOrder } from '@/content/ai-skills'
 import AIModuleRenderer from '@/components/ai/AIModuleRenderer'
 
@@ -84,13 +86,23 @@ export default async function AIModulePage({ params }: PageProps) {
     redirect('/ai-skills')
   }
 
+  const t = await getTranslations('aiSkills')
+  const af = (await getLocale()) === 'af'
+  const localised = (en: string, afText?: string) => (af && afText ? afText : en)
+
   const isCompleted = completedModules.includes(moduleId)
   const currentIndex = moduleOrder.indexOf(moduleId as typeof moduleOrder[number])
   const prevModule = currentIndex > 0 ? aiModules[moduleOrder[currentIndex - 1]] : null
   const nextModule = currentIndex < moduleOrder.length - 1 ? aiModules[moduleOrder[currentIndex + 1]] : null
 
   return (
-    <div className="p-4 md:p-6 max-w-3xl mx-auto space-y-6">
+    <div>
+      <Topbar
+        title={localised(aiModule.title, aiModule.titleAf)}
+        subtitle={t('title')}
+      />
+
+      <div className="p-4 md:p-6 max-w-3xl mx-auto space-y-6">
       {/* Back Link */}
       <Link
         href="/ai-skills"
@@ -98,7 +110,7 @@ export default async function AIModulePage({ params }: PageProps) {
         style={{ color: 'var(--muted-custom)' }}
       >
         <ArrowLeft className="w-4 h-4" />
-        Back to AI Skills
+        {t('backToAiSkills')}
       </Link>
 
       {/* Module Content */}
@@ -119,7 +131,7 @@ export default async function AIModulePage({ params }: PageProps) {
             style={{ color: 'var(--muted-custom)' }}
           >
             <ArrowLeft className="w-4 h-4" />
-            {prevModule.title}
+            {localised(prevModule.title, prevModule.titleAf)}
           </Link>
         ) : (
           <div />
@@ -131,7 +143,7 @@ export default async function AIModulePage({ params }: PageProps) {
             className="flex items-center gap-2 text-sm hover:text-ai-purple transition-colors"
             style={{ color: 'var(--muted-custom)' }}
           >
-            {nextModule.title}
+            {localised(nextModule.title, nextModule.titleAf)}
             <ArrowRight className="w-4 h-4" />
           </Link>
         ) : (
@@ -140,11 +152,12 @@ export default async function AIModulePage({ params }: PageProps) {
             className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium"
             style={{ background: 'var(--ai-purple)', color: 'white' }}
           >
-            Take the Challenge
+            {t('takeTheChallenge')}
             <ArrowRight className="w-4 h-4" />
           </Link>
         )}
       </div>
     </div>
+  </div>
   )
 }

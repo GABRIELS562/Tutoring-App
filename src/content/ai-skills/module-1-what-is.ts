@@ -3,8 +3,11 @@ import type { AIModule } from '@/types'
 export const aiWhatIs: AIModule = {
   id: 'ai-what-is',
   title: "What AI actually is — and what it isn't",
+  titleAf: "Wat KI werklik is — en wat dit nie is nie",
   description: "Understand how AI really works under the hood, why it makes mistakes, and how to use this knowledge to get better results.",
+  descriptionAf: "Verstaan hoe KI eintlik onder die enjinkap werk, hoekom dit foute maak, en hoe om dié kennis te gebruik om beter resultate te kry.",
   timeEstimate: "12 min",
+  timeEstimateAf: "12 min",
   sections: [
     {
       id: 'intro',

@@ -72,8 +72,12 @@ export type AIModuleId = 'ai-what-is' | 'ai-prompts' | 'ai-study' | 'ai-ethics' 
 export type AIModule = {
   id: AIModuleId
   title: string
+  /** Afrikaans title. The lesson BODY is still English - see index.ts. */
+  titleAf?: string
   description: string
+  descriptionAf?: string
   timeEstimate: string // e.g. "5 min"
+  timeEstimateAf?: string
   unlockCondition?: AIModuleId // Module that must be completed first
   sections: TopicSection[]
 }
@@ -94,7 +98,9 @@ export type PromptTechnique =
 export type PromptScenario = {
   id: string
   context: string
+  contextAf?: string
   task: string
+  taskAf?: string
   idealElements: string[]
   difficulty?: 'basic' | 'advanced'
   technique?: PromptTechnique
@@ -132,7 +138,9 @@ export type BadgeId =
 export type Badge = {
   id: BadgeId
   name: string
+  nameAf?: string
   description: string
+  descriptionAf?: string
   icon: string // Lucide icon name
   xpReward: number
 }

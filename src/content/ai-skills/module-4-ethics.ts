@@ -3,8 +3,11 @@ import type { AIModule } from '@/types'
 export const aiEthics: AIModule = {
   id: 'ai-ethics',
   title: "AI ethics: The line between smart and cheating",
+  titleAf: "KI-etiek: Die lyn tussen slim wees en kul",
   description: "Know exactly where the line is — and how to stay on the right side of it.",
+  descriptionAf: "Weet presies waar die lyn lê — en hoe om aan die regte kant daarvan te bly.",
   timeEstimate: "15 min",
+  timeEstimateAf: "15 min",
   unlockCondition: 'ai-study',
   sections: [
     {

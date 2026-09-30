@@ -3,6 +3,7 @@
 import { useRef, useState, useEffect } from 'react'
 import { useMounted } from '@/hooks/useMounted'
 import { Download, Share2, Loader2, Check } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 
 interface CertificateGeneratorProps {
   studentName: string
@@ -20,6 +21,7 @@ export default function CertificateGenerator({
   issuedAt,
 }: CertificateGeneratorProps) {
   const mounted = useMounted()
+  const t = useTranslations('aiSkills')
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const [isGenerating, setIsGenerating] = useState(false)
   const [qrDataUrl, setQrDataUrl] = useState<string | null>(null)
@@ -234,9 +236,7 @@ export default function CertificateGenerator({
             className="flex items-center justify-center gap-2 px-4 py-3 rounded-lg font-medium transition-all"
             style={{ background: 'var(--surface2)', color: 'var(--text)' }}
           >
-            <Share2 className="w-4 h-4" />
-            Share
-          </button>
+            <Share2 className="w-4 h-4" />{t('share')}</button>
         )}
       </div>
 
@@ -245,18 +245,14 @@ export default function CertificateGenerator({
         className="p-4 rounded-lg text-center space-y-2"
         style={{ background: 'var(--surface)', border: '1px solid var(--border-custom)' }}
       >
-        <p className="text-sm" style={{ color: 'var(--muted-custom)' }}>
-          This certificate can be verified at:
-        </p>
+        <p className="text-sm" style={{ color: 'var(--muted-custom)' }}>{t('verifiableAt')}</p>
         <code
           className="text-sm px-3 py-1 rounded inline-block"
           style={{ background: 'var(--surface2)', color: 'var(--ai-purple)' }}
         >
           {mounted ? `${window.location.origin}/verify/${certificateId}` : ''}
         </code>
-        <p className="text-xs" style={{ color: 'var(--muted-custom)' }}>
-          Add this link or QR code to your CV for employer verification
-        </p>
+        <p className="text-xs" style={{ color: 'var(--muted-custom)' }}>{t('addToCv')}</p>
       </div>
     </div>
   )

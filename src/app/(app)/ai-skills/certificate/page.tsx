@@ -1,4 +1,6 @@
 import { redirect } from 'next/navigation'
+import { getTranslations } from 'next-intl/server'
+import Topbar from '@/components/layout/Topbar'
 import { cookies } from 'next/headers'
 import { createServerClient } from '@supabase/ssr'
 import Link from 'next/link'
@@ -114,19 +116,20 @@ async function getCertificateReadState(): Promise<CertificateReadState> {
 }
 
 export default async function CertificatePage() {
+  const t = await getTranslations('aiSkills')
   const { isEligible, certificate } = await getCertificateReadState()
 
   if (!isEligible) {
     return (
-      <div className="p-4 md:p-6 max-w-2xl mx-auto space-y-6">
+      <div>
+        <Topbar title={t('certificateTitle')} subtitle={t('title')} />
+        <div className="p-4 md:p-6 max-w-2xl mx-auto space-y-6">
         <Link
           href="/ai-skills"
           className="inline-flex items-center gap-2 text-sm hover:text-ai-purple transition-colors"
           style={{ color: 'var(--muted-custom)' }}
         >
-          <ArrowLeft className="w-4 h-4" />
-          Back to AI Skills
-        </Link>
+          <ArrowLeft className="w-4 h-4" />{t('backToAiSkills')}</Link>
 
         <div
           className="rounded-xl p-8 text-center space-y-4"
@@ -138,42 +141,35 @@ export default async function CertificatePage() {
           >
             <Lock className="w-8 h-8 text-muted-custom" />
           </div>
-          <h1 className="text-xl font-bold" style={{ color: 'var(--text)' }}>
-            Certificate Locked
-          </h1>
+          <h1 className="text-xl font-bold" style={{ color: 'var(--text)' }}>{t('certificateLocked')}</h1>
           <p className="text-sm text-muted-custom max-w-md mx-auto">
-            Complete all 5 AI Literacy modules to unlock your certificate. This verifiable credential proves your AI skills to employers.
+            {t('certificateLockedBlurb')}
           </p>
           <Link
             href="/ai-skills"
             className="inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium"
             style={{ background: 'var(--ai-purple)', color: 'white' }}
-          >
-            Continue Learning
-          </Link>
+          >{t('continueLearning')}</Link>
+        </div>
         </div>
       </div>
     )
   }
 
   return (
-    <div className="p-4 md:p-6 max-w-2xl mx-auto space-y-6">
+    <div>
+      <Topbar title={t('certificateTitle')} subtitle={t('title')} />
+      <div className="p-4 md:p-6 max-w-2xl mx-auto space-y-6">
       <Link
         href="/ai-skills"
         className="inline-flex items-center gap-2 text-sm hover:text-ai-purple transition-colors"
         style={{ color: 'var(--muted-custom)' }}
       >
-        <ArrowLeft className="w-4 h-4" />
-        Back to AI Skills
-      </Link>
+        <ArrowLeft className="w-4 h-4" />{t('backToAiSkills')}</Link>
 
       <div className="text-center space-y-2">
-        <h1 className="text-2xl font-bold" style={{ color: 'var(--text)' }}>
-          Your AI Literacy Certificate
-        </h1>
-        <p className="text-sm text-muted-custom">
-          Congratulations! Download and share your verifiable credential.
-        </p>
+        <h1 className="text-2xl font-bold" style={{ color: 'var(--text)' }}>{t('certificateTitle')}</h1>
+        <p className="text-sm text-muted-custom">{t('certificateBlurb')}</p>
       </div>
 
       {certificate ? (
@@ -188,5 +184,6 @@ export default async function CertificatePage() {
         <IssueCertificate />
       )}
     </div>
+  </div>
   )
 }

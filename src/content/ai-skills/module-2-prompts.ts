@@ -3,8 +3,11 @@ import type { AIModule } from '@/types'
 export const aiPrompts: AIModule = {
   id: 'ai-prompts',
   title: "The skill that gets you hired: prompt engineering",
+  titleAf: "Die vaardigheid wat jou werk gee: instruksie-ingenieurswese",
   description: "Master the art and science of communicating with AI — from basic techniques to advanced strategies used by professionals.",
+  descriptionAf: "Bemeester die kuns en wetenskap van kommunikasie met KI — van basiese tegnieke tot gevorderde strategieë wat professionele mense gebruik.",
   timeEstimate: "25 min",
+  timeEstimateAf: "25 min",
   unlockCondition: 'ai-what-is',
   sections: [
     {

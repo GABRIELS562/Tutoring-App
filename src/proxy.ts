@@ -4,12 +4,29 @@ import { NextResponse, type NextRequest } from 'next/server'
 // so the demo-mode pass-through below can never be reached on a real deploy.
 import '@/lib/env'
 
+/** Auth pages that have nothing to do in demo mode. */
+const DEMO_BYPASSED_ROUTES = new Set(['/login', '/signup', '/forgot-password', '/reset-password'])
+
 export async function proxy(request: NextRequest) {
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
   const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
 
-  // If Supabase isn't configured, let requests through
+  // If Supabase isn't configured, let requests through - except the auth
+  // pages, which become a dead end in demo mode. There is nothing to sign
+  // in to, so /login offers a form that cannot work and a "Continue as
+  // Demo User" button that is the only way out; signing out lands there
+  // and looks like the app is asking for an account it never needed.
+  //
+  // This cannot weaken a real deployment: production refuses to boot
+  // without Supabase env (assertProductionEnv, imported above for that
+  // side effect), so this branch is unreachable there.
   if (!supabaseUrl || !supabaseKey) {
+    if (DEMO_BYPASSED_ROUTES.has(request.nextUrl.pathname)) {
+      const url = request.nextUrl.clone()
+      url.pathname = '/dashboard'
+      url.search = ''
+      return NextResponse.redirect(url)
+    }
     return NextResponse.next()
   }
 

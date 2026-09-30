@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { Star, ArrowRight, ArrowLeft, Trophy, Loader2, Check, Sparkles, Target } from 'lucide-react'
+import { useTranslations, useLocale } from 'next-intl'
 import { promptScenarios, PROMPT_CHALLENGE_XP_PER_STAR } from '@/content/ai-skills'
 import type { PromptEvaluationResult } from '@/types'
 
@@ -41,6 +42,10 @@ export default function PromptChallengeGame({ userId, onComplete }: PromptChalle
   const [evaluation, setEvaluation] = useState<PromptEvaluationResult | null>(null)
   const [attempts, setAttempts] = useState<ChallengeAttempt[]>([])
   const [showResults, setShowResults] = useState(false)
+  const t = useTranslations('aiSkills')
+  const af = useLocale() === 'af'
+  const localised = (en: string, afText?: string) => (af && afText ? afText : en)
+  const [submitError, setSubmitError] = useState<string | null>(null)
   const [filter, setFilter] = useState<ChallengeFilter>('all')
   const [isHydrated, setIsHydrated] = useState(false)
 
@@ -92,6 +97,7 @@ export default function PromptChallengeGame({ userId, onComplete }: PromptChalle
     if (!userPrompt.trim() || isEvaluating) return
 
     setIsEvaluating(true)
+    setSubmitError(null)
 
     try {
       const res = await fetch('/api/ai-hint', {
@@ -111,7 +117,13 @@ export default function PromptChallengeGame({ userId, onComplete }: PromptChalle
       const data = await res.json()
 
       if (!res.ok) {
-        throw new Error(data.error || 'Failed to evaluate')
+        // 429 is the daily free-tier AI quota and 503 is Claude being
+        // unavailable - both are ordinary, expected outcomes, not edge
+        // cases. The catch below only console.error'd them, so the button
+        // went from "Evaluating your prompt..." straight back to
+        // "Submit for Evaluation" and the student was told nothing.
+        setSubmitError(res.status === 429 ? t('quotaReached') : t('evaluationFailed'))
+        return
       }
 
       // The server persists the attempt (with its own server-computed
@@ -135,6 +147,7 @@ export default function PromptChallengeGame({ userId, onComplete }: PromptChalle
       setAttempts(prev => [...prev.filter(a => a.scenarioId !== currentScenario.id), newAttempt])
     } catch (error) {
       console.error('Evaluation error:', error)
+      setSubmitError(t('evaluationFailed'))
     } finally {
       setIsEvaluating(false)
     }
@@ -186,30 +199,30 @@ export default function PromptChallengeGame({ userId, onComplete }: PromptChalle
         <div className="rounded-2xl p-8 text-center space-y-6 bg-ai-purple-glow border border-ai-purple">
           <Trophy className="w-16 h-16 mx-auto text-ai-purple" />
           <h2 className="text-2xl font-bold text-primary-text">
-            Challenge Complete!
+            {t('challengeComplete')}
           </h2>
 
           <div className="flex justify-center gap-8">
             <div className="text-center">
               <p className="text-3xl font-bold text-ai-purple">{attempts.length}</p>
-              <p className="text-sm text-muted-custom">Scenarios</p>
+              <p className="text-sm text-muted-custom">{t('scenarios')}</p>
             </div>
             <div className="text-center">
               <p className="text-3xl font-bold text-gold">{totalXP}</p>
-              <p className="text-sm text-muted-custom">XP Earned</p>
+              <p className="text-sm text-muted-custom">{t('xpEarned')}</p>
             </div>
             <div className="text-center">
               <div className="flex items-center justify-center gap-1">
                 <span className="text-3xl font-bold text-ai-purple">{avgScore.toFixed(1)}</span>
                 <Star className="w-6 h-6 text-gold fill-gold" />
               </div>
-              <p className="text-sm text-muted-custom">Average</p>
+              <p className="text-sm text-muted-custom">{t('average')}</p>
             </div>
           </div>
 
           {avgScore >= 4 && (
             <p className="text-teal font-medium">
-              You&apos;re ready to earn your AI Literacy Certificate!
+              {t('readyForCertificate')}
             </p>
           )}
 
@@ -217,7 +230,7 @@ export default function PromptChallengeGame({ userId, onComplete }: PromptChalle
             onClick={() => setShowResults(false)}
             className="px-6 py-3 rounded-lg font-medium bg-ai-purple text-white"
           >
-            Review Challenges
+            {t('reviewChallenges')}
           </button>
         </div>
       </div>
@@ -236,9 +249,9 @@ export default function PromptChallengeGame({ userId, onComplete }: PromptChalle
               filter === f ? 'bg-ai-purple text-white' : 'bg-surface2 text-muted-custom'
             }`}
           >
-            {f === 'all' ? `All (${promptScenarios.length})` :
-             f === 'basic' ? `Basic (${promptScenarios.filter(s => s.difficulty !== 'advanced').length})` :
-             `Advanced (${promptScenarios.filter(s => s.difficulty === 'advanced').length})`}
+            {f === 'all' ? `${t('all')} (${promptScenarios.length})` :
+             f === 'basic' ? `${t('basic')} (${promptScenarios.filter(s => s.difficulty !== 'advanced').length})` :
+             `${t('advanced')} (${promptScenarios.filter(s => s.difficulty === 'advanced').length})`}
           </button>
         ))}
       </div>
@@ -246,7 +259,7 @@ export default function PromptChallengeGame({ userId, onComplete }: PromptChalle
       {/* Progress Bar */}
       <div className="flex items-center justify-between">
         <span className="text-sm text-muted-custom">
-          Challenge {currentIndex + 1} of {filteredScenarios.length}
+          {t('challengeOf', { current: currentIndex + 1, total: filteredScenarios.length })}
         </span>
         <div className="flex items-center gap-2">
           <span className="text-sm text-gold">{totalXP} XP</span>
@@ -275,11 +288,11 @@ export default function PromptChallengeGame({ userId, onComplete }: PromptChalle
             {currentScenario.difficulty === 'advanced' ? (
               <span className="text-xs px-2.5 py-1 rounded-full font-medium flex items-center gap-1 bg-ai-purple-glow text-ai-purple">
                 <Sparkles className="w-3 h-3" />
-                Advanced
+                {t('advanced')}
               </span>
             ) : (
               <span className="text-xs px-2.5 py-1 rounded-full font-medium bg-surface2 text-muted-custom">
-                Basic
+                {t('basic')}
               </span>
             )}
             {currentScenario.technique && (
@@ -290,18 +303,16 @@ export default function PromptChallengeGame({ userId, onComplete }: PromptChalle
             )}
           </div>
 
-          <h3 className="text-lg font-semibold text-primary-text">
-            Scenario
-          </h3>
+          <h3 className="text-lg font-semibold text-primary-text">{t('scenario')}</h3>
           <p className="text-sm text-muted-custom">
-            {currentScenario.context}
+            {localised(currentScenario.context, currentScenario.contextAf)}
           </p>
         </div>
 
         <div className="p-4 rounded-lg bg-ai-purple-glow border border-ai-purple">
-          <p className="text-sm font-medium text-ai-purple">Your Task</p>
+          <p className="text-sm font-medium text-ai-purple">{t('yourTask')}</p>
           <p className="text-sm mt-1 text-primary-text">
-            {currentScenario.task}
+            {localised(currentScenario.task, currentScenario.taskAf)}
           </p>
         </div>
 
@@ -311,7 +322,7 @@ export default function PromptChallengeGame({ userId, onComplete }: PromptChalle
             <textarea
               value={userPrompt}
               onChange={(e) => setUserPrompt(e.target.value)}
-              placeholder="Write your prompt here..."
+              placeholder={t('writePromptHere')}
               className="w-full h-32 px-4 py-3 rounded-lg text-sm resize-none focus:outline-none focus:ring-2 focus:ring-ai-purple bg-surface2 border border-custom text-primary-text"
               disabled={isEvaluating}
             />
@@ -324,12 +335,18 @@ export default function PromptChallengeGame({ userId, onComplete }: PromptChalle
               {isEvaluating ? (
                 <>
                   <Loader2 className="w-4 h-4 animate-spin" />
-                  Evaluating your prompt...
+                  {t('evaluating')}
                 </>
               ) : (
-                'Submit for Evaluation'
+                t('submitForEvaluation')
               )}
             </button>
+
+            {submitError && (
+              <p role="alert" className="text-sm" style={{ color: 'var(--accent-red)' }}>
+                {submitError}
+              </p>
+            )}
           </div>
         )}
 
@@ -363,27 +380,21 @@ export default function PromptChallengeGame({ userId, onComplete }: PromptChalle
             {/* Feedback */}
             <div className="space-y-3">
               <div className="p-3 rounded-lg bg-ai-success-glow">
-                <p className="text-xs font-medium mb-1 text-ai-success">
-                  What worked
-                </p>
+                <p className="text-xs font-medium mb-1 text-ai-success">{t('whatWorked')}</p>
                 <p className="text-sm text-primary-text">
                   {evaluation.what_worked}
                 </p>
               </div>
 
               <div className="p-3 rounded-lg bg-ai-purple-glow">
-                <p className="text-xs font-medium mb-1 text-ai-purple">
-                  To improve
-                </p>
+                <p className="text-xs font-medium mb-1 text-ai-purple">{t('toImprove')}</p>
                 <p className="text-sm text-primary-text">
                   {evaluation.what_to_improve}
                 </p>
               </div>
 
               <div className="p-3 rounded-lg bg-surface2">
-                <p className="text-xs font-medium mb-1 text-muted-custom">
-                  Better version
-                </p>
+                <p className="text-xs font-medium mb-1 text-muted-custom">{t('betterVersion')}</p>
                 <p className="text-sm italic text-primary-text">
                   &quot;{evaluation.improved_prompt}&quot;
                 </p>
@@ -400,23 +411,17 @@ export default function PromptChallengeGame({ userId, onComplete }: PromptChalle
               <button
                 onClick={handleTryAgain}
                 className="flex-1 px-4 py-2.5 rounded-lg font-medium transition-all bg-surface2 text-primary-text"
-              >
-                Try Again
-              </button>
+              >{t('tryAgain')}</button>
               <button
                 onClick={handleNext}
                 className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg font-medium transition-all bg-ai-purple text-white"
               >
                 {currentIndex < filteredScenarios.length - 1 ? (
-                  <>
-                    Next Challenge
-                    <ArrowRight className="w-4 h-4" />
+                  <>{t('nextChallenge')}<ArrowRight className="w-4 h-4" />
                   </>
                 ) : (
                   <>
-                    <Check className="w-4 h-4" />
-                    Finish
-                  </>
+                    <Check className="w-4 h-4" />{t('finish')}</>
                 )}
               </button>
             </div>
@@ -431,17 +436,13 @@ export default function PromptChallengeGame({ userId, onComplete }: PromptChalle
           disabled={currentIndex === 0}
           className="flex items-center gap-2 px-4 py-2 rounded-lg transition-all disabled:opacity-30 text-muted-custom"
         >
-          <ArrowLeft className="w-4 h-4" />
-          Previous
-        </button>
+          <ArrowLeft className="w-4 h-4" />{t('previous')}</button>
 
         <button
           onClick={handleNext}
           disabled={!hasAttemptedCurrent}
           className="flex items-center gap-2 px-4 py-2 rounded-lg transition-all disabled:opacity-30 text-muted-custom"
-        >
-          Skip
-          <ArrowRight className="w-4 h-4" />
+        >{t('skip')}<ArrowRight className="w-4 h-4" />
         </button>
       </div>
     </div>

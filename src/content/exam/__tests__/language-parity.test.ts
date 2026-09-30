@@ -1,4 +1,6 @@
 import { describe, it, expect } from 'vitest'
+import { readFileSync } from 'node:fs'
+import { join } from 'node:path'
 import { papers, type Paper } from '../index'
 
 /**
@@ -133,6 +135,46 @@ describe.each(pairs())('$0.key and $1.key mark identically', (en, af) => {
  * silently becomes `$<tab>heta$` and renders as garbage - which is
  * exactly what had happened to question 3.3 of P2.
  */
+/**
+ * The runtime check below catches only the escapes that produce a CONTROL
+ * character (\t, \v, \f, \b, \r). JavaScript eats a lone backslash before
+ * ANY letter, and most of those leave printable text that looks almost
+ * right:
+ *
+ *   '$\angle$'   -> "$angle$"     italic letters, not the ∠ symbol
+ *   '(1 \;;\; 6)' -> "(1 ;;; 6)"   a triple semicolon in a coordinate pair
+ *
+ * Both shipped. This reads the SOURCE instead, where the bug actually
+ * lives: inside a quoted string, a backslash before a letter or before
+ * `;`/`,` must be doubled.
+ */
+describe('every LaTeX command in the source is escaped', () => {
+  const FILES = [
+    'gr11-p1-2013.ts',
+    'gr11-p1-2013-en.ts',
+    'gr11-p2-2013.ts',
+    'gr11-p2-2013-af.ts',
+  ]
+
+  it.each(FILES)('%s doubles every backslash', (file) => {
+    const source = readFileSync(join(__dirname, '..', file), 'utf-8')
+    const offenders: string[] = []
+
+    source.split('\n').forEach((line, index) => {
+      // A lone backslash before a letter or a LaTeX spacing command.
+      // `\n` is excluded: several question stems are multi-line data
+      // tables that use it as a real newline, which is intended. That
+      // costs us \nu and \neq, which no paper here uses; every other
+      // LaTeX command is covered.
+      for (const match of line.matchAll(/(?<!\\)\\(?![\\'"`n])([a-zA-Z;,])/g)) {
+        offenders.push(`line ${index + 1}: \\${match[1]} in ${line.trim().slice(0, 70)}`)
+      }
+    })
+
+    expect(offenders).toEqual([])
+  })
+})
+
 describe('no LaTeX command has been eaten by a string escape', () => {
   it('contains no control characters in any displayed text', () => {
     const offenders: string[] = []
@@ -156,5 +198,49 @@ describe('no LaTeX command has been eaten by a string escape', () => {
       }
     }
     expect(offenders).toEqual([])
+  })
+})
+
+/**
+ * The real question is not "does the source look right" but "does KaTeX
+ * render it". This puts every expression in every paper through the same
+ * renderer the app uses, with throwOnError, so a malformed command fails
+ * the build instead of reaching a student as red error text.
+ *
+ * It is the check that would have caught `ext$\angle$` -> `ext$angle$`
+ * and `buite$hoek$` (a LaTeX command name that had been translated into
+ * Afrikaans) without anyone having to notice them by eye.
+ */
+describe('every LaTeX expression renders', () => {
+  it('parses cleanly through KaTeX', async () => {
+    const katex = (await import('katex')).default
+    const failures: string[] = []
+    let checked = 0
+
+    for (const paper of papers) {
+      for (const item of paper.items) {
+        const fields = [
+          item.prompt,
+          item.context,
+          item.commonError,
+          ...item.solution,
+          ...item.markScheme.map((m) => m.descriptor),
+        ]
+        for (const field of fields) {
+          if (!field) continue
+          for (const match of field.matchAll(/\$([^$]+)\$/g)) {
+            checked++
+            try {
+              katex.renderToString(match[1], { throwOnError: true })
+            } catch {
+              failures.push(`${item.id}: ${match[1].slice(0, 50)}`)
+            }
+          }
+        }
+      }
+    }
+
+    expect(checked).toBeGreaterThan(2000)
+    expect(failures).toEqual([])
   })
 })

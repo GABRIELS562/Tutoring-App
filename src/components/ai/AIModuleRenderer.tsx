@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { Check, ChevronRight, BookOpen, Lightbulb, Zap, Video, Loader2, Award } from 'lucide-react'
+import { useTranslations, useLocale } from 'next-intl'
 import type { AIModule, TopicSection, NoteBlock } from '@/types'
 import AIPracticalBlock from './AIPracticalBlock'
 
@@ -144,15 +145,20 @@ export default function AIModuleRenderer({
   onComplete,
 }: AIModuleRendererProps) {
   const router = useRouter()
+  const t = useTranslations('aiSkills')
+  const af = useLocale() === 'af'
+  const localised = (en: string, afText?: string) => (af && afText ? afText : en)
   const [isCompleted, setIsCompleted] = useState(initialCompleted)
   const [isLoading, setIsLoading] = useState(false)
   const [xpEarned, setXpEarned] = useState<number | null>(null)
   const [newBadges, setNewBadges] = useState<string[]>([])
+  const [failed, setFailed] = useState(false)
 
   const handleComplete = async () => {
     if (isLoading || isCompleted) return
 
     setIsLoading(true)
+    setFailed(false)
 
     try {
       const res = await fetch('/api/ai-skills/complete-module', {
@@ -165,19 +171,28 @@ export default function AIModuleRenderer({
 
       const data = await res.json()
 
-      if (data.success) {
-        setIsCompleted(true)
-        setXpEarned(data.xpEarned)
-        setNewBadges(data.newBadges || [])
-        onComplete?.()
-
-        // Refresh page data after a short delay
-        setTimeout(() => {
-          router.refresh()
-        }, 2000)
+      // res.ok was never checked and there was no else branch, so a 400,
+      // a 500 or a dropped connection just flipped the button back to
+      // "Mark as Complete": no XP, no badge, module not completed, and no
+      // way for the student to know. Since all five modules gate the
+      // certificate, that silently blocked it.
+      if (!res.ok || !data.success) {
+        setFailed(true)
+        return
       }
+
+      setIsCompleted(true)
+      setXpEarned(data.xpEarned)
+      setNewBadges(data.newBadges || [])
+      onComplete?.()
+
+      // Refresh page data after a short delay
+      setTimeout(() => {
+        router.refresh()
+      }, 2000)
     } catch (error) {
       console.error('Error completing module:', error)
+      setFailed(true)
     } finally {
       setIsLoading(false)
     }
@@ -189,20 +204,20 @@ export default function AIModuleRenderer({
       <div className="space-y-2">
         <div className="flex items-center gap-2">
           <span className="text-xs px-2 py-1 rounded-full font-medium bg-ai-purple-glow text-ai-purple">
-            {module.timeEstimate}
+            {localised(module.timeEstimate, module.timeEstimateAf)}
           </span>
           {isCompleted && (
             <span className="text-xs px-2 py-1 rounded-full font-medium flex items-center gap-1 bg-ai-success-glow text-ai-success">
               <Check className="w-3 h-3" />
-              Completed
+              {t('completed')}
             </span>
           )}
         </div>
         <h1 className="text-2xl font-bold text-primary-text">
-          {module.title}
+          {localised(module.title, module.titleAf)}
         </h1>
         <p className="text-sm text-muted-custom">
-          {module.description}
+          {localised(module.description, module.descriptionAf)}
         </p>
       </div>
 
@@ -219,15 +234,25 @@ export default function AIModuleRenderer({
           <Award className="w-6 h-6 text-ai-success" />
           <div>
             <p className="font-medium text-ai-success">
-              +{xpEarned} XP earned!
+              {t('xpEarnedToast', { xp: xpEarned })}
             </p>
             {newBadges.length > 0 && (
               <p className="text-sm text-ai-purple">
-                New badge: {newBadges.join(', ')}
+                {t('newBadge', { badge: newBadges.join(', ') })}
               </p>
             )}
           </div>
         </div>
+      )}
+
+      {failed && (
+        <p
+          role="alert"
+          className="text-sm"
+          style={{ color: 'var(--accent-red)' }}
+        >
+          {t('somethingWentWrong')} {t('tryAgain')}
+        </p>
       )}
 
       {/* Complete Button */}
@@ -240,12 +265,12 @@ export default function AIModuleRenderer({
           {isLoading ? (
             <>
               <Loader2 className="w-4 h-4 animate-spin" />
-              Saving...
+              {t('saving')}
             </>
           ) : (
             <>
               <Check className="w-4 h-4" />
-              Mark as Complete
+              {t('markAsComplete')}
             </>
           )}
         </button>

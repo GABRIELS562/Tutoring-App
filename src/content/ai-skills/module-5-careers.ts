@@ -3,8 +3,11 @@ import type { AIModule } from '@/types'
 export const aiCareers: AIModule = {
   id: 'ai-careers',
   title: "AI in your career: What employers actually want",
+  titleAf: "KI in jou loopbaan: Wat werkgewers werklik soek",
   description: "The AI skills that will get you hired — and the ones that won't.",
+  descriptionAf: "Die KI-vaardighede wat jou gehuur sal kry — en dié wat nie sal nie.",
   timeEstimate: "18 min",
+  timeEstimateAf: "18 min",
   unlockCondition: 'ai-ethics',
   sections: [
     {

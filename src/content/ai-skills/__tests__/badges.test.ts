@@ -1,5 +1,6 @@
 import { describe, it, expect } from 'vitest'
 import { readFileSync } from 'node:fs'
+import { join } from 'node:path'
 import { badges, moduleOrder } from '@/content/ai-skills'
 
 const PAGE = 'src/app/(app)/ai-skills/page.tsx'
@@ -24,8 +25,26 @@ describe('the badge set is always visible', () => {
     expect(source).toMatch(/allBadges\.map/)
   })
 
+  /**
+   * The count must be "earned out of the WHOLE set", not out of the earned
+   * ones - that is the point of showing locked badges at all. The literal
+   * markup moved into the `aiSkills` message namespace when the section
+   * was localised, so this checks the call and the message together
+   * rather than the English string it used to render.
+   */
   it('shows how many of the whole set are earned', () => {
-    expect(source).toMatch(/earnedBadges\.length\}\s*of\s*\{allBadges\.length\}/)
+    expect(source).toMatch(
+      /t\('badgesEarned',\s*\{\s*earned:\s*earnedBadges\.length,\s*total:\s*allBadges\.length\s*\}\)/
+    )
+
+    for (const locale of ['en', 'af']) {
+      const messages = JSON.parse(
+        readFileSync(join(__dirname, '..', '..', '..', 'messages', `${locale}.json`), 'utf-8')
+      )
+      const template = messages.aiSkills.badgesEarned
+      expect(template, `${locale}.json badgesEarned`).toContain('{earned}')
+      expect(template, `${locale}.json badgesEarned`).toContain('{total}')
+    }
   })
 })
 

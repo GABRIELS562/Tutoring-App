@@ -1,5 +1,7 @@
 import Link from 'next/link'
 import { cookies } from 'next/headers'
+import { getTranslations, getLocale } from 'next-intl/server'
+import Topbar from '@/components/layout/Topbar'
 import { createServerClient } from '@supabase/ssr'
 import {
   Brain,
@@ -101,13 +103,26 @@ async function getUserProgress() {
 
 export default async function AISkillsPage() {
   const { completedModules, promptChallengesCompleted, earnedBadges } = await getUserProgress()
+  const t = await getTranslations('aiSkills')
+  const locale = await getLocale()
+  const af = locale === 'af'
+
+  /** Module and badge names carry Afrikaans; the lesson bodies do not yet. */
+  const localised = (en: string, afText?: string) => (af && afText ? afText : en)
 
   const allBadges = Object.values(badges)
   const allModulesCompleted = moduleOrder.every((id) => completedModules.includes(id))
   const totalXP = completedModules.length * AI_MODULE_XP
 
   return (
-    <div className="p-4 md:p-6 max-w-4xl mx-auto space-y-8">
+    <div>
+      {/* Without this the whole AI Skills section had no Topbar, so an
+          Afrikaans student who navigated in got an English section AND no
+          language toggle to get back out - plus no XP, streak or account
+          menu. */}
+      <Topbar title={t('title')} subtitle={t('subtitle')} />
+
+      <div className="p-4 md:p-6 max-w-4xl mx-auto space-y-8">
       {/* Header */}
       <div className="space-y-4">
         <div className="flex items-center gap-3">
@@ -119,10 +134,10 @@ export default async function AISkillsPage() {
           </div>
           <div>
             <h1 className="text-2xl font-bold" style={{ color: 'var(--text)' }}>
-              AI Skills
+              {t('title')}
             </h1>
             <p className="text-sm text-muted-custom">
-              Learn to use AI like a pro
+              {t('subtitle')}
             </p>
           </div>
         </div>
@@ -135,15 +150,15 @@ export default async function AISkillsPage() {
           <div className="flex items-center gap-6">
             <div>
               <p className="text-2xl font-bold text-ai-purple">{completedModules.length}/5</p>
-              <p className="text-xs text-muted-custom">Modules</p>
+              <p className="text-xs text-muted-custom">{t('modules')}</p>
             </div>
             <div>
               <p className="text-2xl font-bold text-gold">{totalXP}</p>
-              <p className="text-xs text-muted-custom">XP Earned</p>
+              <p className="text-xs text-muted-custom">{t('xpEarned')}</p>
             </div>
             <div>
               <p className="text-2xl font-bold text-teal">{promptChallengesCompleted}</p>
-              <p className="text-xs text-muted-custom">Challenges</p>
+              <p className="text-xs text-muted-custom">{t('challenges')}</p>
             </div>
           </div>
 
@@ -154,7 +169,7 @@ export default async function AISkillsPage() {
               style={{ background: 'var(--ai-purple)', color: 'white' }}
             >
               <Trophy className="w-4 h-4" />
-              Get Certificate
+              {t('getCertificate')}
             </Link>
           )}
         </div>
@@ -163,7 +178,7 @@ export default async function AISkillsPage() {
       {/* Modules Grid */}
       <div className="space-y-4">
         <h2 className="font-semibold" style={{ color: 'var(--text)' }}>
-          Modules
+          {t('modules')}
         </h2>
 
         <div className="space-y-3">
@@ -203,13 +218,13 @@ export default async function AISkillsPage() {
                   {/* Module Info */}
                   <div className="flex-1 min-w-0">
                     <h3 className="font-medium truncate" style={{ color: 'var(--text)' }}>
-                      {aiModule.title}
+                      {localised(aiModule.title, aiModule.titleAf)}
                     </h3>
                     <p className="text-sm text-muted-custom truncate">
-                      {aiModule.description}
+                      {localised(aiModule.description, aiModule.descriptionAf)}
                     </p>
                     <div className="flex items-center gap-3 mt-1">
-                      <span className="text-xs text-muted-custom">{aiModule.timeEstimate}</span>
+                      <span className="text-xs text-muted-custom">{localised(aiModule.timeEstimate, aiModule.timeEstimateAf)}</span>
                       <span className="text-xs text-gold">+{AI_MODULE_XP} XP</span>
                     </div>
                   </div>
@@ -222,7 +237,7 @@ export default async function AISkillsPage() {
 
                 {isLocked && prevModule && (
                   <p className="text-xs text-muted-custom mt-2 ml-14">
-                    Complete &quot;{prevModule.title}&quot; first
+                    {t('completeFirst', { module: localised(prevModule.title, prevModule.titleAf) })}
                   </p>
                 )}
               </Link>
@@ -245,9 +260,9 @@ export default async function AISkillsPage() {
             <Sparkles className="w-6 h-6 text-white" />
           </div>
           <div className="flex-1">
-            <h3 className="font-semibold text-ai-purple">Prompt Challenge</h3>
+            <h3 className="font-semibold text-ai-purple">{t('promptChallenge')}</h3>
             <p className="text-sm text-muted-custom">
-              Test your prompt engineering skills and earn XP
+              {t('promptChallengeBlurb')}
             </p>
           </div>
           <ArrowRight className="w-5 h-5 text-ai-purple" />
@@ -263,10 +278,10 @@ export default async function AISkillsPage() {
       <div className="space-y-4">
         <div className="flex items-baseline justify-between">
           <h2 className="font-semibold" style={{ color: 'var(--text)' }}>
-            Badges
+            {t('badges')}
           </h2>
           <span className="text-sm" style={{ color: 'var(--muted-custom)' }}>
-            {earnedBadges.length} of {allBadges.length} earned
+            {t('badgesEarned', { earned: earnedBadges.length, total: allBadges.length })}
           </span>
         </div>
 
@@ -302,13 +317,13 @@ export default async function AISkillsPage() {
 
                 <div className="min-w-0">
                   <p className="text-sm font-semibold" style={{ color: 'var(--text)' }}>
-                    {badge.name}
+                    {localised(badge.name, badge.nameAf)}
                     {earned && (
-                      <span className="ml-2 text-xs font-normal text-ai-purple">Earned</span>
+                      <span className="ml-2 text-xs font-normal text-ai-purple">{t('earned')}</span>
                     )}
                   </p>
                   <p className="text-xs mt-0.5" style={{ color: 'var(--muted-custom)' }}>
-                    {badge.description}
+                    {localised(badge.description, badge.descriptionAf)}
                   </p>
                   <p className="text-xs mt-1" style={{ color: 'var(--gold)' }}>
                     +{badge.xpReward} XP
@@ -320,5 +335,6 @@ export default async function AISkillsPage() {
         </div>
       </div>
     </div>
+  </div>
   )
 }
