@@ -52,7 +52,6 @@ export const matterMaterialsGr10: TopicContent = {
       blocks: [
         {
           type: 'video',
-          title: 'Kyk: Name en formules van chemiese verbindings Gr. 10 Chemie — Danike Aucamp_Wiskunde en Wetenskap ',
           videoIdAf: '44SNuly1CdU',
           titleAf: 'Kyk: Name en formules van chemiese verbindings Gr. 10 Chemie — Danike Aucamp_Wiskunde en Wetenskap '
         }

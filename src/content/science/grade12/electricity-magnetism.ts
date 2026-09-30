@@ -40,7 +40,6 @@ export const electricityMagnetismGr12: TopicContent = {
       blocks: [
         {
           type: 'video',
-          title: 'Kyk: Gr. 12 Fisika: Elektrisiteit (interne weerstand) | die ENIGSTE video wat jy nodig het! — Danike Aucamp_Wiskunde en Wetenskap ',
           videoIdAf: '1lpHeTHZI6E',
           titleAf: 'Kyk: Gr. 12 Fisika: Elektrisiteit (interne weerstand) | die ENIGSTE video wat jy nodig het! — Danike Aucamp_Wiskunde en Wetenskap '
         }

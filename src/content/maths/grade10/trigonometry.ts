@@ -51,7 +51,6 @@ export const trigonometryGr10: TopicContent = {
       blocks: [
         {
           type: 'video',
-          title: 'Kyk: 09 Trig berekeninge op die kartesiese vlak — Wiskunde_Mathematics_SUM',
           videoIdAf: 'lbfvJw6Ywc8',
           titleAf: 'Kyk: 09 Trig berekeninge op die kartesiese vlak — Wiskunde_Mathematics_SUM'
         }

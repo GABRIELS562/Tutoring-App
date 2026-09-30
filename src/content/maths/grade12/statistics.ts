@@ -75,7 +75,8 @@ export const statisticsGr12: TopicContent = {
       blocks: [
         {
           type: 'video',
-          title: 'Kyk: Statistiek Graad12:L3 Korrelasie en korrelasiekoeffisiënt — Online Maths by Miss Pythagoras',
+          title: 'Watch: 1. Grade 12 Mathematics - Statistics - Basics of Correlation — JuniorTukkie at the University of Pretoria',
+          videoId: 'tpeFck9tyAM',
           videoIdAf: 'Jiml5rfBIlw',
           titleAf: 'Kyk: Statistiek Graad12:L3 Korrelasie en korrelasiekoeffisiënt — Online Maths by Miss Pythagoras'
         }

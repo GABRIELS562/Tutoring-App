@@ -297,18 +297,6 @@
         "score": 75.9
       },
       {
-        "id": "rd8QZHX3lSU",
-        "title": "Nature of Roots Grade 11 Practice: Exam Questions",
-        "channel": "Miss Martins Maths and Science",
-        "views": 79636,
-        "viewsText": "79,636 views",
-        "duration": "9:20",
-        "durationSeconds": 560,
-        "saChannel": true,
-        "embeddable": true,
-        "score": 72
-      },
-      {
         "id": "yLSYC9J9nKA",
         "title": "Grade 11 - Nature of Roots | Part 3 | Mlungisi Nkosi",
         "channel": "Mlungisi Nkosi Maths & Science",
@@ -343,6 +331,18 @@
         "saChannel": true,
         "embeddable": true,
         "score": 62.5
+      },
+      {
+        "id": "MxcM-C3eQKo",
+        "title": "Nature of Roots  |  Master Class  |  Theory  |  8 Examples  |  South Africa  |  Grade 11  | Grade 12",
+        "channel": "Modern Maths",
+        "views": 16036,
+        "viewsText": "16,036 views",
+        "duration": "30:16",
+        "durationSeconds": 1816,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 60.1
       }
     ],
     "pick": {
@@ -688,18 +688,6 @@
         "score": 81.5
       },
       {
-        "id": "1b2BsuPmCfQ",
-        "title": "3) Inverse of parabola | Part 1",
-        "channel": "Kevinmathscience",
-        "views": 666811,
-        "viewsText": "666,811 views",
-        "duration": "5:53",
-        "durationSeconds": 353,
-        "saChannel": true,
-        "embeddable": true,
-        "score": 81.2
-      },
-      {
         "id": "4WEmQZZvgI8",
         "title": "Draw Parabola Grade 11 | Part 2",
         "channel": "Kevinmathscience",
@@ -722,6 +710,18 @@
         "saChannel": true,
         "embeddable": true,
         "score": 79.2
+      },
+      {
+        "id": "AzuJ_tQOpt0",
+        "title": "Reflection Parabola in Y axis |  Grade 11 Functions",
+        "channel": "Kevinmathscience",
+        "views": 298121,
+        "viewsText": "298,121 views",
+        "duration": "1:42",
+        "durationSeconds": 102,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 77.7
       }
     ],
     "pick": {
@@ -974,10 +974,33 @@
       "miss martins sinking funds grade 11",
       "Finance & Growth grade 11 Sinking funds"
     ],
-    "candidates": [],
-    "pick": null,
-    "usedAdjacentGrade": false,
-    "note": "No embeddable, on-topic CAPS candidate found - left blank for manual search"
+    "candidates": [
+      {
+        "id": "EIor59x--jc",
+        "title": "6. Grade 11 Mathematics - Financial Maths - Sinking Funds",
+        "channel": "JuniorTukkie at the University of Pretoria",
+        "views": 5721,
+        "viewsText": "5,721 views",
+        "duration": "13:46",
+        "durationSeconds": 826,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 60.6
+      }
+    ],
+    "pick": {
+      "id": "EIor59x--jc",
+      "title": "6. Grade 11 Mathematics - Financial Maths - Sinking Funds",
+      "channel": "JuniorTukkie at the University of Pretoria",
+      "views": 5721,
+      "viewsText": "5,721 views",
+      "duration": "13:46",
+      "durationSeconds": 826,
+      "saChannel": true,
+      "embeddable": true,
+      "score": 60.6
+    },
+    "usedAdjacentGrade": false
   },
   {
     "slug": "finance-gr11",
@@ -1056,6 +1079,18 @@
     ],
     "candidates": [
       {
+        "id": "x_b1YyidzVU",
+        "title": "1. Grade 11 Mathematics - Financial Maths -  Nominal vs Effective Interest Rates",
+        "channel": "JuniorTukkie at the University of Pretoria",
+        "views": 21445,
+        "viewsText": "21,445 views",
+        "duration": "11:16",
+        "durationSeconds": 676,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 63.3
+      },
+      {
         "id": "dml0IOgpPWw",
         "title": "04 Effective and nominal interest rates",
         "channel": "Wiskunde_Mathematics_SUM",
@@ -1069,16 +1104,16 @@
       }
     ],
     "pick": {
-      "id": "dml0IOgpPWw",
-      "title": "04 Effective and nominal interest rates",
-      "channel": "Wiskunde_Mathematics_SUM",
-      "views": 11911,
-      "viewsText": "11,911 views",
-      "duration": "8:12",
-      "durationSeconds": 492,
+      "id": "x_b1YyidzVU",
+      "title": "1. Grade 11 Mathematics - Financial Maths -  Nominal vs Effective Interest Rates",
+      "channel": "JuniorTukkie at the University of Pretoria",
+      "views": 21445,
+      "viewsText": "21,445 views",
+      "duration": "11:16",
+      "durationSeconds": 676,
       "saChannel": true,
       "embeddable": true,
-      "score": 60.8
+      "score": 63.3
     },
     "usedAdjacentGrade": false
   },
@@ -1108,6 +1143,18 @@
         "saChannel": true,
         "embeddable": true,
         "score": 74.9
+      },
+      {
+        "id": "nJKV6I5DxTc",
+        "title": "Mathematics Grade 11 Probability - Dependent and Independent Events @mathszoneafricanmotives",
+        "channel": "Maths Zone African Motives",
+        "views": 3332,
+        "viewsText": "3,332 views",
+        "duration": "16:21",
+        "durationSeconds": 981,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 58.2
       }
     ],
     "pick": {
@@ -1283,6 +1330,18 @@
         "saChannel": true,
         "embeddable": true,
         "score": 52.2
+      },
+      {
+        "id": "SgI-0pk4INU",
+        "title": "Mathematics Grade 11 Probability - Contingency Table  Notes and Examples @mathszoneafricanmotives",
+        "channel": "Maths Zone African Motives",
+        "views": 2467,
+        "viewsText": "2,467 views",
+        "duration": "15:38",
+        "durationSeconds": 938,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 47.9
       }
     ],
     "pick": {
@@ -1638,6 +1697,18 @@
         "saChannel": true,
         "embeddable": true,
         "score": 66.1
+      },
+      {
+        "id": "bRJX2oP_j84",
+        "title": "Mathematics Grade 11 Trigonometry Sine Rule Proof @mathszoneafricanmotives  @mathwithlightone",
+        "channel": "Maths Zone African Motives",
+        "views": 25492,
+        "viewsText": "25,492 views",
+        "duration": "27:12",
+        "durationSeconds": 1632,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 62.1
       }
     ],
     "pick": {
@@ -2112,6 +2183,18 @@
         "saChannel": true,
         "embeddable": true,
         "score": 59.2
+      },
+      {
+        "id": "mC8Q1O6Qtjk",
+        "title": "Mathematics Grade 11 Analytical Geometry Angle of Inclination @mathszoneafricanmotives",
+        "channel": "Maths Zone African Motives",
+        "views": 3149,
+        "viewsText": "3,149 views",
+        "duration": "1:07:50",
+        "durationSeconds": 4070,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 40.5
       }
     ],
     "pick": {
@@ -2211,6 +2294,30 @@
         "saChannel": true,
         "embeddable": true,
         "score": 74.8
+      },
+      {
+        "id": "C61p6pNe2do",
+        "title": "Mathematics Grade 11 Statistics  -  Cumulative Frequency Curve  (Ogive)",
+        "channel": "Maths Zone African Motives",
+        "views": 2718,
+        "viewsText": "2,718 views",
+        "duration": "19:40",
+        "durationSeconds": 1180,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 53.6
+      },
+      {
+        "id": "LJMyFPmztL4",
+        "title": "2. Grade 11 Mathematics - Statistics - Ogives and Box and Whisker Diagrams",
+        "channel": "JuniorTukkie at the University of Pretoria",
+        "views": 5075,
+        "viewsText": "5,075 views",
+        "duration": "10:31",
+        "durationSeconds": 631,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 52.6
       }
     ],
     "pick": {
@@ -2241,10 +2348,33 @@
       "miss martins variance standard deviation grade 11",
       "Statistics grade 11 Variance and standard deviation"
     ],
-    "candidates": [],
-    "pick": null,
-    "usedAdjacentGrade": false,
-    "note": "No embeddable, on-topic CAPS candidate found - left blank for manual search"
+    "candidates": [
+      {
+        "id": "vC6nxA5cVhI",
+        "title": "Mathematics Grade 11 Statistics - Variance and Standard Deviation of Ungrouped Data",
+        "channel": "Maths Zone African Motives",
+        "views": 2376,
+        "viewsText": "2,376 views",
+        "duration": "38:04",
+        "durationSeconds": 2284,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 51.8
+      }
+    ],
+    "pick": {
+      "id": "vC6nxA5cVhI",
+      "title": "Mathematics Grade 11 Statistics - Variance and Standard Deviation of Ungrouped Data",
+      "channel": "Maths Zone African Motives",
+      "views": 2376,
+      "viewsText": "2,376 views",
+      "duration": "38:04",
+      "durationSeconds": 2284,
+      "saChannel": true,
+      "embeddable": true,
+      "score": 51.8
+    },
+    "usedAdjacentGrade": false
   },
   {
     "slug": "statistics-gr11",
@@ -2260,9 +2390,32 @@
       "miss martins symmetric skewed data grade 11",
       "Statistics grade 11 Symmetric and skewed data"
     ],
-    "candidates": [],
-    "pick": null,
-    "usedAdjacentGrade": false,
-    "note": "No embeddable, on-topic CAPS candidate found - left blank for manual search"
+    "candidates": [
+      {
+        "id": "T8XldLrJXMU",
+        "title": "6. Grade 11 Mathematics - Statistics - Skewed Data",
+        "channel": "JuniorTukkie at the University of Pretoria",
+        "views": 2872,
+        "viewsText": "2,872 views",
+        "duration": "7:37",
+        "durationSeconds": 457,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 52.6
+      }
+    ],
+    "pick": {
+      "id": "T8XldLrJXMU",
+      "title": "6. Grade 11 Mathematics - Statistics - Skewed Data",
+      "channel": "JuniorTukkie at the University of Pretoria",
+      "views": 2872,
+      "viewsText": "2,872 views",
+      "duration": "7:37",
+      "durationSeconds": 457,
+      "saChannel": true,
+      "embeddable": true,
+      "score": 52.6
+    },
+    "usedAdjacentGrade": false
   }
 ]

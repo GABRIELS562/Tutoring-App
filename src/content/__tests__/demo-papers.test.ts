@@ -125,6 +125,50 @@ describe('Grade 10 and 11 Common Papers', () => {
  *
  * The seed is now derived from this list. These keep it that way.
  */
+/**
+ * Grade 12 had 20 English rows and no Afrikaans ones, and the papers page
+ * defaults its language filter to the student's locale - so an Afrikaans
+ * matric student, the group closest to the exam, opened the page to
+ * "Showing 0 papers".
+ */
+describe('every grade is offered in both languages', () => {
+  it('has as many Afrikaans papers as English ones, per grade', () => {
+    for (const grade of [10, 11, 12]) {
+      const forGrade = demoPapers.filter((p) => p.grade === grade)
+      const english = forGrade.filter((p) => p.language === 'english').length
+      const afrikaans = forGrade.filter((p) => p.language === 'afrikaans').length
+
+      expect(english, `Grade ${grade} has no English papers`).toBeGreaterThan(0)
+      expect(afrikaans, `Grade ${grade}: ${english} English vs ${afrikaans} Afrikaans`).toBe(
+        english
+      )
+    }
+  })
+
+  it('gives every Grade 12 Afrikaans paper a memo', () => {
+    const afrikaans = demoPapers.filter((p) => p.grade === 12 && p.language === 'afrikaans')
+
+    expect(afrikaans).toHaveLength(20)
+    expect(afrikaans.filter((p) => !p.memoUrl)).toEqual([])
+  })
+
+  /**
+   * DBE publishes one bilingual memo per paper, so the two language
+   * editions share it. The PAPERS must differ - that is the mistake this
+   * catches.
+   */
+  it('gives each Grade 12 language its own question paper', () => {
+    const byPaper = new Map<string, string[]>()
+    for (const paper of demoPapers.filter((p) => p.grade === 12)) {
+      const key = `${paper.subject}-${paper.year}-p${paper.paperNumber}`
+      byPaper.set(key, [...(byPaper.get(key) ?? []), paper.pdfUrl])
+    }
+    for (const [key, urls] of byPaper) {
+      expect(new Set(urls).size, `${key} serves one PDF to both languages`).toBe(urls.length)
+    }
+  })
+})
+
 describe('there is one past-paper library, not two', () => {
   it('sources every paper from the government, not a third party', () => {
     const foreign = demoPapers

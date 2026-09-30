@@ -67,6 +67,18 @@
         "saChannel": true,
         "embeddable": true,
         "score": 59.1
+      },
+      {
+        "id": "FK2csaw8lwM",
+        "title": "Mathematics Grade 12 Solving Simultaneous Equations  - Algebra @mathszoneafricanmotives",
+        "channel": "Maths Zone African Motives",
+        "views": 8979,
+        "viewsText": "8,979 views",
+        "duration": "34:00",
+        "durationSeconds": 2040,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 52.5
       }
     ],
     "pick": {
@@ -659,16 +671,16 @@
         "score": 73.4
       },
       {
-        "id": "YSaIsgbxT9s",
-        "title": "First Principles exam Questions",
+        "id": "QkBnHGBQ3jE",
+        "title": "First principles grade 12: Practice",
         "channel": "Kevinmathscience",
-        "views": 323627,
-        "viewsText": "323,627 views",
-        "duration": "4:38",
-        "durationSeconds": 278,
+        "views": 302137,
+        "viewsText": "302,137 views",
+        "duration": "3:44",
+        "durationSeconds": 224,
         "saChannel": true,
         "embeddable": true,
-        "score": 73.1
+        "score": 72.8
       }
     ],
     "pick": {
@@ -699,10 +711,81 @@
       "miss martins rules differentiation grade 12",
       "Calculus grade 12 The rules of differentiation"
     ],
-    "candidates": [],
-    "pick": null,
-    "usedAdjacentGrade": false,
-    "note": "No embeddable, on-topic CAPS candidate found - left blank for manual search"
+    "candidates": [
+      {
+        "id": "XncMY0ui_j8",
+        "title": "First Derivative Calculus Grade 12 | Roots",
+        "channel": "Kevinmathscience",
+        "views": 487406,
+        "viewsText": "487,406 views",
+        "duration": "4:21",
+        "durationSeconds": 261,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 79.9
+      },
+      {
+        "id": "PBEeD9q25O4",
+        "title": "First Derivative Calculus Grade 12 | Polynomials",
+        "channel": "Kevinmathscience",
+        "views": 474077,
+        "viewsText": "474,077 views",
+        "duration": "4:44",
+        "durationSeconds": 284,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 79.8
+      },
+      {
+        "id": "N3GBGiufKCk",
+        "title": "First Derivative Calculus Grade 12 | What Is the First Derivative?",
+        "channel": "Kevinmathscience",
+        "views": 466500,
+        "viewsText": "466,500 views",
+        "duration": "7:22",
+        "durationSeconds": 442,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 79.7
+      },
+      {
+        "id": "8x8JhwCh5cs",
+        "title": "First Derivative grade 12: Practice",
+        "channel": "Kevinmathscience",
+        "views": 436151,
+        "viewsText": "436,151 views",
+        "duration": "1:05",
+        "durationSeconds": 65,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 79.4
+      },
+      {
+        "id": "Mw3aze22QKo",
+        "title": "First Derivative grade 12: Practice",
+        "channel": "Kevinmathscience",
+        "views": 343961,
+        "viewsText": "343,961 views",
+        "duration": "1:21",
+        "durationSeconds": 81,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 78.4
+      }
+    ],
+    "pick": {
+      "id": "XncMY0ui_j8",
+      "title": "First Derivative Calculus Grade 12 | Roots",
+      "channel": "Kevinmathscience",
+      "views": 487406,
+      "viewsText": "487,406 views",
+      "duration": "4:21",
+      "durationSeconds": 261,
+      "saChannel": true,
+      "embeddable": true,
+      "score": 79.9
+    },
+    "usedAdjacentGrade": false
   },
   {
     "slug": "calculus-gr12",
@@ -966,6 +1049,18 @@
     ],
     "candidates": [
       {
+        "id": "khM3bvXitM8",
+        "title": "5  Gr 12 Mathematics - Financial Maths - Future Value Annuities",
+        "channel": "JuniorTukkie at the University of Pretoria",
+        "views": 3515,
+        "viewsText": "3,515 views",
+        "duration": "7:14",
+        "durationSeconds": 434,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 54.7
+      },
+      {
         "id": "rlShQ-qRGmo",
         "title": "Financial Mathematics Grade 12: L3 Future Value Annuities",
         "channel": "Online Maths by Miss Pythagoras",
@@ -979,16 +1074,16 @@
       }
     ],
     "pick": {
-      "id": "rlShQ-qRGmo",
-      "title": "Financial Mathematics Grade 12: L3 Future Value Annuities",
-      "channel": "Online Maths by Miss Pythagoras",
-      "views": 2090,
-      "viewsText": "2,090 views",
-      "duration": "14:55",
-      "durationSeconds": 895,
+      "id": "khM3bvXitM8",
+      "title": "5  Gr 12 Mathematics - Financial Maths - Future Value Annuities",
+      "channel": "JuniorTukkie at the University of Pretoria",
+      "views": 3515,
+      "viewsText": "3,515 views",
+      "duration": "7:14",
+      "durationSeconds": 434,
       "saChannel": true,
       "embeddable": true,
-      "score": 52.5
+      "score": 54.7
     },
     "usedAdjacentGrade": false
   },
@@ -1095,7 +1190,7 @@
         "durationSeconds": 1955,
         "saChannel": true,
         "embeddable": true,
-        "score": 50.5
+        "score": 38.5
       }
     ],
     "pick": {
@@ -1138,6 +1233,18 @@
         "saChannel": true,
         "embeddable": true,
         "score": 69.9
+      },
+      {
+        "id": "EXXgv-fOwdk",
+        "title": "Fundamental Counting Principle (Grade 12 Maths)",
+        "channel": "Goon School",
+        "views": 3157,
+        "viewsText": "3,157 views",
+        "duration": "3:55",
+        "durationSeconds": 235,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 58
       }
     ],
     "pick": {
@@ -1211,6 +1318,18 @@
         "saChannel": true,
         "embeddable": true,
         "score": 54.9
+      },
+      {
+        "id": "EXXgv-fOwdk",
+        "title": "Fundamental Counting Principle (Grade 12 Maths)",
+        "channel": "Goon School",
+        "views": 3157,
+        "viewsText": "3,157 views",
+        "duration": "3:55",
+        "durationSeconds": 235,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 50.5
       }
     ],
     "pick": {
@@ -1904,6 +2023,18 @@
         "score": 70.8
       },
       {
+        "id": "CYLniifmoms",
+        "title": "2. Grade 12 Mathematics - Statistics - Lines of Best Fit",
+        "channel": "JuniorTukkie at the University of Pretoria",
+        "views": 16555,
+        "viewsText": "16,555 views",
+        "duration": "8:10",
+        "durationSeconds": 490,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 59.2
+      },
+      {
         "id": "vEDMk4xVa8k",
         "title": "Statistics Grade 12 Mathematics September 2021 Trial | Scatter Plot, Least Squares Regression Line..",
         "channel": "Khoza Explains",
@@ -1986,9 +2117,44 @@
       "miss martins correlation coefficient grade 12",
       "Statistics grade 12 The correlation coefficient r"
     ],
-    "candidates": [],
-    "pick": null,
-    "usedAdjacentGrade": false,
-    "note": "No embeddable, on-topic CAPS candidate found - left blank for manual search"
+    "candidates": [
+      {
+        "id": "tpeFck9tyAM",
+        "title": "1. Grade 12 Mathematics - Statistics - Basics of Correlation",
+        "channel": "JuniorTukkie at the University of Pretoria",
+        "views": 35929,
+        "viewsText": "35,929 views",
+        "duration": "10:31",
+        "durationSeconds": 631,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 61.1
+      },
+      {
+        "id": "hzxcF4-1RrI",
+        "title": "4. Grade 12 Mathematics - Statistics - Correlation between Variables",
+        "channel": "JuniorTukkie at the University of Pretoria",
+        "views": 9787,
+        "viewsText": "9,787 views",
+        "duration": "8:01",
+        "durationSeconds": 481,
+        "saChannel": true,
+        "embeddable": true,
+        "score": 55.4
+      }
+    ],
+    "pick": {
+      "id": "tpeFck9tyAM",
+      "title": "1. Grade 12 Mathematics - Statistics - Basics of Correlation",
+      "channel": "JuniorTukkie at the University of Pretoria",
+      "views": 35929,
+      "viewsText": "35,929 views",
+      "duration": "10:31",
+      "durationSeconds": 631,
+      "saChannel": true,
+      "embeddable": true,
+      "score": 61.1
+    },
+    "usedAdjacentGrade": false
   }
 ]

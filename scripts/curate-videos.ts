@@ -524,6 +524,7 @@ const ENGLISH_SYNONYMS: Record<string, string[]> = {
   dispersion: ['range', 'quartiles', 'percentiles'],
   midpoint: ['mid-point'],
   depreciation: ['depreciate'],
+  correlation: ['correlate', 'correlated'],
   simultaneous: ['simultaneously'],
   inequalities: ['inequality'],
   ogives: ['ogive', 'cumulative'],
@@ -725,12 +726,25 @@ const EXCLUSIVE_PAIRS: [string, string][] = [
   ['present', 'future'],
 ]
 
+/**
+ * "rule" discriminates in "sine rule", "cosine rule", "product rule" - the
+ * qualifier and the word travel together. It does NOT in "the rules of
+ * differentiation", where the concept is differentiation and "rules" is an
+ * ordinary noun. Requiring it there rejected "First Derivative Calculus
+ * Grade 12" from Kevinmathscience - 474,000 views, the right lesson, the
+ * right channel - and left the sub-topic with no English video at all.
+ */
+function ruleIsGeneric(subTopic: string): boolean {
+  return /\brules?\s+of\b/i.test(subTopic)
+}
+
 /** Discriminating terms this sub-topic names, which a title must also name. */
 function requiredTerms(subTopic: string, subject: 'maths' | 'science' = SUBJECT): string[] {
   const tokens = tokenise(subTopic)
   const neutralised = new Set(
     EXCLUSIVE_PAIRS.filter(([a, b]) => tokens.includes(a) && tokens.includes(b)).flat()
   )
+  if (ruleIsGeneric(subTopic)) neutralised.add('rule')
   // Compare on stems: CAPS writes "Tangents to circles" while the term list
   // holds "circle", and an exact match would silently drop the requirement.
   const stems = new Set(tokens.map(stem))
@@ -773,7 +787,13 @@ export function hasRequiredTerms(subTopic: string, title: string): boolean {
  * "adding fractions" video for "sum and difference of cubes".
  */
 export function relevance(subTopic: string, title: string): number {
-  const wanted = tokenise(subTopic)
+  // "rules of X" - see ruleIsGeneric. The backstop below demands that every
+  // token land for a short phrase, so leaving the generic "rules" in scored
+  // "First Derivative Calculus Grade 12" at 0.00 even though the required
+  // terms passed and the video is exactly the lesson.
+  const wanted = tokenise(subTopic).filter(
+    (word) => !(ruleIsGeneric(subTopic) && stem(word) === 'rule')
+  )
   if (wanted.length === 0) return 0
   const haystack = ` ${fold(title.toLowerCase())} `
 

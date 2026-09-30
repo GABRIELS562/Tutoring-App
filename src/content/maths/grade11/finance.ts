@@ -64,7 +64,6 @@ export const financeGr11: TopicContent = {
       blocks: [
         {
           type: 'video',
-          title: 'Kyk: 03 Huidige waarde annuïteite — Wiskunde_Mathematics_SUM',
           videoIdAf: 'xgMk-9CT0dI',
           titleAf: 'Kyk: 03 Huidige waarde annuïteite — Wiskunde_Mathematics_SUM'
         }

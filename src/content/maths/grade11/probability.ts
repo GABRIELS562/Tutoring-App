@@ -51,7 +51,6 @@ export const probabilityGr11: TopicContent = {
       blocks: [
         {
           type: 'video',
-          title: 'Kyk: Hersiening van waarskynlikheid se reëls - Graad 11 — SlimDink',
           videoIdAf: '3FKNRkhf8Eo',
           titleAf: 'Kyk: Hersiening van waarskynlikheid se reëls - Graad 11 — SlimDink'
         }

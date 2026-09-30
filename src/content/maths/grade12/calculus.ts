@@ -64,7 +64,8 @@ export const calculusGr12: TopicContent = {
       blocks: [
         {
           type: 'video',
-          title: 'Kyk: Differensiasie Graad12: L2 Reëls van Differensiasie — Online Maths by Miss Pythagoras',
+          title: 'Watch: First Derivative Calculus Grade 12 | Polynomials — Kevinmathscience',
+          videoId: 'PBEeD9q25O4',
           videoIdAf: 'y-CzYdhCBAU',
           titleAf: 'Kyk: Differensiasie Graad12: L2 Reëls van Differensiasie — Online Maths by Miss Pythagoras'
         }
