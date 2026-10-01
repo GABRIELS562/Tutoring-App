@@ -29,11 +29,25 @@ docker run -d --name "$CONTAINER" \
   -e POSTGRES_PASSWORD=rehearsal -e POSTGRES_DB=angelo \
   -p "${PORT}:5432" "$IMAGE" >/dev/null
 
-for _ in $(seq 1 60); do
-  docker exec "$CONTAINER" pg_isready -U postgres >/dev/null 2>&1 && break
+# pg_isready alone is not enough: the postgres image starts the server,
+# runs its init, then SHUTS IT DOWN and restarts it for real. pg_isready
+# answers during that first phase, so the next command would hit
+# "the database system is shutting down". Wait for a query to actually
+# succeed, twice in a row, instead.
+ready=0
+for _ in $(seq 1 90); do
+  if docker exec "$CONTAINER" psql -U postgres -d angelo -tAc 'select 1' >/dev/null 2>&1; then
+    ready=$((ready + 1))
+    [ "$ready" -ge 2 ] && break
+  else
+    ready=0
+  fi
   sleep 1
 done
-docker exec "$CONTAINER" pg_isready -U postgres >/dev/null
+if [ "$ready" -lt 2 ]; then
+  echo "postgres never became ready" >&2
+  exit 1
+fi
 
 # Supabase provides auth.uid() and the anon/authenticated/service_role
 # roles, with broad default grants on public and RLS as the real gate.
