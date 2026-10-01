@@ -98,19 +98,23 @@
   --card-foreground: #e6edf3;
   --popover: #161b22;
   --popover-foreground: #e6edf3;
-  --primary: #e63946;
+  /* The shadcn layer had its own copy of the old red, so <Button> would
+     have shipped white-on-#e63946 at 4.17:1 all over again. It is imported
+     nowhere today, which is the only reason that never reached a student.
+     Pointed at the real tokens so the two cannot drift apart. */
+  --primary: var(--accent-red);
   --primary-foreground: #ffffff;
   --secondary: #21262d;
   --secondary-foreground: #e6edf3;
   --muted: #21262d;
-  --muted-foreground: #7d8590;
+  --muted-foreground: var(--muted-custom);
   --accent: #21262d;
   --accent-foreground: #e6edf3;
-  --destructive: #e63946;
+  --destructive: var(--accent-red);
   --border: #30363d;
   --input: #30363d;
-  --ring: #e63946;
-  --chart-1: #e63946;
+  --ring: var(--accent-red);
+  --chart-1: var(--accent-red-text);
   --chart-2: #f4a261;
   --chart-3: #2dd4bf;
   --chart-4: #457b9d;
@@ -118,12 +122,12 @@
   --radius: 0.625rem;
   --sidebar: #161b22;
   --sidebar-foreground: #e6edf3;
-  --sidebar-primary: #e63946;
+  --sidebar-primary: var(--accent-red);
   --sidebar-primary-foreground: #ffffff;
   --sidebar-accent: #21262d;
   --sidebar-accent-foreground: #e6edf3;
   --sidebar-border: #30363d;
-  --sidebar-ring: #e63946;
+  --sidebar-ring: var(--accent-red);
 }
 
 @layer base {
@@ -259,6 +263,6 @@
  * overridden by a utility class the way a `@layer base` rule could be.
  */
 :focus-visible {
-  outline: 2px solid var(--ring, #e63946);
+  outline: 2px solid var(--ring, #dc1e2e);
   outline-offset: 2px;
 }
