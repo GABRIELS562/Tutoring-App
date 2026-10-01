@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import { useDialog } from '@/hooks/useDialog'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useTranslations } from 'next-intl'
 import { ArrowRight, Check, Circle, GripHorizontal, HelpCircle, ListChecks, Loader2, MessageCircle, X as XIcon } from 'lucide-react'
@@ -24,7 +25,7 @@ function StepDots({ stepResults, t }: { stepResults: readonly StepResult[]; t: R
           {result === 'knew_it' ? (
             <Check className="w-3.5 h-3.5" style={{ color: 'var(--teal)' }} aria-hidden="true" />
           ) : result === 'didnt_know' ? (
-            <XIcon className="w-3.5 h-3.5" style={{ color: 'var(--accent-red)' }} aria-hidden="true" />
+            <XIcon className="w-3.5 h-3.5" style={{ color: 'var(--accent-red-text)' }} aria-hidden="true" />
           ) : (
             <Circle className="w-2.5 h-2.5" style={{ color: 'var(--border-custom)' }} aria-hidden="true" />
           )}
@@ -122,6 +123,8 @@ export default function StepsSheet({
       setAskingAngelo(false)
     }
   }
+
+  const angeloDialogRef = useDialog<HTMLDivElement>(confirmAngelo, () => setConfirmAngelo(false))
 
   return (
     <motion.div
@@ -243,7 +246,7 @@ export default function StepsSheet({
                         type="button"
                         onClick={() => setStage('explained')}
                         className="flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-lg text-sm font-semibold"
-                        style={{ background: 'rgba(230, 57, 70, 0.15)', color: 'var(--accent-red)', border: '2px solid var(--accent-red)' }}
+                        style={{ background: 'rgba(230, 57, 70, 0.15)', color: 'var(--accent-red-text)', border: '2px solid var(--accent-red)' }}
                       >
                         <XIcon className="w-4 h-4" aria-hidden="true" />
                         {t('noIDidNot')}
@@ -291,7 +294,7 @@ export default function StepsSheet({
                   {t('askAngeloCost')}
                 </button>
                 {angeloError && (
-                  <p className="mt-2 text-xs" style={{ color: 'var(--accent-red)' }}>
+                  <p className="mt-2 text-xs" style={{ color: 'var(--accent-red-text)' }}>
                     {angeloError}
                   </p>
                 )}
@@ -331,6 +334,7 @@ export default function StepsSheet({
               onClick={() => setConfirmAngelo(false)}
             />
             <div
+              ref={angeloDialogRef}
               role="alertdialog"
               aria-modal="true"
               aria-label={t('confirmAskAngeloTitle')}
@@ -358,8 +362,8 @@ export default function StepsSheet({
                 <button
                   type="button"
                   onClick={handleAskAngelo}
-                  className="flex-1 min-h-11 min-w-11 px-4 py-2 rounded-lg text-sm font-semibold text-white"
-                  style={{ background: 'var(--teal)' }}
+                  className="flex-1 min-h-11 min-w-11 px-4 py-2 rounded-lg text-sm font-semibold"
+                  style={{ background: 'var(--teal)', color: 'var(--bg)' }}
                 >
                   {t('confirmAskAngeloAction')}
                 </button>

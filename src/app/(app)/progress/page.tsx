@@ -176,7 +176,7 @@ export default async function ProgressPage() {
                       </span>
                       <span className="text-sm font-bold" style={{ color: 'var(--text)' }}>
                         {paper.marksEarned} / {paper.marksAvailable}
-                        <span className="ml-2" style={{ color: 'var(--accent-red)' }}>{percent}%</span>
+                        <span className="ml-2" style={{ color: 'var(--accent-red-text)' }}>{percent}%</span>
                       </span>
                     </div>
                     <p className="text-xs mt-1" style={{ color: 'var(--muted-custom)' }}>

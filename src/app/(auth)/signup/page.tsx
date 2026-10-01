@@ -154,7 +154,7 @@ export default function SignupPage() {
               className="p-3 rounded-lg text-sm"
               style={{
                 background: 'rgba(230, 57, 70, 0.1)',
-                color: 'var(--accent-red)',
+                color: 'var(--accent-red-text)',
                 border: '1px solid var(--accent-red)'
               }}
             >
@@ -184,7 +184,7 @@ export default function SignupPage() {
               placeholder={t('fullNamePlaceholder')}
             />
             {errors.name && (
-              <p className="mt-1 text-sm" style={{ color: 'var(--accent-red)' }}>{errors.name}</p>
+              <p className="mt-1 text-sm" style={{ color: 'var(--accent-red-text)' }}>{errors.name}</p>
             )}
           </div>
 
@@ -210,7 +210,7 @@ export default function SignupPage() {
               placeholder={t('emailPlaceholder')}
             />
             {errors.email && (
-              <p className="mt-1 text-sm" style={{ color: 'var(--accent-red)' }}>{errors.email}</p>
+              <p className="mt-1 text-sm" style={{ color: 'var(--accent-red-text)' }}>{errors.email}</p>
             )}
           </div>
 
@@ -236,7 +236,7 @@ export default function SignupPage() {
               placeholder={t('passwordPlaceholder')}
             />
             {errors.password && (
-              <p className="mt-1 text-sm" style={{ color: 'var(--accent-red)' }}>{errors.password}</p>
+              <p className="mt-1 text-sm" style={{ color: 'var(--accent-red-text)' }}>{errors.password}</p>
             )}
           </div>
 
@@ -265,7 +265,7 @@ export default function SignupPage() {
               <option value="12">{t('grade')} 12</option>
             </select>
             {errors.grade && (
-              <p className="mt-1 text-sm" style={{ color: 'var(--accent-red)' }}>{errors.grade}</p>
+              <p className="mt-1 text-sm" style={{ color: 'var(--accent-red-text)' }}>{errors.grade}</p>
             )}
           </div>
 
@@ -317,7 +317,7 @@ export default function SignupPage() {
           <Link
             href="/login"
             className="font-semibold hover:underline"
-            style={{ color: 'var(--accent-red)' }}
+            style={{ color: 'var(--accent-red-text)' }}
           >
             {t('signIn')}
           </Link>

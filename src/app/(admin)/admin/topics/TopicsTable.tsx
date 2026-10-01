@@ -124,7 +124,7 @@ export default function TopicsTable({ topics }: TopicsTableProps) {
                 >
                   <Trash2
                     className="w-4 h-4"
-                    style={{ color: 'var(--accent-red)' }}
+                    style={{ color: 'var(--accent-red-text)' }}
                   />
                 </button>
               </td>

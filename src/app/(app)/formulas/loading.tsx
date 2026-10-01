@@ -43,7 +43,7 @@ export default function FormulasLoading() {
         <div className="flex flex-col items-center justify-center py-16">
           <Loader2
             className="w-8 h-8 animate-spin mb-3"
-            style={{ color: 'var(--accent-red)' }}
+            style={{ color: 'var(--accent-red-text)' }}
           />
           <p className="text-sm" style={{ color: 'var(--muted-custom)' }}>
             Loading formulas...

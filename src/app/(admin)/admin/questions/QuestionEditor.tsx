@@ -252,7 +252,7 @@ export default function QuestionEditor({
       <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
         <div className="absolute inset-0 bg-black/60" />
         <div className="relative p-8">
-          <Loader2 className="w-8 h-8 animate-spin" style={{ color: 'var(--accent-red)' }} />
+          <Loader2 className="w-8 h-8 animate-spin" style={{ color: 'var(--accent-red-text)' }} />
         </div>
       </div>
     )
@@ -404,7 +404,7 @@ export default function QuestionEditor({
                 {[
                   { value: '1', label: 'Easy', color: 'var(--teal)' },
                   { value: '2', label: 'Medium', color: 'var(--gold)' },
-                  { value: '3', label: 'Hard', color: 'var(--accent-red)' },
+                  { value: '3', label: 'Hard', color: 'var(--accent-red-text)' },
                 ].map((d) => (
                   <button
                     key={d.value}
@@ -540,7 +540,7 @@ export default function QuestionEditor({
                         onClick={() => removeStep(index)}
                         className="p-1 rounded transition-colors hover:bg-white/10"
                       >
-                        <Trash2 className="w-4 h-4" style={{ color: 'var(--accent-red)' }} />
+                        <Trash2 className="w-4 h-4" style={{ color: 'var(--accent-red-text)' }} />
                       </button>
                     )}
                   </div>
@@ -668,7 +668,7 @@ export default function QuestionEditor({
             onClick={() => handleSave(true)}
             disabled={isPending}
             className="px-4 py-2 rounded-lg text-sm font-medium transition-colors disabled:opacity-50"
-            style={{ background: 'var(--teal)', color: 'white' }}
+            style={{ background: 'var(--teal)', color: 'var(--bg)' }}
           >
             {isPending ? 'Saving...' : 'Approve & Publish'}
           </button>

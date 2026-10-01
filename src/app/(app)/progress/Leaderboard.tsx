@@ -84,7 +84,7 @@ export default function Leaderboard({ data, currentUserId }: LeaderboardProps) {
                 <td className="py-3">
                   <span
                     className="text-sm font-medium"
-                    style={{ color: isCurrentUser ? 'var(--accent-red)' : 'var(--text)' }}
+                    style={{ color: isCurrentUser ? 'var(--accent-red-text)' : 'var(--text)' }}
                   >
                     {entry.name}
                     {isCurrentUser && (

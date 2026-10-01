@@ -204,7 +204,7 @@ export default function NoteBlock({ block, topicSlug = 'topic', sectionId = 'sec
           {block.title && (
             <h4
               className="text-sm font-semibold mb-2"
-              style={{ color: 'var(--accent-red)' }}
+              style={{ color: 'var(--accent-red-text)' }}
             >
               {block.title}
             </h4>

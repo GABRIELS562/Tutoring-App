@@ -27,7 +27,7 @@ export default function FormulasError({ error, reset }: ErrorProps) {
         >
           <AlertTriangle
             className="w-12 h-12 mx-auto mb-4"
-            style={{ color: 'var(--accent-red)' }}
+            style={{ color: 'var(--accent-red-text)' }}
           />
           <h2
             className="text-lg font-semibold mb-2"

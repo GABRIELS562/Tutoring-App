@@ -211,7 +211,7 @@ export default function PapersPageClient({ papers, playable }: PapersPageClientP
               <button
                 onClick={clearFilters}
                 className="mt-3 flex items-center gap-1.5 text-sm font-medium"
-                style={{ color: 'var(--accent-red)' }}
+                style={{ color: 'var(--accent-red-text)' }}
               >
                 <X className="w-4 h-4" />
                 {t('clearFilters')}
@@ -235,7 +235,7 @@ export default function PapersPageClient({ papers, playable }: PapersPageClientP
             <div className="flex items-start gap-3">
               <Swords
                 className="w-5 h-5 mt-0.5 flex-shrink-0"
-                style={{ color: 'var(--accent-red)' }}
+                style={{ color: 'var(--accent-red-text)' }}
                 aria-hidden="true"
               />
               <div className="min-w-0 flex-1">
@@ -323,7 +323,7 @@ export default function PapersPageClient({ papers, playable }: PapersPageClientP
                   className="px-2.5 py-1 rounded-lg text-xs font-semibold"
                   style={{
                     background: paper.subject === 'maths' ? 'rgba(230, 57, 70, 0.15)' : 'rgba(45, 212, 191, 0.15)',
-                    color: paper.subject === 'maths' ? 'var(--accent-red)' : 'var(--teal)',
+                    color: paper.subject === 'maths' ? 'var(--accent-red-text)' : 'var(--teal)',
                   }}
                 >
                   {paper.year}

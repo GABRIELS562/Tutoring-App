@@ -76,7 +76,7 @@ export default function QuestionsList({ topicId, onEdit, onRefresh }: QuestionsL
       case 2:
         return { label: 'Medium', color: 'var(--gold)' }
       case 3:
-        return { label: 'Hard', color: 'var(--accent-red)' }
+        return { label: 'Hard', color: 'var(--accent-red-text)' }
       default:
         return { label: 'Unknown', color: 'var(--muted-custom)' }
     }
@@ -184,7 +184,7 @@ export default function QuestionsList({ topicId, onEdit, onRefresh }: QuestionsL
                 className="p-2 rounded-lg transition-colors hover:bg-white/10 disabled:opacity-50"
                 title="Delete question"
               >
-                <Trash2 className="w-4 h-4" style={{ color: 'var(--accent-red)' }} />
+                <Trash2 className="w-4 h-4" style={{ color: 'var(--accent-red-text)' }} />
               </button>
             </div>
           </div>

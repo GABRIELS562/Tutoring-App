@@ -136,7 +136,7 @@ export default function ExamPageClient({
           <p className="text-xs mt-1" style={{ color: 'var(--muted-custom)' }}>
             {t('progress', { done, total: items.length, earned, available })}
             {done === items.length && available > 0 && (
-              <strong style={{ color: 'var(--accent-red)' }}>
+              <strong style={{ color: 'var(--accent-red-text)' }}>
                 {' '}
                 — {Math.round((earned / available) * 100)}%
               </strong>

@@ -49,7 +49,7 @@ export default function WorkedExample({
       {/* Title */}
       <h4
         className="text-sm font-semibold mb-3"
-        style={{ color: 'var(--accent-red)' }}
+        style={{ color: 'var(--accent-red-text)' }}
       >
         Worked Example: {title}
       </h4>
@@ -143,7 +143,7 @@ export default function WorkedExample({
                   className="ml-10 px-3 py-1.5 rounded text-sm font-medium transition-all"
                   style={{
                     background: 'var(--surface)',
-                    color: 'var(--accent-red)',
+                    color: 'var(--accent-red-text)',
                     border: '1px solid var(--accent-red)',
                   }}
                 >

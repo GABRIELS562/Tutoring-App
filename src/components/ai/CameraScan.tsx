@@ -170,7 +170,7 @@ export default function CameraScan() {
                   >
                     <Loader2
                       className="w-8 h-8 mx-auto mb-3 animate-spin"
-                      style={{ color: 'var(--accent-red)' }}
+                      style={{ color: 'var(--accent-red-text)' }}
                     />
                     <p className="font-medium" style={{ color: 'var(--text)' }}>
                       {t('readingQuestion')}
@@ -187,7 +187,7 @@ export default function CameraScan() {
                     className="rounded-xl p-4"
                     style={{ background: 'rgba(230, 57, 70, 0.1)', border: '1px solid var(--accent-red)' }}
                   >
-                    <p className="text-sm" style={{ color: 'var(--accent-red)' }}>
+                    <p className="text-sm" style={{ color: 'var(--accent-red-text)' }}>
                       {error}
                     </p>
                   </div>

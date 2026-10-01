@@ -194,7 +194,7 @@ function StepRow({
               )}
             </button>
             {angeloError && (
-              <p className="mt-2 text-xs" style={{ color: 'var(--accent-red)' }}>
+              <p className="mt-2 text-xs" style={{ color: 'var(--accent-red-text)' }}>
                 {angeloError}
               </p>
             )}
@@ -214,8 +214,8 @@ function StepRow({
           >
             <div className="flex items-start gap-2">
               <div
-                className="w-6 h-6 rounded-full flex items-center justify-center shrink-0 text-[10px] font-bold text-white"
-                style={{ background: 'var(--teal)' }}
+                className="w-6 h-6 rounded-full flex items-center justify-center shrink-0 text-[10px] font-bold"
+                style={{ background: 'var(--teal)', color: 'var(--bg)' }}
               >
                 AT
               </div>

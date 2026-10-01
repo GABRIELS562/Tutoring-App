@@ -149,7 +149,7 @@ export default function TopicPageClient({ slug, content }: TopicPageClientProps)
                 onClick={() => handleSectionClick(section.id)}
                 className="w-full text-left px-3 py-2 rounded-lg text-sm transition-all hover:bg-white/5"
                 style={{
-                  color: activeSection === section.id ? 'var(--accent-red)' : 'var(--text)',
+                  color: activeSection === section.id ? 'var(--accent-red-text)' : 'var(--text)',
                   background: activeSection === section.id ? 'rgba(230, 57, 70, 0.1)' : 'transparent',
                 }}
               >

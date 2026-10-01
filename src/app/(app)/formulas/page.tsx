@@ -261,7 +261,7 @@ export default function FormulasPage() {
                         <Link
                           href={`/topics/${formula.topicSlug}/practice`}
                           className="text-xs font-medium shrink-0 ml-2"
-                          style={{ color: 'var(--accent-red)' }}
+                          style={{ color: 'var(--accent-red-text)' }}
                         >
                           {t('practiceArrow')}
                         </Link>

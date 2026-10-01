@@ -408,7 +408,7 @@ export default async function DashboardPage() {
                 className="p-2 rounded-lg"
                 style={{ background: 'rgba(230, 57, 70, 0.15)' }}
               >
-                <Flame className="w-5 h-5" style={{ color: 'var(--accent-red)' }} />
+                <Flame className="w-5 h-5" style={{ color: 'var(--accent-red-text)' }} />
               </div>
             </div>
             <p className="text-2xl font-bold" style={{ color: 'var(--text)' }}>
@@ -553,7 +553,7 @@ export default async function DashboardPage() {
             <div className="flex items-center justify-between gap-4">
               <div className="min-w-0">
                 <h2 className="font-semibold flex items-center gap-2" style={{ color: 'var(--text)' }}>
-                  <Swords className="w-4 h-4" style={{ color: 'var(--accent-red)' }} aria-hidden="true" />
+                  <Swords className="w-4 h-4" style={{ color: 'var(--accent-red-text)' }} aria-hidden="true" />
                   {tExam('title')}
                 </h2>
                 <p className="text-sm mt-1" style={{ color: 'var(--muted-custom)' }}>

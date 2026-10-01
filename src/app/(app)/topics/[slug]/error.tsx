@@ -32,7 +32,7 @@ export default function TopicError({
           className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4"
           style={{ background: 'rgba(230, 57, 70, 0.15)' }}
         >
-          <AlertCircle className="w-8 h-8" style={{ color: 'var(--accent-red)' }} />
+          <AlertCircle className="w-8 h-8" style={{ color: 'var(--accent-red-text)' }} />
         </div>
         <h2 className="text-xl font-bold mb-2" style={{ color: 'var(--text)' }}>
           Something went wrong

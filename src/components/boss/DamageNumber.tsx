@@ -28,7 +28,7 @@ export default function DamageNumber({ damageKey, damage }: DamageNumberProps) {
             exit={variant({ opacity: 0, y: -44 }, { opacity: 0 })}
             transition={transition({ duration: 0.7, ease: 'easeOut' })}
             className="absolute right-2 -top-2 text-lg font-extrabold pointer-events-none"
-            style={{ color: 'var(--accent-red)' }}
+            style={{ color: 'var(--accent-red-text)' }}
           >
             -{damage}
           </motion.div>

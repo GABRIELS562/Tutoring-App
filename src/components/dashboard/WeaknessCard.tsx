@@ -67,7 +67,7 @@ export default function WeaknessCard({ weakness }: WeaknessCardProps) {
               percent: (chunks) => (
                 <span
                   style={{
-                    color: accuracyPercent < 40 ? 'var(--accent-red)' : 'var(--gold)',
+                    color: accuracyPercent < 40 ? 'var(--accent-red-text)' : 'var(--gold)',
                     fontWeight: 600,
                   }}
                 >

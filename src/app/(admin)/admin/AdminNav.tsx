@@ -79,7 +79,7 @@ export default function AdminNav({ userName }: AdminNavProps) {
         <button
           onClick={handleSignOut}
           className="flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-colors hover:bg-white/5"
-          style={{ color: 'var(--accent-red)' }}
+          style={{ color: 'var(--accent-red-text)' }}
         >
           <LogOut className="w-4 h-4" />
           <span className="hidden sm:inline">Sign out</span>

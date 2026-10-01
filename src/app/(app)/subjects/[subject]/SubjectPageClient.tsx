@@ -28,7 +28,7 @@ const subjectInfo = {
   maths: {
     nameKey: 'mathematics',
     icon: Calculator,
-    color: 'var(--accent-red)',
+    color: 'var(--accent-red-text)',
   },
   science: {
     nameKey: 'physicalScience',

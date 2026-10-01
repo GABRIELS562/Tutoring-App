@@ -86,7 +86,7 @@ export default function StudyPlanBanner({ daysRemaining, topics = [] }: StudyPla
     >
       {/* Header */}
       <div className="flex items-center gap-2 mb-3">
-        <ClipboardList className="w-5 h-5" style={{ color: 'var(--accent-red)' }} />
+        <ClipboardList className="w-5 h-5" style={{ color: 'var(--accent-red-text)' }} />
         <h2 className="font-semibold" style={{ color: 'var(--text)' }}>
           {t('title')}
         </h2>

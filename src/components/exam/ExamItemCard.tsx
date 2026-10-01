@@ -104,7 +104,7 @@ function ExamItemCard({
       style={{ background: 'var(--surface)', border: '1px solid var(--border-custom)' }}
     >
       <div className="flex items-baseline justify-between mb-3">
-        <span className="text-sm font-semibold" style={{ color: 'var(--accent-red)' }}>
+        <span className="text-sm font-semibold" style={{ color: 'var(--accent-red-text)' }}>
           {t('question')} {item.question}
         </span>
         <span className="text-xs" style={{ color: 'var(--muted-custom)' }}>
@@ -192,7 +192,7 @@ function ExamItemCard({
           <button
             onClick={() => setPhase('attempt')}
             className="mt-3 inline-flex items-center gap-1 text-sm font-semibold"
-            style={{ color: 'var(--accent-red)' }}
+            style={{ color: 'var(--accent-red-text)' }}
           >
             {t('nowTryIt')} <ArrowRight className="w-4 h-4" />
           </button>
@@ -305,7 +305,7 @@ function ExamItemCard({
               +{xpFor(calibration!, earned)} XP
             </p>
             {saveFailed && (
-              <p className="text-xs mt-1" style={{ color: 'var(--accent-red)' }}>
+              <p className="text-xs mt-1" style={{ color: 'var(--accent-red-text)' }}>
                 {t('notSaved')}
               </p>
             )}
@@ -350,7 +350,7 @@ function ExamItemCard({
                 {satisfied.includes(i) ? (
                   <Check className="w-3 h-3" style={{ color: 'var(--teal)' }} />
                 ) : (
-                  <X className="w-3 h-3" style={{ color: 'var(--accent-red)' }} />
+                  <X className="w-3 h-3" style={{ color: 'var(--accent-red-text)' }} />
                 )}
                 {/* Descriptors carry LaTeX - the memo writes marks like
                     $\frac{408}{19}$ - so this summary must render them the

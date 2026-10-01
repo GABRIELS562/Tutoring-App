@@ -30,7 +30,7 @@ const subjects = [
     nameKey: 'mathematics',
     icon: Calculator,
     descriptionKey: 'mathsDescription',
-    color: 'var(--accent-red)',
+    color: 'var(--accent-red-text)',
   },
   {
     id: 'science',

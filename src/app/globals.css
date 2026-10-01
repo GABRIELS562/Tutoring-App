@@ -53,6 +53,7 @@
   --color-surface2: var(--surface2);
   --color-border-custom: var(--border-custom);
   --color-accent-red: var(--accent-red);
+  --color-accent-red-text: var(--accent-red-text);
   --color-gold: var(--gold);
   --color-teal: var(--teal);
   --color-text: var(--text);
@@ -65,11 +66,23 @@
   --surface: #161b22;
   --surface2: #21262d;
   --border-custom: #30363d;
-  --accent-red: #e63946;
+  /* One red was doing two jobs and failing both.
+     As a BUTTON FILL it carried white text at 4.17:1 - under the 4.5:1
+     AA minimum, on the most-pressed control in the app. As TEXT on a dark
+     surface it sat at 4.15:1, which is the "you got this wrong" message.
+     Darkening fixes the button and worsens the text; lightening does the
+     reverse. So there are two now.
+     --accent-red     fill:  white on it is 4.92:1
+     --accent-red-text text: 5.44:1 on --surface, 4.78:1 on --surface2 */
+  --accent-red: #dc1e2e;
+  --accent-red-text: #ef616d;
   --gold: #f4a261;
   --teal: #2dd4bf;
   --text: #e6edf3;
-  --muted-custom: #7d8590;
+  /* Was #7d8590, which failed on --surface2 at 4.08:1 - the exam-type and
+     language chips on the papers page sit on exactly that. 4.95:1 now,
+     and better everywhere else too. */
+  --muted-custom: #8b949e;
 
   /* AI Skills Purple Theme - inspired by Azure */
   --ai-purple: #8b5cf6;

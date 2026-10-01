@@ -32,7 +32,7 @@ describe('WeaknessCard attempted-stats message', () => {
 
     const percentSpan = screen.getByText('35%')
     expect(percentSpan.tagName).toBe('SPAN')
-    expect(percentSpan).toHaveStyle({ color: 'var(--accent-red)' })
+    expect(percentSpan).toHaveStyle({ color: 'var(--accent-red-text)' })
   })
 
   it('colours the percent span gold at or above 40% accuracy', () => {

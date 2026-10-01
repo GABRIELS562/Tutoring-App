@@ -122,7 +122,7 @@ export default function QuestionCard({
       return {
         background: 'rgba(230, 57, 70, 0.2)',
         border: '2px solid var(--accent-red)',
-        color: 'var(--accent-red)',
+        color: 'var(--accent-red-text)',
       }
     }
 
@@ -248,7 +248,7 @@ export default function QuestionCard({
             )}
           </button>
           {angeloError && (
-            <p className="mt-2 text-sm" style={{ color: 'var(--accent-red)' }}>
+            <p className="mt-2 text-sm" style={{ color: 'var(--accent-red-text)' }}>
               {angeloError}
             </p>
           )}
@@ -268,8 +268,8 @@ export default function QuestionCard({
         >
           <div className="flex items-start gap-3">
             <div
-              className="w-8 h-8 rounded-full flex items-center justify-center shrink-0 text-xs font-bold text-white"
-              style={{ background: 'var(--teal)' }}
+              className="w-8 h-8 rounded-full flex items-center justify-center shrink-0 text-xs font-bold"
+              style={{ background: 'var(--teal)', color: 'var(--bg)' }}
             >
               AT
             </div>

@@ -32,7 +32,7 @@ export default function ShieldsAndCombo({ shields, combo }: ShieldsAndComboProps
           />
         ))}
         {shields === 0 && (
-          <span className="text-xs font-medium" style={{ color: 'var(--accent-red)' }}>
+          <span className="text-xs font-medium" style={{ color: 'var(--accent-red-text)' }}>
             {t('noShieldsLeft')}
           </span>
         )}

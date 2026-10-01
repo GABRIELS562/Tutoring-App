@@ -249,7 +249,7 @@ export default function AIModuleRenderer({
         <p
           role="alert"
           className="text-sm"
-          style={{ color: 'var(--accent-red)' }}
+          style={{ color: 'var(--accent-red-text)' }}
         >
           {t('somethingWentWrong')} {t('tryAgain')}
         </p>

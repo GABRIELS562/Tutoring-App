@@ -144,7 +144,7 @@ function ResetPasswordForm() {
         <p
           className="text-center mb-8"
           role="alert"
-          style={{ color: 'var(--accent-red)' }}
+          style={{ color: 'var(--accent-red-text)' }}
         >
           {t('invalidResetLink')}
         </p>
@@ -192,7 +192,7 @@ function ResetPasswordForm() {
           role="alert"
           style={{
             background: 'rgba(230, 57, 70, 0.1)',
-            color: 'var(--accent-red)',
+            color: 'var(--accent-red-text)',
             border: '1px solid var(--accent-red)',
           }}
         >
@@ -225,7 +225,7 @@ function ResetPasswordForm() {
           placeholder={t('passwordPlaceholder')}
         />
         {errors.password && (
-          <p id="newPassword-error" className="mt-1 text-sm" style={{ color: 'var(--accent-red)' }}>
+          <p id="newPassword-error" className="mt-1 text-sm" style={{ color: 'var(--accent-red-text)' }}>
             {errors.password}
           </p>
         )}
@@ -256,7 +256,7 @@ function ResetPasswordForm() {
           placeholder={t('passwordPlaceholder')}
         />
         {errors.confirmPassword && (
-          <p id="confirmPassword-error" className="mt-1 text-sm" style={{ color: 'var(--accent-red)' }}>
+          <p id="confirmPassword-error" className="mt-1 text-sm" style={{ color: 'var(--accent-red-text)' }}>
             {errors.confirmPassword}
           </p>
         )}

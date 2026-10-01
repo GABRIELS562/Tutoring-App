@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Trophy, RefreshCw, BookOpen, ArrowRight, Loader2, Heart } from 'lucide-react'
 import Link from 'next/link'
@@ -46,6 +46,25 @@ export default function QuizEngine({
 
   const [questions, setQuestions] = useState<QuestionWithDetails[]>(questionsToUse)
   const [currentIndex, setCurrentIndex] = useState(0)
+  /**
+   * AnimatePresence unmounts the old card when the question changes, which
+   * destroys the button the student just pressed - so focus fell back to
+   * <body> after EVERY question and a keyboard or screen-reader user had
+   * to navigate down from the top of the page again.
+   *
+   * Focus moves to the new question instead. Skipped on first render, so
+   * arriving on the page does not yank focus away from the skip link.
+   */
+  const questionRef = useRef<HTMLDivElement>(null)
+  const isFirstQuestion = useRef(true)
+
+  useEffect(() => {
+    if (isFirstQuestion.current) {
+      isFirstQuestion.current = false
+      return
+    }
+    questionRef.current?.focus()
+  }, [currentIndex])
   const [answers, setAnswers] = useState<boolean[]>([])
   const [score, setScore] = useState(0)
   const [complete, setComplete] = useState(false)
@@ -187,7 +206,7 @@ export default function QuizEngine({
   if (loading) {
     return (
       <div className="flex flex-col items-center justify-center py-20">
-        <Loader2 className="w-8 h-8 animate-spin mb-4" style={{ color: 'var(--accent-red)' }} />
+        <Loader2 className="w-8 h-8 animate-spin mb-4" style={{ color: 'var(--accent-red-text)' }} />
         <p style={{ color: 'var(--muted-custom)' }}>{t('loadingQuestions')}</p>
       </div>
     )
@@ -337,7 +356,7 @@ export default function QuizEngine({
             className="w-full flex items-center justify-center gap-2 px-5 py-3 rounded-lg font-semibold transition-all"
             style={{
               background: 'transparent',
-              color: 'var(--accent-red)',
+              color: 'var(--accent-red-text)',
             }}
           >
             {t('nextTopic')}
@@ -360,12 +379,12 @@ export default function QuizEngine({
             <span>{t('scoreOf', { score, total: answers.length })}</span>
             {isPremium ? (
               <span className="flex items-center gap-1" aria-label={t('unlimitedHeartsLabel')}>
-                <Heart className="w-3.5 h-3.5" style={{ color: 'var(--accent-red)' }} />
+                <Heart className="w-3.5 h-3.5" style={{ color: 'var(--accent-red-text)' }} />
                 <span>{t('unlimited')}</span>
               </span>
             ) : (
               <span className="flex items-center gap-1" aria-label={t('heartsRemainingLabel', { count: heartsRemaining })}>
-                <Heart className="w-3.5 h-3.5" style={{ color: 'var(--accent-red)' }} />
+                <Heart className="w-3.5 h-3.5" style={{ color: 'var(--accent-red-text)' }} />
                 <span>{heartsRemaining}</span>
               </span>
             )}
@@ -392,7 +411,7 @@ export default function QuizEngine({
           style={{
             background: 'rgba(230, 57, 70, 0.1)',
             border: '1px solid var(--accent-red)',
-            color: 'var(--accent-red)',
+            color: 'var(--accent-red-text)',
           }}
         >
           <span>{t('notSavedRetry')}</span>
@@ -405,7 +424,15 @@ export default function QuizEngine({
         </div>
       )}
 
+      {/* Announced on its own, because the card itself is replaced rather
+          than updated and a screen reader has no other signal that the
+          question changed. */}
+      <div aria-live="polite" className="sr-only">
+        {t('questionOfTotal', { current: currentIndex + 1, total: questions.length })}
+      </div>
+
       {/* Question Card */}
+      <div ref={questionRef} tabIndex={-1} className="outline-none">
       <AnimatePresence mode="wait">
         <QuestionCard
           key={questions[currentIndex].id}
@@ -415,6 +442,7 @@ export default function QuizEngine({
           nextDisabled={Boolean(saveError)}
         />
       </AnimatePresence>
+      </div>
     </div>
   )
 }

@@ -77,7 +77,7 @@ export default function ForgotPasswordPage() {
         ) : submitted ? (
           <>
             <div className="flex justify-center mb-4" aria-hidden="true">
-              <Mail className="w-10 h-10" style={{ color: 'var(--accent-red)' }} />
+              <Mail className="w-10 h-10" style={{ color: 'var(--accent-red-text)' }} />
             </div>
             <h1
               className="text-2xl font-bold text-center mb-2"
@@ -159,7 +159,7 @@ export default function ForgotPasswordPage() {
           <Link
             href="/login"
             className="font-semibold hover:underline"
-            style={{ color: 'var(--accent-red)' }}
+            style={{ color: 'var(--accent-red-text)' }}
           >
             {t('backToSignIn')}
           </Link>

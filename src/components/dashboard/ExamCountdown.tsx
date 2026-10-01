@@ -123,9 +123,9 @@ export default function ExamCountdown({ subject = 'maths' }: ExamCountdownProps)
         className="flex items-start gap-2 p-3 rounded-lg"
         style={{ background: 'var(--surface2)' }}
       >
-        <Clock className="w-4 h-4 shrink-0 mt-0.5" style={{ color: 'var(--accent-red)' }} />
+        <Clock className="w-4 h-4 shrink-0 mt-0.5" style={{ color: 'var(--accent-red-text)' }} />
         <p className="text-xs leading-relaxed" style={{ color: 'var(--text)' }}>
-          <strong style={{ color: 'var(--accent-red)' }}>{t('angelosAdvice')}</strong>{' '}
+          <strong style={{ color: 'var(--accent-red-text)' }}>{t('angelosAdvice')}</strong>{' '}
           {isUrgent
             ? t('adviceUrgent')
             : isWarning

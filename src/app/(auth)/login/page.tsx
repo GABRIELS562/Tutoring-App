@@ -118,7 +118,7 @@ export default function LoginPage() {
               role="alert"
               style={{
                 background: 'rgba(230, 57, 70, 0.1)',
-                color: 'var(--accent-red)',
+                color: 'var(--accent-red-text)',
                 border: '1px solid var(--accent-red)'
               }}
             >
@@ -162,7 +162,7 @@ export default function LoginPage() {
               <Link
                 href="/forgot-password"
                 className="text-sm font-medium hover:underline"
-                style={{ color: 'var(--accent-red)' }}
+                style={{ color: 'var(--accent-red-text)' }}
               >
                 {t('forgotPassword')}
               </Link>
@@ -230,7 +230,7 @@ export default function LoginPage() {
           <Link
             href="/signup"
             className="font-semibold hover:underline"
-            style={{ color: 'var(--accent-red)' }}
+            style={{ color: 'var(--accent-red-text)' }}
           >
             {t('signUp')}
           </Link>

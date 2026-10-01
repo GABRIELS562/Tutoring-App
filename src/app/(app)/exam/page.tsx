@@ -68,7 +68,7 @@ export default async function ExamIndexPage() {
                   <span className="font-semibold text-base" style={{ color: 'var(--text)' }}>
                     {paper.title}
                   </span>
-                  <ArrowRight className="w-4 h-4 shrink-0" style={{ color: 'var(--accent-red)' }} />
+                  <ArrowRight className="w-4 h-4 shrink-0" style={{ color: 'var(--accent-red-text)' }} />
                 </span>
                 <span className="text-xs" style={{ color: 'var(--muted-custom)' }}>
                   {paper.source}

@@ -162,7 +162,7 @@ function NotFoundCard({ certificateId, t }: { certificateId: string; t: VerifyTr
         className="w-16 h-16 rounded-full flex items-center justify-center mx-auto"
         style={{ background: 'rgba(230, 57, 70, 0.15)' }}
       >
-        <XCircle className="w-8 h-8" style={{ color: 'var(--accent-red)' }} />
+        <XCircle className="w-8 h-8" style={{ color: 'var(--accent-red-text)' }} />
       </div>
       <h1 className="text-xl font-bold" style={{ color: 'var(--text)' }}>
         {t('certificateNotFound')}

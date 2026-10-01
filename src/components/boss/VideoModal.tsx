@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useRef } from 'react'
+import { useDialog } from '@/hooks/useDialog'
 import { X, ShieldPlus } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 
@@ -53,8 +54,9 @@ export default function VideoModal({
     return () => clearTimeout(timer)
   }, [open, onShieldEarned])
 
-  if (!open) return null
-
+  // Both of these must run before the early return - a hook may not be
+  // called conditionally, and handleClose is the hook's Escape handler.
+  // `open` is passed through so the hook decides whether to trap focus.
   const handleClose = () => {
     if (!grantedRef.current && openedAtRef.current !== null) {
       const elapsed = Date.now() - openedAtRef.current
@@ -65,6 +67,10 @@ export default function VideoModal({
     }
     onClose()
   }
+  const videoDialogRef = useDialog<HTMLDivElement>(open, handleClose)
+
+  if (!open) return null
+
 
   return (
     <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4">
@@ -76,6 +82,7 @@ export default function VideoModal({
         onClick={handleClose}
       />
       <div
+        ref={videoDialogRef}
         role="dialog"
         aria-modal="true"
         aria-label={title || t('videoModalLabel')}

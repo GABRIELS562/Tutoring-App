@@ -343,7 +343,7 @@ export default function PromptChallengeGame({ userId, onComplete }: PromptChalle
             </button>
 
             {submitError && (
-              <p role="alert" className="text-sm" style={{ color: 'var(--accent-red)' }}>
+              <p role="alert" className="text-sm" style={{ color: 'var(--accent-red-text)' }}>
                 {submitError}
               </p>
             )}

@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, type CSSProperties } from 'react'
+import { useDialog } from '@/hooks/useDialog'
 import { motion } from 'framer-motion'
 import { Flag, Swords } from 'lucide-react'
 import { useTranslations } from 'next-intl'
@@ -63,6 +64,8 @@ export default function BattleScreen({
     if (isFeedbackPhase) return
     onSelectOption(letter, correct)
   }
+
+  const retreatDialogRef = useDialog<HTMLDivElement>(confirmRetreat, () => setConfirmRetreat(false))
 
   return (
     <div className="max-w-lg mx-auto px-4 py-4">
@@ -138,7 +141,7 @@ export default function BattleScreen({
               if (option.isCorrect) {
                 style = { background: 'rgba(42, 157, 143, 0.2)', border: '2px solid var(--teal)', color: 'var(--teal)' }
               } else if (letter === mcqSelectedLetter) {
-                style = { background: 'rgba(230, 57, 70, 0.2)', border: '2px solid var(--accent-red)', color: 'var(--accent-red)' }
+                style = { background: 'rgba(230, 57, 70, 0.2)', border: '2px solid var(--accent-red)', color: 'var(--accent-red-text)' }
               } else {
                 style = { ...style, opacity: 0.55 }
               }
@@ -193,7 +196,7 @@ export default function BattleScreen({
         )}
 
         {mcqCorrect === false && (
-          <p className="mt-3 text-xs" style={{ color: 'var(--accent-red)' }}>
+          <p className="mt-3 text-xs" style={{ color: 'var(--accent-red-text)' }}>
             {t('wrongAnswerHitBack')}
           </p>
         )}
@@ -209,6 +212,7 @@ export default function BattleScreen({
             onClick={() => setConfirmRetreat(false)}
           />
           <div
+            ref={retreatDialogRef}
             role="alertdialog"
             aria-modal="true"
             aria-label={t('confirmRetreatTitle')}
