@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { readFileSync } from 'node:fs'
+import { readFileSync, readdirSync, statSync } from 'node:fs'
 import { join } from 'node:path'
 import { contrastRatio } from '../contrast'
 
@@ -118,18 +118,26 @@ describe('non-text contrast', () => {
 describe('components use the text red for text', () => {
   const SRC = join(__dirname, '..', '..', '..')
 
-  it('never sets color to the fill token', async () => {
-    const { globSync } = await import('node:fs')
-    const files = globSync('**/*.tsx', { cwd: SRC })
+  it('never sets color to the fill token', () => {
     const offenders: string[] = []
 
-    for (const file of files) {
-      if (file.includes('__tests__')) continue
-      const source = readFileSync(join(SRC, file), 'utf-8')
-      for (const line of source.split('\n')) {
-        if (/color:\s*'var\(--accent-red\)'/.test(line)) offenders.push(`${file}: ${line.trim()}`)
+    const walk = (dir: string) => {
+      for (const entry of readdirSync(dir)) {
+        if (entry === '__tests__' || entry === 'node_modules') continue
+        const full = join(dir, entry)
+        if (statSync(full).isDirectory()) {
+          walk(full)
+          continue
+        }
+        if (!entry.endsWith('.tsx')) continue
+        for (const line of readFileSync(full, 'utf-8').split('\n')) {
+          if (/color:\s*'var\(--accent-red\)'/.test(line)) {
+            offenders.push(`${full.replace(SRC, '')}: ${line.trim()}`)
+          }
+        }
       }
     }
+    walk(SRC)
 
     expect(offenders).toEqual([])
   })
