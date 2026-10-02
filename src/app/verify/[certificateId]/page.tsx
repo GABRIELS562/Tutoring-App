@@ -70,7 +70,7 @@ export default async function VerifyCertificatePage({ params }: VerifyPageProps)
   const t = await getTranslations('verify')
 
   return (
-    <div
+    <main
       className="min-h-screen flex items-center justify-center p-4"
       style={{ background: 'var(--bg)' }}
     >
@@ -79,7 +79,7 @@ export default async function VerifyCertificatePage({ params }: VerifyPageProps)
       ) : (
         <NotFoundCard certificateId={certificateId} t={t} />
       )}
-    </div>
+    </main>
   )
 }
 
@@ -160,7 +160,7 @@ function NotFoundCard({ certificateId, t }: { certificateId: string; t: VerifyTr
     >
       <div
         className="w-16 h-16 rounded-full flex items-center justify-center mx-auto"
-        style={{ background: 'rgba(230, 57, 70, 0.15)' }}
+        style={{ background: 'var(--accent-red-glow)' }}
       >
         <XCircle className="w-8 h-8" style={{ color: 'var(--accent-red-text)' }} />
       </div>

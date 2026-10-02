@@ -180,6 +180,34 @@ describe('heading structure', () => {
    * to an h2 the rule above becomes vacuous and every page loses its h1
    * silently.
    */
+  /**
+   * Every page needs a main landmark, from a layout or from itself.
+   *
+   * The (app) and admin layouts each render one, but the (auth) group had
+   * no layout at all, so login, signup, forgot-password and reset-password
+   * - the first four pages a new student sees - had no landmarks of any
+   * kind, and neither did the public certificate-verification page.
+   */
+  it('every route group reaches a main landmark', () => {
+    const groups = [
+      ['app/(app)', ['app/(app)/layout.tsx']],
+      ['app/(auth)', ['app/(auth)/layout.tsx']],
+      ['app/(admin)', ['app/(admin)/admin/layout.tsx']],
+      ['app/verify', ['app/verify/[certificateId]/page.tsx']],
+    ] as const
+
+    const missing = groups
+      .filter(([, providers]) =>
+        !providers.some((file) => {
+          const full = join(SRC, file)
+          return existsSync(full) && /<main[\s>]/.test(readFileSync(full, 'utf-8'))
+        })
+      )
+      .map(([group]) => group)
+
+    expect(missing).toEqual([])
+  })
+
   it('Topbar is the thing that provides the h1', () => {
     const topbar = readFileSync(join(SRC, 'components', 'layout', 'Topbar.tsx'), 'utf-8')
     expect(topbar).toMatch(/<h1[\s>]/)

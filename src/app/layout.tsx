@@ -51,7 +51,6 @@ export default async function RootLayout({
       className={`${plusJakartaSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <head>
-        <link rel="manifest" href="/manifest.json" />
         <meta name="theme-color" content="#dc1e2e" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
