@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useRef } from 'react'
+import { useState } from 'react'
 import { Camera, X, Loader2, RotateCcw } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useMotionSafe } from '@/hooks/useMotionSafe'
@@ -17,7 +17,6 @@ export default function CameraScan() {
   const [loading, setLoading] = useState(false)
   const [response, setResponse] = useState<string | null>(null)
   const [error, setError] = useState<string | null>(null)
-  const fileInputRef = useRef<HTMLInputElement>(null)
 
   const handleCameraClick = () => {
     // Create file input and trigger
@@ -111,15 +110,6 @@ export default function CameraScan() {
       >
         <Camera className="w-6 h-6 text-white" />
       </button>
-
-      {/* Hidden file input for programmatic access */}
-      <input
-        ref={fileInputRef}
-        type="file"
-        accept="image/*"
-        capture="environment"
-        className="hidden"
-      />
 
       {/* Full-screen Overlay */}
       <AnimatePresence>

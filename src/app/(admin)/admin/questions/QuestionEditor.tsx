@@ -282,10 +282,11 @@ export default function QuestionEditor({
             </p>
           </div>
           <button
+            aria-label="Close"
             onClick={() => onClose(false)}
             className="p-2 rounded-lg transition-colors hover:bg-white/10"
           >
-            <X className="w-5 h-5" style={{ color: 'var(--muted-custom)' }} />
+            <X className="w-5 h-5" aria-hidden="true" style={{ color: 'var(--muted-custom)' }} />
           </button>
         </div>
 
@@ -293,10 +294,11 @@ export default function QuestionEditor({
         <div className="p-4 space-y-6 max-h-[calc(100vh-250px)] overflow-y-auto">
           {/* Question Text */}
           <div>
-            <label className="block text-sm font-medium mb-1" style={{ color: 'var(--text)' }}>
+            <label htmlFor="question-text" className="block text-sm font-medium mb-1" style={{ color: 'var(--text)' }}>
               Question Text * <span className="text-xs font-normal" style={{ color: 'var(--muted-custom)' }}>(supports LaTeX with $ delimiters)</span>
             </label>
             <textarea
+              id="question-text"
               value={questionText}
               onChange={(e) => setQuestionText(e.target.value)}
               rows={4}
@@ -314,10 +316,11 @@ export default function QuestionEditor({
           {/* Source + Year + Exam Type Row */}
           <div className="grid grid-cols-3 gap-4">
             <div>
-              <label className="block text-sm font-medium mb-1" style={{ color: 'var(--text)' }}>
+              <label htmlFor="question-source" className="block text-sm font-medium mb-1" style={{ color: 'var(--text)' }}>
                 Source
               </label>
               <select
+                id="question-source"
                 value={source}
                 onChange={(e) => setSource(e.target.value)}
                 className="w-full px-3 py-2 rounded-lg text-sm"
@@ -335,10 +338,11 @@ export default function QuestionEditor({
               </select>
             </div>
             <div>
-              <label className="block text-sm font-medium mb-1" style={{ color: 'var(--text)' }}>
+              <label htmlFor="question-year" className="block text-sm font-medium mb-1" style={{ color: 'var(--text)' }}>
                 Year
               </label>
               <input
+                id="question-year"
                 type="number"
                 value={year}
                 onChange={(e) => setYear(e.target.value)}
@@ -354,10 +358,11 @@ export default function QuestionEditor({
               />
             </div>
             <div>
-              <label className="block text-sm font-medium mb-1" style={{ color: 'var(--text)' }}>
+              <label htmlFor="question-exam-type" className="block text-sm font-medium mb-1" style={{ color: 'var(--text)' }}>
                 Exam Type
               </label>
               <select
+                id="question-exam-type"
                 value={examType}
                 onChange={(e) => setExamType(e.target.value)}
                 className="w-full px-3 py-2 rounded-lg text-sm"
@@ -379,10 +384,11 @@ export default function QuestionEditor({
           {/* Marks + Difficulty Row */}
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-medium mb-1" style={{ color: 'var(--text)' }}>
+              <label htmlFor="question-marks" className="block text-sm font-medium mb-1" style={{ color: 'var(--text)' }}>
                 Marks
               </label>
               <input
+                id="question-marks"
                 type="number"
                 value={marks}
                 onChange={(e) => setMarks(e.target.value)}
@@ -471,6 +477,7 @@ export default function QuestionEditor({
                       type="text"
                       value={option.optionText}
                       onChange={(e) => handleOptionChange(index, 'optionText', e.target.value)}
+                      aria-label={`Option ${option.optionLetter}`}
                       placeholder={`Option ${option.optionLetter}`}
                       className="flex-1 px-3 py-2 rounded-lg text-sm"
                       style={{
@@ -539,11 +546,12 @@ export default function QuestionEditor({
                     </span>
                     {steps.length > 1 && (
                       <button
+                        aria-label={`Remove step ${step.stepNumber}`}
                         type="button"
                         onClick={() => removeStep(index)}
                         className="p-1 rounded transition-colors hover:bg-white/10"
                       >
-                        <Trash2 className="w-4 h-4" style={{ color: 'var(--accent-red-text)' }} />
+                        <Trash2 className="w-4 h-4" aria-hidden="true" style={{ color: 'var(--accent-red-text)' }} />
                       </button>
                     )}
                   </div>
@@ -556,6 +564,7 @@ export default function QuestionEditor({
                       <textarea
                         value={step.instruction}
                         onChange={(e) => handleStepChange(index, 'instruction', e.target.value)}
+                        aria-label={`Instruction, step ${step.stepNumber}`}
                         rows={2}
                         placeholder="What should the student do in this step?"
                         className="w-full px-3 py-2 rounded-lg text-sm resize-none"
@@ -575,6 +584,7 @@ export default function QuestionEditor({
                         type="text"
                         value={step.hint}
                         onChange={(e) => handleStepChange(index, 'hint', e.target.value)}
+                        aria-label={`Hint, step ${step.stepNumber}`}
                         placeholder="Optional hint for struggling students"
                         className="w-full px-3 py-2 rounded-lg text-sm"
                         style={{
@@ -593,6 +603,7 @@ export default function QuestionEditor({
                         type="text"
                         value={step.correctAnswer}
                         onChange={(e) => handleStepChange(index, 'correctAnswer', e.target.value)}
+                        aria-label={`Correct answer, step ${step.stepNumber}`}
                         placeholder="The expected answer for this step"
                         className="w-full px-3 py-2 rounded-lg text-sm"
                         style={{
@@ -610,6 +621,7 @@ export default function QuestionEditor({
                       <textarea
                         value={step.explanation}
                         onChange={(e) => handleStepChange(index, 'explanation', e.target.value)}
+                        aria-label={`Explanation, step ${step.stepNumber}`}
                         rows={2}
                         placeholder="Why is this the correct answer?"
                         className="w-full px-3 py-2 rounded-lg text-sm resize-none"

@@ -104,19 +104,21 @@ export default function AddTopicModal() {
               </h2>
               <button
                 onClick={() => setIsOpen(false)}
+                aria-label="Close"
                 className="p-2 rounded-lg transition-colors hover:bg-white/10"
               >
-                <X className="w-5 h-5" style={{ color: 'var(--muted-custom)' }} />
+                <X className="w-5 h-5" aria-hidden="true" style={{ color: 'var(--muted-custom)' }} />
               </button>
             </div>
 
             <form onSubmit={handleSubmit} className="space-y-4">
               {/* Name */}
               <div>
-                <label className="block text-sm font-medium mb-1" style={{ color: 'var(--text)' }}>
+                <label htmlFor="topic-topic-name" className="block text-sm font-medium mb-1" style={{ color: 'var(--text)' }}>
                   Topic Name *
                 </label>
                 <input
+                  id="topic-topic-name"
                   type="text"
                   value={formData.name}
                   onChange={(e) => handleNameChange(e.target.value)}
@@ -134,10 +136,11 @@ export default function AddTopicModal() {
               {/* Subject + Grade row */}
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium mb-1" style={{ color: 'var(--text)' }}>
+                  <label htmlFor="topic-subject" className="block text-sm font-medium mb-1" style={{ color: 'var(--text)' }}>
                     Subject *
                   </label>
                   <select
+                    id="topic-subject"
                     value={formData.subject}
                     onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
                     className="w-full px-3 py-2 rounded-lg text-sm"
@@ -152,10 +155,11 @@ export default function AddTopicModal() {
                   </select>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium mb-1" style={{ color: 'var(--text)' }}>
+                  <label htmlFor="topic-grade" className="block text-sm font-medium mb-1" style={{ color: 'var(--text)' }}>
                     Grade *
                   </label>
                   <select
+                    id="topic-grade"
                     value={formData.grade}
                     onChange={(e) => setFormData({ ...formData, grade: e.target.value })}
                     className="w-full px-3 py-2 rounded-lg text-sm"
@@ -175,10 +179,11 @@ export default function AddTopicModal() {
               {/* Paper + Term row */}
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium mb-1" style={{ color: 'var(--text)' }}>
+                  <label htmlFor="topic-paper" className="block text-sm font-medium mb-1" style={{ color: 'var(--text)' }}>
                     Paper
                   </label>
                   <select
+                    id="topic-paper"
                     value={formData.paper}
                     onChange={(e) => setFormData({ ...formData, paper: e.target.value })}
                     className="w-full px-3 py-2 rounded-lg text-sm"
@@ -194,10 +199,11 @@ export default function AddTopicModal() {
                   </select>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium mb-1" style={{ color: 'var(--text)' }}>
+                  <label htmlFor="topic-term" className="block text-sm font-medium mb-1" style={{ color: 'var(--text)' }}>
                     Term
                   </label>
                   <select
+                    id="topic-term"
                     value={formData.term}
                     onChange={(e) => setFormData({ ...formData, term: e.target.value })}
                     className="w-full px-3 py-2 rounded-lg text-sm"
@@ -218,10 +224,11 @@ export default function AddTopicModal() {
 
               {/* Slug */}
               <div>
-                <label className="block text-sm font-medium mb-1" style={{ color: 'var(--text)' }}>
+                <label htmlFor="topic-slug-auto-generated" className="block text-sm font-medium mb-1" style={{ color: 'var(--text)' }}>
                   Slug (auto-generated)
                 </label>
                 <input
+                  id="topic-slug-auto-generated"
                   type="text"
                   value={formData.slug}
                   onChange={(e) => setFormData({ ...formData, slug: e.target.value })}
@@ -239,10 +246,11 @@ export default function AddTopicModal() {
               {/* CAPS Weight + Sort Order row */}
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium mb-1" style={{ color: 'var(--text)' }}>
+                  <label htmlFor="topic-caps-weight" className="block text-sm font-medium mb-1" style={{ color: 'var(--text)' }}>
                     CAPS Weight %
                   </label>
                   <input
+                    id="topic-caps-weight"
                     type="number"
                     value={formData.capsWeightPercent}
                     onChange={(e) => setFormData({ ...formData, capsWeightPercent: e.target.value })}
@@ -258,10 +266,11 @@ export default function AddTopicModal() {
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium mb-1" style={{ color: 'var(--text)' }}>
+                  <label htmlFor="topic-sort-order" className="block text-sm font-medium mb-1" style={{ color: 'var(--text)' }}>
                     Sort Order
                   </label>
                   <input
+                    id="topic-sort-order"
                     type="number"
                     value={formData.sortOrder}
                     onChange={(e) => setFormData({ ...formData, sortOrder: e.target.value })}
