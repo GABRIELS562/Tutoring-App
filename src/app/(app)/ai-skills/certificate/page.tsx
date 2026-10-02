@@ -126,7 +126,7 @@ export default async function CertificatePage() {
         <div className="p-4 md:p-6 max-w-2xl mx-auto space-y-6">
         <Link
           href="/ai-skills"
-          className="inline-flex items-center gap-2 text-sm hover:text-ai-purple transition-colors"
+          className="inline-flex items-center gap-2 text-sm hover:text-ai-purple transition-colors tap-target"
           style={{ color: 'var(--muted-custom)' }}
         >
           <ArrowLeft className="w-4 h-4" />{t('backToAiSkills')}</Link>
@@ -141,7 +141,7 @@ export default async function CertificatePage() {
           >
             <Lock className="w-8 h-8 text-muted-custom" />
           </div>
-          <h1 className="text-xl font-bold" style={{ color: 'var(--text)' }}>{t('certificateLocked')}</h1>
+          <h2 className="text-xl font-bold" style={{ color: 'var(--text)' }}>{t('certificateLocked')}</h2>
           <p className="text-sm text-muted-custom max-w-md mx-auto">
             {t('certificateLockedBlurb')}
           </p>
@@ -162,13 +162,13 @@ export default async function CertificatePage() {
       <div className="p-4 md:p-6 max-w-2xl mx-auto space-y-6">
       <Link
         href="/ai-skills"
-        className="inline-flex items-center gap-2 text-sm hover:text-ai-purple transition-colors"
+        className="inline-flex items-center gap-2 text-sm hover:text-ai-purple transition-colors tap-target"
         style={{ color: 'var(--muted-custom)' }}
       >
         <ArrowLeft className="w-4 h-4" />{t('backToAiSkills')}</Link>
 
       <div className="text-center space-y-2">
-        <h1 className="text-2xl font-bold" style={{ color: 'var(--text)' }}>{t('certificateTitle')}</h1>
+        <h2 className="text-2xl font-bold" style={{ color: 'var(--text)' }}>{t('certificateTitle')}</h2>
         <p className="text-sm text-muted-custom">{t('certificateBlurb')}</p>
       </div>
 

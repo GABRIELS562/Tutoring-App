@@ -133,9 +133,9 @@ export default async function AISkillsPage() {
             <Brain className="w-6 h-6 text-ai-purple" />
           </div>
           <div>
-            <h1 className="text-2xl font-bold" style={{ color: 'var(--text)' }}>
+            <h2 className="text-2xl font-bold" style={{ color: 'var(--text)' }}>
               {t('title')}
-            </h1>
+            </h2>
             <p className="text-sm text-muted-custom">
               {t('subtitle')}
             </p>
@@ -203,7 +203,10 @@ export default async function AISkillsPage() {
                     className="w-10 h-10 rounded-lg flex items-center justify-center font-bold"
                     style={{
                       background: isCompleted ? 'var(--ai-success)' : isLocked ? 'var(--surface2)' : 'var(--ai-purple)',
-                      color: 'white',
+                      // The green is light (white on it is 3.12:1); the
+                      // purple fill is dark (7.10:1). One white for all
+                      // three branches could not be right for both.
+                      color: isCompleted ? 'var(--bg)' : isLocked ? 'var(--muted-custom)' : 'white',
                     }}
                   >
                     {isCompleted ? (

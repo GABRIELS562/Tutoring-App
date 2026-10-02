@@ -70,6 +70,7 @@ export default function LanguageToggle({ variant = 'dropdown', showLabel = false
           <button
             key={locale}
             onClick={() => handleLocaleChange(locale)}
+            aria-pressed={currentLocale === locale}
             className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${
               currentLocale === locale
                 ? 'bg-white/10'
@@ -110,10 +111,15 @@ export default function LanguageToggle({ variant = 'dropdown', showLabel = false
           className="absolute right-0 top-full mt-2 w-40 rounded-lg shadow-lg py-1 z-50"
           style={{ background: 'var(--surface2)', border: '1px solid var(--border-custom)' }}
         >
+          {/* aria-pressed rather than role="menuitemradio": the selected
+              language was conveyed by the tick alone, and claiming menu
+              semantics would promise arrow-key navigation this does not
+              implement. */}
           {locales.map((locale) => (
             <button
               key={locale}
               onClick={() => handleLocaleChange(locale)}
+              aria-pressed={currentLocale === locale}
               className="w-full flex items-center justify-between px-4 py-2 text-sm transition-colors hover:bg-white/5"
               style={{ color: 'var(--text)' }}
             >
@@ -122,7 +128,7 @@ export default function LanguageToggle({ variant = 'dropdown', showLabel = false
                 <span>{localeNames[locale]}</span>
               </span>
               {currentLocale === locale && (
-                <Check className="w-4 h-4" style={{ color: 'var(--teal)' }} />
+                <Check className="w-4 h-4" aria-hidden="true" style={{ color: 'var(--teal)' }} />
               )}
             </button>
           ))}

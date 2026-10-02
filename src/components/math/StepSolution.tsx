@@ -2,6 +2,8 @@
 
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import { useMotionSafe } from '@/hooks/useMotionSafe'
+import { useTranslations } from 'next-intl'
 import { HelpCircle, ChevronDown, ChevronUp, MessageCircle, Loader2 } from 'lucide-react'
 import MathRenderer from './MathRenderer'
 
@@ -37,6 +39,8 @@ function StepRow({
   remainingHints: RemainingHints
   onRemainingHintsChange: (remaining: RemainingHints) => void
 }) {
+  const { transition, variant } = useMotionSafe()
+  const t = useTranslations('quiz')
   const [showHint, setShowHint] = useState(false)
   const [askingAngelo, setAskingAngelo] = useState(false)
   const [angeloResponse, setAngeloResponse] = useState<string | null>(null)
@@ -68,14 +72,14 @@ function StepRow({
 
       if (response.status === 429) {
         setAngeloError(
-          data.message || 'Daily hint limit reached. Upgrade to Premium for unlimited hints!'
+          data.message || t('dailyHintLimitReached')
         )
         onRemainingHintsChange(0)
         return
       }
 
       if (!response.ok) {
-        throw new Error(data.error || 'Failed to get help')
+        throw new Error(data.error || t('failedToGetHelp'))
       }
 
       setAngeloResponse(data.hint)
@@ -83,7 +87,7 @@ function StepRow({
         onRemainingHintsChange(data.remaining)
       }
     } catch (error) {
-      setAngeloError('Something went wrong. Please try again.')
+      setAngeloError(t('somethingWentWrongRetry'))
       console.error('Ask Angelo (step hint) error:', error)
     } finally {
       setAskingAngelo(false)
@@ -92,9 +96,9 @@ function StepRow({
 
   return (
     <motion.div
-      initial={{ y: 10 }}
+      initial={variant({ y: 10 }, { y: 0 })}
       animate={{ y: 0 }}
-      transition={{ duration: 0.3, delay: index * 0.1 }}
+      transition={transition({ duration: 0.3, delay: index * 0.1 })}
       className="flex gap-3"
     >
       {/* Step Number Badge */}
@@ -127,11 +131,11 @@ function StepRow({
         {step.hint && (
           <button
             onClick={() => setShowHint(!showHint)}
-            className="flex items-center gap-1.5 text-xs font-medium mb-2 transition-colors"
+            className="flex items-center gap-1.5 text-xs font-medium mb-2 transition-colors tap-target"
             style={{ color: 'var(--muted-custom)' }}
           >
             <HelpCircle className="w-3.5 h-3.5" aria-hidden="true" />
-            {showHint ? 'Hide hint' : 'Show hint'}
+            {showHint ? t('hideHint') : t('showHint')}
             {showHint ? (
               <ChevronUp className="w-3 h-3" aria-hidden="true" />
             ) : (
@@ -147,6 +151,7 @@ function StepRow({
               initial={{ height: 0 }}
               animate={{ height: 'auto' }}
               exit={{ height: 0 }}
+              transition={transition({})}
               className="text-sm italic mb-2 pl-3"
               style={{
                 color: 'var(--muted-custom)',
@@ -184,12 +189,12 @@ function StepRow({
               {askingAngelo ? (
                 <>
                   <Loader2 className="w-3.5 h-3.5 animate-spin" aria-hidden="true" />
-                  Angelo is thinking...
+                  {t('angeloThinking')}
                 </>
               ) : (
                 <>
                   <MessageCircle className="w-3.5 h-3.5" aria-hidden="true" />
-                  Ask Angelo about this step
+                  {t('askAngeloAboutStep')}
                 </>
               )}
             </button>
@@ -204,8 +209,9 @@ function StepRow({
         {/* Angelo's Response */}
         {angeloResponse && (
           <motion.div
-            initial={{ y: 10 }}
+            initial={variant({ y: 10 }, { y: 0 })}
             animate={{ y: 0 }}
+            transition={transition({})}
             className="mt-3 p-3 rounded-lg"
             style={{
               background: 'rgba(42, 157, 143, 0.1)',
@@ -221,7 +227,7 @@ function StepRow({
               </div>
               <div>
                 <p className="text-xs font-medium mb-1" style={{ color: 'var(--teal)' }}>
-                  Angelo says:
+                  {t('angeloSays')}
                 </p>
                 <p className="text-sm" style={{ color: 'var(--text)' }}>
                   {angeloResponse}
@@ -236,6 +242,8 @@ function StepRow({
 }
 
 export default function StepSolution({ steps, questionText }: StepSolutionProps) {
+  const { transition, variant } = useMotionSafe()
+  const t = useTranslations('quiz')
   // Shared across all steps in this solution - a 429 on one step means
   // every other step's button should reflect the same exhausted quota
   // rather than letting the student trigger the same rejection again.
@@ -247,21 +255,21 @@ export default function StepSolution({ steps, questionText }: StepSolutionProps)
 
   return (
     <motion.div
-      initial={{ y: 20 }}
+      initial={variant({ y: 20 }, { y: 0 })}
       animate={{ y: 0 }}
-      transition={{ duration: 0.4 }}
+      transition={transition({ duration: 0.4 })}
       className="mt-4 p-4 rounded-lg"
       style={{
         background: 'var(--surface2)',
         border: '1px solid var(--border-custom)',
       }}
     >
-      <h4
+      <h3
         className="text-sm font-semibold mb-4"
         style={{ color: 'var(--text)' }}
       >
-        Step-by-step solution
-      </h4>
+        {t('stepByStepSolution')}
+      </h3>
 
       <div className="space-y-4">
         {steps.map((step, index) => (

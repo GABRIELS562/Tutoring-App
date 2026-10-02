@@ -1,6 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
+import { useMotionSafe } from '@/hooks/useMotionSafe'
 import { useTranslations } from 'next-intl'
 
 type HpBarProps = {
@@ -14,6 +15,7 @@ type HpBarProps = {
  * role. The live region announcing damage lives in BossBattleClient (one
  * shared announcer for the whole battle, not duplicated per bar). */
 export default function HpBar({ bossName, hp, maxHp, accent }: HpBarProps) {
+  const { transition } = useMotionSafe()
   const t = useTranslations('boss')
   const percent = maxHp > 0 ? Math.max(0, Math.min(100, (hp / maxHp) * 100)) : 0
 
@@ -41,7 +43,7 @@ export default function HpBar({ bossName, hp, maxHp, accent }: HpBarProps) {
           style={{ background: accent }}
           initial={false}
           animate={{ width: `${percent}%` }}
-          transition={{ type: 'spring', stiffness: 120, damping: 20 }}
+          transition={transition({ type: 'spring', stiffness: 120, damping: 20 })}
         />
       </div>
     </div>

@@ -60,7 +60,7 @@ export default function ExamCountdown({ subject = 'maths' }: ExamCountdownProps)
           <Calendar
             className="w-5 h-5"
             style={{
-              color: isUrgent ? 'var(--accent-red)' : isWarning ? 'var(--gold)' : 'var(--teal)',
+              color: isUrgent ? 'var(--accent-red-text)' : isWarning ? 'var(--gold)' : 'var(--teal)',
             }}
           />
         </div>
@@ -80,7 +80,7 @@ export default function ExamCountdown({ subject = 'maths' }: ExamCountdownProps)
           <span
             className="text-4xl font-bold"
             style={{
-              color: isUrgent ? 'var(--accent-red)' : isWarning ? 'var(--gold)' : 'var(--teal)',
+              color: isUrgent ? 'var(--accent-red-text)' : isWarning ? 'var(--gold)' : 'var(--teal)',
             }}
           >
             {daysRemaining}

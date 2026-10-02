@@ -50,12 +50,17 @@ export default function GradeSelector({ currentGrade }: GradeSelectorProps) {
         <button
           key={grade}
           onClick={() => handleGradeChange(grade)}
+          aria-pressed={selectedGrade === grade}
           disabled={isPending}
           className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
             isPending ? 'opacity-70' : ''
           }`}
           style={{
-            background: selectedGrade === grade ? 'white' : 'rgba(255,255,255,0.2)',
+            // The unselected chip used to LIGHTEN the red banner behind it
+            // with a 20% white scrim, which left white-on-#e34b58 at
+            // 3.88:1. Darkening instead keeps the same "inset" look and
+            // takes it to 7.65:1.
+            background: selectedGrade === grade ? 'white' : 'rgba(0,0,0,0.25)',
             color: selectedGrade === grade ? 'var(--accent-red)' : 'white',
           }}
         >

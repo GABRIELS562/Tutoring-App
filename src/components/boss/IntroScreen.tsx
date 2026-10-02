@@ -59,9 +59,9 @@ export default function IntroScreen({
         <BossFigure variant={boss.svgVariant} accent={boss.accent} state="idle" />
       </div>
 
-      <h1 className="text-2xl font-extrabold mb-1" style={{ color: 'var(--text)' }}>
+      <h2 className="text-2xl font-extrabold mb-1" style={{ color: 'var(--text)' }}>
         {bossName}
-      </h1>
+      </h2>
       <p className="text-sm mb-6" style={{ color: 'var(--muted-custom)' }}>
         {bossTagline}
       </p>

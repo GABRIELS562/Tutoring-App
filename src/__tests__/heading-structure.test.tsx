@@ -7,6 +7,8 @@
  * exactly one h1 on each affected page.
  */
 import { describe, it, expect, vi, beforeEach } from 'vitest'
+import { readFileSync, readdirSync, statSync } from 'node:fs'
+import { join } from 'node:path'
 import { render } from '@testing-library/react'
 import { UserProvider } from '@/context/UserContext'
 import type { UserData } from '@/context/UserContext'
@@ -101,3 +103,63 @@ describe('exactly one h1 per page (Topbar owns it)', () => {
     expect(h1Count(container)).toBe(1)
   })
 })
+
+/**
+ * The render tests above cover four pages by name. These cover every page
+ * at once, from source - which is the only reason the AI Skills pages, the
+ * topic not-found page and the three boss screens were caught: none of
+ * them had a test of their own.
+ */
+const SRC = join(__dirname, '..')
+
+function componentFiles(): string[] {
+  const found: string[] = []
+  const walk = (dir: string) => {
+    for (const entry of readdirSync(dir)) {
+      if (entry === 'node_modules' || entry === '__tests__') continue
+      const full = join(dir, entry)
+      if (statSync(full).isDirectory()) {
+        walk(full)
+        continue
+      }
+      if (full.endsWith('.tsx')) found.push(full)
+    }
+  }
+  walk(SRC)
+  return found
+}
+
+describe('heading structure', () => {
+  it('nothing that renders a Topbar declares its own h1', () => {
+    const offenders = componentFiles()
+      .filter((file) => {
+        const source = readFileSync(file, 'utf-8')
+        return /<Topbar\b/.test(source) && /<h1[\s>]/.test(source)
+      })
+      .map((file) => file.replace(SRC, ''))
+
+    expect(offenders).toEqual([])
+  })
+
+  /**
+   * The flip side: Topbar is where the h1 lives, so if that ever changes
+   * to an h2 the rule above becomes vacuous and every page loses its h1
+   * silently.
+   */
+  it('Topbar is the thing that provides the h1', () => {
+    const topbar = readFileSync(join(SRC, 'components', 'layout', 'Topbar.tsx'), 'utf-8')
+    expect(topbar).toMatch(/<h1[\s>]/)
+  })
+
+})
+
+/*
+ * Deliberately NOT tested here: "no file contains more than one <h1>".
+ * It reads like the obvious companion rule and it is unsound - counting
+ * occurrences in source cannot see that only one of them renders.
+ * forgot-password has three in `isDemoMode ? … : sent ? … : …`, and the
+ * verify page has two because the file holds two components. Both are
+ * correct. A rule that needs an allowlist of correct code to stay green
+ * is worse than no rule, so the Topbar check above is the one kept: it is
+ * decidable from the source, and it is what actually found the five.
+ */

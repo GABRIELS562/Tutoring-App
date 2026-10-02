@@ -376,7 +376,12 @@
     "angeloThinking": "Angelo is thinking...",
     "askAngeloWhy": "Ask Angelo why I got this wrong",
     "angeloSays": "Angelo says:",
-    "nextQuestion": "Next question"
+    "nextQuestion": "Next question",
+    "showHint": "Show hint",
+    "hideHint": "Hide hint",
+    "stepByStepSolution": "Step-by-step solution",
+    "askAngeloAboutStep": "Ask Angelo about this step",
+    "failedToGetHelp": "Failed to get help"
   },
   "topbar": {
     "userFallback": "User",

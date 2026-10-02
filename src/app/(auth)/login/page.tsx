@@ -161,7 +161,7 @@ export default function LoginPage() {
               </label>
               <Link
                 href="/forgot-password"
-                className="text-sm font-medium hover:underline"
+                className="inline-block text-sm font-medium hover:underline tap-target"
                 style={{ color: 'var(--accent-red-text)' }}
               >
                 {t('forgotPassword')}

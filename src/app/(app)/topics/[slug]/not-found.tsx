@@ -18,9 +18,9 @@ export default async function TopicNotFound() {
       <Topbar title={t('notFoundTitle')} />
 
       <div className="max-w-xl mx-auto px-4 py-10">
-        <h1 className="text-xl font-bold mb-2" style={{ color: 'var(--text)' }}>
+        <h2 className="text-xl font-bold mb-2" style={{ color: 'var(--text)' }}>
           {t('notFoundTitle')}
-        </h1>
+        </h2>
         <p className="text-sm mb-6" style={{ color: 'var(--muted-custom)' }}>
           {t('notFoundBody')}
         </p>

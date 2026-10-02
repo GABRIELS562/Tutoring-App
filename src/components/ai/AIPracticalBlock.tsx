@@ -107,6 +107,7 @@ export default function AIPracticalBlock({ config, title }: AIPracticalBlockProp
         <textarea
           value={input}
           onChange={(e) => setInput(e.target.value)}
+          aria-label={config.inputPlaceholder || 'Type your message...'}
           placeholder={config.inputPlaceholder || 'Type your message...'}
           className="w-full h-28 px-4 py-3 rounded-lg text-sm resize-none focus:outline-none focus:ring-2 bg-surface border border-custom text-primary-text"
           disabled={isLoading}

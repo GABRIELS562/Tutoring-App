@@ -9,6 +9,15 @@ import 'katex/dist/katex.min.css'
 import { formulas, type Formula } from '@/content/formulas'
 import Link from 'next/link'
 
+/**
+ * Topic names become DOM ids, so they need to survive the trip: they carry
+ * spaces ("Reduction Formulae") and, in the science sheet, brackets and
+ * slashes, none of which belong in an id a querySelector may have to find.
+ */
+function panelId(topic: string): string {
+  return `formulas-${topic.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')}`
+}
+
 export default function FormulasPage() {
   const t = useTranslations('formulas')
   const [subjectFilter, setSubjectFilter] = useState<'maths' | 'science' | ''>('')
@@ -90,8 +99,11 @@ export default function FormulasPage() {
               className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4"
               style={{ color: 'var(--muted-custom)' }}
             />
+            {/* A placeholder is not an accessible name - a screen reader
+                announced only "edit text" here. */}
             <input
-              type="text"
+              type="search"
+              aria-label={t('searchPlaceholder')}
               placeholder={t('searchPlaceholder')}
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
@@ -110,6 +122,7 @@ export default function FormulasPage() {
             <div className="flex gap-1 p-1 rounded-lg" style={{ background: 'var(--surface2)' }}>
               <button
                 onClick={() => setSubjectFilter('')}
+                aria-pressed={subjectFilter === ''}
                 className="flex items-center gap-1.5 px-3 py-1.5 rounded-md text-sm font-medium transition-all"
                 style={{
                   background: subjectFilter === '' ? 'var(--accent-red)' : 'transparent',
@@ -120,6 +133,7 @@ export default function FormulasPage() {
               </button>
               <button
                 onClick={() => setSubjectFilter('maths')}
+                aria-pressed={subjectFilter === 'maths'}
                 className="flex items-center gap-1.5 px-3 py-1.5 rounded-md text-sm font-medium transition-all"
                 style={{
                   background: subjectFilter === 'maths' ? 'var(--accent-red)' : 'transparent',
@@ -131,6 +145,7 @@ export default function FormulasPage() {
               </button>
               <button
                 onClick={() => setSubjectFilter('science')}
+                aria-pressed={subjectFilter === 'science'}
                 className="flex items-center gap-1.5 px-3 py-1.5 rounded-md text-sm font-medium transition-all"
                 style={{
                   background: subjectFilter === 'science' ? 'var(--accent-red)' : 'transparent',
@@ -148,10 +163,12 @@ export default function FormulasPage() {
                 <button
                   key={grade}
                   onClick={() => setGradeFilter(grade as 10 | 11 | 12 | '')}
+                  aria-pressed={gradeFilter === grade}
                   className="px-3 py-1.5 rounded-md text-sm font-medium transition-all"
                   style={{
                     background: gradeFilter === grade ? 'var(--teal)' : 'transparent',
-                    color: gradeFilter === grade ? 'white' : 'var(--muted-custom)',
+                    // Teal is light: white on it is 1.86:1. Dark is 10.17:1.
+                    color: gradeFilter === grade ? 'var(--bg)' : 'var(--muted-custom)',
                   }}
                 >
                   {grade === '' ? t('all') : t('grAbbrev', { grade })}
@@ -195,6 +212,8 @@ export default function FormulasPage() {
               {/* Topic Header */}
               <button
                 onClick={() => toggleTopic(topic)}
+                aria-expanded={expandedTopics.has(topic)}
+                aria-controls={panelId(topic)}
                 className="w-full flex items-center justify-between p-4 text-left transition-colors hover:bg-white/5"
               >
                 <div className="flex items-center gap-3">
@@ -203,9 +222,9 @@ export default function FormulasPage() {
                   ) : (
                     <ChevronRight className="w-4 h-4" style={{ color: 'var(--muted-custom)' }} />
                   )}
-                  <h3 className="font-semibold" style={{ color: 'var(--text)' }}>
+                  <h2 className="font-semibold" style={{ color: 'var(--text)' }}>
                     {topic}
-                  </h3>
+                  </h2>
                 </div>
                 <span
                   className="px-2 py-0.5 rounded text-xs"
@@ -218,6 +237,7 @@ export default function FormulasPage() {
               {/* Formulas */}
               {expandedTopics.has(topic) && (
                 <div
+                  id={panelId(topic)}
                   className="px-4 pb-4 space-y-3"
                   style={{ borderTop: '1px solid var(--border-custom)' }}
                 >
@@ -229,16 +249,25 @@ export default function FormulasPage() {
                     >
                       {/* Formula Name & Grade */}
                       <div className="flex items-start justify-between mb-2">
-                        <h4 className="font-medium text-sm" style={{ color: 'var(--text)' }}>
+                        <h3 className="font-medium text-sm" style={{ color: 'var(--text)' }}>
                           {formula.name}
-                        </h4>
+                        </h3>
                         <span
                           className="px-2 py-0.5 rounded text-xs shrink-0 ml-2"
                           style={{
+                            // The TEXT red, not the fill: the fill was 2.72:1
+                            // here. The tint behind it was also still mixed
+                            // from the retired #e63946.
+                            //
+                            // 0.10, not the 0.15 used elsewhere: a red tint
+                            // under red text eats its own contrast, and at
+                            // 0.15 this badge was 4.40:1 - still short. 0.10
+                            // is 4.56:1. The teal badge has no such problem
+                            // (6.64:1) so it keeps the standard tint.
                             background: formula.subject === 'maths'
-                              ? 'rgba(230, 57, 70, 0.15)'
+                              ? 'rgba(220, 30, 46, 0.10)'
                               : 'rgba(42, 157, 143, 0.15)',
-                            color: formula.subject === 'maths' ? 'var(--accent-red)' : 'var(--teal)',
+                            color: formula.subject === 'maths' ? 'var(--accent-red-text)' : 'var(--teal)',
                           }}
                         >
                           {t('grAbbrev', { grade: formula.grade })}
@@ -260,7 +289,7 @@ export default function FormulasPage() {
                         </p>
                         <Link
                           href={`/topics/${formula.topicSlug}/practice`}
-                          className="text-xs font-medium shrink-0 ml-2"
+                          className="inline-block text-xs font-medium shrink-0 ml-2 tap-target"
                           style={{ color: 'var(--accent-red-text)' }}
                         >
                           {t('practiceArrow')}

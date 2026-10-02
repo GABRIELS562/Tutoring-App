@@ -106,7 +106,7 @@ export default async function AIModulePage({ params }: PageProps) {
       {/* Back Link */}
       <Link
         href="/ai-skills"
-        className="inline-flex items-center gap-2 text-sm hover:text-ai-purple transition-colors"
+        className="inline-flex items-center gap-2 text-sm hover:text-ai-purple transition-colors tap-target"
         style={{ color: 'var(--muted-custom)' }}
       >
         <ArrowLeft className="w-4 h-4" />
@@ -127,7 +127,7 @@ export default async function AIModulePage({ params }: PageProps) {
         {prevModule ? (
           <Link
             href={`/ai-skills/${prevModule.id}`}
-            className="flex items-center gap-2 text-sm hover:text-ai-purple transition-colors"
+            className="flex items-center gap-2 text-sm hover:text-ai-purple transition-colors tap-target"
             style={{ color: 'var(--muted-custom)' }}
           >
             <ArrowLeft className="w-4 h-4" />
@@ -140,7 +140,7 @@ export default async function AIModulePage({ params }: PageProps) {
         {nextModule ? (
           <Link
             href={`/ai-skills/${nextModule.id}`}
-            className="flex items-center gap-2 text-sm hover:text-ai-purple transition-colors"
+            className="flex items-center gap-2 text-sm hover:text-ai-purple transition-colors tap-target"
             style={{ color: 'var(--muted-custom)' }}
           >
             {localised(nextModule.title, nextModule.titleAf)}

@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect } from 'react'
 import { X, Download, MessageCircle } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
+import { useMotionSafe } from '@/hooks/useMotionSafe'
 
 type AchievementType = 'topic_mastery' | 'streak' | 'leaderboard' | 'questions_milestone'
 
@@ -21,6 +22,7 @@ type AchievementCardProps = {
 }
 
 export default function AchievementCard({ type, data, isOpen, onClose }: AchievementCardProps) {
+  const { transition, variant } = useMotionSafe()
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const [imageUrl, setImageUrl] = useState<string | null>(null)
 
@@ -173,6 +175,7 @@ export default function AchievementCard({ type, data, isOpen, onClose }: Achieve
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
+          transition={transition({})}
           className="fixed inset-0 z-50 flex items-center justify-center p-4"
           style={{ background: 'rgba(0, 0, 0, 0.8)' }}
           onClick={onClose}
@@ -182,9 +185,10 @@ export default function AchievementCard({ type, data, isOpen, onClose }: Achieve
             // download and the share buttons; a stalled animation would
             // leave the student with a dimmed screen and nothing on it.
             // Same rule as the quiz question card.
-            initial={{ scale: 0.9 }}
+            initial={variant({ scale: 0.9 }, { scale: 1 })}
             animate={{ scale: 1 }}
             exit={{ scale: 0.9 }}
+            transition={transition({})}
             className="w-full max-w-sm rounded-xl overflow-hidden"
             style={{ background: 'var(--surface)', border: '1px solid var(--border-custom)' }}
             onClick={(e) => e.stopPropagation()}

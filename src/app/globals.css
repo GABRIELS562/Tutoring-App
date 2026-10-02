@@ -84,11 +84,30 @@
      and better everywhere else too. */
   --muted-custom: #8b949e;
 
-  /* AI Skills Purple Theme - inspired by Azure */
-  --ai-purple: #8b5cf6;
-  --ai-purple-dim: #6d28d9;
+  /* AI Skills Purple Theme - inspired by Azure.
+
+     Split in two for the same reason the red was, and it was worse: the
+     single #8b5cf6 failed in BOTH of its roles. As a fill it carried white
+     text at 4.23:1 (every AI Skills CTA), and as text it was 4.09:1 on
+     --surface and 3.59:1 on --surface2 - and the AI Skills section is
+     almost entirely purple text on those two surfaces.
+     --ai-purple      fill:  white on it is 7.10:1
+     --ai-purple-text text:  6.36:1 on --surface, 5.59:1 on --surface2,
+                             5.38:1 on the --ai-purple-glow chip
+     The old --ai-purple-dim was this same #6d28d9 and was referenced
+     nowhere, so the fill lane took its value and it is gone. */
+  --ai-purple: #6d28d9;
+  --ai-purple-text: #a78bfa;
+  /* Still mixed from the original hue - it is a 15% tint behind text, not
+     a fill that carries any, so it is judged by what reads ON it. */
   --ai-purple-glow: rgba(139, 92, 246, 0.15);
+  /* The red equivalent, which the Sidebar had inlined as
+     rgba(230, 57, 70, 0.15) - a tint of #e63946, the red that was
+     replaced. Named here so there is one place to change it. */
+  --accent-red-glow: rgba(220, 30, 46, 0.15);
   --ai-blue: #0078D4;
+  /* Passes as TEXT (5.54:1 on --surface, 4.88:1 on --surface2) but NOT as
+     a fill under white, which is 3.12:1 - see .bg-ai-success below. */
   --ai-success: #00A854;
 
   /* Shadcn overrides for dark theme */
@@ -179,6 +198,17 @@
     padding-bottom: env(safe-area-inset-bottom, 16px);
   }
 
+  /* Grows a small text link's hit area to meet the 24px minimum in WCAG
+     2.2 SC 2.5.8, without moving it: the padding enlarges the target and
+     the equal negative margin hands the extra space back to the layout,
+     so the link sits exactly where it did before. For standalone links
+     (back links, prev/next, "Forgot password?") - a link inside a
+     sentence is exempt from 2.5.8 and does not need this. */
+  .tap-target {
+    padding: 0.375rem 0.25rem;
+    margin: -0.375rem -0.25rem;
+  }
+
   /* AI Skills Purple Theme utilities */
   .bg-ai-purple {
     background-color: var(--ai-purple);
@@ -186,17 +216,21 @@
   .bg-ai-purple-glow {
     background-color: var(--ai-purple-glow);
   }
+  /* The text lane, not the fill - see the token comments above. Borders
+     and rings use it too: the fill purple is only 1.9:1 against
+     --surface, so a hover ring drawn in it was all but invisible. */
   .text-ai-purple {
-    color: var(--ai-purple);
+    color: var(--ai-purple-text);
   }
   .border-ai-purple {
-    border-color: var(--ai-purple);
+    border-color: var(--ai-purple-text);
   }
   .ring-ai-purple {
-    --tw-ring-color: var(--ai-purple);
+    --tw-ring-color: var(--ai-purple-text);
   }
 
-  /* AI Success utilities */
+  /* AI Success utilities. White on this is 3.12:1, so anything using
+     .bg-ai-success as a fill sets its own dark text colour. */
   .bg-ai-success {
     background-color: var(--ai-success);
   }
@@ -265,4 +299,42 @@
 :focus-visible {
   outline: 2px solid var(--ring, #dc1e2e);
   outline-offset: 2px;
+}
+
+/*
+ * Reduced motion (WCAG 2.2 SC 2.3.3 Animation from Interactions).
+ *
+ * The app has ~280 CSS-driven motion sites - `transition-all` on nearly
+ * every card and button, `hover:scale-[1.02]` on the dashboard tiles,
+ * `animate-pulse` on every skeleton - and none of them asked whether the
+ * reader wanted movement. One rule covers all of them.
+ *
+ * Unlayered, for the same cascade reason as the :focus-visible rule
+ * above: Tailwind's `transition-*` utilities sit in `@layer utilities`,
+ * and an unlayered declaration beats any layered one. `!important` is
+ * there to also beat the inline `style` attribute, which no layer does.
+ *
+ * Framer Motion is NOT covered by this - it writes transforms to the
+ * inline style attribute frame by frame, so there is no transition or
+ * animation for CSS to shorten. Those components take the preference
+ * through the useMotionSafe() hook instead.
+ *
+ * .animate-spin is exempt: it is only ever a loading spinner here, and
+ * freezing it leaves a progress indicator that reads as a stuck one.
+ * Slowed right down instead, so it still says "working" without being
+ * the thing that spins at you.
+ */
+@media (prefers-reduced-motion: reduce) {
+  *:not(.animate-spin),
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .animate-spin {
+    animation-duration: 1.8s !important;
+  }
 }

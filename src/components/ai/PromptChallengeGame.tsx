@@ -245,6 +245,7 @@ export default function PromptChallengeGame({ userId, onComplete }: PromptChalle
           <button
             key={f}
             onClick={() => handleFilterChange(f)}
+            aria-pressed={filter === f}
             className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
               filter === f ? 'bg-ai-purple text-white' : 'bg-surface2 text-muted-custom'
             }`}
@@ -319,9 +320,12 @@ export default function PromptChallengeGame({ userId, onComplete }: PromptChalle
         {/* Input */}
         {!evaluation && (
           <div className="space-y-3">
+            {/* A placeholder is not an accessible name - it disappears on
+                first keystroke and screen readers announce only "edit text". */}
             <textarea
               value={userPrompt}
               onChange={(e) => setUserPrompt(e.target.value)}
+              aria-label={t('writePromptHere')}
               placeholder={t('writePromptHere')}
               className="w-full h-32 px-4 py-3 rounded-lg text-sm resize-none focus:outline-none focus:ring-2 focus:ring-ai-purple bg-surface2 border border-custom text-primary-text"
               disabled={isEvaluating}

@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import { useMotionSafe } from '@/hooks/useMotionSafe'
 import { ChevronDown, ChevronUp } from 'lucide-react'
 import MathRenderer from '@/components/math/MathRenderer'
 import type { WorkedStep } from '@/types'
@@ -19,6 +20,7 @@ export default function WorkedExample({
   steps,
   answer,
 }: WorkedExampleProps) {
+  const { transition, variant } = useMotionSafe()
   const [showSolution, setShowSolution] = useState(false)
   const [visibleSteps, setVisibleSteps] = useState(0)
 
@@ -96,15 +98,15 @@ export default function WorkedExample({
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.3 }}
+            transition={transition({ duration: 0.3 })}
           >
             <div className="space-y-3">
               {steps.slice(0, visibleSteps).map((step, index) => (
                 <motion.div
                   key={index}
-                  initial={{ opacity: 0, x: -20 }}
+                  initial={variant({ opacity: 0, x: -20 }, { opacity: 0, x: 0 })}
                   animate={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.3, delay: index * 0.1 }}
+                  transition={transition({ duration: 0.3, delay: index * 0.1 })}
                   className="flex gap-3"
                 >
                   {/* Step Number Badge */}
@@ -154,9 +156,9 @@ export default function WorkedExample({
               {/* Final Answer */}
               {visibleSteps >= steps.length && (
                 <motion.div
-                  initial={{ opacity: 0, y: 10 }}
+                  initial={variant({ opacity: 0, y: 10 }, { opacity: 0, y: 0 })}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.3 }}
+                  transition={transition({ duration: 0.3 })}
                   className="p-3 rounded-lg mt-4"
                   style={{
                     background: 'rgba(42, 157, 143, 0.15)',

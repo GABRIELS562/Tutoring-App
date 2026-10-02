@@ -27,6 +27,26 @@ function token(name: string): string {
   return match![1]
 }
 
+/**
+ * A translucent token flattened onto an opaque one, so a tint used as a
+ * background can be measured. `--ai-purple-glow` is an rgba(), and the
+ * only thing that matters about it is what reads on top of it.
+ */
+function rgbaOver(name: string, backdropHex: string): string {
+  const match = CSS.match(
+    new RegExp(`^\\s*--${name}:\\s*rgba\\((\\d+),\\s*(\\d+),\\s*(\\d+),\\s*([\\d.]+)\\)`, 'm')
+  )
+  expect(match, `--${name} is not an rgba() in globals.css`).not.toBeNull()
+  const [r, g, b] = [match![1], match![2], match![3]].map(Number)
+  const alpha = Number(match![4])
+  const backdrop = backdropHex.replace('#', '')
+  const channels = [0, 2, 4].map((i) => parseInt(backdrop.slice(i, i + 2), 16))
+  const blend = [r, g, b].map((channel, i) =>
+    Math.round(channel * alpha + channels[i] * (1 - alpha))
+  )
+  return `#${blend.map((c) => c.toString(16).padStart(2, '0')).join('')}`
+}
+
 const AA_NORMAL = 4.5
 /** WCAG 2.2 SC 1.4.11, for borders and chart fills rather than text. */
 const AA_NON_TEXT = 3
@@ -44,6 +64,12 @@ describe('text on its background meets AA', () => {
     ['red text on a raised card', 'accent-red-text', 'surface2'],
     ['teal text on a card', 'teal', 'surface'],
     ['gold text on a card', 'gold', 'surface'],
+    // The AI Skills section is almost entirely these two on these two
+    // surfaces, and the purple failed both before it was split.
+    ['purple text on a card', 'ai-purple-text', 'surface'],
+    ['purple text on a raised card', 'ai-purple-text', 'surface2'],
+    ['success text on a card', 'ai-success', 'surface'],
+    ['success text on a raised card', 'ai-success', 'surface2'],
   ]
 
   it.each(cases)('%s', (_label, fg, bg) => {
@@ -56,19 +82,50 @@ describe('button labels meet AA against their fill', () => {
     expect(contrastRatio('#ffffff', token('accent-red'))).toBeGreaterThanOrEqual(AA_NORMAL)
   })
 
-  /**
-   * Teal is a light colour - white on it was 1.86:1, nowhere near legible.
-   * Dark text is the only workable answer, and the codebase's own
-   * pickAccentTextColor() already said so.
-   */
-  it('dark text on teal', () => {
-    expect(contrastRatio(token('bg'), token('teal'))).toBeGreaterThanOrEqual(AA_NORMAL)
+  it('white on the AI Skills purple CTA', () => {
+    expect(contrastRatio('#ffffff', token('ai-purple'))).toBeGreaterThanOrEqual(AA_NORMAL)
   })
 
-  it('white on gold would NOT pass, so gold is never a button fill with white text', () => {
-    const white = contrastRatio('#ffffff', token('gold'))
-    const dark = contrastRatio(token('bg'), token('gold'))
-    expect(dark).toBeGreaterThan(white)
+  /**
+   * The light fills. Every one of these carried white text somewhere in
+   * the app and every one of them failed: teal 1.86:1, gold 2.06:1,
+   * ai-success 3.12:1, and the text red used as a fill 3.18:1. Dark text
+   * is the answer for all four - see the component guard at the bottom,
+   * which is what stops white coming back.
+   */
+  const LIGHT_FILLS = ['teal', 'gold', 'ai-success', 'accent-red-text'] as const
+
+  it.each(LIGHT_FILLS)('white would NOT pass on --%s, dark does', (fill) => {
+    expect(contrastRatio('#ffffff', token(fill))).toBeLessThan(AA_NORMAL)
+    expect(contrastRatio(token('bg'), token(fill))).toBeGreaterThanOrEqual(AA_NORMAL)
+  })
+
+})
+
+describe('the two purples stay in their lanes', () => {
+  it('are different colours', () => {
+    expect(token('ai-purple')).not.toBe(token('ai-purple-text'))
+  })
+
+  it('the fill is the darker of the two', () => {
+    expect(contrastRatio('#ffffff', token('ai-purple'))).toBeGreaterThan(
+      contrastRatio('#ffffff', token('ai-purple-text'))
+    )
+  })
+
+  it('the text purple is the one that reads on a dark surface', () => {
+    expect(contrastRatio(token('ai-purple-text'), token('surface'))).toBeGreaterThan(
+      contrastRatio(token('ai-purple'), token('surface'))
+    )
+  })
+
+  /**
+   * The glow is a 15% tint of the ORIGINAL hue behind purple text, so it
+   * is not covered by either lane and has to be checked on its own.
+   */
+  it('the text purple reads on the glow chip', () => {
+    const glow = rgbaOver('ai-purple-glow', token('surface'))
+    expect(contrastRatio(token('ai-purple-text'), glow)).toBeGreaterThanOrEqual(AA_NORMAL)
   })
 })
 
@@ -115,12 +172,10 @@ describe('non-text contrast', () => {
  * The component layer has to use the right one. A fill token used as a
  * text colour is exactly the bug this split was made to fix.
  */
-describe('components use the text red for text', () => {
+describe('components use the text lane for text', () => {
   const SRC = join(__dirname, '..', '..', '..')
 
-  it('never sets color to the fill token', () => {
-    const offenders: string[] = []
-
+  function eachComponentFile(visit: (path: string, source: string) => void) {
     const walk = (dir: string) => {
       for (const entry of readdirSync(dir)) {
         if (entry === '__tests__' || entry === 'node_modules') continue
@@ -130,14 +185,162 @@ describe('components use the text red for text', () => {
           continue
         }
         if (!entry.endsWith('.tsx')) continue
-        for (const line of readFileSync(full, 'utf-8').split('\n')) {
-          if (/color:\s*'var\(--accent-red\)'/.test(line)) {
-            offenders.push(`${full.replace(SRC, '')}: ${line.trim()}`)
-          }
-        }
+        visit(full.replace(SRC, ''), readFileSync(full, 'utf-8'))
       }
     }
     walk(SRC)
+  }
+
+  /** The `style={{ … }}` objects in a file, as raw text, brace-balanced. */
+  function styleObjects(source: string): string[] {
+    const blocks: string[] = []
+    const OPEN = 'style={{'
+    let at = source.indexOf(OPEN)
+    while (at !== -1) {
+      let depth = 2
+      let i = at + OPEN.length
+      while (i < source.length && depth > 0) {
+        if (source[i] === '{') depth++
+        else if (source[i] === '}') depth--
+        i++
+      }
+      blocks.push(source.slice(at, i))
+      at = source.indexOf(OPEN, i)
+    }
+    return blocks
+  }
+
+  /**
+   * Checks the whole `color:` VALUE, not just what sits straight after the
+   * colon. The first version anchored on `color: 'var(--accent-red)'` and
+   * so walked straight past
+   * `color: subject === 'maths' ? 'var(--accent-red)' : 'var(--teal)'`
+   * - a formula-sheet badge that was shipping at 2.72:1. A browser found
+   * it; this is what would have.
+   */
+  it('never sets color to a fill token, in any branch', () => {
+    const FILL_ONLY = /var\(--(accent-red|ai-purple)\)/
+    /**
+     * The one place the fill red is RIGHT as text: on a white chip, where
+     * it is 4.92:1 and the text red would drop it to 3.18:1. So the rule
+     * is about the pairing, not the token - the branch is only wrong when
+     * what sits behind it is dark.
+     */
+    const LIGHT_BACKGROUND = /^'(white|#fff|#ffffff)'$/i
+
+    const offenders: string[] = []
+    eachComponentFile((path, source) => {
+      for (const block of styleObjects(source)) {
+        const text = property(block, ['color'])
+        if (!text) continue
+        const fills = branches(property(block, ['background', 'backgroundColor']) ?? '')
+        const texts = branches(text)
+        texts.forEach((branch, i) => {
+          if (!FILL_ONLY.test(branch)) return
+          const paired = fills.length === 1 ? fills[0] : fills[i]
+          if (paired && LIGHT_BACKGROUND.test(paired.trim())) return
+          offenders.push(`${path}: color -> ${branch}`)
+        })
+      }
+      // `color` outside a style object (a plain object, a helper's return)
+      for (const line of source.split('\n')) {
+        if (/\bcolor:\s*'var\(--(accent-red|ai-purple)\)'/.test(line)) {
+          offenders.push(`${path}: ${line.trim()}`)
+        }
+      }
+    })
+
+    expect([...new Set(offenders)]).toEqual([])
+  })
+
+  /** Splits on separators that are not inside quotes, parens or brackets. */
+  function splitTopLevel(text: string, separator: string): string[] {
+    const parts: string[] = []
+    let depth = 0
+    let quote = ''
+    let start = 0
+    for (let i = 0; i < text.length; i++) {
+      const char = text[i]
+      if (quote) {
+        if (char === quote && text[i - 1] !== '\\') quote = ''
+        continue
+      }
+      if (char === "'" || char === '"' || char === '`') quote = char
+      else if ('([{'.includes(char)) depth++
+      else if (')]}'.includes(char)) depth--
+      else if (char === separator && depth === 0) {
+        parts.push(text.slice(start, i))
+        start = i + 1
+      }
+    }
+    parts.push(text.slice(start))
+    return parts
+  }
+
+  /**
+   * A property's value flattened into the branches it can resolve to, in
+   * order. `a ? 'x' : b ? 'y' : 'z'` becomes ['x', 'y', 'z'] - which is
+   * what lets a background and a colour be lined up branch by branch.
+   */
+  function branches(value: string): string[] {
+    const parts = splitTopLevel(value, '?')
+    if (parts.length === 1) return [value.trim()]
+    const tail = splitTopLevel(parts.slice(1).join('?'), ':')
+    return [tail[0], ...branches(tail.slice(1).join(':'))].map((part) => part.trim())
+  }
+
+  function property(block: string, names: string[]): string | null {
+    const body = block.slice(block.indexOf('{{') + 2, block.lastIndexOf('}}'))
+    const withoutComments = body.replace(/\/\/[^\n]*/g, '')
+    for (const entry of splitTopLevel(withoutComments, ',')) {
+      const at = entry.indexOf(':')
+      if (at === -1) continue
+      if (names.includes(entry.slice(0, at).trim())) return entry.slice(at + 1)
+    }
+    return null
+  }
+
+  /**
+   * The failure this one exists for: a style object that fills with a
+   * LIGHT accent and writes on it in white. It was in six places, and
+   * four of them were inside ternaries - which is why the first contrast
+   * sweep, done by eye over single lines, walked straight past them.
+   *
+   * Lining the two properties up branch by branch is the whole point: a
+   * block legitimately pairs `background: correct ? teal : red` with
+   * `color: correct ? dark : white`, and a check that only asked "does
+   * this block mention a light fill and the word white" called that a
+   * failure. It assumes both ternaries test their conditions in the same
+   * order, which is the only way they are written here.
+   *
+   * Blind spot: a fill reached through a variable (`info.color`,
+   * `d.color`) is invisible to this, so those two are only held by the
+   * reading of their definitions - see SubjectPageClient and
+   * QuestionEditor, where neither uses white at all any more.
+   */
+  it('never writes white on a light fill', () => {
+    const LIGHT_FILL = /var\(--(teal|gold|ai-success|accent-red-text)\)/
+
+    const offenders: string[] = []
+    eachComponentFile((path, source) => {
+      for (const block of styleObjects(source)) {
+        const fill = property(block, ['background', 'backgroundColor'])
+        const text = property(block, ['color'])
+        if (!fill || !text) continue
+
+        const fills = branches(fill)
+        const texts = branches(text)
+        for (let i = 0; i < Math.max(fills.length, texts.length); i++) {
+          // An unconditional value applies to every branch of the other.
+          const onFill = fills.length === 1 ? fills[0] : fills[i]
+          const onText = texts.length === 1 ? texts[0] : texts[i]
+          if (!onFill || !onText) continue
+          if (LIGHT_FILL.test(onFill) && /^'white'$/.test(onText)) {
+            offenders.push(`${path}: ${onText} on ${onFill}`)
+          }
+        }
+      }
+    })
 
     expect(offenders).toEqual([])
   })

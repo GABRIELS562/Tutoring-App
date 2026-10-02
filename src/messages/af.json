@@ -376,7 +376,12 @@
     "angeloThinking": "Angelo dink tans...",
     "askAngeloWhy": "Vra Angelo hoekom ek dit verkeerd gekry het",
     "angeloSays": "Angelo sê:",
-    "nextQuestion": "Volgende vraag"
+    "nextQuestion": "Volgende vraag",
+    "showHint": "Wys wenk",
+    "hideHint": "Versteek wenk",
+    "stepByStepSolution": "Stap-vir-stap-oplossing",
+    "askAngeloAboutStep": "Vra Angelo oor hierdie stap",
+    "failedToGetHelp": "Kon nie hulp kry nie"
   },
   "topbar": {
     "userFallback": "Gebruiker",

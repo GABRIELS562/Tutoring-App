@@ -45,10 +45,30 @@ export default function SignupPage() {
     return Object.keys(newErrors).length === 0
   }
 
+  /**
+   * Fields in the order they appear, so focus lands on the FIRST problem
+   * rather than the last one the validator happened to write.
+   */
+  const FIELD_ORDER = ['name', 'email', 'password', 'grade'] as const
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
 
-    if (!validate()) return
+    if (!validate()) {
+      // Without this the form simply redrew: a screen-reader user got no
+      // signal that anything had happened, because focus never moved and
+      // the errors were not announced.
+      const firstInvalid = FIELD_ORDER.find((field) => {
+        if (field === 'name') return !name.trim()
+        if (field === 'email') return !email.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
+        if (field === 'password') return !password || password.length < 8
+        return !grade
+      })
+      if (firstInvalid) {
+        document.getElementById(firstInvalid)?.focus()
+      }
+      return
+    }
 
     setLoading(true)
 
@@ -151,6 +171,7 @@ export default function SignupPage() {
         <form onSubmit={handleSubmit} className="space-y-4">
           {errors.form && (
             <div
+              role="alert"
               className="p-3 rounded-lg text-sm"
               style={{
                 background: 'rgba(230, 57, 70, 0.1)',
@@ -172,6 +193,8 @@ export default function SignupPage() {
             </label>
             <input
               id="name"
+              aria-invalid={errors.name ? true : undefined}
+              aria-describedby={errors.name ? 'name-error' : undefined}
               type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
@@ -184,7 +207,7 @@ export default function SignupPage() {
               placeholder={t('fullNamePlaceholder')}
             />
             {errors.name && (
-              <p className="mt-1 text-sm" style={{ color: 'var(--accent-red-text)' }}>{errors.name}</p>
+              <p id="name-error" className="mt-1 text-sm" style={{ color: 'var(--accent-red-text)' }}>{errors.name}</p>
             )}
           </div>
 
@@ -198,6 +221,8 @@ export default function SignupPage() {
             </label>
             <input
               id="email"
+              aria-invalid={errors.email ? true : undefined}
+              aria-describedby={errors.email ? 'email-error' : undefined}
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
@@ -210,7 +235,7 @@ export default function SignupPage() {
               placeholder={t('emailPlaceholder')}
             />
             {errors.email && (
-              <p className="mt-1 text-sm" style={{ color: 'var(--accent-red-text)' }}>{errors.email}</p>
+              <p id="email-error" className="mt-1 text-sm" style={{ color: 'var(--accent-red-text)' }}>{errors.email}</p>
             )}
           </div>
 
@@ -224,6 +249,8 @@ export default function SignupPage() {
             </label>
             <input
               id="password"
+              aria-invalid={errors.password ? true : undefined}
+              aria-describedby={errors.password ? 'password-error' : undefined}
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
@@ -236,7 +263,7 @@ export default function SignupPage() {
               placeholder={t('passwordPlaceholder')}
             />
             {errors.password && (
-              <p className="mt-1 text-sm" style={{ color: 'var(--accent-red-text)' }}>{errors.password}</p>
+              <p id="password-error" className="mt-1 text-sm" style={{ color: 'var(--accent-red-text)' }}>{errors.password}</p>
             )}
           </div>
 
@@ -250,6 +277,8 @@ export default function SignupPage() {
             </label>
             <select
               id="grade"
+              aria-invalid={errors.grade ? true : undefined}
+              aria-describedby={errors.grade ? 'grade-error' : undefined}
               value={grade}
               onChange={(e) => setGrade(e.target.value ? Number(e.target.value) : '')}
               className="w-full px-4 py-3 rounded-lg outline-none transition-all focus:ring-2"
@@ -265,7 +294,7 @@ export default function SignupPage() {
               <option value="12">{t('grade')} 12</option>
             </select>
             {errors.grade && (
-              <p className="mt-1 text-sm" style={{ color: 'var(--accent-red-text)' }}>{errors.grade}</p>
+              <p id="grade-error" className="mt-1 text-sm" style={{ color: 'var(--accent-red-text)' }}>{errors.grade}</p>
             )}
           </div>
 
@@ -279,6 +308,8 @@ export default function SignupPage() {
             </label>
             <input
               id="school"
+              aria-invalid={errors.school ? true : undefined}
+              aria-describedby={errors.school ? 'school-error' : undefined}
               type="text"
               value={school}
               onChange={(e) => setSchool(e.target.value)}

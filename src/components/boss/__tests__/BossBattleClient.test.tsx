@@ -112,8 +112,10 @@ describe('BossBattleClient happy path (victory)', () => {
     }
 
     // Assert - defeating the boss on the last correct answer goes
-    // straight to the victory screen (no intermediate feedback screen)
-    expect(screen.getByText('You defeated The Tangent Titan!', { selector: 'h1' })).toBeInTheDocument()
+    // straight to the victory screen (no intermediate feedback screen).
+    // h2, not h1: BossBattleClient renders a Topbar, and that is the page's
+    // only h1 - two of them was the accessibility bug this now pins.
+    expect(screen.getByText('You defeated The Tangent Titan!', { selector: 'h2' })).toBeInTheDocument()
   })
 })
 

@@ -154,8 +154,8 @@ export default function VoicePlayer({ text, topicSlug, sectionId }: VoicePlayerP
       disabled={state === 'loading' || state === 'error'}
       className="p-1.5 rounded-lg transition-all hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed"
       style={{
-        background: state === 'playing' ? 'rgba(230, 57, 70, 0.2)' : 'var(--surface2)',
-        color: state === 'error' ? 'var(--muted-custom)' : 'var(--accent-red)',
+        background: state === 'playing' ? 'rgba(220, 30, 46, 0.2)' : 'var(--surface2)',
+        color: state === 'error' ? 'var(--muted-custom)' : 'var(--accent-red-text)',
       }}
       title={getTitle()}
       aria-label={getTitle()}

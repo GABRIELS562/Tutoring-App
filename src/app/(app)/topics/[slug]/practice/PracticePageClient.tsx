@@ -56,7 +56,7 @@ export default function PracticePageClient({
         <div className="flex items-center justify-between mb-6">
           <Link
             href={`/topics/${slug}`}
-            className="flex items-center gap-2 text-sm font-medium transition-colors hover:opacity-80"
+            className="flex items-center gap-2 text-sm font-medium transition-colors hover:opacity-80 tap-target"
             style={{ color: 'var(--muted-custom)' }}
           >
             <ArrowLeft className="w-4 h-4" />
@@ -72,6 +72,7 @@ export default function PracticePageClient({
         <div className="flex flex-wrap gap-2 mb-6">
           <button
             onClick={() => setDifficulty(undefined)}
+            aria-pressed={!difficulty}
             className="px-4 py-2 rounded-lg text-sm font-medium transition-all"
             style={{
               background: !difficulty ? 'var(--accent-red)' : 'var(--surface2)',
@@ -84,6 +85,7 @@ export default function PracticePageClient({
           </button>
           <button
             onClick={() => setDifficulty(1)}
+            aria-pressed={difficulty === 1}
             className="flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-medium transition-all"
             style={{
               background: difficulty === 1 ? 'var(--accent-red)' : 'var(--surface2)',
@@ -97,6 +99,7 @@ export default function PracticePageClient({
           </button>
           <button
             onClick={() => setDifficulty(2)}
+            aria-pressed={difficulty === 2}
             className="flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-medium transition-all"
             style={{
               background: difficulty === 2 ? 'var(--accent-red)' : 'var(--surface2)',
@@ -110,6 +113,7 @@ export default function PracticePageClient({
           </button>
           <button
             onClick={() => setDifficulty(3)}
+            aria-pressed={difficulty === 3}
             className="flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-medium transition-all"
             style={{
               background: difficulty === 3 ? 'var(--accent-red)' : 'var(--surface2)',

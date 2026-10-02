@@ -176,4 +176,52 @@ describe('accessibility (axe)', () => {
 
     expect(await axe(container)).toHaveNoViolations()
   })
+
+  it('FormulasPage has no axe violations', async () => {
+    const { default: FormulasPage } = await import('@/app/(app)/formulas/page')
+
+    const { container } = render(<FormulasPage />)
+
+    expect(await axe(container)).toHaveNoViolations()
+  })
+
+  /**
+   * NOT covered by the axe test above, which is why this exists: the
+   * accessible-name spec lets `placeholder` serve as a last-resort name,
+   * so axe is silent on an input that has nothing else - and a placeholder
+   * disappears the moment the student types. Removing the aria-label left
+   * every axe test green, so this asserts the name directly.
+   */
+  it('the formula search has a name that is not just its placeholder', async () => {
+    const { default: FormulasPage } = await import('@/app/(app)/formulas/page')
+
+    const { getByRole } = render(<FormulasPage />)
+    const search = getByRole('searchbox', { name: /search formulas/i })
+
+    expect(search).toHaveAttribute('aria-label')
+  })
+
+  /**
+   * The exam card's self-marking list - toggles drawn as checkboxes whose
+   * ticked state was an icon and a colour until they got role=checkbox.
+   *
+   * Driven all the way to the marking phase on purpose: those checkboxes
+   * do not exist in the card's initial state, so scanning a freshly
+   * rendered card passes whether or not the roles are there at all.
+   */
+  it('ExamItemCard has no axe violations in its self-marking phase', async () => {
+    const userEvent = (await import('@testing-library/user-event')).default
+    const { default: ExamItemCard } = await import('@/components/exam/ExamItemCard')
+    const { papers } = await import('@/content/exam')
+    const user = userEvent.setup()
+    const item = papers.find((p) => p.language === 'en')!.items[0]
+
+    const { container, getByText } = render(<ExamItemCard item={item} />)
+    await user.click(getByText('Seen it, shaky'))
+    await user.click(getByText('Now try it'))
+    await user.click(getByText("I've worked it out — mark me"))
+
+    expect(container.querySelectorAll('[role="checkbox"]').length).toBeGreaterThan(0)
+    expect(await axe(container)).toHaveNoViolations()
+  })
 })

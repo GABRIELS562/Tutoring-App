@@ -248,7 +248,7 @@ export default function CertificateGenerator({
         <p className="text-sm" style={{ color: 'var(--muted-custom)' }}>{t('verifiableAt')}</p>
         <code
           className="text-sm px-3 py-1 rounded inline-block"
-          style={{ background: 'var(--surface2)', color: 'var(--ai-purple)' }}
+          style={{ background: 'var(--surface2)', color: 'var(--ai-purple-text)' }}
         >
           {mounted ? `${window.location.origin}/verify/${certificateId}` : ''}
         </code>

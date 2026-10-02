@@ -173,7 +173,7 @@ export default function TopicPageClient({ slug, content }: TopicPageClientProps)
                 color: downloadState === 'downloaded'
                   ? 'var(--teal)'
                   : downloadState === 'error'
-                  ? 'var(--accent-red)'
+                  ? 'var(--accent-red-text)'
                   : downloadState === 'limit_reached'
                   ? 'var(--gold)'
                   : 'var(--text)',
@@ -268,7 +268,9 @@ export default function TopicPageClient({ slug, content }: TopicPageClientProps)
         </div>
 
         {/* Main Content Area */}
-        <main className="flex-1 min-w-0 p-4 md:p-6 lg:p-8">
+        {/* Not <main>: (app)/layout.tsx already provides the page's one
+            main landmark, and nesting a second is invalid. */}
+        <div className="flex-1 min-w-0 p-4 md:p-6 lg:p-8">
           <div className="max-w-3xl">
             {/* Topic Header */}
             <div className="mb-8">
@@ -363,7 +365,7 @@ export default function TopicPageClient({ slug, content }: TopicPageClientProps)
               </Link>
             </div>
           </div>
-        </main>
+        </div>
 
         {/* Desktop Metadata Card - Right Sidebar */}
         <aside

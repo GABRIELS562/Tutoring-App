@@ -191,7 +191,7 @@ function ExamItemCard({
           )}
           <button
             onClick={() => setPhase('attempt')}
-            className="mt-3 inline-flex items-center gap-1 text-sm font-semibold"
+            className="mt-3 inline-flex items-center gap-1 text-sm font-semibold tap-target"
             style={{ color: 'var(--accent-red-text)' }}
           >
             {t('nowTryIt')} <ArrowRight className="w-4 h-4" />
@@ -213,19 +213,30 @@ function ExamItemCard({
       {/* ---------------------------------------------- mark yourself */}
       {phase === 'marking' && (
         <div>
-          <p className="text-sm mb-1 font-semibold" style={{ color: 'var(--text)' }}>
+          <p
+            id={`marking-${item.id}`}
+            className="text-sm mb-1 font-semibold"
+            style={{ color: 'var(--text)' }}
+          >
             {t('tickWhatShows')}
           </p>
           <p className="text-xs mb-3" style={{ color: 'var(--muted-custom)' }}>
             {t('examinersMarks')}
           </p>
-          <div className="space-y-2">
+          {/* These toggle on and off, and the only thing that said so was a
+              tick icon and a colour - a screen reader read the descriptor
+              and gave no hint whether the student had claimed that mark
+              (WCAG 2.2 SC 4.1.2). role=checkbox matches what is drawn; the
+              element stays a <button>, so Enter and Space both still work. */}
+          <div className="space-y-2" role="group" aria-labelledby={`marking-${item.id}`}>
             {item.markScheme.map((point, index) => {
               const on = satisfied.includes(index)
               return (
                 <button
                   key={index}
                   onClick={() => toggle(index)}
+                  role="checkbox"
+                  aria-checked={on}
                   className="w-full flex items-center gap-3 rounded-lg p-3 text-left"
                   style={{
                     background: on ? 'rgba(42, 157, 143, 0.12)' : 'var(--surface2)',
@@ -233,6 +244,7 @@ function ExamItemCard({
                   }}
                 >
                   <span
+                    aria-hidden="true"
                     className="w-5 h-5 rounded flex items-center justify-center shrink-0"
                     style={{ border: `1px solid ${on ? 'var(--teal)' : 'var(--border-custom)'}` }}
                   >

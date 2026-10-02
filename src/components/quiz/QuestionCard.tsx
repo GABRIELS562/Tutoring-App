@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { motion } from 'framer-motion'
+import { useMotionSafe } from '@/hooks/useMotionSafe'
 import { ArrowRight, MessageCircle, Loader2 } from 'lucide-react'
 import MathRenderer from '@/components/math/MathRenderer'
 import StepSolution from '@/components/math/StepSolution'
@@ -44,6 +45,7 @@ export default function QuestionCard({
   onNext,
   nextDisabled = false,
 }: QuestionCardProps) {
+  const { transition, variant } = useMotionSafe()
   const t = useTranslations('quiz')
   const [selectedLetter, setSelectedLetter] = useState<string | null>(null)
   const [answered, setAnswered] = useState(false)
@@ -148,9 +150,11 @@ export default function QuestionCard({
       // animation - a backgrounded tab throttling rAF, a slow device, a
       // hydration hiccup, JS that never arrives - left the student sitting on
       // an empty practice page. A slide that never runs is merely 20px low.
-      initial={{ y: 20 }}
+      // Under reduced motion it starts where it ends: no slide, and still
+      // never a fade, for the reason above.
+      initial={variant({ y: 20 }, { y: 0 })}
       animate={{ y: 0 }}
-      transition={{ duration: 0.3 }}
+      transition={transition({ duration: 0.3 })}
       className="rounded-xl p-5 md:p-6"
       style={{ background: 'var(--surface)', border: '1px solid var(--border-custom)' }}
     >
@@ -196,9 +200,14 @@ export default function QuestionCard({
                   : answered && option.optionLetter === selectedLetter && !option.isCorrect
                     ? 'var(--accent-red)'
                     : 'var(--surface)',
-                color: answered && (option.isCorrect || option.optionLetter === selectedLetter)
-                  ? 'white'
-                  : 'var(--text)',
+                // The two fills need opposite text colours: white on the
+                // teal "correct" badge was 1.86:1, while white on the red
+                // "wrong" badge is 4.92:1. Same white for both was the bug.
+                color: answered && option.isCorrect
+                  ? 'var(--bg)'
+                  : answered && option.optionLetter === selectedLetter
+                    ? 'white'
+                    : 'var(--text)',
               }}
             >
               {option.optionLetter}
@@ -220,9 +229,9 @@ export default function QuestionCard({
       {/* Ask Angelo Button (shown after incorrect answer) */}
       {wasIncorrect && !angeloResponse && (
         <motion.div
-          initial={{ y: 10 }}
+          initial={variant({ y: 10 }, { y: 0 })}
           animate={{ y: 0 }}
-          transition={{ duration: 0.3, delay: 0.3 }}
+          transition={transition({ duration: 0.3, delay: 0.3 })}
           className="mt-4"
         >
           <button
@@ -258,8 +267,9 @@ export default function QuestionCard({
       {/* Angelo's Response */}
       {angeloResponse && (
         <motion.div
-          initial={{ y: 10 }}
+          initial={variant({ y: 10 }, { y: 0 })}
           animate={{ y: 0 }}
+          transition={transition({})}
           className="mt-4 p-4 rounded-lg"
           style={{
             background: 'rgba(42, 157, 143, 0.1)',
@@ -288,9 +298,9 @@ export default function QuestionCard({
       {/* Next Button (shown after answer) */}
       {answered && (
         <motion.div
-          initial={{ y: 10 }}
+          initial={variant({ y: 10 }, { y: 0 })}
           animate={{ y: 0 }}
-          transition={{ duration: 0.3, delay: 0.5 }}
+          transition={transition({ duration: 0.3, delay: 0.5 })}
           className="mt-6 flex justify-end"
         >
           <button

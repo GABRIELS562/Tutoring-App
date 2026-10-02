@@ -3,10 +3,12 @@
 import { useState, useRef } from 'react'
 import { Camera, X, Loader2, RotateCcw } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
+import { useMotionSafe } from '@/hooks/useMotionSafe'
 import { downscaleImage } from '@/lib/image/downscale'
 import { useTranslations } from 'next-intl'
 
 export default function CameraScan() {
+  const { transition } = useMotionSafe()
   const t = useTranslations('cameraScan')
   const tCommon = useTranslations('common')
   const tQuiz = useTranslations('quiz')
@@ -126,6 +128,7 @@ export default function CameraScan() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
+            transition={transition({})}
             className="fixed inset-0 z-50 flex flex-col"
             style={{ background: 'var(--bg)' }}
           >

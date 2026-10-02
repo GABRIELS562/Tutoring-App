@@ -54,14 +54,14 @@ export default async function PromptChallengePage() {
       {/* Back Link */}
       <Link
         href="/ai-skills"
-        className="inline-flex items-center gap-2 text-sm hover:text-ai-purple transition-colors"
+        className="inline-flex items-center gap-2 text-sm hover:text-ai-purple transition-colors tap-target"
         style={{ color: 'var(--muted-custom)' }}
       >
         <ArrowLeft className="w-4 h-4" />{t('backToAiSkills')}</Link>
 
       {/* Header */}
       <div className="text-center space-y-2">
-        <h1 className="text-2xl font-bold" style={{ color: 'var(--text)' }}>{t('promptChallenge')}</h1>
+        <h2 className="text-2xl font-bold" style={{ color: 'var(--text)' }}>{t('promptChallenge')}</h2>
         <p className="text-sm text-muted-custom max-w-lg mx-auto">
           {t('challengeIntro', { count: promptScenarios.length })}
         </p>

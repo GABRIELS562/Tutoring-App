@@ -271,7 +271,7 @@ export default async function DashboardPage() {
               <h2 className="text-2xl md:text-3xl font-bold text-white mb-2">
                 {getGreeting(t)}, {user?.name?.split(' ')[0] || t('studentFallback')}!
               </h2>
-              <p className="text-white/80">
+              <p className="text-white">
                 {user?.streakCount && user.streakCount > 0
                   ? t('streakActive', { days: user.streakCount })
                   : t('streakStart')}
@@ -375,7 +375,7 @@ export default async function DashboardPage() {
                     color: accuracy >= 70
                       ? 'var(--teal)'
                       : accuracy < 50
-                      ? 'var(--accent-red)'
+                      ? 'var(--accent-red-text)'
                       : 'var(--gold)',
                   }}
                 />
@@ -387,7 +387,7 @@ export default async function DashboardPage() {
                 color: accuracy >= 70
                   ? 'var(--teal)'
                   : accuracy < 50
-                  ? 'var(--accent-red)'
+                  ? 'var(--accent-red-text)'
                   : 'var(--text)',
               }}
             >
@@ -631,7 +631,7 @@ export default async function DashboardPage() {
           >
             <div>
               <h3 className="font-semibold text-white mb-1">{t('practice')}</h3>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 {t('continueWhereLeftOff')}
               </p>
             </div>
@@ -646,7 +646,7 @@ export default async function DashboardPage() {
           >
             <div>
               <h3 className="font-semibold text-white mb-1">{tNav('aiSkills')}</h3>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 {t('learnToUseAI')}
               </p>
             </div>

@@ -149,9 +149,9 @@ export default function VictoryScreen({
         <Trophy className="w-8 h-8" style={{ color: 'var(--gold)' }} />
       </div>
 
-      <h1 className="text-2xl font-extrabold mb-1" style={{ color: 'var(--text)' }}>
+      <h2 className="text-2xl font-extrabold mb-1" style={{ color: 'var(--text)' }}>
         {t('victoryTitle', { bossName })}
-      </h1>
+      </h2>
       <p className="text-sm mb-6" style={{ color: 'var(--muted-custom)' }}>
         {t('shareCardMarks', { dealt: marksDealt, total: totalMarks })}
       </p>

@@ -43,9 +43,9 @@ export default function RetreatScreen({
         <BossFigure variant={boss.svgVariant} accent={boss.accent} state="idle" />
       </motion.div>
 
-      <h1 className="text-xl font-bold mb-1" style={{ color: 'var(--text)' }}>
+      <h2 className="text-xl font-bold mb-1" style={{ color: 'var(--text)' }}>
         {t('retreatTitle')}
-      </h1>
+      </h2>
       <p className="text-sm mb-6" style={{ color: 'var(--muted-custom)' }}>
         {t('retreatBody', { bossName, hp: remainingHp })}
       </p>

@@ -207,10 +207,12 @@ export default function PapersPageClient({ papers, playable }: PapersPageClientP
               </div>
             </div>
 
+            {/* tap-target: with no padding the hit area was the 20px text
+                line, under the 24px minimum in WCAG 2.2 SC 2.5.8. */}
             {hasActiveFilters && (
               <button
                 onClick={clearFilters}
-                className="mt-3 flex items-center gap-1.5 text-sm font-medium"
+                className="mt-3 inline-flex items-center gap-1.5 text-sm font-medium tap-target"
                 style={{ color: 'var(--accent-red-text)' }}
               >
                 <X className="w-4 h-4" />

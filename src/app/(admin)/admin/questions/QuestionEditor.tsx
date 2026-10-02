@@ -413,7 +413,10 @@ export default function QuestionEditor({
                     className="flex-1 px-3 py-2 rounded-lg text-sm font-medium transition-colors"
                     style={{
                       background: difficulty === d.value ? d.color : 'var(--surface2)',
-                      color: difficulty === d.value ? 'white' : 'var(--muted-custom)',
+                      // All three d.color values are light fills (teal
+                      // 1.86:1, gold 2.06:1, the text red 3.18:1 under
+                      // white), so the selected label has to go dark.
+                      color: difficulty === d.value ? 'var(--bg)' : 'var(--muted-custom)',
                       border: `1px solid ${difficulty === d.value ? d.color : 'var(--border-custom)'}`,
                     }}
                   >
@@ -459,7 +462,7 @@ export default function QuestionEditor({
                       className="w-8 h-8 rounded-lg flex items-center justify-center text-sm font-bold"
                       style={{
                         background: option.isCorrect ? 'var(--teal)' : 'var(--surface2)',
-                        color: option.isCorrect ? 'white' : 'var(--muted-custom)',
+                        color: option.isCorrect ? 'var(--bg)' : 'var(--muted-custom)',
                       }}
                     >
                       {option.optionLetter}
@@ -482,7 +485,7 @@ export default function QuestionEditor({
                       className="px-3 py-2 rounded-lg text-xs font-medium transition-colors"
                       style={{
                         background: option.isCorrect ? 'var(--teal)' : 'var(--surface2)',
-                        color: option.isCorrect ? 'white' : 'var(--muted-custom)',
+                        color: option.isCorrect ? 'var(--bg)' : 'var(--muted-custom)',
                       }}
                     >
                       {option.isCorrect ? 'Correct' : 'Set correct'}
@@ -506,7 +509,7 @@ export default function QuestionEditor({
                 className="flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-medium transition-colors disabled:opacity-50"
                 style={{
                   background: 'rgba(139, 92, 246, 0.15)',
-                  color: '#8B5CF6',
+                  color: 'var(--ai-purple-text)',
                 }}
               >
                 {isGeneratingSteps ? (
@@ -529,7 +532,7 @@ export default function QuestionEditor({
                     <span className="text-sm font-medium" style={{ color: 'var(--text)' }}>
                       Step {step.stepNumber}
                       {step.createdBy === 'claude_ai' && (
-                        <span className="ml-2 text-xs px-2 py-0.5 rounded" style={{ background: 'rgba(139, 92, 246, 0.15)', color: '#8B5CF6' }}>
+                        <span className="ml-2 text-xs px-2 py-0.5 rounded" style={{ background: 'rgba(139, 92, 246, 0.15)', color: 'var(--ai-purple-text)' }}>
                           AI Generated
                         </span>
                       )}

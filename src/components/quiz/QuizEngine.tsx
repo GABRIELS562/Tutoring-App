@@ -6,6 +6,7 @@ import { Trophy, RefreshCw, BookOpen, ArrowRight, Loader2, Heart } from 'lucide-
 import Link from 'next/link'
 import QuestionCard from './QuestionCard'
 import { useTranslations } from 'next-intl'
+import { useMotionSafe } from '@/hooks/useMotionSafe'
 import type { QuestionWithDetails } from '@/db/queries/questions'
 import { recordAnswer, completeQuiz } from '@/app/(app)/topics/[slug]/practice/actions'
 import { XP_PER_CORRECT_ANSWER, MAX_HEARTS } from '@/lib/game-rules'
@@ -35,6 +36,7 @@ export default function QuizEngine({
   hearts,
   isPremium = false,
 }: QuizEngineProps) {
+  const { transition, variant } = useMotionSafe()
   const t = useTranslations('quiz')
   const tPractice = useTranslations('practice')
   // Real questions from the database win. Mock questions are only ever
@@ -259,15 +261,16 @@ export default function QuizEngine({
         // Scale only, never fade - see the note in QuestionCard. The results
         // screen carries the score and the XP the student just earned; it
         // must not be invisible if the animation stalls.
-        initial={{ scale: 0.95 }}
+        initial={variant({ scale: 0.95 }, { scale: 1 })}
         animate={{ scale: 1 }}
+        transition={transition({})}
         className="max-w-md mx-auto text-center py-8"
       >
         {/* Trophy Icon */}
         <motion.div
-          initial={{ scale: 0 }}
+          initial={variant({ scale: 0 }, { scale: 1 })}
           animate={{ scale: 1 }}
-          transition={{ type: 'spring', delay: 0.2 }}
+          transition={transition({ type: 'spring', delay: 0.2 })}
           className="w-20 h-20 rounded-full mx-auto mb-6 flex items-center justify-center"
           style={{
             background: accuracy >= 80 ? 'rgba(244, 162, 97, 0.2)' : 'rgba(42, 157, 143, 0.2)',
@@ -289,9 +292,9 @@ export default function QuizEngine({
 
         {/* XP Earned */}
         <motion.div
-          initial={{ y: 20 }}
+          initial={variant({ y: 20 }, { y: 0 })}
           animate={{ y: 0 }}
-          transition={{ delay: 0.4 }}
+          transition={transition({ delay: 0.4 })}
           className="mb-6"
         >
           <p className="text-sm mb-1" style={{ color: 'var(--muted-custom)' }}>
@@ -313,12 +316,15 @@ export default function QuizEngine({
               ? 'rgba(42, 157, 143, 0.2)'
               : accuracy >= 60
                 ? 'rgba(244, 162, 97, 0.2)'
-                : 'rgba(230, 57, 70, 0.2)',
+                : 'rgba(220, 30, 46, 0.2)',
+            // Text lane. The low-accuracy branch carried the fill red, so
+            // the one message a struggling student gets was the least
+            // readable thing on the screen.
             color: accuracy >= 80
               ? 'var(--teal)'
               : accuracy >= 60
                 ? 'var(--gold)'
-                : 'var(--accent-red)',
+                : 'var(--accent-red-text)',
           }}
         >
           {t('accuracyPercent', { percent: accuracy })}
@@ -367,6 +373,10 @@ export default function QuizEngine({
     )
   }
 
+  // Named because the reduced-motion path has to start the bar AT this
+  // width rather than animate to it, and the two must not drift apart.
+  const progressWidth = `${((currentIndex + 1) / questions.length) * 100}%`
+
   return (
     <div>
       {/* Progress Bar */}
@@ -397,9 +407,9 @@ export default function QuizEngine({
           <motion.div
             className="h-full rounded-full"
             style={{ background: 'var(--accent-red)' }}
-            initial={{ width: 0 }}
-            animate={{ width: `${((currentIndex + 1) / questions.length) * 100}%` }}
-            transition={{ duration: 0.3 }}
+            initial={variant({ width: 0 }, { width: progressWidth })}
+            animate={{ width: progressWidth }}
+            transition={transition({ duration: 0.3 })}
           />
         </div>
       </div>

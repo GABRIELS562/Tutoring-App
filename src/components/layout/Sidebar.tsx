@@ -89,8 +89,12 @@ export default function Sidebar() {
             const Icon = item.icon
             const active = isActive(item.href)
             const isAI = 'isAI' in item && item.isAI
-            const activeColor = isAI ? 'var(--ai-purple)' : 'var(--accent-red)'
-            const activeBg = isAI ? 'rgba(139, 92, 246, 0.15)' : 'rgba(230, 57, 70, 0.15)'
+            // The TEXT lanes, not the fills: this colours the icon and the
+            // label. The fill red was 3.4:1 here and the fill purple 2.4:1
+            // on the 10px label - and the bg tint still carried #e63946,
+            // the red that was replaced for failing in the first place.
+            const activeColor = isAI ? 'var(--ai-purple-text)' : 'var(--accent-red-text)'
+            const activeBg = isAI ? 'var(--ai-purple-glow)' : 'var(--accent-red-glow)'
 
             return (
               <Link
@@ -151,7 +155,7 @@ export default function Sidebar() {
           const Icon = item.icon
           const active = isActive(item.href)
           const isAI = 'isAI' in item && item.isAI
-          const activeColor = isAI ? 'var(--ai-purple)' : 'var(--accent-red)'
+          const activeColor = isAI ? 'var(--ai-purple-text)' : 'var(--accent-red-text)'
 
           return (
             <Link

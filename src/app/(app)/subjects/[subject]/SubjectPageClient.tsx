@@ -91,10 +91,13 @@ export default function SubjectPageClient({
             <button
               key={grade}
               onClick={() => setSelectedGrade(grade)}
+              aria-pressed={selectedGrade === grade}
               className="px-4 py-2 rounded-lg font-medium text-sm transition-colors"
               style={{
                 background: selectedGrade === grade ? info.color : 'var(--surface)',
-                color: selectedGrade === grade ? 'white' : 'var(--text)',
+                // Both subject accents are light - white on them is 1.86:1
+                // (teal) and 3.18:1 (the text red). Dark reads on both.
+                color: selectedGrade === grade ? 'var(--bg)' : 'var(--text)',
                 border: `1px solid ${selectedGrade === grade ? info.color : 'var(--border-custom)'}`,
               }}
             >
@@ -252,7 +255,7 @@ export default function SubjectPageClient({
         <div className="mt-6 pt-6" style={{ borderTop: '1px solid var(--border-custom)' }}>
           <Link
             href="/subjects"
-            className="text-sm font-medium hover:underline"
+            className="inline-block text-sm font-medium hover:underline tap-target"
             style={{ color: info.color }}
           >
             {t('backToAllSubjects')}
