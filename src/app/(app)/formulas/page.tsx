@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useMemo } from 'react'
-import { Search, BookOpen, Beaker, ChevronDown, ChevronRight, Wifi } from 'lucide-react'
+import { Search, BookOpen, Beaker, ChevronDown, ChevronRight } from 'lucide-react'
 import Topbar from '@/components/layout/Topbar'
 import { useTranslations } from 'next-intl'
 import { BlockMath } from 'react-katex'
@@ -79,14 +79,15 @@ export default function FormulasPage() {
       <Topbar title={t('title')} subtitle={t('pageSubtitle')} />
 
       <div className="p-4 md:p-6 max-w-4xl mx-auto">
-        {/* Offline Badge */}
-        <div
-          className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-medium mb-4"
-          style={{ background: 'rgba(42, 157, 143, 0.15)', color: 'var(--teal)' }}
-        >
-          <Wifi className="w-3 h-3" />
-          {t('worksOffline')}
-        </div>
+        {/* A "works offline" badge stood here. It was never true: it relied
+            on a service worker that next-pwa generated but never registered
+            under the App Router. Registering it would have made the badge
+            true and introduced a worse problem - the worker served this
+            page, and every /topics page, from cache to requests the server
+            answers with a redirect to /login. Authenticated pages are no
+            longer runtime-cached, so the claim goes with them. The real
+            offline feature is the topic page's "save notes for offline",
+            which is per-user and explicit. */}
 
         {/* Filters */}
         <div

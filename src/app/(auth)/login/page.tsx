@@ -200,27 +200,13 @@ export default function LoginPage() {
           </button>
         </form>
 
-        {/* Demo Mode Button */}
-        <div className="relative my-6">
-          <div className="absolute inset-0 flex items-center">
-            <div className="w-full border-t" style={{ borderColor: 'var(--border-custom)' }}></div>
-          </div>
-          <div className="relative flex justify-center text-sm">
-            <span className="px-2" style={{ background: 'var(--surface)', color: 'var(--muted-custom)' }}>{t('or')}</span>
-          </div>
-        </div>
-
-        <button
-          onClick={() => router.push('/dashboard')}
-          className="w-full py-3 rounded-lg font-semibold transition-all hover:opacity-90 flex items-center justify-center gap-2"
-          style={{
-            background: 'var(--surface2)',
-            color: 'var(--text)',
-            border: '1px solid var(--border-custom)'
-          }}
-        >
-          {t('continueAsDemo')}
-        </button>
+        {/* A "Continue as Demo User" button lived here. It pushed to
+            /dashboard, which in production the proxy bounces straight back
+            to /login with no message - so it read as a broken control. And
+            it could only ever be SEEN in production: with Supabase
+            unconfigured the proxy redirects /login to /dashboard, so the
+            demo user never reaches this page. A button visible only in the
+            one mode where it cannot work. */}
 
         <p
           className="text-center mt-6 text-sm"
