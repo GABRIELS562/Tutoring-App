@@ -2,6 +2,7 @@ import { describe, it, expect } from 'vitest'
 import { readFileSync } from 'node:fs'
 import { join } from 'node:path'
 import { badges, moduleOrder } from '@/content/ai-skills'
+import { PREVIEW_PROGRESS } from '@/lib/ai-skills/progress'
 
 const PAGE = 'src/app/(app)/ai-skills/page.tsx'
 const source = readFileSync(PAGE, 'utf8')
@@ -86,25 +87,27 @@ describe('badge definitions', () => {
  * had when it showed a real student a stranger's progress.
  */
 describe('the signed-out preview is internally consistent', () => {
-  const preview = source.slice(
-    source.indexOf('const PREVIEW_PROGRESS'),
-    source.indexOf('async function getUserProgress')
-  )
+  /**
+   * Imported, not scraped out of the page's source. This used to slice the
+   * constant out of ai-skills/page.tsx by string index, so when the preview
+   * moved to a shared module - because the page and the module route had
+   * drifted apart and disagreed about it - the slice came back empty and
+   * the assertions quietly passed over nothing.
+   */
+  const { completedModules, earnedBadges } = PREVIEW_PROGRESS
 
   it('claims only modules that exist', () => {
-    const claimed = [...preview.matchAll(/'([a-z-]+)'/g)]
-      .map((m) => m[1])
-      .filter((id) => (moduleOrder as readonly string[]).includes(id))
-
-    expect(claimed.length).toBeGreaterThan(0)
-    for (const id of claimed) expect(moduleOrder as readonly string[]).toContain(id)
+    expect(completedModules.length).toBeGreaterThan(0)
+    for (const id of completedModules) {
+      expect(moduleOrder as readonly string[]).toContain(id)
+    }
   })
 
   it('claims only badges that exist', () => {
-    const claimed = [...preview.matchAll(/'([a-z-]+)'/g)]
-      .map((m) => m[1])
-      .filter((id) => id in badges)
-
-    expect(claimed.length, 'the preview earns no badges, so none can be demonstrated').toBeGreaterThan(0)
+    expect(
+      earnedBadges.length,
+      'the preview earns no badges, so none can be demonstrated'
+    ).toBeGreaterThan(0)
+    for (const id of earnedBadges) expect(Object.keys(badges)).toContain(id)
   })
 })

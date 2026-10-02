@@ -1,8 +1,7 @@
 import Link from 'next/link'
-import { cookies } from 'next/headers'
 import { getTranslations, getLocale } from 'next-intl/server'
 import Topbar from '@/components/layout/Topbar'
-import { createServerClient } from '@supabase/ssr'
+import { getAiSkillsProgress } from '@/lib/ai-skills/progress'
 import {
   Brain,
   Lock,
@@ -38,71 +37,8 @@ export const metadata = {
   description: 'Learn to use AI effectively with our AI Literacy Curriculum. Master prompt engineering, study smarter, and prepare for an AI-powered workplace.',
 }
 
-/**
- * What a visitor with no account sees.
- *
- * A coherent part-way profile rather than an empty one: two modules done,
- * one prompt challenge, and the two badges those actually unlock. It has to
- * stay internally consistent - claiming badges a student has not earned
- * anywhere else on the page would be the same mistake the dashboard used to
- * make, showing someone a stranger's progress as their own.
- *
- * This is for SIGNED-OUT visitors only. A signed-in student always sees
- * their real state, however empty.
- */
-const PREVIEW_PROGRESS = {
-  completedModules: ['ai-what-is', 'ai-prompts'] as string[],
-  promptChallengesCompleted: 1,
-  earnedBadges: ['ai-explorer', 'prompt-pro'] as string[],
-}
-
-async function getUserProgress() {
-  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
-  const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
-
-  if (!supabaseUrl || !supabaseKey) {
-    return PREVIEW_PROGRESS
-  }
-
-  const cookieStore = await cookies()
-  const supabase = createServerClient(supabaseUrl, supabaseKey, {
-    cookies: {
-      getAll() {
-        return cookieStore.getAll()
-      },
-      setAll(cookiesToSet) {
-        try {
-          cookiesToSet.forEach(({ name, value, options }) =>
-            cookieStore.set(name, value, options)
-          )
-        } catch {
-          // Ignore
-        }
-      },
-    },
-  })
-
-  const { data: { user } } = await supabase.auth.getUser()
-
-  if (!user) {
-    return PREVIEW_PROGRESS
-  }
-
-  const { data: userData } = await supabase
-    .from('users')
-    .select('ai_modules_completed, prompt_challenges_completed, badges')
-    .eq('id', user.id)
-    .single()
-
-  return {
-    completedModules: userData?.ai_modules_completed || [],
-    promptChallengesCompleted: userData?.prompt_challenges_completed || 0,
-    earnedBadges: userData?.badges || [],
-  }
-}
-
 export default async function AISkillsPage() {
-  const { completedModules, promptChallengesCompleted, earnedBadges } = await getUserProgress()
+  const { completedModules, promptChallengesCompleted, earnedBadges } = await getAiSkillsProgress()
   const t = await getTranslations('aiSkills')
   const locale = await getLocale()
   const af = locale === 'af'

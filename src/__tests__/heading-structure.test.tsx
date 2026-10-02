@@ -7,8 +7,8 @@
  * exactly one h1 on each affected page.
  */
 import { describe, it, expect, vi, beforeEach } from 'vitest'
-import { readFileSync, readdirSync, statSync } from 'node:fs'
-import { join } from 'node:path'
+import { readFileSync, readdirSync, statSync, existsSync } from 'node:fs'
+import { join, dirname } from 'node:path'
 import { render } from '@testing-library/react'
 import { UserProvider } from '@/context/UserContext'
 import type { UserData } from '@/context/UserContext'
@@ -129,16 +129,50 @@ function componentFiles(): string[] {
   return found
 }
 
-describe('heading structure', () => {
-  it('nothing that renders a Topbar declares its own h1', () => {
-    const offenders = componentFiles()
-      .filter((file) => {
-        const source = readFileSync(file, 'utf-8')
-        return /<Topbar\b/.test(source) && /<h1[\s>]/.test(source)
-      })
-      .map((file) => file.replace(SRC, ''))
+/** The project-local components a file imports, resolved to their paths. */
+function localImports(file: string, source: string): string[] {
+  const resolved: string[] = []
+  for (const match of source.matchAll(/^import\s+\w+\s+from\s+'([^']+)'/gm)) {
+    const spec = match[1]
+    const base = spec.startsWith('@/')
+      ? join(SRC, spec.slice(2))
+      : spec.startsWith('.')
+        ? join(dirname(file), spec)
+        : null
+    if (!base) continue
+    for (const candidate of [`${base}.tsx`, join(base, 'index.tsx')]) {
+      if (existsSync(candidate)) { resolved.push(candidate); break }
+    }
+  }
+  return resolved
+}
 
-    expect(offenders).toEqual([])
+describe('heading structure', () => {
+  /**
+   * Checks the page AND the components it renders, not just the page file.
+   *
+   * The per-file version of this missed two: the AI module page renders its
+   * h1 from AIModuleRenderer and the certificate page from IssueCertificate,
+   * so each shipped two h1s with a Topbar whose title the second one
+   * repeated word for word. One level of imports is enough to catch that
+   * shape; it will not follow a component that renders another.
+   */
+  it('nothing that renders a Topbar declares an h1, in itself or a child', () => {
+    const offenders: string[] = []
+    for (const file of componentFiles()) {
+      const source = readFileSync(file, 'utf-8')
+      if (!/<Topbar\b/.test(source)) continue
+      if (/<h1[\s>]/.test(source)) offenders.push(file.replace(SRC, ''))
+      for (const child of localImports(file, source)) {
+        // Topbar is the h1 provider itself, not a second one.
+        if (child.endsWith(join('layout', 'Topbar.tsx'))) continue
+        if (/<h1[\s>]/.test(readFileSync(child, 'utf-8'))) {
+          offenders.push(`${child.replace(SRC, '')} (rendered by ${file.replace(SRC, '')})`)
+        }
+      }
+    }
+
+    expect([...new Set(offenders)]).toEqual([])
   })
 
   /**

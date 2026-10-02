@@ -1,6 +1,5 @@
 import { notFound, redirect } from 'next/navigation'
-import { cookies } from 'next/headers'
-import { createServerClient } from '@supabase/ssr'
+import { getAiSkillsProgress } from '@/lib/ai-skills/progress'
 import Link from 'next/link'
 import { ArrowLeft, ArrowRight } from 'lucide-react'
 import { getTranslations, getLocale } from 'next-intl/server'
@@ -30,47 +29,6 @@ export async function generateMetadata({ params }: PageProps) {
   }
 }
 
-async function getUserData() {
-  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
-  const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
-
-  if (!supabaseUrl || !supabaseKey) {
-    return { completedModules: [] as string[] }
-  }
-
-  const cookieStore = await cookies()
-  const supabase = createServerClient(supabaseUrl, supabaseKey, {
-    cookies: {
-      getAll() {
-        return cookieStore.getAll()
-      },
-      setAll(cookiesToSet) {
-        try {
-          cookiesToSet.forEach(({ name, value, options }) =>
-            cookieStore.set(name, value, options)
-          )
-        } catch {
-          // Ignore
-        }
-      },
-    },
-  })
-
-  const { data: { user } } = await supabase.auth.getUser()
-
-  if (!user) {
-    return { completedModules: [] as string[] }
-  }
-
-  const { data: userData } = await supabase
-    .from('users')
-    .select('ai_modules_completed')
-    .eq('id', user.id)
-    .single()
-
-  return { completedModules: userData?.ai_modules_completed || [] }
-}
-
 export default async function AIModulePage({ params }: PageProps) {
   const { moduleId } = await params
   const aiModule = aiModules[moduleId]
@@ -79,7 +37,7 @@ export default async function AIModulePage({ params }: PageProps) {
     notFound()
   }
 
-  const { completedModules } = await getUserData()
+  const { completedModules } = await getAiSkillsProgress()
 
   // Check if module is locked
   if (aiModule.unlockCondition && !completedModules.includes(aiModule.unlockCondition)) {

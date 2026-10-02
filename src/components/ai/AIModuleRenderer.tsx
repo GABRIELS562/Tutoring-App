@@ -213,9 +213,11 @@ export default function AIModuleRenderer({
             </span>
           )}
         </div>
-        <h1 className="text-2xl font-bold text-primary-text">
+        {/* h2: the module page's Topbar already renders the page h1, with
+            this same title in it. Two h1s, the second repeating the first. */}
+        <h2 className="text-2xl font-bold text-primary-text">
           {localised(module.title, module.titleAf)}
-        </h1>
+        </h2>
         <p className="text-sm text-muted-custom">
           {localised(module.description, module.descriptionAf)}
         </p>

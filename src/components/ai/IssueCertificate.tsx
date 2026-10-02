@@ -96,7 +96,8 @@ export default function IssueCertificate() {
         >
           <AlertTriangle className="w-8 h-8 text-muted-custom" />
         </div>
-        <h1 className="text-xl font-bold" style={{ color: 'var(--text)' }}>{t('certificateFailed')}</h1>
+        {/* h2: rendered inside the certificate page, which has a Topbar h1. */}
+        <h2 className="text-xl font-bold" style={{ color: 'var(--text)' }}>{t('certificateFailed')}</h2>
         <p className="text-sm text-muted-custom max-w-md mx-auto">
           {state.message} Please try again - if this keeps happening, let us know.
         </p>
