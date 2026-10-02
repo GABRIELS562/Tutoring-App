@@ -1,4 +1,6 @@
+import { Suspense } from 'react'
 import Link from 'next/link'
+import AISkillsSkeleton from './AISkillsSkeleton'
 import { getTranslations, getLocale } from 'next-intl/server'
 import Topbar from '@/components/layout/Topbar'
 import { getAiSkillsProgress } from '@/lib/ai-skills/progress'
@@ -37,7 +39,7 @@ export const metadata = {
   description: 'Learn to use AI effectively with our AI Literacy Curriculum. Master prompt engineering, study smarter, and prepare for an AI-powered workplace.',
 }
 
-export default async function AISkillsPage() {
+async function AISkillsContent() {
   const { completedModules, promptChallengesCompleted, earnedBadges } = await getAiSkillsProgress()
   const t = await getTranslations('aiSkills')
   const locale = await getLocale()
@@ -275,5 +277,13 @@ export default async function AISkillsPage() {
       </div>
     </div>
   </div>
+  )
+}
+
+export default function AISkillsPage() {
+  return (
+    <Suspense fallback={<AISkillsSkeleton />}>
+      <AISkillsContent />
+    </Suspense>
   )
 }

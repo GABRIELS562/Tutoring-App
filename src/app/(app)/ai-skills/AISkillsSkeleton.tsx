@@ -1,4 +1,11 @@
-export default function AISkillsLoading() {
+/**
+ * Was loading.tsx. At the ai-skills segment it wrapped the [moduleId]
+ * route too, so Next flushed the shell - committing the status - before
+ * that page could call notFound(): an unknown module answered 200. As a
+ * component it is the fallback for Suspense boundaries the pages declare
+ * themselves, after validating.
+ */
+export default function AISkillsSkeleton() {
   return (
     <div className="p-4 md:p-6 max-w-4xl mx-auto space-y-8">
       {/* Header skeleton */}

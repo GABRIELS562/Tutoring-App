@@ -1,4 +1,7 @@
+import { Suspense } from 'react'
+import type { AIModule } from '@/types'
 import { notFound, redirect } from 'next/navigation'
+import AISkillsSkeleton from '../AISkillsSkeleton'
 import { getAiSkillsProgress } from '@/lib/ai-skills/progress'
 import Link from 'next/link'
 import { ArrowLeft, ArrowRight } from 'lucide-react'
@@ -29,14 +32,17 @@ export async function generateMetadata({ params }: PageProps) {
   }
 }
 
-export default async function AIModulePage({ params }: PageProps) {
-  const { moduleId } = await params
-  const aiModule = aiModules[moduleId]
-
-  if (!aiModule) {
-    notFound()
-  }
-
+/**
+ * Everything that waits on the student's progress, behind its own Suspense
+ * boundary - so the module check above can fail before anything streams.
+ */
+async function AIModuleContent({
+  moduleId,
+  aiModule,
+}: {
+  moduleId: string
+  aiModule: AIModule
+}) {
   const { completedModules } = await getAiSkillsProgress()
 
   // Check if module is locked
@@ -117,5 +123,22 @@ export default async function AIModulePage({ params }: PageProps) {
       </div>
     </div>
   </div>
+  )
+}
+
+export default async function AIModulePage({ params }: PageProps) {
+  const { moduleId } = await params
+  const aiModule = aiModules[moduleId]
+
+  // Runs before the Suspense boundary, so an unknown module id answers
+  // with a real 404 instead of a 200 carrying a "not found" page.
+  if (!aiModule) {
+    notFound()
+  }
+
+  return (
+    <Suspense fallback={<AISkillsSkeleton />}>
+      <AIModuleContent moduleId={moduleId} aiModule={aiModule} />
+    </Suspense>
   )
 }

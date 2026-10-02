@@ -70,7 +70,11 @@ describe('the AI Skills section is translated', () => {
    */
   it('gives every page a Topbar, so the language toggle is reachable', () => {
     const withoutTopbar = pages
-      .filter((file) => !/error\.tsx$|loading\.tsx$/.test(file))
+      // Skeleton.tsx is the former loading.tsx: it moved out of the
+      // route-level loading slot so the [moduleId] page could call
+      // notFound() before the shell flushed, and it is still the same
+      // grid of grey boxes - no chrome and nothing to translate.
+      .filter((file) => !/error\.tsx$|loading\.tsx$|Skeleton\.tsx$/.test(file))
       .filter((file) => !/<Topbar\b/.test(readFileSync(file, 'utf-8')))
       .map((file) => file.replace(ROOT, ''))
 
@@ -79,7 +83,8 @@ describe('the AI Skills section is translated', () => {
 
   it('reads its text from the message namespace on every page', () => {
     const withoutTranslations = pages
-      .filter((file) => !/loading\.tsx$/.test(file))
+      // Skeleton.tsx is the former loading.tsx - see the note above.
+      .filter((file) => !/loading\.tsx$|Skeleton\.tsx$/.test(file))
       .filter((file) => {
         const source = readFileSync(file, 'utf-8')
         return !/useTranslations|getTranslations/.test(source)

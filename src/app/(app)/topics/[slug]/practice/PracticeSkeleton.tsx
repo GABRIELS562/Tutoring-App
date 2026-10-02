@@ -1,4 +1,15 @@
-export default function PracticeLoading() {
+/**
+ * The practice page's loading skeleton.
+ *
+ * This was loading.tsx. A route-level loading file wraps the whole page in
+ * a Suspense boundary, which makes Next flush the shell - and commit the
+ * HTTP status - before the page component runs at all, so an unknown topic
+ * slug answered 200 while rendering "Topic not found". As a plain
+ * component it is the fallback for a Suspense boundary the page declares
+ * AFTER it has validated the slug, which keeps the skeleton and lets
+ * notFound() set a real 404.
+ */
+export default function PracticeSkeleton() {
   return (
     <div className="min-h-screen" style={{ background: 'var(--bg)' }}>
       {/* Topbar skeleton */}
