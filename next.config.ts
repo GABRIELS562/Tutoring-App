@@ -1,4 +1,5 @@
 import type { NextConfig } from "next";
+import { createRequire } from 'node:module';
 import withPWAInit from 'next-pwa';
 import createNextIntlPlugin from 'next-intl/plugin';
 
@@ -104,6 +105,31 @@ const SECURITY_HEADERS = [
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
+  /**
+   * Ship ONE copy of KaTeX, not two.
+   *
+   * katex declares conditional exports: `require` resolves to
+   * dist/katex.js and `import` to dist/katex.mjs. react-katex is CJS and
+   * requires it; MathRenderer and FormulaBox import it. Webpack saw two
+   * different files, so it bundled KaTeX twice - measured as two chunks of
+   * 256 KB and 255 KB, and the build graph showed the exam and practice
+   * routes pulling BOTH. Half a megabyte of identical library on the pages
+   * a student spends the most time in.
+   *
+   * Pinning the specifier to the CJS build is what react-katex already
+   * resolves to, so the two collapse into one module. Verified beforehand
+   * that renderToString produces identical output from either build.
+   */
+  webpack(config) {
+    config.resolve.alias = {
+      ...config.resolve.alias,
+      // The trailing $ makes this an EXACT match for the request "katex".
+      // Without it the alias also captures katex/dist/katex.min.css and
+      // every other subpath, and the build cannot resolve the stylesheet.
+      katex$: createRequire(import.meta.url).resolve('katex/dist/katex.js'),
+    }
+    return config
+  },
   async headers() {
     return [{ source: '/:path*', headers: SECURITY_HEADERS }]
   },
