@@ -5,7 +5,7 @@ import { UserProvider, UserData } from '@/context/UserContext'
 import Sidebar from '@/components/layout/Sidebar'
 import SkipLink from '@/components/layout/SkipLink'
 import InstallPrompt from '@/components/InstallPrompt'
-import CameraScan from '@/components/ai/CameraScan'
+import CameraScanLoader from '@/components/ai/CameraScanLoader'
 
 // Force dynamic rendering - don't prerender at build time
 export const dynamic = 'force-dynamic'
@@ -116,7 +116,7 @@ export default async function AppLayout({
           {children}
         </main>
         <InstallPrompt />
-        <CameraScan />
+        <CameraScanLoader />
       </div>
     </UserProvider>
   )
