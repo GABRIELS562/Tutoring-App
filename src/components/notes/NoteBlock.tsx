@@ -216,6 +216,15 @@ export default function NoteBlock({ block, topicSlug = 'topic', sectionId = 'sec
       )
 
     default:
+      // A block type this renderer does not handle renders NOTHING, with no
+      // error anywhere - a lesson section would simply be missing from the
+      // page. NoteBlock is one shared type across both renderers, so a type
+      // handled in the other one can legitimately appear here. Loud in
+      // development, silent in production rather than breaking a student's
+      // lesson over one unknown block.
+      if (process.env.NODE_ENV !== 'production') {
+        console.warn(`Unhandled note block type: ${block.type}`)
+      }
       return null
   }
 }
