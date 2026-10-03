@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useReducer, useRef, useState } from 'react'
+import { useCallback, useEffect, useReducer, useRef, useState } from 'react'
 import { useTranslations, useLocale } from 'next-intl'
 import { BookOpen } from 'lucide-react'
 import Link from 'next/link'
@@ -225,6 +225,14 @@ function BossBattleSession({ topicSlug, topicName, questions, isDemo, userId, vi
       })
   }
 
+  /**
+   * Stable identity on purpose. VideoModal's 30-second watch timer is keyed
+   * on this prop, so a new closure each render would clear and restart the
+   * timer - and a student who really did watch the whole video could end up
+   * never granted the shield. dispatch from useReducer is already stable.
+   */
+  const grantVideoShield = useCallback(() => dispatch({ type: 'GRANT_VIDEO_SHIELD' }), [dispatch])
+
   const handleSelectOption = (letter: string, correct: boolean) => {
     const question = getCurrentQuestion(state)
     dispatch({ type: 'SELECT_MCQ_OPTION', letter, correct })
@@ -265,7 +273,7 @@ function BossBattleSession({ topicSlug, topicName, questions, isDemo, userId, vi
           onStart={() => dispatch({ type: 'START_BATTLE' })}
           video={localizedVideo}
           videoShieldGranted={state.videoShieldGranted}
-          onGrantVideoShield={() => dispatch({ type: 'GRANT_VIDEO_SHIELD' })}
+          onGrantVideoShield={grantVideoShield}
           shields={state.shields}
           questionCount={questionCount}
           totalMarks={state.bossMaxHp}

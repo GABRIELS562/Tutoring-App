@@ -289,15 +289,30 @@ interface PersistedPromptChallengeAttempt {
  * request — never a client-supplied score. Returns null when there is
  * nothing to persist (demo mode, or the caller didn't send a challengeId).
  */
+/**
+ * Saved, deliberately not saved, or genuinely failed.
+ *
+ * This used to be `null` for all three. The client could not tell "demo
+ * mode, nothing to persist" from "the write failed", so on a real failure
+ * it fell back to a client-computed score, showed "+XP earned", marked the
+ * challenge complete and moved on - and none of it had reached the
+ * database. The student finished every challenge and had nothing to show
+ * for it, with nothing on screen suggesting a problem.
+ */
+type PromptAttemptOutcome =
+  | { status: 'saved'; attempt: PersistedPromptChallengeAttempt }
+  | { status: 'skipped' }
+  | { status: 'failed' }
+
 async function persistPromptChallengeAttempt(
   userId: string,
   challengeId: string | undefined,
   studentPrompt: string | undefined,
   evaluation: PromptEvaluation
-): Promise<PersistedPromptChallengeAttempt | null> {
+): Promise<PromptAttemptOutcome> {
   const supabase = getApiSupabase()
   if (!supabase || !challengeId) {
-    return null
+    return { status: 'skipped' }
   }
 
   const { data: existing, error: existingError } = await supabase
@@ -309,14 +324,15 @@ async function persistPromptChallengeAttempt(
 
   if (existingError) {
     console.error('Error checking existing prompt challenge attempt:', existingError)
-    return null
+    return { status: 'failed' }
   }
 
   if (existing) {
-    return updateExistingAttempt(supabase, existing, studentPrompt, evaluation)
+    return { status: 'saved', attempt: await updateExistingAttempt(supabase, existing, studentPrompt, evaluation) }
   }
 
-  return insertFirstAttempt(supabase, userId, challengeId, studentPrompt, evaluation)
+  const inserted = await insertFirstAttempt(supabase, userId, challengeId, studentPrompt, evaluation)
+  return inserted ? { status: 'saved', attempt: inserted } : { status: 'failed' }
 }
 
 type SupabaseLike = NonNullable<ReturnType<typeof getApiSupabase>>
@@ -492,7 +508,9 @@ async function buildDemoResponse(
       responseBody: {
         evaluation: mockEvaluation,
         isDemo: true,
-        ...(attempt ? { attempt } : {}),
+        ...(attempt.status === 'saved' ? { attempt: attempt.attempt } : {}),
+        // Explicit, so the client can refuse to award XP it did not earn.
+        persisted: attempt.status !== 'failed',
       },
       reportsRemaining: false,
     }
@@ -622,7 +640,12 @@ async function handlePromptEvaluation(
   const evaluation = validation.data
   const attempt = await persistPromptChallengeAttempt(userId, body.challengeId, body.studentPrompt, evaluation)
 
-  return { evaluation, remaining, ...(attempt ? { attempt } : {}) }
+  return {
+    evaluation,
+    remaining,
+    ...(attempt.status === 'saved' ? { attempt: attempt.attempt } : {}),
+    persisted: attempt.status !== 'failed',
+  }
 }
 
 type ParsedHintRequest =

@@ -1,6 +1,6 @@
 import { db } from '@/db'
 import { users, studentProgress, questions, topics } from '@/db/schema'
-import { eq, and, sql, desc, gte } from 'drizzle-orm'
+import { and, desc, eq, gte, inArray, sql } from 'drizzle-orm'
 
 export type DashboardData = {
   user: {
@@ -49,81 +49,104 @@ export type LeaderboardEntry = {
 
 export async function getDashboardData(userId: string): Promise<DashboardData> {
   try {
-    // Get user data
-    const userRows = await db
-      .select()
-      .from(users)
-      .where(eq(users.id, userId))
-      .limit(1)
-
-    const user = userRows[0] || null
-
-    // Get total questions answered
-    const totalResult = await db
-      .select({ count: sql<number>`count(*)` })
-      .from(studentProgress)
-      .where(eq(studentProgress.userId, userId))
-
-    const totalQuestionsAnswered = Number(totalResult[0]?.count || 0)
-
-    // Get correct answers count
-    const correctResult = await db
-      .select({ count: sql<number>`count(*)` })
-      .from(studentProgress)
-      .where(
-        and(
-          eq(studentProgress.userId, userId),
-          eq(studentProgress.status, 'correct')
-        )
-      )
-
-    const correctAnswers = Number(correctResult[0]?.count || 0)
-
-    // Get distinct topic count
-    const distinctTopicsResult = await db
-      .selectDistinct({ topicId: questions.topicId })
-      .from(studentProgress)
-      .innerJoin(questions, eq(studentProgress.questionId, questions.id))
-      .where(eq(studentProgress.userId, userId))
-
-    const topicsStarted = distinctTopicsResult.length
-
-    // Get recent activity (last 5)
-    const recentRows = await db
-      .select({
-        id: studentProgress.id,
-        topicName: topics.name,
-        topicSlug: topics.slug,
-        questionText: questions.questionText,
-        status: studentProgress.status,
-        xpEarned: studentProgress.xpEarned,
-        lastAttemptedAt: studentProgress.lastAttemptedAt,
-      })
-      .from(studentProgress)
-      .innerJoin(questions, eq(studentProgress.questionId, questions.id))
-      .innerJoin(topics, eq(questions.topicId, topics.id))
-      .where(eq(studentProgress.userId, userId))
-      .orderBy(desc(studentProgress.lastAttemptedAt))
-      .limit(5)
-
-    // Get weekly XP (last 14 days)
+    // Seven independent reads, all keyed on nothing but userId, and they
+    // used to run one after another - seven serial round trips to the
+    // Supabase pooler before the dashboard could render. On SA mobile data
+    // that is the difference between a page that appears and one that
+    // hangs. Nothing here depends on anything else here, so they go
+    // together and the cost becomes the slowest one, not the sum.
     const fourteenDaysAgo = new Date()
     fourteenDaysAgo.setDate(fourteenDaysAgo.getDate() - 14)
 
-    const weeklyXPRows = await db
-      .select({
-        date: sql<string>`DATE(${studentProgress.lastAttemptedAt})`,
-        xp: sql<number>`SUM(${studentProgress.xpEarned})`,
-      })
-      .from(studentProgress)
-      .where(
-        and(
-          eq(studentProgress.userId, userId),
-          gte(studentProgress.lastAttemptedAt, fourteenDaysAgo)
+    const [
+      userRows,
+      totalResult,
+      correctResult,
+      distinctTopicsResult,
+      recentRows,
+      weeklyXPRows,
+      topicsProgressRows,
+    ] = await Promise.all([
+      db.select().from(users).where(eq(users.id, userId)).limit(1),
+
+      db
+        .select({ count: sql<number>`count(*)` })
+        .from(studentProgress)
+        .where(eq(studentProgress.userId, userId)),
+
+      db
+        .select({ count: sql<number>`count(*)` })
+        .from(studentProgress)
+        .where(
+          and(
+            eq(studentProgress.userId, userId),
+            eq(studentProgress.status, 'correct')
+          )
+        ),
+
+      db
+        .selectDistinct({ topicId: questions.topicId })
+        .from(studentProgress)
+        .innerJoin(questions, eq(studentProgress.questionId, questions.id))
+        .where(eq(studentProgress.userId, userId)),
+
+      db
+        .select({
+          id: studentProgress.id,
+          topicName: topics.name,
+          topicSlug: topics.slug,
+          questionText: questions.questionText,
+          status: studentProgress.status,
+          xpEarned: studentProgress.xpEarned,
+          lastAttemptedAt: studentProgress.lastAttemptedAt,
+        })
+        .from(studentProgress)
+        .innerJoin(questions, eq(studentProgress.questionId, questions.id))
+        .innerJoin(topics, eq(questions.topicId, topics.id))
+        .where(eq(studentProgress.userId, userId))
+        .orderBy(desc(studentProgress.lastAttemptedAt))
+        .limit(5),
+
+      db
+        .select({
+          date: sql<string>`DATE(${studentProgress.lastAttemptedAt})`,
+          xp: sql<number>`SUM(${studentProgress.xpEarned})`,
+        })
+        .from(studentProgress)
+        .where(
+          and(
+            eq(studentProgress.userId, userId),
+            gte(studentProgress.lastAttemptedAt, fourteenDaysAgo)
+          )
         )
-      )
-      .groupBy(sql`DATE(${studentProgress.lastAttemptedAt})`)
-      .orderBy(sql`DATE(${studentProgress.lastAttemptedAt})`)
+        .groupBy(sql`DATE(${studentProgress.lastAttemptedAt})`)
+        .orderBy(sql`DATE(${studentProgress.lastAttemptedAt})`),
+
+      db
+        .select({
+          topicId: topics.id,
+          topicName: topics.name,
+          topicSlug: topics.slug,
+          correctCount: sql<number>`SUM(CASE WHEN ${studentProgress.status} = 'correct' THEN 1 ELSE 0 END)`,
+          attemptCount: sql<number>`COUNT(${studentProgress.id})`,
+          lastAttemptedAt: sql<string>`MAX(${studentProgress.lastAttemptedAt})`,
+        })
+        .from(studentProgress)
+        .innerJoin(questions, eq(studentProgress.questionId, questions.id))
+        .innerJoin(topics, eq(questions.topicId, topics.id))
+        .where(eq(studentProgress.userId, userId))
+        .groupBy(topics.id, topics.name, topics.slug)
+        // LIMIT without ORDER BY left it to the planner which four topics
+        // "Continue learning" showed. Most recently attempted is what the
+        // section claims to be.
+        .orderBy(desc(sql`MAX(${studentProgress.lastAttemptedAt})`))
+        .limit(4),
+    ])
+
+    const user = userRows[0] || null
+    const totalQuestionsAnswered = Number(totalResult[0]?.count || 0)
+    const correctAnswers = Number(correctResult[0]?.count || 0)
+    const topicsStarted = distinctTopicsResult.length
 
     // Fill in missing days with 0 XP
     const weeklyXP: { date: string; xp: number }[] = []
@@ -138,43 +161,42 @@ export async function getDashboardData(userId: string): Promise<DashboardData> {
       })
     }
 
-    // Get topics with progress for "Continue learning"
-    const topicsProgressRows = await db
-      .select({
-        topicId: topics.id,
-        topicName: topics.name,
-        topicSlug: topics.slug,
-        correctCount: sql<number>`SUM(CASE WHEN ${studentProgress.status} = 'correct' THEN 1 ELSE 0 END)`,
-        attemptCount: sql<number>`COUNT(${studentProgress.id})`,
-      })
-      .from(studentProgress)
-      .innerJoin(questions, eq(studentProgress.questionId, questions.id))
-      .innerJoin(topics, eq(questions.topicId, topics.id))
-      .where(eq(studentProgress.userId, userId))
-      .groupBy(topics.id, topics.name, topics.slug)
-      .limit(4)
-
-    // Get total questions per topic for progress calculation
-    const topicsWithProgress = await Promise.all(
-      topicsProgressRows.map(async (tp) => {
-        const totalQuestionsForTopic = await db
-          .select({ count: sql<number>`count(*)` })
+    // One grouped query, not one per topic. This was a four-round-trip
+    // fan-out inside Promise.all - better than serial, but still four
+    // extra trips to the pooler to count rows the database can count in
+    // a single GROUP BY. The same N+1 was already fixed this way in
+    // getQuestionsByTopic.
+    const topicIds = topicsProgressRows.map((tp) => tp.topicId)
+    const questionCounts = topicIds.length
+      ? await db
+          .select({
+            topicId: questions.topicId,
+            count: sql<number>`count(*)`,
+          })
           .from(questions)
-          .where(eq(questions.topicId, tp.topicId))
+          .where(inArray(questions.topicId, topicIds))
+          .groupBy(questions.topicId)
+      : []
 
-        const total = Number(totalQuestionsForTopic[0]?.count || 1)
-        const correct = Number(tp.correctCount || 0)
-
-        return {
-          topicId: tp.topicId,
-          topicName: tp.topicName,
-          topicSlug: tp.topicSlug,
-          correctCount: correct,
-          totalQuestions: total,
-          progressPercent: Math.round((correct / total) * 100),
-        }
-      })
+    const countByTopic = new Map(
+      questionCounts.map((row) => [row.topicId, Number(row.count)])
     )
+
+    const topicsWithProgress = topicsProgressRows.map((tp) => {
+      // 1, not 0: this is the denominator of the progress percentage, and
+      // a topic with no questions yet should read 0%, not divide by zero.
+      const total = countByTopic.get(tp.topicId) || 1
+      const correct = Number(tp.correctCount || 0)
+
+      return {
+        topicId: tp.topicId,
+        topicName: tp.topicName,
+        topicSlug: tp.topicSlug,
+        correctCount: correct,
+        totalQuestions: total,
+        progressPercent: Math.round((correct / total) * 100),
+      }
+    })
 
     return {
       user,
@@ -252,7 +274,13 @@ export async function getProgressData(userId: string) {
     const fourteenDaysAgo = new Date()
     fourteenDaysAgo.setDate(fourteenDaysAgo.getDate() - 14)
 
-    const weeklyXPRows = await db
+    // Last 8 weeks for the activity calendar.
+    const eightWeeksAgo = new Date()
+    eightWeeksAgo.setDate(eightWeeksAgo.getDate() - 56)
+
+    // Three independent reads for three independent charts. They ran one
+    // after another, so the progress page waited for the sum of them.
+    const weeklyXPPromise = db
       .select({
         date: sql<string>`DATE(${studentProgress.lastAttemptedAt})`,
         xp: sql<number>`SUM(${studentProgress.xpEarned})`,
@@ -267,21 +295,7 @@ export async function getProgressData(userId: string) {
       .groupBy(sql`DATE(${studentProgress.lastAttemptedAt})`)
       .orderBy(sql`DATE(${studentProgress.lastAttemptedAt})`)
 
-    // Fill in missing days
-    const weeklyXP: { date: string; xp: number }[] = []
-    for (let i = 13; i >= 0; i--) {
-      const date = new Date()
-      date.setDate(date.getDate() - i)
-      const dateStr = date.toISOString().split('T')[0]
-      const existingRow = weeklyXPRows.find((r) => r.date === dateStr)
-      weeklyXP.push({
-        date: dateStr,
-        xp: Number(existingRow?.xp || 0),
-      })
-    }
-
-    // Get accuracy by topic
-    const topicAccuracyRows = await db
+    const topicAccuracyPromise = db
       .select({
         topicId: topics.id,
         topicName: topics.name,
@@ -297,6 +311,43 @@ export async function getProgressData(userId: string) {
       .where(eq(studentProgress.userId, userId))
       .groupBy(topics.id, topics.name, topics.slug)
 
+    const activityPromise = db
+      .select({
+        date: sql<string>`DATE(${studentProgress.lastAttemptedAt})`,
+        count: sql<number>`COUNT(*)`,
+      })
+      .from(studentProgress)
+      .where(
+        and(
+          eq(studentProgress.userId, userId),
+          gte(studentProgress.lastAttemptedAt, eightWeeksAgo)
+        )
+      )
+      .groupBy(sql`DATE(${studentProgress.lastAttemptedAt})`)
+
+    const [weeklyXPRows, topicAccuracyRows, activityRows] = await Promise.all([
+      weeklyXPPromise,
+      topicAccuracyPromise,
+      activityPromise,
+    ])
+
+
+    // Fill in missing days
+    const weeklyXP: { date: string; xp: number }[] = []
+    for (let i = 13; i >= 0; i--) {
+      const date = new Date()
+      date.setDate(date.getDate() - i)
+      const dateStr = date.toISOString().split('T')[0]
+      const existingRow = weeklyXPRows.find((r) => r.date === dateStr)
+      weeklyXP.push({
+        date: dateStr,
+        xp: Number(existingRow?.xp || 0),
+      })
+    }
+
+    // Get accuracy by topic
+
+
     const topicAccuracy = topicAccuracyRows.map((row) => {
       const accuracy = Math.round(
         (Number(row.correctCount) / Number(row.totalCount || 1)) * 100
@@ -311,23 +362,7 @@ export async function getProgressData(userId: string) {
       }
     })
 
-    // Get activity calendar data (last 8 weeks = 56 days)
-    const eightWeeksAgo = new Date()
-    eightWeeksAgo.setDate(eightWeeksAgo.getDate() - 56)
 
-    const activityRows = await db
-      .select({
-        date: sql<string>`DATE(${studentProgress.lastAttemptedAt})`,
-        count: sql<number>`COUNT(*)`,
-      })
-      .from(studentProgress)
-      .where(
-        and(
-          eq(studentProgress.userId, userId),
-          gte(studentProgress.lastAttemptedAt, eightWeeksAgo)
-        )
-      )
-      .groupBy(sql`DATE(${studentProgress.lastAttemptedAt})`)
 
     // Build activity map
     const activityMap = new Map<string, number>()

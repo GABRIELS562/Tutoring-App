@@ -625,6 +625,7 @@
     "evaluationFailed": "Kon nie jou instruksie beoordeel nie. Kyk jou verbinding en probeer weer.",
     "quotaReached": "Jy het jou gratis KI-kontroles vir vandag opgebruik. Hulle herstel môre.",
     "readyForCertificate": "Jy is gereed om jou KI-geletterdheidsertifikaat te verdien!",
-    "certificateLockedBlurb": "Voltooi al 5 die KI-geletterdheidsmodules om jou sertifikaat te ontsluit. Hierdie verifieerbare kwalifikasie bewys jou KI-vaardighede aan werkgewers."
+    "certificateLockedBlurb": "Voltooi al 5 die KI-geletterdheidsmodules om jou sertifikaat te ontsluit. Hierdie verifieerbare kwalifikasie bewys jou KI-vaardighede aan werkgewers.",
+    "feedbackNotSaved": "Jou terugvoer is hieronder, maar ons kon dit nie stoor nie. Probeer weer om jou vordering op te teken."
   }
 }

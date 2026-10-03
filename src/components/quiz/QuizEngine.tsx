@@ -82,6 +82,17 @@ export default function QuizEngine({
   // saved. Holds what to retry (a question answer, or the final
   // completeQuiz call).
   const [saveError, setSaveError] = useState<{ retry: () => void } | null>(null)
+  /**
+   * True while this question's answer is still in flight.
+   *
+   * Without it the Next button appeared the instant the card flipped to
+   * "answered", so a student on a slow connection could answer Q1, press
+   * Next, answer Q2, and only THEN have Q1's save fail - putting the "not
+   * saved, retry" banner and the Next block on Q2, a question that had
+   * saved perfectly well. Blocking until the save settles keeps the error
+   * attached to the question it belongs to.
+   */
+  const [isSaving, setIsSaving] = useState(false)
 
   // These props are accepted for future difficulty-aware retry logic
   // and grade-scoped question fetching (already applied server-side by
@@ -148,7 +159,12 @@ export default function QuizEngine({
       return
     }
 
-    await persistAnswer(questions[currentIndex].id, selectedLetter)
+    setIsSaving(true)
+    try {
+      await persistAnswer(questions[currentIndex].id, selectedLetter)
+    } finally {
+      setIsSaving(false)
+    }
   }
 
   const persistCompleteQuiz = async () => {
@@ -172,7 +188,7 @@ export default function QuizEngine({
     // programmatic call). The unsaved answer must be retried
     // successfully - or the save error cleared by a successful retry -
     // before the student can move on.
-    if (saveError) {
+    if (saveError || isSaving) {
       return
     }
 
@@ -449,7 +465,7 @@ export default function QuizEngine({
           question={questions[currentIndex]}
           onAnswer={handleAnswer}
           onNext={handleNext}
-          nextDisabled={Boolean(saveError)}
+          nextDisabled={Boolean(saveError) || isSaving}
         />
       </AnimatePresence>
       </div>

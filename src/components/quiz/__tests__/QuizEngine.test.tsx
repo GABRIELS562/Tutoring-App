@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
-import { render, screen } from '@testing-library/react'
+import { render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import QuizEngine from '../QuizEngine'
 import type { QuestionWithDetails } from '@/db/queries/questions'
@@ -390,5 +390,47 @@ describe('question visibility does not depend on an animation', () => {
       zeroOpacity(container).map((el) => el.className),
       'post-answer content is invisible until an animation runs'
     ).toEqual([])
+  })
+})
+
+/**
+ * A save that fails AFTER the student has moved on used to attach its
+ * "not saved, retry" banner and its Next block to whichever question was
+ * on screen by then - a question that had saved perfectly well. The cause
+ * was Next becoming clickable the moment the card flipped to "answered",
+ * without waiting for the save to settle.
+ */
+describe('QuizEngine does not let a student outrun the save', () => {
+  beforeEach(() => {
+    vi.clearAllMocks()
+  })
+
+  it('keeps Next disabled until the answer has actually been recorded', async () => {
+    // Arrange - a save that stays in flight until we release it
+    let release: (value: { ok: true; xpEarned: number }) => void = () => {}
+    recordAnswerMock.mockImplementationOnce(
+      () => new Promise((resolve) => { release = resolve })
+    )
+    const user = userEvent.setup()
+    render(
+      <QuizEngine
+        topicSlug="trig-gr11"
+        grade={11}
+        userId="real-student-1"
+        initialQuestions={[makeQuestion()]}
+        isDemo={false}
+      />
+    )
+
+    // Act - answer, while the save is still pending
+    await user.click(screen.getByText('Four'))
+
+    // Assert - the student cannot advance past an unsettled save
+    const next = screen.getByRole('button', { name: /next|finish/i })
+    expect(next).toBeDisabled()
+
+    // Act - the save lands
+    release({ ok: true, xpEarned: 10 })
+    await waitFor(() => expect(next).not.toBeDisabled())
   })
 })

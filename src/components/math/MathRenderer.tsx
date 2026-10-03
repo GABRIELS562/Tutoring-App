@@ -1,18 +1,43 @@
 'use client'
 
-import { useMemo } from 'react'
+import { memo, useMemo } from 'react'
 import 'katex/dist/katex.min.css'
 import { InlineMath, BlockMath } from 'react-katex'
 import katex from 'katex'
 
-// Validate LaTeX before rendering
+/**
+ * Validate LaTeX before rendering, once per distinct expression.
+ *
+ * This is a full katex.renderToString() purely to find out whether the
+ * string parses - and then react-katex renders the very same expression a
+ * second time to produce the output. That is unavoidable without changing
+ * the render path, but repeating it on every re-render is not: an exam
+ * paper carries hundreds of expressions, and ExamItemCard re-renders its
+ * whole subtree each time a card moves between gate, scaffold, attempt,
+ * marking and result. Every one of those transitions was re-parsing every
+ * formula on screen, which is the jank a student feels while marking.
+ *
+ * The cache is keyed on the expression and mode, module-level because the
+ * same formulas recur across components and across mounts. LaTeX strings
+ * here come from static content files and the question bank, so the key
+ * space is bounded by the curriculum, not by user input.
+ */
+const latexValidity = new Map<string, boolean>()
+
 function isValidLatex(math: string, displayMode: boolean): boolean {
+  const key = `${displayMode ? 'b' : 'i'}:${math}`
+  const cached = latexValidity.get(key)
+  if (cached !== undefined) return cached
+
+  let valid: boolean
   try {
     katex.renderToString(math, { throwOnError: true, displayMode })
-    return true
+    valid = true
   } catch {
-    return false
+    valid = false
   }
+  latexValidity.set(key, valid)
+  return valid
 }
 
 type MathRendererProps = {
@@ -96,7 +121,7 @@ function renderText(text: string, keyPrefix: number) {
   })
 }
 
-function SafeInlineMath({ math }: { math: string }) {
+const SafeInlineMath = memo(function SafeInlineMath({ math }: { math: string }) {
   if (!isValidLatex(math, false)) {
     return (
       <span className="text-red-500 font-mono text-sm" title="KaTeX error">
@@ -105,9 +130,9 @@ function SafeInlineMath({ math }: { math: string }) {
     )
   }
   return <InlineMath math={math} />
-}
+})
 
-function SafeBlockMath({ math }: { math: string }) {
+const SafeBlockMath = memo(function SafeBlockMath({ math }: { math: string }) {
   if (!isValidLatex(math, true)) {
     return (
       <div className="text-red-500 font-mono text-sm p-2" title="KaTeX error">
@@ -116,7 +141,7 @@ function SafeBlockMath({ math }: { math: string }) {
     )
   }
   return <BlockMath math={math} />
-}
+})
 
 export default function MathRenderer({ content, block = false }: MathRendererProps) {
   const parts = useMemo(() => parseMathContent(content), [content])

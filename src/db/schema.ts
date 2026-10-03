@@ -85,7 +85,7 @@ export const questions = pgTable('questions', {
 export const questionOptions = pgTable('question_options', {
   id: uuid('id').primaryKey().defaultRandom(),
   // An option is part of its question, not a thing in its own right.
-  questionId: uuid('question_id').references(() => questions.id, { onDelete: 'cascade' }),
+  questionId: uuid('question_id').references(() => questions.id, { onDelete: 'cascade' }).notNull(),
   optionLetter: text('option_letter'), // 'A'|'B'|'C'|'D'
   optionText: text('option_text').notNull(),
   isCorrect: boolean('is_correct').default(false),
@@ -97,7 +97,7 @@ export const questionOptions = pgTable('question_options', {
 export const steps = pgTable('steps', {
   id: uuid('id').primaryKey().defaultRandom(),
   // Likewise a step.
-  questionId: uuid('question_id').references(() => questions.id, { onDelete: 'cascade' }),
+  questionId: uuid('question_id').references(() => questions.id, { onDelete: 'cascade' }).notNull(),
   stepNumber: integer('step_number').notNull(),
   instruction: text('instruction').notNull(),
   hint: text('hint'),
@@ -116,8 +116,8 @@ export const studentProgress = pgTable('student_progress', {
   // progress rows against it: a row saying "answered question X correctly"
   // is meaningless once X is gone, and without this an admin could never
   // delete a question any student had ever attempted.
-  userId: uuid('user_id').references(() => users.id, { onDelete: 'cascade' }),
-  questionId: uuid('question_id').references(() => questions.id, { onDelete: 'cascade' }),
+  userId: uuid('user_id').references(() => users.id, { onDelete: 'cascade' }).notNull(),
+  questionId: uuid('question_id').references(() => questions.id, { onDelete: 'cascade' }).notNull(),
   status: text('status').default('unanswered'), // 'unanswered'|'attempted'|'correct'|'incorrect'
   attempts: integer('attempts').default(0),
   lastAttemptedAt: timestamp('last_attempted_at'),
@@ -134,6 +134,12 @@ export const studentProgress = pgTable('student_progress', {
   // (INSERT ... ON CONFLICT DO NOTHING, then SELECT ... FOR UPDATE)
   // instead of two concurrent first-time answers to the same question
   // racing to insert duplicate rows and each awarding XP.
+  // Both columns are .notNull() for this index to mean anything: Postgres
+  // treats NULL as distinct from every other NULL, so a nullable column
+  // here would let duplicate rows through the ON CONFLICT DO NOTHING above
+  // and award XP twice, with no error. The RLS policies have the same
+  // dependency - `USING (user_id = auth.uid())` matches no row whose
+  // user_id is NULL, which would make it invisible to its own student.
   uniqueIndex('student_progress_user_question_unique').on(table.userId, table.questionId),
 ])
 
@@ -175,7 +181,7 @@ export const aiHintUsage = pgTable('ai_hint_usage', {
 export const aiCertificates = pgTable('ai_certificates', {
   id: uuid('id').primaryKey().defaultRandom(),
   // A certificate belongs to a student; if the student is erased so is it.
-  userId: uuid('user_id').references(() => users.id, { onDelete: 'cascade' }),
+  userId: uuid('user_id').references(() => users.id, { onDelete: 'cascade' }).notNull(),
   certificateId: text('certificate_id').unique().notNull(), // Short unique ID for QR, e.g. AT-2026-X7K9
   studentName: text('student_name').notNull(),
   issuedAt: timestamp('issued_at').defaultNow(),
@@ -188,7 +194,7 @@ export const aiCertificates = pgTable('ai_certificates', {
 // Table 11: prompt_challenge_attempts
 export const promptChallengeAttempts = pgTable('prompt_challenge_attempts', {
   id: uuid('id').primaryKey().defaultRandom(),
-  userId: uuid('user_id').references(() => users.id, { onDelete: 'cascade' }),
+  userId: uuid('user_id').references(() => users.id, { onDelete: 'cascade' }).notNull(),
   challengeId: text('challenge_id').notNull(), // Which challenge scenario
   studentPrompt: text('student_prompt').notNull(),
   aiScore: integer('ai_score'), // 1-5

@@ -132,9 +132,20 @@ export default function PromptChallengeGame({ userId, onComplete }: PromptChalle
       // xpEarned (including any badge bonus) and newBadges when Supabase is
       // configured; it's absent in demo mode.
       const evalResult: PromptEvaluationResult = data.evaluation
-      const xpEarned: number = data.attempt?.xpEarned ?? evalResult.score * PROMPT_CHALLENGE_XP_PER_STAR
-
       setEvaluation(evalResult)
+
+      // `persisted: false` means the write genuinely failed, as opposed to
+      // demo mode where there was nothing to write. Showing the feedback is
+      // right either way - the model did its work and it is free - but
+      // counting XP and ticking the challenge off would be a lie: none of
+      // it reached the database, and the certificate gate reads the
+      // database, not this screen.
+      if (data.persisted === false) {
+        setSubmitError(t('feedbackNotSaved'))
+        return
+      }
+
+      const xpEarned: number = data.attempt?.xpEarned ?? evalResult.score * PROMPT_CHALLENGE_XP_PER_STAR
 
       // Save attempt locally
       const newAttempt: ChallengeAttempt = {

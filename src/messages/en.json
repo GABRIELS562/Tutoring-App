@@ -625,6 +625,7 @@
     "evaluationFailed": "Could not evaluate your prompt. Check your connection and try again.",
     "quotaReached": "You have used your free AI checks for today. They reset tomorrow.",
     "readyForCertificate": "You’re ready to earn your AI Literacy Certificate!",
-    "certificateLockedBlurb": "Complete all 5 AI Literacy modules to unlock your certificate. This verifiable credential proves your AI skills to employers."
+    "certificateLockedBlurb": "Complete all 5 AI Literacy modules to unlock your certificate. This verifiable credential proves your AI skills to employers.",
+    "feedbackNotSaved": "Your feedback is below, but we could not save it. Try again to record your progress."
   }
 }
