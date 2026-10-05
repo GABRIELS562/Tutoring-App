@@ -627,5 +627,9 @@
     "readyForCertificate": "You’re ready to earn your AI Literacy Certificate!",
     "certificateLockedBlurb": "Complete all 5 AI Literacy modules to unlock your certificate. This verifiable credential proves your AI skills to employers.",
     "feedbackNotSaved": "Your feedback is below, but we could not save it. Try again to record your progress."
+  },
+  "demoBanner": {
+    "label": "Demo mode",
+    "message": "Explore everything freely - progress, XP and quiz results are not saved and reset when you reload."
   }
 }

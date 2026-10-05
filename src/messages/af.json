@@ -627,5 +627,9 @@
     "readyForCertificate": "Jy is gereed om jou KI-geletterdheidsertifikaat te verdien!",
     "certificateLockedBlurb": "Voltooi al 5 die KI-geletterdheidsmodules om jou sertifikaat te ontsluit. Hierdie verifieerbare kwalifikasie bewys jou KI-vaardighede aan werkgewers.",
     "feedbackNotSaved": "Jou terugvoer is hieronder, maar ons kon dit nie stoor nie. Probeer weer om jou vordering op te teken."
+  },
+  "demoBanner": {
+    "label": "Demo-modus",
+    "message": "Verken alles vrylik - vordering, XP en kwisuitslae word nie gestoor nie en herstel wanneer jy herlaai."
   }
 }

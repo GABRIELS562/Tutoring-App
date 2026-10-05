@@ -38,6 +38,21 @@ const REQUIRED_PRODUCTION_ENV = [
 
 const NEXT_PRODUCTION_BUILD_PHASE = 'phase-production-build'
 
+/**
+ * Is this the demo deployment - a production build running with no
+ * database, opted into with NEXT_PUBLIC_DEMO_DEPLOYMENT?
+ *
+ * Deliberately NOT folded into isDemoAuth(). That function decides whether
+ * demo AUTH is permitted - whether a caller with no session is treated as a
+ * signed-in admin - and it is false in production precisely so the admin
+ * panel stays shut on a deployment like this one. This answers a different
+ * question: whether the app is serving demo CONTENT. A demo deployment is
+ * both (demo content, no demo auth), so the two must stay separate.
+ */
+export function isDemoDeployment(): boolean {
+  return process.env.NEXT_PUBLIC_DEMO_DEPLOYMENT === 'true'
+}
+
 export function assertProductionEnv(): void {
   if (process.env.NODE_ENV !== 'production') {
     return
@@ -45,6 +60,44 @@ export function assertProductionEnv(): void {
 
   if (process.env.NEXT_PHASE === NEXT_PRODUCTION_BUILD_PHASE) {
     return
+  }
+
+  const present = REQUIRED_PRODUCTION_ENV.filter((key) => process.env[key])
+
+  /**
+   * A demo deployment: a real production build, deliberately with no
+   * database, so a client can click through the app exactly as it looks on
+   * a developer's machine - Demo Student, the demo question bank, the
+   * static paper library. Nothing persists, and nothing is meant to.
+   *
+   * Opted into explicitly, and only honoured when NOT ONE Supabase value is
+   * set. A half-configured deployment is the accident this guard exists to
+   * catch, and it still fails: a real deployment that loses one variable
+   * cannot silently slide into demo mode by having this flag set too.
+   *
+   * What is NOT relaxed: demo-admin. `isDemoAuth()` requires
+   * NODE_ENV !== 'production', so the admin panel stays shut here and the
+   * layout falls through to requireAdmin(), which has no session to find.
+   *
+   * This does mean the app serves content to anyone who reaches it, signed
+   * in as a fake student. Put the hostname behind Cloudflare Access (or
+   * equivalent) - the deployment itself has no login of its own.
+   */
+  if (process.env.NEXT_PUBLIC_DEMO_DEPLOYMENT === 'true') {
+    if (present.length === 0) {
+      console.warn(
+        '[demo deployment] Running a production build with no database. ' +
+          'Nothing persists, and the app is open to anyone who can reach it - ' +
+          'it must sit behind an access gate.'
+      )
+      return
+    }
+
+    throw new Error(
+      `NEXT_PUBLIC_DEMO_DEPLOYMENT is set, but these are also configured: ${present.join(', ')}. ` +
+        'A demo deployment must have no database at all - refusing to start ' +
+        'rather than run half-configured.'
+    )
   }
 
   const missing = REQUIRED_PRODUCTION_ENV.filter((key) => !process.env[key])

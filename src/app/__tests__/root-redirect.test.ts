@@ -1,12 +1,14 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 
-const { redirectMock, isDemoAuthMock } = vi.hoisted(() => ({
+const { redirectMock, isDemoAuthMock, isDemoDeploymentMock } = vi.hoisted(() => ({
   redirectMock: vi.fn(),
   isDemoAuthMock: vi.fn<() => boolean>(),
+  isDemoDeploymentMock: vi.fn<() => boolean>(),
 }))
 
 vi.mock('next/navigation', () => ({ redirect: redirectMock }))
 vi.mock('@/lib/auth/require-user', () => ({ isDemoAuth: isDemoAuthMock }))
+vi.mock('@/lib/env', () => ({ isDemoDeployment: isDemoDeploymentMock }))
 
 const { default: Home } = await import('@/app/page')
 
@@ -25,6 +27,8 @@ const { default: Home } = await import('@/app/page')
 describe('the root route', () => {
   beforeEach(() => {
     vi.clearAllMocks()
+    isDemoAuthMock.mockReturnValue(false)
+    isDemoDeploymentMock.mockReturnValue(false)
   })
 
   it('goes to the dashboard when the app is running in demo auth', () => {
@@ -41,5 +45,22 @@ describe('the root route', () => {
     Home()
 
     expect(redirectMock).toHaveBeenCalledWith('/login')
+  })
+
+  /**
+   * On the production demo deployment isDemoAuth() is false by design - it
+   * gates demo-admin, which has to stay shut - but the proxy is still open
+   * and the app still serves a demo student. "/" therefore went to /login
+   * and was bounced on to /dashboard: two redirects through a sign-in page,
+   * for the single URL the client is given.
+   */
+  it('goes straight to the dashboard on a demo deployment, without passing through login', () => {
+    isDemoAuthMock.mockReturnValue(false)
+    isDemoDeploymentMock.mockReturnValue(true)
+
+    Home()
+
+    expect(redirectMock).toHaveBeenCalledWith('/dashboard')
+    expect(redirectMock).not.toHaveBeenCalledWith('/login')
   })
 })

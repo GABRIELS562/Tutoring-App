@@ -1,5 +1,6 @@
 import { redirect } from 'next/navigation'
 import { isDemoAuth } from '@/lib/auth/require-user'
+import { isDemoDeployment } from '@/lib/env'
 
 /**
  * Where "/" sends you.
@@ -12,7 +13,14 @@ import { isDemoAuth } from '@/lib/auth/require-user'
  *
  * isDemoAuth() is false in production and whenever Supabase IS configured,
  * so a real deployment still starts at /login exactly as before.
+ *
+ * isDemoDeployment() covers the production demo build, where isDemoAuth()
+ * is false by design (it gates demo-admin, which must stay shut) but the
+ * app is still serving demo content behind an open proxy. Without it "/"
+ * went to /login and the proxy bounced it on to /dashboard - two redirects
+ * through a sign-in page, for the one URL the client actually types.
  */
 export default function Home() {
-  redirect(isDemoAuth() ? '/dashboard' : '/login')
+  const toDashboard = isDemoAuth() || isDemoDeployment()
+  redirect(toDashboard ? '/dashboard' : '/login')
 }

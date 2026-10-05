@@ -6,6 +6,7 @@ import Sidebar from '@/components/layout/Sidebar'
 import SkipLink from '@/components/layout/SkipLink'
 import InstallPrompt from '@/components/InstallPrompt'
 import CameraScanLoader from '@/components/ai/CameraScanLoader'
+import DemoBanner from '@/components/layout/DemoBanner'
 
 // Force dynamic rendering - don't prerender at build time
 export const dynamic = 'force-dynamic'
@@ -113,6 +114,10 @@ export default async function AppLayout({
             focus target for SkipLink - without it, .focus() from script
             is a no-op on a non-interactive element like <main>. */}
         <main id="main-content" tabIndex={-1} className="md:ml-[60px] pb-20 md:pb-0">
+          {/* Inside <main> so it picks up the sidebar offset, and above
+              {children} so it is the first thing on every page. Renders
+              nothing unless this is a demo deployment. */}
+          <DemoBanner />
           {children}
         </main>
         <InstallPrompt />

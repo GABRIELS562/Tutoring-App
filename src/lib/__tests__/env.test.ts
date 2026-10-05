@@ -1,7 +1,15 @@
-import { describe, it, expect, beforeEach, afterEach } from 'vitest'
+import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest'
 import { assertProductionEnv } from '@/lib/env'
 
 const ORIGINAL_ENV = { ...process.env }
+
+/** Mirrors REQUIRED_PRODUCTION_ENV in src/lib/env.ts. */
+const REQUIRED_PRODUCTION_ENV_KEYS = [
+  'NEXT_PUBLIC_SUPABASE_URL',
+  'NEXT_PUBLIC_SUPABASE_ANON_KEY',
+  'DATABASE_URL',
+  'SUPABASE_SERVICE_ROLE_KEY',
+] as const
 
 function setEnv(overrides: Record<string, string | undefined>) {
   for (const [key, value] of Object.entries(overrides)) {
@@ -21,6 +29,8 @@ describe('assertProductionEnv', () => {
       NEXT_PUBLIC_SUPABASE_ANON_KEY: undefined,
       DATABASE_URL: undefined,
       NEXT_PHASE: undefined,
+      SUPABASE_SERVICE_ROLE_KEY: undefined,
+      NEXT_PUBLIC_DEMO_DEPLOYMENT: undefined,
     })
   })
 
@@ -118,5 +128,90 @@ describe('the service role key is a production requirement', () => {
     })
 
     expect(() => assertProductionEnv()).not.toThrow()
+  })
+})
+
+/**
+ * The demo deployment: a production build with no database, so the client
+ * can click through the app the way it looks on a developer's machine.
+ *
+ * It exists because the guard above is the ONLY thing that stops that from
+ * working - every other layer already degrades on its own, and demo-admin
+ * stays shut because isDemoAuth() checks NODE_ENV separately. So the escape
+ * hatch has to be narrow: opt-in by name, and refused the moment any real
+ * Supabase value appears, which is the half-configured deploy the guard is
+ * actually there to catch.
+ */
+describe('demo deployment', () => {
+  beforeEach(() => {
+    setEnv({
+      NODE_ENV: 'production',
+      NEXT_PHASE: undefined,
+      NEXT_PUBLIC_SUPABASE_URL: undefined,
+      NEXT_PUBLIC_SUPABASE_ANON_KEY: undefined,
+      DATABASE_URL: undefined,
+      SUPABASE_SERVICE_ROLE_KEY: undefined,
+      NEXT_PUBLIC_DEMO_DEPLOYMENT: undefined,
+    })
+    vi.spyOn(console, 'warn').mockImplementation(() => {})
+  })
+
+  afterEach(() => {
+    vi.restoreAllMocks()
+    process.env = { ...ORIGINAL_ENV }
+  })
+
+  it('boots a production build with no database when opted into explicitly', () => {
+    setEnv({ NEXT_PUBLIC_DEMO_DEPLOYMENT: 'true' })
+
+    expect(() => assertProductionEnv()).not.toThrow()
+  })
+
+  it('warns that the deployment is open and persists nothing', () => {
+    setEnv({ NEXT_PUBLIC_DEMO_DEPLOYMENT: 'true' })
+
+    assertProductionEnv()
+
+    expect(console.warn).toHaveBeenCalledWith(
+      expect.stringMatching(/demo deployment/i)
+    )
+  })
+
+  it.each(REQUIRED_PRODUCTION_ENV_KEYS)(
+    'refuses to start when %s is also set - that is a half-configured deploy, not a demo',
+    (key) => {
+      setEnv({ NEXT_PUBLIC_DEMO_DEPLOYMENT: 'true', [key]: 'a-real-value' })
+
+      expect(() => assertProductionEnv()).toThrow(new RegExp(key))
+    }
+  )
+
+  it('does not let the flag mask a real deployment that lost one variable', () => {
+    setEnv({
+      NEXT_PUBLIC_DEMO_DEPLOYMENT: 'true',
+      NEXT_PUBLIC_SUPABASE_URL: 'https://example.supabase.co',
+      NEXT_PUBLIC_SUPABASE_ANON_KEY: 'anon-key',
+      SUPABASE_SERVICE_ROLE_KEY: 'service-role-key',
+      // DATABASE_URL lost. Without the present-count check this would boot
+      // into demo mode and quietly serve a fake student instead of failing.
+    })
+
+    expect(() => assertProductionEnv()).toThrow(/refusing to start/)
+  })
+
+  it.each(['false', 'TRUE', '1', 'yes', ''])(
+    'is not enabled by %o - only the exact string "true"',
+    (value) => {
+      setEnv({ NEXT_PUBLIC_DEMO_DEPLOYMENT: value })
+
+      expect(() => assertProductionEnv()).toThrow(/NEXT_PUBLIC_SUPABASE_URL/)
+    }
+  )
+
+  it('is irrelevant outside production', () => {
+    setEnv({ NODE_ENV: 'test', NEXT_PUBLIC_DEMO_DEPLOYMENT: undefined })
+
+    expect(() => assertProductionEnv()).not.toThrow()
+    expect(console.warn).not.toHaveBeenCalled()
   })
 })
