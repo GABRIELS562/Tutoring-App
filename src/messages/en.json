@@ -296,7 +296,9 @@
     "examPapers": "Exam papers",
     "examAnswered": "{count} questions answered",
     "examMastered": "{count} mastered",
-    "examBlindSpots": "{count} blind spots"
+    "examBlindSpots": "{count} blind spots",
+    "loadFailedTitle": "We could not load your progress",
+    "loadFailedBody": "Something went wrong on our side, so we are not showing you numbers we cannot stand behind. Your work is safe - please refresh in a moment."
   },
   "subjects": {
     "title": "Subjects",

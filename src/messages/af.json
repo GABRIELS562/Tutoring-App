@@ -296,7 +296,9 @@
     "examPapers": "Eksamenvraestelle",
     "examAnswered": "{count} vrae beantwoord",
     "examMastered": "{count} bemeester",
-    "examBlindSpots": "{count} blindekolle"
+    "examBlindSpots": "{count} blindekolle",
+    "loadFailedTitle": "Ons kon nie jou vordering laai nie",
+    "loadFailedBody": "Iets het aan ons kant verkeerd geloop, so ons wys nie syfers wat ons nie kan staaf nie. Jou werk is veilig - herlaai asseblief oor 'n oomblik."
   },
   "subjects": {
     "title": "Vakke",

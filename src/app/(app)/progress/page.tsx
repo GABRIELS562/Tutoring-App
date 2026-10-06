@@ -76,6 +76,14 @@ export default async function ProgressPage() {
   // they actually got wrong, so the section simply does not render until
   // there is a real attempt behind it.
   let examSummary: ExamPaperSummary[] = []
+  // A signed-in student whose queries failed must not be shown an empty
+  // chart. getProgressData/getLeaderboard/getExamSummary each catch every
+  // error and return the same empty shape a brand-new student gets, so
+  // "nothing to show" and "the database did not answer" are indistinguish-
+  // able from here - and the empty version reads as "I lost all my work".
+  // getDashboardData is the same canary the dashboard uses.
+  let signedIn = false
+  let loadFailed = false
 
   // Try to get authenticated user
   try {
@@ -96,9 +104,12 @@ export default async function ProgressPage() {
       const { data: { user: authUser } } = await supabase.auth.getUser()
       if (authUser) {
         userId = authUser.id
+        signedIn = true
         const dashboardData = await getDashboardData(userId)
         if (dashboardData.user) {
           userGrade = dashboardData.user.grade || 11
+        } else {
+          loadFailed = true
         }
 
         // For a signed-in student we show what they actually have, even
@@ -113,6 +124,30 @@ export default async function ProgressPage() {
     }
   } catch (error) {
     console.error('Progress page auth error:', error)
+  }
+
+  // Say so, rather than rendering a flat zero chart a student will read as
+  // having lost weeks of work.
+  if (signedIn && loadFailed) {
+    return (
+      <div className="min-h-screen" style={{ background: 'var(--bg)' }}>
+        <Topbar title={t('title')} subtitle={t('subtitle')} />
+        <div className="max-w-xl mx-auto px-4 py-10">
+          <div
+            role="status"
+            className="rounded-xl p-5"
+            style={{ background: 'var(--surface)', border: '1px solid var(--accent-red)' }}
+          >
+            <h2 className="font-semibold mb-1" style={{ color: 'var(--text)' }}>
+              {t('loadFailedTitle')}
+            </h2>
+            <p className="text-sm" style={{ color: 'var(--muted-custom)' }}>
+              {t('loadFailedBody')}
+            </p>
+          </div>
+        </div>
+      </div>
+    )
   }
 
   return (
