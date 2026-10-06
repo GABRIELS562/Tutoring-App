@@ -555,7 +555,8 @@
     "notSaved": "Nie gestoor nie — kyk jou verbinding. Jou punte wys hier, maar het nie jou rekening bereik nie.",
     "chooseSubtitle": "Kies ’n vraestel",
     "paperMeta": "{questions} vrae · {marks} punte",
-    "paperProgress": "{done} van {total} beantwoord · {earned}/{available} punte"
+    "paperProgress": "{done} van {total} beantwoord · {earned}/{available} punte",
+    "outOf": "uit"
   },
   "weakness": {
     "issue_signErrors": "Tekenfoute in reduksieformules",

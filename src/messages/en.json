@@ -555,7 +555,8 @@
     "notSaved": "Not saved — check your connection. Your marks are shown but did not reach your account.",
     "chooseSubtitle": "Choose a paper",
     "paperMeta": "{questions} questions · {marks} marks",
-    "paperProgress": "{done} of {total} answered · {earned}/{available} marks"
+    "paperProgress": "{done} of {total} answered · {earned}/{available} marks",
+    "outOf": "out of"
   },
   "weakness": {
     "issue_signErrors": "Sign errors in reduction formulae",

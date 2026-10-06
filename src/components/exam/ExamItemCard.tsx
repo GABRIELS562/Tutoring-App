@@ -1,6 +1,6 @@
 'use client'
 
-import { memo, useState } from 'react'
+import { memo, useEffect, useRef, useState } from 'react'
 import { useTranslations } from 'next-intl'
 import Image from 'next/image'
 import { Check, X, Clock, ArrowRight } from 'lucide-react'
@@ -90,6 +90,42 @@ function ExamItemCard({
   const calibration = familiarity ? calibrationOf(familiarity, earned, available) : null
   const copy = calibration ? CALIBRATION_COPY[calibration] : null
 
+  /**
+   * Each phase replaces the button the student just pressed, so the
+   * browser drops focus to <body> - up to five times per question, on a
+   * 53-question paper. A keyboard user has to tab back down from the top
+   * of the page every time, and a screen reader loses its place at the
+   * exact moment the new content appears.
+   *
+   * Focus moves to the new phase instead. Skipped on first render so that
+   * arriving at the page (or scrolling past 50 cards) does not yank focus
+   * into one of them.
+   */
+  const phaseRef = useRef<HTMLDivElement>(null)
+  const settled = useRef(false)
+
+  useEffect(() => {
+    if (!settled.current) {
+      settled.current = true
+      return
+    }
+    phaseRef.current?.focus()
+  }, [phase])
+
+  /**
+   * What the result actually says, as one sentence. The marks, the
+   * verdict and the XP are spread across three separate nodes on screen,
+   * and none of them was in a live region - so a blind student marking
+   * themselves against the memo got no feedback at all on the app's main
+   * feature.
+   */
+  const resultAnnouncement =
+    phase === 'result' && copy && calibration
+      ? `${t(copy.key)}. ${earned} ${earned === 1 ? t('mark') : t('marks')} ${t(
+          'outOf'
+        )} ${available}. ${t(`${copy.key}Detail`)}`
+      : ''
+
   const choose = (value: Familiarity) => {
     setFamiliarity(value)
     setPhase(SCAFFOLD[value] === 'none' ? 'attempt' : 'scaffold')
@@ -139,6 +175,16 @@ function ExamItemCard({
       <div className="text-base mb-4" style={{ color: 'var(--text)' }}>
         <MathRenderer content={item.prompt} />
       </div>
+
+      {/* Announces the outcome. role="status" rather than "alert": it
+          should be read when reached, not interrupt. */}
+      <div aria-live="polite" role="status" className="sr-only">
+        {resultAnnouncement}
+      </div>
+
+      {/* tabIndex -1 makes this a valid programmatic focus target; it is
+          not in the tab order itself. */}
+      <div ref={phaseRef} tabIndex={-1} className="outline-none">
 
       {/* ---------------------------------------------------- the gate */}
       {phase === 'gate' && (
@@ -374,6 +420,8 @@ function ExamItemCard({
           </div>
         </div>
       )}
+
+      </div>
     </div>
   )
 }
