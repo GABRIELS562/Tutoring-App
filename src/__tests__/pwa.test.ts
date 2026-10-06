@@ -84,3 +84,48 @@ describe('caching strategy', () => {
     expect(messages.formulas).not.toHaveProperty('worksOffline')
   })
 })
+
+/**
+ * What the worker downloads before the student has asked for anything.
+ *
+ * next-pwa precaches every build asset by default. Measured on this app
+ * that was 182 entries / ~1.6 MB gzip, fetched in the background the
+ * moment the worker installs - over mobile data, regardless of which
+ * pages the student ever opens. Excluding two groups took it to 89
+ * entries / ~990 KB.
+ *
+ * The exclusions are only safe because of what they are, so this pins
+ * both the exclusions AND what must stay.
+ */
+describe('the precache does not download what nobody will use', () => {
+  it('excludes legacy font formats', () => {
+    // KaTeX ships every face as woff2 AND woff AND ttf. @font-face makes
+    // the browser pick exactly one - woff2 - and the other two exist for
+    // browsers that cannot run a service worker at all (woff2: Chrome 36,
+    // Firefox 39, Safari 10; service workers: Safari 11.1). 598 KB gzip
+    // downloaded by everyone and used by nobody.
+    expect(configSource).toMatch(/buildExcludes:[\s\S]{0,120}\\\.\(woff\|ttf\)\$/)
+  })
+
+  it('excludes per-route chunks, which load on navigation anyway', () => {
+    expect(configSource).toMatch(/buildExcludes:[\s\S]{0,160}\\\/app\\\//)
+  })
+
+  /**
+   * The flip side. Excluding the shell would break the offline shell the
+   * runtime caching exists to support, and excluding woff2 would mean
+   * maths renders in a fallback font offline.
+   */
+  it('does not exclude woff2, the format actually used', () => {
+    const excludes = configSource.match(/buildExcludes:\s*\[([\s\S]*?)\]/)?.[1] ?? ''
+
+    expect(excludes).not.toMatch(/woff2/)
+  })
+
+  it('does not exclude the app shell or CSS', () => {
+    const excludes = configSource.match(/buildExcludes:\s*\[([\s\S]*?)\]/)?.[1] ?? ''
+
+    expect(excludes).not.toMatch(/main-app|webpack|framework|polyfills/)
+    expect(excludes).not.toMatch(/css/)
+  })
+})

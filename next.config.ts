@@ -8,6 +8,34 @@ const withPWA = withPWAInit({
   register: true,
   skipWaiting: true,
   disable: process.env.NODE_ENV === 'development',
+  /**
+   * What NOT to download on a student's first visit.
+   *
+   * next-pwa precaches every build asset by default, which measured at
+   * 182 entries / ~1.6 MB gzip - fetched in the background the moment the
+   * worker installs, over whatever mobile data the student is paying for,
+   * regardless of which pages they ever open.
+   *
+   * 1. Legacy font formats (598 KB gzip, 40 files). KaTeX ships every
+   *    face as woff2 AND woff AND ttf, and @font-face makes the browser
+   *    pick exactly one - woff2. The other two are fallbacks for browsers
+   *    that cannot run a service worker in the first place (woff2 landed
+   *    in Chrome 36 / Firefox 39 / Safari 10; service workers needed
+   *    Safari 11.1). So these were downloaded by everyone and used by
+   *    nobody. They stay in the build and are still served if anything
+   *    ever asks.
+   *
+   * 2. Per-route chunks (69 KB gzip, 53 files). These load on navigation
+   *    anyway, and the StaleWhileRevalidate rule below caches them from
+   *    the first visit onwards. Precaching them bought nothing offline
+   *    either: page HTML is deliberately not cached, so a route the
+   *    student has never opened cannot load offline whether its chunk is
+   *    present or not.
+   *
+   * The app shell, shared vendor chunks, CSS and woff2 are all still
+   * precached, so repeat loads and the offline shell are unchanged.
+   */
+  buildExcludes: [/\.(woff|ttf)$/, /\/app\/.*\.js$/],
   runtimeCaching: [
     // NOTHING BEHIND THE LOGIN IS RUNTIME-CACHED, and that is deliberate.
     //
