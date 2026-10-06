@@ -1,6 +1,7 @@
 import { redirect } from 'next/navigation'
 import { isDemoAuth, requireAdmin, AuthError } from '@/lib/auth/require-user'
 import AdminNav from './AdminNav'
+import DemoBanner from '@/components/layout/DemoBanner'
 
 export const dynamic = 'force-dynamic'
 
@@ -39,6 +40,8 @@ function renderAdmin(children: React.ReactNode, userName: string) {
   return (
     <div className="min-h-screen" style={{ background: 'var(--bg)' }}>
       <AdminNav userName={userName} />
+      {/* Renders nothing unless this is a demo deployment. */}
+      <DemoBanner variant="admin" />
       <main className="p-4 md:p-6">
         {children}
       </main>

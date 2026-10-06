@@ -2,6 +2,7 @@ import { createServerClient } from '@supabase/ssr'
 import { cookies } from 'next/headers'
 import { NextResponse } from 'next/server'
 import { isUserAdmin } from '@/db/queries/admin'
+import { isDemoDeployment } from '@/lib/env'
 
 /**
  * A minimal, trusted view of the signed-in user, derived server-side
@@ -32,16 +33,39 @@ export class AuthError extends Error {
 }
 
 /**
- * True only when Supabase auth is unconfigured AND we are not running in
- * production. This is the single condition every layer must agree on so
- * demo mode can never be reached on a real deployment.
+ * Whether this process should treat callers as a signed-in demo user -
+ * which also makes them an admin, since there is no role to look up.
+ *
+ * Supabase being unconfigured is necessary but not sufficient. Beyond
+ * that there are exactly two cases:
+ *
+ *   - local development, where an empty .env.local is how the app runs;
+ *   - a demo deployment, opted into by name with
+ *     NEXT_PUBLIC_DEMO_DEPLOYMENT and only valid when NOT ONE Supabase
+ *     value is set (assertProductionEnv refuses to boot otherwise).
+ *
+ * The second case is why this is not simply `NODE_ENV !== 'production'`.
+ * A demo deployment is a production build that is meant to be explored,
+ * admin panel included, by the handful of people who can reach it - it
+ * has no login of its own and must sit behind an access gate, so "admin"
+ * there means whoever the gate already let in.
+ *
+ * What has NOT changed is the accident this guards against: a real
+ * deployment that loses its Supabase env does not land here. It fails to
+ * boot, because assertProductionEnv() throws unless the demo flag is set
+ * AND every Supabase value is absent. Demo auth in production stays
+ * something you can only choose, never something you can slip into.
  */
 export function isDemoAuth(): boolean {
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
   const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
   const supabaseConfigured = Boolean(supabaseUrl && supabaseKey)
 
-  return !supabaseConfigured && process.env.NODE_ENV !== 'production'
+  if (supabaseConfigured) {
+    return false
+  }
+
+  return process.env.NODE_ENV !== 'production' || isDemoDeployment()
 }
 
 /**

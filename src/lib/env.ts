@@ -75,13 +75,16 @@ export function assertProductionEnv(): void {
    * catch, and it still fails: a real deployment that loses one variable
    * cannot silently slide into demo mode by having this flag set too.
    *
-   * What is NOT relaxed: demo-admin. `isDemoAuth()` requires
-   * NODE_ENV !== 'production', so the admin panel stays shut here and the
-   * layout falls through to requireAdmin(), which has no session to find.
+   * This is a full demo: isDemoAuth() treats a demo deployment as a
+   * signed-in demo user, admin panel included, because the point is that
+   * someone can explore the app exactly as a developer sees it locally.
+   * There is no role to look up without a database, so "admin" here means
+   * whoever got through the gate in front of this deployment.
    *
-   * This does mean the app serves content to anyone who reaches it, signed
-   * in as a fake student. Put the hostname behind Cloudflare Access (or
-   * equivalent) - the deployment itself has no login of its own.
+   * Which is a condition, not a nicety: this serves content - and an admin
+   * panel - to anyone who can reach it, signed in as a fake student, and it
+   * has no login of its own. Put the hostname behind Cloudflare Access (or
+   * equivalent) before it is reachable from the internet.
    */
   if (process.env.NEXT_PUBLIC_DEMO_DEPLOYMENT === 'true') {
     if (present.length === 0) {

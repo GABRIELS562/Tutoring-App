@@ -229,3 +229,70 @@ describe('require-user auth helpers', () => {
     })
   })
 })
+
+/**
+ * A demo deployment is a production build with no database, opted into by
+ * name, meant to be explored in full - admin panel included - by whoever
+ * the access gate in front of it has already let in.
+ *
+ * The thing these pin down is that it stays a CHOICE. A real deployment
+ * that loses its Supabase env must not land here; it fails to boot
+ * instead, because assertProductionEnv() only tolerates the demo flag when
+ * every Supabase value is absent.
+ */
+describe('isDemoAuth on a demo deployment', () => {
+  const ORIGINAL = { ...process.env }
+
+  const set = (env: Record<string, string | undefined>) => {
+    for (const [k, v] of Object.entries(env)) {
+      if (v === undefined) delete process.env[k]
+      else process.env[k] = v
+    }
+  }
+
+  beforeEach(() => {
+    set({
+      NODE_ENV: 'production',
+      NEXT_PUBLIC_SUPABASE_URL: undefined,
+      NEXT_PUBLIC_SUPABASE_ANON_KEY: undefined,
+      NEXT_PUBLIC_DEMO_DEPLOYMENT: undefined,
+    })
+  })
+
+  afterEach(() => {
+    process.env = { ...ORIGINAL }
+  })
+
+  it('is true in a production build when the demo flag is set', () => {
+    set({ NEXT_PUBLIC_DEMO_DEPLOYMENT: 'true' })
+
+    expect(isDemoAuth()).toBe(true)
+  })
+
+  it('is false in a production build without the flag - a misconfigured deploy gets no admin', () => {
+    expect(isDemoAuth()).toBe(false)
+  })
+
+  /**
+   * The flag must never override configured Supabase. If someone sets it on
+   * a real deployment, the live auth has to keep winning - otherwise one
+   * stray environment variable turns a real site into an open admin panel.
+   */
+  it('is false when Supabase IS configured, even with the flag set', () => {
+    set({
+      NEXT_PUBLIC_DEMO_DEPLOYMENT: 'true',
+      NEXT_PUBLIC_SUPABASE_URL: 'https://example.supabase.co',
+      NEXT_PUBLIC_SUPABASE_ANON_KEY: 'anon-key',
+    })
+
+    expect(isDemoAuth()).toBe(false)
+  })
+
+  it('still works the old way in development, flag or no flag', () => {
+    set({ NODE_ENV: 'development' })
+    expect(isDemoAuth()).toBe(true)
+
+    set({ NEXT_PUBLIC_DEMO_DEPLOYMENT: 'true' })
+    expect(isDemoAuth()).toBe(true)
+  })
+})

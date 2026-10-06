@@ -14,12 +14,22 @@ import { getTranslations } from 'next-intl/server'
  * the same demo mode is simply how the app runs and the banner would be
  * noise.
  */
-export default async function DemoBanner() {
+export default async function DemoBanner({
+  variant = 'student',
+}: {
+  /**
+   * 'admin' explains why saving fails. The student wording is about XP and
+   * quiz results, which tells an admin nothing about the 500 they get the
+   * moment they press Save - there is no database for the write to land in.
+   */
+  variant?: 'student' | 'admin'
+} = {}) {
   if (process.env.NEXT_PUBLIC_DEMO_DEPLOYMENT !== 'true') {
     return null
   }
 
   const t = await getTranslations('demoBanner')
+  const message = variant === 'admin' ? t('adminMessage') : t('message')
 
   return (
     // role="status" rather than "alert": a screen reader should hear this
@@ -40,7 +50,7 @@ export default async function DemoBanner() {
       <span aria-hidden="true" style={{ color: 'var(--text-muted)' }}>
         {' · '}
       </span>
-      <span style={{ color: 'var(--text-muted)' }}>{t('message')}</span>
+      <span style={{ color: 'var(--text-muted)' }}>{message}</span>
     </div>
   )
 }

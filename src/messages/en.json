@@ -630,6 +630,7 @@
   },
   "demoBanner": {
     "label": "Demo mode",
-    "message": "Explore everything freely - progress, XP and quiz results are not saved and reset when you reload."
+    "message": "Explore everything freely - progress, XP and quiz results are not saved and reset when you reload.",
+    "adminMessage": "There is no database behind this demo - you can look around, but creating or editing anything will fail."
   }
 }

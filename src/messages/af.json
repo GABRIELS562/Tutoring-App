@@ -630,6 +630,7 @@
   },
   "demoBanner": {
     "label": "Demo-modus",
-    "message": "Verken alles vrylik - vordering, XP en kwisuitslae word nie gestoor nie en herstel wanneer jy herlaai."
+    "message": "Verken alles vrylik - vordering, XP en kwisuitslae word nie gestoor nie en herstel wanneer jy herlaai.",
+    "adminMessage": "Daar is geen databasis agter hierdie demo nie - jy kan rondkyk, maar om iets te skep of te wysig sal misluk."
   }
 }
