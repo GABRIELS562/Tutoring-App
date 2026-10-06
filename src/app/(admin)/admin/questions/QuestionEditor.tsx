@@ -41,6 +41,21 @@ const EXAM_TYPES = [
   { value: 'custom', label: 'Custom' },
 ]
 
+/**
+ * The route replies with a named list of what was wrong. Showing only
+ * `error` turned that back into "Invalid question" with no clue which
+ * field to fix.
+ */
+function describeSaveError(data: {
+  error?: string
+  issues?: { field: string; message: string }[]
+}): string {
+  if (data.issues?.length) {
+    return data.issues.map((i) => `${i.field}: ${i.message}`).join('\n')
+  }
+  return data.error || 'Failed to save'
+}
+
 export default function QuestionEditor({
   topicId,
   topicName,
@@ -245,7 +260,7 @@ export default function QuestionEditor({
         onClose(true)
       } else {
         const data = await res.json()
-        alert(data.error || 'Failed to save question')
+        alert(describeSaveError(data))
       }
     })
   }

@@ -1,14 +1,30 @@
 'use client'
 
-import { useState, useTransition } from 'react'
+import { useCallback, useState, useTransition } from 'react'
 import { useRouter } from 'next/navigation'
 import { Plus, X } from 'lucide-react'
+import { useDialog } from '@/hooks/useDialog'
 
 function slugify(text: string): string {
   return text
     .toLowerCase()
     .replace(/[^a-z0-9]+/g, '-')
     .replace(/(^-|-$)/g, '')
+}
+
+/**
+ * The route replies with a named list of what was wrong. Showing only
+ * `error` turned that back into "Invalid question" with no clue which
+ * field to fix.
+ */
+function describeSaveError(data: {
+  error?: string
+  issues?: { field: string; message: string }[]
+}): string {
+  if (data.issues?.length) {
+    return data.issues.map((i) => `${i.field}: ${i.message}`).join('\n')
+  }
+  return data.error || 'Failed to save'
 }
 
 export default function AddTopicModal() {
@@ -34,6 +50,16 @@ export default function AddTopicModal() {
       slug: slugify(name),
     })
   }
+
+  const close = useCallback(() => setIsOpen(false), [])
+  /**
+   * The same hook the boss-battle dialogs use. Without it this modal had
+   * no dialog semantics at all: nothing announced it, focus stayed
+   * wherever it was, Tab walked straight out into the page behind the
+   * backdrop - which a sighted keyboard user cannot see - and Escape did
+   * nothing.
+   */
+  const dialogRef = useDialog<HTMLDivElement>(isOpen, close)
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
@@ -65,11 +91,11 @@ export default function AddTopicModal() {
           term: '',
           sortOrder: '',
         })
-        setIsOpen(false)
+        close()
         router.refresh()
       } else {
         const data = await res.json()
-        alert(data.error || 'Failed to create topic')
+        alert(describeSaveError(data))
       }
     })
   }
@@ -87,23 +113,31 @@ export default function AddTopicModal() {
 
       {isOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-          {/* Backdrop */}
+          {/* Backdrop. aria-hidden because the dialog below names itself -
+              a bare clickable div would otherwise be announced as an
+              unlabelled element between the user and the form. */}
           <div
             className="absolute inset-0 bg-black/60"
-            onClick={() => setIsOpen(false)}
+            aria-hidden="true"
+            onClick={close}
           />
 
           {/* Modal */}
           <div
+            ref={dialogRef}
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="add-topic-title"
             className="relative w-full max-w-lg rounded-xl p-6"
             style={{ background: 'var(--surface)', border: '1px solid var(--border-custom)' }}
           >
             <div className="flex items-center justify-between mb-6">
-              <h2 className="text-xl font-bold" style={{ color: 'var(--text)' }}>
+              <h2 id="add-topic-title" className="text-xl font-bold" style={{ color: 'var(--text)' }}>
                 Add New Topic
               </h2>
               <button
-                onClick={() => setIsOpen(false)}
+                type="button"
+                onClick={close}
                 aria-label="Close"
                 className="p-2 rounded-lg transition-colors hover:bg-white/10"
               >
