@@ -58,10 +58,20 @@ There is no single feature flag. Each layer degrades on its own:
 | `src/proxy.ts` | Supabase env missing (dev only) | Passes every request through; `/api/admin/*` gets 401 JSON when a session is required |
 | `(app)/layout.tsx` | Supabase env missing (dev only) | Returns a hard-coded `Demo Student` user |
 | `(admin)/admin/layout.tsx` | `isDemoAuth()` only | Calls `requireAdmin()`; **fails closed** on any error (redirects to `/login`). `ADMIN_EMAIL` (case-insensitive) also grants admin |
-| `src/lib/env.ts` | `NODE_ENV === 'production'` | `assertProductionEnv()` throws at boot (root layout + proxy) if Supabase env or `DATABASE_URL` is missing — demo mode is unreachable in production |
+| `src/lib/env.ts` | `NODE_ENV === 'production'` | `assertProductionEnv()` throws at boot (root layout + proxy) if Supabase env or `DATABASE_URL` is missing — **unless** `NEXT_PUBLIC_DEMO_DEPLOYMENT=true` and *no* Supabase value is set (see below). A half-configured deploy still fails |
 | `src/db/index.ts` | `DATABASE_URL` missing | Exports a Proxy that **throws** on any property access |
 | `src/lib/supabase/api.ts` | Supabase env missing | `withSupabase()` returns the caller's `demoFallback` silently |
 | `QuizEngine.tsx` | no `initialQuestions` | Falls back to in-file mock questions |
+
+### The demo deployment
+
+`NEXT_PUBLIC_DEMO_DEPLOYMENT=true` runs a **production build with no database** so a client can click through the app as it looks locally. Deployed to server1 as `angelo-tutoring.service` (127.0.0.1:3000) behind the `cloudflared-lucidbuilds` tunnel at `tutorial.lucidbuilds.co.za`. Redeploy with `./scripts/deploy-demo.sh`.
+
+Three things to know:
+
+- **The flag must be set at BUILD time.** `NEXT_PUBLIC_*` is inlined into the bundle, so setting it only in the systemd unit does nothing — the value is already baked in. `deploy-demo.sh` sets it; a manual `npm run build` that forgets it produces an app that refuses to boot.
+- **It is only honoured when *no* Supabase value is set.** A real deployment that loses one variable still fails to boot and names what it found, rather than sliding into demo mode. Configured Supabase always wins over the flag.
+- **`isDemoAuth()` is true there**, so the admin panel is open — deliberately, for the demo. The panel is an empty shell with no database behind it, and saving returns 500; the banner says so. **The deployment has no login of its own**: anyone who reaches it is a signed-in demo admin, so it must stay behind Cloudflare Access.
 
 Consequence: you can run the UI with an empty `.env.local`, but anything touching `db` will throw unless the caller catches it (most `src/db/queries/*` do, returning `null`/empty). "Demo mode" means `isDemoMode` (no `DATABASE_URL`) and/or `isDemoAuth()` (no Supabase env AND not production).
 
