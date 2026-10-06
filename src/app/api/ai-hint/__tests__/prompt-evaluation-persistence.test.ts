@@ -1,23 +1,43 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest'
+import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
 import { NextRequest } from 'next/server'
 
 const requireUserMock = vi.fn()
-const getApiSupabaseMock = vi.fn()
+const createTutorMessageMock = vi.fn()
+const { recordMock, isDemoModeRef } = vi.hoisted(() => ({
+  recordMock: vi.fn(),
+  isDemoModeRef: { value: false },
+}))
 
 vi.mock('@/lib/auth/require-user', async () => {
   const actual = await vi.importActual<typeof import('@/lib/auth/require-user')>(
     '@/lib/auth/require-user'
   )
+  return { ...actual, requireUser: requireUserMock }
+})
+
+// null = Supabase not configured, so the daily-quota path is skipped.
+// Persistence no longer depends on this - it goes through Drizzle and is
+// gated on isDemoMode instead.
+vi.mock('@/lib/supabase/api', () => ({ getApiSupabase: vi.fn(() => null) }))
+vi.mock('@/db/queries/users', () => ({ checkPremiumStatus: vi.fn(async () => false) }))
+vi.mock('@/db/queries/ai-skills', () => ({ recordPromptChallengeAttempt: recordMock }))
+
+vi.mock('@/db', () => ({
+  get isDemoMode() {
+    return isDemoModeRef.value
+  },
+}))
+
+vi.mock('@/lib/claude', async () => {
+  const actual = await vi.importActual<typeof import('@/lib/claude')>('@/lib/claude')
   return {
     ...actual,
-    requireUser: requireUserMock,
+    getClaudeClient: vi.fn(() => ({})),
+    createTutorMessage: createTutorMessageMock,
   }
 })
 
-vi.mock('@/lib/supabase/api', () => ({
-  getApiSupabase: getApiSupabaseMock,
-}))
-
+const { makePromptChallengeStore } = await import('./helpers/promptChallengeStore')
 const { POST } = await import('@/app/api/ai-hint/route')
 
 function makeRequest(body: Record<string, unknown>) {
@@ -28,171 +48,120 @@ function makeRequest(body: Record<string, unknown>) {
   })
 }
 
-function makeSupabaseMock(userRow: Record<string, unknown> = { badges: [], xp: 100, prompt_challenges_completed: 2 }) {
-  const insertedRows: Record<string, unknown>[] = []
-  const updateCalls: Record<string, unknown>[] = []
-
-  const client = {
-    from(table: string) {
-      if (table === 'ai_hint_usage') {
-        return {
-          select: () => ({
-            eq: () => ({
-              eq: () => ({
-                single: async () => ({ data: null, error: { code: 'PGRST116' } }),
-              }),
-            }),
-          }),
-          insert: async () => ({ data: null, error: null }),
-        }
-      }
-
-      if (table === 'prompt_challenge_attempts') {
-        return {
-          // No existing attempt for this (user, challenge) pair in any of
-          // these tests - every call is a first completion.
-          select: () => ({
-            eq: () => ({
-              eq: () => ({
-                maybeSingle: async () => ({ data: null, error: null }),
-              }),
-            }),
-          }),
-          insert: (row: Record<string, unknown>) => {
-            insertedRows.push(row)
-            return {
-              select: () => ({
-                single: async () => ({ data: { id: 'attempt-1' }, error: null }),
-              }),
-            }
-          },
-        }
-      }
-
-      if (table === 'users') {
-        return {
-          select: () => ({
-            eq: () => ({
-              single: async () => ({ data: userRow, error: null }),
-            }),
-          }),
-          update: (fields: Record<string, unknown>) => {
-            updateCalls.push(fields)
-            return {
-              eq: async () => ({ error: null }),
-            }
-          },
-        }
-      }
-
-      throw new Error(`Unexpected table in test mock: ${table}`)
-    },
-    // Stands in for the increment_hint_usage() RPC the route calls via
-    // supabase.rpc() to atomically bump usage - these tests are about
-    // persistence, not usage-count correctness, so a fixed non-error
-    // response is enough to let the route proceed.
-    rpc: async () => ({ data: { id: 'usage-1', hint_count: 1, camera_count: 0 }, error: null }),
+function evaluationScoring(score: number) {
+  return {
+    text: JSON.stringify({
+      score,
+      what_worked: 'worked',
+      what_to_improve: 'improve',
+      improved_prompt: 'improved',
+      encouragement: 'encouragement',
+    }),
+    usage: { input_tokens: 10, output_tokens: 10 },
   }
+}
 
-  return { client, insertedRows, updateCalls }
+const REQUEST = {
+  mode: 'prompt_evaluation',
+  challengeId: 'scenario-1',
+  scenarioContext: 'ctx',
+  scenarioTask: 'task',
+  studentPrompt: 'my prompt',
 }
 
 describe('POST /api/ai-hint (prompt_evaluation persistence)', () => {
   beforeEach(() => {
     vi.clearAllMocks()
-    delete process.env.ANTHROPIC_API_KEY
+    isDemoModeRef.value = false
+    process.env.ANTHROPIC_API_KEY = 'test-anthropic-key'
     requireUserMock.mockResolvedValue({ id: 'session-user-1', email: 'a@b.com' })
   })
 
-  it('persists the attempt using the server-computed score, never a client-supplied one', async () => {
-    const { client, insertedRows } = makeSupabaseMock()
-    getApiSupabaseMock.mockReturnValue(client)
+  afterEach(() => {
+    delete process.env.ANTHROPIC_API_KEY
+  })
 
-    const res = await POST(
-      makeRequest({
-        mode: 'prompt_evaluation',
-        challengeId: 'scenario-1',
-        scenarioContext: 'ctx',
-        scenarioTask: 'task',
-        studentPrompt: 'my prompt',
-        // Even if a caller tries to smuggle a score in, it must be ignored:
-        aiScore: 5,
-      })
-    )
+  it('persists the attempt using the server-computed score, never a client-supplied one', async () => {
+    const { recordPromptChallengeAttempt, attempts } = makePromptChallengeStore()
+    recordMock.mockImplementation(recordPromptChallengeAttempt)
+    createTutorMessageMock.mockResolvedValue(evaluationScoring(3))
+
+    const res = await POST(makeRequest({ ...REQUEST, aiScore: 5 }))
 
     expect(res.status).toBe(200)
     const body = await res.json()
 
-    expect(insertedRows).toHaveLength(1)
-    expect(insertedRows[0]).toMatchObject({
-      user_id: 'session-user-1',
-      challenge_id: 'scenario-1',
-      student_prompt: 'my prompt',
-      ai_score: body.evaluation.score,
-    })
-    // The score actually persisted must come from the evaluation Angelo just
-    // computed, not from any client-supplied field.
-    expect(insertedRows[0].ai_score).not.toBe(5)
-    expect(body.attempt).toMatchObject({ id: 'attempt-1' })
+    expect(attempts).toHaveLength(1)
+    expect(attempts[0]).toMatchObject({ challengeId: 'scenario-1', prompt: 'my prompt' })
+    // The persisted score is the one Angelo just computed, not the 5 the
+    // caller tried to smuggle in.
+    expect(attempts[0].score).toBe(body.evaluation.score)
+    expect(attempts[0].score).not.toBe(5)
+    // Identity comes from the session, never the body.
+    expect(recordMock.mock.calls[0][0]).toMatchObject({ userId: 'session-user-1' })
   })
 
-  it('does not attempt to persist when Supabase is not configured (demo mode)', async () => {
-    getApiSupabaseMock.mockReturnValue(null)
+  it('does not persist in demo mode, and says so rather than implying a save', async () => {
+    isDemoModeRef.value = true
 
-    const res = await POST(
-      makeRequest({
-        mode: 'prompt_evaluation',
-        challengeId: 'scenario-1',
-        scenarioContext: 'ctx',
-        scenarioTask: 'task',
-        studentPrompt: 'my prompt',
-      })
-    )
+    const res = await POST(makeRequest(REQUEST))
 
     expect(res.status).toBe(200)
     const body = await res.json()
     expect(body.evaluation).toBeTruthy()
     expect(body.attempt).toBeUndefined()
+    expect(recordMock).not.toHaveBeenCalled()
   })
 
   it('does not attempt to persist when no challengeId is supplied', async () => {
-    const { client, insertedRows } = makeSupabaseMock()
-    getApiSupabaseMock.mockReturnValue(client)
+    createTutorMessageMock.mockResolvedValue(evaluationScoring(3))
 
     const res = await POST(
-      makeRequest({
-        mode: 'prompt_evaluation',
-        scenarioContext: 'ctx',
-        scenarioTask: 'task',
-        studentPrompt: 'my prompt',
-      })
+      makeRequest({ mode: 'prompt_evaluation', scenarioContext: 'ctx', scenarioTask: 'task', studentPrompt: 'p' })
     )
 
     expect(res.status).toBe(200)
-    expect(insertedRows).toHaveLength(0)
+    expect(recordMock).not.toHaveBeenCalled()
   })
 
   it('awards the prompt-master badge on a perfect score and includes it in the response', async () => {
-    // Demo evaluation (no ANTHROPIC_API_KEY) always scores 3, so force a
-    // perfect score deterministically isn't possible here — this test only
-    // verifies the badge is *not* awarded for a non-5 score, keeping the
-    // assertion honest about what the mock path actually returns.
-    const { client, updateCalls } = makeSupabaseMock({ badges: [], xp: 0, prompt_challenges_completed: 0 })
-    getApiSupabaseMock.mockReturnValue(client)
+    const { recordPromptChallengeAttempt, userRow } = makePromptChallengeStore()
+    recordMock.mockImplementation(recordPromptChallengeAttempt)
+    createTutorMessageMock.mockResolvedValue(evaluationScoring(5))
 
-    const res = await POST(
-      makeRequest({
-        mode: 'prompt_evaluation',
-        challengeId: 'scenario-1',
-        scenarioContext: 'ctx',
-        scenarioTask: 'task',
-        studentPrompt: 'my prompt',
-      })
-    )
-
+    const res = await POST(makeRequest(REQUEST))
     const body = await res.json()
-    expect(body.evaluation.score).toBe(3)
-    expect(updateCalls).toHaveLength(1)
-    expect(updateCalls[0].badges).not.toContain('prompt-master')
+
+    expect(body.evaluation.score).toBe(5)
+    expect(body.attempt.newBadges).toContain('prompt-master')
+    expect(userRow.badges).toContain('prompt-master')
+  })
+
+  it('does not award the badge for a less-than-perfect score', async () => {
+    const { recordPromptChallengeAttempt, userRow } = makePromptChallengeStore()
+    recordMock.mockImplementation(recordPromptChallengeAttempt)
+    createTutorMessageMock.mockResolvedValue(evaluationScoring(4))
+
+    const body = await (await POST(makeRequest(REQUEST))).json()
+
+    expect(body.attempt.newBadges).toEqual([])
+    expect(userRow.badges).not.toContain('prompt-master')
+  })
+
+  /**
+   * The reason the persistence path was rewritten. It used to insert the
+   * attempt, then read the user, then write XP back - swallowing every
+   * failure after the first. A failed write still replied as though the
+   * XP had landed, so the client showed badge confetti for nothing.
+   */
+  it('reports persisted:false when the write fails, instead of celebrating', async () => {
+    recordMock.mockResolvedValue(null)
+    createTutorMessageMock.mockResolvedValue(evaluationScoring(4))
+
+    const body = await (await POST(makeRequest(REQUEST))).json()
+
+    expect(body.evaluation).toBeTruthy()
+    expect(body.persisted).toBe(false)
+    expect(body.attempt).toBeUndefined()
   })
 })

@@ -4,6 +4,7 @@ import { NextRequest } from 'next/server'
 const requireUserMock = vi.fn()
 const getApiSupabaseMock = vi.fn()
 const createTutorMessageMock = vi.fn()
+const { recordMock } = vi.hoisted(() => ({ recordMock: vi.fn() }))
 
 vi.mock('@/lib/auth/require-user', async () => {
   const actual = await vi.importActual<typeof import('@/lib/auth/require-user')>(
@@ -21,6 +22,10 @@ vi.mock('@/lib/supabase/api', () => ({
 
 vi.mock('@/db/queries/users', () => ({
   checkPremiumStatus: vi.fn(async () => false),
+}))
+
+vi.mock('@/db/queries/ai-skills', () => ({
+  recordPromptChallengeAttempt: recordMock,
 }))
 
 vi.mock('@/db', () => ({
@@ -42,98 +47,8 @@ vi.mock('@/lib/claude', async () => {
   }
 })
 
+const { makePromptChallengeStore } = await import('./helpers/promptChallengeStore')
 const { POST } = await import('@/app/api/ai-hint/route')
-
-interface AttemptRow {
-  id: string
-  user_id: string
-  challenge_id: string
-  ai_score: number
-  xp_earned: number
-}
-
-function makeStatefulSupabaseMock() {
-  const attempts: AttemptRow[] = []
-  const userRow = { badges: [] as string[], xp: 0, prompt_challenges_completed: 0 }
-  const usersUpdateCalls: Record<string, unknown>[] = []
-  let nextId = 1
-
-  const client = {
-    from(table: string) {
-      if (table === 'ai_hint_usage') {
-        return {
-          select: () => ({
-            eq: () => ({
-              eq: () => ({
-                single: async () => ({ data: null, error: { code: 'PGRST116' } }),
-              }),
-            }),
-          }),
-          insert: async () => ({ error: null }),
-        }
-      }
-
-      if (table === 'prompt_challenge_attempts') {
-        return {
-          select: () => ({
-            eq: (_col1: string, userId: string) => ({
-              eq: (_col2: string, challengeId: string) => ({
-                maybeSingle: async () => {
-                  const found = attempts.find(
-                    (a) => a.user_id === userId && a.challenge_id === challengeId
-                  )
-                  return { data: found ?? null, error: null }
-                },
-              }),
-            }),
-          }),
-          insert: (row: Omit<AttemptRow, 'id'>) => {
-            const newRow: AttemptRow = { id: `attempt-${nextId++}`, ...row }
-            attempts.push(newRow)
-            return {
-              select: () => ({
-                single: async () => ({ data: { id: newRow.id }, error: null }),
-              }),
-            }
-          },
-          update: (fields: Partial<AttemptRow>) => ({
-            eq: async (_col: string, id: string) => {
-              const idx = attempts.findIndex((a) => a.id === id)
-              if (idx >= 0) {
-                attempts[idx] = { ...attempts[idx], ...fields }
-              }
-              return { error: null }
-            },
-          }),
-        }
-      }
-
-      if (table === 'users') {
-        return {
-          select: () => ({
-            eq: () => ({
-              single: async () => ({ data: { ...userRow }, error: null }),
-            }),
-          }),
-          update: (fields: Record<string, unknown>) => {
-            usersUpdateCalls.push(fields)
-            Object.assign(userRow, fields)
-            return { eq: async () => ({ error: null }) }
-          },
-        }
-      }
-
-      throw new Error(`Unexpected table in test mock: ${table}`)
-    },
-    // Stands in for the increment_hint_usage() RPC the route now calls
-    // via supabase.rpc() to atomically bump usage - these tests are
-    // about prompt-challenge idempotency, not usage-count correctness,
-    // so a fixed non-error response is enough to let the route proceed.
-    rpc: async () => ({ data: { id: 'usage-1', hint_count: 1, camera_count: 0 }, error: null }),
-  }
-
-  return { client, attempts, userRow, usersUpdateCalls }
-}
 
 function makeRequest(body: Record<string, unknown>) {
   return new NextRequest('http://localhost/api/ai-hint', {
@@ -168,8 +83,8 @@ describe('POST /api/ai-hint prompt_evaluation is idempotent per (user, challenge
   })
 
   it('awards XP once; a repeat attempt with a higher score updates the row but earns no extra XP', async () => {
-    const { client, attempts, userRow } = makeStatefulSupabaseMock()
-    getApiSupabaseMock.mockReturnValue(client)
+    const { recordPromptChallengeAttempt, attempts, userRow } = makePromptChallengeStore()
+    recordMock.mockImplementation(recordPromptChallengeAttempt)
     createTutorMessageMock
       .mockResolvedValueOnce(mockTutorMessage(3))
       .mockResolvedValueOnce(mockTutorMessage(5))
@@ -185,26 +100,26 @@ describe('POST /api/ai-hint prompt_evaluation is idempotent per (user, challenge
 
     const first = await (await POST(req())).json()
     expect(attempts).toHaveLength(1)
-    expect(attempts[0].ai_score).toBe(3)
+    expect(attempts[0].score).toBe(3)
     expect(first.attempt.xpEarned).toBe(15) // 3 * PROMPT_CHALLENGE_XP_PER_STAR(5)
     expect(userRow.xp).toBe(15)
-    expect(userRow.prompt_challenges_completed).toBe(1)
+    expect(userRow.completed).toBe(1)
 
     const second = await (await POST(req())).json()
 
     // Still exactly one row - updated in place, not a second insert.
     expect(attempts).toHaveLength(1)
-    expect(attempts[0].ai_score).toBe(5)
+    expect(attempts[0].score).toBe(5)
 
     // No additional XP/completion count for the repeat.
     expect(second.attempt.xpEarned).toBe(0)
     expect(userRow.xp).toBe(15)
-    expect(userRow.prompt_challenges_completed).toBe(1)
+    expect(userRow.completed).toBe(1)
   })
 
   it('does not lower the stored score when a repeat attempt scores worse', async () => {
-    const { client, attempts } = makeStatefulSupabaseMock()
-    getApiSupabaseMock.mockReturnValue(client)
+    const { recordPromptChallengeAttempt, attempts } = makePromptChallengeStore()
+    recordMock.mockImplementation(recordPromptChallengeAttempt)
     createTutorMessageMock
       .mockResolvedValueOnce(mockTutorMessage(4))
       .mockResolvedValueOnce(mockTutorMessage(2))
@@ -219,10 +134,10 @@ describe('POST /api/ai-hint prompt_evaluation is idempotent per (user, challenge
       })
 
     await POST(req())
-    expect(attempts[0].ai_score).toBe(4)
+    expect(attempts[0].score).toBe(4)
 
     await POST(req())
     expect(attempts).toHaveLength(1)
-    expect(attempts[0].ai_score).toBe(4) // unchanged - 2 is not an improvement
+    expect(attempts[0].score).toBe(4) // unchanged - 2 is not an improvement
   })
 })

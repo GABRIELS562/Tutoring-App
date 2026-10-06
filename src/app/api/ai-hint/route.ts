@@ -5,6 +5,7 @@ import { getApiSupabase } from '@/lib/supabase/api'
 import { requireUser, authErrorResponse } from '@/lib/auth/require-user'
 import { badges, PROMPT_CHALLENGE_XP_PER_STAR } from '@/content/ai-skills'
 import { checkPremiumStatus } from '@/db/queries/users'
+import { recordPromptChallengeAttempt } from '@/db/queries/ai-skills'
 import { isDemoMode } from '@/db'
 import { getClaudeClient, createTutorMessage, getClaudeModel, ClaudeError, type ClaudeErrorKind } from '@/lib/claude'
 import { logClaudeUsage } from '@/lib/claude-usage-log'
@@ -299,6 +300,9 @@ interface PersistedPromptChallengeAttempt {
  * database. The student finished every challenge and had nothing to show
  * for it, with nothing on screen suggesting a problem.
  */
+/** Awarded for a perfect prompt-engineering score. */
+const PROMPT_MASTER_BADGE_ID = 'prompt-master'
+
 type PromptAttemptOutcome =
   | { status: 'saved'; attempt: PersistedPromptChallengeAttempt }
   | { status: 'skipped' }
@@ -310,133 +314,34 @@ async function persistPromptChallengeAttempt(
   studentPrompt: string | undefined,
   evaluation: PromptEvaluation
 ): Promise<PromptAttemptOutcome> {
-  const supabase = getApiSupabase()
-  if (!supabase || !challengeId) {
+  if (isDemoMode || !challengeId) {
     return { status: 'skipped' }
   }
 
-  const { data: existing, error: existingError } = await supabase
-    .from('prompt_challenge_attempts')
-    .select('id, ai_score, xp_earned')
-    .eq('user_id', userId)
-    .eq('challenge_id', challengeId)
-    .maybeSingle()
+  const result = await recordPromptChallengeAttempt({
+    userId,
+    challengeId,
+    studentPrompt: studentPrompt || '',
+    score: evaluation.score,
+    feedback: `${evaluation.what_worked} ${evaluation.what_to_improve}`,
+    improvedPrompt: evaluation.improved_prompt,
+    xpPerStar: PROMPT_CHALLENGE_XP_PER_STAR,
+    masterBadgeId: PROMPT_MASTER_BADGE_ID,
+    masterBadgeXp: badges[PROMPT_MASTER_BADGE_ID]?.xpReward ?? 0,
+  })
 
-  if (existingError) {
-    console.error('Error checking existing prompt challenge attempt:', existingError)
+  if (!result) {
     return { status: 'failed' }
   }
 
-  if (existing) {
-    return { status: 'saved', attempt: await updateExistingAttempt(supabase, existing, studentPrompt, evaluation) }
-  }
-
-  const inserted = await insertFirstAttempt(supabase, userId, challengeId, studentPrompt, evaluation)
-  return inserted ? { status: 'saved', attempt: inserted } : { status: 'failed' }
-}
-
-type SupabaseLike = NonNullable<ReturnType<typeof getApiSupabase>>
-
-async function updateExistingAttempt(
-  supabase: SupabaseLike,
-  existing: { id: string; ai_score: number | null },
-  studentPrompt: string | undefined,
-  evaluation: PromptEvaluation
-): Promise<PersistedPromptChallengeAttempt> {
-  const previousBest = existing.ai_score ?? 0
-
-  if (evaluation.score > previousBest) {
-    const { error: updateError } = await supabase
-      .from('prompt_challenge_attempts')
-      .update({
-        student_prompt: studentPrompt || '',
-        ai_score: evaluation.score,
-        ai_feedback: `${evaluation.what_worked} ${evaluation.what_to_improve}`,
-        improved_prompt: evaluation.improved_prompt,
-      })
-      .eq('id', existing.id)
-
-    if (updateError) {
-      console.error('Error updating prompt challenge attempt:', updateError)
-    }
-  }
-
-  // No XP/badge/completion-count change on a repeat - those are awarded
-  // once, on first completion (insertFirstAttempt).
-  return { id: existing.id, xpEarned: 0, newBadges: [], totalChallengesCompleted: 0 }
-}
-
-async function insertFirstAttempt(
-  supabase: SupabaseLike,
-  userId: string,
-  challengeId: string,
-  studentPrompt: string | undefined,
-  evaluation: PromptEvaluation
-): Promise<PersistedPromptChallengeAttempt | null> {
-  const xpEarned = evaluation.score * PROMPT_CHALLENGE_XP_PER_STAR
-
-  const { data: attempt, error: insertError } = await supabase
-    .from('prompt_challenge_attempts')
-    .insert({
-      user_id: userId,
-      challenge_id: challengeId,
-      student_prompt: studentPrompt || '',
-      ai_score: evaluation.score,
-      ai_feedback: `${evaluation.what_worked} ${evaluation.what_to_improve}`,
-      improved_prompt: evaluation.improved_prompt,
-      xp_earned: xpEarned,
-    })
-    .select('id')
-    .single()
-
-  if (insertError || !attempt) {
-    console.error('Error saving prompt challenge attempt:', insertError)
-    return null
-  }
-
-  const { data: userData, error: fetchError } = await supabase
-    .from('users')
-    .select('badges, xp, prompt_challenges_completed')
-    .eq('id', userId)
-    .single()
-
-  if (fetchError || !userData) {
-    console.error('Error fetching user for prompt challenge attempt:', fetchError)
-    return { id: attempt.id, xpEarned, newBadges: [], totalChallengesCompleted: 0 }
-  }
-
-  const currentBadges: string[] = userData.badges || []
-  const currentXP: number = userData.xp || 0
-  const challengesCompleted: number = userData.prompt_challenges_completed || 0
-  const newBadges: string[] = []
-
-  if (evaluation.score === 5 && !currentBadges.includes('prompt-master')) {
-    newBadges.push('prompt-master')
-  }
-
-  let totalXpEarned = xpEarned
-  for (const badgeId of newBadges) {
-    totalXpEarned += badges[badgeId as keyof typeof badges]?.xpReward || 0
-  }
-
-  const { error: updateError } = await supabase
-    .from('users')
-    .update({
-      xp: currentXP + totalXpEarned,
-      badges: [...currentBadges, ...newBadges],
-      prompt_challenges_completed: challengesCompleted + 1,
-    })
-    .eq('id', userId)
-
-  if (updateError) {
-    console.error('Error updating user after prompt challenge attempt:', updateError)
-  }
-
   return {
-    id: attempt.id,
-    xpEarned: totalXpEarned,
-    newBadges,
-    totalChallengesCompleted: challengesCompleted + 1,
+    status: 'saved',
+    attempt: {
+      id: result.attemptId,
+      xpEarned: result.xpEarned,
+      newBadges: result.newBadges,
+      totalChallengesCompleted: result.totalChallengesCompleted,
+    },
   }
 }
 

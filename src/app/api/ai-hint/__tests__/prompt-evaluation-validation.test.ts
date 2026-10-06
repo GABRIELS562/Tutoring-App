@@ -3,6 +3,7 @@ import { NextRequest } from 'next/server'
 
 const requireUserMock = vi.fn()
 const getApiSupabaseMock = vi.fn()
+const { recordMock } = vi.hoisted(() => ({ recordMock: vi.fn() }))
 const createTutorMessageMock = vi.fn()
 
 vi.mock('@/lib/auth/require-user', async () => {
@@ -17,6 +18,13 @@ vi.mock('@/lib/auth/require-user', async () => {
 
 vi.mock('@/lib/supabase/api', () => ({
   getApiSupabase: getApiSupabaseMock,
+}))
+
+// Persistence moved to a Drizzle transaction (src/db/queries/ai-skills.ts),
+// which has its own tests; this file is about what the ROUTE does with a
+// model response it cannot trust.
+vi.mock('@/db/queries/ai-skills', () => ({
+  recordPromptChallengeAttempt: recordMock,
 }))
 
 vi.mock('@/db/queries/users', () => ({
@@ -39,6 +47,7 @@ vi.mock('@/lib/claude', async () => {
   }
 })
 
+const { makePromptChallengeStore } = await import('./helpers/promptChallengeStore')
 const { POST } = await import('@/app/api/ai-hint/route')
 
 function makeSupabaseMock() {
@@ -169,7 +178,7 @@ describe('POST /api/ai-hint prompt_evaluation validates the model JSON', () => {
   })
 
   it('rejects an oversized field from the model: no insert, canned fallback with parseError', async () => {
-    const { client, insertedRows } = makeSupabaseMock()
+    const { client } = makeSupabaseMock()
     getApiSupabaseMock.mockReturnValue(client)
     createTutorMessageMock.mockResolvedValue(
       mockTutorMessage({
@@ -193,12 +202,15 @@ describe('POST /api/ai-hint prompt_evaluation validates the model JSON', () => {
 
     const body = await res.json()
     expect(body.parseError).toBe(true)
-    expect(insertedRows).toHaveLength(0)
+    // A model response that fails validation must not be written at all.
+    expect(recordMock).not.toHaveBeenCalled()
   })
 
   it('accepts a valid in-range evaluation and persists it normally', async () => {
-    const { client, insertedRows } = makeSupabaseMock()
+    const { client } = makeSupabaseMock()
     getApiSupabaseMock.mockReturnValue(client)
+    const { recordPromptChallengeAttempt, attempts } = makePromptChallengeStore()
+    recordMock.mockImplementation(recordPromptChallengeAttempt)
     createTutorMessageMock.mockResolvedValue(
       mockTutorMessage({
         score: 4,
@@ -222,7 +234,7 @@ describe('POST /api/ai-hint prompt_evaluation validates the model JSON', () => {
     const body = await res.json()
     expect(body.parseError).toBeUndefined()
     expect(body.attempt).toBeTruthy()
-    expect(insertedRows).toHaveLength(1)
-    expect(insertedRows[0]).toMatchObject({ ai_score: 4 })
+    expect(attempts).toHaveLength(1)
+    expect(attempts[0].score).toBe(4)
   })
 })
