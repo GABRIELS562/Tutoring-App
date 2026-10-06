@@ -65,13 +65,13 @@ There is no single feature flag. Each layer degrades on its own:
 
 ### The demo deployment
 
-`NEXT_PUBLIC_DEMO_DEPLOYMENT=true` runs a **production build with no database** so a client can click through the app as it looks locally. Deployed to server1 as `angelo-tutoring.service` (127.0.0.1:3000) behind the `cloudflared-lucidbuilds` tunnel at `tutorial.lucidbuilds.co.za`. Redeploy with `./scripts/deploy-demo.sh`.
+`NEXT_PUBLIC_DEMO_DEPLOYMENT=true` runs a **production build with no database**, so someone can click through the app as it looks on a developer's machine. It is deployed to a private host behind an access gate; see `scripts/deploy-demo.sh` for the deploy, and the operator's own notes for where. Redeploy with `./scripts/deploy-demo.sh`.
 
 Three things to know:
 
 - **The flag must be set at BUILD time.** `NEXT_PUBLIC_*` is inlined into the bundle, so setting it only in the systemd unit does nothing — the value is already baked in. `deploy-demo.sh` sets it; a manual `npm run build` that forgets it produces an app that refuses to boot.
 - **It is only honoured when *no* Supabase value is set.** A real deployment that loses one variable still fails to boot and names what it found, rather than sliding into demo mode. Configured Supabase always wins over the flag.
-- **`isDemoAuth()` is true there**, so the admin panel is open — deliberately, for the demo. The panel is an empty shell with no database behind it, and saving returns 500; the banner says so. **The deployment has no login of its own**: anyone who reaches it is a signed-in demo admin, so it must stay behind Cloudflare Access.
+- **`isDemoAuth()` is true there**, so the admin panel renders — deliberately, so a demo shows the whole app. With no database behind it the panel is an empty shell and saving returns 500; the banner says so. A demo deployment authenticates nobody, which is why it only ever runs behind an access gate in front of it. Never point this flag at a host that is reachable without one.
 
 Consequence: you can run the UI with an empty `.env.local`, but anything touching `db` will throw unless the caller catches it (most `src/db/queries/*` do, returning `null`/empty). "Demo mode" means `isDemoMode` (no `DATABASE_URL`) and/or `isDemoAuth()` (no Supabase env AND not production).
 
