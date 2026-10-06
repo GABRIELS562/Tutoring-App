@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import Link from 'next/link'
 import { FileText, BookOpen, Filter, X, ChevronDown, ExternalLink, Shield, Swords } from 'lucide-react'
 import Topbar from '@/components/layout/Topbar'
@@ -39,30 +39,37 @@ export default function PapersPageClient({ papers, playable }: PapersPageClientP
   )
   const [showFilters, setShowFilters] = useState(false)
 
-  const filteredPapers = papers.filter(paper => {
-    if (subjectFilter && paper.subject !== subjectFilter) return false
-    if (gradeFilter && paper.grade !== parseInt(gradeFilter)) return false
-    if (yearFilter && paper.year !== parseInt(yearFilter)) return false
-    // Compared case-insensitively. The seeded rows and the demo fixture
-    // are both lowercase now, but a row written before that is not, and a
-    // filter that silently hides every paper is much worse than one that
-    // matches a little too loosely.
-    if (
-      languageFilter &&
-      paper.language &&
-      paper.language.toLowerCase() !== languageFilter.toLowerCase()
-    ) {
-      return false
-    }
-    return true
-  })
+  // Memoised because this runs over the full paper list (100+ rows, both
+  // languages) and the result feeds a .map() of that many cards. Without
+  // it every keystroke-free filter toggle re-filtered, re-sorted and
+  // re-rendered the whole list, which is the kind of thing only noticed
+  // on the low-end Android phones most of these students use.
+  const sortedPapers = useMemo(() => {
+    const filteredPapers = papers.filter(paper => {
+      if (subjectFilter && paper.subject !== subjectFilter) return false
+      if (gradeFilter && paper.grade !== parseInt(gradeFilter)) return false
+      if (yearFilter && paper.year !== parseInt(yearFilter)) return false
+      // Compared case-insensitively. The seeded rows and the demo fixture
+      // are both lowercase now, but a row written before that is not, and a
+      // filter that silently hides every paper is much worse than one that
+      // matches a little too loosely.
+      if (
+        languageFilter &&
+        paper.language &&
+        paper.language.toLowerCase() !== languageFilter.toLowerCase()
+      ) {
+        return false
+      }
+      return true
+    })
 
-  // Sort by year (newest first), then grade, then paper number
-  const sortedPapers = [...filteredPapers].sort((a, b) => {
-    if (b.year !== a.year) return b.year - a.year
-    if (b.grade !== a.grade) return b.grade - a.grade
-    return a.paperNumber - b.paperNumber
-  })
+    // Sort by year (newest first), then grade, then paper number
+    return [...filteredPapers].sort((a, b) => {
+      if (b.year !== a.year) return b.year - a.year
+      if (b.grade !== a.grade) return b.grade - a.grade
+      return a.paperNumber - b.paperNumber
+    })
+  }, [papers, subjectFilter, gradeFilter, yearFilter, languageFilter])
 
   const formatSubject = (subject: string) => {
     return subject === 'maths' ? t('mathematics') : t('physicalScience')

@@ -116,6 +116,16 @@ describe('BossBattleClient happy path (victory)', () => {
     // h2, not h1: BossBattleClient renders a Topbar, and that is the page's
     // only h1 - two of them was the accessibility bug this now pins.
     expect(screen.getByText('You defeated The Tangent Titan!', { selector: 'h2' })).toBeInTheDocument()
+
+    // The numbers on the screen, not just the headline. Replacing
+    // `xp={state.xp}` with `xp={0}` in BossBattleClient used to leave this
+    // whole test green - so a student could win a battle, be shown 0 XP,
+    // and nothing in the suite would notice. The retreat test below
+    // already pins its equivalents; the victory path did not.
+    expect(screen.getByText('14/14 marks dealt')).toBeInTheDocument()
+    const xpNode = screen.getByText(/^\+\d+$/)
+    expect(xpNode).toBeInTheDocument()
+    expect(Number(xpNode.textContent!.slice(1))).toBeGreaterThan(0)
   })
 })
 

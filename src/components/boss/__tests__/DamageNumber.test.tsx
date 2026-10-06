@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
-import { render } from '@testing-library/react'
+import { render, screen } from '@testing-library/react'
 import DamageNumber from '../DamageNumber'
 
 // DamageNumber's motion values (initial/animate/exit/transition) all flow
@@ -44,5 +44,42 @@ describe('DamageNumber + useMotionSafe (mocked)', () => {
   it('renders nothing (no motion node asked for) when there is no damage to show', () => {
     render(<DamageNumber damageKey={0} damage={null} />)
     expect(variantMock).not.toHaveBeenCalled()
+  })
+})
+
+/**
+ * The tests above mock useMotionSafe and then assert what it was CALLED
+ * with, which never reads the rendered output. Changing the component to
+ * render `{damage + 999}` instead of `-{damage}` left both of them green
+ * - so the only number a student sees per hit was effectively untested.
+ */
+describe('DamageNumber renders the damage it was given', () => {
+  it('shows the hit as a negative number', () => {
+    render(<DamageNumber damageKey={1} damage={5} />)
+
+    expect(screen.getByText('-5')).toBeInTheDocument()
+  })
+
+  it('shows a different hit correctly, so the value is not hard-coded', () => {
+    render(<DamageNumber damageKey={2} damage={12} />)
+
+    expect(screen.getByText('-12')).toBeInTheDocument()
+    expect(screen.queryByText('-5')).not.toBeInTheDocument()
+  })
+
+  it('renders nothing at all when there is no damage', () => {
+    const { container } = render(<DamageNumber damageKey={0} damage={null} />)
+
+    expect(container.textContent).toBe('')
+  })
+
+  /**
+   * damage === 0 is the falsy-but-not-null case the original tests never
+   * covered. A zero-damage hit should show nothing rather than "-0".
+   */
+  it('does not render "-0" for a zero-damage hit', () => {
+    render(<DamageNumber damageKey={3} damage={0} />)
+
+    expect(screen.queryByText('-0')).not.toBeInTheDocument()
   })
 })

@@ -1,3 +1,4 @@
+import { cache } from 'react'
 import { createServerClient } from '@supabase/ssr'
 import { cookies } from 'next/headers'
 import { NextResponse } from 'next/server'
@@ -69,12 +70,23 @@ export function isDemoAuth(): boolean {
 }
 
 /**
+ * Wrapped in React's cache() so one request resolves the session once.
+ *
+ * requireAdmin() calls requireUser() which calls this, and pages call it
+ * directly as well - /exam/[key] does, on top of the layout already
+ * resolving a user. Each call was a real GoTrue round trip, and with the
+ * Supabase project in eu-west-1 serving South African students those are
+ * cross-continent hops, not local ones. cache() is per-request, so this
+ * changes nothing about correctness or session freshness between
+ * requests; it only stops the same question being asked three times
+ * within one render.
+ *
  * Resolves the current session user server-side using @supabase/ssr,
  * same cookie pattern as `(app)/layout.tsx`. Returns null when there is
  * no authenticated session. In demo mode (local dev, Supabase env unset)
  * returns a fixed demo user instead of touching Supabase at all.
  */
-export async function getSessionUser(): Promise<SessionUser | null> {
+export const getSessionUser = cache(async function getSessionUser(): Promise<SessionUser | null> {
   if (isDemoAuth()) {
     return DEMO_USER
   }
@@ -116,7 +128,7 @@ export async function getSessionUser(): Promise<SessionUser | null> {
   }
 
   return { id: user.id, email: user.email ?? null }
-}
+})
 
 /**
  * Returns the current session user or throws a 401 AuthError.
