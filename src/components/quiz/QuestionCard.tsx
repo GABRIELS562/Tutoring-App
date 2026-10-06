@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { useMotionSafe } from '@/hooks/useMotionSafe'
-import { ArrowRight, MessageCircle, Loader2 } from 'lucide-react'
+import { ArrowRight, MessageCircle, Loader2, Check, X } from 'lucide-react'
 import MathRenderer from '@/components/math/MathRenderer'
 import StepSolution from '@/components/math/StepSolution'
 import { useTranslations } from 'next-intl'
@@ -181,14 +181,36 @@ export default function QuestionCard({
         </div>
       </div>
 
+      {/* Announces the result. QuizEngine's live region only says which
+          question you are on, so until now a screen-reader student
+          answered and heard nothing at all. */}
+      <div aria-live="polite" className="sr-only">
+        {answered &&
+          (wasIncorrect
+            ? t('incorrectAnswerWas', {
+                chosen: selectedLetter ?? '',
+                letter: question.options.find((o) => o.isCorrect)?.optionLetter ?? '',
+              })
+            : t('correctAnswerWas', {
+                letter: question.options.find((o) => o.isCorrect)?.optionLetter ?? '',
+              }))}
+      </div>
+
       {/* Options Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-4">
         {question.options.map((option) => (
           <button
             key={option.id}
             onClick={() => handleOptionClick(option)}
-            disabled={answered}
-            className="flex items-start gap-3 p-4 rounded-lg text-left transition-all"
+            /* aria-disabled, not disabled. Disabling the button the student
+               just clicked makes the browser blur it to <body>, so a
+               keyboard user loses their place and a screen reader loses its
+               reading cursor at precisely the moment the result appears.
+               handleOptionClick already ignores clicks once answered. */
+            aria-disabled={answered}
+            className={`flex items-start gap-3 p-4 rounded-lg text-left transition-all ${
+              answered ? 'cursor-default' : ''
+            }`}
             style={getOptionStyle(option)}
           >
             {/* Letter Badge */}
@@ -217,6 +239,29 @@ export default function QuestionCard({
             <span className="flex-1 text-sm pt-1">
               <MathRenderer content={option.optionText} />
             </span>
+
+            {/* The outcome has to survive without colour: correct and
+                wrong previously differed only in hue, both with a 2px
+                border, which fails WCAG 1.4.1. The icon carries it
+                visually and the sr-only text carries it to a screen
+                reader reading the option itself. */}
+            {answered && option.isCorrect && (
+              <span className="flex-shrink-0 pt-1" style={{ color: 'var(--teal)' }}>
+                <Check size={18} aria-hidden="true" />
+                <span className="sr-only">{t('answerCorrect')}</span>
+              </span>
+            )}
+            {answered && option.optionLetter === selectedLetter && !option.isCorrect && (
+              <span
+                className="flex-shrink-0 pt-1"
+                style={{ color: 'var(--accent-red-text)' }}
+              >
+                <X size={18} aria-hidden="true" />
+                <span className="sr-only">
+                  {t('answerIncorrect')} - {t('yourAnswer')}
+                </span>
+              </span>
+            )}
           </button>
         ))}
       </div>

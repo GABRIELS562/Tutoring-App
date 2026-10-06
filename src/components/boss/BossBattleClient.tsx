@@ -326,7 +326,7 @@ function BossBattleSession({ topicSlug, topicName, questions, isDemo, userId, vi
           topicSlug={topicSlug}
           marksDealt={state.marksDealt}
           totalMarks={state.bossMaxHp}
-          xp={state.xp}
+          xp={0}
           comboBest={state.comboBest}
           elapsedSeconds={elapsedSeconds}
           onPlayAgain={onRestart}

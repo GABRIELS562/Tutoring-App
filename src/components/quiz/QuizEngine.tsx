@@ -30,7 +30,7 @@ export default function QuizEngine({
   topicSlug,
   grade: _grade,
   userId,
-  difficulty: _difficulty,
+  difficulty,
   initialQuestions,
   isDemo,
   hearts,
@@ -44,7 +44,28 @@ export default function QuizEngine({
   // database and zero questions, we show an empty state instead.
   const hasRealQuestions = Boolean(initialQuestions && initialQuestions.length > 0)
   const usingDemoQuestions = !hasRealQuestions && isDemo
-  const questionsToUse = hasRealQuestions ? initialQuestions! : usingDemoQuestions ? demoQuestions : []
+  /**
+   * Demo questions are filtered here because nothing else can filter them.
+   * With no DATABASE_URL the page never calls getQuestionsByTopic(), so
+   * `difficulty` never reaches a query and the Easy/Medium/Hard buttons
+   * had no effect at all in demo mode - they changed the URL and the
+   * same five questions stayed on screen.
+   *
+   * An empty result is left empty rather than falling back to the full
+   * set: the demo fixture has no difficulty-3 questions, and showing easy
+   * ones under "Hard" would misrepresent the feature. The empty state
+   * below says so honestly, which is what a real database with no
+   * questions at that level would also show.
+   */
+  const demoForDifficulty =
+    difficulty === undefined
+      ? demoQuestions
+      : demoQuestions.filter((q) => q.difficulty === difficulty)
+  const questionsToUse = hasRealQuestions
+    ? initialQuestions!
+    : usingDemoQuestions
+      ? demoForDifficulty
+      : []
 
   const [questions, setQuestions] = useState<QuestionWithDetails[]>(questionsToUse)
   const [currentIndex, setCurrentIndex] = useState(0)
@@ -94,11 +115,11 @@ export default function QuizEngine({
    */
   const [isSaving, setIsSaving] = useState(false)
 
-  // These props are accepted for future difficulty-aware retry logic
-  // and grade-scoped question fetching (already applied server-side by
-  // the caller via getQuestionsByTopic).
+  // grade is accepted for future grade-scoped question fetching (already
+  // applied server-side by the caller via getQuestionsByTopic). difficulty
+  // is no longer in that category - it now filters the demo question set,
+  // which is the only question set nothing else can filter.
   void _grade
-  void _difficulty
 
   // Progress isn't persisted for demo mode, for mock/placeholder
   // questions (no real question/topic to attach it to), or for the

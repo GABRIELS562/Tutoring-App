@@ -378,7 +378,12 @@
     "hideHint": "Versteek wenk",
     "stepByStepSolution": "Stap-vir-stap-oplossing",
     "askAngeloAboutStep": "Vra Angelo oor hierdie stap",
-    "failedToGetHelp": "Kon nie hulp kry nie"
+    "failedToGetHelp": "Kon nie hulp kry nie",
+    "answerCorrect": "Korrek",
+    "answerIncorrect": "Verkeerd",
+    "yourAnswer": "Jou antwoord",
+    "correctAnswerWas": "Korrek. Die antwoord is {letter}.",
+    "incorrectAnswerWas": "Verkeerd. Jy het {chosen} gekies. Die korrekte antwoord is {letter}."
   },
   "topbar": {
     "userFallback": "Gebruiker",

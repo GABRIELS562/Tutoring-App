@@ -100,3 +100,88 @@ describe('QuestionCard answered-state badges', () => {
     }
   })
 })
+
+/**
+ * Whether a student can tell they got it right WITHOUT seeing colour.
+ *
+ * Correct and wrong-selected previously differed only in hue - both drew a
+ * 2px border, neither carried an icon or any text, and the only live region
+ * in the flow (QuizEngine's) announces which question you are on, not how
+ * you did. So a colour-blind student saw two near-identical highlighted
+ * options and a blind student heard nothing at all. WCAG 1.4.1.
+ */
+describe('the result survives without colour', () => {
+  it('marks the correct option with something other than a colour', async () => {
+    const user = userEvent.setup()
+    renderCard()
+
+    await user.click(screen.getByRole('button', { name: /Four/ }))
+
+    const correct = screen.getByRole('button', { name: /Four/ })
+    // An icon alone is aria-hidden, so the accessible name is what proves
+    // a screen reader gets it too.
+    expect(correct).toHaveAccessibleName(/correct/i)
+    expect(correct.querySelector('svg')).not.toBeNull()
+  })
+
+  it('marks a wrong choice as wrong, and still shows which one was right', async () => {
+    const user = userEvent.setup()
+    renderCard()
+
+    await user.click(screen.getByRole('button', { name: /Five/ }))
+
+    expect(screen.getByRole('button', { name: /Five/ })).toHaveAccessibleName(
+      /incorrect/i
+    )
+    expect(screen.getByRole('button', { name: /Four/ })).toHaveAccessibleName(
+      /correct/i
+    )
+  })
+
+  it('announces the outcome in a live region', async () => {
+    const user = userEvent.setup()
+    const { container } = renderCard()
+
+    const live = container.querySelector('[aria-live="polite"]')
+    expect(live, 'no live region in the card').not.toBeNull()
+    expect(live?.textContent?.trim()).toBe('')
+
+    await user.click(screen.getByRole('button', { name: /Five/ }))
+
+    expect(live?.textContent).toMatch(/incorrect/i)
+    // Naming the right answer is the point - "Incorrect" alone leaves a
+    // blind student with no way to learn what it should have been.
+    expect(live?.textContent).toMatch(/\bA\b/)
+  })
+
+  /**
+   * `disabled` on the button the student just clicked makes the browser
+   * blur it to <body>. A keyboard user loses their place, and a screen
+   * reader loses its reading cursor, at the exact moment the result
+   * appears - so the announcement above lands nowhere.
+   */
+  it('keeps the answered option focusable so focus is not dropped to the body', async () => {
+    const user = userEvent.setup()
+    renderCard()
+
+    const chosen = screen.getByRole('button', { name: /Five/ })
+    await user.click(chosen)
+
+    const after = screen.getByRole('button', { name: /Five/ })
+    expect(after).not.toBeDisabled()
+    expect(after).toHaveAttribute('aria-disabled', 'true')
+    expect(document.activeElement).not.toBe(document.body)
+  })
+
+  it('still ignores a second click once answered', async () => {
+    const user = userEvent.setup()
+    const onAnswer = vi.fn()
+    render(<QuestionCard question={QUESTION} onAnswer={onAnswer} onNext={vi.fn()} />)
+
+    await user.click(screen.getByRole('button', { name: /Five/ }))
+    await user.click(screen.getByRole('button', { name: /Four/ }))
+
+    expect(onAnswer).toHaveBeenCalledTimes(1)
+    expect(onAnswer).toHaveBeenCalledWith('B', false)
+  })
+})

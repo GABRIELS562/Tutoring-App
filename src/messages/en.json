@@ -378,7 +378,12 @@
     "hideHint": "Hide hint",
     "stepByStepSolution": "Step-by-step solution",
     "askAngeloAboutStep": "Ask Angelo about this step",
-    "failedToGetHelp": "Failed to get help"
+    "failedToGetHelp": "Failed to get help",
+    "answerCorrect": "Correct",
+    "answerIncorrect": "Incorrect",
+    "yourAnswer": "Your answer",
+    "correctAnswerWas": "Correct. The answer is {letter}.",
+    "incorrectAnswerWas": "Incorrect. You chose {chosen}. The correct answer is {letter}."
   },
   "topbar": {
     "userFallback": "User",

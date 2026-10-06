@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { z } from 'zod'
 import { requireAdmin, authErrorResponse } from '@/lib/auth/require-user'
 import { getClaudeClient, createTutorMessage, getClaudeModel, ClaudeError, type ClaudeErrorKind } from '@/lib/claude'
 import { logClaudeUsage } from '@/lib/claude-usage-log'
@@ -7,6 +8,42 @@ import { logClaudeUsage } from '@/lib/claude-usage-log'
 // equivalent here (generate-steps isn't part of api/ai-hint), so this is
 // its own literal.
 const USAGE_LOG_MODE = 'generate_steps'
+
+/**
+ * The model's answer is external input, exactly like a request body.
+ *
+ * api/ai-hint validates its prompt_evaluation response for this reason;
+ * this route did not, and returned `parsed.steps || []` straight through.
+ * A step missing `instruction` or `correctAnswer` then reached
+ * QuestionEditor, which stores it and later calls `s.instruction.trim()`
+ * in handleSave - a TypeError that kills the editor with nothing but
+ * "Failed to generate steps" in the console. Truncation at max_tokens
+ * makes a half-written final step entirely plausible, not hypothetical.
+ *
+ * Steps that do not survive validation are dropped rather than failing
+ * the whole request: a partial set of good steps is still useful to an
+ * admin, who can write the rest.
+ */
+const GeneratedStepSchema = z.object({
+  instruction: z.string().min(1),
+  correctAnswer: z.string().min(1),
+  hint: z.string().optional().default(''),
+  explanation: z.string().optional().default(''),
+})
+
+type GeneratedStep = z.infer<typeof GeneratedStepSchema>
+
+function validSteps(raw: unknown): GeneratedStep[] {
+  if (!Array.isArray(raw)) return []
+  return raw.flatMap((step) => {
+    const parsed = GeneratedStepSchema.safeParse(step)
+    if (!parsed.success) {
+      console.warn('generate-steps: discarding malformed step', parsed.error.issues)
+      return []
+    }
+    return [parsed.data]
+  })
+}
 
 // See the identical comment in src/app/api/ai-hint/route.ts - this route
 // also calls the Anthropic API and must outlive Vercel's default
@@ -130,9 +167,13 @@ Focus on trigonometry, algebra, functions, and calculus common in NSC exams.`
       const jsonMatch = content.match(/\{[\s\S]*\}/)
       if (jsonMatch) {
         const parsed = JSON.parse(jsonMatch[0])
-        return NextResponse.json({
-          steps: parsed.steps || [],
-        })
+        const steps = validSteps(parsed?.steps)
+        // An empty result falls through to the mock below rather than
+        // handing the editor nothing - same outcome as a parse failure,
+        // because that is what it is.
+        if (steps.length > 0) {
+          return NextResponse.json({ steps })
+        }
       }
     } catch (parseError) {
       console.error('JSON parse error:', parseError)

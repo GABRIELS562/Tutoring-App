@@ -211,7 +211,10 @@ export default function QuestionEditor({
       return
     }
 
-    if (steps.some((s) => !s.instruction.trim() || !s.correctAnswer.trim())) {
+    // Optional chaining, not decoration: steps can arrive from the AI
+    // generator, and a missing field used to throw here rather than show
+    // the message below.
+    if (steps.some((s) => !s.instruction?.trim() || !s.correctAnswer?.trim())) {
       alert('Please fill in all step instructions and correct answers')
       return
     }

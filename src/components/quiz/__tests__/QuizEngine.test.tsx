@@ -434,3 +434,105 @@ describe('QuizEngine does not let a student outrun the save', () => {
     await waitFor(() => expect(next).not.toBeDisabled())
   })
 })
+
+/**
+ * The Easy/Medium/Hard filter used to do nothing after the first render.
+ *
+ * Two independent causes, one symptom. In production, QuizEngine seeds
+ * `questions` with a useState initializer, which React runs only on mount;
+ * changing the filter re-runs the server component and fetches a genuinely
+ * different set, but the mounted instance kept the old one - along with the
+ * old score and position. PracticePageClient now passes a key so a new
+ * question set remounts the quiz.
+ *
+ * In demo mode there is no query at all: the page never calls
+ * getQuestionsByTopic, so `difficulty` reached nothing and the same five
+ * fixture questions showed under every filter. QuizEngine now filters the
+ * demo set itself.
+ */
+describe('the difficulty filter actually filters', () => {
+  beforeEach(() => {
+    vi.clearAllMocks()
+  })
+
+  /**
+   * The counter is rendered twice - once visibly and once inside the
+   * sr-only live region - so this reads the total rather than matching a
+   * single node.
+   */
+  function questionTotal(): number {
+    const nodes = screen.getAllByText(/Question \d+ of \d+/i)
+    expect(nodes.length).toBeGreaterThan(0)
+    const match = nodes[0].textContent?.match(/of (\d+)/)
+    expect(match, `could not read a total from "${nodes[0].textContent}"`).not.toBeNull()
+    return Number(match![1])
+  }
+
+  it('shows every demo question when no difficulty is selected', () => {
+    render(<QuizEngine topicSlug="trigonometry" grade={11} userId="demo-user" isDemo />)
+
+    expect(questionTotal()).toBe(5)
+  })
+
+  it('narrows to just the easy ones when Easy is selected', () => {
+    render(
+      <QuizEngine topicSlug="trigonometry" grade={11} userId="demo-user" isDemo difficulty={1} />
+    )
+
+    // The fixture is [1, 2, 2, 1, 1] - three at difficulty 1.
+    expect(questionTotal()).toBe(3)
+  })
+
+  it('narrows to the medium ones when Medium is selected', () => {
+    render(
+      <QuizEngine topicSlug="trigonometry" grade={11} userId="demo-user" isDemo difficulty={2} />
+    )
+
+    expect(questionTotal()).toBe(2)
+  })
+
+  /**
+   * The fixture has no difficulty-3 questions. Falling back to the full
+   * set would show easy questions under "Hard", misrepresenting the
+   * feature - the honest answer is the same empty state a real database
+   * with nothing at that level would produce.
+   */
+  it('shows the empty state rather than easier questions when none match', () => {
+    render(
+      <QuizEngine topicSlug="trigonometry" grade={11} userId="demo-user" isDemo difficulty={3} />
+    )
+
+    expect(screen.getByText('No questions yet for this topic.')).toBeInTheDocument()
+    expect(screen.queryByText(/Question \d+ of/i)).not.toBeInTheDocument()
+  })
+
+  it('never lets a real question set be filtered away by this path', () => {
+    // Real questions are already filtered server-side by
+    // getQuestionsByTopic; re-filtering them here would drop rows twice.
+    render(
+      <QuizEngine
+        topicSlug="trigonometry"
+        grade={11}
+        userId="u1"
+        isDemo={false}
+        difficulty={3}
+        initialQuestions={[makeQuestion({ difficulty: 1 })]}
+      />
+    )
+
+    expect(questionTotal()).toBe(1)
+  })
+})
+
+describe('PracticePageClient remounts the quiz when the question set changes', () => {
+  it('keys QuizEngine on the slug and difficulty', async () => {
+    const { readFileSync } = await import('node:fs')
+    const { join } = await import('node:path')
+    const source = readFileSync(
+      join(__dirname, '..', '..', '..', 'app', '(app)', 'topics', '[slug]', 'practice', 'PracticePageClient.tsx'),
+      'utf-8'
+    )
+
+    expect(source).toMatch(/<QuizEngine[\s\S]{0,200}?key=\{`\$\{slug\}-\$\{difficulty \?\? 'all'\}`\}/)
+  })
+})

@@ -128,7 +128,19 @@ export default function PracticePageClient({
         </div>
 
         {/* Quiz Engine */}
+        {/*
+          The key is load-bearing, not cosmetic. QuizEngine seeds its
+          `questions` state from this prop with a useState initializer,
+          which React only runs on mount. Changing the difficulty filter
+          calls router.replace(), the server component re-runs and really
+          does fetch a different question set - but without a key the
+          mounted instance keeps the old one, along with the old score and
+          position. The filter above silently did nothing after first
+          render. Remounting is also the right semantics: a different
+          question set is a new quiz, not a continuation of the old one.
+        */}
         <QuizEngine
+          key={`${slug}-${difficulty ?? 'all'}`}
           topicSlug={slug}
           grade={user?.grade || 11}
           userId={user?.id || 'demo-user'}
